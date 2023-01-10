@@ -9,3 +9,4 @@ psycopg2-binary==2.9.5
 python-dotenv==0.21.0
 whitenoise==6.2.0
 djlint==1.19.9
+gunicorn==20.1.0
