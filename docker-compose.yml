@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:14.5-alpine
+    environment:
+      POSTGRES_USER: dju
+      POSTGRES_PASSWORD: djpwd
+      POSTGRES_DB: djdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgres://dju:djpwd@db:5432/djdb
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

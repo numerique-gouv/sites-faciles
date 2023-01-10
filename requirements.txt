@@ -1,0 +1,11 @@
+Django==3.2.16
+django-dsfr==0.11.1
+black==22.12.0
+flake8==6.0.0
+isort==5.11.4
+pre-commit==2.20.0
+dj-database-url==1.2.0
+psycopg2-binary==2.9.5
+python-dotenv==0.21.0
+whitenoise==6.2.0
+djlint==1.19.9
