@@ -1,5 +1,5 @@
-Django==3.2.16
-django-dsfr==0.11.1
+Django==4.1.5
+django-dsfr==0.12.0
 black==22.12.0
 flake8==6.0.0
 isort==5.11.4
