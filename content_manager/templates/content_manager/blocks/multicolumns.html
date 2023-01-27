@@ -1,0 +1,38 @@
+{% load dsfr_tags wagtailcore_tags wagtailimages_tags %}
+<div class="fr-container fr-py-3w">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        {% for subblock in block.value %}
+            {% if subblock.block_type == 'text' %}
+                <div class="fr-col-12 fr-col-sm">{{ subblock.value|richtext }}</div>
+            {% elif subblock.block_type == 'image' %}
+                <div class="fr-col-12 fr-col-sm">{% include "content_manager/blocks/image.html" with block=subblock %}</div>
+            {% elif subblock.block_type == 'video' %}
+                <div class="fr-col-12 fr-col-sm">
+                    <h2>{{ subblock.value.title }}</h2>
+                    <div class="fr-content-media">
+                        <iframe title="{{ subblock.value.title }}"
+                                class="fr-responsive-vid"
+                                src="{{ subblock.value.url }}"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        <div class="fr-content-media__caption">{{ subblock.value.caption }}</div>
+                    </div>
+                </div>
+            {% elif subblock.block_type == 'card' %}
+                <div class="fr-col-12 fr-col-sm">
+                    {% image subblock.value.bg_image original as img %}
+                    {% if subblock.value.document %}
+                        {% dsfr_card title=subblock.value.title description=subblock.value.description link=subblock.value.document.url image_url=img.url %}
+                    {% else %}
+                        {% dsfr_card title=subblock.value.title description=subblock.value.description link=subblock.value.url image_url=img.url %}
+                    {% endif %}
+                </div>
+            {% elif subblock.block_type == 'quote' %}
+                <div class="fr-col-12 fr-col-sm">
+                    {% image subblock.value.image original as img %}
+                    {% dsfr_quote text=subblock.value.quote author=subblock.value.author_name source=subblock.value.author_title image_url=img.url %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

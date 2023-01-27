@@ -1,0 +1,19 @@
+<div class="fr-container fr-my-3w">
+    <div class="fr-stepper">
+        <h2 class="fr-stepper__title">{{ block.value.title }}</h2>
+        <div class="fr-stepper__steps"
+             data-fr-current-step="{{ block.value.current }}"
+             data-fr-steps="{{ block.value.total }}">
+        </div>
+        <div class="fr-grid-row fr-grid-row--gutters">
+            {% for subblock in block.value.steps %}
+                <div class="fr-col-12 fr-col-sm">
+                    <p>
+                        <strong>{{ subblock.value.title }}</strong>
+                    </p>
+                    <p>{{ subblock.value.detail|linebreaksbr }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
