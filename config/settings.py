@@ -42,6 +42,7 @@ ALLOWED_HOSTS = HOST_URL.replace(" ", "").split(",")
 # Application definition
 
 INSTALLED_APPS = [
+    "storages",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
     "wagtail.sites",
@@ -156,6 +157,25 @@ STATICFILES_FINDERS = [
     "sass_processor.finders.CssFinder",
     "django.contrib.staticfiles.finders.FileSystemFinder",
 ]
+
+# S3 uploads
+# ------------------------------------------------------------------------------
+
+AWS_S3_ACCESS_KEY_ID = os.getenv("S3_KEY_ID", "123")
+AWS_S3_SECRET_ACCESS_KEY = os.getenv("S3_KEY_SECRET", "secret")
+AWS_S3_ENDPOINT_URL = (
+    f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST', 'set-var-env.com/')}"
+)
+AWS_STORAGE_BUCKET_NAME = os.getenv("S3_BUCKET_NAME", "set-bucket-name")
+AWS_S3_STORAGE_BUCKET_REGION = os.getenv("S3_BUCKET_REGION", "fr")
+
+# MEDIA CONFIGURATION
+# ------------------------------------------------------------------------------
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+MEDIA_URL = f"https://{AWS_S3_ENDPOINT_URL}/"  # noqa
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 # Django Sass
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "static")
