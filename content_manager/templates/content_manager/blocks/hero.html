@@ -1,0 +1,16 @@
+{% load static wagtailimages_tags %}
+{% image block.value.bg_image original as bg_img %}
+<div class="hero"
+     style="background: url({{ bg_img.url }}) {{ block.value.bg_color }} no-repeat center">
+    <div class="fr-container fr-py-14w">
+        <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col fr-col-12 fr-col-md-6">
+                <h1>{{ block.value.title }}</h1>
+                {% if block.value.cta_link and block.value.cta_label %}
+                    <a class="fr-btn fr-btn--primary fr-btn--lg"
+                       href="{{ block.value.cta_link }}">{{ block.value.cta_label }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

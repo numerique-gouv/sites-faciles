@@ -8,6 +8,21 @@ from wagtail.search import index
 
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
+class HeroBlock(blocks.StructBlock):
+    bg_image = ImageChooserBlock(label="Image d'arrière plan")
+    bg_color = blocks.RegexBlock(
+        label="Couleur d'arrière plan au format hexa (Ex: #f5f5fe)",
+        regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+        error_messages={
+            "invalid": "La couleur n'est pas correcte, le format doit être #fff ou #f5f5fe"
+        },
+        required=False,
+    )
+    title = blocks.CharBlock(label="Titre")
+    cta_label = blocks.CharBlock(label="Texte du bouton", required=False)
+    cta_link = blocks.URLBlock(label="Lien du bouton", required=False)
+
+
 class TitleBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre")
     large = blocks.BooleanBlock(label="Large", required=False)
@@ -160,6 +175,7 @@ class StepperBlock(blocks.StructBlock):
 class ContentPage(Page):
     body = StreamField(
         [
+            ("hero", HeroBlock(label="Section promotionnelle")),
             ("title", TitleBlock(label="Titre de page")),
             ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
             (
