@@ -1,0 +1,17 @@
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+<div class="fr-container fr-my-6w">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-col-sm-{{ block.value.image_ratio }}">
+            <div class="bordered fr-p-2w">{% image block.value.image original class="fr-responsive-img" %}</div>
+        </div>
+        <div class="fr-col-12 fr-col-sm{{ -12|add:block.value.image_ratio }}">
+            {{ block.value.text|richtext }}
+            {% if block.value.link_url and block.value.link_label %}
+                <a class="fr-link fr-fi-arrow-right-line fr-link--icon-right"
+                   href="{{ block.value.link_url }}">{{ block.value.link_label }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

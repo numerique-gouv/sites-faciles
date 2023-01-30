@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% block title %}
+    <title>{{ page.seo_title|default:page.title }} — {{ SITE_CONFIG.site_title }}</title>
+{% endblock title %}
+{% if page.search_description %}
+    {% block description %}
+        <meta name="description" content="{{ page.search_description }}" />
+    {% endblock description %}
+{% endif %}
+{% block content %}
+    {# Display Django message info from previous form #}
+    {% if messages %}
+        <div class="fr-container fr-mt-6w">
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-12">
+                    {% for message in messages %}
+                        {% if message.tags == "success" %}
+                            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-5w"
+                                 role="status">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% elif message.tags == "info" %}
+                            <div class="fr-alert fr-alert--info fr-alert--sm fr-mb-5w" role="status">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% elif message.tags == "error" %}
+                            <div class="fr-alert fr-alert--error fr-alert--sm fr-mb-5w" role="alert">
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% for block in page.body %}
+        {% if block.block_type == 'title' %}
+            <div class="fr-container fr-mt-6w">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-12{% if not block.value.large %} fr-col-offset-md-2 fr-col-md-8{% endif %}">
+                        <h1 class="fr-display--sm">{{ block.value.title }}</h1>
+                    </div>
+                </div>
+            </div>
+        {% elif block.block_type == 'imageandtext' %}
+            {% include "content_manager/blocks/imageandtext.html" %}
+        {% elif block.block_type == 'alert' %}
+            <div class="fr-container fr-py-3w">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">
+                        {% dsfr_alert title=block.value.title type=block.value.level content=block.value.description %}
+                    </div>
+                </div>
+            </div>
+        {% elif block.block_type == 'callout' %}
+            <div class="fr-container fr-py-3w">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8 fr-p-1w">
+                        {% dsfr_callout title=block.value.title text=block.value.text %}
+                    </div>
+                </div>
+            </div>
+        {% elif block.block_type == 'quote' %}
+            <div class="fr-background-alt--blue-france fr-my-6w fr-py-6w">
+                <div class="fr-container">
+                    <div class="fr-grid-row fr-grid-row--gutters">
+                        <div class="fr-col-8 fr-col-offset-2">
+                            {% image block.value.image original as img %}
+                            {% dsfr_quote text=block.value.quote author=block.value.author_name source=block.value.author_title image_url=img.url %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% elif block.block_type == 'image' %}
+            <div class="fr-container fr-my-3w">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-12">{% include "content_manager/blocks/image.html"  %}</div>
+                </div>
+            </div>
+        {% elif block.block_type == 'video' %}
+            <div class="fr-container fr-my-3w">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">{% include "content_manager/blocks/video.html"  %}</div>
+                </div>
+            </div>
+        {% elif block.block_type == 'multicolumns' %}
+            {% include "content_manager/blocks/multicolumns.html"  %}
+        {% elif block.block_type == 'paragraph' %}
+            <div class="fr-container">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">{{ block.value|richtext }}</div>
+                </div>
+            </div>
+        {% elif block.block_type == 'paragraphlarge' %}
+            <div class="fr-container">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-12">{{ block.value|richtext }}</div>
+                </div>
+            </div>
+        {% elif block.block_type == 'accordions' %}
+            {% include "content_manager/blocks/accordions.html" with accordions_id=forloop.counter0|lower %}
+        {% elif block.block_type == 'stepper' %}
+            {% include "content_manager/blocks/stepper.html" %}
+        {% endif %}
+    {% endfor %}
+{% endblock content %}

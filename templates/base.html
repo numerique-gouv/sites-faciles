@@ -1,0 +1,45 @@
+{% load static dsfr_tags %}
+<!doctype html>
+<html lang="fr" data-fr-scheme="system" {% if SITE_CONFIG.mourning %}data-fr-mourning{% endif %}>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  {% dsfr_css %}
+  {% dsfr_favicon %}
+  {% block extra_css %}{% endblock extra_css %}
+
+  {% block title %}
+  <title>
+    {% if title %}
+      {{ title }} — {{ SITE_CONFIG.site_title }}
+    {% else %}
+    {{ SITE_CONFIG.site_title }}
+    {% endif %}
+  </title>
+  {% endblock title %}
+</head>
+
+<body>
+    {% block skiplinks %}
+        {% dsfr_skiplinks skiplinks %}
+    {% endblock skiplinks %}
+    {% include "blocks/header.html" %}
+    {% dsfr_theme_modale %}
+
+    <div class="fr-container fr-mt-4w fr-mb-6w">
+      {% dsfr_breadcrumb %}
+
+      <main id="content" role="main">
+        {% block content %}{% endblock content %}
+      </main>
+    </div>
+
+    {% include "blocks/footer.html" %}
+
+  {% dsfr_js nonce=request.csp_nonce %}
+  {% block extra_js %}{% endblock extra_js %}
+</body>
+
+</html>
