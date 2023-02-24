@@ -1,6 +1,6 @@
 {% load wagtailimages_tags %}
 {% if block.value.title %}<h5>{{ block.value.title }}</h5>{% endif %}
-<div class="{% if not noclass %}fr-content-media{% endif %}{% if block.value.url %} fr-enlarge-link{% endif %}">
+<div class="{% if block.value.url %} fr-enlarge-link{% endif %}">
     {% if block.value.url %}<a href="{{ block.value.url }}" />{% endif %}
     {% image block.value.image original class="fr-responsive-img" alt=block.value.alt %}
     {% if block.value.url %}</a>{% endif %}
