@@ -19,6 +19,7 @@ class HeroBlock(blocks.StructBlock):
         required=False,
     )
     title = blocks.CharBlock(label="Titre")
+    text = blocks.CharBlock(label="Texte", required=False)
     cta_label = blocks.CharBlock(label="Texte du bouton", required=False)
     cta_link = blocks.URLBlock(label="Lien du bouton", required=False)
 
