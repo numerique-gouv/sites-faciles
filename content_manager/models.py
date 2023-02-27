@@ -19,6 +19,7 @@ class HeroBlock(blocks.StructBlock):
         required=False,
     )
     title = blocks.CharBlock(label="Titre")
+    text = blocks.CharBlock(label="Texte", required=False)
     cta_label = blocks.CharBlock(label="Texte du bouton", required=False)
     cta_link = blocks.URLBlock(label="Lien du bouton", required=False)
 
@@ -146,6 +147,20 @@ class MultiColumnsBlock(blocks.StreamBlock):
     quote = QuoteBlock(label="Citation")
 
 
+class MultiColumnsWithTitleBlock(blocks.StructBlock):
+    bg_image = ImageChooserBlock(label="Image d'arrière plan", required=False)
+    bg_color = blocks.RegexBlock(
+        label="Couleur d'arrière plan au format hexa (Ex: #f5f5fe)",
+        regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+        error_messages={
+            "invalid": "La couleur n'est pas correcte, le format doit être #fff ou #f5f5fe"
+        },
+        required=False,
+    )
+    title = blocks.CharBlock(label="Titre", required=False)
+    columns = MultiColumnsBlock(label="Multi-colonnes")
+
+
 class AccordionBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre")
     content = blocks.RichTextBlock(label="Contenu")
@@ -172,6 +187,15 @@ class StepperBlock(blocks.StructBlock):
     steps = StepsListBlock(label="Les étapes")
 
 
+class SeparatorBlock(blocks.StructBlock):
+    top_margin = blocks.IntegerBlock(
+        label="Espacement au dessus", min_value=0, max_value=15, default=3
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label="Espacement en dessous", min_value=0, max_value=15, default=3
+    )
+
+
 class ContentPage(Page):
     body = StreamField(
         [
@@ -191,9 +215,10 @@ class ContentPage(Page):
             ("callout", CalloutBlock(label="Texte mise en avant")),
             ("quote", QuoteBlock(label="Citation")),
             ("video", VideoBlock(label="Vidéo")),
-            ("multicolumns", MultiColumnsBlock(label="Multi-colonnes")),
+            ("multicolumns", MultiColumnsWithTitleBlock(label="Multi-colonnes")),
             ("accordions", AccordionsBlock(label="Accordéons")),
             ("stepper", StepperBlock(label="Étapes")),
+            ("separator", SeparatorBlock(label="Séparateur")),
         ],
         blank=True,
         use_json_field=True,
