@@ -27,15 +27,9 @@
     {% endblock skiplinks %}
     {% include "blocks/header.html" %}
     {% dsfr_theme_modale %}
-
-    <div class="fr-container fr-mt-4w fr-mb-6w">
-      {% dsfr_breadcrumb %}
-
       <main id="content" role="main">
         {% block content %}{% endblock content %}
       </main>
-    </div>
-
     {% include "blocks/footer.html" %}
 
   {% dsfr_js nonce=request.csp_nonce %}
