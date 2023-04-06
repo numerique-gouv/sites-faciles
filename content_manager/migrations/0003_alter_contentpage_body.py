@@ -25,9 +25,7 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "bg_image",
-                                    wagtail.images.blocks.ImageChooserBlock(
-                                        label="Image d'arrière plan"
-                                    ),
+                                    wagtail.images.blocks.ImageChooserBlock(label="Image d'arrière plan"),
                                 ),
                                 (
                                     "bg_color",
@@ -45,21 +43,15 @@ class Migration(migrations.Migration):
                                 ("title", wagtail.blocks.CharBlock(label="Titre")),
                                 (
                                     "text",
-                                    wagtail.blocks.CharBlock(
-                                        label="Texte", required=False
-                                    ),
+                                    wagtail.blocks.CharBlock(label="Texte", required=False),
                                 ),
                                 (
                                     "cta_label",
-                                    wagtail.blocks.CharBlock(
-                                        label="Texte du bouton", required=False
-                                    ),
+                                    wagtail.blocks.CharBlock(label="Texte du bouton", required=False),
                                 ),
                                 (
                                     "cta_link",
-                                    wagtail.blocks.URLBlock(
-                                        label="Lien du bouton", required=False
-                                    ),
+                                    wagtail.blocks.URLBlock(label="Lien du bouton", required=False),
                                 ),
                             ],
                             label="Section promotionnelle",
@@ -72,9 +64,7 @@ class Migration(migrations.Migration):
                                 ("title", wagtail.blocks.CharBlock(label="Titre")),
                                 (
                                     "large",
-                                    wagtail.blocks.BooleanBlock(
-                                        label="Large", required=False
-                                    ),
+                                    wagtail.blocks.BooleanBlock(label="Large", required=False),
                                 ),
                             ],
                             label="Titre de page",
@@ -86,9 +76,7 @@ class Migration(migrations.Migration):
                     ),
                     (
                         "paragraphlarge",
-                        wagtail.blocks.RichTextBlock(
-                            label="Texte avec mise en forme (large)"
-                        ),
+                        wagtail.blocks.RichTextBlock(label="Texte avec mise en forme (large)"),
                     ),
                     (
                         "image",
@@ -96,15 +84,11 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "title",
-                                    wagtail.blocks.CharBlock(
-                                        label="Titre", required=False
-                                    ),
+                                    wagtail.blocks.CharBlock(label="Titre", required=False),
                                 ),
                                 (
                                     "image",
-                                    wagtail.images.blocks.ImageChooserBlock(
-                                        label="Illustration"
-                                    ),
+                                    wagtail.images.blocks.ImageChooserBlock(label="Illustration"),
                                 ),
                                 (
                                     "alt",
@@ -115,15 +99,11 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "caption",
-                                    wagtail.blocks.CharBlock(
-                                        label="Légende", required=False
-                                    ),
+                                    wagtail.blocks.CharBlock(label="Légende", required=False),
                                 ),
                                 (
                                     "url",
-                                    wagtail.blocks.URLBlock(
-                                        label="Lien", required=False
-                                    ),
+                                    wagtail.blocks.URLBlock(label="Lien", required=False),
                                 ),
                             ]
                         ),
@@ -134,9 +114,7 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "image",
-                                    wagtail.images.blocks.ImageChooserBlock(
-                                        label="Illustration (à gauche)"
-                                    ),
+                                    wagtail.images.blocks.ImageChooserBlock(label="Illustration (à gauche)"),
                                 ),
                                 (
                                     "image_ratio",
@@ -151,9 +129,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "text",
-                                    wagtail.blocks.RichTextBlock(
-                                        label="Texte avec mise en forme (à droite)"
-                                    ),
+                                    wagtail.blocks.RichTextBlock(label="Texte avec mise en forme (à droite)"),
                                 ),
                                 (
                                     "link_label",
@@ -165,9 +141,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "link_url",
-                                    wagtail.blocks.URLBlock(
-                                        label="Lien", required=False
-                                    ),
+                                    wagtail.blocks.URLBlock(label="Lien", required=False),
                                 ),
                             ],
                             label="Bloc image à gauche et texte à droite",
@@ -179,15 +153,11 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "title",
-                                    wagtail.blocks.CharBlock(
-                                        label="Titre du message", required=False
-                                    ),
+                                    wagtail.blocks.CharBlock(label="Titre du message", required=False),
                                 ),
                                 (
                                     "description",
-                                    wagtail.blocks.TextBlock(
-                                        label="Texte du message", required=False
-                                    ),
+                                    wagtail.blocks.TextBlock(label="Texte du message", required=False),
                                 ),
                                 (
                                     "level",
@@ -211,15 +181,11 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "title",
-                                    wagtail.blocks.CharBlock(
-                                        label="Titre de la mise en vant", required=False
-                                    ),
+                                    wagtail.blocks.CharBlock(label="Titre de la mise en vant", required=False),
                                 ),
                                 (
                                     "text",
-                                    wagtail.blocks.TextBlock(
-                                        label="Texte mis en avant", required=False
-                                    ),
+                                    wagtail.blocks.TextBlock(label="Texte mis en avant", required=False),
                                 ),
                             ],
                             label="Texte mise en avant",
@@ -254,9 +220,7 @@ class Migration(migrations.Migration):
                             [
                                 (
                                     "title",
-                                    wagtail.blocks.CharBlock(
-                                        label="Titre", required=False
-                                    ),
+                                    wagtail.blocks.CharBlock(label="Titre", required=False),
                                 ),
                                 ("caption", wagtail.blocks.CharBlock(label="Légende")),
                                 (
@@ -297,9 +261,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "title",
-                                    wagtail.blocks.CharBlock(
-                                        label="Titre", required=False
-                                    ),
+                                    wagtail.blocks.CharBlock(label="Titre", required=False),
                                 ),
                                 (
                                     "columns",
@@ -307,9 +269,7 @@ class Migration(migrations.Migration):
                                         [
                                             (
                                                 "text",
-                                                wagtail.blocks.RichTextBlock(
-                                                    label="Texte avec mise en forme"
-                                                ),
+                                                wagtail.blocks.RichTextBlock(label="Texte avec mise en forme"),
                                             ),
                                             (
                                                 "image",
@@ -369,9 +329,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "caption",
-                                                            wagtail.blocks.CharBlock(
-                                                                label="Légende"
-                                                            ),
+                                                            wagtail.blocks.CharBlock(label="Légende"),
                                                         ),
                                                         (
                                                             "url",
@@ -393,21 +351,15 @@ class Migration(migrations.Migration):
                                                     [
                                                         (
                                                             "title",
-                                                            wagtail.blocks.CharBlock(
-                                                                label="Titre"
-                                                            ),
+                                                            wagtail.blocks.CharBlock(label="Titre"),
                                                         ),
                                                         (
                                                             "description",
-                                                            wagtail.blocks.TextBlock(
-                                                                label="Texte"
-                                                            ),
+                                                            wagtail.blocks.TextBlock(label="Texte"),
                                                         ),
                                                         (
                                                             "image",
-                                                            wagtail.images.blocks.ImageChooserBlock(
-                                                                label="Image"
-                                                            ),
+                                                            wagtail.images.blocks.ImageChooserBlock(label="Image"),
                                                         ),
                                                         (
                                                             "url",
@@ -445,21 +397,15 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "quote",
-                                                            wagtail.blocks.CharBlock(
-                                                                label="Citation"
-                                                            ),
+                                                            wagtail.blocks.CharBlock(label="Citation"),
                                                         ),
                                                         (
                                                             "author_name",
-                                                            wagtail.blocks.CharBlock(
-                                                                label="Nom de l'auteur"
-                                                            ),
+                                                            wagtail.blocks.CharBlock(label="Nom de l'auteur"),
                                                         ),
                                                         (
                                                             "author_title",
-                                                            wagtail.blocks.CharBlock(
-                                                                label="Titre de l'auteur"
-                                                            ),
+                                                            wagtail.blocks.CharBlock(label="Titre de l'auteur"),
                                                         ),
                                                     ],
                                                     label="Citation",
@@ -488,9 +434,7 @@ class Migration(migrations.Migration):
                                             ),
                                             (
                                                 "content",
-                                                wagtail.blocks.RichTextBlock(
-                                                    label="Contenu"
-                                                ),
+                                                wagtail.blocks.RichTextBlock(label="Contenu"),
                                             ),
                                         ],
                                         label="Accordéon",
@@ -525,15 +469,11 @@ class Migration(migrations.Migration):
                                                     [
                                                         (
                                                             "title",
-                                                            wagtail.blocks.CharBlock(
-                                                                label="Titre de l'étape"
-                                                            ),
+                                                            wagtail.blocks.CharBlock(label="Titre de l'étape"),
                                                         ),
                                                         (
                                                             "detail",
-                                                            wagtail.blocks.TextBlock(
-                                                                label="Détail"
-                                                            ),
+                                                            wagtail.blocks.TextBlock(label="Détail"),
                                                         ),
                                                     ],
                                                     label="Étape",
