@@ -14,6 +14,16 @@
             {% for subblock in block.value.columns %}
                 {% if subblock.block_type == 'text' %}
                     <div class="fr-col-12 fr-col-sm">{{ subblock.value|richtext }}</div>
+                {% elif subblock.block_type == 'text_cta' %}
+                    <div class="fr-col-12 fr-col-sm">
+                        {{ subblock.value.text|richtext }}
+                        {% if subblock.value.cta_url and subblock.value.cta_label %}
+                        <p class="fr-mb-5w">
+                            {# It doesn't use dsfr_link or dsfr_button because it's a link with a button style #}
+                            <a href="{{ subblock.value.cta_url }}" class="fr-btn fr-btn--primary">{{ subblock.value.cta_label }}</a>
+                        </p>
+                        {% endif %}
+                    </div>
                 {% elif subblock.block_type == 'image' %}
                     <div class="fr-col-12 fr-col-sm">{% include "content_manager/blocks/image.html" with block=subblock %}</div>
                 {% elif subblock.block_type == 'video' %}
