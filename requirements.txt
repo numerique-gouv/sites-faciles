@@ -1,7 +1,7 @@
 dj-static==0.0.6
 Django==4.1.5
 django-dsfr==0.12.0
-black==23.1.0
+black==23.3.0
 flake8==6.0.0
 isort==5.11.4
 pre-commit==2.20.0
