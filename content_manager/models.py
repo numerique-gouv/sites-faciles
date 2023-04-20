@@ -143,6 +143,18 @@ class TextAndCTA(blocks.StructBlock):
     cta_url = blocks.CharBlock(label="Lien", required=False)
 
 
+class IframeBlock(blocks.StructBlock):
+    title = blocks.CharBlock(
+        label="Titre",
+        help_text="Accessibilité : Le titre doit décrire, de façon claire et concise, le contenu embarqué.",
+    )
+    url = blocks.URLBlock(
+        label="Lien du cadre intégré",
+        help_text="Exemple pour Tally : https://tally.so/embed/w2jMRa",
+    )
+    height = blocks.IntegerBlock(label="Hauteur en pixels")
+
+
 class MultiColumnsBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label="Texte avec mise en forme")
     image = ImageBlock(label="Image")
@@ -150,6 +162,7 @@ class MultiColumnsBlock(blocks.StreamBlock):
     card = CardBlock(label="Carte")
     quote = QuoteBlock(label="Citation")
     text_cta = TextAndCTA(label="Texte et appel à l'action")
+    iframe = IframeBlock(label="Cadre intégré")
 
 
 class MultiColumnsWithTitleBlock(blocks.StructBlock):
