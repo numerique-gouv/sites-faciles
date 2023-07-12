@@ -52,6 +52,10 @@
                         {% image subblock.value.image original as img %}
                         {% dsfr_quote text=subblock.value.quote author=subblock.value.author_name source=subblock.value.author_title image_url=img.url %}
                     </div>
+                {% elif subblock.block_type == 'iframe' %}
+                    <div class="fr-col-12 fr-col-sm">
+                        <iframe title="{{ subblock.value.title }}" src="{{ subblock.value.url }}" height="{{ subblock.value.height }}px" width="100%"></iframe>
+                    </div>
                 {% endif %}
             {% endfor %}
         </div>
