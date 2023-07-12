@@ -1,4 +1,24 @@
-# Content Manager
+# Gestionnaire de contenu DSFR et Accessible
+
+**Créez et gérez votre site internet simplement**
+
+Gestionnaire de contenu (CMS) pour créer un site internet dont le domaine se terminant par .gouv.fr . Pas besoin de compétence technique pour mettre à jours le contenu.
+
+**Un CMS basé sur la solution open source Wagtail**
+
+Créez ou modifiez des pages, ajoutez un menu de navigation, des boutons, images, vidéos, contributeurs etc
+
+**Système de Design de l'État**
+
+Construisez vos pages à l'aide de composants prêts à l'emploi issus du Système de Design de l'État (DSFR)
+
+**Accessible et responsive**
+
+Le contenu des pages générées par le CMS est partiellement conforme selon la norme RGAA 4.1 et responsive
+
+
+
+
 
 ## Prérequis
 
