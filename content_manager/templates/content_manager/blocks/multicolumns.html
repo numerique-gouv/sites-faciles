@@ -40,7 +40,7 @@
                     </div>
                 {% elif subblock.block_type == 'card' %}
                     <div class="fr-col-12 fr-col-sm">
-                        {% image subblock.value.bg_image original as img %}
+                        {% image subblock.value.image original as img %}
                         {% if subblock.value.document %}
                             {% dsfr_card title=subblock.value.title description=subblock.value.description link=subblock.value.document.url image_url=img.url %}
                         {% else %}
