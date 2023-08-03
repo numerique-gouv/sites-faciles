@@ -13,9 +13,7 @@ class HeroBlock(blocks.StructBlock):
     bg_color = blocks.RegexBlock(
         label="Couleur d'arrière plan au format hexa (Ex: #f5f5fe)",
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        error_messages={
-            "invalid": "La couleur n'est pas correcte, le format doit être #fff ou #f5f5fe"
-        },
+        error_messages={"invalid": "La couleur n'est pas correcte, le format doit être #fff ou #f5f5fe"},
         required=False,
     )
     title = blocks.CharBlock(label="Titre")
@@ -32,9 +30,7 @@ class TitleBlock(blocks.StructBlock):
 class ImageBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre", required=False)
     image = ImageChooserBlock(label="Illustration")
-    alt = blocks.CharBlock(
-        label="Texte alternatif (description textuelle de l'image)", required=False
-    )
+    alt = blocks.CharBlock(label="Texte alternatif (description textuelle de l'image)", required=False)
     caption = blocks.CharBlock(label="Légende", required=False)
     url = blocks.URLBlock(label="Lien", required=False)
 
@@ -129,14 +125,34 @@ class CardBlock(blocks.StructBlock):
 
 class BadgeBlock(blocks.StructBlock):
     text = blocks.CharBlock(label="Texte du badge", required=False)
-    color = blocks.ChoiceBlock(
-        label="Couleur de badge", choices=badge_level_choices, required=False
-    )
+    color = blocks.ChoiceBlock(label="Couleur de badge", choices=badge_level_choices, required=False)
     hide_icon = blocks.BooleanBlock(label="Masquer l'icon du badge", required=False)
 
 
 class BadgesListBlock(blocks.StreamBlock):
     badge = BadgeBlock(label="Badge")
+
+
+class TextAndCTA(blocks.StructBlock):
+    text = blocks.RichTextBlock(label="Texte avec mise en forme", required=False)
+    cta_label = blocks.CharBlock(
+        label="Titre de l'appel à l'action",
+        help_text="Le lien apparait comme un bouton sous le bloc de texte",
+        required=False,
+    )
+    cta_url = blocks.CharBlock(label="Lien", required=False)
+
+
+class IframeBlock(blocks.StructBlock):
+    title = blocks.CharBlock(
+        label="Titre",
+        help_text="Accessibilité : Le titre doit décrire, de façon claire et concise, le contenu embarqué.",
+    )
+    url = blocks.URLBlock(
+        label="Lien du cadre intégré",
+        help_text="Exemple pour Tally : https://tally.so/embed/w2jMRa",
+    )
+    height = blocks.IntegerBlock(label="Hauteur en pixels")
 
 
 class MultiColumnsBlock(blocks.StreamBlock):
@@ -145,6 +161,8 @@ class MultiColumnsBlock(blocks.StreamBlock):
     video = VideoBlock(label="Vidéo")
     card = CardBlock(label="Carte")
     quote = QuoteBlock(label="Citation")
+    text_cta = TextAndCTA(label="Texte et appel à l'action")
+    iframe = IframeBlock(label="Cadre intégré")
 
 
 class MultiColumnsWithTitleBlock(blocks.StructBlock):
@@ -152,9 +170,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
     bg_color = blocks.RegexBlock(
         label="Couleur d'arrière plan au format hexa (Ex: #f5f5fe)",
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        error_messages={
-            "invalid": "La couleur n'est pas correcte, le format doit être #fff ou #f5f5fe"
-        },
+        error_messages={"invalid": "La couleur n'est pas correcte, le format doit être #fff ou #f5f5fe"},
         required=False,
     )
     title = blocks.CharBlock(label="Titre", required=False)
@@ -188,12 +204,8 @@ class StepperBlock(blocks.StructBlock):
 
 
 class SeparatorBlock(blocks.StructBlock):
-    top_margin = blocks.IntegerBlock(
-        label="Espacement au dessus", min_value=0, max_value=15, default=3
-    )
-    bottom_margin = blocks.IntegerBlock(
-        label="Espacement en dessous", min_value=0, max_value=15, default=3
-    )
+    top_margin = blocks.IntegerBlock(label="Espacement au dessus", min_value=0, max_value=15, default=3)
+    bottom_margin = blocks.IntegerBlock(label="Espacement en dessous", min_value=0, max_value=15, default=3)
 
 
 class ContentPage(Page):
