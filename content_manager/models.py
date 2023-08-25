@@ -1,5 +1,8 @@
+from django.db import models
+from django.forms.widgets import Textarea
 from wagtail import blocks
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
@@ -244,4 +247,50 @@ class ContentPage(Page):
     # Inherit search_fields from Page and add body to index
     search_fields = Page.search_fields + [
         index.SearchField("body"),
+    ]
+
+
+class MonospaceField(models.TextField):
+    """
+    A TextField which renders as a large HTML textarea with monospace font.
+    """
+
+    def formfield(self, **kwargs):
+        kwargs["widget"] = Textarea(
+            attrs={
+                "rows": 12,
+                "class": "monospace",
+                "spellcheck": "false",
+            }
+        )
+        return super().formfield(**kwargs)
+
+
+@register_setting(icon="code")
+class AnalyticsSettings(BaseSiteSetting):
+    class Meta:
+        verbose_name = "Scripts de suivi"
+
+    head_scripts = MonospaceField(
+        blank=True,
+        null=True,
+        verbose_name="Scripts de suivi <head>",
+        help_text="Ajoutez des scripts de suivi entre les balises <head>.",
+    )
+
+    body_scripts = MonospaceField(
+        blank=True,
+        null=True,
+        verbose_name="Scripts de suivi <body>",
+        help_text="Ajoutez des scripts de suivi vers la fermeture de la balise <body>.",
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("head_scripts"),
+                FieldPanel("body_scripts"),
+            ],
+            heading="Scripts de suivi",
+        ),
     ]

@@ -1,4 +1,5 @@
-{% load static dsfr_tags %}
+{% load static dsfr_tags wagtailsettings_tags %}
+{% get_settings %}
 <!doctype html>
 <html lang="fr" data-fr-scheme="system" {% if SITE_CONFIG.mourning %}data-fr-mourning{% endif %}>
 
@@ -10,15 +11,12 @@
   {% dsfr_favicon %}
   {% block extra_css %}{% endblock extra_css %}
 
-  {% block title %}
-  <title>
-    {% if title %}
-      {{ title }} — {{ SITE_CONFIG.site_title }}
-    {% else %}
-    {{ SITE_CONFIG.site_title }}
+  {% block title %}<title>{% if title %}{{ title }} — {{ SITE_CONFIG.site_title }}{% else %}{{ SITE_CONFIG.site_title }}{% endif %}</title>{% endblock title %}
+  {% block tracking %}
+    {% if settings.content_manager.AnalyticsSettings.head_scripts %}
+      {{settings.content_manager.AnalyticsSettings.head_scripts|safe}}
     {% endif %}
-  </title>
-  {% endblock title %}
+  {% endblock %}
 </head>
 
 <body>
@@ -34,6 +32,12 @@
 
   {% dsfr_js nonce=request.csp_nonce %}
   {% block extra_js %}{% endblock extra_js %}
+
+  {% block body_tracking_scripts %}
+    {% if settings.content_manager.AnalyticsSettings.body_scripts %}
+      {{settings.content_manager.AnalyticsSettings.body_scripts|safe}}
+    {% endif %}
+  {% endblock %}
 </body>
 
 </html>
