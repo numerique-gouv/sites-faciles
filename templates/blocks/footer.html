@@ -1,8 +1,6 @@
 {% extends "dsfr/footer.html" %}
+{% load menu_tags %}
 
 {% block footer_links %}
-  {{ block.super }}
-  <li class="fr-footer__bottom-item">
-    <button class="fr-btn--display fr-btn" aria-controls="fr-theme-modal" data-fr-opened="false">Paramètres d'affichage</button>
-  </li>
+  {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html"  %}
 {% endblock footer_links %}
