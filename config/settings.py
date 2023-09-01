@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     "blog",
     "events",
     "forms",
+    "formations",
 ]
 
 # Only add these on a dev machine, outside of tests
