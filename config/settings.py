@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "dsfr",
     "sass_processor",
     "content_manager",
+    "formations",
 ]
 
 MIDDLEWARE = [

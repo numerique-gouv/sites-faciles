@@ -19,5 +19,6 @@ from django.urls import include, path
 
 
 urlpatterns = [
+    path("", include("formations.urls")),
     path("", include("content_manager.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
