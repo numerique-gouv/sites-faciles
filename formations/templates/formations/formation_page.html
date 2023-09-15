@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static wagtailcore_tags wagtailimages_tags %}
+{% block title %}
+    <title>{{ page.seo_title|default:page.title }} — {{ SITE_CONFIG.site_title }}</title>
+{% endblock title %}
+{% if page.search_description %}
+    {% block description %}
+        <meta name="description" content="{{ page.search_description }}" />
+    {% endblock description %}
+{% endif %}
+{% block content %}
+    <div>
+        <div class="fr-container fr-pt-2w fr-pb-6w">
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-12">
+                    {% include "content_manager/breadcrumb.html" %}
+                    <h1 class="fr-display--sm">{{ page.name }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fr-container fr-my-2w">
+        <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col-12">
+                <strong>Type :</strong> {{ page.kind }}<br>
+                <strong>Durée en minutes :</strong> {{ page.duration }}<br>
+                <strong>Lien d'inscription :</strong> {{ page.registration_link }}<br>
+            </div>
+        </div>
+    </div>
+    <div class="fr-container fr-my-2w">
+        <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col-12">
+                <h2>Description</h2>
+                <p>
+                    {{ page.short_description|richtext }}
+                </p>
+                <h2>À la fin, vous saurez</h2>
+                <p>
+                    {{ page.knowledge_at_the_end|richtext }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
