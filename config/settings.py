@@ -44,6 +44,7 @@ ALLOWED_HOSTS = HOST_URL.replace(" ", "").split(",")
 INSTALLED_APPS = [
     "storages",
     "wagtail.contrib.redirects",
+    "wagtail.contrib.settings",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
@@ -94,6 +95,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "dsfr.context_processors.site_config",
+                "wagtail.contrib.settings.context_processors.settings",
                 "wagtailmenus.context_processors.wagtailmenus",
             ],
         },
@@ -212,6 +214,7 @@ WAGTAIL_RICHTEXT_FIELD_FEATURES = [
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 WAGTAIL_MODERATION_ENABLED = False
+WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (("header_tools", "Menu en haut à droite"), ("footer", "Menu en pied de page"),)
 
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:

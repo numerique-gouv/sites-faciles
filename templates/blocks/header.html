@@ -9,9 +9,7 @@
 {% block service_tagline %}{{ SITE_CONFIG.site_tagline }}{% endblock service_tagline %}
 
 {% block header_tools %}
-<li>
-    <button class="fr-btn--display fr-btn" aria-controls="fr-theme-modal" data-fr-opened="false">Paramètres d'affichage</button>
-</li>
+    {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html"  %}
 {% endblock header_tools %}
 
 {# Leave burger_menu and main_menu blocks empty if the main menu is not used #}
