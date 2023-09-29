@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% block content %}
+    <div>
+        <div class="fr-container fr-pt-2w fr-pb-6w">
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-12">
+                    {% dsfr_breadcrumb %}
+                    <h1 class="fr-display--sm">Catalogue de formations et parcours</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fr-container fr-my-6w">
+        <div class="fr-grid-row fr-grid-row--gutters">
+            {% for formation in formationpage_list %}
+                <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
+                    <div class="fr-card fr-enlarge-link">
+                        <div class="fr-card__body">
+                            <div class="fr-card__content">
+                                <h3 class="fr-card__title">
+                                    <a href="{% pageurl formation %}">{{ formation.name }}</a>
+                                </h3>
+                                <p class="fr-card__desc">
+                                    <span class="fr-icon-clipboard-line" aria-hidden="true"></span>
+                                    {{ formation.get_kind_display }}
+                                </p>
+                                <p class="fr-card__desc"></p>
+                            </div>
+                        </div>
+                        <div class="fr-card__header">
+                            <div class="fr-card__img">
+                                {% if formation.image_url %}
+                                    <img class="fr-responsive-img" src="{{ formation.image_url }}" alt="">
+                                {% else %}
+                                    <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

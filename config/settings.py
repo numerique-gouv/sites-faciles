@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "wagtail",
     "wagtail.contrib.modeladmin",
     "wagtailmenus",
+    "wagtail_airtable",
     "taggit",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -65,6 +66,7 @@ INSTALLED_APPS = [
     "dsfr",
     "sass_processor",
     "content_manager",
+    "formations",
 ]
 
 MIDDLEWARE = [
@@ -214,8 +216,28 @@ WAGTAIL_RICHTEXT_FIELD_FEATURES = [
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 WAGTAIL_MODERATION_ENABLED = False
-WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (("header_tools", "Menu en haut à droite"), ("footer", "Menu en pied de page"),)
+WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
+    ("header_tools", "Menu en haut à droite"),
+    ("footer", "Menu en pied de page"),
+)
 
+# Wagtail Airtable
+AIRTABLE_API_KEY = os.getenv("AIRTABLE_API_KEY")
+WAGTAIL_AIRTABLE_ENABLED = True
+WAGTAIL_AIRTABLE_DEBUG = True
+
+AIRTABLE_IMPORT_SETTINGS = {
+    "formations.FormationPage": {
+        "AIRTABLE_BASE_KEY": os.getenv("AIRTABLE_BASE_KEY"),
+        "AIRTABLE_TABLE_NAME": os.getenv("AIRTABLE_TABLE_NAME"),
+        "AIRTABLE_UNIQUE_IDENTIFIER": {
+            "Wagtail Page ID": "pk",
+        },
+        "AIRTABLE_SERIALIZER": "formations.serializers.FormationPageSerializer",
+        "AIRTABLE_IMPORT_ALLOWED": True,
+        "PARENT_PAGE_ID": "formations.utils.get_parent_page_of_formation_page",
+    }
+}
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
     CSRF_TRUSTED_ORIGINS.append("https://" + host)
