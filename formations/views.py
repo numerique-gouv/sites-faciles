@@ -10,3 +10,6 @@ class FormationsListView(ListView):
         context = super().get_context_data()
         context["breadcrumb_data"] = {"current": "Catalogue"}
         return context
+
+    def get_queryset(self):
+        return super().get_queryset().live()

@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "wagtailmenus",
     "wagtail_localize",
     "wagtail_localize.locales",
+    "wagtail_airtable",
     "taggit",
     "wagtail.api.v2",
     "rest_framework",
@@ -379,6 +380,24 @@ if PROCONNECT_ACTIVATED:
     ]
 
     LOGOUT_URL = "/oidc/logout/"
+
+# Wagtail Airtable
+AIRTABLE_API_KEY = os.getenv("AIRTABLE_API_KEY")
+WAGTAIL_AIRTABLE_ENABLED = True
+WAGTAIL_AIRTABLE_DEBUG = True
+
+AIRTABLE_IMPORT_SETTINGS = {
+    "formations.FormationPage": {
+        "AIRTABLE_BASE_KEY": os.getenv("AIRTABLE_BASE_KEY"),
+        "AIRTABLE_TABLE_NAME": os.getenv("AIRTABLE_TABLE_NAME"),
+        "AIRTABLE_UNIQUE_IDENTIFIER": {
+            "Wagtail Page ID": "pk",
+        },
+        "AIRTABLE_SERIALIZER": "formations.serializers.FormationPageSerializer",
+        "AIRTABLE_IMPORT_ALLOWED": True,
+        "PARENT_PAGE_ID": "formations.utils.get_parent_page_of_formation_page",
+    }
+}
 
 # CSRF
 CSRF_TRUSTED_ORIGINS = []
