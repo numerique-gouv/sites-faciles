@@ -39,14 +39,7 @@
                         </div>
                     </div>
                 {% elif subblock.block_type == 'card' %}
-                    <div class="fr-col-12 fr-col-sm">
-                        {% image subblock.value.image original as img %}
-                        {% if subblock.value.document %}
-                            {% dsfr_card title=subblock.value.title description=subblock.value.description link=subblock.value.document.url image_url=img.url %}
-                        {% else %}
-                            {% dsfr_card title=subblock.value.title description=subblock.value.description link=subblock.value.url image_url=img.url %}
-                        {% endif %}
-                    </div>
+                    <div class="fr-col-12 fr-col-sm">{% include "content_manager/blocks/card.html" with block=subblock %}</div>
                 {% elif subblock.block_type == 'quote' %}
                     <div class="fr-col-12 fr-col-sm">
                         {% image subblock.value.image original as img %}
