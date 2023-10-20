@@ -1,2 +1,9 @@
+.hero {
+  background-repeat: no-repeat;
+  background-position: center; }
+
+@media (max-width: 64em) {
+  .hero {
+    background-size: 0; } }
 
 /*# sourceMappingURL=style.css.map */
