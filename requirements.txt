@@ -1,5 +1,5 @@
 dj-static==0.0.6
-Django==4.1.10
+Django==4.1.13
 django-dsfr==0.14.0
 black==23.3.0
 flake8==6.0.0
