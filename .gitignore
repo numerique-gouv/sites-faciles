@@ -61,6 +61,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 staticfiles/
+images/
+original_images/
 
 # Flask stuff:
 instance/
