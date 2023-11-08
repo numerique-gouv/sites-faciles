@@ -1,6 +1,16 @@
 {% extends "dsfr/footer.html" %}
 {% load menu_tags %}
 
+{% block brand %}
+  <p class="fr-logo" title="{{ settings.content_manager.CmsDsfrConfig.footer_brand|default:'république française' }}">
+    {{ settings.content_manager.CmsDsfrConfig.footer_brand_html| default_if_none:'république<br />française' | safe }}
+  </p>
+{% endblock brand %}
+
+{% block footer_content %}
+  {{ settings.content_manager.CmsDsfrConfig.footer_description | safe }}
+{% endblock footer_content %}
+
 {% block footer_links %}
   {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html"  %}
 {% endblock footer_links %}
