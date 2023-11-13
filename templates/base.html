@@ -1,7 +1,7 @@
 {% load static dsfr_tags wagtailsettings_tags %}
 {% get_settings %}
 <!doctype html>
-<html lang="fr" data-fr-scheme="system" {% if SITE_CONFIG.mourning %}data-fr-mourning{% endif %}>
+<html lang="fr" data-fr-scheme="system" {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
 
 <head>
   <meta charset="utf-8" />
