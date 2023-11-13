@@ -304,33 +304,30 @@ class CmsDsfrConfig(BaseSiteSetting):
     header_brand = models.CharField(
         "Institution (en-tête)",
         max_length=200,
-        default="République française",
+        default="Intitulé officiel",
+        help_text="""Intitulé du bloc-marques tel que défini sur la page
+        https://www.gouvernement.fr/charte/charte-graphique-les-fondamentaux/le-bloc-marque""",
         blank=True,
     )
     header_brand_html = models.CharField(
         "Institution avec césure (en-tête)",
         max_length=200,
-        default="République<br />française",
+        default="Intitulé<br />officiel",
         blank=True,
+        help_text="""Intitulé du bloc-marques avec des balises <br />
+        pour affichage sur plusieurs lignes""",
     )
     footer_brand = models.CharField(
         "Institution (pied)",
         max_length=200,
-        default="République française",
+        default="Intitulé officiel",
         blank=True,
     )
 
     footer_brand_html = models.CharField(
         "Institution avec césure (pied)",
         max_length=200,
-        default="République<br />française",
-        blank=True,
-    )
-
-    brand_html = models.CharField(
-        "Institution avec césure (en-tête)",
-        max_length=200,
-        default="République<br />française",
+        default="Intitulé<br />officiel",
         blank=True,
     )
 
@@ -346,7 +343,12 @@ class CmsDsfrConfig(BaseSiteSetting):
         default="Sous-titre du site",
         blank=True,
     )
-    footer_description = models.TextField("Description", default="", blank=True)
+    footer_description = models.TextField(
+        "Description",
+        default="",
+        blank=True,
+        help_text="Balises HTML autorisés",
+    )
     mourning = models.BooleanField("Mise en berne", default=False)
 
     panels = [
