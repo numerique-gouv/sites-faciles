@@ -1,2 +1,2 @@
-postdeploy: python manage.py migrate && python manage.py loaddata init.json
+postdeploy: python manage.py migrate
 web: gunicorn config.wsgi --log-file -
