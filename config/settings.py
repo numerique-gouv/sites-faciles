@@ -166,11 +166,11 @@ STATICFILES_FINDERS = [
 if os.getenv("S3_HOST"):
     AWS_S3_ACCESS_KEY_ID = os.getenv("S3_KEY_ID", "123")
     AWS_S3_SECRET_ACCESS_KEY = os.getenv("S3_KEY_SECRET", "secret")
-    AWS_S3_ENDPOINT_URL = f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST', 'set-var-env.com/')}"
+    AWS_S3_ENDPOINT_URL = os.getenv("S3_HOST")
     AWS_STORAGE_BUCKET_NAME = os.getenv("S3_BUCKET_NAME", "set-bucket-name")
     AWS_S3_STORAGE_BUCKET_REGION = os.getenv("S3_BUCKET_REGION", "fr")
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = f"https://{AWS_S3_ENDPOINT_URL}/"  # noqa
+    MEDIA_URL = os.getenv("S3_HOST", "set-var-env.com/")
 else:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_URL = "medias/"
@@ -214,7 +214,10 @@ WAGTAIL_RICHTEXT_FIELD_FEATURES = [
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 WAGTAIL_MODERATION_ENABLED = False
-WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (("header_tools", "Menu en haut à droite"), ("footer", "Menu en pied de page"),)
+WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
+    ("header_tools", "Menu en haut à droite"),
+    ("footer", "Menu en pied de page"),
+)
 
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
