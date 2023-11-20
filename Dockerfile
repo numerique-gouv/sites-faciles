@@ -22,11 +22,11 @@ RUN python -m pip install --upgrade pip \
 WORKDIR $APP_DIR
 
 COPY pyproject.toml poetry.lock .
-RUN poetry install
+RUN poetry install --no-root
 
 COPY --chown=app:app . .
 
-RUN python manage.py collectstatic --no-input
+RUN poetry run python manage.py collectstatic --no-input
 
 USER app
 

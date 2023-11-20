@@ -42,16 +42,14 @@ pre-commit run --all-files
 Le projet peut se lancer en local ou avec Docker.
 
 ### En local
+#### Installer poetry s’il ne l’est pas
 
-#### Créer un environnement virtuel
+Cf. la [documentation de poetry](https://python-poetry.org/docs/#installationok)
+
+#### Installer les dépendances
 
 ```
-# Configurer et activer l'environnement virtuel
-python -m venv venv
-. venv/bin/activate
-
-# Installer les packages requis
-pip install -r requirements.txt
+poetry install
 ```
 
 #### Copier les variables d'environnement
@@ -90,7 +88,7 @@ accessibles sur votre machine pour lancer les tests E2E.  Sur MacOS,
 vous pouvez les installer via [brew](https://brew.sh/) avec la commande: `brew install geckodriver`.
 
 Vous pouvez également générer un rapport sur la couverture de tests :
-```sh 
+```sh
 coverage run manage.py test --settings config.settings_test
 ```
 
