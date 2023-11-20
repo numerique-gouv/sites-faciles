@@ -39,7 +39,7 @@ jobs:
           make quality
       - name: 🚧 Check pending migrations
         run: |
-          django-admin makemigrations --check --dry-run --noinput
+          poetry run django-admin makemigrations --check --dry-run --noinput
       - name: 🤹‍ Run the unit tests
         run: |
           make test-unit
