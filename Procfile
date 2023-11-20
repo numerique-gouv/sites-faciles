@@ -1,2 +1,2 @@
-postdeploy: poetry run python manage.py migrate
+postdeploy: python manage.py migrate
 web: gunicorn config.wsgi --log-file -
