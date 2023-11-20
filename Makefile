@@ -1,5 +1,5 @@
 ifeq ($(USE_VENV),1)
-	EXEC_CMD :=
+	EXEC_CMD := poetry run
 else
 	EXEC_CMD := docker-compose exec -ti web
 endif
