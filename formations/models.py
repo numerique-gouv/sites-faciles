@@ -60,19 +60,8 @@ class FormationPage(AirtableMixin, Page):
     themes = ParentalManyToManyField(Theme, verbose_name="Familles thématiques", blank=True)
     organizers = ParentalManyToManyField(Organizer, verbose_name="Entités organisatrices", blank=True)
 
-    # Editor panels configuration (for debug)
-    content_panels = Page.content_panels + [
-        FieldPanel("name"),
-        FieldPanel("kind"),
-        FieldPanel("short_description"),
-        FieldPanel("knowledge_at_the_end"),
-        FieldPanel("duration"),
-        FieldPanel("registration_link"),
-        FieldPanel("image_url"),
-        FieldPanel("target_audience"),
-        FieldPanel("themes"),
-        FieldPanel("organizers"),
-    ]
+    # Editor panels configuration
+    content_panels = Page.content_panels
 
     @classmethod
     def map_import_fields(cls):
