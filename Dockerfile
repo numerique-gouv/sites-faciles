@@ -16,12 +16,13 @@ RUN set -ex \
     && addgroup app \
     && adduser --ingroup app --home $APP_DIR --disabled-password app;
 
-RUN python -m pip install --upgrade pip
+RUN python -m pip install --upgrade pip \
+    && pip install poetry
 
 WORKDIR $APP_DIR
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY pyproject.toml poetry.lock .
+RUN poetry install
 
 COPY --chown=app:app . .
 

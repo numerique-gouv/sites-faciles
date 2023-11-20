@@ -1,5 +1,5 @@
 ifeq ($(USE_VENV),1)
-	EXEC_CMD := poetry run
+	EXEC_CMD :=
 else
 	EXEC_CMD := docker-compose exec -ti web
 endif
@@ -10,11 +10,11 @@ web-prompt:
 
 .PHONY: test-unit
 test-unit:
-	$(EXEC_CMD) python manage.py test --settings config.settings_test
+	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test
 
 .PHONY: test-e2e
 test-e2e:
-	$(EXEC_CMD) python manage.py behave --settings config.settings_test
+	$(EXEC_CMD) poetry run python manage.py behave --settings config.settings_test
 
 .PHONY: test
 test: test-e2e test-unit
