@@ -18,6 +18,24 @@
                     <span class="fr-icon-slideshow-fill" aria-hidden="true"></span>
                     {{ page.get_kind_display }}
                 </p>
+                {% if page.themes %}
+                    <p class="fr-text--lead">
+                        <span class="fr-icon-archive-fill" aria-hidden="true"></span>
+                        {{ page.themes.all|join:", " }}
+                    </p>
+                {% endif %}
+                {% if page.target_audience %}
+                    <p class="fr-text--lead">
+                        <span class="fr-icon-user-fill" aria-hidden="true"></span>
+                        Public visé : {{ page.target_audience.all|join:", " }}
+                    </p>
+                {% endif %}
+                {% if page.organizers %}
+                    <p class="fr-text--lead">
+                        <span class="fr-icon-hotel-fill" aria-hidden="true"></span>
+                        {{ page.organizers.all|join:", " }}
+                    </p>
+                {% endif %}
                 <p class="fr-text--lead">
                     <span class="fr-icon-calendar-2-fill" aria-hidden="true"></span>
                     Durée : {{ page.duration }}
