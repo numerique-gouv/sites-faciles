@@ -22,7 +22,7 @@ RUN python -m pip install --upgrade pip \
 WORKDIR $APP_DIR
 
 COPY pyproject.toml poetry.lock .
-RUN poetry install --no-root
+RUN poetry install
 
 COPY --chown=app:app . .
 
