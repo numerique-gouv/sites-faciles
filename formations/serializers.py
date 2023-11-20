@@ -1,7 +1,9 @@
+from airtable import airtable
+from django.conf import settings
 from rest_framework import serializers
-
 from wagtail_airtable.serializers import AirtableSerializer
-from taggit.models import Tag
+
+from formations.models import Organizer, Theme, TargetAudience
 
 
 class LowerCharSerializer(serializers.CharField):
@@ -9,21 +11,51 @@ class LowerCharSerializer(serializers.CharField):
         return str(value).lower()
 
 
-class TagSerializer(serializers.RelatedField):
+class TargetAudienceSerializer(serializers.RelatedField):
     def to_internal_value(self, data):
-        if type(data) == list:
-            print(f"data is a list : {data}")
-            tags = []
-            for tag in data:
-                tag, _ = Tag.objects.get_or_create(name=tag.strip()[:3])
-                tags.append(tag)
-
-            print(tags)
-            return tags
-        return data
+        target_audience, _ = TargetAudience.objects.get_or_create(name=data.strip())
+        return target_audience
 
     def get_queryset(self):
-        return Tag.objects.all()
+        return TargetAudience.objects.all()
+
+
+class ThemeSerializer(serializers.RelatedField):
+    def to_internal_value(self, data):
+        theme_at_id = data.strip()
+        try:
+            theme_obj = Theme.objects.get(airtable_id=theme_at_id)
+        except Theme.DoesNotExist:
+            # Theme does not already exist so get infos from airtable
+            at = airtable.Airtable(
+                settings.AIRTABLE_IMPORT_SETTINGS["formations.FormationPage"]["AIRTABLE_BASE_KEY"],
+                settings.AIRTABLE_IMPORT_SETTINGS["formations.FormationPage"]["AIRTABLE_TABLE_NAME_THEME"],
+            )
+            at_theme = at.get(theme_at_id)
+            theme_obj = Theme.objects.create(airtable_id=theme_at_id, name=at_theme["fields"]["Familles thématiques"])
+        return theme_obj
+
+    def get_queryset(self):
+        return Theme.objects.all()
+
+
+class OrganizerSerializer(serializers.RelatedField):
+    def to_internal_value(self, data):
+        organizer_at_id = data.strip()
+        try:
+            organizer_obj = Organizer.objects.get(airtable_id=organizer_at_id)
+        except Organizer.DoesNotExist:
+            # Organizer does not already exist so get infos from airtable
+            at = airtable.Airtable(
+                settings.AIRTABLE_IMPORT_SETTINGS["formations.FormationPage"]["AIRTABLE_BASE_KEY"],
+                settings.AIRTABLE_IMPORT_SETTINGS["formations.FormationPage"]["AIRTABLE_TABLE_NAME_ORGA"],
+            )
+            at_organizer = at.get(organizer_at_id)
+            organizer_obj = Organizer.objects.create(airtable_id=organizer_at_id, name=at_organizer["fields"]["Nom"])
+        return organizer_obj
+
+    def get_queryset(self):
+        return Organizer.objects.all()
 
 
 class FormationPageSerializer(AirtableSerializer):
@@ -34,6 +66,17 @@ class FormationPageSerializer(AirtableSerializer):
     knowledge_at_the_end = serializers.CharField(required=False)
     duration = serializers.CharField(max_length=20, required=False)
     registration_link = serializers.URLField(required=False)
-    # target_audience = TagSerializer(required=False)
+    target_audience = TargetAudienceSerializer(required=False, many=True)
+    themes = ThemeSerializer(required=False, many=True)
+    organizers = OrganizerSerializer(required=False, many=True)
     image_url = serializers.URLField(required=False)
     visible = serializers.CharField(max_length=3, required=True)
+
+    def get_target_audience_list(self, obj):
+        return TargetAudienceSerializer(obj.fresh_data, many=True).data
+
+    def get_themes_list(self, obj):
+        return ThemeSerializer(obj.fresh_data, many=True).data
+
+    def get_organizers_list(self, obj):
+        return OrganizerSerializer(obj.fresh_data, many=True).data
