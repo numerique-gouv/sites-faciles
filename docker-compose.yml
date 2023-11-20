@@ -7,15 +7,16 @@ services:
       POSTGRES_USER: dju
       POSTGRES_PASSWORD: djpwd
       POSTGRES_DB: djdb
+      PGPORT: 8432
     ports:
-      - "5433:5433"
+      - "8432:8432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   web:
     build: .
     environment:
-      DATABASE_URL: postgres://dju:djpwd@db:5433/djdb
+      DATABASE_URL: postgres://dju:djpwd@db:8432/djdb
     ports:
       - "8000:8000"
     volumes:
