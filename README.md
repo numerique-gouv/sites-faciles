@@ -41,6 +41,14 @@ pre-commit run --all-files
 
 Le projet peut se lancer en local ou avec Docker.
 
+### Dans tous les cas, copier les variables d’environnement
+
+```
+cp .env.example .env
+```
+
+- Mettre une clef secrète et vérifier les autres valeurs
+
 ### En local
 #### Installer poetry s’il ne l’est pas
 
@@ -52,31 +60,19 @@ Cf. la [documentation de poetry](https://python-poetry.org/docs/#installationok)
 poetry install
 ```
 
-#### Copier les variables d'environnement
-
-```
-cp .env.example .env
-```
-
-#### Lancer le serveur
-
-```
-python manage.py runserver
-```
-
 #### Lancer les migrations
 
 ```
 python manage.py migrate
 ```
 
-#### Effectuer les tests
+#### Lancer le serveur
 
-D'abord installer les dépendances de test :
-
-```sh
-pip install -r requirements.txt
 ```
+poetry run python manage.py runserver
+```
+
+#### Effectuer les tests
 
 Les tests unitaires peuvent être lancés avec `make test-units`, les
 tests E2E avec `make test-e2e`, les deux avec `make test`.
@@ -94,14 +90,8 @@ coverage run manage.py test --settings config.settings_test
 
 ### via Docker
 
-#### Copier les variables d'environnement
-
-```sh
-cp .env.example .env
-```
-
 #### Lancer les containers
 
 ```sh
-docker-compose up
+docker compose up
 ```
