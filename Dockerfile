@@ -13,15 +13,10 @@ ENV POETRY_HOME=/opt/poetry
 ENV POETRY_VENV=/opt/poetry-venv
 ENV POETRY_CACHE_DIR=/opt/.cache
 
-# For behave tests
-RUN apt-get update && apt-get install -y --no-install-recommends firefox-esr && rm -rf /var/lib/apt/lists/*
-RUN wget -qO- ${GECKODRIVER_URL} | tar xvz -C /usr/bin/
-
 # Add new user to run the whole thing as non-root.
 RUN set -ex \
     && addgroup app \
     && adduser --ingroup app --home ${APP_DIR} --disabled-password app;
-
 
 # Install poetry separated from system interpreter
 RUN python3 -m venv ${POETRY_VENV} \

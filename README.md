@@ -43,11 +43,17 @@ Le projet peut se lancer en local ou avec Docker.
 
 ### Dans tous les cas, copier les variables d’environnement
 
+- Copier le fichier
 ```
 cp .env.example .env
 ```
 
-- Mettre une clef secrète et vérifier les autres valeurs
+- Générer la `SECRET_KEY`
+```
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+- Mettre les valeurs pertinentes dans le fichier `.env`
 
 ### En local
 #### Installer poetry s’il ne l’est pas
@@ -61,33 +67,23 @@ Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
 make init
 ```
 
-
 #### Lancer le serveur
 
 ```
 make runserver
 ```
 
-#### Effectuer les tests
-
-Les tests unitaires peuvent être lancés avec `make test-units`, les
-tests E2E avec `make test-e2e`, les deux avec `make test`.
-
-Pour les tests E2E, si vous n'utilisez pas Docker, il vous faudra
-[Firefox](https://www.mozilla.org/fr/firefox/download/thanks/) et
-[`geckodriver`](https://github.com/mozilla/geckodriver/releases)
-accessibles sur votre machine pour lancer les tests E2E.  Sur MacOS,
-vous pouvez les installer via [brew](https://brew.sh/) avec la commande: `brew install geckodriver`.
-
-Vous pouvez également générer un rapport sur la couverture de tests :
-```sh
-coverage run manage.py test --settings config.settings_test
-```
-
 ### via Docker
-
 #### Lancer les containers
 
 ```sh
 docker compose up
+```
+
+### Effectuer les tests
+Les tests unitaires peuvent être lancés avec `make test-unit`.
+
+Vous pouvez également générer un rapport sur la couverture de tests :
+```sh
+coverage run manage.py test --settings config.settings_test
 ```

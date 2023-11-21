@@ -18,13 +18,6 @@ web-prompt:
 test-unit:
 	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test
 
-.PHONY: test-e2e
-test-e2e:
-	$(EXEC_CMD) poetry run python manage.py behave --settings config.settings_test
-
-.PHONY: test
-test: test-e2e test-unit
-
 .PHONY: quality
 quality:
 	$(EXEC_CMD) poetry run black --check --exclude=venv .
