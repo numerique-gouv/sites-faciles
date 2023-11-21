@@ -27,14 +27,14 @@ test: test-e2e test-unit
 
 .PHONY: quality
 quality:
-	$(EXEC_CMD) black --check --exclude=venv .
-	$(EXEC_CMD) isort --check --skip-glob="**/migrations" --extend-skip-glob="venv" .
-	$(EXEC_CMD) flake8 --count --show-source --statistics --exclude=venv .
+	$(EXEC_CMD) poetry run black --check --exclude=venv .
+	$(EXEC_CMD) poetry run isort --check --skip-glob="**/migrations" --extend-skip-glob="venv" .
+	$(EXEC_CMD) poetry run flake8 --count --show-source --statistics --exclude=venv .
 
 .PHONY: fix
 fix:
-	$(EXEC_CMD) black --exclude=venv .
-	$(EXEC_CMD) isort --skip-glob="**/migrations" --extend-skip-glob="venv" .
+	$(EXEC_CMD) poetry run black --exclude=venv .
+	$(EXEC_CMD) poetry run isort --skip-glob="**/migrations" --extend-skip-glob="venv" .
 
 runserver:
 	$(EXEC_CMD) poetry run python manage.py runserver $(HOST_URL):$(HOST_PORT)
