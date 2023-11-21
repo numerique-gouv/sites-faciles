@@ -35,9 +35,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("DEBUG") == "True" else False
 
-HOST_URL = os.getenv("HOST_URL", "127.0.0.1, localhost")
-
-ALLOWED_HOSTS = HOST_URL.replace(" ", "").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1, localhost").replace(" ", "").split(",")
 
 # Application definition
 
@@ -195,7 +193,7 @@ WAGTAIL_SITE_NAME = "Gestionnaire de contenu avec le Système de Design de l'Ét
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{HOST_URL[-1]}"
+WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{os.getenv('HOST_URL', 'localhost')}"
 
 # Disable Gravatar service
 WAGTAIL_GRAVATAR_PROVIDER_URL = None
