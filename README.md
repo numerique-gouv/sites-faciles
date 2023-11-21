@@ -54,22 +54,18 @@ cp .env.example .env
 
 Cf. la [documentation de poetry](https://python-poetry.org/docs/#installationok)
 
-#### Installer les dépendances
+#### Installer le projet
 
+- La commande suivante installe les dépendances, fait les migrations et collecte les fichiers
 ```
-poetry install
+make init
 ```
 
-#### Lancer les migrations
-
-```
-python manage.py migrate
-```
 
 #### Lancer le serveur
 
 ```
-poetry run python manage.py runserver
+make runserver
 ```
 
 #### Effectuer les tests

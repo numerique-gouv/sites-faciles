@@ -36,5 +36,14 @@ fix:
 	$(EXEC_CMD) poetry run black --exclude=venv .
 	$(EXEC_CMD) poetry run isort --skip-glob="**/migrations" --extend-skip-glob="venv" .
 
+
+.PHONY: init
+init:
+	$(EXEC_CMD) poetry install
+	$(EXEC_CMD) poetry run pre-commit install
+	$(EXEC_CMD) poetry run python manage.py migrate
+	$(EXEC_CMD) poetry run python manage.py collectstatic --noinput
+
+.PHONY: runserver
 runserver:
 	$(EXEC_CMD) poetry run python manage.py runserver $(HOST_URL):$(HOST_PORT)
