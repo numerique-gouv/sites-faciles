@@ -1,3 +1,9 @@
+# Loading environment variables
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
+
 ifeq ($(USE_DOCKER),1)
 	EXEC_CMD := docker-compose exec -ti web
 else
@@ -29,3 +35,6 @@ quality:
 fix:
 	$(EXEC_CMD) black --exclude=venv .
 	$(EXEC_CMD) isort --skip-glob="**/migrations" --extend-skip-glob="venv" .
+
+runserver:
+	$(EXEC_CMD) poetry run python manage.py runserver $(HOST_URL):$(HOST_PORT)
