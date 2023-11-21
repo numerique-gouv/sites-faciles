@@ -52,7 +52,7 @@ cp .env.example .env
 ### En local
 #### Installer poetry s’il ne l’est pas
 
-Cf. la [documentation de poetry](https://python-poetry.org/docs/#installationok)
+Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
 
 #### Installer le projet
 
