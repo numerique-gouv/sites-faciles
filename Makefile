@@ -1,7 +1,7 @@
-ifeq ($(USE_VENV),1)
-	EXEC_CMD :=
-else
+ifeq ($(USE_DOCKER),1)
 	EXEC_CMD := docker-compose exec -ti web
+else
+	EXEC_CMD :=
 endif
 
 .PHONY: web-prompt

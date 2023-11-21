@@ -45,4 +45,3 @@ jobs:
           make test-unit
         env:
           DJANGO_DEBUG: True
-          USE_VENV: 1

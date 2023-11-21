@@ -4,21 +4,21 @@ services:
   db:
     image: postgres:14.5-alpine
     environment:
-      POSTGRES_USER: dju
-      POSTGRES_PASSWORD: djpwd
-      POSTGRES_DB: djdb
-      PGPORT: 8432
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+      PGPORT: ${DATABASE_PORT}
     ports:
-      - "8432:8432"
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   web:
     build: .
     environment:
-      DATABASE_URL: postgres://dju:djpwd@db:8432/djdb
+      DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@db:${DATABASE_PORT}/${DATABASE_NAME}
     ports:
-      - "8000:8000"
+      - "${HOST_PORT}:${HOST_PORT}"
     volumes:
       - .:/app
     depends_on:
