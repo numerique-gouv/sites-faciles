@@ -63,6 +63,7 @@ db.sqlite3-journal
 staticfiles/
 images/
 original_images/
+avatar_images/
 
 # Flask stuff:
 instance/
