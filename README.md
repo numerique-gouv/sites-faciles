@@ -41,69 +41,49 @@ pre-commit run --all-files
 
 Le projet peut se lancer en local ou avec Docker.
 
-### En local
+### Dans tous les cas, copier les variables d’environnement
 
-#### Créer un environnement virtuel
-
-```
-# Configurer et activer l'environnement virtuel
-python -m venv venv
-. venv/bin/activate
-
-# Installer les packages requis
-pip install -r requirements.txt
-```
-
-#### Copier les variables d'environnement
-
+- Copier le fichier
 ```
 cp .env.example .env
+```
+
+- Générer la `SECRET_KEY`
+```
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+- Mettre les valeurs pertinentes dans le fichier `.env`
+
+### En local
+#### Installer poetry s’il ne l’est pas
+
+Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
+
+#### Installer le projet
+
+- La commande suivante installe les dépendances, fait les migrations et collecte les fichiers
+```
+make init
 ```
 
 #### Lancer le serveur
 
 ```
-python manage.py runserver
-```
-
-#### Lancer les migrations
-
-```
-python manage.py migrate
-```
-
-#### Effectuer les tests
-
-D'abord installer les dépendances de test :
-
-```sh
-pip install -r requirements.txt
-```
-
-Les tests unitaires peuvent être lancés avec `make test-units`, les
-tests E2E avec `make test-e2e`, les deux avec `make test`.
-
-Pour les tests E2E, si vous n'utilisez pas Docker, il vous faudra
-[Firefox](https://www.mozilla.org/fr/firefox/download/thanks/) et
-[`geckodriver`](https://github.com/mozilla/geckodriver/releases)
-accessibles sur votre machine pour lancer les tests E2E.  Sur MacOS,
-vous pouvez les installer via [brew](https://brew.sh/) avec la commande: `brew install geckodriver`.
-
-Vous pouvez également générer un rapport sur la couverture de tests :
-```sh 
-coverage run manage.py test --settings config.settings_test
+make runserver
 ```
 
 ### via Docker
-
-#### Copier les variables d'environnement
-
-```sh
-cp .env.example .env
-```
-
 #### Lancer les containers
 
 ```sh
-docker-compose up
+docker compose up
+```
+
+### Effectuer les tests
+Les tests unitaires peuvent être lancés avec `make test-unit`.
+
+Vous pouvez également générer un rapport sur la couverture de tests :
+```sh
+coverage run manage.py test --settings config.settings_test
 ```

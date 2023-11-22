@@ -35,9 +35,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("DEBUG") == "True" else False
 
-HOST_URL = os.getenv("HOST_URL", "127.0.0.1, localhost")
-
-ALLOWED_HOSTS = HOST_URL.replace(" ", "").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1, localhost").replace(" ", "").split(",")
 
 # Application definition
 
@@ -166,11 +164,11 @@ STATICFILES_FINDERS = [
 if os.getenv("S3_HOST"):
     AWS_S3_ACCESS_KEY_ID = os.getenv("S3_KEY_ID", "123")
     AWS_S3_SECRET_ACCESS_KEY = os.getenv("S3_KEY_SECRET", "secret")
-    AWS_S3_ENDPOINT_URL = os.getenv('S3_HOST')
+    AWS_S3_ENDPOINT_URL = f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST')}"
     AWS_STORAGE_BUCKET_NAME = os.getenv("S3_BUCKET_NAME", "set-bucket-name")
     AWS_S3_STORAGE_BUCKET_REGION = os.getenv("S3_BUCKET_REGION", "fr")
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = os.getenv('S3_HOST', 'set-var-env.com/')  # noqa
+    MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/"
 else:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_URL = "medias/"
@@ -195,7 +193,7 @@ WAGTAIL_SITE_NAME = "Gestionnaire de contenu avec le Système de Design de l'Ét
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{HOST_URL[-1]}"
+WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{os.getenv('HOST_URL', 'localhost')}"
 
 # Disable Gravatar service
 WAGTAIL_GRAVATAR_PROVIDER_URL = None
@@ -214,7 +212,12 @@ WAGTAIL_RICHTEXT_FIELD_FEATURES = [
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 WAGTAIL_MODERATION_ENABLED = False
-WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (("header_tools", "Menu en haut à droite"), ("footer", "Menu en pied de page"),)
+WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
+    ("header_tools", "Menu en haut à droite"),
+    ("footer", "Menu en pied de page"),
+)
+
+WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
