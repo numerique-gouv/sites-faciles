@@ -217,6 +217,8 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("footer", "Menu en pied de page"),
 )
 
+WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
+
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
     CSRF_TRUSTED_ORIGINS.append("https://" + host)
