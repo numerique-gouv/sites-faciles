@@ -11,7 +11,7 @@
   {% dsfr_favicon %}
   {% block extra_css %}{% endblock extra_css %}
 
-  {% block title %}<title>{% if title %}{{ title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}{% else %}{{ settings.content_manager.CmsDsfrConfig.site_title }}{% endif %}</title>{% endblock title %}
+  {% block title %}<title>{% if title %}{{ title }} — {% endif %}{{ settings.content_manager.CmsDsfrConfig.site_title }}</title>{% endblock title %}
   {% block tracking %}
     {% if settings.content_manager.AnalyticsSettings.head_scripts %}
       {{settings.content_manager.AnalyticsSettings.head_scripts|safe}}
