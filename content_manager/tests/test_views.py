@@ -8,9 +8,7 @@ from content_manager.models import ContentPage
 class ContentPageTestCase(WagtailPageTestCase):
     def setUp(self):
         home = Page.objects.get(slug="home")
-        self.user = User.objects.create_user("test", "test@test.test", "pass")
-        self.user.is_superuser = True
-        self.user.is_staff = True
+        self.user = User.objects.create_superuser("test", "test@test.test", "pass")
         self.user.save()
         self.content_page = home.add_child(
             instance=ContentPage(
