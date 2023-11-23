@@ -92,7 +92,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "dsfr.context_processors.site_config",
                 "wagtail.contrib.settings.context_processors.settings",
                 "wagtailmenus.context_processors.wagtailmenus",
             ],

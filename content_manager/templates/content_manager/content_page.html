@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags %}
 {% block title %}
-    <title>{{ page.seo_title|default:page.title }} — {{ SITE_CONFIG.site_title }}</title>
+    <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
 {% endblock title %}
 {% if page.search_description %}
     {% block description %}
