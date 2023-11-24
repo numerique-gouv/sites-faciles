@@ -11,7 +11,7 @@
 {% block content %}
     <div class="fr-container fr-mt-8v">
         <div class="fr-grid-row">
-            <div class="fr-col-9">
+            <div class="fr-col-12">
                 {% include "content_manager/breadcrumb.html" %}
                 <h1>{{ page.name }}</h1>
                 <p class="fr-text--lead">
@@ -41,13 +41,6 @@
                     Durée : {{ page.duration }}
                 </p>
             </div>
-            <div class="fr-col-3">
-                {% if formation.image_url %}
-                    <img class="fr-responsive-img" src="{{ formation.image_url }}" alt="">
-                {% else %}
-                    <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
-                {% endif %}
-            </div>
         </div>
         <section class="fr-py-8v">
             <div class="fr-callout fr-icon-book-2-fill">
@@ -61,7 +54,11 @@
             <h2>Objectifs</h2>
             <div class="fr-grid-row">
                 <div class="fr-col-12 fr-col-md-3">
-                    <img src="https://beta.gouv.fr/assets/home/manifest.svg" class="fr-responsive-img" alt="">
+                    {% if formation.image_url %}
+                        <img class="fr-responsive-img" src="{{ formation.image_url }}" alt="">
+                    {% else %}
+                        <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
+                    {% endif %}
                 </div>
                 <div class="fr-ml-1w fr-py-6w fr-col-12 fr-col-md-8">
                     <p class="fr-text--lead">
