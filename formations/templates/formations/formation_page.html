@@ -54,8 +54,8 @@
             <h2>Objectifs</h2>
             <div class="fr-grid-row">
                 <div class="fr-col-12 fr-col-md-3">
-                    {% if formation.image_url %}
-                        <img class="fr-responsive-img" src="{{ formation.image_url }}" alt="">
+                    {% if page.image_url %}
+                        <img class="fr-responsive-img" src="{{ page.image_url }}" alt="">
                     {% else %}
                         <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
                     {% endif %}
