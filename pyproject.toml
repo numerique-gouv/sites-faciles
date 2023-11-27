@@ -26,6 +26,7 @@ dj-static = "^0.0.6"
 wagtailmenus = "^3.1.9"
 boto3 = "^1.29.1"
 django-storages = "^1.14.2"
+wagtail-modeladmin = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]

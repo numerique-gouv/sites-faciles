@@ -13,4 +13,11 @@
 
 {% block footer_links %}
   {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html"  %}
+  {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}
+    <li class="fr-footer__bottom-item">
+      <button id="footer__bottom-link__parametres-affichage" aria-controls="fr-theme-modal" data-fr-opened="false" class="fr-icon-theme-fill fr-link--icon-left fr-footer__bottom-link" data-fr-js-modal-button="true">
+        Paramètres d’affichage
+      </button>
+    </li>
+  {% endif %}
 {% endblock footer_links %}

@@ -108,7 +108,7 @@ class AnalyticsSettings(BaseSiteSetting):
     ]
 
 
-@register_setting(icon="code")
+@register_setting(icon="cog")
 class CmsDsfrConfig(BaseSiteSetting):
     class Meta:
         verbose_name = "Configuration du site"
@@ -161,6 +161,8 @@ class CmsDsfrConfig(BaseSiteSetting):
         blank=True,
         help_text="Balises HTML autorisés",
     )
+
+    theme_modale_button = models.BooleanField("Choix du thème clair/sombre", default=False)
     mourning = models.BooleanField("Mise en berne", default=False)
 
     panels = [
@@ -172,4 +174,5 @@ class CmsDsfrConfig(BaseSiteSetting):
         FieldPanel("site_tagline"),
         FieldPanel("footer_description"),
         FieldPanel("mourning"),
+        FieldPanel("theme_modale_button"),
     ]
