@@ -41,6 +41,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1, localhost").replace(" ", 
 
 INSTALLED_APPS = [
     "storages",
+    "dashboard",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
     "wagtail.embeds",
@@ -51,7 +52,6 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail.search",
     "wagtail",
-    "wagtail.contrib.modeladmin",
     "wagtailmenus",
     "taggit",
     "django.contrib.auth",

@@ -1,0 +1,15 @@
+{% extends "wagtailadmin/userbar/base.html" %}
+
+{% load wagtailadmin_tags i18n %}
+
+{% block branding_logo %}
+  <div style="display: none">
+    <svg>
+        <defs>
+          {% include "wagtailadmin/icons/edit.svg" %}
+        </defs>
+    </svg>
+  </div>
+  <!-- Update the icon name -->
+  {% icon name="edit" class_name="w-userbar-icon" %}
+{% endblock %}

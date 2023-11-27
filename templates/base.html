@@ -1,4 +1,4 @@
-{% load static dsfr_tags wagtailsettings_tags %}
+{% load static dsfr_tags wagtailuserbar wagtailsettings_tags %}
 {% get_settings %}
 <!doctype html>
 <html lang="fr" data-fr-scheme="system" {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
@@ -23,11 +23,15 @@
     {% block skiplinks %}
         {% dsfr_skiplinks skiplinks %}
     {% endblock skiplinks %}
+
     {% include "blocks/header.html" %}
     {% dsfr_theme_modale %}
-      <main id="content" role="main">
-        {% block content %}{% endblock content %}
-      </main>
+    {% wagtailuserbar %}
+
+    <main id="content" role="main">
+      {% block content %}{% endblock content %}
+    </main>
+
     {% include "blocks/footer.html" %}
 
   {% dsfr_js nonce=request.csp_nonce %}
