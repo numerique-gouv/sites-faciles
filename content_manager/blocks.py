@@ -53,9 +53,20 @@ class BadgesListBlock(blocks.StreamBlock):
     badge = BadgeBlock(label="Badge")
 
 
+heading_choices = [
+    ("h2", "En-tête 2"),
+    ("h3", "En-tête 3"),
+    ("h4", "En-tête 4"),
+    ("h5", "En-tête 5"),
+    ("h6", "En-tête 6"),
+    ("p", "Paragraphe"),
+]
+
+
 class CalloutBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre de la mise en vant", required=False)
     text = blocks.TextBlock(label="Texte mis en avant", required=False)
+    heading_tag = blocks.ChoiceBlock(label="Niveau de titre", choices=heading_choices, default="h3")
 
 
 class CardBlock(blocks.StructBlock):
