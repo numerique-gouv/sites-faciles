@@ -5,11 +5,12 @@ from wagtail.test.utils import WagtailPageTestCase
 from content_manager.models import ContentPage
 
 
-class ContentPageTestCase(WagtailPageTestCase):
+class DashboardTestCase(WagtailPageTestCase):
     def setUp(self):
         home = Page.objects.get(slug="home")
         self.admin = User.objects.create_superuser("test", "test@test.test", "pass")
         self.admin.save()
+
         self.content_page = home.add_child(
             instance=ContentPage(
                 title="Page de contenu",
@@ -19,15 +20,19 @@ class ContentPageTestCase(WagtailPageTestCase):
         )
         self.content_page.save()
 
-    def test_content_page_is_renderable(self):
-        self.assertPageIsRenderable(self.content_page)
-
-    def test_content_page_has_minimal_content(self):
+    def test_userbar_is_present_when_logged_in(self):
         url = self.content_page.url
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(
+            response,
+            '<svg class="icon icon-edit w-userbar-icon" aria-hidden="true"><use href="#icon-edit"></use></svg>',
+            html=True,
+        )
 
+        self.client.force_login(self.admin)
+        response = self.client.get(url)
         self.assertContains(
             response,
-            "<title>Page de contenu — Titre du site</title>",
+            '<svg class="icon icon-edit w-userbar-icon" aria-hidden="true"><use href="#icon-edit"></use></svg>',
+            html=True,
         )
