@@ -66,7 +66,12 @@ heading_choices = [
 class CalloutBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre de la mise en vant", required=False)
     text = blocks.TextBlock(label="Texte mis en avant", required=False)
-    heading_tag = blocks.ChoiceBlock(label="Niveau de titre", choices=heading_choices, default="h3")
+    heading_tag = blocks.ChoiceBlock(
+        label="Niveau de titre",
+        choices=heading_choices,
+        default="h3",
+        help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
+    )
 
 
 class CardBlock(blocks.StructBlock):
