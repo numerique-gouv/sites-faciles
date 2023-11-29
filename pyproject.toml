@@ -15,7 +15,7 @@ readme = "README.md"
 python = "^3.10"
 django = "^4.2.7"
 wagtail = "^5.2.1"
-django-dsfr = "^0.16.2"
+django-dsfr = "^0.16.3"
 psycopg2-binary = "^2.9.9"
 python-dotenv = "^1.0.0"
 dj-database-url = "^2.1.0"
@@ -26,6 +26,7 @@ dj-static = "^0.0.6"
 wagtailmenus = "^3.1.9"
 boto3 = "^1.29.1"
 django-storages = "^1.14.2"
+wagtail-modeladmin = "^1.0.0"
 
 
 [tool.poetry.group.dev.dependencies]

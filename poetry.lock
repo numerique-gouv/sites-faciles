@@ -389,13 +389,13 @@ django = ">=4.2"
 
 [[package]]
 name = "django-dsfr"
-version = "0.16.2"
+version = "0.16.3"
 description = "Integrate the French government Design System into a Django app"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "django_dsfr-0.16.2-py3-none-any.whl", hash = "sha256:79d04b59892be29e72b50e992a873f5ea2799c87c29ed1283d60580ee6c18996"},
-    {file = "django_dsfr-0.16.2.tar.gz", hash = "sha256:c6f6ae381366092108085b3b4b62b7e62611a240e22e52d8e01aa429d6b88660"},
+    {file = "django_dsfr-0.16.3-py3-none-any.whl", hash = "sha256:f47dfc3e94c04a3ac568a238bf157517e583c6519662c868c3ace78707d6eb32"},
+    {file = "django_dsfr-0.16.3.tar.gz", hash = "sha256:c2016703f6965fd0150aa4ecd4189e2eb41343e0d057831d2e2e2789a8955733"},
 ]
 
 [package.dependencies]
@@ -1597,6 +1597,24 @@ docs = ["Sphinx (>=1.5.2)", "myst-parser (==0.18.1)", "pyenchant (>=3.1.1,<4)", 
 testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-frontdoor (>=1.0,<1.1)", "black (==22.3.0)", "boto3 (>=1.28,<2)", "coverage (>=3.7.0)", "curlylint (==0.13.1)", "django-pattern-library (>=0.7,<0.8)", "djhtml (==1.5.2)", "doc8 (==0.8.1)", "factory-boy (>=3.2)", "freezegun (>=0.3.8)", "polib (>=1.1,<2.0)", "python-dateutil (>=2.7)", "pytz (>=2014.7)", "ruff (==0.0.290)", "semgrep (==1.40.0)", "tblib (>=2.0,<3.0)"]
 
 [[package]]
+name = "wagtail-modeladmin"
+version = "1.0.0"
+description = "Add any model in your project to the Wagtail admin. Formerly wagtail.contrib.modeladmin."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "wagtail_modeladmin-1.0.0-py3-none-any.whl", hash = "sha256:0d92dd012e17dd5b5d5058792c8549594884c87da7ef794e8f1765bb245a5340"},
+    {file = "wagtail_modeladmin-1.0.0.tar.gz", hash = "sha256:da545ba34747bff01c942b8306e20ac17d8a64d1873734cc8cf7303716af93fc"},
+]
+
+[package.dependencies]
+Wagtail = ">=5.0"
+
+[package.extras]
+docs = ["Sphinx (>=6.0)", "myst_parser (>=0.18.1,<1.0)", "pyenchant (>=3.1.1,<4)", "sphinx-autobuild (>=0.6.0)", "sphinx-wagtail-theme (==6.0.0)", "sphinx_copybutton (>=0.5)", "sphinxcontrib-spelling (>=8.0,<9.0)"]
+testing = ["dj-database-url (>=2.0.0)", "pre-commit (<3.0)"]
+
+[[package]]
 name = "wagtailmenus"
 version = "3.1.9"
 description = "An app to help you manage menus in your Wagtail projects more consistently."
@@ -1650,4 +1668,4 @@ testing = ["Pillow (>=9.1.0,<11.0.0)", "Wand (>=0.6,<1.0)", "black (==22.3.0)", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "c1262c1684b441db158e4162af80d90c4d92247a86c58a38f58827c98827f0bc"
+content-hash = "3d6e6cb1261e6245e15f6ebef5611688839ca1fe77033b06c951c7c75a95e8db"
