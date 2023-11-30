@@ -87,7 +87,7 @@ class Command(BaseCommand):
             title="Pictogrammes DSFR — Internet",
         )
 
-        text_raw = """<p>Bienvenue !</p>
+        text_raw = """<p>Bienvenue !</p>
 
         <p>Vous venez de créer un site utilisant le gestionnaire de contenus de l’État.</p>
 
@@ -142,7 +142,7 @@ class Command(BaseCommand):
         if already_exists:
             raise ValueError(f"The {slug} page seem to already exist with id {already_exists.id}")
 
-        home_page = Page.objects.get(slug="home")
+        home_page = Site.objects.filter(is_default_site=True).first().root_page
         new_page = home_page.add_child(instance=ContentPage(title=title, body=body, slug=slug, show_in_menus=True))
 
         footer_menu = get_or_create_footer_menu()
