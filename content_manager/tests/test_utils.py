@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User
+from wagtail.images.models import Image
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
+from wagtailmenus.models.menus import FlatMenu
 
 from content_manager.models import ContentPage
+from content_manager.utils import get_or_create_footer_menu, import_image
 
 
-class ContentPageTestCase(WagtailPageTestCase):
+class UtilsTestCase(WagtailPageTestCase):
     def setUp(self):
         home = Page.objects.get(slug="home")
         self.admin = User.objects.create_superuser("test", "test@test.test", "pass")
@@ -19,15 +22,17 @@ class ContentPageTestCase(WagtailPageTestCase):
         )
         self.content_page.save()
 
-    def test_content_page_is_renderable(self):
-        self.assertPageIsRenderable(self.content_page)
+    def test_import_image(self):
+        image_file = "static/artwork/technical-error.svg"
+        image = import_image(image_file, "Sample image")
 
-    def test_content_page_has_minimal_content(self):
-        url = self.content_page.url
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        assert isinstance(image, Image)
+        assert image.title == "Sample image"
 
-        self.assertContains(
-            response,
-            "<title>Page de contenu — Titre du site</title>",
-        )
+    def test_get_or_create_footer_menu(self):
+        assert FlatMenu.objects.count() == 0
+
+        flat_menu = get_or_create_footer_menu()
+
+        assert FlatMenu.objects.count() == 1
+        assert flat_menu.handle == "footer"
