@@ -4,7 +4,7 @@ from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
 from wagtail_airtable.mixins import AirtableMixin
 
-from formations.enums import Kind
+from formations.enums import Attendance, Kind
 
 
 class TargetAudience(models.Model):
@@ -59,6 +59,12 @@ class FormationPage(AirtableMixin, Page):
     target_audience = ParentalManyToManyField(TargetAudience, verbose_name="Public cible", blank=True)
     themes = ParentalManyToManyField(Theme, verbose_name="Familles thématiques", blank=True)
     organizers = ParentalManyToManyField(Organizer, verbose_name="Entités organisatrices", blank=True)
+    attendance = models.CharField(
+        "En ligne/Présentiel/Hybride",
+        max_length=20,
+        choices=Attendance.choices,
+        blank=True,
+    )
 
     # Editor panels configuration
     content_panels = Page.content_panels
@@ -78,6 +84,7 @@ class FormationPage(AirtableMixin, Page):
             "Public cible": "target_audience",
             "Famille thématique": "themes",
             "Une formation proposée par": "organizers",
+            "En ligne/Présentiel/Hybride": "attendance",
         }
         return mappings
 
@@ -104,6 +111,7 @@ class FormationPage(AirtableMixin, Page):
             "Public cible": self.target_audience,
             "Famille thématique": self.themes,
             "Une formation proposée par": self.organizers,
+            "En ligne/Présentiel/Hybride": self.attendance,
         }
 
     class Meta:
