@@ -5,6 +5,22 @@ from wagtail.images.blocks import ImageChooserBlock
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
+HEADING_CHOICES = [
+    ("h2", "En-tête 2"),
+    ("h3", "En-tête 3"),
+    ("h4", "En-tête 4"),
+    ("h5", "En-tête 5"),
+    ("h6", "En-tête 6"),
+    ("p", "Paragraphe"),
+]
+
+LEVEL_CHOICES = [
+    ("error", "Erreur"),
+    ("success", "Succès"),
+    ("info", "Information"),
+    ("warning", "Attention"),
+]
+
 
 ## Basic blocks
 class AccordionBlock(blocks.StructBlock):
@@ -17,18 +33,16 @@ class AccordionsBlock(blocks.StreamBlock):
     accordion = AccordionBlock(label="Accordéon", min_num=1, max_num=15)
 
 
-level_choices = [
-    ("error", "Erreur"),
-    ("success", "Succès"),
-    ("info", "Information"),
-    ("warning", "Attention"),
-]
-
-
 class AlertBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre du message", required=False)
     description = blocks.TextBlock(label="Texte du message", required=False)
-    level = blocks.ChoiceBlock(label="Type de message", choices=level_choices)
+    level = blocks.ChoiceBlock(label="Type de message", choices=LEVEL_CHOICES)
+    heading_tag = blocks.ChoiceBlock(
+        label="Niveau de titre",
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
+    )
 
 
 badge_level_choices = [
@@ -53,22 +67,12 @@ class BadgesListBlock(blocks.StreamBlock):
     badge = BadgeBlock(label="Badge")
 
 
-heading_choices = [
-    ("h2", "En-tête 2"),
-    ("h3", "En-tête 3"),
-    ("h4", "En-tête 4"),
-    ("h5", "En-tête 5"),
-    ("h6", "En-tête 6"),
-    ("p", "Paragraphe"),
-]
-
-
 class CalloutBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre de la mise en vant", required=False)
     text = blocks.TextBlock(label="Texte mis en avant", required=False)
     heading_tag = blocks.ChoiceBlock(
         label="Niveau de titre",
-        choices=heading_choices,
+        choices=HEADING_CHOICES,
         default="h3",
         help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
     )
