@@ -66,6 +66,11 @@ INSTALLED_APPS = [
     "content_manager",
 ]
 
+if DEBUG:
+    INSTALLED_APPS += [
+        "django_extensions",
+    ]
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

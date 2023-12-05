@@ -35,6 +35,8 @@ flake8 = "^6.1.0"
 isort = "^5.12.0"
 pre-commit = "^3.5.0"
 djlint = "^1.34.0"
+django-extensions = "^3.2.3"
+ipython = "^8.18.1"
 
 [build-system]
 requires = ["poetry-core"]
