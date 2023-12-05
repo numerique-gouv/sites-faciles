@@ -3,12 +3,12 @@ from django.conf import settings
 from rest_framework import serializers
 from wagtail_airtable.serializers import AirtableSerializer
 
-from formations.models import Organizer, Theme, TargetAudience
+from formations.models import Organizer, TargetAudience, Theme
 
 
 class LowerCharSerializer(serializers.CharField):
     def to_internal_value(self, value):
-        return str(value).lower()
+        return str(value).replace(" ", "").lower()
 
 
 class TargetAudienceSerializer(serializers.RelatedField):
@@ -71,6 +71,7 @@ class FormationPageSerializer(AirtableSerializer):
     organizers = OrganizerSerializer(required=False, many=True)
     image_url = serializers.URLField(required=False)
     visible = serializers.CharField(max_length=3, required=True)
+    attendance = LowerCharSerializer(max_length=20, required=True)
 
     def get_target_audience_list(self, obj):
         return TargetAudienceSerializer(obj.fresh_data, many=True).data
