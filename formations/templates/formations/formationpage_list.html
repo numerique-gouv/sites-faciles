@@ -18,9 +18,26 @@
                     <div class="fr-card fr-enlarge-link">
                         <div class="fr-card__body">
                             <div class="fr-card__content">
+                                {% if formation.themes %}
+                                    <div class="fr-card__start">
+                                        <ul class="fr-tags-group">
+                                            {% for theme in formation.themes.all %}
+                                                <li>
+                                                    <p class="fr-tag">{{ theme }}</p>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
                                 <h3 class="fr-card__title">
                                     <a href="{% pageurl formation %}">{{ formation.name }}</a>
                                 </h3>
+                                {% if formation.organizers %}
+                                    <p class="fr-card__desc">
+                                        <span class="fr-icon-hotel-fill" aria-hidden="true"></span>
+                                        {{ formation.organizers.all|join:", " }}
+                                    </p>
+                                {% endif %}
                                 <p class="fr-card__desc">
                                     <span class="fr-icon-clipboard-line" aria-hidden="true"></span>
                                     {{ formation.get_kind_display }}
