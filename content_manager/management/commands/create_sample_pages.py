@@ -28,7 +28,8 @@ class Command(BaseCommand):
                 self.create_homepage()
             elif slug == "mentions-legales":
                 title = "Mentions légales"
-                body = []
+                body = [("title", {"title": title, "large": True})]
+
                 alert_block = {
                     "title": title,
                     "description": """Entrez ici les mentions légales du site.<br />
@@ -54,7 +55,8 @@ class Command(BaseCommand):
                 self.create_page(slug=slug, title=title, body=body)
             elif slug == "accessibilite":
                 title = "Déclaration d’accessibilité"
-                body = []
+                body = [("title", {"title": title, "large": True})]
+
                 alert_block = {
                     "title": title,
                     "description": """Entrez ici la déclaration d’accessibilité.<br />
@@ -78,9 +80,7 @@ class Command(BaseCommand):
             raise ValueError(f"The home page seem to already exist with id {already_exists.id}")
 
         # Create the page
-        body = []
-
-        body.append(("title", {"title": "Votre nouveau site avec le CMS Beta", "large": True}))
+        body = [("title", {"title": "Votre nouveau site avec le CMS Beta", "large": True})]
 
         image = import_image(
             full_path="staticfiles/dsfr/dist/artwork/pictograms/digital/coding.svg",
