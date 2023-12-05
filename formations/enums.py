@@ -8,3 +8,9 @@ class Kind(models.TextChoices):
     SEMINAIRE = "séminaire", "Séminaire"
     UNIVERSITE = "université d'été", "Université d'été"
     PROGRAMME = "programme", "Programme"
+
+
+class Attendance(models.TextChoices):
+    ENLIGNE = "enligne", "En ligne"
+    PRESENTIEL = "présentiel", "Présentiel"
+    HYBRIDE = "hybride", "Hybride"
