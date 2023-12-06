@@ -25,6 +25,7 @@ collectstatic:
 .PHONY: sass
 sass:
 	$(EXEC_CMD) poetry run python manage.py compilescss
+	make collectstatic
 
 .PHONY: quality
 quality:
@@ -43,7 +44,7 @@ init:
 	$(EXEC_CMD) poetry install
 	$(EXEC_CMD) poetry run pre-commit install
 	$(EXEC_CMD) poetry run python manage.py migrate
-	make sass
+	make collectstatic
 	$(EXEC_CMD) poetry run python manage.py create_sample_pages
 
 .PHONY: runserver
