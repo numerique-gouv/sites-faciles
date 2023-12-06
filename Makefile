@@ -18,6 +18,14 @@ web-prompt:
 test-unit:
 	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test
 
+.PHONY: collectstatic
+collectstatic:
+	$(EXEC_CMD) poetry run python manage.py collectstatic --noinput --ignore=*.sass
+
+.PHONY: sass
+sass:
+	$(EXEC_CMD) poetry run python manage.py compilescss
+
 .PHONY: quality
 quality:
 	$(EXEC_CMD) poetry run black --check --exclude=venv .
@@ -35,7 +43,7 @@ init:
 	$(EXEC_CMD) poetry install
 	$(EXEC_CMD) poetry run pre-commit install
 	$(EXEC_CMD) poetry run python manage.py migrate
-	$(EXEC_CMD) poetry run python manage.py collectstatic --noinput
+	make sass
 	$(EXEC_CMD) poetry run python manage.py create_sample_pages
 
 .PHONY: runserver

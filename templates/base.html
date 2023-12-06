@@ -1,4 +1,4 @@
-{% load static dsfr_tags wagtailuserbar wagtailsettings_tags %}
+{% load static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
 {% get_settings %}
 <!doctype html>
 <html lang="fr" data-fr-scheme="system" {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
@@ -9,6 +9,9 @@
 
   {% dsfr_css %}
   {% dsfr_favicon %}
+
+  <link href="{% sass_src 'css/style.sass' %}" rel="stylesheet" type="text/css" />
+
   {% block extra_css %}{% endblock extra_css %}
 
   {% block title %}<title>{% if title %}{{ title }} — {% endif %}{{ settings.content_manager.CmsDsfrConfig.site_title }}</title>{% endblock title %}
