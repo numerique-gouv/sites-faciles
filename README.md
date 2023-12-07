@@ -87,3 +87,11 @@ Vous pouvez également générer un rapport sur la couverture de tests :
 ```sh
 coverage run manage.py test --settings config.settings_test
 ```
+
+## Configurer l’authentification à deux facteurs (2FA)
+Pour activer l’authentification à deux facteurs sur le site, il faut passer la variable `WAGTAIL_2FA_REQUIRED` à True et remplir la variable `SITE_NAME` si elle ne l’est pas déjà.
+
+```
+SITE_NAME=Nom du site
+WAGTAIL_2FA_REQUIRED=True
+```
