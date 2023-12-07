@@ -6,15 +6,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-  {% dsfr_css %}
+  {% block title %}<title>{% if title %}{{ title }} — {% endif %}{{ settings.content_manager.CmsDsfrConfig.site_title }}</title>{% endblock title %}
   {% dsfr_favicon %}
 
+  {% dsfr_css %}
+  <link href="{% static 'dsfr/dist/utility/utility.min.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% sass_src 'css/style.sass' %}" rel="stylesheet" type="text/css" />
 
   {% block extra_css %}{% endblock extra_css %}
 
-  {% block title %}<title>{% if title %}{{ title }} — {% endif %}{{ settings.content_manager.CmsDsfrConfig.site_title }}</title>{% endblock title %}
   {% block tracking %}
     {% if settings.content_manager.AnalyticsSettings.head_scripts %}
       {{settings.content_manager.AnalyticsSettings.head_scripts|safe}}
