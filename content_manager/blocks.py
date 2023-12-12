@@ -60,7 +60,7 @@ badge_level_choices = [
 class BadgeBlock(blocks.StructBlock):
     text = blocks.CharBlock(label="Texte du badge", required=False)
     color = blocks.ChoiceBlock(label="Couleur de badge", choices=badge_level_choices, required=False)
-    hide_icon = blocks.BooleanBlock(label="Masquer l'icon du badge", required=False)
+    hide_icon = blocks.BooleanBlock(label="Masquer l’icône du badge", required=False)
 
 
 class BadgesListBlock(blocks.StreamBlock):
@@ -87,24 +87,26 @@ class CardBlock(blocks.StructBlock):
         label="ou Document",
         help_text=(
             "Sélectionnez un document pour rendre la carte cliquable vers "
-            "celui ci (si le champ `Lien` n'est pas renseigné)."
+            "celui ci (si le champ « Lien » n’est pas renseigné)."
         ),
         required=False,
     )
 
 
 class HeroBlock(blocks.StructBlock):
-    bg_image = ImageChooserBlock(label="Image d'arrière plan")
+    bg_image = ImageChooserBlock(label="Image d’arrière plan")
     bg_color = blocks.RegexBlock(
-        label="Couleur d'arrière plan au format hexa (Ex: #f5f5fe)",
+        label="Couleur d’arrière plan au format hexa (Ex: #f5f5fe)",
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        error_messages={"invalid": "La couleur n'est pas correcte, le format doit être #fff ou #f5f5fe"},
+        error_messages={"invalid": "La couleur n’est pas correcte, le format doit être #fff ou #f5f5fe"},
         required=False,
     )
     title = blocks.CharBlock(label="Titre")
     text = blocks.CharBlock(label="Texte", required=False)
     cta_label = blocks.CharBlock(label="Texte du bouton", required=False)
     cta_link = blocks.URLBlock(label="Lien du bouton", required=False)
+    large = blocks.BooleanBlock(label="Large", required=False)
+    darken = blocks.BooleanBlock(label="Assombrir", required=False)
 
 
 class IframeBlock(blocks.StructBlock):
@@ -122,7 +124,7 @@ class IframeBlock(blocks.StructBlock):
 class ImageAndTextBlock(blocks.StructBlock):
     image = ImageChooserBlock(label="Illustration (à gauche)")
     image_ratio = blocks.ChoiceBlock(
-        label="Largeur de l'image",
+        label="Largeur de l’image",
         choices=[
             ("3", "3/12"),
             ("5", "5/12"),
@@ -141,7 +143,7 @@ class ImageAndTextBlock(blocks.StructBlock):
 class ImageBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre", required=False)
     image = ImageChooserBlock(label="Illustration")
-    alt = blocks.CharBlock(label="Texte alternatif (description textuelle de l'image)", required=False)
+    alt = blocks.CharBlock(label="Texte alternatif (description textuelle de l’image)", required=False)
     caption = blocks.CharBlock(label="Légende", required=False)
     url = blocks.URLBlock(label="Lien", required=False)
 
@@ -149,8 +151,8 @@ class ImageBlock(blocks.StructBlock):
 class QuoteBlock(blocks.StructBlock):
     image = ImageChooserBlock(label="Illustration (à gauche)", required=False)
     quote = blocks.CharBlock(label="Citation")
-    author_name = blocks.CharBlock(label="Nom de l'auteur")
-    author_title = blocks.CharBlock(label="Titre de l'auteur")
+    author_name = blocks.CharBlock(label="Nom de l’auteur")
+    author_title = blocks.CharBlock(label="Titre de l’auteur")
 
 
 class SeparatorBlock(blocks.StructBlock):
@@ -159,7 +161,7 @@ class SeparatorBlock(blocks.StructBlock):
 
 
 class StepBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre de l'étape")
+    title = blocks.CharBlock(label="Titre de l’étape")
     detail = blocks.TextBlock(label="Détail")
 
 
@@ -169,7 +171,7 @@ class StepsListBlock(blocks.StreamBlock):
 
 class StepperBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre")
-    total = blocks.IntegerBlock(label="Nombre d'étape")
+    total = blocks.IntegerBlock(label="Nombre d’étapes")
     current = blocks.IntegerBlock(label="Étape en cours")
     steps = StepsListBlock(label="Les étapes")
 
@@ -177,7 +179,7 @@ class StepperBlock(blocks.StructBlock):
 class TextAndCTA(blocks.StructBlock):
     text = blocks.RichTextBlock(label="Texte avec mise en forme", required=False)
     cta_label = blocks.CharBlock(
-        label="Titre de l'appel à l'action",
+        label="Titre de l’appel à l’action",
         help_text="Le lien apparait comme un bouton sous le bloc de texte",
         required=False,
     )
@@ -194,7 +196,7 @@ class VideoBlock(blocks.StructBlock):
     caption = blocks.CharBlock(label="Légende")
     url = blocks.URLBlock(
         label="Lien de la vidéo",
-        help_text="URL au format 'embed' (Ex. : https://www.youtube.com/embed/gLzXOViPX-0)",
+        help_text="URL au format « embed » (Ex. : https://www.youtube.com/embed/gLzXOViPX-0)",
     )
 
 
@@ -205,16 +207,16 @@ class MultiColumnsBlock(blocks.StreamBlock):
     video = VideoBlock(label="Vidéo")
     card = CardBlock(label="Carte")
     quote = QuoteBlock(label="Citation")
-    text_cta = TextAndCTA(label="Texte et appel à l'action")
+    text_cta = TextAndCTA(label="Texte et appel à l’action")
     iframe = IframeBlock(label="Cadre intégré")
 
 
 class MultiColumnsWithTitleBlock(blocks.StructBlock):
-    bg_image = ImageChooserBlock(label="Image d'arrière plan", required=False)
+    bg_image = ImageChooserBlock(label="Image d’arrière plan", required=False)
     bg_color = blocks.RegexBlock(
-        label="Couleur d'arrière plan au format hexa (Ex: #f5f5fe)",
+        label="Couleur d’arrière plan au format hexa (Ex: #f5f5fe)",
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        error_messages={"invalid": "La couleur n'est pas correcte, le format doit être #fff ou #f5f5fe"},
+        error_messages={"invalid": "La couleur n’est pas correcte, le format doit être #fff ou #f5f5fe"},
         required=False,
     )
     title = blocks.CharBlock(label="Titre", required=False)
