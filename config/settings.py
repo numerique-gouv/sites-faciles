@@ -69,6 +69,7 @@ INSTALLED_APPS = [
 if DEBUG:
     INSTALLED_APPS += [
         "django_extensions",
+        "wagtail.contrib.styleguide",
     ]
 
 MIDDLEWARE = [
@@ -196,7 +197,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 # Wagtail settings
 # https://docs.wagtail.org/en/stable/reference/settings.html
 
-WAGTAIL_SITE_NAME = "Gestionnaire de contenu avec le Système de Design de l'État"
+WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Gestionnaire de contenu avec le Système de Design de l’État")
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
