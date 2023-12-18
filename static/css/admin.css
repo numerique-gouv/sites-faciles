@@ -1,0 +1,16 @@
+:root {
+    --w-color-primary-hue: 240;
+    --w-color-secondary-hue: 173;
+    --w-color-info-100: #0078f3;
+    --w-color-info-50: #f4f6ff;
+    --w-color-positive-100: #1f8d49;
+    --w-color-positive-50: #dffee6;
+    --w-color-warning-100: #d64d00;
+    --w-color-warning-50: #fff4f3;
+}
+
+.sidebar-custom-branding {
+    background-color: white;
+    padding: 25px;
+    border-radius: 50%;
+}
