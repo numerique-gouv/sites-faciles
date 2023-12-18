@@ -138,6 +138,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
