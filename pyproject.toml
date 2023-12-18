@@ -37,6 +37,8 @@ pre-commit = "^3.5.0"
 djlint = "^1.34.0"
 django-extensions = "^3.2.3"
 ipython = "^8.18.1"
+libsass = "^0.22.0"
+django-compressor = "^4.4"
 
 [build-system]
 requires = ["poetry-core"]
