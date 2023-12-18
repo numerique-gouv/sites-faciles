@@ -28,7 +28,7 @@ ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
 WORKDIR $APP_DIR
 
-COPY pyproject.toml poetry.lock .
+COPY pyproject.toml poetry.lock ./
 RUN poetry install
 
 COPY --chown=app:app . .
