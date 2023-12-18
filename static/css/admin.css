@@ -8,3 +8,8 @@
     padding: 25px;
     border-radius: 50%;
 }
+
+.sidebar--slim .sidebar-custom-branding {
+    padding: 10px;
+    margin: 5px;
+}
