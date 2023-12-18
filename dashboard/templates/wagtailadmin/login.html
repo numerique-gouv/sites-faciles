@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load widget_tweaks i18n static %}
+{% load widget_tweaks i18n static dsfr_tags %}
 {% block content %}
     <div class="fr-container fr-container--fluid fr-my-md-14v">
         <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
@@ -34,12 +34,9 @@
                                                                 avec un compte autorisé.
                                                             </p>
                                                         </div>
-                                                    {% else %}
-                                                        <div class="fr-alert fr-alert--info fr-alert--sm">
-                                                            <p>Merci de vous identifier pour accéder à cette page.</p>
-                                                        </div>
                                                     {% endif %}
                                                 {% endif %}
+                                                {% dsfr_django_messages messages %}
                                             </div>
                                         </div>
                                         <div class="fr-fieldset__element">
