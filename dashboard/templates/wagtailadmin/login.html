@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load widget_tweaks i18n static dsfr_tags %}
+{% block content %}
+    <div class="fr-container fr-container--fluid fr-my-md-14v">
+        <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+            <div class="fr-col-12 fr-col-md-8 fr-col-lg-6">
+                <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-py-10v fr-py-md-14v">
+                    <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+                        <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
+                            <h1>Connexion</h1>
+                            <div>
+                                <form id="login-form" action="{% url 'wagtailadmin_login' %}" method="post">
+                                    <fieldset class="fr-fieldset"
+                                              id="login-form-fieldset"
+                                              aria-labelledby="login-form-fieldset-legend login-form-fieldset-messages">
+                                        <legend class="fr-fieldset__legend" id="login-form-fieldset-legend">
+                                            <h2>Se connecter avec son compte</h2>
+                                        </legend>
+                                        <div class="fr-fieldset__element">
+                                            <p class="fr-text--sm">Sauf mention contraire, tous les champs sont obligatoires.</p>
+                                            <div class="fr-messages-group"
+                                                 id="login-form-fieldset-messages"
+                                                 aria-live="assertive">
+                                                {% if form.errors %}
+                                                    <div class="fr-alert fr-alert--error fr-alert--sm">
+                                                        <p>Erreur : Votre identifiant et mot de passe ne correspondent pas, merci de réessayer.</p>
+                                                    </div>
+                                                {% endif %}
+                                                {% if next %}
+                                                    {% if user.is_authenticated %}
+                                                        <div class="fr-alert fr-alert--error fr-alert--sm">
+                                                            <p>
+                                                                Erreur : Votre compte n’a pas accès à cette page. Pour continuer, merci de vous connecter
+                                                                avec un compte autorisé.
+                                                            </p>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endif %}
+                                                {% dsfr_django_messages %}
+                                            </div>
+                                        </div>
+                                        <div class="fr-fieldset__element">
+                                            {% csrf_token %}
+                                            {% url 'wagtailadmin_home' as home_url %}
+                                            <input type="hidden" name="next" value="{{ next|default:home_url }}" />
+                                            <div class="fr-input-group">
+                                                <label class="fr-label" for="id_username">
+                                                    Identifiant&nbsp;:
+                                                    <span class="fr-hint-text">Format attendu : nom@domaine.fr</span>
+                                                </label>
+                                                {{ form.username |add_class:"fr-input" }}
+                                            </div>
+                                        </div>
+                                        <div class="fr-fieldset__element">
+                                            <div class="fr-password">
+                                                <label class="fr-label" for="id_password">Mot de passe&nbsp;:</label>
+                                                {{ form.password |add_class:"fr-password__input fr-input" }}
+                                                <div class="fr-password__checkbox fr-checkbox-group fr-checkbox-group--sm">
+                                                    <input aria-label="Afficher le mot de passe"
+                                                           id="id_password-show"
+                                                           type="checkbox"
+                                                           aria-describedby="id_password-show-messages">
+                                                    <label class="fr-password__checkbox fr-label" for="id_password-show">Afficher</label>
+                                                    <div class="fr-messages-group"
+                                                         id="id_password-show-messages"
+                                                         aria-live="assertive"></div>
+                                                </div>
+                                                {% if show_password_reset %}
+                                                    <a class="fr-link" href="{% url 'wagtailadmin_password_reset' %}">Mot de passe oublié ?</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="fr-fieldset__element">
+                                            <div class="fr-checkbox-group fr-checkbox-group--sm">
+                                                <div class="fr-checkbox-group}">
+                                                    {{ form.remember }}
+                                                    <label for="{{ form.remember.id_for_label }}" class="fr-label">Se souvenir de moi</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="fr-fieldset__element">
+                                            <ul class="fr-btns-group">
+                                                <li>
+                                                    <input class="fr-btn" type="submit" value="Se connecter" />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block extra_css %}
+    <link rel="stylesheet"
+          href="{% static 'dsfr/dist/utility/utility.min.css' %}">
+{% endblock extra_css %}
