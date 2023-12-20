@@ -39,4 +39,5 @@ USER app
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:${HOST_PORT}"]
+# https://stackoverflow.com/a/40454758/21676629
+CMD ["sh", "-c", "poetry run python manage.py runserver 0.0.0.0:$HOST_PORT"]
