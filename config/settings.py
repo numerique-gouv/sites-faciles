@@ -175,6 +175,7 @@ if os.getenv("S3_HOST"):
     AWS_S3_ENDPOINT_URL = f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST')}"
     AWS_STORAGE_BUCKET_NAME = os.getenv("S3_BUCKET_NAME", "set-bucket-name")
     AWS_S3_STORAGE_BUCKET_REGION = os.getenv("S3_BUCKET_REGION", "fr")
+    AWS_S3_FILE_OVERWRITE = False
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/"
     AWS_LOCATION = os.getenv("S3_LOCATION", "")
