@@ -15,14 +15,3 @@ class FormationsFilterForm(forms.Form):
         ),
         required=False,
     )
-    target_audience = forms.ModelChoiceField(
-        label="Public cible",
-        queryset=TargetAudience.objects.all(),
-        widget=forms.Select(
-            attrs={
-                "class": "fr-select",
-                "onchange": "this.form.submit()",
-            }
-        ),
-        required=False,
-    )

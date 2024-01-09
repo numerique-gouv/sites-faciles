@@ -30,8 +30,4 @@ class FormationsListView(ListView):
             themes = form.cleaned_data.get("themes")
             if themes:
                 queryset = queryset.filter(themes__in=themes)
-
-            target_audience = form.cleaned_data.get("target_audience")
-            if target_audience:
-                queryset = queryset.filter(target_audience__in=[target_audience])
         return queryset
