@@ -11,8 +11,19 @@
             </div>
         </div>
     </div>
-    <div class="fr-container fr-my-6w">
+    <div class="fr-container fr-mb-6w">
         <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col-12 ">
+                <div class="filter-tags fr-tags-group">
+                    <form action="{% url 'formations_list' %}" method="GET">
+                        {{ form.themes.errors }}
+                        {% for theme in form.themes %}
+                            {{ theme.tag }}
+                            <label class="fr-tag" for="{{ theme.id_for_label }}" aria-pressed="{% if theme.choice_label in selected_themes %}true{% else %}false{% endif %}">{{ theme.choice_label }}</label>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
             {% for formation in formationpage_list %}
                 <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
                     <div class="fr-card fr-enlarge-link">
