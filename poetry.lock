@@ -452,13 +452,13 @@ django = ">=4.2"
 
 [[package]]
 name = "django-dsfr"
-version = "0.17.0"
+version = "0.17.1"
 description = "Integrate the French government Design System into a Django app"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "django_dsfr-0.17.0-py3-none-any.whl", hash = "sha256:bd7aa6d0de7a7615477cb9df4c3af48e6093a0ba459f50cdd35e5755fdad36e9"},
-    {file = "django_dsfr-0.17.0.tar.gz", hash = "sha256:87b1e88b016730f52171577aaa33844149dc0c23a59043ccb0d771acddb11669"},
+    {file = "django_dsfr-0.17.1-py3-none-any.whl", hash = "sha256:81407df3e8ea9140be097d21bce22f238385b43a298625aa603468c3a1edc191"},
+    {file = "django_dsfr-0.17.1.tar.gz", hash = "sha256:a8ecdd8d3e06055fcf537326fd9c94400058c874f96346395971fb7552f3e820"},
 ]
 
 [package.dependencies]
@@ -2034,4 +2034,4 @@ testing = ["Pillow (>=9.1.0,<11.0.0)", "Wand (>=0.6,<1.0)", "black (==22.3.0)", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "d3f58644d0699bfa16392e2973dff37fab3d5c736f0cf3214a98677b8c526c49"
+content-hash = "503cb67d5cfae6998ce48017fc99c1b8d76de3b3460f9366589a102fbfafd495"

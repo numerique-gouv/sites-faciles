@@ -162,6 +162,7 @@ class CmsDsfrConfig(BaseSiteSetting):
         help_text="Balises HTML autorisés",
     )
 
+    search_bar = models.BooleanField("Barre de recherche dans l’en-tête", default=False)
     theme_modale_button = models.BooleanField("Choix du thème clair/sombre", default=False)
     mourning = models.BooleanField("Mise en berne", default=False)
 
@@ -173,6 +174,7 @@ class CmsDsfrConfig(BaseSiteSetting):
         FieldPanel("site_title"),
         FieldPanel("site_tagline"),
         FieldPanel("footer_description"),
+        FieldPanel("search_bar"),
         FieldPanel("mourning"),
         FieldPanel("theme_modale_button"),
     ]

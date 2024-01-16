@@ -1,0 +1,7 @@
+{
+  "jobs": [
+    {
+      "command": "0 3 * * SUN python manage.py update_index"
+    }
+  ]
+}

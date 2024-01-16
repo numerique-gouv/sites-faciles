@@ -144,3 +144,6 @@ dmypy.json
 # VSCode
 .VSCode
 .vscode/
+
+# Project-specific stuff
+cron.json

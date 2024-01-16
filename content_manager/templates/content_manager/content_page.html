@@ -1,13 +1,17 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags %}
+
 {% block title %}
     <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
 {% endblock title %}
+
 {% if page.search_description %}
     {% block description %}
         <meta name="description" content="{{ page.search_description }}" />
     {% endblock description %}
 {% endif %}
+
 {% block content %}
     {# Display Django message info from previous form #}
     {% if messages %}
@@ -37,9 +41,7 @@
     {% for block in page.body %}
         {% if block.block_type == 'hero' %}
             {% include "content_manager/blocks/hero.html" %}
-            <div class="fr-container">
-                {% include "content_manager/blocks/breadcrumbs.html" %}
-            </div>
+            <div class="fr-container">{% include "content_manager/blocks/breadcrumbs.html" %}</div>
         {% elif block.block_type == 'title' %}
             <div class="fr-container fr-mt-6w">
                 <div class="fr-grid-row fr-grid-row--gutters">
@@ -69,17 +71,17 @@
         {% elif block.block_type == 'image' %}
             <div class="fr-container fr-my-3w">
                 <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12">{% include "content_manager/blocks/image.html"  %}</div>
+                    <div class="fr-col-12">{% include "content_manager/blocks/image.html" %}</div>
                 </div>
             </div>
         {% elif block.block_type == 'video' %}
             <div class="fr-container fr-my-3w">
                 <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">{% include "content_manager/blocks/video.html"  %}</div>
+                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">{% include "content_manager/blocks/video.html" %}</div>
                 </div>
             </div>
         {% elif block.block_type == 'multicolumns' %}
-            {% include "content_manager/blocks/multicolumns.html"  %}
+            {% include "content_manager/blocks/multicolumns.html" %}
         {% elif block.block_type == 'paragraph' %}
             <div class="fr-container">
                 <div class="fr-grid-row fr-grid-row--gutters">
