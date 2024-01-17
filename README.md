@@ -87,3 +87,18 @@ Vous pouvez également générer un rapport sur la couverture de tests :
 ```sh
 coverage run manage.py test --settings config.settings_test
 ```
+
+## Indexation des contenus
+Les contenus des pages sont indexés pour la recherche par un script `python manage.py update_index` (cf. [documentation de Wagtail](https://docs.wagtail.org/en/stable/topics/search/indexing.html))
+
+### Scalingo
+Le script est lancé automatiquement après les déploiements sur Scalingo.
+
+Il est recommandé de procéder à une nouvelle indexation une fois par semaine, en renommant le fichier `cron.json.example` en `cron.json` (cf. [documentation de Scalingo](https://doc.scalingo.com/platform/app/task-scheduling/scalingo-scheduler))
+
+### Autres déploiements
+Il est recommandé de faire de même pour les déploiements sur d’autres plateformes, en ajoutant une ligne à la crontab de l’utilisateur avec lequel tourne le site :
+
+```
+0 3 * * SUN python manage.py update_index
+```

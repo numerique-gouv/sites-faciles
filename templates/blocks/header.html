@@ -31,6 +31,29 @@
     {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
 {% endblock header_tools %}
 
+{% block header_search %}
+    {% if settings.content_manager.CmsDsfrConfig.search_bar %}
+        <div class="fr-header__search fr-modal" id="modal-search">
+            <div class="fr-container fr-container-lg--fluid">
+                <button class="fr-btn--close fr-btn"
+                        aria-controls="modal-search"
+                        title="Fermer">Fermer</button>
+                <form action="{% url 'cms_search' %}" method="get">
+                    <div class="fr-search-bar" id="search-bar" role="search">
+                        <label class="fr-label" for="search-bar-input">Rechercher</label>
+                        <input class="fr-input"
+                               placeholder="Rechercher"
+                               type="search"
+                               id="query"
+                               name="q">
+                        <button class="fr-btn" title="Rechercher">Rechercher</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock header_search %}
+
 {# Leave burger_menu and main_menu blocks empty if the main menu is not used #}
 {# block burger_menu #}
 {# endblock burger_menu #}
