@@ -12,3 +12,6 @@
 
 .cmsfr-hero-dark h1, .cmsfr-hero-dark p {
   color: white; }
+
+.fr-header__service-title em {
+  font-weight: lighter; }

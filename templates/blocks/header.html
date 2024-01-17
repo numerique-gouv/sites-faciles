@@ -11,7 +11,14 @@
 {% block service_title %}
     <a href="/"
        title="Accueil — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
-        <p class="fr-header__service-title">{{ settings.content_manager.CmsDsfrConfig.site_title }}</p>
+
+        <p class="fr-header__service-title">
+            {% if settings.content_manager.CmsDsfrConfig.site_title|slice:"-2:" == "fr" %}
+                {{ settings.content_manager.CmsDsfrConfig.site_title|slice:":-2" }}<em>fr</em>
+            {% else %}
+                {{ settings.content_manager.CmsDsfrConfig.site_title }}
+            {% endif %}
+        </p>
     </a>
 
 {% endblock service_title %}
