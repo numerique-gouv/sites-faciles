@@ -61,6 +61,15 @@ class ContentPage(Page):
         index.SearchField("body"),
     ]
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+
+        context["skiplinks"] = [
+            {"link": "#content", "label": "Contenu"},
+            {"link": "#fr-navigation", "label": "Menu"},
+        ]
+        return context
+
 
 class MonospaceField(models.TextField):
     """
