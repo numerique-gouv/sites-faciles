@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags dsfr_tags %}
+
+{% block content %}
+    <div class="fr-container fr-my-6w">
+        <div class="fr-grid-row fr-grid-row--center">
+            <div class="fr-col-md-8">
+                <h1>{{ page.title }}</h1>
+                {{ page.intro|richtext }}
+                <form action="{% pageurl page %}" method="post">
+                    {% csrf_token %}
+                    {% dsfr_form %}
+
+                    <input class="fr-btn" type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_css %}
+    <style>
+        input:required:after {
+            content:" *";
+        }
+    </style>
+{% endblock extra_css %}
