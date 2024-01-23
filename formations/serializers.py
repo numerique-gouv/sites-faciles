@@ -64,7 +64,7 @@ class FormationPageSerializer(AirtableSerializer):
     kind = LowerCharSerializer(max_length=20, required=True)
     short_description = serializers.CharField(required=False)
     knowledge_at_the_end = serializers.CharField(required=False)
-    duration = serializers.CharField(max_length=20, required=False)
+    duration = serializers.CharField(max_length=100, required=False)
     registration_link = serializers.URLField(required=False)
     target_audience = TargetAudienceSerializer(required=False, many=True)
     themes = ThemeSerializer(required=False, many=True)
