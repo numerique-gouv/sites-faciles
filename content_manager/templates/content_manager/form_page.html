@@ -13,6 +13,12 @@
                     {% dsfr_form %}
 
                     <input class="fr-btn" type="submit">
+
+                    <ul>
+                        {% for field in form %}
+                            <li>{{ field.label }}, {{ field.type }}, {{ field.field.widget.attrs }} {{ field.field.widget }}</li>
+                        {% endfor %}
+                    </ul>
                 </form>
             </div>
         </div>

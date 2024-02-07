@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.urls import reverse
 from wagtail.models import Page, Site
@@ -28,7 +29,8 @@ class Command(BaseCommand):
                 self.create_homepage()
             elif slug == "mentions-legales":
                 title = "Mentions légales"
-                body = [("title", {"title": title, "large": True})]
+                body = []
+                body.append(("title", {"title": title, "large": True}))
 
                 alert_block = {
                     "title": title,
@@ -55,7 +57,8 @@ class Command(BaseCommand):
                 self.create_page(slug=slug, title=title, body=body)
             elif slug == "accessibilite":
                 title = "Déclaration d’accessibilité"
-                body = [("title", {"title": title, "large": True})]
+                body = []
+                body.append(("title", {"title": title, "large": True}))
 
                 alert_block = {
                     "title": title,
@@ -80,7 +83,8 @@ class Command(BaseCommand):
             raise ValueError(f"The home page seem to already exist with id {already_exists.id}")
 
         # Create the page
-        body = [("title", {"title": "Votre nouveau site avec le CMS Beta", "large": True})]
+        body = []
+        body.append(("title", {"title": "Votre nouveau site avec le CMS Beta", "large": True}))
 
         image = import_image(
             full_path="staticfiles/dsfr/dist/artwork/pictograms/digital/coding.svg",
@@ -119,13 +123,21 @@ class Command(BaseCommand):
 
         # Define it as default for the default site
         site = Site.objects.filter(is_default_site=True).first()
+        if not site:
+            site = Site.objects.create(
+                root_page_id=1,
+                is_default_site=True,
+                hostname=settings.ALLOWED_HOSTS[0],
+                site_name=settings.ALLOWED_HOSTS[0],
+            )
 
         site.root_page_id = home_page.id
         site.save()
 
         # Delete the original default page and get its slug
-        original_home = Page.objects.get(slug="home")
-        original_home.delete()
+        original_home = Page.objects.filter(slug="home").first()
+        if original_home:
+            original_home.delete()
 
         home_page.slug = "home"
         home_page.save()

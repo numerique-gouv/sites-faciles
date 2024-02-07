@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms import widgets
 from django.template.response import TemplateResponse
+from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
@@ -189,6 +190,21 @@ class CmsDsfrConfig(BaseSiteSetting):
 
 
 class FormField(AbstractFormField):
+    FORM_FIELD_CHOICES = (
+        ("singleline", _("Single line text")),
+        ("multiline", _("Multi-line text")),
+        ("email", _("Email")),
+        ("number", _("Number")),
+        ("url", _("URL")),
+        ("checkbox", _("Checkbox")),
+        ("cmsfr_checkboxes", _("Checkboxes")),
+        ("dropdown", _("Drop down")),
+        ("cmsfr_radio", _("Radio buttons")),
+        ("cmsfr_date", _("Date")),
+        ("cmsfr_datetime", _("Date/time")),
+        ("hidden", _("Hidden field")),
+    )
+
     page = ParentalKey("FormPage", on_delete=models.CASCADE, related_name="form_fields")
 
 
@@ -252,6 +268,9 @@ class FormPage(AbstractEmailForm):
                 ]:
                     visible.field.widget.attrs["class"] = "fr-select"
                     visible.field.widget.group_class = "fr-select-group"
+                elif isinstance(visible.field.widget, widgets.DateInput):
+                    visible.field.widget.attrs["class"] = "fr-input"
+                    visible.field.widget.attrs["type"] = "date"
                 elif isinstance(visible.field.widget, widgets.RadioSelect):
                     visible.field.widget.attrs["dsfr"] = "dsfr"
                     visible.field.widget.group_class = "fr-radio-group"
