@@ -22,6 +22,11 @@ test-unit:
 collectstatic:
 	$(EXEC_CMD) poetry run python manage.py collectstatic --noinput --ignore=*.sass
 
+
+.PHONY: makemessages
+makemessages:
+	$(EXEC_CMD) poetry run django-admin makemessages -l fr --ignore=manage.py
+
 .PHONY: sass
 sass:
 	$(EXEC_CMD) poetry run python manage.py compilescss
