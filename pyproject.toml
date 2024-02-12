@@ -47,3 +47,11 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line_length = 119
+
+[tool.pyright]
+reportAttributeAccessIssue = false
+reportGeneralTypeIssues = false
+reportIncompatibleVariableOverride = false
+reportOptionalCall = false
+reportOptionalMemberAccess = false
+reportUnboundVariable = false
