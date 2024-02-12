@@ -3,10 +3,13 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
+from modelcluster.tags import ClusterTaggableManager
 from taggit.models import Tag as TaggitTag, TaggedItemBase
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel, TitleFieldPanel
+from wagtail.admin.widgets.slug import SlugInput
 from wagtail.fields import StreamField
 from wagtail.models import Page
+from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
 from blog.managers import CategoryManager, TagManager
@@ -40,12 +43,30 @@ class BlogEntryPage(Page):
         FieldPanel("body", heading=_("body")),
     ]
 
+    tags = ClusterTaggableManager(through="TagEntryPage", blank=True)
+    blog_categories = models.ManyToManyField(
+        "Category",
+        through="CategoryEntryPage",
+        blank=True,
+        verbose_name=_("Categories"),
+    )
+
+    settings_panels = Page.settings_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("tags"),
+                FieldPanel("blog_categories"),
+            ],
+            heading=_("Tags and Categories"),
+        ),
+    ]
+
     class Meta:
         verbose_name = _("Blog page")
 
 
 @register_snippet
-class Category(models.Model):
+class Category(index.Indexed, models.Model):
     name = models.CharField(max_length=80, unique=True, verbose_name=_("Category name"))
     slug = models.SlugField(unique=True, max_length=80)
     parent = models.ForeignKey(
@@ -61,7 +82,7 @@ class Category(models.Model):
     objects = CategoryManager()
 
     def __str__(self):
-        return str(self.name)
+        return self.name
 
     def clean(self):
         if self.parent:
@@ -76,10 +97,19 @@ class Category(models.Model):
             self.slug = slugify(self.name)
         return super(Category, self).save(*args, **kwargs)
 
+    panels = [
+        TitleFieldPanel("name"),
+        FieldPanel("slug", widget=SlugInput),
+        FieldPanel("description"),
+        FieldPanel("parent"),
+    ]
+
     class Meta:
         ordering = ["name"]
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
+
+    search_fields = [index.SearchField("name")]
 
 
 class CategoryEntryPage(models.Model):
@@ -88,7 +118,7 @@ class CategoryEntryPage(models.Model):
     panels = [FieldPanel("category")]
 
     def __str__(self):
-        return str(self.category)
+        return self.category
 
 
 class TagEntryPage(TaggedItemBase):

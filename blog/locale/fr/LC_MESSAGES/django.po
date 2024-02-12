@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-12 16:37+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: blog/models.py:21 blog/models.py:60
+msgid "Description"
+msgstr ""
+
+#: blog/models.py:27
+msgid "Blog index"
+msgstr "Index de blog"
+
+#: blog/models.py:41
+msgid "body"
+msgstr "corps"
+
+#: blog/models.py:45
+msgid "Blog page"
+msgstr "Page de blog"
+
+#: blog/models.py:50
+msgid "Category name"
+msgstr "Nom de la catégorie"
+
+#: blog/models.py:57
+msgid "Parent category"
+msgstr "Catégorie parente"
+
+#: blog/models.py:71
+msgid "Parent category cannot be self."
+msgstr "La catégorie ne peut être sa propre parente"
+
+#: blog/models.py:73
+msgid "Cannot have circular Parents."
+msgstr "Il est impossible d’avoir des parents circulaires"
+
+#: blog/models.py:82 blog/models.py:89
+msgid "Category"
+msgstr "Catégorie"
+
+#: blog/models.py:83
+msgid "Categories"
+msgstr "Catégories"
