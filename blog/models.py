@@ -36,13 +36,6 @@ class BlogEntryPage(Page):
         use_json_field=True,
     )
 
-    parent_page_types = ["blog.BlogIndexPage"]
-    subpage_types = []
-
-    content_panels = Page.content_panels + [
-        FieldPanel("body", heading=_("body")),
-    ]
-
     tags = ClusterTaggableManager(through="TagEntryPage", blank=True)
     blog_categories = models.ManyToManyField(
         "Category",
@@ -50,6 +43,13 @@ class BlogEntryPage(Page):
         blank=True,
         verbose_name=_("Categories"),
     )
+
+    parent_page_types = ["blog.BlogIndexPage"]
+    subpage_types = []
+
+    content_panels = Page.content_panels + [
+        FieldPanel("body", heading=_("body")),
+    ]
 
     settings_panels = Page.settings_panels + [
         MultiFieldPanel(
