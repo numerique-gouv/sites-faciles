@@ -67,6 +67,14 @@ Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
 make init
 ```
 
+#### Créer un utilisateur
+
+- La commande suivante crée un utilisateur administrateur avec tous les droits:
+
+```
+poetry run python manage.py createsuperuser
+```
+
 #### Lancer le serveur
 
 ```
