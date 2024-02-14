@@ -69,7 +69,7 @@ make init
 
 #### Créer un utilisateur
 
-- La commande suivante crée un utilisateur administrateur avec tout les droits:
+- La commande suivante crée un utilisateur administrateur avec tous les droits:
 
 ```
 poetry run python manage.py createsuperuser
