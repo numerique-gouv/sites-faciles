@@ -152,7 +152,7 @@ WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", Fal
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = "fr-FR"
+LANGUAGE_CODE = "fr"
 
 TIME_ZONE = "Europe/Paris"
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load static dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags i18n %}
 
 {% block title %}
     <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
@@ -13,34 +13,40 @@
 {% endif %}
 
 {% block content %}
-    {# Display Django message info from previous form #}
-    {% if messages %}
-        <div class="fr-container fr-mt-6w">
-            <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12">
-                    {% for message in messages %}
-                        {% if message.tags == "success" %}
-                            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-5w"
-                                 role="status">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% elif message.tags == "info" %}
-                            <div class="fr-alert fr-alert--info fr-alert--sm fr-mb-5w" role="status">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% elif message.tags == "error" %}
-                            <div class="fr-alert fr-alert--error fr-alert--sm fr-mb-5w" role="alert">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    {% include "content_manager/blocks/messages.html" %}
 
     <div class="fr-container fr-mt-6w">
-        <h1>{{ page.title }}</h1>
+        {% include "content_manager/blocks/breadcrumbs.html" %}
+        {% if category %}
+            <h1>{% blocktranslate %}Posts in category {{ category }}{% endblocktranslate %}</h1>
+        {% elif tag %}
+            <h1>{% blocktranslate %}Posts tagged with #{{ tag }}{% endblocktranslate %}</h1>
+        {% elif author %}
+            <h1>{% blocktranslate %}Posts written by {{ author }}{% endblocktranslate %}</h1>
+        {% elif year %}
+            <h1 class="title">{% blocktranslate %}Posts published in {{ year }}{% endblocktranslate %}</h1>
+        {% else %}
+            <h1>{{ page.title }}</h1>
+        {% endif %}
+    </div>
+
+    <div class="fr-container fr-mt-6w">
+        <div class="fr-grid-row fr-mb-3w">
+            <div class="fr-col fr-col-md-6">
+                {% for post in posts %}
+                    <div class="fr-card fr-enlarge-link">
+                        <div class="fr-card__body">
+                            <div class="fr-card__content">
+                                <h2 class="fr-card__title">
+                                    <a href="{{ post.url }}">{{ post.title }}</a>
+                                </h2>
+                                <p class="fr-card__desc"></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
 {% endblock content %}

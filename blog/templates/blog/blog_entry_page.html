@@ -13,39 +13,25 @@
 {% endif %}
 
 {% block content %}
-    {# Display Django message info from previous form #}
-    {% if messages %}
-        <div class="fr-container fr-mt-6w">
-            <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12">
-                    {% for message in messages %}
-                        {% if message.tags == "success" %}
-                            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-5w"
-                                 role="status">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% elif message.tags == "info" %}
-                            <div class="fr-alert fr-alert--info fr-alert--sm fr-mb-5w" role="status">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% elif message.tags == "error" %}
-                            <div class="fr-alert fr-alert--error fr-alert--sm fr-mb-5w" role="alert">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    {% include "content_manager/blocks/messages.html" %}
 
     <div class="fr-container fr-mt-6w">
         <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-12{% if not block.value.large %} fr-col-offset-md-2 fr-col-md-8{% endif %}">
+            <div class="fr-col-12">
                 {% include "content_manager/blocks/breadcrumbs.html" %}
                 <h1 class="fr-display--sm">{{ page.title }}</h1>
             </div>
         </div>
+        <p>
+            Publié le {{ page.date |date:'Y-m-d H:i:s e' }}
+            {% if page.blog_categories.all %}
+                |
+                {% for category in page.blog_categories.all %}
+                    <a href="{% url 'blog:category' page.get_parent.slug category.slug %}">{{ category.name }}</a>
+                    {% if not forloop.last %},{% endif %}
+                {% endfor %}
+            {% endif %}
+        </p>
     </div>
 
     {% for block in page.body %}
@@ -102,4 +88,13 @@
             </div>
         {% endif %}
     {% endfor %}
+
+    <div class="fr-container fr-my-6w">
+        {% for tag in page.tags.all|dictsort:"slug" %}
+            <a class="fr-tag"
+               target="_self"
+               href="{% url 'blog:tag' page.get_parent.slug tag.slug %}">{{ tag }}</a>
+        {% endfor %}
+    </div>
+
 {% endblock content %}
