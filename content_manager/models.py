@@ -1,52 +1,17 @@
 from django.db import models
 from django.forms.widgets import Textarea
-from wagtail import blocks
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.fields import StreamField
 from wagtail.models import Page
 from wagtail.search import index
 
-from content_manager.blocks import (
-    AccordionsBlock,
-    AlertBlock,
-    CalloutBlock,
-    HeroBlock,
-    ImageAndTextBlock,
-    ImageBlock,
-    MultiColumnsWithTitleBlock,
-    QuoteBlock,
-    SeparatorBlock,
-    StepperBlock,
-    TitleBlock,
-    VideoBlock,
-)
+from content_manager.blocks import STREAMFIELD_BLOCKS
 
 
 class ContentPage(Page):
     body = StreamField(
-        [
-            ("hero", HeroBlock(label="Section promotionnelle")),
-            ("title", TitleBlock(label="Titre de page")),
-            ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
-            (
-                "paragraphlarge",
-                blocks.RichTextBlock(label="Texte avec mise en forme (large)"),
-            ),
-            ("image", ImageBlock()),
-            (
-                "imageandtext",
-                ImageAndTextBlock(label="Bloc image à gauche et texte à droite"),
-            ),
-            ("alert", AlertBlock(label="Message d'alerte")),
-            ("callout", CalloutBlock(label="Texte mise en avant")),
-            ("quote", QuoteBlock(label="Citation")),
-            ("video", VideoBlock(label="Vidéo")),
-            ("multicolumns", MultiColumnsWithTitleBlock(label="Multi-colonnes")),
-            ("accordions", AccordionsBlock(label="Accordéons")),
-            ("stepper", StepperBlock(label="Étapes")),
-            ("separator", SeparatorBlock(label="Séparateur")),
-        ],
+        STREAMFIELD_BLOCKS,
         blank=True,
         use_json_field=True,
     )

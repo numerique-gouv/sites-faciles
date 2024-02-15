@@ -1,6 +1,8 @@
+from django.conf import settings
 from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
+from wagtailmarkdown.blocks import MarkdownBlock
 
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
@@ -221,3 +223,43 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
     )
     title = blocks.CharBlock(label="Titre", required=False)
     columns = MultiColumnsBlock(label="Multi-colonnes")
+
+
+STREAMFIELD_BLOCKS = [
+    ("hero", HeroBlock(label="Section promotionnelle")),
+    ("title", TitleBlock(label="Titre de page")),
+    ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
+    (
+        "paragraphlarge",
+        blocks.RichTextBlock(label="Texte avec mise en forme (large)"),
+    ),
+    ("image", ImageBlock()),
+    (
+        "imageandtext",
+        ImageAndTextBlock(label="Bloc image à gauche et texte à droite"),
+    ),
+    ("alert", AlertBlock(label="Message d'alerte")),
+    ("callout", CalloutBlock(label="Texte mise en avant")),
+    ("quote", QuoteBlock(label="Citation")),
+    ("video", VideoBlock(label="Vidéo")),
+    ("multicolumns", MultiColumnsWithTitleBlock(label="Multi-colonnes")),
+    ("accordions", AccordionsBlock(label="Accordéons")),
+    ("stepper", StepperBlock(label="Étapes")),
+    ("separator", SeparatorBlock(label="Séparateur")),
+    ("markdown", MarkdownBlock()),
+]
+
+# See warning on https://docs.wagtail.org/en/latest/reference/streamfield/blocks.html#wagtail.blocks.RawHTMLBlock
+# There is currently no way to restrict a type of block depending on user permissions,
+# pending issue https://github.com/wagtail/wagtail/issues/6323
+if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
+    STREAMFIELD_BLOCKS += [
+        (
+            "html",
+            blocks.RawHTMLBlock(
+                readonly=True,
+                help_text="""Avertissement : Utilisez le bloc HTML avec précaution.
+                Un code malveillant peut compromettre la sécurité du site.""",
+            ),
+        )
+    ]

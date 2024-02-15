@@ -111,6 +111,22 @@ jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
+name = "bleach"
+version = "4.1.0"
+description = "An easy safelist-based HTML-sanitizing tool."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "bleach-4.1.0-py2.py3-none-any.whl", hash = "sha256:4d2651ab93271d1129ac9cbc679f524565cc8a1b791909c4a51eac4446a15994"},
+    {file = "bleach-4.1.0.tar.gz", hash = "sha256:0900d8b37eba61a802ee40ac0061f8c2b5dee29c1927dd1d233e075ebf5a71da"},
+]
+
+[package.dependencies]
+packaging = "*"
+six = ">=1.9.0"
+webencodings = "*"
+
+[[package]]
 name = "boto3"
 version = "1.34.2"
 description = "The AWS SDK for Python"
@@ -997,6 +1013,21 @@ files = [
     {file = "libsass-0.22.0-cp37-abi3-win_amd64.whl", hash = "sha256:65455a2728b696b62100eb5932604aa13a29f4ac9a305d95773c14aaa7200aaf"},
     {file = "libsass-0.22.0.tar.gz", hash = "sha256:3ab5ad18e47db560f4f0c09e3d28cf3bb1a44711257488ac2adad69f4f7f8425"},
 ]
+
+[[package]]
+name = "markdown"
+version = "3.5.2"
+description = "Python implementation of John Gruber's Markdown."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "Markdown-3.5.2-py3-none-any.whl", hash = "sha256:d43323865d89fc0cb9b20c75fc8ad313af307cc087e84b657d9eec768eddeadd"},
+    {file = "Markdown-3.5.2.tar.gz", hash = "sha256:e1ac7b3dc550ee80e602e71c1d168002f062e49f1b11e26a36264dafd4df2ef8"},
+]
+
+[package.extras]
+docs = ["mdx-gh-links (>=0.2)", "mkdocs (>=1.5)", "mkdocs-gen-files", "mkdocs-literate-nav", "mkdocs-nature (>=0.6)", "mkdocs-section-index", "mkdocstrings[python]"]
+testing = ["coverage", "pyyaml"]
 
 [[package]]
 name = "matplotlib-inline"
@@ -1986,6 +2017,25 @@ docs = ["Sphinx (>=1.5.2)", "myst-parser (==2.0.0)", "pyenchant (>=3.1.1,<4)", "
 testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-frontdoor (>=1.0,<1.1)", "boto3 (>=1.28,<2)", "coverage (>=3.7.0)", "curlylint (==0.13.1)", "django-pattern-library (>=0.7)", "djhtml (==3.0.6)", "doc8 (==0.8.1)", "factory-boy (>=3.2)", "freezegun (>=0.3.8)", "polib (>=1.1,<2.0)", "python-dateutil (>=2.7)", "pytz (>=2014.7)", "ruff (==0.1.5)", "semgrep (==1.40.0)", "tblib (>=2.0,<3.0)"]
 
 [[package]]
+name = "wagtail-markdown"
+version = "0.11.1"
+description = "Markdown support for Wagtail"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "wagtail_markdown-0.11.1-py3-none-any.whl", hash = "sha256:3d2c5dcfac718c3fc03f2ed05aca535b2aa70f71254599505ee272c54437db21"},
+    {file = "wagtail_markdown-0.11.1.tar.gz", hash = "sha256:afcb64efac5b1b57de9f7cc475987c0c7dec5b669833e4617ec4658880de0f77"},
+]
+
+[package.dependencies]
+bleach = ">=3.3,<5"
+Markdown = ">=3.3,<4"
+Wagtail = ">=4.1"
+
+[package.extras]
+testing = ["pre-commit (>=3.3.0,<4)", "tox (>=4.6.4,<5)"]
+
+[[package]]
 name = "wagtail-modeladmin"
 version = "1.0.0"
 description = "Add any model in your project to the Wagtail admin. Formerly wagtail.contrib.modeladmin."
@@ -2071,4 +2121,4 @@ testing = ["Pillow (>=9.1.0,<11.0.0)", "Wand (>=0.6,<1.0)", "black (==22.3.0)", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "49ecf09781db35fe941fd5fcbc92b1f41faf1665659cd1d511cfb1f8e38d5176"
+content-hash = "67855d6148c19627d367c437659bb834a55e9f3c817788beab9deb5c59d4b576"
