@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "wagtail.search",
     "wagtail",
     "wagtail_modeladmin",
+    "wagtailmarkdown",
     "wagtailmenus",
     "taggit",
     "django.contrib.auth",
@@ -234,3 +235,5 @@ WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
     CSRF_TRUSTED_ORIGINS.append("https://" + host)
+
+SF_ALLOW_RAW_HTML_BLOCKS = os.getenv("SF_ALLOW_RAW_HTML_BLOCKS", "False").lower() == "true"
