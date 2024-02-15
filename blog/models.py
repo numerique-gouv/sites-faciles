@@ -20,7 +20,7 @@ from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
 from blog.managers import CategoryManager, TagManager
-from content_manager.constants import STREAMFIELD_COMMON_FIELDS
+from content_manager.blocks import STREAMFIELD_COMMON_BLOCKS
 
 
 class BlogIndexPage(Page):
@@ -119,7 +119,7 @@ class BlogIndexPage(Page):
 
 class BlogEntryPage(Page):
     body = StreamField(
-        STREAMFIELD_COMMON_FIELDS,
+        STREAMFIELD_COMMON_BLOCKS,
         blank=True,
         use_json_field=True,
     )

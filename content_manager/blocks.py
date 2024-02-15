@@ -225,9 +225,12 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
     columns = MultiColumnsBlock(label="Multi-colonnes")
 
 
-STREAMFIELD_BLOCKS = [
+STREAMFIELD_TITLE_BLOCKS = [
     ("hero", HeroBlock(label="Section promotionnelle")),
     ("title", TitleBlock(label="Titre de page")),
+]
+
+STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
     (
         "paragraphlarge",
@@ -249,11 +252,12 @@ STREAMFIELD_BLOCKS = [
     ("markdown", MarkdownBlock()),
 ]
 
+
 # See warning on https://docs.wagtail.org/en/latest/reference/streamfield/blocks.html#wagtail.blocks.RawHTMLBlock
 # There is currently no way to restrict a type of block depending on user permissions,
 # pending issue https://github.com/wagtail/wagtail/issues/6323
 if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
-    STREAMFIELD_BLOCKS += [
+    STREAMFIELD_COMMON_BLOCKS += [
         (
             "html",
             blocks.RawHTMLBlock(
@@ -263,3 +267,6 @@ if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
             ),
         )
     ]
+
+
+STREAMFIELD_ALL_BLOCKS = STREAMFIELD_TITLE_BLOCKS + STREAMFIELD_COMMON_BLOCKS
