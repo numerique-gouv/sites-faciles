@@ -124,7 +124,15 @@ class IframeBlock(blocks.StructBlock):
 
 
 class ImageAndTextBlock(blocks.StructBlock):
-    image = ImageChooserBlock(label="Illustration (à gauche)")
+    image = ImageChooserBlock(label="Illustration")
+    image_side = blocks.ChoiceBlock(
+        label="Côté où afficher l’image",
+        choices=[
+            ("left", "Gauche"),
+            ("right", "Droite"),
+        ],
+        default="right",
+    )
     image_ratio = blocks.ChoiceBlock(
         label="Largeur de l’image",
         choices=[
@@ -132,14 +140,16 @@ class ImageAndTextBlock(blocks.StructBlock):
             ("5", "5/12"),
             ("6", "6/12"),
         ],
+        default="3",
     )
-    text = blocks.RichTextBlock(label="Texte avec mise en forme (à droite)")
+    text = blocks.RichTextBlock(label="Texte avec mise en forme")
     link_label = blocks.CharBlock(
         label="Titre du lien",
         help_text="Le lien apparait en bas du bloc de droite, avec une flèche",
         required=False,
     )
-    link_url = blocks.URLBlock(label="Lien", required=False)
+    page = blocks.PageChooserBlock(label="Lien interne", required=False)
+    link_url = blocks.URLBlock(label="Lien externe", required=False)
 
 
 class ImageBlock(blocks.StructBlock):
@@ -239,9 +249,9 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("image", ImageBlock()),
     (
         "imageandtext",
-        ImageAndTextBlock(label="Bloc image à gauche et texte à droite"),
+        ImageAndTextBlock(label="Bloc image et texte"),
     ),
-    ("alert", AlertBlock(label="Message d'alerte")),
+    ("alert", AlertBlock(label="Message d’alerte")),
     ("callout", CalloutBlock(label="Texte mise en avant")),
     ("quote", QuoteBlock(label="Citation")),
     ("video", VideoBlock(label="Vidéo")),
