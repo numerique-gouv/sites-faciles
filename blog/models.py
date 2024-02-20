@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Count
 from django.db.models.expressions import F
@@ -7,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import get_language, gettext_lazy as _
-from modelcluster.fields import ParentalKey
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import Tag as TaggitTag, TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
@@ -25,9 +26,18 @@ from content_manager.blocks import STREAMFIELD_COMMON_BLOCKS
 
 class BlogIndexPage(Page):
     description = models.CharField(max_length=255, null=True, blank=True)
+    posts_per_page = models.PositiveSmallIntegerField(
+        default=10,
+        validators=[MaxValueValidator(100), MinValueValidator(1)],
+        verbose_name=_("Posts per page"),
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel("description", heading=_("Description")),
+    ]
+
+    settings_panels = Page.settings_panels + [
+        FieldPanel("posts_per_page"),
     ]
 
     subpage_types = ["blog.BlogEntryPage"]
@@ -75,9 +85,9 @@ class BlogIndexPage(Page):
 
         # Pagination
         page = request.GET.get("page")
-        page_size = 10
+        page_size = self.posts_per_page
 
-        paginator = Paginator(posts, page_size)  # Show 10 posts per page
+        paginator = Paginator(posts, page_size)  # Show <page_size> posts per page
         try:
             posts = paginator.page(page)
         except PageNotAnInteger:
@@ -132,10 +142,11 @@ class BlogEntryPage(Page):
         verbose_name=_("Header image"),
     )
     tags = ClusterTaggableManager(through="TagEntryPage", blank=True)
-    blog_categories = models.ManyToManyField(
+    blog_categories = ParentalManyToManyField(
         "Category",
         through="CategoryEntryPage",
         blank=True,
+        null=True,
         verbose_name=_("Categories"),
     )
     date = models.DateTimeField(verbose_name=_("Post date"), default=timezone.now)
