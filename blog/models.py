@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -6,6 +7,7 @@ from django.db.models import Count
 from django.db.models.expressions import F
 from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import get_language, gettext_lazy as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -22,6 +24,9 @@ from wagtail.snippets.models import register_snippet
 
 from blog.managers import CategoryManager, TagManager
 from content_manager.blocks import STREAMFIELD_COMMON_BLOCKS
+
+
+User = get_user_model()
 
 
 class BlogIndexPage(Page):
@@ -59,10 +64,24 @@ class BlogIndexPage(Page):
         posts = self.posts
         locale = Locale.objects.get(language_code=get_language())
 
+        breadcrumb = None
+
         if tag is None:
             tag = request.GET.get("tag")
         if tag:
+            tag = get_object_or_404(Tag, slug=tag)
             posts = posts.filter(tags__slug=tag)
+            breadcrumb = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                    {
+                        "url": reverse("blog:tags_list", kwargs={"blog_slug": self.slug}),
+                        "title": _("Tags"),
+                    },
+                ],
+                "current": tag,
+            }
+
         if category is None:  # Not coming from category_view in views.py
             if request.GET.get("category"):
                 category = get_object_or_404(
@@ -74,11 +93,27 @@ class BlogIndexPage(Page):
             if not request.GET.get("category"):
                 category = get_object_or_404(Category, slug=category, locale=locale)
             posts = posts.filter(blog_categories__slug=category.slug)
+
+            breadcrumb = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                    {
+                        "url": reverse("blog:categories_list", kwargs={"blog_slug": self.slug}),
+                        "title": _("Categories"),
+                    },
+                ],
+                "current": category.name,
+            }
         if author:
-            if isinstance(author, str) and not author.isdigit():
-                posts = posts.filter(author__username=author)
-            else:
-                posts = posts.filter(author_id=author)
+            author = get_object_or_404(User, id=author)
+
+            breadcrumb = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                ],
+                "current": _("Posts written by") + f" {author.first_name} {author.last_name}",
+            }
+            posts = posts.filter(owner=author)
 
         if year:
             posts = posts.filter(date__year=year)
@@ -102,6 +137,9 @@ class BlogIndexPage(Page):
         context["author"] = author
         context["year"] = year
         context["paginator"] = paginator
+
+        if breadcrumb:
+            context["breadcrumb"] = breadcrumb
 
         return context
 

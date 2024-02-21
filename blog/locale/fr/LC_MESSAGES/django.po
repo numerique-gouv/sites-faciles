@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 16:37+0100\n"
+"POT-Creation-Date: 2024-02-21 16:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,42 +17,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: blog/models.py:21 blog/models.py:60
-msgid "Description"
-msgstr ""
 
-#: blog/models.py:27
+#: blog/models.py:36
+msgid "Posts per page"
+msgstr "Articles par page"
+
+#: blog/models.py:40 blog/models.py:243
+msgid "Description"
+msgstr "Description"
+
+#: blog/models.py:50
 msgid "Blog index"
 msgstr "Index de blog"
 
-#: blog/models.py:41
+#: blog/models.py:78 blog/templates/blog/tags_list_page.html:20
+#: blog/views.py:149
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: blog/models.py:101 blog/models.py:187 blog/models.py:273
+#: blog/templates/blog/categories_list_page.html:20 blog/views.py:117
+msgid "Categories"
+msgstr "Catégories"
+
+#: blog/models.py:113 blog/templates/blog/blog_index_page.html:27
+msgid "Posts written by"
+msgstr "Articles écrits par"
+
+#: blog/models.py:179
+msgid "Header image"
+msgstr "Image d’en-tête"
+
+#: blog/models.py:189
+msgid "Post date"
+msgstr "Date de publication"
+
+#: blog/models.py:196
 msgid "body"
 msgstr "corps"
 
-#: blog/models.py:45
+#: blog/models.py:200
+msgid "Author"
+msgstr "Auteur"
+
+#: blog/models.py:212
+msgid "Scheduled publishing"
+msgstr "Publication planifiée"
+
+#: blog/models.py:220
+#, fuzzy
+#| msgid "Categories"
+msgid "Tags and Categories"
+msgstr "Catégories"
+
+#: blog/models.py:228
 msgid "Blog page"
 msgstr "Page de blog"
 
-#: blog/models.py:50
+#: blog/models.py:233
 msgid "Category name"
 msgstr "Nom de la catégorie"
 
-#: blog/models.py:57
+#: blog/models.py:240
 msgid "Parent category"
 msgstr "Catégorie parente"
 
-#: blog/models.py:71
+#: blog/models.py:254
 msgid "Parent category cannot be self."
 msgstr "La catégorie ne peut être sa propre parente"
 
-#: blog/models.py:73
+#: blog/models.py:256
 msgid "Cannot have circular Parents."
 msgstr "Il est impossible d’avoir des parents circulaires"
 
-#: blog/models.py:82 blog/models.py:89
+#: blog/models.py:272 blog/models.py:284
 msgid "Category"
 msgstr "Catégorie"
 
-#: blog/models.py:83
-msgid "Categories"
-msgstr "Catégories"
+#: blog/templates/blog/blog_index_page.html:21
+#, python-format
+msgid "Posts in category %(category)s"
+msgstr "Articles dans la catégorie %(category)s"
+
+#: blog/templates/blog/blog_index_page.html:24
+#, python-format
+msgid "Posts tagged with %(tag)s"
+msgstr "Articles avec l’étiquette %(tag)s"
+
+#: blog/templates/blog/blog_index_page.html:29
+#, python-format
+msgid "Posts published in %(year)s"
+msgstr "Articles publiés en %(year)s"

@@ -24,9 +24,9 @@
             </div>
         </div>
         <p>
-            Publié le {{ page.date |date:'l j F Y' }}
+            Publié le <a href="{% url 'blog:archive_year' page.get_parent.slug page.date.year %}">{{ page.date |date:'l j F Y' }}</a>
             {% if page.owner.first_name and page.owner.last_name %}
-                par {{ page.owner.first_name }} {{ page.owner.last_name }}
+                par <a href="{% url 'blog:author' page.get_parent.slug page.owner.id %}">{{ page.owner.first_name }} {{ page.owner.last_name }}</a>
             {% endif %}
             {% if page.blog_categories.all %}
                 |

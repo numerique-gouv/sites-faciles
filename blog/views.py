@@ -1,7 +1,7 @@
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
 from django.utils.feedgenerator import Atom1Feed
-from django.utils.translation import get_language
+from django.utils.translation import get_language, gettext_lazy as _
 from django.views.generic import TemplateView
 from unidecode import unidecode
 from wagtail.models.i18n import Locale
@@ -24,9 +24,9 @@ def category_view(request, blog_slug, category):
     return index.serve(request, category=category)
 
 
-def author_view(request, blog_slug, author):
+def author_view(request, blog_slug, author_id):
     index = get_localized_index(blog_slug)
-    return index.serve(request, author=author)
+    return index.serve(request, author=author_id)
 
 
 def year_view(request, blog_slug, year):
@@ -109,8 +109,17 @@ class CategoriesListView(TemplateView):
         blog_index = get_localized_index(blog_slug)
         if blog_index:
             categories = blog_index.list_categories()
+
+        breadcrumb = {
+            "links": [
+                {"url": blog_index.get_url(), "title": blog_index.title},
+            ],
+            "current": _("Categories"),
+        }
+
         context["categories"] = categories
         context["page"] = blog_index
+        context["breadcrumb"] = breadcrumb
         return context
 
 
@@ -132,6 +141,15 @@ class TagsListView(TemplateView):
             if first_letter not in tags_by_first_letter:
                 tags_by_first_letter[first_letter] = []
             tags_by_first_letter[first_letter].append(tag)
+
+        breadcrumb = {
+            "links": [
+                {"url": blog_index.get_url(), "title": blog_index.title},
+            ],
+            "current": _("Tags"),
+        }
+
         context["sorted_tags"] = tags_by_first_letter
         context["page"] = blog_index
+        context["breadcrumb"] = breadcrumb
         return context
