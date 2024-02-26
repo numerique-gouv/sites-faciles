@@ -15,33 +15,25 @@ from modelcluster.tags import ClusterTaggableManager
 from taggit.models import Tag as TaggitTag, TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
 from wagtail.admin.widgets.slug import SlugInput
-from wagtail.fields import StreamField
-from wagtail.images import get_image_model_string
-from wagtail.models import Page
 from wagtail.models.i18n import Locale, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
 from blog.managers import CategoryManager, TagManager
-from content_manager.blocks import STREAMFIELD_COMMON_BLOCKS
+from content_manager.abstract import SitesFacilesBasePage
 
 
 User = get_user_model()
 
 
-class BlogIndexPage(Page):
-    description = models.CharField(max_length=255, null=True, blank=True)
+class BlogIndexPage(SitesFacilesBasePage):
     posts_per_page = models.PositiveSmallIntegerField(
         default=10,
         validators=[MaxValueValidator(100), MinValueValidator(1)],
         verbose_name=_("Posts per page"),
     )
 
-    content_panels = Page.content_panels + [
-        FieldPanel("description", heading=_("Description")),
-    ]
-
-    settings_panels = Page.settings_panels + [
+    settings_panels = SitesFacilesBasePage.settings_panels + [
         FieldPanel("posts_per_page"),
     ]
 
@@ -70,7 +62,7 @@ class BlogIndexPage(Page):
             tag = request.GET.get("tag")
         if tag:
             tag = get_object_or_404(Tag, slug=tag)
-            posts = posts.filter(tags__slug=tag)
+            posts = posts.filter(tags__slug=tag.slug)
             breadcrumb = {
                 "links": [
                     {"url": self.get_url(), "title": self.title},
@@ -165,20 +157,7 @@ class BlogIndexPage(Page):
         )
 
 
-class BlogEntryPage(Page):
-    body = StreamField(
-        STREAMFIELD_COMMON_BLOCKS,
-        blank=True,
-        use_json_field=True,
-    )
-    header_image = models.ForeignKey(
-        get_image_model_string(),
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        verbose_name=_("Header image"),
-    )
+class BlogEntryPage(SitesFacilesBasePage):
     tags = ClusterTaggableManager(through="TagEntryPage", blank=True)
     blog_categories = ParentalManyToManyField(
         "Category",
@@ -192,12 +171,7 @@ class BlogEntryPage(Page):
     parent_page_types = ["blog.BlogIndexPage"]
     subpage_types = []
 
-    content_panels = Page.content_panels + [
-        FieldPanel("header_image"),
-        FieldPanel("body", heading=_("body")),
-    ]
-
-    settings_panels = Page.settings_panels + [
+    settings_panels = SitesFacilesBasePage.settings_panels + [
         FieldPanel("owner", heading=_("Author")),
         FieldPanel("date"),
         MultiFieldPanel(

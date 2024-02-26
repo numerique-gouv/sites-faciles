@@ -214,6 +214,10 @@ WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Gestionnaire de contenu avec le Syst
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{os.getenv('HOST_URL', 'localhost')}"
 
+HOST_PORT = os.getenv("HOST_PORT", "")
+if HOST_PORT != "":
+    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
+
 # Disable Gravatar service
 WAGTAIL_GRAVATAR_PROVIDER_URL = None
 
