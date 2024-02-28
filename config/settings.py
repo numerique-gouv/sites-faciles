@@ -166,6 +166,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 # https://whitenoise.evans.io/en/latest/
+STORAGES = {}
+STORAGES["staticfiles"] = {
+    "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+}
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -177,17 +181,26 @@ STATICFILES_FINDERS = [
 # ------------------------------------------------------------------------------
 
 if os.getenv("S3_HOST"):
-    AWS_S3_ACCESS_KEY_ID = os.getenv("S3_KEY_ID", "123")
-    AWS_S3_SECRET_ACCESS_KEY = os.getenv("S3_KEY_SECRET", "secret")
-    AWS_S3_ENDPOINT_URL = f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST')}"
-    AWS_STORAGE_BUCKET_NAME = os.getenv("S3_BUCKET_NAME", "set-bucket-name")
-    AWS_S3_STORAGE_BUCKET_REGION = os.getenv("S3_BUCKET_REGION", "fr")
-    AWS_S3_FILE_OVERWRITE = False
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/"
-    AWS_LOCATION = os.getenv("S3_LOCATION", "")
+    endpoint_url = f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST')}"
+
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "bucket_name": os.getenv("S3_BUCKET_NAME", "set-bucket-name"),
+            "access_key": os.getenv("S3_KEY_ID", "123"),
+            "secret_key": os.getenv("S3_KEY_SECRET", "secret"),
+            "endpoint_url": endpoint_url,
+            "region_name": os.getenv("S3_BUCKET_REGION", "fr"),
+            "file_overwrite": False,
+            "location": os.getenv("S3_LOCATION", ""),
+        },
+    }
+
+    MEDIA_URL = f"{endpoint_url}/"
 else:
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    STORAGES["default"] = {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    }
     MEDIA_URL = "medias/"
     MEDIA_ROOT = os.path.join(BASE_DIR, os.getenv("MEDIA_ROOT", ""))
 
