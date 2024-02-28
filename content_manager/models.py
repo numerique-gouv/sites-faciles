@@ -6,12 +6,12 @@ from wagtail.fields import StreamField
 from wagtail.models import Page
 from wagtail.search import index
 
-from content_manager.blocks import STREAMFIELD_BLOCKS
+from content_manager.blocks import STREAMFIELD_ALL_BLOCKS
 
 
 class ContentPage(Page):
     body = StreamField(
-        STREAMFIELD_BLOCKS,
+        STREAMFIELD_ALL_BLOCKS,
         blank=True,
         use_json_field=True,
     )
