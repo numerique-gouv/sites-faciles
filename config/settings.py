@@ -164,8 +164,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-# https://whitenoise.evans.io/en/latest/
+# https://docs.djangoproject.com/en/5.0/howto/static-files/
 STORAGES = {}
 STORAGES["staticfiles"] = {
     "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
@@ -178,7 +177,7 @@ STATICFILES_FINDERS = [
 ]
 
 # S3 uploads & MEDIA CONFIGURATION
-# ------------------------------------------------------------------------------
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 
 if os.getenv("S3_HOST"):
     endpoint_url = f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST')}"

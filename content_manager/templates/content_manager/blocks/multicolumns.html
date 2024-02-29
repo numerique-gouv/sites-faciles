@@ -1,7 +1,7 @@
 {% load dsfr_tags wagtailcore_tags wagtailimages_tags %}
 {% image block.value.bg_image original as bg_img %}
 <div class="fr-py-5w fr-my-5w"
-     {% if bg_img %} style="background: url({{ bg_img.url }}) {{ block.value.bg_color }} no-repeat center" {% elif block.value.bg_color %} style="background: {{ block.value.bg_color }}" {% endif %}>
+     {% if block.value.bg_color_class %}style="background: var(--background-alt-{{ block.value.bg_color_class }});"{% elif bg_img %} style="background: url({{ bg_img.url }}) {{ block.value.bg_color }} no-repeat center" {% elif block.value.bg_color %} style="background: {{ block.value.bg_color }}" {% endif %}>
     <div class="fr-container">
         {% if block.value.title %}
             <div class="fr-grid-row fr-grid-row--gutters">
@@ -18,10 +18,10 @@
                     <div class="fr-col-12 fr-col-sm">
                         {{ subblock.value.text|richtext }}
                         {% if subblock.value.cta_url and subblock.value.cta_label %}
-                        <p class="fr-mb-5w">
-                            {# It doesn't use dsfr_link or dsfr_button because it's a link with a button style #}
-                            <a href="{{ subblock.value.cta_url }}" class="fr-btn fr-btn--primary">{{ subblock.value.cta_label }}</a>
-                        </p>
+                            <p class="fr-mb-5w">
+                                {# It doesn't use dsfr_link or dsfr_button because it's a link with a button style #}
+                                <a href="{{ subblock.value.cta_url }}" class="fr-btn fr-btn--primary">{{ subblock.value.cta_label }}</a>
+                            </p>
                         {% endif %}
                     </div>
                 {% elif subblock.block_type == 'image' %}
@@ -47,7 +47,10 @@
                     </div>
                 {% elif subblock.block_type == 'iframe' %}
                     <div class="fr-col-12 fr-col-sm">
-                        <iframe title="{{ subblock.value.title }}" src="{{ subblock.value.url }}" height="{{ subblock.value.height }}px" width="100%"></iframe>
+                        <iframe title="{{ subblock.value.title }}"
+                                src="{{ subblock.value.url }}"
+                                height="{{ subblock.value.height }}px"
+                                width="100%"></iframe>
                     </div>
                 {% endif %}
             {% endfor %}
