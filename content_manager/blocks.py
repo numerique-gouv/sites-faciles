@@ -24,6 +24,45 @@ LEVEL_CHOICES = [
 ]
 
 
+## Meta blocks
+class BackgroundColorChoiceBlock(blocks.ChoiceBlock):
+    choices = [
+        (
+            "Couleurs primaires",
+            (
+                ("blue-france", "Bleu France"),
+                ("red-marianne", "Rouge Marianne"),
+            ),
+        ),
+        ("Couleurs neutres", (("grey", "Gris"),)),
+        (
+            "Couleurs système",
+            (
+                ("green-tilleul-verveine", "Thilleul verveine"),
+                ("green-bourgeon", "Bourgeon"),
+                ("green-emeraude", "Émeraude"),
+                ("green-menthe", "Menthe"),
+                ("green-archipel", "Archipel"),
+                ("blue-ecume", "Écume"),
+                ("blue-cumulus", "Cumulus"),
+                ("purple-glycine", "Glycine"),
+                ("pink-macaron", "Macaron"),
+                ("pink-tuile", "Tuile"),
+                ("yellow-tournesol", "Tournesol"),
+                ("yellow-moutarde", "Moutarde"),
+                ("orange-terre-battue", "Terre battue"),
+                ("brown-cafe-creme", "Café crème"),
+                ("brown-caramel", "Caramel"),
+                ("brown-opera", "Opéra"),
+                ("beige-gris-galet", "Gris galet"),
+            ),
+        ),
+    ]
+
+    class Meta:
+        icon = "view"
+
+
 ## Basic blocks
 class AccordionBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre")
@@ -96,10 +135,16 @@ class CardBlock(blocks.StructBlock):
 
 
 class HeroBlock(blocks.StructBlock):
-    bg_image = ImageChooserBlock(label="Image d’arrière plan")
+    bg_image = ImageChooserBlock(label="Image d’arrière plan", required=False)
+    bg_color_class = BackgroundColorChoiceBlock(
+        label="Couleur d’arrière-plan",
+        required=False,
+        help_text="Utilise les couleurs du système de design de l'État",
+    )
     bg_color = blocks.RegexBlock(
-        label="Couleur d’arrière plan au format hexa (Ex: #f5f5fe)",
+        label="Couleur d’arrière-plan au format hexa (Ex: #f5f5fe)",
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+        help_text="(Obsolète, sera retiré dans une future mise à jour. Remplacez-le par la couleur d’arrière-plan)",
         error_messages={"invalid": "La couleur n’est pas correcte, le format doit être #fff ou #f5f5fe"},
         required=False,
     )
@@ -225,9 +270,15 @@ class MultiColumnsBlock(blocks.StreamBlock):
 
 class MultiColumnsWithTitleBlock(blocks.StructBlock):
     bg_image = ImageChooserBlock(label="Image d’arrière plan", required=False)
+    bg_color_class = BackgroundColorChoiceBlock(
+        label="Couleur d’arrière-plan",
+        required=False,
+        help_text="Utilise les couleurs du système de design de l'État",
+    )
     bg_color = blocks.RegexBlock(
-        label="Couleur d’arrière plan au format hexa (Ex: #f5f5fe)",
+        label="Couleur d’arrière-plan au format hexa (Ex: #f5f5fe)",
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+        help_text="(Obsolète, sera retiré dans une future mise à jour. Remplacez-le par la couleur d’arrière-plan)",
         error_messages={"invalid": "La couleur n’est pas correcte, le format doit être #fff ou #f5f5fe"},
         required=False,
     )
