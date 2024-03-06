@@ -2055,38 +2055,39 @@ testing = ["pre-commit (>=3.3.0,<4)", "tox (>=4.6.4,<5)"]
 
 [[package]]
 name = "wagtail-modeladmin"
-version = "1.0.0"
+version = "2.0.0"
 description = "Add any model in your project to the Wagtail admin. Formerly wagtail.contrib.modeladmin."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wagtail_modeladmin-1.0.0-py3-none-any.whl", hash = "sha256:0d92dd012e17dd5b5d5058792c8549594884c87da7ef794e8f1765bb245a5340"},
-    {file = "wagtail_modeladmin-1.0.0.tar.gz", hash = "sha256:da545ba34747bff01c942b8306e20ac17d8a64d1873734cc8cf7303716af93fc"},
+    {file = "wagtail_modeladmin-2.0.0-py3-none-any.whl", hash = "sha256:36931ce4b2c2bb56d0367317b29786eb001344b7c9a1cd4f719d7f11efeae71b"},
+    {file = "wagtail_modeladmin-2.0.0.tar.gz", hash = "sha256:3794c854b86d69ad1b2ec4f3ee5e6852ff8cb0505bd9151186ef26e0a88d84bc"},
 ]
 
 [package.dependencies]
-Wagtail = ">=5.0"
+Wagtail = ">=5.2"
 
 [package.extras]
-docs = ["Sphinx (>=6.0)", "myst_parser (>=0.18.1,<1.0)", "pyenchant (>=3.1.1,<4)", "sphinx-autobuild (>=0.6.0)", "sphinx-wagtail-theme (==6.0.0)", "sphinx_copybutton (>=0.5)", "sphinxcontrib-spelling (>=8.0,<9.0)"]
+docs = ["Sphinx (>=6.0)", "myst_parser (>=0.18.1,<1.0)", "pyenchant (>=3.1.1,<4)", "sphinx-autobuild (>=0.6.0)", "sphinx-wagtail-theme (==6.2.0)", "sphinx_copybutton (>=0.5)", "sphinxcontrib-spelling (>=8.0,<9.0)"]
 testing = ["dj-database-url (>=2.0.0)", "pre-commit (<3.0)"]
 
 [[package]]
 name = "wagtailmenus"
-version = "3.1.9"
+version = "4.0"
 description = "An app to help you manage menus in your Wagtail projects more consistently."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wagtailmenus-3.1.9-py3-none-any.whl", hash = "sha256:cfcaa942474c20383eed6e01a1ddf1249c7a18bb1a2faa25a744fc28c57a745b"},
-    {file = "wagtailmenus-3.1.9.tar.gz", hash = "sha256:ce484d06cf901402238ad337fc09ba8842ceff3baa08b4cafaddbb158878cda3"},
+    {file = "wagtailmenus-4.0-py3-none-any.whl", hash = "sha256:fe548b1ccd6a7b9c96b03ed0cfd020d278a8cab3b08e32d6859001ec7ec4fd03"},
+    {file = "wagtailmenus-4.0.tar.gz", hash = "sha256:d233dba4f67a72a19b61bfa0a494949e52622be124d8b537287d5d64021c57f2"},
 ]
 
 [package.dependencies]
 django-cogwheels = "0.3"
+wagtail = ">=5.2"
 
 [package.extras]
-development = ["beautifulsoup4 (>=4.8,<4.10)", "coverage (>=4.5)", "django-debug-toolbar", "django-extensions", "django-webtest (>=1.9,<1.10)", "ipdb", "wagtail (>=2.15)", "wagtail-modeladmin (>=1.0)", "werkzeug"]
+development = ["beautifulsoup4 (>=4.8,<4.10)", "coverage (>=4.5)", "django-debug-toolbar", "django-extensions", "django-webtest (>=1.9,<1.10)", "ipdb", "wagtail (>=5.2)", "werkzeug"]
 docs = ["Sphinx (>=1.7.4)", "pyenchant (>=2.0)", "sphinx-rtd-theme (>=0.3)", "sphinxcontrib-spelling (>=1.4)"]
 testing = ["beautifulsoup4 (>=4.8,<4.10)", "coverage (>=4.5)", "django-webtest (>=1.9,<1.10)"]
 
@@ -2141,4 +2142,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "632f14eb29fd991206da576b14b6341c8af9389a548a5544783410f59d25f5ea"
+content-hash = "13a4633a715e64c7b244adc500fac0a784e2fd56f710e63010890dbad36c48da"
