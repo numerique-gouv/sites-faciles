@@ -1,4 +1,6 @@
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+from dsfr.constants import COLOR_CHOICES
 from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
@@ -26,41 +28,26 @@ LEVEL_CHOICES = [
 
 ## Meta blocks
 class BackgroundColorChoiceBlock(blocks.ChoiceBlock):
-    choices = [
-        (
-            "Couleurs primaires",
-            (
-                ("blue-france", "Bleu France"),
-                ("red-marianne", "Rouge Marianne"),
-            ),
-        ),
-        ("Couleurs neutres", (("grey", "Gris"),)),
-        (
-            "Couleurs système",
-            (
-                ("green-tilleul-verveine", "Thilleul verveine"),
-                ("green-bourgeon", "Bourgeon"),
-                ("green-emeraude", "Émeraude"),
-                ("green-menthe", "Menthe"),
-                ("green-archipel", "Archipel"),
-                ("blue-ecume", "Écume"),
-                ("blue-cumulus", "Cumulus"),
-                ("purple-glycine", "Glycine"),
-                ("pink-macaron", "Macaron"),
-                ("pink-tuile", "Tuile"),
-                ("yellow-tournesol", "Tournesol"),
-                ("yellow-moutarde", "Moutarde"),
-                ("orange-terre-battue", "Terre battue"),
-                ("brown-cafe-creme", "Café crème"),
-                ("brown-caramel", "Caramel"),
-                ("brown-opera", "Opéra"),
-                ("beige-gris-galet", "Gris galet"),
-            ),
-        ),
-    ]
+    choices = COLOR_CHOICES
 
     class Meta:
         icon = "view"
+
+
+class LinkStructValue(blocks.StructValue):
+    def url(self):
+        external_url = self.get("external_url")
+        page = self.get("page")
+        return external_url or page.url
+
+
+class LinkBlock(blocks.StructBlock):
+    text = blocks.CharBlock(label=_("Link text"), required=False)
+    page = blocks.PageChooserBlock(label=_("Page"), required=False)
+    external_url = blocks.URLBlock(label=_("External URL"), required=False)
+
+    class Meta:
+        value_class = LinkStructValue
 
 
 ## Basic blocks
@@ -139,7 +126,7 @@ class HeroBlock(blocks.StructBlock):
     bg_color_class = BackgroundColorChoiceBlock(
         label="Couleur d’arrière-plan",
         required=False,
-        help_text="Utilise les couleurs du système de design de l'État",
+        help_text="Utilise les couleurs du système de design de l’État",
     )
     bg_color = blocks.RegexBlock(
         label="Couleur d’arrière-plan au format hexa (Ex: #f5f5fe)",
@@ -188,6 +175,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         default="3",
     )
     text = blocks.RichTextBlock(label="Texte avec mise en forme")
+    link = LinkBlock(required=False)
     link_label = blocks.CharBlock(
         label="Titre du lien",
         help_text="Le lien apparait en bas du bloc de droite, avec une flèche",
@@ -273,7 +261,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
     bg_color_class = BackgroundColorChoiceBlock(
         label="Couleur d’arrière-plan",
         required=False,
-        help_text="Utilise les couleurs du système de design de l'État",
+        help_text="Utilise les couleurs du système de design de l’État",
     )
     bg_color = blocks.RegexBlock(
         label="Couleur d’arrière-plan au format hexa (Ex: #f5f5fe)",
@@ -293,10 +281,6 @@ STREAMFIELD_TITLE_BLOCKS = [
 
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
-    (
-        "paragraphlarge",
-        blocks.RichTextBlock(label="Texte avec mise en forme (large)"),
-    ),
     ("image", ImageBlock()),
     (
         "imageandtext",

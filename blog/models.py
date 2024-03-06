@@ -12,15 +12,16 @@ from django.utils import timezone
 from django.utils.translation import get_language, gettext_lazy as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
-from taggit.models import Tag as TaggitTag, TaggedItemBase
+from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
 from wagtail.admin.widgets.slug import SlugInput
 from wagtail.models.i18n import Locale, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
-from blog.managers import CategoryManager, TagManager
+from blog.managers import CategoryManager
 from content_manager.abstract import SitesFacilesBasePage
+from content_manager.models import Tag
 
 
 User = get_user_model()
@@ -163,7 +164,6 @@ class BlogEntryPage(SitesFacilesBasePage):
         "Category",
         through="CategoryEntryPage",
         blank=True,
-        null=True,
         verbose_name=_("Categories"),
     )
     date = models.DateTimeField(verbose_name=_("Post date"), default=timezone.now)
@@ -266,11 +266,3 @@ class CategoryEntryPage(models.Model):
 
 class TagEntryPage(TaggedItemBase):
     content_object = ParentalKey("BlogEntryPage", related_name="entry_tags")
-
-
-@register_snippet
-class Tag(TaggitTag):
-    objects = TagManager()
-
-    class Meta:
-        proxy = True

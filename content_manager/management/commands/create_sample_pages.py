@@ -29,7 +29,6 @@ class Command(BaseCommand):
             elif slug == "mentions-legales":
                 title = "Mentions légales"
                 body = []
-                body.append(("title", {"title": title, "large": True}))
 
                 alert_block = {
                     "title": title,
@@ -37,6 +36,7 @@ class Command(BaseCommand):
                     <a href="https://www.francenum.gouv.fr/guides-et-conseils/developpement-commercial/site-web/quelles-sont-les-mentions-legales-pour-un-site">
                     Que doivent-elles obligatoirement contenir ?</a>""",  # noqa
                     "level": "info",
+                    "heading_tag": "h2",
                 }
                 body.append(("alert", alert_block))
 
@@ -51,13 +51,12 @@ class Command(BaseCommand):
                 </ul>
                 <p>Ces deux derniers peuvent pointer vers des pages à part entière ou des sections de cette page.</p>
                 """  # noqa
-                body.append(("paragraphlarge", RichText(text_raw)))
+                body.append(("paragraph", RichText(text_raw)))
 
                 self.create_page(slug=slug, title=title, body=body)
             elif slug == "accessibilite":
                 title = "Déclaration d’accessibilité"
                 body = []
-                body.append(("title", {"title": title, "large": True}))
 
                 alert_block = {
                     "title": title,
@@ -65,6 +64,7 @@ class Command(BaseCommand):
                     <a href="https://betagouv.github.io/a11y-generateur-declaration/#create">
                     Générateur de déclaration d’accessibilité</a>""",
                     "level": "info",
+                    "heading_tag": "h2",
                 }
 
                 body.append(("alert", alert_block))
@@ -83,7 +83,7 @@ class Command(BaseCommand):
 
         # Create the page
         body = []
-        body.append(("title", {"title": "Votre nouveau site avec le CMS Beta", "large": True}))
+        title = "Votre nouveau site avec le CMS Beta"
 
         image = import_image(
             full_path="staticfiles/dsfr/dist/artwork/pictograms/digital/coding.svg",
@@ -115,10 +115,10 @@ class Command(BaseCommand):
             <li>Remplacer le contenu de cette page d’accueil.</li>
         </ul>
         """
-        body.append(("paragraphlarge", RichText(text_2_raw)))
+        body.append(("paragraph", RichText(text_2_raw)))
 
         root = Page.objects.get(slug="root")
-        home_page = root.add_child(instance=ContentPage(title="Accueil", body=body, show_in_menus=True))
+        home_page = root.add_child(instance=ContentPage(title=title, body=body, show_in_menus=True))
 
         # Define it as default for the default site
         site = Site.objects.filter(is_default_site=True).first()

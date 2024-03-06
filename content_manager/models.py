@@ -1,30 +1,38 @@
 from django.db import models
 from django.forms.widgets import Textarea
+from django.utils.translation import gettext_lazy as _
+from modelcluster.fields import ParentalKey
+from modelcluster.tags import ClusterTaggableManager
+from taggit.models import Tag as TaggitTag, TaggedItemBase
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
-from wagtail.fields import StreamField
-from wagtail.models import Page
-from wagtail.search import index
+from wagtail.snippets.models import register_snippet
 
-from content_manager.blocks import STREAMFIELD_ALL_BLOCKS
+from content_manager.abstract import SitesFacilesBasePage
+from content_manager.managers import TagManager
 
 
-class ContentPage(Page):
-    body = StreamField(
-        STREAMFIELD_ALL_BLOCKS,
-        blank=True,
-        use_json_field=True,
-    )
+class ContentPage(SitesFacilesBasePage):
+    tags = ClusterTaggableManager(through="TagContentPage", blank=True)
 
-    # Editor panels configuration
-    content_panels = Page.content_panels + [
-        FieldPanel("body"),
+    class Meta:
+        verbose_name = _("Content page")
+
+    settings_panels = SitesFacilesBasePage.settings_panels + [
+        FieldPanel("tags"),
     ]
 
-    # Inherit search_fields from Page and add body to index
-    search_fields = Page.search_fields + [
-        index.SearchField("body"),
-    ]
+
+class TagContentPage(TaggedItemBase):
+    content_object = ParentalKey("ContentPage", related_name="contentpage_tags")
+
+
+@register_snippet
+class Tag(TaggitTag):
+    objects = TagManager()
+
+    class Meta:
+        proxy = True
 
 
 class MonospaceField(models.TextField):

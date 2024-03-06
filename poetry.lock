@@ -471,13 +471,13 @@ django = ">=4.2"
 
 [[package]]
 name = "django-dsfr"
-version = "0.17.1"
+version = "0.18.1"
 description = "Integrate the French government Design System into a Django app"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "django_dsfr-0.17.1-py3-none-any.whl", hash = "sha256:81407df3e8ea9140be097d21bce22f238385b43a298625aa603468c3a1edc191"},
-    {file = "django_dsfr-0.17.1.tar.gz", hash = "sha256:a8ecdd8d3e06055fcf537326fd9c94400058c874f96346395971fb7552f3e820"},
+    {file = "django_dsfr-0.18.1-py3-none-any.whl", hash = "sha256:8874b6ea9b6267c8d34179f0120670f7e11e8f8733ea592f29955672c67caeda"},
+    {file = "django_dsfr-0.18.1.tar.gz", hash = "sha256:ceb19cb5a0ce3d4ae4091964b7ade56e5757f7e7499d6668804b12443c3f212c"},
 ]
 
 [package.dependencies]
