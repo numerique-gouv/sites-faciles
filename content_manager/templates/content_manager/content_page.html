@@ -55,9 +55,7 @@
 
     <div class="fr-container fr-my-6w">
         {% for tag in page.tags.all|dictsort:"slug" %}
-            <a class="fr-tag"
-               target="_self"
-               href="{% url 'blog:tag' page.get_parent.slug tag.slug %}">{{ tag }}</a>
+            <a class="fr-tag" target="_self" href="{% url 'global_tag' tag.slug %}">{{ tag }}</a>
         {% endfor %}
     </div>
 

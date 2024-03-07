@@ -3,7 +3,7 @@
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags i18n %}
 
 {% block title %}
-    <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+    <title>{% blocktranslate %}Posts tagged with {{ tag }}{% endblocktranslate %}</title>
 {% endblock title %}
 
 {% if page.search_description %}
@@ -43,58 +43,30 @@
 {% endblock social_media %}
 
 {% block content %}
-    {% include "content_manager/blocks/heading.html" %}
     {% include "content_manager/blocks/messages.html" %}
 
     <div class="fr-container fr-mt-6w">
-        {% if category %}
-            {% dsfr_breadcrumb breadcrumb %}
-            <h1>{% blocktranslate %}Posts in category {{ category }}{% endblocktranslate %}</h1>
-        {% elif tag %}
-            {% dsfr_breadcrumb breadcrumb %}
-            <h1>{% blocktranslate %}Posts tagged with {{ tag }}{% endblocktranslate %}</h1>
-        {% elif author %}
-            {% dsfr_breadcrumb breadcrumb %}
-            <h1>{% blocktranslate %}Posts written by{% endblocktranslate %} {{ author.first_name }} {{ author.last_name }}</h1>
-        {% elif year %}
-            <h1 class="title">{% blocktranslate %}Posts published in {{ year }}{% endblocktranslate %}</h1>
-        {% else %}
-            {% include "content_manager/blocks/breadcrumbs.html" %}
-            <h1>{{ page.title }}</h1>
-            {% if page.description %}<p>{{ page.description }}</p>{% endif %}
-        {% endif %}
+        {% dsfr_breadcrumb breadcrumb %}
+        <h1>{% blocktranslate %}Posts tagged with {{ tag }}{% endblocktranslate %}</h1>
     </div>
 
     <div class="fr-container fr-mt-6w">
         <div class="fr-grid-row fr-grid-row--gutters fr-mb-3w">
-            {% for post in posts %}
+            {% for entry in object_list %}
                 <div class="fr-col fr-col-md-6">
                     <div class="fr-card fr-enlarge-link">
                         <div class="fr-card__body">
                             <div class="fr-card__content">
                                 <h2 class="fr-card__title">
-                                    <a href="{{ post.url }}">{{ post.title }}</a>
+                                    <a href="{{ entry.url }}">{{ entry.title }}</a>
                                 </h2>
-                                <p class="fr-card__desc">Publié le {{ post.date |date:'l j F Y' }}</p>
-
-                                {% if post.blog_categories.all %}
-                                    <div class="fr-card__start">
-                                        <ul class="fr-tags-group">
-                                            {% for category in post.blog_categories.all %}
-                                                <li>
-                                                    <p class="fr-tag">{{ category.name }}</p>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                {% endif %}
                             </div>
                         </div>
-                        {% if post.header_image %}
+                        {% if entry.header_image %}
                             <div class="fr-card__header">
                                 <div class="fr-card__img">
                                     <img class="fr-responsive-img"
-                                         src="{{ post.header_image.file.url }}"
+                                         src="{{ entry.header_image.file.url }}"
                                          alt="">
                                 </div>
                             </div>

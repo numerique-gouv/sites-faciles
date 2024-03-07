@@ -3,6 +3,5 @@ from django.db.models import Count
 
 
 class TagManager(models.Manager):
-    def most_common(self, blog_page):
-        entries = blog_page.get_entries()
-        return self.filter(entrypage__in=entries).annotate(num_times=Count("entrypage")).order_by("-num_times")
+    def tags_with_usecount(self, min_count=0):
+        return self.annotate(usecount=Count("contentpage")).filter(usecount__gte=min_count)
