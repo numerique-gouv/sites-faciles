@@ -1,6 +1,0 @@
-{% load static wagtailimages_tags %}
-{% image block.value.bg_image original as bg_img %}
-<div class="cmsfr-hero{% if block.value.large %} cmsfr-hero-large{% endif %}{% if block.value.darken %} cmsfr-hero-dark{% endif %}"
-     style="{% if bg_img %}background-image: {% if block.value.darken %}linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),{% endif %}url({{ bg_img.url }});
-            {% endif %} background-color: {% if block.value.bg_color_class %}var(--background-alt-{{ block.value.bg_color_class }}){% else %}{{ block.value.bg_color }}{% endif %}">
-</div>

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.urls import reverse
 from wagtail.models import Page, Site
@@ -97,11 +98,13 @@ class Command(BaseCommand):
         <p>Vous pouvez maintenant vous connecter dans l’administration et personnaliser le site.</p>
         """
 
+        admin_url = f"{settings.WAGTAILADMIN_BASE_URL}{reverse('wagtailadmin_home')}"
+
         image_and_text_block = {
             "image": image,
             "image_ratio": "3",
             "text": RichText(text_raw),
-            "link_url": reverse("wagtailadmin_home"),
+            "link_url": admin_url,
             "link_label": "Gérer le site",
         }
 
