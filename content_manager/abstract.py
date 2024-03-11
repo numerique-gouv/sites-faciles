@@ -8,6 +8,7 @@ from wagtail.models import Page
 from wagtail.search import index
 
 from content_manager.blocks import STREAMFIELD_COMMON_BLOCKS
+from content_manager.utils import get_streamfield_raw_text
 
 
 class SitesFacilesBasePage(Page):
@@ -88,6 +89,13 @@ class SitesFacilesBasePage(Page):
 
     def get_absolute_url(self):
         return self.url
+
+    def save(self, *args, **kwargs):
+        if not self.search_description:
+            search_description = get_streamfield_raw_text(self.body, max_words=20)
+            if search_description:
+                self.search_description = search_description
+        return super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
