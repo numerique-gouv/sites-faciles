@@ -1,66 +1,39 @@
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+from dsfr.constants import COLOR_CHOICES
 from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
+from content_manager.constants import HEADING_CHOICES, LEVEL_CHOICES
+
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
-
-HEADING_CHOICES = [
-    ("h2", "En-tête 2"),
-    ("h3", "En-tête 3"),
-    ("h4", "En-tête 4"),
-    ("h5", "En-tête 5"),
-    ("h6", "En-tête 6"),
-    ("p", "Paragraphe"),
-]
-
-LEVEL_CHOICES = [
-    ("error", "Erreur"),
-    ("success", "Succès"),
-    ("info", "Information"),
-    ("warning", "Attention"),
-]
 
 
 ## Meta blocks
 class BackgroundColorChoiceBlock(blocks.ChoiceBlock):
-    choices = [
-        (
-            "Couleurs primaires",
-            (
-                ("blue-france", "Bleu France"),
-                ("red-marianne", "Rouge Marianne"),
-            ),
-        ),
-        ("Couleurs neutres", (("grey", "Gris"),)),
-        (
-            "Couleurs système",
-            (
-                ("green-tilleul-verveine", "Thilleul verveine"),
-                ("green-bourgeon", "Bourgeon"),
-                ("green-emeraude", "Émeraude"),
-                ("green-menthe", "Menthe"),
-                ("green-archipel", "Archipel"),
-                ("blue-ecume", "Écume"),
-                ("blue-cumulus", "Cumulus"),
-                ("purple-glycine", "Glycine"),
-                ("pink-macaron", "Macaron"),
-                ("pink-tuile", "Tuile"),
-                ("yellow-tournesol", "Tournesol"),
-                ("yellow-moutarde", "Moutarde"),
-                ("orange-terre-battue", "Terre battue"),
-                ("brown-cafe-creme", "Café crème"),
-                ("brown-caramel", "Caramel"),
-                ("brown-opera", "Opéra"),
-                ("beige-gris-galet", "Gris galet"),
-            ),
-        ),
-    ]
+    choices = COLOR_CHOICES
 
     class Meta:
         icon = "view"
+
+
+class LinkStructValue(blocks.StructValue):
+    def url(self):
+        external_url = self.get("external_url")
+        page = self.get("page")
+        return external_url or page.url
+
+
+class LinkBlock(blocks.StructBlock):
+    text = blocks.CharBlock(label=_("Link text"), required=False)
+    page = blocks.PageChooserBlock(label=_("Page"), required=False)
+    external_url = blocks.URLBlock(label=_("External URL"), required=False)
+
+    class Meta:
+        value_class = LinkStructValue
 
 
 ## Basic blocks
@@ -134,28 +107,6 @@ class CardBlock(blocks.StructBlock):
     )
 
 
-class HeroBlock(blocks.StructBlock):
-    bg_image = ImageChooserBlock(label="Image d’arrière plan", required=False)
-    bg_color_class = BackgroundColorChoiceBlock(
-        label="Couleur d’arrière-plan",
-        required=False,
-        help_text="Utilise les couleurs du système de design de l'État",
-    )
-    bg_color = blocks.RegexBlock(
-        label="Couleur d’arrière-plan au format hexa (Ex: #f5f5fe)",
-        regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        help_text="(Obsolète, sera retiré dans une future mise à jour. Remplacez-le par la couleur d’arrière-plan)",
-        error_messages={"invalid": "La couleur n’est pas correcte, le format doit être #fff ou #f5f5fe"},
-        required=False,
-    )
-    title = blocks.CharBlock(label="Titre")
-    text = blocks.CharBlock(label="Texte", required=False)
-    cta_label = blocks.CharBlock(label="Texte du bouton", required=False)
-    cta_link = blocks.URLBlock(label="Lien du bouton", required=False)
-    large = blocks.BooleanBlock(label="Large", required=False)
-    darken = blocks.BooleanBlock(label="Assombrir", required=False)
-
-
 class IframeBlock(blocks.StructBlock):
     title = blocks.CharBlock(
         label="Titre",
@@ -188,6 +139,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         default="3",
     )
     text = blocks.RichTextBlock(label="Texte avec mise en forme")
+    link = LinkBlock(required=False)
     link_label = blocks.CharBlock(
         label="Titre du lien",
         help_text="Le lien apparait en bas du bloc de droite, avec une flèche",
@@ -243,11 +195,6 @@ class TextAndCTA(blocks.StructBlock):
     cta_url = blocks.CharBlock(label="Lien", required=False)
 
 
-class TitleBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre")
-    large = blocks.BooleanBlock(label="Large", required=False)
-
-
 class VideoBlock(blocks.StructBlock):
     title = blocks.CharBlock(label="Titre", required=False)
     caption = blocks.CharBlock(label="Légende")
@@ -273,7 +220,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
     bg_color_class = BackgroundColorChoiceBlock(
         label="Couleur d’arrière-plan",
         required=False,
-        help_text="Utilise les couleurs du système de design de l'État",
+        help_text="Utilise les couleurs du système de design de l’État",
     )
     bg_color = blocks.RegexBlock(
         label="Couleur d’arrière-plan au format hexa (Ex: #f5f5fe)",
@@ -286,17 +233,8 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
     columns = MultiColumnsBlock(label="Multi-colonnes")
 
 
-STREAMFIELD_TITLE_BLOCKS = [
-    ("hero", HeroBlock(label="Section promotionnelle")),
-    ("title", TitleBlock(label="Titre de page")),
-]
-
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
-    (
-        "paragraphlarge",
-        blocks.RichTextBlock(label="Texte avec mise en forme (large)"),
-    ),
     ("image", ImageBlock()),
     (
         "imageandtext",
@@ -328,6 +266,3 @@ if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
             ),
         )
     ]
-
-
-STREAMFIELD_ALL_BLOCKS = STREAMFIELD_TITLE_BLOCKS + STREAMFIELD_COMMON_BLOCKS

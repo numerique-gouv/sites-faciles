@@ -1,19 +1,7 @@
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtailmarkdown %}
 
 {% for block in page.body %}
-    {% if block.block_type == 'hero' %}
-        {% include "content_manager/blocks/hero.html" %}
-        <div class="fr-container">{% include "content_manager/blocks/breadcrumbs.html" %}</div>
-    {% elif block.block_type == 'title' %}
-        <div class="fr-container fr-mt-6w">
-            <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12{% if not block.value.large %} fr-col-offset-md-2 fr-col-md-8{% endif %}">
-                    {% include "content_manager/blocks/breadcrumbs.html" %}
-                    <h1 class="fr-display--sm">{{ block.value.title }}</h1>
-                </div>
-            </div>
-        </div>
-    {% elif block.block_type == 'imageandtext' %}
+    {% if block.block_type == 'imageandtext' %}
         {% include "content_manager/blocks/imageandtext.html" %}
     {% elif block.block_type == 'alert' %}
         {% include "content_manager/blocks/alert.html" %}
@@ -45,12 +33,6 @@
     {% elif block.block_type == 'multicolumns' %}
         {% include "content_manager/blocks/multicolumns.html" %}
     {% elif block.block_type == 'paragraph' %}
-        <div class="fr-container">
-            <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">{{ block.value|richtext }}</div>
-            </div>
-        </div>
-    {% elif block.block_type == 'paragraphlarge' %}
         <div class="fr-container">
             <div class="fr-grid-row fr-grid-row--gutters">
                 <div class="fr-col-12">{{ block.value|richtext }}</div>

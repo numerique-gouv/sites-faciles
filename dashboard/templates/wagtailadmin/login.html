@@ -44,10 +44,7 @@
                                             {% url 'wagtailadmin_home' as home_url %}
                                             <input type="hidden" name="next" value="{{ next|default:home_url }}" />
                                             <div class="fr-input-group">
-                                                <label class="fr-label" for="id_username">
-                                                    Identifiant&nbsp;:
-                                                    <span class="fr-hint-text">Format attendu : nom@domaine.fr</span>
-                                                </label>
+                                                <label class="fr-label" for="id_username">Identifiant&nbsp;:</label>
                                                 {{ form.username |add_class:"fr-input" }}
                                             </div>
                                         </div>
