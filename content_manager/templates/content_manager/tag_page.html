@@ -3,43 +3,24 @@
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags i18n %}
 
 {% block title %}
-    <title>{% blocktranslate %}Posts tagged with {{ tag }}{% endblocktranslate %}</title>
+    <title>{{ title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
 {% endblock title %}
 
-{% if page.search_description %}
-    {% block description %}
-        <meta name="description" content="{{ page.search_description }}" />
-    {% endblock description %}
-{% endif %}
+{% block description %}
+    <meta name="description" content="{{ search_description }}" />
+{% endblock description %}
 
 {% block social_media %}
-    <meta property="og:site_name" content="{{ request.get_host }}" />
-    <meta property="og:title"
-          content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="{{ page.full_url }}" />
-    <meta property="og:description" content="{{ page.search_description }}" />
+    <meta property="og:site_name"
+          content="{{ settings.content_manager.CmsDsfrConfig.site_title }}" />
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:description" content="{{ search_description }}" />
     <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
 
-    {% if page.get_translations.live %}
-        {% for translation in page.get_translations.live %}
-            <meta property="og:locale:alternate"
-                  content="{{ translation.locale.language_code }}" />
-        {% endfor %}
-    {% endif %}
-
-    <meta name="twitter:title"
-          content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
-    <meta name="twitter:description" content="{{ page.search_description }}" />
-
-    {% if page.header_image %}
-        <meta name="twitter:card" content="summary_large_image" />
-        {% image page.header_image fill-1200x627 as header_image %}
-        <meta property="og:image" content="{{ header_image.full_url }}" />
-        <meta name="twitter:image" content="{{ header_image.full_url }}" />
-    {% else %}
-        <meta name="twitter:card" content="summary" />
-    {% endif %}
+    <meta name="twitter:title" content="{{ title }}" />
+    <meta name="twitter:description" content="{{ search_description }}" />
 {% endblock social_media %}
 
 {% block content %}
@@ -47,7 +28,7 @@
 
     <div class="fr-container fr-mt-6w">
         {% dsfr_breadcrumb breadcrumb %}
-        <h1>{% blocktranslate %}Posts tagged with {{ tag }}{% endblocktranslate %}</h1>
+        <h1>{{ title }}</h1>
     </div>
 
     <div class="fr-container fr-mt-6w">

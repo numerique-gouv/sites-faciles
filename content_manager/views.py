@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, TemplateView
 from unidecode import unidecode
-from wagtail.models import Site
 
 from content_manager.models import ContentPage, Tag
 
@@ -41,13 +41,16 @@ class TagsListView(TemplateView):
                 tags_by_first_letter[first_letter] = []
             tags_by_first_letter[first_letter].append(tag)
 
-        breadcrumb = {
-            "links": [],
-            "current": _("Tags"),
-        }
-
         context["sorted_tags"] = tags_by_first_letter
-        context["breadcrumb"] = breadcrumb
+
+        title = _("Tags")
+        context["title"] = title
+        context["breadcrumb"] = {
+            "links": [],
+            "current": title,
+        }
+        context["search_description"] = _("List of all the tags.")
+
         return context
 
 
@@ -64,12 +67,18 @@ class TagView(ListView):
         context = super().get_context_data(**kwargs)
         tag_slug = self.kwargs.get("tag")
 
-        print(tag_slug)
-
         tag = get_object_or_404(Tag, slug=tag_slug)
         context["tag"] = tag
 
-        # Use the homepage for context
-        context["page"] = Site.objects.filter(is_default_site=True).first().root_page
+        title = _("Pages tagged with {tag}").format(tag=tag.name)
+        context["title"] = title
+        context["breadcrumb"] = {
+            "links": [
+                {"url": reverse("global_tags_list"), "title": _("Tags")},
+            ],
+            "current": title,
+        }
+
+        context["search_description"] = _("List of pages tagged with {tag}").format(tag=tag.name)
 
         return context
