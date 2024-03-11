@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 11:30+0100\n"
+"POT-Creation-Date: 2024-03-11 16:15+0100\n"
 "PO-Revision-Date: 2024-02-27 11:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,25 +18,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.4\n"
 
-#: blog/models.py:33
+#: blog/models.py:34
 msgid "Posts per page"
 msgstr "Articles par page"
 
-#: blog/models.py:43
+#: blog/models.py:44
 msgid "Blog index"
 msgstr "Index de blog"
 
-#: blog/models.py:71 blog/templates/blog/tags_list_page.html:20
+#: blog/models.py:72 blog/templates/blog/tags_list_page.html:20
 #: blog/views.py:149
 msgid "Tags"
 msgstr "Étiquettes"
 
-#: blog/models.py:94 blog/models.py:167 blog/models.py:248
+#: blog/models.py:95 blog/models.py:167 blog/models.py:248
 #: blog/templates/blog/categories_list_page.html:20 blog/views.py:117
 msgid "Categories"
 msgstr "Catégories"
 
-#: blog/models.py:106 blog/templates/blog/blog_index_page.html:58
+#: blog/models.py:107 blog/templates/blog/blog_index_page.html:58
 msgid "Posts written by"
 msgstr "Articles écrits par"
 

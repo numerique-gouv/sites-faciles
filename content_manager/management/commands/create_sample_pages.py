@@ -84,7 +84,7 @@ class Command(BaseCommand):
 
         # Create the page
         body = []
-        title = "Votre nouveau site avec le CMS Beta"
+        title = "Votre nouveau site avec Sites faciles"
 
         image = import_image(
             full_path="staticfiles/dsfr/dist/artwork/pictograms/digital/coding.svg",

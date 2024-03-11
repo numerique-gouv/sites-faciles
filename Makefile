@@ -23,8 +23,8 @@ collectstatic:
 	$(EXEC_CMD) poetry run python manage.py collectstatic --noinput --ignore=*.sass
 
 
-.PHONY: makemessages
-makemessages:
+.PHONY: messages
+messages:
 	$(EXEC_CMD) poetry run django-admin makemessages -l fr --ignore=manage.py
 
 .PHONY: sass
