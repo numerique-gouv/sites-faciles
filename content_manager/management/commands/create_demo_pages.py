@@ -7,7 +7,7 @@ from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from blog.models import BlogIndexPage
-from content_manager.models import ContentPage, MegaMenu
+from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
 
 
 ALL_ALLOWED_SLUGS = ["blog_index", "publications"]
@@ -69,17 +69,20 @@ class Command(BaseCommand):
                 )
 
                 # Create a set of publications sub-pages
-                for i in range(1, 5):
-                    menu_category, _created = FlatMenu.objects.get_or_create(
+                for i in range(4):
+                    menu_category_menu, _created = FlatMenu.objects.get_or_create(
                         site_id=site.id,
-                        title=f"Menu publications > Catégorie {i}",
-                        handle=f"mega_menu_section_{i}",
-                        heading=f"Colonne {i}",
+                        title=f"Menu publications > Catégorie {i + 1}",
+                        handle=f"mega_menu_section_{i + 1}",
+                        heading=f"Colonne {i + 1}",
+                    )
+
+                    menu_category, _created = MegaMenuCategory.objects.get_or_create(
+                        mega_menu=publications_mega_menu, sort_order=i, category=menu_category_menu
                     )
 
                     for j in range(8):
-                        title = " ".join(fake.words(nb=3, unique=True)).capitalize()
-                        title = f"{title} ({i} - {j + 1})"
+                        title = f"Page {i + 1} - {j + 1}"
 
                         body = []
                         text = ""
@@ -91,9 +94,7 @@ class Command(BaseCommand):
                             slug=slugify(title), title=title, body=body, parent_page=publications_page
                         )
 
-                        FlatMenuItem.objects.get_or_create(
-                            link_page_id=new_page.id, menu_id=menu_category.id, sort_order=j
-                        )
+                        FlatMenuItem.objects.get_or_create(link_page=new_page, menu=menu_category_menu, sort_order=j)
 
                     publications_mega_menu.categories.add(menu_category)
                     publications_mega_menu.save()

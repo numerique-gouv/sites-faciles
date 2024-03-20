@@ -2,10 +2,12 @@ from django.db import models
 from django.forms.widgets import Textarea
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import Tag as TaggitTag, TaggedItemBase
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
+from wagtail.models import Orderable
 from wagtail.snippets.models import register_snippet
 
 from content_manager.abstract import SitesFacilesBasePage
@@ -154,10 +156,17 @@ class CmsDsfrConfig(BaseSiteSetting):
 
 
 # Mega-Menus
+class MegaMenuCategory(Orderable):
+    mega_menu = ParentalKey("content_manager.MegaMenu", related_name="categories", on_delete=models.CASCADE)
+    category = models.ForeignKey("wagtailmenus.FlatMenu", on_delete=models.CASCADE, verbose_name=_("Category"))
+
+    class Meta:
+        verbose_name = _("Mega menu category")
+        verbose_name_plural = _("Mega menu categories")
 
 
 @register_snippet
-class MegaMenu(models.Model):
+class MegaMenu(ClusterableModel):
     name = models.CharField(_("Name"), max_length=255)
     parent_menu_item = models.ForeignKey(
         "wagtailmenus.MainMenuItem", on_delete=models.CASCADE, related_name="megamenu_parent_menu_items"
@@ -165,22 +174,24 @@ class MegaMenu(models.Model):
     description = models.TextField(_("Description"), blank=True)
     main_link = models.URLField(_("Main link"), blank=True, null=True)
 
-    categories = models.ManyToManyField(
-        "wagtailmenus.FlatMenu", blank=True, null=True, help_text=_("Maximum 4 categories, each with maximum 8 links.")
-    )
     panels = [
         FieldPanel("name"),
         FieldPanel("parent_menu_item"),
         FieldPanel("description"),
         FieldPanel("main_link"),
-        FieldPanel("categories"),
+        InlinePanel(
+            "categories",
+            max_num=4,
+            heading=_("Categories"),
+            help_text=_("Maximum 4 categories, each with maximum 8 links."),
+        ),
     ]
 
     def __str__(self):  # type: ignore
         return self.name
 
     def get_categories(self):
-        return self.categories.order_by("handle")
+        return self.categories.order_by("sort_order")
 
     class Meta:
         verbose_name = _("Mega menu")

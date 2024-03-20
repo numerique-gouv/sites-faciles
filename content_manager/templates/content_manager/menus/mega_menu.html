@@ -16,18 +16,18 @@
                     {% endif %}
                 </div>
             </div>
-            {% for category in menu.get_categories|slice:":4" %}
+            {% for category in menu.get_categories %}
                 <div class="fr-col-12 fr-col-lg-3">
                     <h5 class="fr-mega-menu__category">
                         <a class="fr-nav__link" href="#" target="_self">
-                            {% if category.heading %}
-                                {{ category.heading }}
+                            {% if category.category.heading %}
+                                {{ category.category.heading }}
                             {% else %}
-                                {{ category.title }}
+                                {{ category.category.title }}
                             {% endif %}
                         </a>
                     </h5>
-                    {% flat_menu category.handle template="content_manager/menus/mega_menu_category.html" %}
+                    {% flat_menu category.category.handle template="content_manager/menus/mega_menu_category.html" %}
                 </div>
             {% endfor %}
         </div>
