@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.management import call_command
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
 
@@ -30,4 +31,21 @@ class ContentPageTestCase(WagtailPageTestCase):
         self.assertContains(
             response,
             "<title>Page de contenu — Titre du site</title>",
+        )
+
+
+class MegaMenuTestCase(WagtailPageTestCase):
+    @classmethod
+    def setUpTestData(cls) -> None:
+        call_command("create_starter_pages")
+        call_command("create_demo_pages")
+
+    def test_mega_menu_is_rendered(self):
+        self.home_page = ContentPage.objects.get(slug="home")
+        self.assertPageIsRenderable(self.home_page)
+        response = self.client.get(self.home_page.url)
+
+        self.assertContains(
+            response,
+            '<p class="fr-hidden fr-displayed-lg">Ceci est une description</p>',
         )

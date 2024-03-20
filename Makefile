@@ -61,3 +61,8 @@ demo:
 .PHONY: runserver
 runserver:
 	$(EXEC_CMD) poetry run python manage.py runserver $(HOST_URL):$(HOST_PORT)
+
+
+.PHONY: test
+test:
+	$(EXEC_CMD) poetry run python manage.py test
