@@ -93,7 +93,7 @@ class Command(BaseCommand):
         title = "Votre nouveau site avec Sites faciles"
 
         image = import_image(
-            full_path="staticfiles/dsfr/dist/artwork/pictograms/digital/coding.svg",
+            full_path="static/artwork/pictograms/digital/coding.svg",
             title="Pictogrammes DSFR — Internet",
         )
 
