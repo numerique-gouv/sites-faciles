@@ -1,9 +1,12 @@
 from django.contrib.auth.models import User
 from django.core.management import call_command
-from wagtail.models import Page
+from wagtail.models import Page, Site
+from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
+from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
+from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from content_manager.models import ContentPage
+from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
 
 
 class ContentPageTestCase(WagtailPageTestCase):
@@ -34,18 +37,129 @@ class ContentPageTestCase(WagtailPageTestCase):
         )
 
 
-class MegaMenuTestCase(WagtailPageTestCase):
+class MenusTestCase(WagtailPageTestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         call_command("create_starter_pages")
-        call_command("create_demo_pages")
 
-    def test_mega_menu_is_rendered(self):
-        self.home_page = ContentPage.objects.get(slug="home")
+    def setUp(self) -> None:
+        self.site = Site.objects.filter(is_default_site=True).first()
+        self.home_page = self.site.root_page
+
+        self.main_menu = MainMenu.objects.create(site=self.site)
+
+        MainMenuItem.objects.create(link_page=self.home_page, menu=self.main_menu, link_text="Accueil", sort_order=0)
+
+        body = []
+
+        text_raw = """<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"""
+        body.append(("paragraph", RichText(text_raw)))
+
+        self.publications_page = self.home_page.add_child(
+            instance=ContentPage(title="Publications", body=body, show_in_menus=True)
+        )
+
+        self.example_publication_page = self.publications_page.add_child(
+            instance=ContentPage(title="Publication 1", body=body, show_in_menus=True)
+        )
+        self.publications_menu_item = MainMenuItem.objects.create(
+            link_page=self.publications_page, menu=self.main_menu, sort_order=2
+        )
+
+    def test_basic_menu_is_rendered(self):
         self.assertPageIsRenderable(self.home_page)
         response = self.client.get(self.home_page.url)
 
-        self.assertContains(
-            response,
+        # Selected menu item : home page
+        self.assertInHTML(
+            '<a class="fr-nav__link" href="/" aria-current="page" target="_self">Accueil</a>',
+            response.content.decode(),
+        )
+
+        self.assertInHTML(
+            f"""<button class="fr-nav__btn"
+                aria-expanded="false"
+                aria-controls="menu-{self.publications_menu_item.link_page.pk}">
+                Publications
+            </button>""",
+            response.content.decode(),
+        )
+
+        self.assertInHTML(
+            '<a class="fr-nav__link" href="/publications/publication-1/" target="_self">Publication 1</a>',
+            response.content.decode(),
+        )
+
+        # Selected menu item : publication 1
+        response = self.client.get(self.example_publication_page.url)
+        self.assertInHTML(
+            '<a class="fr-nav__link" href="/" target="_self">Accueil</a>',
+            response.content.decode(),
+        )
+
+        self.assertInHTML(
+            f"""<button class="fr-nav__btn"
+                aria-current="true"
+                aria-expanded="false"
+                aria-controls="menu-{self.publications_menu_item.link_page.pk}">
+                    Publications
+            </button>""",
+            response.content.decode(),
+        )
+
+        self.assertInHTML(
+            """<a class="fr-nav__link"
+                aria-current="page"
+                href="/publications/publication-1/"
+                target="_self">
+                Publication 1
+            </a>""",
+            response.content.decode(),
+        )
+
+    def test_mega_menu_is_rendered(self):
+        publications_mega_menu = MegaMenu.objects.create(
+            name="Méga-menu publications",
+            parent_menu_item=self.publications_menu_item,
+            description="Ceci est une description",
+        )
+
+        menu_category_menu = FlatMenu.objects.create(
+            site_id=self.site.id,
+            title="Menu publications > Catégorie 1",
+            handle="mega_menu_section_1",
+            heading="Colonne 1",
+        )
+
+        MegaMenuCategory.objects.create(mega_menu=publications_mega_menu, sort_order=0, category=menu_category_menu)
+
+        FlatMenuItem.objects.get_or_create(
+            link_page=self.example_publication_page, menu=menu_category_menu, sort_order=0
+        )
+
+        self.assertPageIsRenderable(self.example_publication_page)
+        response = self.client.get(self.example_publication_page.url)
+
+        self.assertInHTML(
             '<p class="fr-hidden fr-displayed-lg">Ceci est une description</p>',
+            response.content.decode(),
+        )
+
+        self.assertInHTML(
+            f"""<button class="fr-nav__btn"
+                        aria-expanded="false"
+                        aria-current="true"
+                        aria-controls="mega-menu-{self.publications_menu_item.id}">Publications</button>
+            """,
+            response.content.decode(),
+        )
+
+        self.assertInHTML(
+            """<a class="fr-nav__link"
+                aria-current="page"
+                href="/publications/publication-1/"
+                target="_self">
+                    Publication 1
+                </a>""",
+            response.content.decode(),
         )
