@@ -13,6 +13,11 @@ ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite"]
 
 
 class Command(BaseCommand):
+    help = """
+    Creates a series of starter pages, in order to avoid new sites having only a
+    blank "Welcome to Wagtail" page.
+    """
+
     def add_arguments(self, parser):
         parser.add_argument(
             "--slug", nargs="+", type=str, help="[Optional] Slug of the page(s) to create", choices=ALL_ALLOWED_SLUGS
@@ -75,12 +80,13 @@ class Command(BaseCommand):
 
     def create_homepage(self) -> None:
         """
-        Create the homepage, set it as default and delete the sample page
+        Create the homepage, set it as default and delete the initial page
         """
         # Don't replace a manually created home
         already_exists = ContentPage.objects.filter(slug="home").first()
         if already_exists:
-            raise ValueError(f"The home page seem to already exist with id {already_exists.id}")
+            self.stdout.write(f"The home page seem to already exist with id {already_exists.id}")
+            return
 
         # Create the page
         body = []
@@ -146,7 +152,8 @@ class Command(BaseCommand):
         # Don't replace a manually created page
         already_exists = ContentPage.objects.filter(slug=slug).first()
         if already_exists:
-            raise ValueError(f"The {slug} page seem to already exist with id {already_exists.id}")
+            self.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}")
+            return
 
         home_page = Site.objects.filter(is_default_site=True).first().root_page
         new_page = home_page.add_child(instance=ContentPage(title=title, body=body, slug=slug, show_in_menus=True))

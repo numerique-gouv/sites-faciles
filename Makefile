@@ -51,7 +51,12 @@ init:
 	$(EXEC_CMD) poetry run python manage.py migrate
 	make collectstatic
 	$(EXEC_CMD) poetry run python manage.py set_config
-	$(EXEC_CMD) poetry run python manage.py create_sample_pages
+	$(EXEC_CMD) poetry run python manage.py create_starter_pages
+
+.PHONY: demo
+demo:
+	make init
+	$(EXEC_CMD) poetry run python manage.py create_demo_pages
 
 .PHONY: runserver
 runserver:

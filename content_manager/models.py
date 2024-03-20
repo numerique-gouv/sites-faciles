@@ -135,9 +135,9 @@ class CmsDsfrConfig(BaseSiteSetting):
         help_text="Balises HTML autorisés",
     )
 
-    search_bar = models.BooleanField("Barre de recherche dans l’en-tête", default=False)
-    theme_modale_button = models.BooleanField("Choix du thème clair/sombre", default=False)
-    mourning = models.BooleanField("Mise en berne", default=False)
+    search_bar = models.BooleanField("Barre de recherche dans l’en-tête", default=False)  # type: ignore
+    theme_modale_button = models.BooleanField("Choix du thème clair/sombre", default=False)  # type: ignore
+    mourning = models.BooleanField("Mise en berne", default=False)  # type: ignore
 
     panels = [
         FieldPanel("header_brand"),
@@ -151,3 +151,36 @@ class CmsDsfrConfig(BaseSiteSetting):
         FieldPanel("mourning"),
         FieldPanel("theme_modale_button"),
     ]
+
+
+# Mega-Menus
+
+
+@register_snippet
+class MegaMenu(models.Model):
+    name = models.CharField(_("Name"), max_length=255)
+    parent_menu_item = models.ForeignKey(
+        "wagtailmenus.MainMenuItem", on_delete=models.CASCADE, related_name="megamenu_parent_menu_items"
+    )
+    description = models.TextField(_("Description"), blank=True)
+    main_link = models.URLField(_("Main link"), blank=True, null=True)
+
+    categories = models.ManyToManyField(
+        "wagtailmenus.FlatMenu", blank=True, null=True, help_text=_("Maximum 4 categories, each with maximum 8 links.")
+    )
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("parent_menu_item"),
+        FieldPanel("description"),
+        FieldPanel("main_link"),
+        FieldPanel("categories"),
+    ]
+
+    def __str__(self):  # type: ignore
+        return self.name
+
+    def get_categories(self):
+        return self.categories.order_by("handle")
+
+    class Meta:
+        verbose_name = _("Mega menu")

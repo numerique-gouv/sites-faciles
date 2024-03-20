@@ -22,7 +22,7 @@ class SitesFacilesBasePage(Page):
         blank=True,
         use_json_field=True,
     )
-    header_with_title = models.BooleanField(_("Show title in header image?"), default=False)
+    header_with_title = models.BooleanField(_("Show title in header image?"), default=False)  # type: ignore
 
     header_image = models.ForeignKey(
         get_image_model_string(),
@@ -41,8 +41,8 @@ class SitesFacilesBasePage(Page):
         help_text=_("Uses the French Design System colors"),
     )
 
-    header_large = models.BooleanField(_("Full width"), default=False)
-    header_darken = models.BooleanField(_("Darken background image"), default=False)
+    header_large = models.BooleanField(_("Full width"), default=False)  # type: ignore
+    header_darken = models.BooleanField(_("Darken background image"), default=False)  # type: ignore
 
     header_cta_text = models.CharField(
         _("Call to action text"),

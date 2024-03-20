@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-11 16:15+0100\n"
-"PO-Revision-Date: 2024-03-11 16:19+0100\n"
+"POT-Creation-Date: 2024-03-18 15:40+0100\n"
+"PO-Revision-Date: 2024-03-18 15:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -89,6 +89,22 @@ msgstr "URL externe"
 #: content_manager/models.py:19
 msgid "Content page"
 msgstr "Page de contenu"
+
+#: content_manager/models.py:161
+msgid "Name"
+msgstr "Nom"
+
+#: content_manager/models.py:165
+msgid "Description"
+msgstr "Description"
+
+#: content_manager/models.py:166
+msgid "Main link"
+msgstr "Lien principal"
+
+#: content_manager/models.py:181
+msgid "Mega menu"
+msgstr "Méga menu"
 
 #: content_manager/templates/content_manager/tags_list_page.html:31
 #: content_manager/views.py:46 content_manager/views.py:77
