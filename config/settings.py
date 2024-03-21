@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     "wagtail.search",
     "wagtail.snippets",
     "wagtail",
-    "wagtail_modeladmin",
     "wagtailmarkdown",
     "wagtailmenus",
     "taggit",
@@ -105,6 +104,7 @@ TEMPLATES = [
                 "wagtail.contrib.settings.context_processors.settings",
                 "wagtailmenus.context_processors.wagtailmenus",
                 "content_manager.context_processors.skiplinks",
+                "content_manager.context_processors.mega_menus",
             ],
         },
     },
@@ -220,7 +220,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 # Wagtail settings
 # https://docs.wagtail.org/en/stable/reference/settings.html
 
-WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Gestionnaire de contenu avec le Système de Design de l’État")
+WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Sites faciles")
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
@@ -250,6 +250,22 @@ WAGTAIL_MODERATION_ENABLED = False
 WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("header_tools", "Menu en haut à droite"),
     ("footer", "Menu en pied de page"),
+    ("mega_menu_section_1", "Catégorie de méga-menu 1"),
+    ("mega_menu_section_2", "Catégorie de méga-menu 2"),
+    ("mega_menu_section_3", "Catégorie de méga-menu 3"),
+    ("mega_menu_section_4", "Catégorie de méga-menu 4"),
+    ("mega_menu_section_5", "Catégorie de méga-menu 5"),
+    ("mega_menu_section_6", "Catégorie de méga-menu 6"),
+    ("mega_menu_section_7", "Catégorie de méga-menu 7"),
+    ("mega_menu_section_8", "Catégorie de méga-menu 8"),
+    ("mega_menu_section_9", "Catégorie de méga-menu 9"),
+    ("mega_menu_section_10", "Catégorie de méga-menu 10"),
+    ("mega_menu_section_11", "Catégorie de méga-menu 11"),
+    ("mega_menu_section_12", "Catégorie de méga-menu 12"),
+    ("mega_menu_section_13", "Catégorie de méga-menu 13"),
+    ("mega_menu_section_14", "Catégorie de méga-menu 14"),
+    ("mega_menu_section_15", "Catégorie de méga-menu 15"),
+    ("mega_menu_section_16", "Catégorie de méga-menu 16"),
 )
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]

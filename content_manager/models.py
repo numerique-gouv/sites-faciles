@@ -2,10 +2,12 @@ from django.db import models
 from django.forms.widgets import Textarea
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import Tag as TaggitTag, TaggedItemBase
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
+from wagtail.models import Orderable
 from wagtail.snippets.models import register_snippet
 
 from content_manager.abstract import SitesFacilesBasePage
@@ -135,9 +137,9 @@ class CmsDsfrConfig(BaseSiteSetting):
         help_text="Balises HTML autorisés",
     )
 
-    search_bar = models.BooleanField("Barre de recherche dans l’en-tête", default=False)
-    theme_modale_button = models.BooleanField("Choix du thème clair/sombre", default=False)
-    mourning = models.BooleanField("Mise en berne", default=False)
+    search_bar = models.BooleanField("Barre de recherche dans l’en-tête", default=False)  # type: ignore
+    theme_modale_button = models.BooleanField("Choix du thème clair/sombre", default=False)  # type: ignore
+    mourning = models.BooleanField("Mise en berne", default=False)  # type: ignore
 
     panels = [
         FieldPanel("header_brand"),
@@ -151,3 +153,45 @@ class CmsDsfrConfig(BaseSiteSetting):
         FieldPanel("mourning"),
         FieldPanel("theme_modale_button"),
     ]
+
+
+# Mega-Menus
+class MegaMenuCategory(Orderable):
+    mega_menu = ParentalKey("content_manager.MegaMenu", related_name="categories", on_delete=models.CASCADE)
+    category = models.ForeignKey("wagtailmenus.FlatMenu", on_delete=models.CASCADE, verbose_name=_("Category"))
+
+    class Meta:
+        verbose_name = _("Mega menu category")
+        verbose_name_plural = _("Mega menu categories")
+
+
+@register_snippet
+class MegaMenu(ClusterableModel):
+    name = models.CharField(_("Name"), max_length=255)
+    parent_menu_item = models.ForeignKey(
+        "wagtailmenus.MainMenuItem", on_delete=models.CASCADE, related_name="megamenu_parent_menu_items"
+    )
+    description = models.TextField(_("Description"), blank=True)
+    main_link = models.URLField(_("Main link"), blank=True, null=True)
+
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("parent_menu_item"),
+        FieldPanel("description"),
+        FieldPanel("main_link"),
+        InlinePanel(
+            "categories",
+            max_num=4,
+            heading=_("Categories"),
+            help_text=_("Maximum 4 categories, each with maximum 8 links."),
+        ),
+    ]
+
+    def __str__(self):  # type: ignore
+        return self.name
+
+    def get_categories(self):
+        return self.categories.order_by("sort_order")
+
+    class Meta:
+        verbose_name = _("Mega menu")

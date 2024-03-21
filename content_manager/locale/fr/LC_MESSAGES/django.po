@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-11 16:15+0100\n"
-"PO-Revision-Date: 2024-03-11 16:19+0100\n"
+"POT-Creation-Date: 2024-03-20 15:31+0100\n"
+"PO-Revision-Date: 2024-03-20 15:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -86,9 +86,45 @@ msgstr "Page"
 msgid "External URL"
 msgstr "URL externe"
 
-#: content_manager/models.py:19
+#: content_manager/models.py:21
 msgid "Content page"
 msgstr "Page de contenu"
+
+#: content_manager/models.py:161
+msgid "Category"
+msgstr "Catégorie"
+
+#: content_manager/models.py:164
+msgid "Mega menu category"
+msgstr "Catégorie de méga menu"
+
+#: content_manager/models.py:165
+msgid "Mega menu categories"
+msgstr "Catégories de méga menu"
+
+#: content_manager/models.py:170
+msgid "Name"
+msgstr "Nom"
+
+#: content_manager/models.py:174
+msgid "Description"
+msgstr "Description"
+
+#: content_manager/models.py:175
+msgid "Main link"
+msgstr "Lien principal"
+
+#: content_manager/models.py:185
+msgid "Categories"
+msgstr "Catégories"
+
+#: content_manager/models.py:186
+msgid "Maximum 4 categories, each with maximum 8 links."
+msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
+
+#: content_manager/models.py:197
+msgid "Mega menu"
+msgstr "Méga menu"
 
 #: content_manager/templates/content_manager/tags_list_page.html:31
 #: content_manager/views.py:46 content_manager/views.py:77

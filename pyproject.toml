@@ -43,6 +43,7 @@ django-extensions = "^3.2.3"
 ipython = "^8.18.1"
 libsass = "^0.22.0"
 django-compressor = "^4.4"
+faker = "^24.3.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -53,7 +54,10 @@ line_length = 119
 
 [tool.pyright]
 reportAttributeAccessIssue = false
+reportArgumentType = false
+reportFunctionMemberAccess = false
 reportGeneralTypeIssues = false
+reportIncompatibleMethodOverride = false
 reportIncompatibleVariableOverride = false
 reportOptionalCall = false
 reportOptionalMemberAccess = false
