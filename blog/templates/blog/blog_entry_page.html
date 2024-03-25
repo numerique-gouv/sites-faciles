@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load static dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags i18n %}
 
 {% block title %}
     <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
@@ -46,29 +46,67 @@
     {% include "content_manager/blocks/heading.html" %}
     {% include "content_manager/blocks/messages.html" %}
 
-    <div class="fr-container fr-mt-6w">
-        <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-12">
-                {% include "content_manager/blocks/breadcrumbs.html" %}
-                <h1 class="fr-display--sm">{{ page.title }}</h1>
-            </div>
-        </div>
-        <p>
-            Publié le <a href="{% url 'blog:archive_year' page.get_parent.slug page.date.year %}">{{ page.date |date:'l j F Y' }}</a>
-            {% if page.owner.first_name and page.owner.last_name %}
-                par <a href="{% url 'blog:author' page.get_parent.slug page.owner.id %}">{{ page.owner.first_name }} {{ page.owner.last_name }}</a>
-            {% endif %}
-            {% if page.blog_categories.all %}
-                |
-                {% for category in page.blog_categories.all %}
-                    <a href="{% url 'blog:category' page.get_parent.slug category.slug %}">{{ category.name }}</a>
-                    {% if not forloop.last %},{% endif %}
-                {% endfor %}
-            {% endif %}
-        </p>
-    </div>
+    {% with categories=page.blog_categories.all %}
 
-    {% include "content_manager/blocks/blocks_stream.html" %}
+        <div class="fr-container fr-mt-6w">
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-12">
+                    {% include "content_manager/blocks/breadcrumbs.html" %}
+                    <h1 class="fr-display--sm">{{ page.title }}</h1>
+                </div>
+            </div>
+            <p>
+                Publié le <a href="{% url 'blog:archive_year' page.get_parent.slug page.date.year %}">{{ page.date |date:'l j F Y' }}</a>
+                {% if categories %}
+                    |
+                    {% for category in categories %}
+                        <a href="{% url 'blog:category' page.get_parent.slug category.slug %}">{{ category.name }}</a>
+                        {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+
+        {% include "content_manager/blocks/blocks_stream.html" %}
+
+        {% with authors=page.authors.all %}
+            {% if authors %}
+                <div class="fr-container fr-my-6w">
+                    <h2>{% translate "Posted by:" %}</h2>
+                    <div class="fr-grid-row fr-grid-row--gutters">
+                        {% for author in authors %}
+                            {% image author.author_image fill-200x200 as author_image %}
+                            <div class="fr-col-12 fr-col-md-8">
+                                <div class="fr-card fr-card--horizontal">
+                                    <div class="fr-card__body">
+                                        <div class="fr-card__content">
+                                            <h3 class="fr-card__title">{{ author.name }}</h3>
+                                            <p class="fr-card__desc">{{ author.role }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="cmsfr-author_card__header fr-card__header">
+                                        <div class="fr-card__img">
+                                            <img class="fr-responsive-img cmsfr-author-img"
+                                                 src="{{ author_image.url }}"
+                                                 alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+            {% endif %}
+        {% endwith %}
+
+        {% if categories %}
+            <div class="fr-container fr-my-6w">
+                {% for category in categories %}<p>{{ category.colophon|richtext }}</p>{% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
 
     <div class="fr-container fr-my-6w">
         {% for tag in page.tags.all|dictsort:"slug" %}

@@ -15,3 +15,13 @@
 
 .fr-header__service-title em {
   font-weight: lighter; }
+
+.cmsfr-author_card__header {
+  flex: 0 0 6rem !important;
+  width: 6rem !important; }
+
+.cmsfr-author-img {
+  border-radius: 50%;
+  height: 4.5rem !important;
+  margin: 1.5rem;
+  width: 4.5rem; }

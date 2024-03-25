@@ -50,6 +50,7 @@
         {% if category %}
             {% dsfr_breadcrumb breadcrumb %}
             <h1>{% blocktranslate %}Posts in category {{ category }}{% endblocktranslate %}</h1>
+            {% if category_description %}<p>{{ category_description }}</p>{% endif %}
         {% elif tag %}
             {% dsfr_breadcrumb breadcrumb %}
             <h1>{% blocktranslate %}Posts tagged with {{ tag }}{% endblocktranslate %}</h1>
