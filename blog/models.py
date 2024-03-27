@@ -15,11 +15,12 @@ from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
 from wagtail.admin.widgets.slug import SlugInput
-from wagtail.fields import RichTextField
+from wagtail.fields import StreamField
 from wagtail.models.i18n import Locale, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
+from blog.blocks import COLOPHON_BLOCKS
 from blog.managers import CategoryManager
 from content_manager.abstract import SitesFacilesBasePage
 from content_manager.models import Tag
@@ -169,7 +170,9 @@ class BlogEntryPage(SitesFacilesBasePage):
         verbose_name=_("Categories"),
     )
     date = models.DateTimeField(verbose_name=_("Post date"), default=timezone.now)
-    authors = ParentalManyToManyField("blog.Author", blank=True)
+    authors = ParentalManyToManyField(
+        "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
+    )
 
     parent_page_types = ["blog.BlogIndexPage"]
     subpage_types = []
@@ -224,14 +227,12 @@ class Category(TranslatableMixin, index.Indexed, models.Model):
         verbose_name=_("Description"),
         help_text=_("Displayed on the top of the category page"),
     )
-    colophon = RichTextField(
-        max_length=500,
+    colophon = StreamField(
+        COLOPHON_BLOCKS,
         blank=True,
-        verbose_name=_("Colophon"),
+        use_json_field=True,
         help_text=_("Text displayed at the end of every page in the category"),
-        features=["h2", "h3", "bold", "italic", "link"],
     )
-
     objects = CategoryManager()
 
     def __str__(self):
@@ -285,21 +286,25 @@ class TagEntryPage(TaggedItemBase):
 
 
 @register_snippet
-class Author(models.Model):
+class Person(models.Model):
     name = models.CharField(_("Name"), max_length=255)
     role = models.CharField(_("Role"), max_length=255)
-    author_image = models.ForeignKey(
+    organization = models.CharField(_("Organization"), max_length=255)
+    contact_info = models.CharField(_("Contact info"), max_length=500, blank=True)
+    image = models.ForeignKey(
         "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
 
     panels = [
         FieldPanel("name"),
         FieldPanel("role"),
-        FieldPanel("author_image"),
+        FieldPanel("organization"),
+        FieldPanel("contact_info"),
+        FieldPanel("image"),
     ]
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _("Author")
+        verbose_name = _("Person")

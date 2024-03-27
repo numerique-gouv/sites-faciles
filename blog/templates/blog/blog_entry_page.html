@@ -67,7 +67,7 @@
             </p>
         </div>
 
-        {% include "content_manager/blocks/blocks_stream.html" %}
+        {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
 
         {% with authors=page.authors.all %}
             {% if authors %}
@@ -75,25 +75,7 @@
                     <h2>{% translate "Posted by:" %}</h2>
                     <div class="fr-grid-row fr-grid-row--gutters">
                         {% for author in authors %}
-                            {% image author.author_image fill-200x200 as author_image %}
-                            <div class="fr-col-12 fr-col-md-8">
-                                <div class="fr-card fr-card--horizontal">
-                                    <div class="fr-card__body">
-                                        <div class="fr-card__content">
-                                            <h3 class="fr-card__title">{{ author.name }}</h3>
-                                            <p class="fr-card__desc">{{ author.role }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="cmsfr-author_card__header fr-card__header">
-                                        <div class="fr-card__img">
-                                            <img class="fr-responsive-img cmsfr-author-img"
-                                                 src="{{ author_image.url }}"
-                                                 alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            {% include "blog/blocks/contact_card.html" with value=author %}
                         {% endfor %}
                     </div>
                 </div>
@@ -102,9 +84,9 @@
         {% endwith %}
 
         {% if categories %}
-            <div class="fr-container fr-my-6w">
-                {% for category in categories %}<p>{{ category.colophon|richtext }}</p>{% endfor %}
-            </div>
+            {% for category in categories %}
+                {% include "content_manager/blocks/blocks_stream.html" with stream=category.colophon %}
+            {% endfor %}
         {% endif %}
     {% endwith %}
 
