@@ -15,10 +15,12 @@ from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
 from wagtail.admin.widgets.slug import SlugInput
+from wagtail.fields import StreamField
 from wagtail.models.i18n import Locale, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
+from blog.blocks import COLOPHON_BLOCKS
 from blog.managers import CategoryManager
 from content_manager.abstract import SitesFacilesBasePage
 from content_manager.models import Tag
@@ -126,6 +128,7 @@ class BlogIndexPage(SitesFacilesBasePage):
         context["posts"] = posts
         if category is not None:
             context["category"] = category.name
+            context["category_description"] = category.description
         context["tag"] = tag
         context["author"] = author
         context["year"] = year
@@ -167,12 +170,15 @@ class BlogEntryPage(SitesFacilesBasePage):
         verbose_name=_("Categories"),
     )
     date = models.DateTimeField(verbose_name=_("Post date"), default=timezone.now)
+    authors = ParentalManyToManyField(
+        "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
+    )
 
     parent_page_types = ["blog.BlogIndexPage"]
     subpage_types = []
 
     settings_panels = SitesFacilesBasePage.settings_panels + [
-        FieldPanel("owner", heading=_("Author")),
+        FieldPanel("authors"),
         FieldPanel("date"),
         MultiFieldPanel(
             [
@@ -215,8 +221,18 @@ class Category(TranslatableMixin, index.Indexed, models.Model):
         verbose_name=_("Parent category"),
         on_delete=models.SET_NULL,
     )
-    description = models.CharField(max_length=500, blank=True, verbose_name=_("Description"))
-
+    description = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name=_("Description"),
+        help_text=_("Displayed on the top of the category page"),
+    )
+    colophon = StreamField(
+        COLOPHON_BLOCKS,
+        blank=True,
+        use_json_field=True,
+        help_text=_("Text displayed at the end of every page in the category"),
+    )
     objects = CategoryManager()
 
     def __str__(self):
@@ -239,6 +255,7 @@ class Category(TranslatableMixin, index.Indexed, models.Model):
         TitleFieldPanel("name"),
         FieldPanel("slug", widget=SlugInput),
         FieldPanel("description"),
+        FieldPanel("colophon"),
         FieldPanel("parent"),
     ]
 
@@ -266,3 +283,28 @@ class CategoryEntryPage(models.Model):
 
 class TagEntryPage(TaggedItemBase):
     content_object = ParentalKey("BlogEntryPage", related_name="entry_tags")
+
+
+@register_snippet
+class Person(models.Model):
+    name = models.CharField(_("Name"), max_length=255)
+    role = models.CharField(_("Role"), max_length=255)
+    organization = models.CharField(_("Organization"), max_length=255)
+    contact_info = models.CharField(_("Contact info"), max_length=500, blank=True)
+    image = models.ForeignKey(
+        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("role"),
+        FieldPanel("organization"),
+        FieldPanel("contact_info"),
+        FieldPanel("image"),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Person")

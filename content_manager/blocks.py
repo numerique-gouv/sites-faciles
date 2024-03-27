@@ -82,7 +82,7 @@ class BadgesListBlock(blocks.StreamBlock):
 
 
 class CalloutBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre de la mise en vant", required=False)
+    title = blocks.CharBlock(label="Titre de la mise en avant", required=False)
     text = blocks.TextBlock(label="Texte mis en avant", required=False)
     heading_tag = blocks.ChoiceBlock(
         label="Niveau de titre",

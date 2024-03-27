@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load static dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags i18n %}
 
 {% block title %}
     <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
@@ -46,29 +46,49 @@
     {% include "content_manager/blocks/heading.html" %}
     {% include "content_manager/blocks/messages.html" %}
 
-    <div class="fr-container fr-mt-6w">
-        <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-12">
-                {% include "content_manager/blocks/breadcrumbs.html" %}
-                <h1 class="fr-display--sm">{{ page.title }}</h1>
-            </div>
-        </div>
-        <p>
-            Publié le <a href="{% url 'blog:archive_year' page.get_parent.slug page.date.year %}">{{ page.date |date:'l j F Y' }}</a>
-            {% if page.owner.first_name and page.owner.last_name %}
-                par <a href="{% url 'blog:author' page.get_parent.slug page.owner.id %}">{{ page.owner.first_name }} {{ page.owner.last_name }}</a>
-            {% endif %}
-            {% if page.blog_categories.all %}
-                |
-                {% for category in page.blog_categories.all %}
-                    <a href="{% url 'blog:category' page.get_parent.slug category.slug %}">{{ category.name }}</a>
-                    {% if not forloop.last %},{% endif %}
-                {% endfor %}
-            {% endif %}
-        </p>
-    </div>
+    {% with categories=page.blog_categories.all %}
 
-    {% include "content_manager/blocks/blocks_stream.html" %}
+        <div class="fr-container fr-mt-6w">
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-12">
+                    {% include "content_manager/blocks/breadcrumbs.html" %}
+                    <h1 class="fr-display--sm">{{ page.title }}</h1>
+                </div>
+            </div>
+            <p>
+                Publié le <a href="{% url 'blog:archive_year' page.get_parent.slug page.date.year %}">{{ page.date |date:'l j F Y' }}</a>
+                {% if categories %}
+                    |
+                    {% for category in categories %}
+                        <a href="{% url 'blog:category' page.get_parent.slug category.slug %}">{{ category.name }}</a>
+                        {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+
+        {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
+
+        {% with authors=page.authors.all %}
+            {% if authors %}
+                <div class="fr-container fr-my-6w">
+                    <h2>{% translate "Posted by:" %}</h2>
+                    <div class="fr-grid-row fr-grid-row--gutters">
+                        {% for author in authors %}
+                            {% include "blog/blocks/contact_card.html" with value=author %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            {% endif %}
+        {% endwith %}
+
+        {% if categories %}
+            {% for category in categories %}
+                {% include "content_manager/blocks/blocks_stream.html" with stream=category.colophon %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <div class="fr-container fr-my-6w">
         {% for tag in page.tags.all|dictsort:"slug" %}
