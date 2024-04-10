@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-from dsfr.constants import COLOR_CHOICES
+from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM
 from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
@@ -38,13 +38,13 @@ class LinkBlock(blocks.StructBlock):
 
 ## Basic blocks
 class AccordionBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre")
-    content = blocks.RichTextBlock(label="Contenu")
+    title = blocks.CharBlock(label=_("Title"))
+    content = blocks.RichTextBlock(label=_("Content"))
 
 
 class AccordionsBlock(blocks.StreamBlock):
-    title = blocks.CharBlock(label="Titre")
-    accordion = AccordionBlock(label="Accordéon", min_num=1, max_num=15)
+    title = blocks.CharBlock(label=_("Title"))
+    accordion = AccordionBlock(label=_("Accordion"), min_num=1, max_num=15)
 
 
 class AlertBlock(blocks.StructBlock):
@@ -59,26 +59,31 @@ class AlertBlock(blocks.StructBlock):
     )
 
 
-badge_level_choices = [
-    ("error", "Erreur"),
-    ("success", "Succès"),
-    ("info", "Information"),
-    ("warning", "Attention"),
-    ("new", "Nouveau"),
-    ("grey", "Gris"),
-    ("green-emeraude", "Vert"),
-    ("blue-ecume", "Bleu"),
-]
+badge_level_choices = (
+    COLOR_CHOICES_SYSTEM
+    + [
+        ("new", _("New")),
+        ("grey", _("Grey")),
+    ]
+    + COLOR_CHOICES_ILLUSTRATION
+)
 
 
 class BadgeBlock(blocks.StructBlock):
-    text = blocks.CharBlock(label="Texte du badge", required=False)
-    color = blocks.ChoiceBlock(label="Couleur de badge", choices=badge_level_choices, required=False)
-    hide_icon = blocks.BooleanBlock(label="Masquer l’icône du badge", required=False)
+    text = blocks.CharBlock(label=_("Badge label"), required=False)
+    color = blocks.ChoiceBlock(label=_("Badge color"), choices=badge_level_choices, required=False)
+    hide_icon = blocks.BooleanBlock(label=_("Hide badge icon"), required=False)
+
+    class Meta:
+        template = ("content_manager/blocks/badge.html",)
 
 
 class BadgesListBlock(blocks.StreamBlock):
-    badge = BadgeBlock(label="Badge")
+    badge = BadgeBlock(label=_("Badge"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/badges_list.html"
 
 
 class CalloutBlock(blocks.StructBlock):
@@ -235,6 +240,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
+    ("badges_list", BadgesListBlock(label=_("Badges list"))),
     ("image", ImageBlock()),
     (
         "imageandtext",

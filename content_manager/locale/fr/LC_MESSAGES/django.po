@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 14:39+0100\n"
-"PO-Revision-Date: 2024-03-20 15:31+0100\n"
+"POT-Creation-Date: 2024-04-10 17:38+0200\n"
+"PO-Revision-Date: 2024-04-10 17:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -86,6 +86,46 @@ msgstr "Page"
 msgid "External URL"
 msgstr "URL externe"
 
+#: content_manager/blocks.py:41 content_manager/blocks.py:46
+msgid "Title"
+msgstr "Titre"
+
+#: content_manager/blocks.py:42
+msgid "Content"
+msgstr "Contenu"
+
+#: content_manager/blocks.py:47
+msgid "Accordion"
+msgstr "Accordéon"
+
+#: content_manager/blocks.py:65
+msgid "New"
+msgstr "Nouveau"
+
+#: content_manager/blocks.py:66
+msgid "Grey"
+msgstr "Gris"
+
+#: content_manager/blocks.py:73
+msgid "Badge label"
+msgstr "Texte du badge"
+
+#: content_manager/blocks.py:74
+msgid "Badge color"
+msgstr "Couleur du badge"
+
+#: content_manager/blocks.py:75
+msgid "Hide badge icon"
+msgstr "Masquer l’icône du badge"
+
+#: content_manager/blocks.py:82
+msgid "Badge"
+msgstr "Badge"
+
+#: content_manager/blocks.py:243
+msgid "Badges list"
+msgstr "Liste de badges"
+
 #: content_manager/models.py:21
 msgid "Content page"
 msgstr "Page de contenu"
@@ -133,7 +173,7 @@ msgstr "Étiquettes"
 
 #: content_manager/views.py:52
 msgid "List of all the tags."
-msgstr "Liste de toutes les étiquettes"
+msgstr "Liste de toutes les étiquettes."
 
 #: content_manager/views.py:73
 #, python-brace-format

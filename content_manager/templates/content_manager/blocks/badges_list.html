@@ -1,0 +1,7 @@
+{% load static wagtailcore_tags %}
+
+<ul class="fr-badge-group">
+  {% for badge in block.value %}
+    <li>{% include_block badge %}</li>
+  {% endfor %}
+</ul>
