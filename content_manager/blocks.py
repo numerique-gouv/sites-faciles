@@ -98,23 +98,21 @@ class CalloutBlock(blocks.StructBlock):
 
 
 class CardBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre")
-    description = blocks.TextBlock(label="Texte")
-    image = ImageChooserBlock(label="Image")
-    url = blocks.URLBlock(label="Lien", required=False)
+    title = blocks.CharBlock(label=_("Title"))
+    description = blocks.TextBlock(label=_("Content"))
+    image = ImageChooserBlock(label=_("Image"), required=False)
+    url = blocks.URLBlock(label=_("Link"), required=False, group="target")
     document = DocumentChooserBlock(
-        label="ou Document",
-        help_text=(
-            "Sélectionnez un document pour rendre la carte cliquable vers "
-            "celui ci (si le champ « Lien » n’est pas renseigné)."
-        ),
+        label=_("or Document"),
+        help_text=_("Select a document to make the card link to it (if the 'Link' field is not populated.)"),
         required=False,
+        group="target",
     )
 
 
 class IframeBlock(blocks.StructBlock):
     title = blocks.CharBlock(
-        label="Titre",
+        label=_("Title"),
         help_text="Accessibilité : Le titre doit décrire, de façon claire et concise, le contenu embarqué.",
     )
     url = blocks.URLBlock(
@@ -125,17 +123,17 @@ class IframeBlock(blocks.StructBlock):
 
 
 class ImageAndTextBlock(blocks.StructBlock):
-    image = ImageChooserBlock(label="Illustration")
+    image = ImageChooserBlock(label=_("Image"))
     image_side = blocks.ChoiceBlock(
-        label="Côté où afficher l’image",
+        label=_("Side where the image is displayed"),
         choices=[
-            ("left", "Gauche"),
-            ("right", "Droite"),
+            ("left", _("Left")),
+            ("right", _("Right")),
         ],
         default="right",
     )
     image_ratio = blocks.ChoiceBlock(
-        label="Largeur de l’image",
+        label=_("Image width"),
         choices=[
             ("3", "3/12"),
             ("5", "5/12"),
@@ -143,7 +141,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         ],
         default="3",
     )
-    text = blocks.RichTextBlock(label="Texte avec mise en forme")
+    text = blocks.RichTextBlock(label=_("Rich text"))
     link = LinkBlock(required=False)
     link_label = blocks.CharBlock(
         label="Titre du lien",
@@ -153,13 +151,19 @@ class ImageAndTextBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(label="Lien interne", required=False)
     link_url = blocks.URLBlock(label="Lien externe", required=False)
 
+    class Meta:
+        icon = "image"
+
 
 class ImageBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre", required=False)
+    title = blocks.CharBlock(label=_("Title"), required=False)
     image = ImageChooserBlock(label="Illustration")
     alt = blocks.CharBlock(label="Texte alternatif (description textuelle de l’image)", required=False)
     caption = blocks.CharBlock(label="Légende", required=False)
     url = blocks.URLBlock(label="Lien", required=False)
+
+    class Meta:
+        icon = "image"
 
 
 class QuoteBlock(blocks.StructBlock):
@@ -184,14 +188,14 @@ class StepsListBlock(blocks.StreamBlock):
 
 
 class StepperBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre")
+    title = blocks.CharBlock(label=_("Title"))
     total = blocks.IntegerBlock(label="Nombre d’étapes")
     current = blocks.IntegerBlock(label="Étape en cours")
     steps = StepsListBlock(label="Les étapes")
 
 
 class TextAndCTA(blocks.StructBlock):
-    text = blocks.RichTextBlock(label="Texte avec mise en forme", required=False)
+    text = blocks.RichTextBlock(label=_("Rich text"), required=False)
     cta_label = blocks.CharBlock(
         label="Titre de l’appel à l’action",
         help_text="Le lien apparait comme un bouton sous le bloc de texte",
@@ -201,7 +205,7 @@ class TextAndCTA(blocks.StructBlock):
 
 
 class VideoBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre", required=False)
+    title = blocks.CharBlock(label=_("Title"), required=False)
     caption = blocks.CharBlock(label="Légende")
     url = blocks.URLBlock(
         label="Lien de la vidéo",
@@ -211,13 +215,16 @@ class VideoBlock(blocks.StructBlock):
 
 ## Multi-column blocks
 class MultiColumnsBlock(blocks.StreamBlock):
-    text = blocks.RichTextBlock(label="Texte avec mise en forme")
-    image = ImageBlock(label="Image")
-    video = VideoBlock(label="Vidéo")
-    card = CardBlock(label="Carte")
-    quote = QuoteBlock(label="Citation")
-    text_cta = TextAndCTA(label="Texte et appel à l’action")
-    iframe = IframeBlock(label="Cadre intégré")
+    text = blocks.RichTextBlock(label=_("Rich text"))
+    image = ImageBlock(label=_("Image"))
+    video = VideoBlock(label=_("Video"))
+    card = CardBlock(label=_("Card"))
+    quote = QuoteBlock(label=_("Quote"))
+    text_cta = TextAndCTA(label=_("Text and call to action"))
+    iframe = IframeBlock(label=_("Iframe"))
+
+    class Meta:
+        icon = "dots-horizontal"
 
 
 class MultiColumnsWithTitleBlock(blocks.StructBlock):
@@ -234,12 +241,12 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
         error_messages={"invalid": "La couleur n’est pas correcte, le format doit être #fff ou #f5f5fe"},
         required=False,
     )
-    title = blocks.CharBlock(label="Titre", required=False)
+    title = blocks.CharBlock(label=_("Title"), required=False)
     columns = MultiColumnsBlock(label="Multi-colonnes")
 
 
 STREAMFIELD_COMMON_BLOCKS = [
-    ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
+    ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     ("badges_list", BadgesListBlock(label=_("Badges list"))),
     ("image", ImageBlock()),
     (

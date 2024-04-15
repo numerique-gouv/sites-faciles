@@ -6,11 +6,9 @@
     <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
 {% endblock title %}
 
-{% if page.search_description %}
-    {% block description %}
-        <meta name="description" content="{{ page.search_description }}" />
-    {% endblock description %}
-{% endif %}
+{% block description %}
+    {% if page.search_description %}<meta name="description" content="{{ page.search_description }}" />{% endif %}
+{% endblock description %}
 
 {% block social_media %}
     <meta property="og:site_name" content="{{ request.get_host }}" />
@@ -58,5 +56,4 @@
             <a class="fr-tag" target="_self" href="{% url 'global_tag' tag.slug %}">{{ tag }}</a>
         {% endfor %}
     </div>
-
 {% endblock content %}
