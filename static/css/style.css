@@ -1,3 +1,21 @@
+
+.hero {
+  background-repeat: no-repeat;
+  background-position: center; }
+
+@media (max-width: 64em) {
+  .hero {
+    background-size: 0; } }
+
+.vh {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden; }
+
 /* Prefix the classes defined here with cmsfr- */
 .cmsfr-hero {
   background-size: cover;

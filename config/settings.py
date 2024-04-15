@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "wagtail",
     "wagtailmarkdown",
     "wagtailmenus",
+    "wagtail_airtable",
     "taggit",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
     "sass_processor",
     "content_manager",
     "blog",
+    "formations",
 ]
 
 if DEBUG:
@@ -270,6 +272,27 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 
+# Wagtail Airtable
+AIRTABLE_API_KEY = os.getenv("AIRTABLE_API_KEY")
+WAGTAIL_AIRTABLE_ENABLED = True
+WAGTAIL_AIRTABLE_DEBUG = True
+WAGTAIL_AIRTABLE_SAVE_SYNC = False
+
+AIRTABLE_IMPORT_SETTINGS = {
+    "formations.FormationPage": {
+        "AIRTABLE_BASE_KEY": os.getenv("AIRTABLE_BASE_KEY"),
+        "AIRTABLE_TABLE_NAME": os.getenv("AIRTABLE_TABLE_NAME"),
+        "AIRTABLE_TABLE_NAME_THEME": os.getenv("AIRTABLE_TABLE_NAME_THEME"),
+        "AIRTABLE_TABLE_NAME_ORGA": os.getenv("AIRTABLE_TABLE_NAME_ORGA"),
+        "AIRTABLE_UNIQUE_IDENTIFIER": {
+            "Wagtail Page ID": "pk",
+        },
+        "AIRTABLE_SERIALIZER": "formations.serializers.FormationPageSerializer",
+        "AIRTABLE_IMPORT_ALLOWED": True,
+        "PARENT_PAGE_ID": "formations.utils.get_parent_page_of_formation_page",
+        "AUTO_PUBLISH_NEW_PAGES": True,
+    }
+}
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
     CSRF_TRUSTED_ORIGINS.append("https://" + host)

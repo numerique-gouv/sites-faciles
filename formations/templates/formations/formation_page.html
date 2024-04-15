@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static wagtailcore_tags wagtailimages_tags %}
+{% block title %}
+    <title>{{ page.seo_title|default:page.title }} — {{ SITE_CONFIG.site_title }}</title>
+{% endblock title %}
+{% if page.search_description %}
+    {% block description %}
+        <meta name="description" content="{{ page.search_description }}" />
+    {% endblock description %}
+{% endif %}
+{% block content %}
+    <div class="fr-container fr-mt-8v">
+        <div class="fr-grid-row">
+            <div class="fr-col-12">
+                {% include "content_manager/breadcrumb.html" %}
+                <h1>{{ page.name }}</h1>
+                <p class="fr-text--lead">
+                    <span class="fr-icon-slideshow-fill" aria-hidden="true"></span>
+                    {{ page.get_kind_display }} / {{ page.get_attendance_display }}
+                </p>
+                {% if page.themes %}
+                    <p class="fr-text--lead">
+                        <span class="fr-icon-archive-fill" aria-hidden="true"></span>
+                        {{ page.themes.all|join:", " }}
+                    </p>
+                {% endif %}
+                {% if page.target_audience %}
+                    <p class="fr-text--lead">
+                        <span class="fr-icon-user-fill" aria-hidden="true"></span>
+                        Public visé : {{ page.target_audience.all|join:", " }}
+                    </p>
+                {% endif %}
+                {% if page.organizers %}
+                    <p class="fr-text--lead">
+                        <span class="fr-icon-hotel-fill" aria-hidden="true"></span>
+                        {{ page.organizers.all|join:", " }}
+                    </p>
+                {% endif %}
+                <p class="fr-text--lead">
+                    <span class="fr-icon-calendar-2-fill" aria-hidden="true"></span>
+                    Durée : {{ page.duration }}
+                </p>
+            </div>
+        </div>
+        <section class="fr-py-8v">
+            <div class="fr-callout fr-icon-book-2-fill">
+                <h2 class="fr-callout__title">Description</h3>
+                <p class="fr-callout__text">
+                    {{ page.short_description|richtext|linebreaksbr }}
+                </p>
+            </div>
+        </section>
+        <section class="fr-py-8v">
+            <h2>Objectifs</h2>
+            <div class="fr-grid-row">
+                <div class="fr-col-12 fr-col-md-3">
+                    {% if page.image_url %}
+                        <img class="fr-responsive-img" src="{{ page.image_url }}" alt="">
+                    {% else %}
+                        <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
+                    {% endif %}
+                </div>
+                <div class="fr-ml-2w fr-col-12 fr-col-md-7">
+                    <p class="fr-text--lead">
+                        {{ page.knowledge_at_the_end|richtext|linebreaksbr }}
+                    </p>
+                </div>
+            </div>
+        </section>
+        {% if page.registration_link %}
+            <div class="fr-mt-8v">
+                <h2>Contacts et informations</h2>
+                <p class="fr-text--lead">
+                    <span class="fr-icon-ball-pen-fill" aria-hidden="true"></span>
+                    Inscriptions sur : <a href="{{ page.registration_link }}" target="_blank">{{ page.registration_link }}</a>
+                </p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}
