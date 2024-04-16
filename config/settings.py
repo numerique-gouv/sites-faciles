@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "sass_processor",
     "content_manager",
     "blog",
+    "numerique_gouv",
 ]
 
 if DEBUG:
