@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-11 15:42+0200\n"
-"PO-Revision-Date: 2024-04-11 15:44+0200\n"
+"POT-Creation-Date: 2024-04-17 19:02+0200\n"
+"PO-Revision-Date: 2024-04-17 19:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -74,71 +74,103 @@ msgstr "Page de base"
 msgid "Base pages"
 msgstr "Pages de base"
 
-#: content_manager/blocks.py:31
+#: content_manager/blocks.py:34
 msgid "Link text"
 msgstr "Texte du lien"
 
-#: content_manager/blocks.py:32
+#: content_manager/blocks.py:36 content_manager/blocks.py:50
 msgid "Page"
 msgstr "Page"
 
-#: content_manager/blocks.py:33
+#: content_manager/blocks.py:38 content_manager/blocks.py:52
+msgid ""
+"Link to a page of this site. Use either this or the external URL parameter."
+msgstr ""
+"Lien vers une page du site. Utilisez soit ce champ soit le champ URL externe."
+
+#: content_manager/blocks.py:41 content_manager/blocks.py:55
 msgid "External URL"
 msgstr "URL externe"
 
-#: content_manager/blocks.py:41 content_manager/blocks.py:46
-#: content_manager/blocks.py:101 content_manager/blocks.py:118
-#: content_manager/blocks.py:162 content_manager/blocks.py:194
-#: content_manager/blocks.py:211 content_manager/blocks.py:247
-msgid "Title"
-msgstr "Titre"
+#: content_manager/blocks.py:41 content_manager/blocks.py:55
+msgid "Use either this or the Page parameter."
+msgstr "Utilisez soit ce champ soit le champ Page."
 
-#: content_manager/blocks.py:42 content_manager/blocks.py:102
-msgid "Content"
-msgstr "Contenu"
-
-#: content_manager/blocks.py:47
-msgid "Accordion"
-msgstr "Accordéon"
-
-#: content_manager/blocks.py:65
+#: content_manager/blocks.py:88
 msgid "New"
 msgstr "Nouveau"
 
-#: content_manager/blocks.py:66
+#: content_manager/blocks.py:89
 msgid "Grey"
 msgstr "Gris"
 
-#: content_manager/blocks.py:73
+#: content_manager/blocks.py:96
 msgid "Badge label"
 msgstr "Texte du badge"
 
-#: content_manager/blocks.py:74
+#: content_manager/blocks.py:97
 msgid "Badge color"
 msgstr "Couleur du badge"
 
-#: content_manager/blocks.py:75
+#: content_manager/blocks.py:98
 msgid "Hide badge icon"
 msgstr "Masquer l’icône du badge"
 
-#: content_manager/blocks.py:82
+#: content_manager/blocks.py:105
 msgid "Badge"
 msgstr "Badge"
 
-#: content_manager/blocks.py:103 content_manager/blocks.py:129
-#: content_manager/blocks.py:222
+#: content_manager/blocks.py:113 content_manager/blocks.py:138
+#: content_manager/blocks.py:143 content_manager/blocks.py:171
+#: content_manager/blocks.py:185 content_manager/blocks.py:229
+#: content_manager/blocks.py:261 content_manager/blocks.py:278
+#: content_manager/blocks.py:314
+msgid "Title"
+msgstr "Titre"
+
+#: content_manager/blocks.py:114
+msgid "Small tag"
+msgstr "Petit tag"
+
+#: content_manager/blocks.py:116
+msgid "Tag color"
+msgstr "Couleur du tag"
+
+#: content_manager/blocks.py:119
+msgid "Only for clickable tags"
+msgstr "Uniquement pour les tags cliquables"
+
+#: content_manager/blocks.py:121
+msgid "Icon"
+msgstr "Icône"
+
+#: content_manager/blocks.py:129
+msgctxt "DSFR Tag"
+msgid "Tag"
+msgstr "Tag"
+
+#: content_manager/blocks.py:139 content_manager/blocks.py:172
+msgid "Content"
+msgstr "Contenu"
+
+#: content_manager/blocks.py:144
+msgid "Accordion"
+msgstr "Accordéon"
+
+#: content_manager/blocks.py:173 content_manager/blocks.py:196
+#: content_manager/blocks.py:289
 msgid "Image"
 msgstr "Image"
 
-#: content_manager/blocks.py:104 content_manager/blocks.py:109
+#: content_manager/blocks.py:174
 msgid "Link"
 msgstr "Lien"
 
-#: content_manager/blocks.py:106
+#: content_manager/blocks.py:176
 msgid "or Document"
 msgstr "ou Document"
 
-#: content_manager/blocks.py:107
+#: content_manager/blocks.py:177
 msgid ""
 "Select a document to make the card link to it (if the 'Link' field is not "
 "populated.)"
@@ -146,50 +178,54 @@ msgstr ""
 "Sélectionnez un document pour faire pointer la carte dessus (si le champ "
 "« Lien » est vide.)"
 
-#: content_manager/blocks.py:131
+#: content_manager/blocks.py:198
 msgid "Side where the image is displayed"
 msgstr "Côté où afficher l’image"
 
-#: content_manager/blocks.py:133
+#: content_manager/blocks.py:200
 msgid "Left"
 msgstr "Gauche"
 
-#: content_manager/blocks.py:134
+#: content_manager/blocks.py:201
 msgid "Right"
 msgstr "Droite"
 
-#: content_manager/blocks.py:139
+#: content_manager/blocks.py:206
 msgid "Image width"
 msgstr "Largeur de l’image"
 
-#: content_manager/blocks.py:147 content_manager/blocks.py:201
-#: content_manager/blocks.py:221 content_manager/blocks.py:252
+#: content_manager/blocks.py:214 content_manager/blocks.py:268
+#: content_manager/blocks.py:288 content_manager/blocks.py:319
 msgid "Rich text"
 msgstr "Texte avec mise en forme"
 
-#: content_manager/blocks.py:223
+#: content_manager/blocks.py:290
 msgid "Video"
 msgstr "Vidéo"
 
-#: content_manager/blocks.py:224
+#: content_manager/blocks.py:291
 msgid "Card"
 msgstr "Carte"
 
-#: content_manager/blocks.py:225
+#: content_manager/blocks.py:292
 msgid "Quote"
 msgstr "Citation"
 
-#: content_manager/blocks.py:226
+#: content_manager/blocks.py:293
 msgid "Text and call to action"
 msgstr "Texte et appel à action"
 
-#: content_manager/blocks.py:227
+#: content_manager/blocks.py:294
 msgid "Iframe"
 msgstr "Iframe"
 
-#: content_manager/blocks.py:253
-msgid "Badges list"
+#: content_manager/blocks.py:320
+msgid "Badge list"
 msgstr "Liste de badges"
+
+#: content_manager/blocks.py:334
+msgid "Tag list"
+msgstr "Liste de tags"
 
 #: content_manager/models.py:21
 msgid "Content page"
@@ -249,3 +285,11 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid "Link to a page, use this or the external URL parameter"
+#~ msgstr ""
+#~ "Lien vers une page du site. Utilisez soit ce champ soit le champ URL "
+#~ "externe."
+
+#~ msgid "Use this or the Page parameter"
+#~ msgstr "Utilisez soit ce champ soit le champ Page."

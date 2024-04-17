@@ -1,5 +1,7 @@
+from django import forms
 from django.conf import settings
-from django.utils.translation import gettext_lazy as _
+from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM
 from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
@@ -7,6 +9,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
 from content_manager.constants import HEADING_CHOICES, LEVEL_CHOICES
+from content_manager.widgets import DsfrIconPickerWidget
 
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
@@ -29,36 +32,55 @@ class LinkStructValue(blocks.StructValue):
 
 class LinkBlock(blocks.StructBlock):
     text = blocks.CharBlock(label=_("Link text"), required=False)
-    page = blocks.PageChooserBlock(label=_("Page"), required=False)
-    external_url = blocks.URLBlock(label=_("External URL"), required=False)
+    page = blocks.PageChooserBlock(
+        label=_("Page"),
+        required=False,
+        help_text=_("Link to a page of this site. Use either this or the external URL parameter."),
+    )
+    external_url = blocks.URLBlock(
+        label=_("External URL"), required=False, help_text=_("Use either this or the Page parameter.")
+    )
 
     class Meta:
         value_class = LinkStructValue
 
 
-## Basic blocks
-class AccordionBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label=_("Title"))
-    content = blocks.RichTextBlock(label=_("Content"))
-
-
-class AccordionsBlock(blocks.StreamBlock):
-    title = blocks.CharBlock(label=_("Title"))
-    accordion = AccordionBlock(label=_("Accordion"), min_num=1, max_num=15)
-
-
-class AlertBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre du message", required=False)
-    description = blocks.TextBlock(label="Texte du message", required=False)
-    level = blocks.ChoiceBlock(label="Type de message", choices=LEVEL_CHOICES)
-    heading_tag = blocks.ChoiceBlock(
-        label="Niveau de titre",
-        choices=HEADING_CHOICES,
-        default="h3",
-        help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
+class LinkWithoutLabelBlock(blocks.StructBlock):
+    page = blocks.PageChooserBlock(
+        label=_("Page"),
+        required=False,
+        help_text=_("Link to a page of this site. Use either this or the external URL parameter."),
+    )
+    external_url = blocks.URLBlock(
+        label=_("External URL"), required=False, help_text=_("Use either this or the Page parameter.")
     )
 
+    class Meta:
+        value_class = LinkStructValue
 
+
+class IconPickerBlock(blocks.FieldBlock):
+    def __init__(self, required=True, help_text=None, validators=(), **kwargs):
+        self.field_options = {
+            "required": required,
+            "help_text": help_text,
+            "max_length": 70,
+            "min_length": 0,
+            "validators": [],
+        }
+        super().__init__(**kwargs)
+
+    @cached_property
+    def field(self):
+        field_kwargs = {"widget": DsfrIconPickerWidget()}
+        field_kwargs.update(self.field_options)
+        return forms.CharField(**field_kwargs)
+
+    class Meta:
+        icon = "radio-full"
+
+
+## Badges and Tags
 badge_level_choices = (
     COLOR_CHOICES_SYSTEM
     + [
@@ -84,6 +106,53 @@ class BadgesListBlock(blocks.StreamBlock):
     class Meta:
         icon = "list-ul"
         template = "content_manager/blocks/badges_list.html"
+
+
+class TagBlock(blocks.StructBlock):
+    label = blocks.CharBlock(label=_("Title"))
+    is_small = blocks.BooleanBlock(label=_("Small tag"), required=False)
+    color = blocks.ChoiceBlock(
+        label=_("Tag color"),
+        choices=COLOR_CHOICES_ILLUSTRATION,
+        required=False,
+        help_text=_("Only for clickable tags"),
+    )
+    icon_class = IconPickerBlock(label=_("Icon"), required=False)
+    link = LinkWithoutLabelBlock(required=False)
+
+    class Meta:
+        template = "content_manager/blocks/tag.html"
+
+
+class TagListBlock(blocks.StreamBlock):
+    tag = TagBlock(label=pgettext_lazy("DSFR Tag", "Tag"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/tags_list.html"
+
+
+## Basic blocks
+class AccordionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    content = blocks.RichTextBlock(label=_("Content"))
+
+
+class AccordionsBlock(blocks.StreamBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    accordion = AccordionBlock(label=_("Accordion"), min_num=1, max_num=15)
+
+
+class AlertBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label="Titre du message", required=False)
+    description = blocks.TextBlock(label="Texte du message", required=False)
+    level = blocks.ChoiceBlock(label="Type de message", choices=LEVEL_CHOICES)
+    heading_tag = blocks.ChoiceBlock(
+        label="Niveau de titre",
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
+    )
 
 
 class CalloutBlock(blocks.StructBlock):
@@ -247,7 +316,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
-    ("badges_list", BadgesListBlock(label=_("Badges list"))),
+    ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("image", ImageBlock()),
     (
         "imageandtext",
@@ -261,6 +330,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("accordions", AccordionsBlock(label="Accordéons")),
     ("stepper", StepperBlock(label="Étapes")),
     ("separator", SeparatorBlock(label="Séparateur")),
+    ("tags_list", TagListBlock(label=_("Tag list"))),
     ("markdown", MarkdownBlock()),
 ]
 
