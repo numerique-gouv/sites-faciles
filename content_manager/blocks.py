@@ -30,21 +30,6 @@ class LinkStructValue(blocks.StructValue):
         return external_url or page.url
 
 
-class LinkBlock(blocks.StructBlock):
-    text = blocks.CharBlock(label=_("Link text"), required=False)
-    page = blocks.PageChooserBlock(
-        label=_("Page"),
-        required=False,
-        help_text=_("Link to a page of this site. Use either this or the external URL parameter."),
-    )
-    external_url = blocks.URLBlock(
-        label=_("External URL"), required=False, help_text=_("Use either this or the Page parameter.")
-    )
-
-    class Meta:
-        value_class = LinkStructValue
-
-
 class LinkWithoutLabelBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(
         label=_("Page"),
@@ -52,11 +37,22 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
         help_text=_("Link to a page of this site. Use either this or the external URL parameter."),
     )
     external_url = blocks.URLBlock(
-        label=_("External URL"), required=False, help_text=_("Use either this or the Page parameter.")
+        label=_("External URL"),
+        required=False,
+        help_text=_("Use either this or the Page parameter."),
     )
 
     class Meta:
         value_class = LinkStructValue
+        icon = "link"
+
+
+class LinkBlock(LinkWithoutLabelBlock):
+    text = blocks.CharBlock(label=_("Link label"), required=False)
+
+    class Meta:
+        value_class = LinkStructValue
+        icon = "link"
 
 
 class IconPickerBlock(blocks.FieldBlock):
@@ -144,25 +140,25 @@ class AccordionsBlock(blocks.StreamBlock):
 
 
 class AlertBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre du message", required=False)
-    description = blocks.TextBlock(label="Texte du message", required=False)
-    level = blocks.ChoiceBlock(label="Type de message", choices=LEVEL_CHOICES)
+    title = blocks.CharBlock(label=_("Message title"), required=False)
+    description = blocks.TextBlock(label=_("Message text"), required=False)
+    level = blocks.ChoiceBlock(label=_("Message type"), choices=LEVEL_CHOICES)
     heading_tag = blocks.ChoiceBlock(
-        label="Niveau de titre",
+        label=_("Heading level"),
         choices=HEADING_CHOICES,
         default="h3",
-        help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
 
 
 class CalloutBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre de la mise en avant", required=False)
-    text = blocks.TextBlock(label="Texte mis en avant", required=False)
+    title = blocks.CharBlock(label=_("Callout title"), required=False)
+    text = blocks.TextBlock(label=_("Callout text"), required=False)
     heading_tag = blocks.ChoiceBlock(
-        label="Niveau de titre",
+        label=_("Heading level"),
         choices=HEADING_CHOICES,
         default="h3",
-        help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
 
 
@@ -182,13 +178,13 @@ class CardBlock(blocks.StructBlock):
 class IframeBlock(blocks.StructBlock):
     title = blocks.CharBlock(
         label=_("Title"),
-        help_text="Accessibilité : Le titre doit décrire, de façon claire et concise, le contenu embarqué.",
+        help_text=_("Accessibility: The title should describe, in a clear and concise manner, the embedded content."),
     )
     url = blocks.URLBlock(
-        label="Lien du cadre intégré",
-        help_text="Exemple pour Tally : https://tally.so/embed/w2jMRa",
+        label=_("URL of the iframe"),
+        help_text=_("Example for Tally: https://tally.so/embed/w2jMRa"),
     )
-    height = blocks.IntegerBlock(label="Hauteur en pixels")
+    height = blocks.IntegerBlock(label=_("Height (in pixels)"))
 
 
 class ImageAndTextBlock(blocks.StructBlock):
@@ -211,74 +207,99 @@ class ImageAndTextBlock(blocks.StructBlock):
         default="3",
     )
     text = blocks.RichTextBlock(label=_("Rich text"))
-    link = LinkBlock(required=False)
-    link_label = blocks.CharBlock(
-        label="Titre du lien",
-        help_text="Le lien apparait en bas du bloc de droite, avec une flèche",
+    link = LinkBlock(
+        label=_("Link"),
         required=False,
+        help_text=_("The link is shown at the bottom of the text block, with an arrow"),
     )
-    page = blocks.PageChooserBlock(label="Lien interne", required=False)
-    link_url = blocks.URLBlock(label="Lien externe", required=False)
+    link_label = blocks.CharBlock(
+        label=_("Link label (obsolete)"),
+        required=False,
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+        group="obsolete",
+    )
+    page = blocks.PageChooserBlock(
+        label=_("Internal link (obsolete)"),
+        required=False,
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+        group="obsolete",
+    )
+    link_url = blocks.URLBlock(
+        label=_("Link URL (obsolete)"),
+        required=False,
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+        group="obsolete",
+    )
 
     class Meta:
         icon = "image"
+        template = "content_manager/blocks/image_and_text.html"
 
 
 class ImageBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
-    image = ImageChooserBlock(label="Illustration")
-    alt = blocks.CharBlock(label="Texte alternatif (description textuelle de l’image)", required=False)
-    caption = blocks.CharBlock(label="Légende", required=False)
-    url = blocks.URLBlock(label="Lien", required=False)
+    image = ImageChooserBlock(label=_("Image"))
+    alt = blocks.CharBlock(
+        label=_("Alternative text (textual description of the image)"),
+        required=False,
+    )
+    caption = blocks.CharBlock(label=_("Caption"), required=False)
+    url = blocks.URLBlock(label=_("Link"), required=False)
 
     class Meta:
         icon = "image"
 
 
 class QuoteBlock(blocks.StructBlock):
-    image = ImageChooserBlock(label="Illustration (à gauche)", required=False)
-    quote = blocks.CharBlock(label="Citation")
-    author_name = blocks.CharBlock(label="Nom de l’auteur")
-    author_title = blocks.CharBlock(label="Titre de l’auteur")
+    image = ImageChooserBlock(label=_("Image"), required=False)
+    quote = blocks.CharBlock(label=_("Quote"))
+    author_name = blocks.CharBlock(label=_("Author name"))
+    author_title = blocks.CharBlock(label=_("Author title"))
 
 
 class SeparatorBlock(blocks.StructBlock):
-    top_margin = blocks.IntegerBlock(label="Espacement au dessus", min_value=0, max_value=15, default=3)
-    bottom_margin = blocks.IntegerBlock(label="Espacement en dessous", min_value=0, max_value=15, default=3)
+    top_margin = blocks.IntegerBlock(label=_("Top margin"), min_value=0, max_value=15, default=3)
+    bottom_margin = blocks.IntegerBlock(label=_("Bottom margin"), min_value=0, max_value=15, default=3)
 
 
 class StepBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre de l’étape")
-    detail = blocks.TextBlock(label="Détail")
+    title = blocks.CharBlock(label=_("Title"))
+    detail = blocks.TextBlock(label=_("Detail"))
 
 
 class StepsListBlock(blocks.StreamBlock):
-    step = StepBlock(label="Étape")
+    step = StepBlock(label=_("Step"))
 
 
 class StepperBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"))
-    total = blocks.IntegerBlock(label="Nombre d’étapes")
-    current = blocks.IntegerBlock(label="Étape en cours")
-    steps = StepsListBlock(label="Les étapes")
+    total = blocks.IntegerBlock(label=_("Number of steps"))
+    current = blocks.IntegerBlock(label=_("Current step"))
+    steps = StepsListBlock(label=_("Steps"))
 
 
 class TextAndCTA(blocks.StructBlock):
     text = blocks.RichTextBlock(label=_("Rich text"), required=False)
     cta_label = blocks.CharBlock(
-        label="Titre de l’appel à l’action",
-        help_text="Le lien apparait comme un bouton sous le bloc de texte",
+        label=_("Call to action label"),
+        help_text=_("The link appears as a button under the text block"),
         required=False,
     )
-    cta_url = blocks.CharBlock(label="Lien", required=False)
+    cta_url = blocks.CharBlock(label=_("Link"), required=False)
 
 
 class VideoBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
-    caption = blocks.CharBlock(label="Légende")
+    caption = blocks.CharBlock(label=_("Caption"))
     url = blocks.URLBlock(
-        label="Lien de la vidéo",
-        help_text="URL au format « embed » (Ex. : https://www.youtube.com/embed/gLzXOViPX-0)",
+        label=_("Video URL"),
+        help_text="Use embed format (e.g. : https://www.youtube.com/embed/gLzXOViPX-0)",
     )
 
 
@@ -297,21 +318,21 @@ class MultiColumnsBlock(blocks.StreamBlock):
 
 
 class MultiColumnsWithTitleBlock(blocks.StructBlock):
-    bg_image = ImageChooserBlock(label="Image d’arrière plan", required=False)
+    bg_image = ImageChooserBlock(label=_("Background image"), required=False)
     bg_color_class = BackgroundColorChoiceBlock(
-        label="Couleur d’arrière-plan",
+        label=_("Background color"),
         required=False,
-        help_text="Utilise les couleurs du système de design de l’État",
+        help_text=_("Uses the French Design System colors"),
     )
     bg_color = blocks.RegexBlock(
-        label="Couleur d’arrière-plan au format hexa (Ex: #f5f5fe)",
+        label=_("Background color, hexadecimal format (obsolete)"),
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
         help_text="(Obsolète, sera retiré dans une future mise à jour. Remplacez-le par la couleur d’arrière-plan)",
-        error_messages={"invalid": "La couleur n’est pas correcte, le format doit être #fff ou #f5f5fe"},
+        error_messages={"invalid": _("Incorrect color format, must be #fff or #f5f5f5")},
         required=False,
     )
     title = blocks.CharBlock(label=_("Title"), required=False)
-    columns = MultiColumnsBlock(label="Multi-colonnes")
+    columns = MultiColumnsBlock(label=_("Multiple columns"))
 
 
 STREAMFIELD_COMMON_BLOCKS = [
@@ -320,16 +341,16 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("image", ImageBlock()),
     (
         "imageandtext",
-        ImageAndTextBlock(label="Bloc image et texte"),
+        ImageAndTextBlock(label=_("Image and text")),
     ),
-    ("alert", AlertBlock(label="Message d’alerte")),
-    ("callout", CalloutBlock(label="Texte mise en avant")),
-    ("quote", QuoteBlock(label="Citation")),
-    ("video", VideoBlock(label="Vidéo")),
-    ("multicolumns", MultiColumnsWithTitleBlock(label="Multi-colonnes")),
-    ("accordions", AccordionsBlock(label="Accordéons")),
-    ("stepper", StepperBlock(label="Étapes")),
-    ("separator", SeparatorBlock(label="Séparateur")),
+    ("alert", AlertBlock(label=_("Alert message"))),
+    ("callout", CalloutBlock(label=_("Callout"))),
+    ("quote", QuoteBlock(label=_("Quote"))),
+    ("video", VideoBlock(label=_("Video"))),
+    ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"))),
+    ("accordions", AccordionsBlock(label=_("Accordions"))),
+    ("stepper", StepperBlock(label=_("Stepper"))),
+    ("separator", SeparatorBlock(label=_("Separator"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
     ("markdown", MarkdownBlock()),
 ]
@@ -344,8 +365,9 @@ if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
             "html",
             blocks.RawHTMLBlock(
                 readonly=True,
-                help_text="""Avertissement : Utilisez le bloc HTML avec précaution.
-                Un code malveillant peut compromettre la sécurité du site.""",
+                help_text=_(
+                    "Warning: Use HTML block with caution. Malicious code can compromise the security of the site."
+                ),
             ),
         )
     ]

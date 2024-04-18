@@ -1,0 +1,43 @@
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+<div class="fr-container fr-my-6w">
+    <div class="fr-grid-row fr-grid-row--gutters">
+        {% if value.image_side == "left" %}
+            <div class="fr-col-12 fr-col-sm-{{ value.image_ratio }}">
+                <div class="bordered fr-px-2w">{% image value.image original class="fr-responsive-img" alt="" %}</div>
+            </div>
+            <div class="fr-col-12 fr-col-sm{{ -12|add:value.image_ratio }}">
+                {{ value.text|richtext }}
+
+                {% if value.link is not None and value.link.url %}
+                    <a class="fr-link fr-fi-arrow-right-line fr-link--icon-right"
+                       href="{{ value.link.url }}">{{ value.link.text }}</a>
+                {% elif value.page and value.link_label %}
+                    <a class="fr-link fr-fi-arrow-right-line fr-link--icon-right"
+                       href="{{ value.page.url }}">{{ value.link_label }}</a>
+                {% elif value.link_url and value.link_label %}
+                    <a class="fr-link fr-fi-arrow-right-line fr-link--icon-right"
+                       href="{{ value.link_url }}">{{ value.link_label }}</a>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="fr-col-12 fr-col-sm{{ -12|add:value.image_ratio }}">
+                {{ value.text|richtext }}
+                {% if value.link is not None and value.link.url %}
+                    <a class="fr-link fr-fi-arrow-right-line fr-link--icon-right"
+                       href="{{ value.link.url }}">{{ value.link.text }}</a>
+                {% elif value.page and value.link_label %}
+                    <a class="fr-link fr-fi-arrow-right-line fr-link--icon-right"
+                       href="{{ value.page.url }}">{{ value.link_label }}</a>
+                {% elif value.link_url and value.link_label %}
+                    <a class="fr-link fr-fi-arrow-right-line fr-link--icon-right"
+                       href="{{ value.link_url }}">{{ value.link_label }}</a>
+                {% endif %}
+            </div>
+            <div class="fr-col-12 fr-col-sm-{{ value.image_ratio }}">
+                <div class="bordered fr-px-2w">{% image value.image original class="fr-responsive-img" alt="" %}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>
