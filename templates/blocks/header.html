@@ -1,13 +1,20 @@
 {% extends "dsfr/header.html" %}
 {% load static wagtailcore_tags menu_tags %}
 
+{% block brand %}
+    <a href="/"
+       title="Accueil — {{ settings.content_manager.CmsDsfrConfig.header_brand }}">
+        <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
+    </a>
+{% endblock brand %}
+
 {% block brand_operator %}
     <img src="{% static 'images/logo_campus_numerique.png' %}" class="fr-responsive-img" style="width:6rem;" alt="">
 {% endblock brand_operator %}
 
 {% block service_title %}
-    <a href="/" title="Accueil — {{ SITE_CONFIG.site_title }}">
-        <p class="fr-header__service-title">{{ SITE_CONFIG.site_title }}</p>
+    <a href="/" title="Accueil — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
+        <p class="fr-header__service-title">{{ settings.content_manager.CmsDsfrConfig.site_title }}</p>
     </a>
 {% endblock service_title %}
 
