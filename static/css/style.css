@@ -2,26 +2,33 @@
 .cmsfr-hero {
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+}
 
 .cmsfr-hero-large {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center; }
+  text-align: center;
+}
 
-.cmsfr-hero-dark h1, .cmsfr-hero-dark p {
-  color: white; }
+.cmsfr-background-dark h1,
+.cmsfr-background-dark p {
+  color: white;
+}
 
 .fr-header__service-title em {
-  font-weight: lighter; }
+  font-weight: lighter;
+}
 
 .cmsfr-author_card__header {
   flex: 0 0 6rem !important;
-  width: 6rem !important; }
+  width: 6rem !important;
+}
 
 .cmsfr-author-img {
   border-radius: 50%;
   height: 4.5rem !important;
   margin: 1.5rem;
-  width: 4.5rem; }
+  width: 4.5rem;
+}

@@ -174,6 +174,10 @@ class CardBlock(blocks.StructBlock):
         group="target",
     )
 
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/card.html"
+
 
 class IframeBlock(blocks.StructBlock):
     title = blocks.CharBlock(
@@ -185,6 +189,10 @@ class IframeBlock(blocks.StructBlock):
         help_text=_("Example for Tally: https://tally.so/embed/w2jMRa"),
     )
     height = blocks.IntegerBlock(label=_("Height (in pixels)"))
+
+    class Meta:
+        icon = "globe"
+        template = "content_manager/blocks/iframe.html"
 
 
 class ImageAndTextBlock(blocks.StructBlock):
@@ -244,6 +252,13 @@ class ImageAndTextBlock(blocks.StructBlock):
 
 class ImageBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        required=False,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
     image = ImageChooserBlock(label=_("Image"))
     alt = blocks.CharBlock(
         label=_("Alternative text (textual description of the image)"),
@@ -254,13 +269,23 @@ class ImageBlock(blocks.StructBlock):
 
     class Meta:
         icon = "image"
+        template = "content_manager/blocks/image.html"
 
 
 class QuoteBlock(blocks.StructBlock):
     image = ImageChooserBlock(label=_("Image"), required=False)
     quote = blocks.CharBlock(label=_("Quote"))
     author_name = blocks.CharBlock(label=_("Author name"))
-    author_title = blocks.CharBlock(label=_("Author title"))
+    author_title = blocks.CharBlock(label=_("Author title"), required=False)
+    color = blocks.ChoiceBlock(
+        label=_("Color"),
+        choices=COLOR_CHOICES_ILLUSTRATION,
+        required=False,
+    )
+
+    class Meta:
+        icon = "openquote"
+        template = "content_manager/blocks/quote.html"
 
 
 class SeparatorBlock(blocks.StructBlock):
@@ -293,6 +318,10 @@ class TextAndCTA(blocks.StructBlock):
     )
     cta_url = blocks.CharBlock(label=_("Link"), required=False)
 
+    class Meta:
+        icon = "link"
+        template = "content_manager/blocks/text_and_cta.html"
+
 
 class VideoBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
@@ -302,16 +331,26 @@ class VideoBlock(blocks.StructBlock):
         help_text="Use embed format (e.g. : https://www.youtube.com/embed/gLzXOViPX-0)",
     )
 
+    class Meta:
+        icon = "media"
+        template = "content_manager/blocks/video.html"
 
-## Multi-column blocks
-class MultiColumnsBlock(blocks.StreamBlock):
+
+## Page structure blocks
+class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
     image = ImageBlock(label=_("Image"))
     video = VideoBlock(label=_("Video"))
-    card = CardBlock(label=_("Card"))
     quote = QuoteBlock(label=_("Quote"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     iframe = IframeBlock(label=_("Iframe"))
+
+    class Meta:
+        icon = "dots-horizontal"
+
+
+class MultiColumnsBlock(CommonStreamBlock):
+    card = CardBlock(label=_("Vertical card"))
 
     class Meta:
         icon = "dots-horizontal"
@@ -327,12 +366,44 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
     bg_color = blocks.RegexBlock(
         label=_("Background color, hexadecimal format (obsolete)"),
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        help_text="(Obsolète, sera retiré dans une future mise à jour. Remplacez-le par la couleur d’arrière-plan)",
+        help_text="(This field is obsolete and will be removed in the near future. Replace it with the background picture)",  # noqa
         error_messages={"invalid": _("Incorrect color format, must be #fff or #f5f5f5")},
         required=False,
     )
     title = blocks.CharBlock(label=_("Title"), required=False)
-    columns = MultiColumnsBlock(label=_("Multiple columns"))
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        required=False,
+        default="h2",
+        help_text=_("Adapt to the page layout. Defaults to heading 2."),
+    )
+    columns = MultiColumnsBlock(label=_("Columns"))
+
+    class Meta:
+        icon = "dots-horizontal"
+        template = "content_manager/blocks/multicolumns.html"
+
+
+class FullWidthBlock(CommonStreamBlock):
+    image_and_text = ImageAndTextBlock(label=_("Image and text"))
+
+    class Meta:
+        icon = "minus"
+
+
+class FullWidthBackgroundBlock(blocks.StructBlock):
+    bg_image = ImageChooserBlock(label=_("Background image"), required=False)
+    bg_color_class = BackgroundColorChoiceBlock(
+        label=_("Background color"),
+        required=False,
+        help_text=_("Uses the French Design System colors"),
+    )
+    content = FullWidthBlock(label=_("Content"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/blocks/full_width_background.html"
 
 
 STREAMFIELD_COMMON_BLOCKS = [
@@ -347,12 +418,13 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("callout", CalloutBlock(label=_("Callout"))),
     ("quote", QuoteBlock(label=_("Quote"))),
     ("video", VideoBlock(label=_("Video"))),
-    ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"))),
     ("accordions", AccordionsBlock(label=_("Accordions"))),
     ("stepper", StepperBlock(label=_("Stepper"))),
-    ("separator", SeparatorBlock(label=_("Separator"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
-    ("markdown", MarkdownBlock()),
+    ("markdown", MarkdownBlock(label=_("Markdown"))),
+    ("separator", SeparatorBlock(label=_("Separator"))),
+    ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
+    ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
 ]
 
 
