@@ -50,10 +50,20 @@
     {% dsfr_theme_modale %}
     {% wagtailuserbar %}
 
+    {% if settings.content_manager.CmsDsfrConfig.notice %}
+      {% dsfr_notice title=settings.content_manager.CmsDsfrConfig.notice %}
+    {% endif %}
+
     <main id="content" role="main">
       {% block content %}
       {% endblock content %}
     </main>
+
+    {% block follow_newsletter_social_media %}
+      {% if settings.content_manager.CmsDsfrConfig.show_newsletter_and_social_block %}
+        {% include "blocks/follow.html" %}
+      {% endif %}
+    {% endblock follow_newsletter_social_media %}
 
     {% include "blocks/footer.html" %}
 

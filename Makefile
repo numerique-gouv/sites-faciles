@@ -25,7 +25,7 @@ collectstatic:
 
 .PHONY: messages
 messages:
-	$(EXEC_CMD) poetry run django-admin makemessages -l fr --ignore=manage.py
+	$(EXEC_CMD) poetry run django-admin makemessages -l fr --ignore=manage.py --ignore=medias --ignore=setup.py --ignore=staticfiles --ignore=templates
 
 .PHONY: sass
 sass:

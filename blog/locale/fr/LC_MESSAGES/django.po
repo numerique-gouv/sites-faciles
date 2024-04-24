@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 18:17+0200\n"
-"PO-Revision-Date: 2024-03-27 14:55+0100\n"
+"POT-Creation-Date: 2024-04-24 16:31+0200\n"
+"PO-Revision-Date: 2024-04-24 17:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -36,7 +36,7 @@ msgstr "Informations de contact"
 
 #: blog/blocks.py:21
 msgid "Rich text"
-msgstr ""
+msgstr "Texte riche"
 
 #: blog/blocks.py:28
 msgid "Contact card"
@@ -50,17 +50,15 @@ msgstr "Articles par page"
 msgid "Blog index"
 msgstr "Index de blog"
 
-#: blog/models.py:74 blog/templates/blog/tags_list_page.html:20
-#: blog/views.py:149
+#: blog/models.py:74 blog/views.py:149
 msgid "Tags"
 msgstr "Étiquettes"
 
-#: blog/models.py:97 blog/models.py:170 blog/models.py:265
-#: blog/templates/blog/categories_list_page.html:20 blog/views.py:117
+#: blog/models.py:97 blog/models.py:170 blog/models.py:265 blog/views.py:117
 msgid "Categories"
 msgstr "Catégories"
 
-#: blog/models.py:109 blog/templates/blog/blog_index_page.html:59
+#: blog/models.py:109
 msgid "Posts written by"
 msgstr "Articles écrits par"
 
@@ -120,24 +118,20 @@ msgstr "Catégorie"
 msgid "Person"
 msgstr "Personne"
 
-#: blog/templates/blog/blog_entry_page.html:75
-msgid "Posted by:"
-msgstr "Écrit par :"
+#~ msgid "Posted by:"
+#~ msgstr "Écrit par :"
 
-#: blog/templates/blog/blog_index_page.html:52
 #, python-format
-msgid "Posts in category %(category)s"
-msgstr "Articles dans la catégorie %(category)s"
+#~ msgid "Posts in category %(category)s"
+#~ msgstr "Articles dans la catégorie %(category)s"
 
-#: blog/templates/blog/blog_index_page.html:56
 #, python-format
-msgid "Posts tagged with %(tag)s"
-msgstr "Articles avec l’étiquette %(tag)s"
+#~ msgid "Posts tagged with %(tag)s"
+#~ msgstr "Articles avec l’étiquette %(tag)s"
 
-#: blog/templates/blog/blog_index_page.html:61
 #, python-format
-msgid "Posts published in %(year)s"
-msgstr "Articles publiés en %(year)s"
+#~ msgid "Posts published in %(year)s"
+#~ msgstr "Articles publiés en %(year)s"
 
 #~ msgid "Colophon"
 #~ msgstr "Colophon"
