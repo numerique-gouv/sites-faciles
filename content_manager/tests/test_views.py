@@ -6,7 +6,7 @@ from wagtail.test.utils import WagtailPageTestCase
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
+from content_manager.models import CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
 
 
 class ContentPageTestCase(WagtailPageTestCase):
@@ -34,6 +34,44 @@ class ContentPageTestCase(WagtailPageTestCase):
         self.assertContains(
             response,
             "<title>Page de contenu — Titre du site</title>",
+        )
+
+
+class ConfigTestCase(WagtailPageTestCase):
+    def setUp(self):
+        home = Page.objects.get(slug="home")
+        self.admin = User.objects.create_superuser("test", "test@test.test", "pass")
+        self.admin.save()
+        self.content_page = home.add_child(
+            instance=ContentPage(
+                title="Page de contenu",
+                slug="content-page",
+                owner=self.admin,
+            )
+        )
+        self.content_page.save()
+
+        self.config, _created = CmsDsfrConfig.objects.update_or_create(
+            site_id=1,
+            defaults={
+                "site_title": "Site title",
+                "site_tagline": "Site tagline",
+                "header_brand": "République française",
+                "header_brand_html": "République<br />française",
+            },
+        )
+        self.config.save()
+
+    def test_header_brand_block_is_displayed(self):
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertInHTML(
+            """<a href="/"
+                title="Accueil — République française">
+                <p class="fr-logo">République<br />française</p>
+            </a>""",
+            response.content.decode(),
         )
 
 
