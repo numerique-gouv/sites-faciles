@@ -58,11 +58,14 @@ class ConfigTestCase(WagtailPageTestCase):
                 "site_tagline": "Site tagline",
                 "header_brand": "République française",
                 "header_brand_html": "République<br />française",
+                "footer_brand": "République française",
+                "footer_brand_html": "République<br />française",
+                "footer_description": "Site <b>description</b>.",
             },
         )
         self.config.save()
 
-    def test_header_brand_block_is_displayed(self):
+    def test_header_brand_block_uses_conf(self):
         url = self.content_page.url
         response = self.client.get(url)
 
@@ -71,6 +74,97 @@ class ConfigTestCase(WagtailPageTestCase):
                 title="Accueil — République française">
                 <p class="fr-logo">République<br />française</p>
             </a>""",
+            response.content.decode(),
+        )
+
+    def test_footer_brand_block_uses_conf(self):
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertInHTML(
+            """<div class="fr-footer__brand fr-enlarge-link">
+                <a id="footer-operator" href="/"
+                    title="Retour à l’accueil du site - Site title - République française">
+                    <p class="fr-logo">
+                        République<br />française
+                    </p>
+                </a>
+            </div>""",
+            response.content.decode(),
+        )
+
+    def test_header_title_block_uses_conf(self):
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertInHTML(
+            """<div class="fr-header__service">
+                <a href="/" title="Accueil — Site title">
+                    <p class="fr-header__service-title">Site title</p>
+                </a>
+                <p class="fr-header__service-tagline">Site tagline</p>
+            </div>""",
+            response.content.decode(),
+        )
+
+    def test_notice_is_not_set_by_default(self):
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertNotContains(
+            response,
+            "fr-notice__body",
+        )
+
+    def test_notice_can_be_set(self):
+        self.config.notice = "Ceci est une information <b>importante</b> et <i>temporaire</i>."
+        self.config.save()
+
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertInHTML(
+            """<div class="fr-notice fr-notice--info">
+                <div class="fr-container">
+                    <div class="fr-notice__body">
+                        <p class="fr-notice__title">
+                            Ceci est une information <b>importante</b> et <i>temporaire</i>.
+                        </p>
+                    </div>
+                </div>
+            </div>""",
+            response.content.decode(),
+        )
+
+    def test_beta_tag_is_not_set_by_default(self):
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertNotContains(
+            response,
+            '<span class="fr-badge fr-badge--sm fr-badge--green-emeraude">BETA</span>',
+        )
+
+    def test_beta_tag_can_be_set(self):
+        self.config.beta_tag = True
+        self.config.save()
+
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertContains(
+            response,
+            '<span class="fr-badge fr-badge--sm fr-badge--green-emeraude">BETA</span>',
+        )
+
+    def test_footer_description_uses_conf(self):
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertInHTML(
+            """<p class="fr-footer__content-desc">
+                    Site <b>description</b>.
+                </p>""",
             response.content.decode(),
         )
 

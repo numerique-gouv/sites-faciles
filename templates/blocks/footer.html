@@ -24,8 +24,7 @@
     <div class="fr-footer__brand fr-enlarge-link">
       <a id="footer-operator"
          href="/"
-         title="{{ back_to_home_label }} - {{ settings.content_manager.CmsDsfrConfig.site_title }} - {{ settings.content_manager.CmsDsfrConfig.footer_brand|default:'république française' }}"
-         None="{{ settings.content_manager.CmsDsfrConfig.footer_brand|default:'république française' }}">
+         title="{{ back_to_home_label }} - {{ settings.content_manager.CmsDsfrConfig.site_title }} - {{ settings.content_manager.CmsDsfrConfig.footer_brand|default:'république française' }}">
         {% block brand %}
           <p class="fr-logo">
             {{ settings.content_manager.CmsDsfrConfig.footer_brand_html| default_if_none:'république<br />française' | safe }}
