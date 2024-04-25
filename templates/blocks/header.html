@@ -1,57 +1,73 @@
 {% extends "dsfr/header.html" %}
-{% load static wagtailcore_tags menu_tags %}
+{% load static wagtailcore_tags wagtailimages_tags menu_tags %}
 
 {% block brand %}
-    <a href="/"
-       title="Accueil — {{ settings.content_manager.CmsDsfrConfig.header_brand }}">
-        <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
-    </a>
+  <a href="/"
+     title="Accueil — {{ settings.content_manager.CmsDsfrConfig.header_brand }}">
+    <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
+  </a>
 {% endblock brand %}
 
 {% block service_title %}
-    <a href="/"
-       title="Accueil — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
+  <a href="/"
+     title="Accueil — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
 
-        <p class="fr-header__service-title">
-            {% if settings.content_manager.CmsDsfrConfig.site_title|slice:"-2:" == "fr" %}
-                {{ settings.content_manager.CmsDsfrConfig.site_title|slice:":-2" }}<em>fr</em>
-            {% else %}
-                {{ settings.content_manager.CmsDsfrConfig.site_title }}
-            {% endif %}
-        </p>
-    </a>
+    <p class="fr-header__service-title">
+      {% if settings.content_manager.CmsDsfrConfig.site_title|slice:"-2:" == "fr" %}
+        {{ settings.content_manager.CmsDsfrConfig.site_title|slice:":-2" }}<em>fr</em>
+      {% else %}
+        {{ settings.content_manager.CmsDsfrConfig.site_title }}
+      {% endif %}
+      {% if settings.content_manager.CmsDsfrConfig.beta_tag %}
+        <span class="fr-badge fr-badge--sm fr-badge--green-emeraude">BETA</span>
+      {% endif %}
 
+    </p>
+  </a>
 {% endblock service_title %}
 
 {% block service_tagline %}
-    {{ settings.content_manager.CmsDsfrConfig.site_tagline }}
+  {{ settings.content_manager.CmsDsfrConfig.site_tagline }}
 {% endblock service_tagline %}
 
+{% block operator_logo %}
+  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file and settings.content_manager.CmsDsfrConfig.operator_logo_alt %}
+    {% image settings.content_manager.CmsDsfrConfig.operator_logo_file original as logo_img %}
+
+    <div class="fr-header__operator">
+      <img class="fr-responsive-img"
+           src="{{ logo_img.url }}"
+           alt="{{ settings.content_manager.CmsDsfrConfig.operator_logo_alt }}"
+           {% if settings.content_manager.CmsDsfrConfig.operator_logo_width >= 1 %}style="max-width:{{ settings.content_manager.CmsDsfrConfig.operator_logo_width }}rem;"{% endif %} />
+    </div>
+  {% endif %}
+{% endblock operator_logo %}
+
 {% block header_tools %}
-    {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
+  {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
 {% endblock header_tools %}
 
 {% block header_search %}
-    {% if settings.content_manager.CmsDsfrConfig.search_bar %}
-        <div class="fr-header__search fr-modal" id="modal-search">
-            <div class="fr-container fr-container-lg--fluid">
-                <button class="fr-btn--close fr-btn"
-                        aria-controls="modal-search"
-                        title="Fermer">Fermer</button>
-                <form action="{% url 'cms_search' %}" method="get">
-                    <div class="fr-search-bar" id="search-bar" role="search">
-                        <label class="fr-label" for="search-bar-input">Rechercher</label>
-                        <input class="fr-input"
-                               placeholder="Rechercher"
-                               type="search"
-                               id="query"
-                               name="q">
-                        <button class="fr-btn" title="Rechercher">Rechercher</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    {% endif %}
+  {% if settings.content_manager.CmsDsfrConfig.search_bar %}
+    <div class="fr-header__search fr-modal" id="modal-search">
+      <div class="fr-container fr-container-lg--fluid">
+        <button class="fr-btn--close fr-btn"
+                aria-controls="modal-search"
+                title="Fermer">Fermer</button>
+        <form action="{% url 'cms_search' %}" method="get">
+          <div class="fr-search-bar" id="search-bar" role="search">
+            <label class="fr-label" for="search-bar-input">Rechercher</label>
+            <input class="fr-input"
+                   placeholder="Rechercher"
+                   type="search"
+                   id="query"
+                   name="q">
+            <button class="fr-btn" title="Rechercher">Rechercher</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {% endif %}
 {% endblock header_search %}
 
 {# Leave burger_menu and main_menu blocks empty if the main menu is not used #}
@@ -59,17 +75,17 @@
 {# endblock burger_menu #}
 
 {% block main_menu %}
-    <div class="fr-header__menu fr-modal"
-         id="fr-menu-mobile"
-         aria-labelledby="fr-btn-menu-mobile">
-        <div class="fr-container">
-            <button type="button"
-                    class="fr-btn--close fr-btn"
-                    aria-controls="fr-menu-mobile">Fermer</button>
-            <div class="fr-header__menu-links"></div>
-            <nav class="fr-nav" id="fr-navigation" aria-label="Menu principal">
-                {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
-            </nav>
-        </div>
+  <div class="fr-header__menu fr-modal"
+       id="fr-menu-mobile"
+       aria-labelledby="fr-btn-menu-mobile">
+    <div class="fr-container">
+      <button type="button"
+              class="fr-btn--close fr-btn"
+              aria-controls="fr-menu-mobile">Fermer</button>
+      <div class="fr-header__menu-links"></div>
+      <nav class="fr-nav" id="fr-navigation" aria-label="Menu principal">
+        {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
+      </nav>
     </div>
+  </div>
 {% endblock main_menu %}

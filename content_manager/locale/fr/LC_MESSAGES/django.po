@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 15:02+0200\n"
-"PO-Revision-Date: 2024-04-22 15:05+0200\n"
+"POT-Creation-Date: 2024-04-24 16:31+0200\n"
+"PO-Revision-Date: 2024-04-24 16:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -127,6 +127,7 @@ msgstr "Badge"
 #: content_manager/blocks.py:184 content_manager/blocks.py:254
 #: content_manager/blocks.py:297 content_manager/blocks.py:306
 #: content_manager/blocks.py:327 content_manager/blocks.py:373
+#: content_manager/models.py:275
 msgid "Title"
 msgstr "Titre"
 
@@ -432,51 +433,184 @@ msgstr ""
 "Avertissement : Utilisez le bloc HTML avec précaution. Un code malveillant "
 "peut compromettre la sécurité du site."
 
-#: content_manager/models.py:21
+#: content_manager/models.py:25
 msgid "Content page"
 msgstr "Page de contenu"
 
-#: content_manager/models.py:161
-msgid "Category"
-msgstr "Catégorie"
+#: content_manager/models.py:93
+msgid "Site configuration"
+msgstr "Configuration du site"
 
-#: content_manager/models.py:164
-msgid "Mega menu category"
-msgstr "Catégorie de méga menu"
+#: content_manager/models.py:94
+msgid "Site configurations"
+msgstr "Configurations du site"
 
-#: content_manager/models.py:165
-msgid "Mega menu categories"
-msgstr "Catégories de méga menu"
+#: content_manager/models.py:97
+msgid "Institution (header)"
+msgstr "Institution (en-tête)"
 
-#: content_manager/models.py:170
-msgid "Name"
-msgstr "Nom"
+#: content_manager/models.py:100
+msgid ""
+"Institution brand as defined on page https://www.info.gouv.fr/marque-de-"
+"letat/le-bloc-marque"
+msgstr ""
+"Nom de l’institution tel que défini sur la page  https://www.info.gouv.fr/"
+"marque-de-letat/le-bloc-marque"
 
-#: content_manager/models.py:174
+#: content_manager/models.py:104
+msgid "Institution with line break (header)"
+msgstr "Institution avec césure (en-tête)"
+
+#: content_manager/models.py:108
+msgid "Institution brand with <br /> tags for line breaks"
+msgstr "Nom de l’institution avec des <br /> pour les retours à la ligne"
+
+#: content_manager/models.py:111
+msgid "Institution (footer)"
+msgstr "Institution (pied)"
+
+#: content_manager/models.py:118
+msgid "Institution with line break (footer)"
+msgstr "Institution avec césure (pied)"
+
+#: content_manager/models.py:125 content_manager/models.py:127
+msgid "Site title"
+msgstr "Titre du site"
+
+#: content_manager/models.py:131 content_manager/models.py:133
+msgid "Site tagline"
+msgstr "Sous-titre du site"
+
+#: content_manager/models.py:138
+msgid "Important notice"
+msgstr "Bandeau d’information importante"
+
+#: content_manager/models.py:143
+msgid ""
+"The important notice banner should only be used for essential and temporary "
+"information.             (Excessive or continuous use risks “drowning” the "
+"message.)"
+msgstr ""
+"Le bandeau d’information importante doit être utilisé uniquement pour une "
+"information primordiale et temporaire.  (Une utilisation excessive ou "
+"continue risque de “noyer” le message)"
+
+#: content_manager/models.py:148
+msgid "Show the BETA tag next to the title"
+msgstr "Afficher la mention BETA à côté du titre"
+
+#: content_manager/models.py:151 content_manager/models.py:311
 msgid "Description"
 msgstr "Description"
 
-#: content_manager/models.py:175
+#: content_manager/models.py:164 content_manager/models.py:208
+msgid "Operator logo"
+msgstr "Logo opérateur"
+
+#: content_manager/models.py:168
+msgid "Logo alt text"
+msgstr "Alternative textuelle du logo"
+
+#: content_manager/models.py:171
+msgid "Must contain the text present in the image."
+msgstr "Doit impérativement contenir le texte présent dans l’image."
+
+#: content_manager/models.py:174
+msgid "Width (em)"
+msgstr "Largeur (em)"
+
+#: content_manager/models.py:180
+msgid ""
+"To be adjusted according to the width of the logo.            Example for a "
+"vertical logo: 3.5, Example for a horizontal logo: 8."
+msgstr ""
+"À ajuster en fonction de la largeur du logo.  Exemple pour un logo vertical: "
+"3.5, Exemple pour un logo horizontal: 8."
+
+#: content_manager/models.py:189
+msgid "Newsletter description"
+msgstr "Description de la lettre d’information"
+
+#: content_manager/models.py:192
+msgid "Newsletter registration URL"
+msgstr "URL d‘inscription à la lettre d’information"
+
+#: content_manager/models.py:217
+msgid "Advanced settings"
+msgstr "Paramètres avancés"
+
+#: content_manager/models.py:227
+msgid "Header"
+msgstr "En-tête"
+
+#: content_manager/models.py:234
+msgid "Footer"
+msgstr "Pied de page"
+
+#: content_manager/models.py:244
+msgid "Newsletter"
+msgstr "Lettre d’information"
+
+#: content_manager/models.py:246 content_manager/models.py:292
+msgid "Social media items"
+msgstr "Liens de réseaux sociaux"
+
+#: content_manager/models.py:250
+msgid "Generic"
+msgstr "Génériques"
+
+#: content_manager/models.py:251
+msgid "Brand block"
+msgstr "Bloc-marque"
+
+#: content_manager/models.py:252
+msgid "Newsletter and social media"
+msgstr "Lettre d’information et réseaux sociaux"
+
+#: content_manager/models.py:278
+msgid "URL"
+msgstr "URL"
+
+#: content_manager/models.py:282
+msgid "Icon class"
+msgstr "Classe d’icône"
+
+#: content_manager/models.py:291
+msgid "Social media item"
+msgstr "Lien de réseau social"
+
+#: content_manager/models.py:298
+msgid "Category"
+msgstr "Catégorie"
+
+#: content_manager/models.py:301
+msgid "Mega menu category"
+msgstr "Catégorie de méga menu"
+
+#: content_manager/models.py:302
+msgid "Mega menu categories"
+msgstr "Catégories de méga menu"
+
+#: content_manager/models.py:307
+msgid "Name"
+msgstr "Nom"
+
+#: content_manager/models.py:312
 msgid "Main link"
 msgstr "Lien principal"
 
-#: content_manager/models.py:185
+#: content_manager/models.py:322
 msgid "Categories"
 msgstr "Catégories"
 
-#: content_manager/models.py:186
+#: content_manager/models.py:323
 msgid "Maximum 4 categories, each with maximum 8 links."
 msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 
-#: content_manager/models.py:197
+#: content_manager/models.py:334
 msgid "Mega menu"
 msgstr "Méga menu"
 
-#: content_manager/templates/content_manager/blocks/image.html:9
-msgid "Go to page"
-msgstr "Aller à la page"
-
-#: content_manager/templates/content_manager/tags_list_page.html:31
 #: content_manager/views.py:46 content_manager/views.py:77
 msgid "Tags"
 msgstr "Étiquettes"
@@ -494,6 +628,9 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid "Go to page"
+#~ msgstr "Aller à la page"
 
 #~ msgid "Card"
 #~ msgstr "Carte"
