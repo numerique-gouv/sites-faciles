@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 14:39+0100\n"
-"PO-Revision-Date: 2024-03-20 15:31+0100\n"
+"POT-Creation-Date: 2024-04-24 16:31+0200\n"
+"PO-Revision-Date: 2024-04-24 16:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -26,11 +26,13 @@ msgstr "Afficher le titre sur l’image d’en-tête ?"
 msgid "Header image"
 msgstr "Image d’en-tête"
 
-#: content_manager/abstract.py:37
+#: content_manager/abstract.py:37 content_manager/blocks.py:362
+#: content_manager/blocks.py:398
 msgid "Background color"
 msgstr "Couleur de fond"
 
-#: content_manager/abstract.py:41
+#: content_manager/abstract.py:41 content_manager/blocks.py:364
+#: content_manager/blocks.py:400
 msgid "Uses the French Design System colors"
 msgstr "Utilise les couleurs du système de design de l'État"
 
@@ -46,7 +48,7 @@ msgstr "Assombrir l’image de fond"
 msgid "Call to action text"
 msgstr "Texte de l’appel à action"
 
-#: content_manager/abstract.py:54
+#: content_manager/abstract.py:54 content_manager/blocks.py:315
 msgid "Call to action label"
 msgstr "Libellé de l’appel à action"
 
@@ -74,66 +76,548 @@ msgstr "Page de base"
 msgid "Base pages"
 msgstr "Pages de base"
 
-#: content_manager/blocks.py:31
-msgid "Link text"
-msgstr "Texte du lien"
-
-#: content_manager/blocks.py:32
+#: content_manager/blocks.py:35
 msgid "Page"
 msgstr "Page"
 
-#: content_manager/blocks.py:33
+#: content_manager/blocks.py:37
+msgid ""
+"Link to a page of this site. Use either this or the external URL parameter."
+msgstr ""
+"Lien vers une page du site. Utilisez soit ce champ soit le champ URL externe."
+
+#: content_manager/blocks.py:40
 msgid "External URL"
 msgstr "URL externe"
 
-#: content_manager/models.py:21
+#: content_manager/blocks.py:42
+msgid "Use either this or the Page parameter."
+msgstr "Utilisez soit ce champ soit le champ Page."
+
+#: content_manager/blocks.py:51
+msgid "Link label"
+msgstr "Libellé du lien"
+
+#: content_manager/blocks.py:83
+msgid "New"
+msgstr "Nouveau"
+
+#: content_manager/blocks.py:84
+msgid "Grey"
+msgstr "Gris"
+
+#: content_manager/blocks.py:91
+msgid "Badge label"
+msgstr "Texte du badge"
+
+#: content_manager/blocks.py:92
+msgid "Badge color"
+msgstr "Couleur du badge"
+
+#: content_manager/blocks.py:93
+msgid "Hide badge icon"
+msgstr "Masquer l’icône du badge"
+
+#: content_manager/blocks.py:100
+msgid "Badge"
+msgstr "Badge"
+
+#: content_manager/blocks.py:108 content_manager/blocks.py:133
+#: content_manager/blocks.py:138 content_manager/blocks.py:166
+#: content_manager/blocks.py:184 content_manager/blocks.py:254
+#: content_manager/blocks.py:297 content_manager/blocks.py:306
+#: content_manager/blocks.py:327 content_manager/blocks.py:373
+#: content_manager/models.py:275
+msgid "Title"
+msgstr "Titre"
+
+#: content_manager/blocks.py:109
+msgid "Small tag"
+msgstr "Petit tag"
+
+#: content_manager/blocks.py:111
+msgid "Tag color"
+msgstr "Couleur du tag"
+
+#: content_manager/blocks.py:114
+msgid "Only for clickable tags"
+msgstr "Uniquement pour les tags cliquables"
+
+#: content_manager/blocks.py:116
+msgid "Icon"
+msgstr "Icône"
+
+#: content_manager/blocks.py:124
+msgctxt "DSFR Tag"
+msgid "Tag"
+msgstr "Tag"
+
+#: content_manager/blocks.py:134 content_manager/blocks.py:167
+#: content_manager/blocks.py:402
+msgid "Content"
+msgstr "Contenu"
+
+#: content_manager/blocks.py:139
+msgid "Accordion"
+msgstr "Accordéon"
+
+#: content_manager/blocks.py:143
+msgid "Message title"
+msgstr "Titre du message"
+
+#: content_manager/blocks.py:144
+msgid "Message text"
+msgstr "Texte du message"
+
+#: content_manager/blocks.py:145
+msgid "Message type"
+msgstr "Type de message"
+
+#: content_manager/blocks.py:147 content_manager/blocks.py:158
+#: content_manager/blocks.py:256 content_manager/blocks.py:375
+msgid "Heading level"
+msgstr "Niveau de titre"
+
+#: content_manager/blocks.py:150 content_manager/blocks.py:161
+#: content_manager/blocks.py:260
+msgid "Adapt to the page layout. Defaults to heading 3."
+msgstr "À adapter à la structure de la page. Par défaut en-tête 3."
+
+#: content_manager/blocks.py:155
+msgid "Callout title"
+msgstr "Titre de l’appel à action"
+
+#: content_manager/blocks.py:156
+msgid "Callout text"
+msgstr "Texte de l’appel à action"
+
+#: content_manager/blocks.py:168 content_manager/blocks.py:199
+#: content_manager/blocks.py:262 content_manager/blocks.py:276
+#: content_manager/blocks.py:342
+msgid "Image"
+msgstr "Image"
+
+#: content_manager/blocks.py:169 content_manager/blocks.py:219
+#: content_manager/blocks.py:268 content_manager/blocks.py:319
+msgid "Link"
+msgstr "Lien"
+
+#: content_manager/blocks.py:171
+msgid "or Document"
+msgstr "ou Document"
+
+#: content_manager/blocks.py:172
+msgid ""
+"Select a document to make the card link to it (if the 'Link' field is not "
+"populated.)"
+msgstr ""
+"Sélectionnez un document pour faire pointer la carte dessus (si le champ "
+"« Lien » est vide.)"
+
+#: content_manager/blocks.py:185
+msgid ""
+"Accessibility: The title should describe, in a clear and concise manner, the "
+"embedded content."
+msgstr ""
+"Accessibilité : Le titre doit décrire, de façon claire et concise, le "
+"contenu embarqué."
+
+#: content_manager/blocks.py:188
+msgid "URL of the iframe"
+msgstr "URL de l‘iframe"
+
+#: content_manager/blocks.py:189
+msgid "Example for Tally: https://tally.so/embed/w2jMRa"
+msgstr "Exemple pour Tally : https://tally.so/embed/w2jMRa"
+
+#: content_manager/blocks.py:191
+msgid "Height (in pixels)"
+msgstr "Hauteur (en pixels)"
+
+#: content_manager/blocks.py:201
+msgid "Side where the image is displayed"
+msgstr "Côté où afficher l’image"
+
+#: content_manager/blocks.py:203
+msgid "Left"
+msgstr "Gauche"
+
+#: content_manager/blocks.py:204
+msgid "Right"
+msgstr "Droite"
+
+#: content_manager/blocks.py:209
+msgid "Image width"
+msgstr "Largeur de l’image"
+
+#: content_manager/blocks.py:217 content_manager/blocks.py:313
+#: content_manager/blocks.py:341 content_manager/blocks.py:410
+msgid "Rich text"
+msgstr "Texte avec mise en forme"
+
+#: content_manager/blocks.py:221
+msgid "The link is shown at the bottom of the text block, with an arrow"
+msgstr "Le lien est affiché en bas du bloc de texte, avec une flèche"
+
+#: content_manager/blocks.py:224
+msgid "Link label (obsolete)"
+msgstr "Libellé du lien (obsolète)"
+
+#: content_manager/blocks.py:227 content_manager/blocks.py:235
+#: content_manager/blocks.py:243
+msgid ""
+"This field is obsolete and will be removed in the near future. Please "
+"replace with the Link field above."
+msgstr ""
+"Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
+"avec le champ Lien ci-dessus."
+
+#: content_manager/blocks.py:232
+msgid "Internal link (obsolete)"
+msgstr "Lien interne (obsolète)"
+
+#: content_manager/blocks.py:240
+msgid "Link URL (obsolete)"
+msgstr "URL du lien (obsolète)"
+
+#: content_manager/blocks.py:264
+msgid "Alternative text (textual description of the image)"
+msgstr "Alternative textuelle (description textuelle de l’image)"
+
+#: content_manager/blocks.py:267 content_manager/blocks.py:328
+msgid "Caption"
+msgstr "Légende"
+
+#: content_manager/blocks.py:277 content_manager/blocks.py:344
+#: content_manager/blocks.py:419
+msgid "Quote"
+msgstr "Citation"
+
+#: content_manager/blocks.py:278
+msgid "Author name"
+msgstr "Nom de l’auteur"
+
+#: content_manager/blocks.py:279
+msgid "Author title"
+msgstr "Titre de l’auteur"
+
+#: content_manager/blocks.py:281
+msgid "Color"
+msgstr "Couleur"
+
+#: content_manager/blocks.py:292
+msgid "Top margin"
+msgstr "Espacement au dessus"
+
+#: content_manager/blocks.py:293
+msgid "Bottom margin"
+msgstr "Espacement en dessous"
+
+#: content_manager/blocks.py:298
+msgid "Detail"
+msgstr "Détail"
+
+#: content_manager/blocks.py:302
+msgid "Step"
+msgstr "Étape"
+
+#: content_manager/blocks.py:307
+msgid "Number of steps"
+msgstr "Nombre d’étapes"
+
+#: content_manager/blocks.py:308
+msgid "Current step"
+msgstr "Étape actuelle"
+
+#: content_manager/blocks.py:309
+msgid "Steps"
+msgstr "Étapes"
+
+#: content_manager/blocks.py:316
+msgid "The link appears as a button under the text block"
+msgstr "Le lien apparaît comme un bouton sous le bloc de texte"
+
+#: content_manager/blocks.py:330
+msgid "Video URL"
+msgstr "URL de la vidéo"
+
+#: content_manager/blocks.py:343 content_manager/blocks.py:420
+msgid "Video"
+msgstr "Vidéo"
+
+#: content_manager/blocks.py:345
+msgid "Text and call to action"
+msgstr "Texte et appel à action"
+
+#: content_manager/blocks.py:346
+msgid "Iframe"
+msgstr "Iframe"
+
+#: content_manager/blocks.py:353
+msgid "Vertical card"
+msgstr "Carte verticale"
+
+#: content_manager/blocks.py:360 content_manager/blocks.py:396
+msgid "Background image"
+msgstr "Image de fond"
+
+#: content_manager/blocks.py:367
+msgid "Background color, hexadecimal format (obsolete)"
+msgstr "Couleur de fond, format hexadécimal (obsolète)"
+
+#: content_manager/blocks.py:370
+msgid "Incorrect color format, must be #fff or #f5f5f5"
+msgstr "Format de couleur incorrect, doit être #fff ou #f5f5f5"
+
+#: content_manager/blocks.py:379
+msgid "Adapt to the page layout. Defaults to heading 2."
+msgstr "À adapter à la structure de la page. Par défaut en-tête 2."
+
+#: content_manager/blocks.py:381
+msgid "Columns"
+msgstr "Colonnes"
+
+#: content_manager/blocks.py:389 content_manager/blocks.py:415
+msgid "Image and text"
+msgstr "Image et texte"
+
+#: content_manager/blocks.py:411
+msgid "Badge list"
+msgstr "Liste de badges"
+
+#: content_manager/blocks.py:417
+msgid "Alert message"
+msgstr "Message d’alerte"
+
+#: content_manager/blocks.py:418
+msgid "Callout"
+msgstr "Texte mis en avant"
+
+#: content_manager/blocks.py:421
+msgid "Accordions"
+msgstr "Accordéons"
+
+#: content_manager/blocks.py:422
+msgid "Stepper"
+msgstr "Étapier"
+
+#: content_manager/blocks.py:423
+msgid "Tag list"
+msgstr "Liste de tags"
+
+#: content_manager/blocks.py:424
+msgid "Markdown"
+msgstr "Markdown"
+
+#: content_manager/blocks.py:425
+msgid "Separator"
+msgstr "Séparateur"
+
+#: content_manager/blocks.py:426
+msgid "Multiple columns"
+msgstr "Multi-colonnes"
+
+#: content_manager/blocks.py:426 content_manager/blocks.py:427
+msgid "Page structure"
+msgstr "Structure de la page"
+
+#: content_manager/blocks.py:427
+msgid "Full width background"
+msgstr "Fond pleine largeur"
+
+#: content_manager/blocks.py:441
+msgid ""
+"Warning: Use HTML block with caution. Malicious code can compromise the "
+"security of the site."
+msgstr ""
+"Avertissement : Utilisez le bloc HTML avec précaution. Un code malveillant "
+"peut compromettre la sécurité du site."
+
+#: content_manager/models.py:25
 msgid "Content page"
 msgstr "Page de contenu"
 
-#: content_manager/models.py:161
-msgid "Category"
-msgstr "Catégorie"
+#: content_manager/models.py:93
+msgid "Site configuration"
+msgstr "Configuration du site"
 
-#: content_manager/models.py:164
-msgid "Mega menu category"
-msgstr "Catégorie de méga menu"
+#: content_manager/models.py:94
+msgid "Site configurations"
+msgstr "Configurations du site"
 
-#: content_manager/models.py:165
-msgid "Mega menu categories"
-msgstr "Catégories de méga menu"
+#: content_manager/models.py:97
+msgid "Institution (header)"
+msgstr "Institution (en-tête)"
 
-#: content_manager/models.py:170
-msgid "Name"
-msgstr "Nom"
+#: content_manager/models.py:100
+msgid ""
+"Institution brand as defined on page https://www.info.gouv.fr/marque-de-"
+"letat/le-bloc-marque"
+msgstr ""
+"Nom de l’institution tel que défini sur la page  https://www.info.gouv.fr/"
+"marque-de-letat/le-bloc-marque"
 
-#: content_manager/models.py:174
+#: content_manager/models.py:104
+msgid "Institution with line break (header)"
+msgstr "Institution avec césure (en-tête)"
+
+#: content_manager/models.py:108
+msgid "Institution brand with <br /> tags for line breaks"
+msgstr "Nom de l’institution avec des <br /> pour les retours à la ligne"
+
+#: content_manager/models.py:111
+msgid "Institution (footer)"
+msgstr "Institution (pied)"
+
+#: content_manager/models.py:118
+msgid "Institution with line break (footer)"
+msgstr "Institution avec césure (pied)"
+
+#: content_manager/models.py:125 content_manager/models.py:127
+msgid "Site title"
+msgstr "Titre du site"
+
+#: content_manager/models.py:131 content_manager/models.py:133
+msgid "Site tagline"
+msgstr "Sous-titre du site"
+
+#: content_manager/models.py:138
+msgid "Important notice"
+msgstr "Bandeau d’information importante"
+
+#: content_manager/models.py:143
+msgid ""
+"The important notice banner should only be used for essential and temporary "
+"information.             (Excessive or continuous use risks “drowning” the "
+"message.)"
+msgstr ""
+"Le bandeau d’information importante doit être utilisé uniquement pour une "
+"information primordiale et temporaire.  (Une utilisation excessive ou "
+"continue risque de “noyer” le message)"
+
+#: content_manager/models.py:148
+msgid "Show the BETA tag next to the title"
+msgstr "Afficher la mention BETA à côté du titre"
+
+#: content_manager/models.py:151 content_manager/models.py:311
 msgid "Description"
 msgstr "Description"
 
-#: content_manager/models.py:175
+#: content_manager/models.py:164 content_manager/models.py:208
+msgid "Operator logo"
+msgstr "Logo opérateur"
+
+#: content_manager/models.py:168
+msgid "Logo alt text"
+msgstr "Alternative textuelle du logo"
+
+#: content_manager/models.py:171
+msgid "Must contain the text present in the image."
+msgstr "Doit impérativement contenir le texte présent dans l’image."
+
+#: content_manager/models.py:174
+msgid "Width (em)"
+msgstr "Largeur (em)"
+
+#: content_manager/models.py:180
+msgid ""
+"To be adjusted according to the width of the logo.            Example for a "
+"vertical logo: 3.5, Example for a horizontal logo: 8."
+msgstr ""
+"À ajuster en fonction de la largeur du logo.  Exemple pour un logo vertical: "
+"3.5, Exemple pour un logo horizontal: 8."
+
+#: content_manager/models.py:189
+msgid "Newsletter description"
+msgstr "Description de la lettre d’information"
+
+#: content_manager/models.py:192
+msgid "Newsletter registration URL"
+msgstr "URL d‘inscription à la lettre d’information"
+
+#: content_manager/models.py:217
+msgid "Advanced settings"
+msgstr "Paramètres avancés"
+
+#: content_manager/models.py:227
+msgid "Header"
+msgstr "En-tête"
+
+#: content_manager/models.py:234
+msgid "Footer"
+msgstr "Pied de page"
+
+#: content_manager/models.py:244
+msgid "Newsletter"
+msgstr "Lettre d’information"
+
+#: content_manager/models.py:246 content_manager/models.py:292
+msgid "Social media items"
+msgstr "Liens de réseaux sociaux"
+
+#: content_manager/models.py:250
+msgid "Generic"
+msgstr "Génériques"
+
+#: content_manager/models.py:251
+msgid "Brand block"
+msgstr "Bloc-marque"
+
+#: content_manager/models.py:252
+msgid "Newsletter and social media"
+msgstr "Lettre d’information et réseaux sociaux"
+
+#: content_manager/models.py:278
+msgid "URL"
+msgstr "URL"
+
+#: content_manager/models.py:282
+msgid "Icon class"
+msgstr "Classe d’icône"
+
+#: content_manager/models.py:291
+msgid "Social media item"
+msgstr "Lien de réseau social"
+
+#: content_manager/models.py:298
+msgid "Category"
+msgstr "Catégorie"
+
+#: content_manager/models.py:301
+msgid "Mega menu category"
+msgstr "Catégorie de méga menu"
+
+#: content_manager/models.py:302
+msgid "Mega menu categories"
+msgstr "Catégories de méga menu"
+
+#: content_manager/models.py:307
+msgid "Name"
+msgstr "Nom"
+
+#: content_manager/models.py:312
 msgid "Main link"
 msgstr "Lien principal"
 
-#: content_manager/models.py:185
+#: content_manager/models.py:322
 msgid "Categories"
 msgstr "Catégories"
 
-#: content_manager/models.py:186
+#: content_manager/models.py:323
 msgid "Maximum 4 categories, each with maximum 8 links."
 msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 
-#: content_manager/models.py:197
+#: content_manager/models.py:334
 msgid "Mega menu"
 msgstr "Méga menu"
 
-#: content_manager/templates/content_manager/tags_list_page.html:31
 #: content_manager/views.py:46 content_manager/views.py:77
 msgid "Tags"
 msgstr "Étiquettes"
 
 #: content_manager/views.py:52
 msgid "List of all the tags."
-msgstr "Liste de toutes les étiquettes"
+msgstr "Liste de toutes les étiquettes."
 
 #: content_manager/views.py:73
 #, python-brace-format
@@ -144,3 +628,17 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid "Go to page"
+#~ msgstr "Aller à la page"
+
+#~ msgid "Card"
+#~ msgstr "Carte"
+
+#~ msgid "Link to a page, use this or the external URL parameter"
+#~ msgstr ""
+#~ "Lien vers une page du site. Utilisez soit ce champ soit le champ URL "
+#~ "externe."
+
+#~ msgid "Use this or the Page parameter"
+#~ msgstr "Utilisez soit ce champ soit le champ Page."

@@ -1,0 +1,7 @@
+{% load static wagtailcore_tags %}
+
+<ul class="fr-tags-group">
+  {% for tag in block.value %}
+    <li>{% include_block tag %}</li>
+  {% endfor %}
+</ul>
