@@ -73,7 +73,7 @@ INSTALLED_APPS = [
 ]
 
 # Only add these on a dev machine
-if DEBUG and HOST_URL == "localhost":
+if DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
         "django_extensions",
         "wagtail.contrib.styleguide",
