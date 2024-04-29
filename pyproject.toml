@@ -31,6 +31,7 @@ django-storages = {extras = ["s3"], version = "^1.14.2"}
 boto3 = "^1.34.56"
 beautifulsoup4 = "^4.12.3"
 django-taggit = "^5.0.1"
+wagtail-localize = "^1.9"
 
 
 [tool.poetry.group.dev.dependencies]
