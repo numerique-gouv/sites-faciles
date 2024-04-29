@@ -44,10 +44,14 @@ fix:
 	$(EXEC_CMD) pipenv run isort --skip-glob="**/migrations" --extend-skip-glob="venv" .
 
 
+.PHONY: dev-init
+dev-init:
+	$(EXEC_CMD) pipenv sync --dev
+	$(EXEC_CMD) pipenv run pre-commit install
+
 .PHONY: init
 init:
 	$(EXEC_CMD) pipenv sync
-	$(EXEC_CMD) pipenv run pre-commit install
 	$(EXEC_CMD) pipenv run python manage.py migrate
 	make collectstatic
 	$(EXEC_CMD) pipenv run python manage.py set_config

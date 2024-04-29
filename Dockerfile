@@ -16,7 +16,8 @@ RUN set -ex \
 WORKDIR $APP_DIR
 
 COPY Pipfile Pipfile.lock ${PROJECT_DIR}/
-RUN pipenv install --system --deploy
+RUN pip install pipenv --no-cache-dir \
+    && pipenv install --system --deploy
 
 COPY --chown=app:app . .
 
