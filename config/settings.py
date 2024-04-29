@@ -37,6 +37,8 @@ DEBUG = True if os.getenv("DEBUG") == "True" else False
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1, localhost").replace(" ", "").split(",")
 
+HOST_URL = os.getenv("HOST_URL", "localhost")
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -70,7 +72,8 @@ INSTALLED_APPS = [
     "blog",
 ]
 
-if DEBUG:
+# Only add these on a dev machine
+if DEBUG and HOST_URL == "localhost":
     INSTALLED_APPS += [
         "django_extensions",
         "wagtail.contrib.styleguide",
@@ -233,7 +236,7 @@ WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Sites faciles")
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{os.getenv('HOST_URL', 'localhost')}"
+WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{HOST_URL}"
 
 HOST_PORT = os.getenv("HOST_PORT", "")
 if HOST_PORT != "":
