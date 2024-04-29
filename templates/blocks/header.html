@@ -1,16 +1,18 @@
 {% extends "dsfr/header.html" %}
-{% load static wagtailcore_tags wagtailimages_tags menu_tags %}
+{% load i18n static wagtailcore_tags wagtailimages_tags menu_tags %}
 
 {% block brand %}
+  {% translate "Home page" as home_page %}
   <a href="/"
-     title="Accueil — {{ settings.content_manager.CmsDsfrConfig.header_brand }}">
+     title="{{ home_page }} — {{ settings.content_manager.CmsDsfrConfig.header_brand }}">
     <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
   </a>
 {% endblock brand %}
 
 {% block service_title %}
+  {% translate "Home page" as home_page %}
   <a href="/"
-     title="Accueil — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
+     title="{{ home_page }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
 
     <p class="fr-header__service-title">
       {% if settings.content_manager.CmsDsfrConfig.site_title|slice:"-2:" == "fr" %}
@@ -48,21 +50,23 @@
 {% endblock header_tools %}
 
 {% block header_search %}
+  {% translate "Search" as search_label %}
   {% if settings.content_manager.CmsDsfrConfig.search_bar %}
     <div class="fr-header__search fr-modal" id="modal-search">
       <div class="fr-container fr-container-lg--fluid">
+        {% translate "Close" as close_label %}
         <button class="fr-btn--close fr-btn"
                 aria-controls="modal-search"
-                title="Fermer">Fermer</button>
+                title="{{ close_label }}">{{ close_label }}</button>
         <form action="{% url 'cms_search' %}" method="get">
           <div class="fr-search-bar" id="search-bar" role="search">
-            <label class="fr-label" for="search-bar-input">Rechercher</label>
+            <label class="fr-label" for="search-bar-input">{{ search_label }}</label>
             <input class="fr-input"
-                   placeholder="Rechercher"
+                   placeholder="{{ search_label }}"
                    type="search"
                    id="query"
                    name="q">
-            <button class="fr-btn" title="Rechercher">Rechercher</button>
+            <button class="fr-btn" title="{{ search_label }}">{{ search_label }}</button>
           </div>
         </form>
       </div>
@@ -79,11 +83,13 @@
        id="fr-menu-mobile"
        aria-labelledby="fr-btn-menu-mobile">
     <div class="fr-container">
+      {% translate "Close" as close_label %}
       <button type="button"
               class="fr-btn--close fr-btn"
-              aria-controls="fr-menu-mobile">Fermer</button>
+              aria-controls="fr-menu-mobile">{{ close_label }}</button>
       <div class="fr-header__menu-links"></div>
-      <nav class="fr-nav" id="fr-navigation" aria-label="Menu principal">
+      {% translate "Main menu" as main_menu_label %}
+      <nav class="fr-nav" id="fr-navigation" aria-label="{{ main_menu_label }}">
         {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
       </nav>
     </div>
