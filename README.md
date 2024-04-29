@@ -56,9 +56,9 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 - Mettre les valeurs pertinentes dans le fichier `.env`
 
 ### En local
-#### Installer poetry s’il ne l’est pas
+#### Installer pipenv s’il ne l’est pas
 
-Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
+Cf. la [documentation de pipenv](https://pipenv.pypa.io/en/latest/installation.html)
 
 #### Installer le projet
 

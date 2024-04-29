@@ -16,53 +16,53 @@ web-prompt:
 
 .PHONY: test-unit
 test-unit:
-	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test
+	$(EXEC_CMD) pipenv run python manage.py test --settings config.settings_test
 
 .PHONY: collectstatic
 collectstatic:
-	$(EXEC_CMD) poetry run python manage.py collectstatic --noinput --ignore=*.sass
+	$(EXEC_CMD) pipenv run python manage.py collectstatic --noinput --ignore=*.sass
 
 
 .PHONY: messages
 messages:
-	$(EXEC_CMD) poetry run django-admin makemessages -l fr --ignore=manage.py --ignore=medias --ignore=setup.py --ignore=staticfiles --ignore=templates
+	$(EXEC_CMD) pipenv run django-admin makemessages -l fr --ignore=manage.py --ignore=medias --ignore=setup.py --ignore=staticfiles --ignore=templates
 
 .PHONY: sass
 sass:
-	$(EXEC_CMD) poetry run python manage.py compilescss
+	$(EXEC_CMD) pipenv run python manage.py compilescss
 	make collectstatic
 
 .PHONY: quality
 quality:
-	$(EXEC_CMD) poetry run black --check --exclude=venv .
-	$(EXEC_CMD) poetry run isort --check --skip-glob="**/migrations" --extend-skip-glob="venv" .
-	$(EXEC_CMD) poetry run flake8 --count --show-source --statistics --exclude="venv,**/migrations" .
+	$(EXEC_CMD) pipenv run black --check --exclude=venv .
+	$(EXEC_CMD) pipenv run isort --check --skip-glob="**/migrations" --extend-skip-glob="venv" .
+	$(EXEC_CMD) pipenv run flake8 --count --show-source --statistics --exclude="venv,**/migrations" .
 
 .PHONY: fix
 fix:
-	$(EXEC_CMD) poetry run black --exclude=venv .
-	$(EXEC_CMD) poetry run isort --skip-glob="**/migrations" --extend-skip-glob="venv" .
+	$(EXEC_CMD) pipenv run black --exclude=venv .
+	$(EXEC_CMD) pipenv run isort --skip-glob="**/migrations" --extend-skip-glob="venv" .
 
 
 .PHONY: init
 init:
-	$(EXEC_CMD) poetry install
-	$(EXEC_CMD) poetry run pre-commit install
-	$(EXEC_CMD) poetry run python manage.py migrate
+	$(EXEC_CMD) pipenv install
+	$(EXEC_CMD) pipenv run pre-commit install
+	$(EXEC_CMD) pipenv run python manage.py migrate
 	make collectstatic
-	$(EXEC_CMD) poetry run python manage.py set_config
-	$(EXEC_CMD) poetry run python manage.py create_starter_pages
+	$(EXEC_CMD) pipenv run python manage.py set_config
+	$(EXEC_CMD) pipenv run python manage.py create_starter_pages
 
 .PHONY: demo
 demo:
 	make init
-	$(EXEC_CMD) poetry run python manage.py create_demo_pages
+	$(EXEC_CMD) pipenv run python manage.py create_demo_pages
 
 .PHONY: runserver
 runserver:
-	$(EXEC_CMD) poetry run python manage.py runserver $(HOST_URL):$(HOST_PORT)
+	$(EXEC_CMD) pipenv run python manage.py runserver $(HOST_URL):$(HOST_PORT)
 
 
 .PHONY: test
 test:
-	$(EXEC_CMD) poetry run python manage.py test
+	$(EXEC_CMD) pipenv run python manage.py test

@@ -29,8 +29,8 @@ jobs:
       - name: 🌍 Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install poetry
-          poetry install --no-root
+          pip install pipenv --user
+          pipenv install
       - name: 📄 Copy empty .env.test to .env
         run: |
           cp .env.test .env
@@ -39,7 +39,7 @@ jobs:
           make quality
       - name: 🚧 Check pending migrations
         run: |
-          poetry run django-admin makemigrations --check --dry-run --noinput
+          pipenv run django-admin makemigrations --check --dry-run --noinput
       - name: 🤹‍ Run the unit tests
         run: |
           make test-unit
