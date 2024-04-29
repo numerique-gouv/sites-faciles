@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gunicorn config.wsgi --log-file -
+pipenv run gunicorn config.wsgi --log-file -
