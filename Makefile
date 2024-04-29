@@ -46,7 +46,7 @@ fix:
 
 .PHONY: init
 init:
-	$(EXEC_CMD) pipenv install
+	$(EXEC_CMD) pipenv sync
 	$(EXEC_CMD) pipenv run pre-commit install
 	$(EXEC_CMD) pipenv run python manage.py migrate
 	make collectstatic
