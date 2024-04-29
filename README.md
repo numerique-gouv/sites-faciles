@@ -72,7 +72,7 @@ make init
 - La commande suivante crée un utilisateur administrateur avec tous les droits:
 
 ```
-poetry run python manage.py createsuperuser
+pipenv run python manage.py createsuperuser
 ```
 
 #### Lancer le serveur

@@ -53,6 +53,13 @@ init:
 	$(EXEC_CMD) pipenv run python manage.py set_config
 	$(EXEC_CMD) pipenv run python manage.py create_starter_pages
 
+.PHONY: update
+update:
+	$(EXEC_CMD) pipenv run python manage.py migrate
+	$(EXEC_CMD) pipenv run python manage.py update_index
+	$(EXEC_CMD) pipenv run python manage.py compilemessages
+	make collectstatic
+
 .PHONY: demo
 demo:
 	make init
