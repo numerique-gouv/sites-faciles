@@ -161,11 +161,11 @@ class ConfigTestCase(WagtailPageTestCase):
         url = self.content_page.url
         response = self.client.get(url)
 
-        self.assertInHTML(
-            """<p class="fr-footer__content-desc">
-                    Site <b>description</b>.
-                </p>""",
-            response.content.decode(),
+        self.config.refresh_from_db()
+
+        self.assertContains(
+            response,
+            self.config.footer_description,
         )
 
 
