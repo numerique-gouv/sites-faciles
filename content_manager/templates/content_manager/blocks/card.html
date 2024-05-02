@@ -1,8 +1,9 @@
 {% load wagtailimages_tags wagtailcore_tags %}
-<div class="fr-card{% if value.url or value.document %} fr-enlarge-link{% endif %}">
+<div class="fr-card {% if value.enlarge_link %}fr-enlarge-link{% endif %} {% if value.grey_background %}fr-card--grey{% elif value.no_background %}fr-card--no-background{% endif %} {% if value.no_border %}fr-card--no-border{% endif %} {% if value.shadow %}fr-card--shadow{% endif %}">
   <div class="fr-card__body">
     <div class="fr-card__content">
-      <h3 class="fr-card__title">
+      {# djlint: off #}
+      <{{ value.heading_tag | default:"h3" }} class="fr-card__title">
         {% if value.url %}
           <a href="{{ value.url }}">{{ value.title }}</a>
         {% elif value.document %}
@@ -10,22 +11,60 @@
         {% else %}
           {{ value.title }}
         {% endif %}
-      </h3>
-      <p class="fr-card__desc">{{ value.description|linebreaksbr }}</p>
+      </{{ value.heading_tag | default:"h3" }}>
+      {# djlint: on #}
+      <p class="fr-card__desc">{{ value.description|safe }}</p>
+      {% if value.top_detail_badges_tags or value.top_detail_text %}
+        <div class="fr-card__start">
+          {% if value.top_detail_badges_tags %}
+            {% for block in value.top_detail_badges_tags %}
+              {% include_block block %}
+            {% endfor %}
+          {% endif %}
+          {% if value.top_detail_text %}
+            <p class="fr-card__detail{% if value.top_detail_icon %} {{ value.top_detail_icon }}{% endif %}">
+              {{ value.top_detail_text }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+      {% if value.bottom_detail_text %}
+        <div class="fr-card__end">
+          <p class="fr-card__detail{% if value.bottom_detail_icon %} {{ value.bottom_detail_icon }}{% endif %}">
+            {{ value.bottom_detail_text }}
+          </p>
+        </div>
+      {% endif %}
     </div>
+    {% if value.call_to_action and not value.bottom_detail_text %}
+      <div class="fr-card__footer">
+        {% if value.call_to_action.buttons %}
+          <ul class="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
+            {% for button in value.call_to_action.buttons %}
+              <li>{% dsfr_button button %}</li>
+            {% endfor %}
+          </ul>
+        {% elif value.call_to_action.links %}
+          <ul class="fr-links-group">
+            {% for link in value.call_to_action.links %}
+              <li>{% dsfr_link link %}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    {% endif %}
+
   </div>
   <div class="fr-card__header">
     {% if value.image %}
-      <div class="fr-card__img">{% image value.image original class="fr-responsive-img" %}</div>
-    {% endif %}
-    {% if value.badge_text %}
-      <ul class="fr-badges-group">
-        <li>
-          <p class="fr-badge fr-badge--{{ value.badge_level }}{% if value.badge_icon %} fr-badge--no-icon{% endif %}">
-            {{ value.badge_text }}
-          </p>
-        </li>
-      </ul>
+      <div class="fr-card__img">{% image value.image original class="fr-responsive-img" alt="" %}</div>
+      {% if value.image_badge %}
+        <ul class="fr-badges-group">
+          {% for badge in value.image_badge %}
+            <li>{% include_block badge %}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     {% endif %}
   </div>
 </div>

@@ -4,6 +4,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM
 from wagtail import blocks
+from wagtail.blocks import StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
@@ -78,12 +79,9 @@ class IconPickerBlock(blocks.FieldBlock):
 
 ## Badges and Tags
 badge_level_choices = (
-    COLOR_CHOICES_SYSTEM
-    + [
-        ("new", _("New")),
-        ("grey", _("Grey")),
-    ]
-    + COLOR_CHOICES_ILLUSTRATION
+    ("", [("new", _("New")), ("grey", _("Grey"))]),
+    (_("System colors"), COLOR_CHOICES_SYSTEM),
+    (_("Illustration colors"), COLOR_CHOICES_ILLUSTRATION),
 )
 
 
@@ -162,10 +160,44 @@ class CalloutBlock(blocks.StructBlock):
     )
 
 
+class CardstructValue(StructValue):
+    def enlarge_link(self):
+        """
+        Determine if we need (and can) enlarge the link on the card.
+        This requires:
+        - That a link is present
+        - That no other link is used on the card (such as a tag with a link, or a call-to-action)
+        """
+        url = self.get("url")
+        document = self.get("document")
+        top_detail_badges_tags = self.get("top_detail_badges_tags")
+
+        if not (url or document):
+            return False
+
+        enlarge = True
+        if len(top_detail_badges_tags) and top_detail_badges_tags.raw_data[0]["type"] == "tags":
+            tags_list = top_detail_badges_tags.raw_data[0]["value"]
+            for tag in tags_list:
+                if tag["value"]["link"]["page"] is not None or tag["value"]["link"]["external_url"] != "":
+                    enlarge = False
+
+        return enlarge
+
+
 class CardBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"))
-    description = blocks.TextBlock(label=_("Content"))
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+    description = blocks.TextBlock(label=_("Content"), help_text=_("Can contain HTML."), required=False)
     image = ImageChooserBlock(label=_("Image"), required=False)
+    image_badge = BadgesListBlock(
+        label=_("Image badge"), required=False, help_text=_("Only used if the badge has an image."), max_num=1
+    )
     url = blocks.URLBlock(label=_("Link"), required=False, group="target")
     document = DocumentChooserBlock(
         label=_("or Document"),
@@ -173,10 +205,28 @@ class CardBlock(blocks.StructBlock):
         required=False,
         group="target",
     )
+    top_detail_text = blocks.CharBlock(label=_("Top detail: text"), required=False)
+    top_detail_icon = IconPickerBlock(label=_("Top detail: icon"), required=False)
+    top_detail_badges_tags = blocks.StreamBlock(
+        [
+            ("badges", BadgesListBlock()),
+            ("tags", TagListBlock()),
+        ],
+        label=_("Top detail: badges or tags"),
+        max_num=1,
+        required=False,
+    )
+    bottom_detail_text = blocks.CharBlock(label=_("Bottom detail: text"), required=False)
+    bottom_detail_icon = IconPickerBlock(label=_("Bottom detail: icon"), required=False)
+    grey_background = blocks.BooleanBlock(label=_("Card with grey background"), required=False)
+    no_background = blocks.BooleanBlock(label=_("Card without background"), required=False)
+    no_border = blocks.BooleanBlock(label=_("Card without border"), required=False)
+    shadow = blocks.BooleanBlock(label=_("Card with a shadow"), required=False)
 
     class Meta:
         icon = "tablet-alt"
         template = "content_manager/blocks/card.html"
+        value_class = CardstructValue
 
 
 class IframeBlock(blocks.StructBlock):
@@ -366,7 +416,9 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
     bg_color = blocks.RegexBlock(
         label=_("Background color, hexadecimal format (obsolete)"),
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        help_text="(This field is obsolete and will be removed in the near future. Replace it with the background picture)",  # noqa
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Replace it with the background color."  # noqa
+        ),
         error_messages={"invalid": _("Incorrect color format, must be #fff or #f5f5f5")},
         required=False,
     )
