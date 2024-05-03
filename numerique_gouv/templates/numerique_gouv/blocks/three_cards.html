@@ -32,16 +32,16 @@
                         <div class="fr-card__body">
                             <div class="fr-card__content fr-p-5v">
                                 <div class="fr-card__desc">
-                                    {{ value.secondary_text }}
+                                    {{ value.top_right_text }}
                                     <div style="text-align: center;">
-                                        {% if value.secondary_page_link %}
-                                            <a href="{{ value.secondary_page_link.url }}" class="fr-btn">{{ value.secondary_button_label }}</a>
-                                        {% elif value.secondary_url_link %}
-                                            <a href="{{ value.secondary_url_link }}"
+                                        {% if value.top_right_page_link %}
+                                            <a href="{{ value.top_right_page_link.url }}" class="fr-btn">{{ value.top_right_button_label }}</a>
+                                        {% elif value.top_right_url_link %}
+                                            <a href="{{ value.top_right_url_link }}"
                                                class="fr-btn"
                                                target="_blank"
-                                               title="{{ value.carte_deux_titre }} - ouvre une nouvelle fenêtre">
-                                                {{ value.secondary_button_label }}</a>
+                                               title="{{ value.top_right_button_label }} - ouvre une nouvelle fenêtre">
+                                                {{ value.top_right_button_label }}</a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="fr-card__header">
                             <div class="fr-card__img">
-                                {% image value.secondary_image original class="fr-responsive-img fr-ratio-32x9" %}
+                                {% image value.top_right_image original class="fr-responsive-img fr-ratio-32x9" %}
                             </div>
                         </div>
                     </div>
@@ -59,16 +59,16 @@
                         <div class="fr-card__body">
                             <div class="fr-card__content fr-p-5v">
                                 <div class="fr-card__desc">
-                                    {{ value.tertiary_text }}
+                                    {{ value.bottom_right_text }}
                                     <div style="text-align: center;">
-                                    {% if value.tertiary_page_link %}
-                                        <a href="{{ value.tertiary_page_link.url }}" class="fr-btn fr-btn--secondary">{{ value.tertiary_button_label }}</a>
-                                    {% elif value.tertiary_url_link %}
-                                        <a href="{{ value.tertiary_url_link }}"
+                                    {% if value.bottom_right_page_link %}
+                                        <a href="{{ value.bottom_right_page_link.url }}" class="fr-btn fr-btn--secondary">{{ value.bottom_right_button_label }}</a>
+                                    {% elif value.bottom_right_url_link %}
+                                        <a href="{{ value.bottom_right_url_link }}"
                                            class="fr-btn fr-btn--secondary"
                                            target="_blank"
-                                           title="{{ value.carte_trois_titre }} - ouvre une nouvelle fenêtre">
-                                            {{ value.tertiary_button_label }}</a>
+                                           title="{{ value.bottom_right_button_label }} - ouvre une nouvelle fenêtre">
+                                            {{ value.bottom_right_button_label }}</a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="fr-card__header">
                             <div class="fr-card__img">
-                               {% image value.tertiary_image original class="fr-responsive-img fr-ratio-32x9" %}
+                               {% image value.bottom_right_image original class="fr-responsive-img fr-ratio-32x9" %}
                             </div>
                         </div>
                     </div>
