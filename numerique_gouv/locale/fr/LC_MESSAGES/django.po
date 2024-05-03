@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-03 18:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: numerique_gouv/blocks.py:8
+msgid "Main card image"
+msgstr "Image de la carte principale"
+
+#: numerique_gouv/blocks.py:9
+msgid "Main card title"
+msgstr "Titre de la carte principale"
+
+#: numerique_gouv/blocks.py:10
+msgid "Main card text"
+msgstr "Texte de la carte principale"
+
+#: numerique_gouv/blocks.py:11 numerique_gouv/blocks.py:17
+#: numerique_gouv/blocks.py:23
+msgid "Link to a page"
+msgstr "Lien vers une page. Utilisez soit ce champ soit le champ URL externe."
+
+#: numerique_gouv/blocks.py:12 numerique_gouv/blocks.py:18
+#: numerique_gouv/blocks.py:24
+msgid "Link to an external URL"
+msgstr "Lien vers une URL externe"
+
+#: numerique_gouv/blocks.py:14
+msgid "Top right card image"
+msgstr "Image de la carte en haut à droite"
+
+#: numerique_gouv/blocks.py:15
+msgid "Top right card text"
+msgstr "Texte de la carte en haut à droite"
+
+#: numerique_gouv/blocks.py:16
+msgid "Top right card button label"
+msgstr "Texte du bouton de la carte en haut à droite"
+
+#: numerique_gouv/blocks.py:20
+msgid "Bottom right card image"
+msgstr "Image de la carte en bas à droite"
+
+#: numerique_gouv/blocks.py:21
+msgid "Bottom right card text"
+msgstr "Texte de la carte en bas à droite"
+
+#: numerique_gouv/blocks.py:22
+msgid "Bottom right card button label"
+msgstr "Texte du bouton de la carte en bas à droite"
+
+#: numerique_gouv/blocks.py:32
+msgid "Headline cards"
+msgstr "Unes"
+
+#: numerique_gouv/models.py:8
+msgid "Numerique page"
+msgstr "Page Numérique.gouv.fr"
