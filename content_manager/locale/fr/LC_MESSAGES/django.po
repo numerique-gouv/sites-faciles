@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-24 16:31+0200\n"
-"PO-Revision-Date: 2024-04-24 16:36+0200\n"
+"POT-Creation-Date: 2024-04-26 12:07+0200\n"
+"PO-Revision-Date: 2024-04-26 12:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -610,6 +610,10 @@ msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 #: content_manager/models.py:334
 msgid "Mega menu"
 msgstr "Méga menu"
+
+#: content_manager/urls.py:18
+msgid "search/"
+msgstr "recherche/"
 
 #: content_manager/views.py:46 content_manager/views.py:77
 msgid "Tags"

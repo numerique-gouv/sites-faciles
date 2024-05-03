@@ -110,8 +110,7 @@ class Command(BaseCommand):
             "image": image,
             "image_ratio": "3",
             "text": RichText(text_raw),
-            "link_url": admin_url,
-            "link_label": "Gérer le site",
+            "link": {"external_url": admin_url, "text": "Gérer le site"},
         }
 
         body.append(("imageandtext", image_and_text_block))

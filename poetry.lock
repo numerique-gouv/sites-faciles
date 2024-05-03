@@ -1331,6 +1331,17 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.4.3)", "pytest-
 type = ["mypy (>=1.8)"]
 
 [[package]]
+name = "polib"
+version = "1.2.0"
+description = "A library to manipulate gettext files (po and mo files)."
+optional = false
+python-versions = "*"
+files = [
+    {file = "polib-1.2.0-py2.py3-none-any.whl", hash = "sha256:1c77ee1b81feb31df9bca258cbc58db1bbb32d10214b173882452c73af06d62d"},
+    {file = "polib-1.2.0.tar.gz", hash = "sha256:f3ef94aefed6e183e342a8a269ae1fc4742ba193186ad76f175938621dbfc26b"},
+]
+
+[[package]]
 name = "pre-commit"
 version = "3.7.0"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
@@ -2049,6 +2060,29 @@ docs = ["Sphinx (>=1.5.2)", "myst-parser (==2.0.0)", "pyenchant (>=3.1.1,<4)", "
 testing = ["Jinja2 (>=3.0,<3.2)", "azure-mgmt-cdn (>=12.0,<13.0)", "azure-mgmt-frontdoor (>=1.0,<1.1)", "boto3 (>=1.28,<2)", "coverage (>=3.7.0)", "curlylint (==0.13.1)", "django-pattern-library (>=0.7)", "djhtml (==3.0.6)", "doc8 (==0.8.1)", "factory-boy (>=3.2)", "freezegun (>=0.3.8)", "polib (>=1.1,<2.0)", "python-dateutil (>=2.7)", "pytz (>=2014.7)", "ruff (==0.1.5)", "semgrep (==1.40.0)", "tblib (>=2.0,<3.0)"]
 
 [[package]]
+name = "wagtail-localize"
+version = "1.9"
+description = "Translation plugin for Wagtail CMS"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "wagtail_localize-1.9-py3-none-any.whl", hash = "sha256:a680fc33c17145e6726f03a57b2ec465405847ae7cb77943ecc0e56463ad68c7"},
+    {file = "wagtail_localize-1.9.tar.gz", hash = "sha256:f4fa9c36d8dbab5c27d1b675ed6fd7b9e8f012cf4bb308464168de7ebbad8324"},
+]
+
+[package.dependencies]
+Django = ">=3.2,<5.1"
+polib = ">=1.1,<2.0"
+typing_extensions = ">=4.0"
+Wagtail = ">=5.2"
+
+[package.extras]
+documentation = ["mkdocs (==1.4.3)", "mkdocs-autorefs (>=0.4.0,<0.5)", "mkdocs-include-markdown-plugin (>=4.0.4,<5)", "mkdocs-material (>=9.1,<10)", "mkdocstrings[python] (==0.22.0)", "pygments (>=2.15,<2.16)"]
+google = ["google-cloud-translate (>=3.0.0)"]
+linting = ["pre-commit (>=3.4,<4)"]
+testing = ["coverage (>=7.0,<8.0)", "dj-database-url (>=2.1.0,<3)", "django-rq (>=2.5,<3.0)", "freezegun (>=1.2,<2)", "google-cloud-translate (>=3.0.0)", "wagtail-modeladmin (>=2.0,<3.0)"]
+
+[[package]]
 name = "wagtail-markdown"
 version = "0.11.1"
 description = "Markdown support for Wagtail"
@@ -2156,4 +2190,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "dd37c073651ca6832fbbf6fe8f463f2df48bd677c859462b3f069588ee31dc48"
+content-hash = "bb0638dd1c532df71b53395cae0b7ed4babdc38b4b023bb7a855bd5948446c40"
