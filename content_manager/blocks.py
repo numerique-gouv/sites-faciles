@@ -56,6 +56,46 @@ class LinkBlock(LinkWithoutLabelBlock):
         icon = "link"
 
 
+class LinksVerticalListBlock(blocks.StreamBlock):
+    link = LinkBlock(label=_("Link"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/links_vertical_list.html"
+
+
+button_type_choices = (
+    ("fr-btn", _("Primary")),
+    ("fr-btn fr-btn--secondary", _("Secundary")),
+    ("fr-btn fr-btn--tertiary", _("Tertiary")),
+    ("fr-btn fr-btn--tertiary-no-outline", _("Tertiary without border")),
+)
+
+
+class ButtonBlock(LinkBlock):
+    button_type = blocks.ChoiceBlock(label=_("Button type"), choices=button_type_choices, required=False)
+
+    class Meta:
+        value_class = LinkStructValue
+        icon = "link"
+
+
+class ButtonsHorizontalListBlock(blocks.StreamBlock):
+    button = ButtonBlock(label=_("Button"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/buttons_horizontal_list.html"
+
+
+class ButtonsVerticalListBlock(blocks.StreamBlock):
+    button = ButtonBlock(label=_("Button"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/buttons_vertical_list.html"
+
+
 class IconPickerBlock(blocks.FieldBlock):
     def __init__(self, required=True, help_text=None, validators=(), **kwargs):
         self.field_options = {
@@ -171,12 +211,15 @@ class CardstructValue(StructValue):
         url = self.get("url")
         document = self.get("document")
         top_detail_badges_tags = self.get("top_detail_badges_tags")
+        call_to_action = self.get("call_to_action")
 
         if not (url or document):
             return False
 
         enlarge = True
-        if len(top_detail_badges_tags) and top_detail_badges_tags.raw_data[0]["type"] == "tags":
+        if len(call_to_action):
+            enlarge = False
+        elif len(top_detail_badges_tags) and top_detail_badges_tags.raw_data[0]["type"] == "tags":
             tags_list = top_detail_badges_tags.raw_data[0]["value"]
             for tag in tags_list:
                 if tag["value"]["link"]["page"] is not None or tag["value"]["link"]["external_url"] != "":
@@ -216,8 +259,22 @@ class CardBlock(blocks.StructBlock):
         max_num=1,
         required=False,
     )
-    bottom_detail_text = blocks.CharBlock(label=_("Bottom detail: text"), required=False)
+    bottom_detail_text = blocks.CharBlock(
+        label=_("Bottom detail: text"),
+        help_text=_("Incompatible with the bottom call-to-action"),
+        required=False,
+    )
     bottom_detail_icon = IconPickerBlock(label=_("Bottom detail: icon"), required=False)
+    call_to_action = blocks.StreamBlock(
+        [
+            ("links", LinksVerticalListBlock()),
+            ("buttons", ButtonsHorizontalListBlock()),
+        ],
+        label=_("Bottom call-to-action: links or buttons"),
+        help_text=_("Incompatible with the bottom detail text"),
+        max_num=1,
+        required=False,
+    )
     grey_background = blocks.BooleanBlock(label=_("Card with grey background"), required=False)
     no_background = blocks.BooleanBlock(label=_("Card without background"), required=False)
     no_border = blocks.BooleanBlock(label=_("Card without border"), required=False)

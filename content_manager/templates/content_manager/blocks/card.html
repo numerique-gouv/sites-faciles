@@ -38,19 +38,9 @@
     </div>
     {% if value.call_to_action and not value.bottom_detail_text %}
       <div class="fr-card__footer">
-        {% if value.call_to_action.buttons %}
-          <ul class="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
-            {% for button in value.call_to_action.buttons %}
-              <li>{% dsfr_button button %}</li>
-            {% endfor %}
-          </ul>
-        {% elif value.call_to_action.links %}
-          <ul class="fr-links-group">
-            {% for link in value.call_to_action.links %}
-              <li>{% dsfr_link link %}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
+        {% for block in value.call_to_action %}
+          {% include_block block %}
+        {% endfor %}
       </div>
     {% endif %}
 
