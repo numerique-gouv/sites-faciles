@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
-from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM
+from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS
 from wagtail import blocks
 from wagtail.blocks import StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
@@ -227,6 +227,16 @@ class CardstructValue(StructValue):
 
         return enlarge
 
+    def image_classes(self):
+        ratio_class = self.get("image_ratio")
+
+        if ratio_class:
+            image_classes = f"fr-responsive-img {ratio_class}"
+        else:
+            image_classes = "fr-responsive-img"
+
+        return image_classes
+
 
 class CardBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"))
@@ -238,6 +248,12 @@ class CardBlock(blocks.StructBlock):
     )
     description = blocks.TextBlock(label=_("Content"), help_text=_("Can contain HTML."), required=False)
     image = ImageChooserBlock(label=_("Image"), required=False)
+    image_ratio = blocks.ChoiceBlock(
+        label=_("Image ratio"),
+        choices=IMAGE_RATIOS,
+        required=False,
+        default="h3",
+    )
     image_badge = BadgesListBlock(
         label=_("Image badge"), required=False, help_text=_("Only used if the badge has an image."), max_num=1
     )
