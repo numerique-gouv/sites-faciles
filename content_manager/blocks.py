@@ -9,7 +9,7 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import HEADING_CHOICES, LEVEL_CHOICES
+from content_manager.constants import HEADING_CHOICES, HORIZONTAL_CARD_IMAGE_RATIOS, LEVEL_CHOICES
 from content_manager.widgets import DsfrIconPickerWidget
 
 
@@ -166,38 +166,7 @@ class TagListBlock(blocks.StreamBlock):
         template = "content_manager/blocks/tags_list.html"
 
 
-## Basic blocks
-class AccordionBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label=_("Title"))
-    content = blocks.RichTextBlock(label=_("Content"))
-
-
-class AccordionsBlock(blocks.StreamBlock):
-    title = blocks.CharBlock(label=_("Title"))
-    accordion = AccordionBlock(label=_("Accordion"), min_num=1, max_num=15)
-
-
-class AlertBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label=_("Message title"), required=False)
-    description = blocks.TextBlock(label=_("Message text"), required=False)
-    level = blocks.ChoiceBlock(label=_("Message type"), choices=LEVEL_CHOICES)
-    heading_tag = blocks.ChoiceBlock(
-        label=_("Heading level"),
-        choices=HEADING_CHOICES,
-        default="h3",
-        help_text=_("Adapt to the page layout. Defaults to heading 3."),
-    )
-
-
-class CalloutBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label=_("Callout title"), required=False)
-    text = blocks.TextBlock(label=_("Callout text"), required=False)
-    heading_tag = blocks.ChoiceBlock(
-        label=_("Heading level"),
-        choices=HEADING_CHOICES,
-        default="h3",
-        help_text=_("Adapt to the page layout. Defaults to heading 3."),
-    )
+## Cards
 
 
 class CardstructValue(StructValue):
@@ -225,9 +194,13 @@ class CardstructValue(StructValue):
                 if tag["value"]["link"]["page"] is not None or tag["value"]["link"]["external_url"] != "":
                     enlarge = False
 
+        print(f"**{call_to_action}**", enlarge)
         return enlarge
 
     def image_classes(self):
+        """
+        Determine the image classes for a vertical card. Not used in horizontal card.
+        """
         ratio_class = self.get("image_ratio")
 
         if ratio_class:
@@ -255,7 +228,7 @@ class CardBlock(blocks.StructBlock):
         default="h3",
     )
     image_badge = BadgesListBlock(
-        label=_("Image badge"), required=False, help_text=_("Only used if the badge has an image."), max_num=1
+        label=_("Image area badge"), required=False, help_text=_("Only used if the card has an image."), max_num=1
     )
     url = blocks.URLBlock(label=_("Link"), required=False, group="target")
     document = DocumentChooserBlock(
@@ -300,6 +273,61 @@ class CardBlock(blocks.StructBlock):
         icon = "tablet-alt"
         template = "content_manager/blocks/card.html"
         value_class = CardstructValue
+
+
+class HorizontalCardBlock(CardBlock):
+    image_ratio = blocks.ChoiceBlock(
+        label=_("Image ratio"),
+        choices=HORIZONTAL_CARD_IMAGE_RATIOS,
+        required=False,
+        default="h3",
+    )
+
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/card_horizontal.html"
+        value_class = CardstructValue
+
+
+class VerticalCardBlock(CardBlock):
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/card_vertical.html"
+        value_class = CardstructValue
+
+
+## Basic blocks
+class AccordionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    content = blocks.RichTextBlock(label=_("Content"))
+
+
+class AccordionsBlock(blocks.StreamBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    accordion = AccordionBlock(label=_("Accordion"), min_num=1, max_num=15)
+
+
+class AlertBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Message title"), required=False)
+    description = blocks.TextBlock(label=_("Message text"), required=False)
+    level = blocks.ChoiceBlock(label=_("Message type"), choices=LEVEL_CHOICES)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+
+
+class CalloutBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Callout title"), required=False)
+    text = blocks.TextBlock(label=_("Callout text"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
 
 
 class IframeBlock(blocks.StructBlock):
@@ -473,7 +501,7 @@ class CommonStreamBlock(blocks.StreamBlock):
 
 
 class MultiColumnsBlock(CommonStreamBlock):
-    card = CardBlock(label=_("Vertical card"))
+    card = VerticalCardBlock(label=_("Vertical card"))
 
     class Meta:
         icon = "dots-horizontal"
@@ -512,6 +540,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 
 class FullWidthBlock(CommonStreamBlock):
     image_and_text = ImageAndTextBlock(label=_("Image and text"))
+    card = HorizontalCardBlock(label=_("Horizontal card"))
 
     class Meta:
         icon = "minus"
@@ -535,14 +564,12 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("image", ImageBlock()),
-    (
-        "imageandtext",
-        ImageAndTextBlock(label=_("Image and text")),
-    ),
+    ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
     ("callout", CalloutBlock(label=_("Callout"))),
     ("quote", QuoteBlock(label=_("Quote"))),
     ("video", VideoBlock(label=_("Video"))),
+    ("card", HorizontalCardBlock(label=_("Horizontal card"))),
     ("accordions", AccordionsBlock(label=_("Accordions"))),
     ("stepper", StepperBlock(label=_("Stepper"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
