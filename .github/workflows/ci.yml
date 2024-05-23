@@ -37,8 +37,7 @@ jobs:
       - name: ✨ Black, isort, flake8 & djlint
         run: |
           make quality
-      - name: 🚧 Check pending migrations
-        continue-on-error: true
+      - name: 🚧 Check pending migrations # continue-on-error: true
         run: |
           poetry run django-admin makemigrations --check --dry-run --noinput
       - name: 🤹‍ Run the unit tests
