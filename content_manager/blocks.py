@@ -194,7 +194,6 @@ class CardstructValue(StructValue):
                 if tag["value"]["link"]["page"] is not None or tag["value"]["link"]["external_url"] != "":
                     enlarge = False
 
-        print(f"**{call_to_action}**", enlarge)
         return enlarge
 
     def image_classes(self):
