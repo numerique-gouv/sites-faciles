@@ -23,3 +23,8 @@ LEVEL_CHOICES = [
     ("info", "Information"),
     ("warning", "Attention"),
 ]
+
+HORIZONTAL_CARD_IMAGE_RATIOS = [
+    ("fr-card--horizontal-tier", "1/3"),
+    ("fr-card--horizontal-half", "50/50"),
+]

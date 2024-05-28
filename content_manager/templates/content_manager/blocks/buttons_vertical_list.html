@@ -1,0 +1,16 @@
+{% load static wagtailcore_tags %}
+
+<ul class="fr-btns-group">
+  {% for button in block.value %}
+    <li>
+      {% if button.value.external_url %}
+        <a class="{{ button.value.button_type }}"
+           href="{{ button.value.url }}"
+           target="_blank"
+           rel="noopener external">{{ button.value.text }}</a>
+      {% else %}
+        <a class="{{ button.value.button_type }}" href="{{ button.value.url }}">{{ button.value.text }}</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
