@@ -425,7 +425,7 @@ class ImageBlock(blocks.StructBlock):
 class QuoteBlock(blocks.StructBlock):
     image = ImageChooserBlock(label=_("Image"), required=False)
     quote = blocks.CharBlock(label=_("Quote"))
-    author_name = blocks.CharBlock(label=_("Author name"))
+    author_name = blocks.CharBlock(label=_("Author name"), required=False)
     author_title = blocks.CharBlock(label=_("Author title"), required=False)
     color = blocks.ChoiceBlock(
         label=_("Color"),
