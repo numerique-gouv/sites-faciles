@@ -1,3 +1,6 @@
+from django.utils.translation import gettext_lazy as _
+
+
 LIMITED_RICHTEXTFIELD_FEATURES = [
     "bold",
     "italic",
@@ -9,22 +12,28 @@ LIMITED_RICHTEXTFIELD_FEATURES = [
 ]
 
 HEADING_CHOICES = [
-    ("h2", "En-tête 2"),
-    ("h3", "En-tête 3"),
-    ("h4", "En-tête 4"),
-    ("h5", "En-tête 5"),
-    ("h6", "En-tête 6"),
-    ("p", "Paragraphe"),
+    ("h2", _("Heading 2")),
+    ("h3", _("Heading 3")),
+    ("h4", _("Heading 4")),
+    ("h5", _("Heading 5")),
+    ("h6", _("Heading 6")),
+    ("p", _("Paragraph")),
 ]
 
 LEVEL_CHOICES = [
-    ("error", "Erreur"),
-    ("success", "Succès"),
-    ("info", "Information"),
-    ("warning", "Attention"),
+    ("error", _("Error")),
+    ("success", _("Success")),
+    ("info", _("Information")),
+    ("warning", _("Warning")),
 ]
 
 HORIZONTAL_CARD_IMAGE_RATIOS = [
     ("fr-card--horizontal-tier", "1/3"),
     ("fr-card--horizontal-half", "50/50"),
+]
+
+MEDIA_WIDTH_CHOICES = [
+    ("fr-content-media--sm", _("Small")),
+    ("", _("Medium")),
+    ("fr-content-media--lg", _("Large")),
 ]
