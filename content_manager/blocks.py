@@ -2,14 +2,14 @@ from django import forms
 from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
-from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS
+from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
 from wagtail.blocks import StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import HEADING_CHOICES, HORIZONTAL_CARD_IMAGE_RATIOS, LEVEL_CHOICES
+from content_manager.constants import HEADING_CHOICES, HORIZONTAL_CARD_IMAGE_RATIOS, LEVEL_CHOICES, MEDIA_WIDTH_CHOICES
 from content_manager.widgets import DsfrIconPickerWidget
 
 
@@ -414,6 +414,18 @@ class ImageBlock(blocks.StructBlock):
         label=_("Alternative text (textual description of the image)"),
         required=False,
     )
+    width = blocks.ChoiceBlock(
+        label=_("Witdh"),
+        choices=MEDIA_WIDTH_CHOICES,
+        required=False,
+        default="",
+    )
+    image_ratio = blocks.ChoiceBlock(
+        label=_("Image ratio"),
+        choices=IMAGE_RATIOS,
+        required=False,
+        default="h3",
+    )
     caption = blocks.CharBlock(label=_("Caption"), required=False)
     url = blocks.URLBlock(label=_("Link"), required=False)
 
@@ -473,13 +485,36 @@ class TextAndCTA(blocks.StructBlock):
         template = "content_manager/blocks/text_and_cta.html"
 
 
+class TranscriptionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"), default="Transcription", required=False)
+    content = blocks.RichTextBlock(label=_("Transcription content"), required=False)
+
+    class Meta:
+        icon = "media"
+        template = "content_manager/blocks/transcription.html"
+
+
 class VideoBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label=_("Title"), required=False)
-    caption = blocks.CharBlock(label=_("Caption"))
+    title = blocks.CharBlock(label=_("Video title"), required=False)
+    caption = blocks.CharBlock(label=_("Caption"), required=False)
     url = blocks.URLBlock(
         label=_("Video URL"),
         help_text="Use embed format (e.g. : https://www.youtube.com/embed/gLzXOViPX-0)",
     )
+
+    width = blocks.ChoiceBlock(
+        label=_("Witdh"),
+        choices=MEDIA_WIDTH_CHOICES,
+        required=False,
+        default="",
+    )
+    video_ratio = blocks.ChoiceBlock(
+        label=_("Video ratio"),
+        choices=VIDEO_RATIOS,
+        required=False,
+        default="h3",
+    )
+    transcription = TranscriptionBlock(label=_("Transcription"), required=False)
 
     class Meta:
         icon = "media"
@@ -491,6 +526,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
     image = ImageBlock(label=_("Image"))
     video = VideoBlock(label=_("Video"))
+    transcription = TranscriptionBlock(label=_("Transcription"))
     quote = QuoteBlock(label=_("Quote"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     iframe = IframeBlock(label=_("Iframe"))
@@ -568,6 +604,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("callout", CalloutBlock(label=_("Callout"))),
     ("quote", QuoteBlock(label=_("Quote"))),
     ("video", VideoBlock(label=_("Video"))),
+    ("transcription", TranscriptionBlock(label=_("Transcription"))),
     ("card", HorizontalCardBlock(label=_("Horizontal card"))),
     ("accordions", AccordionsBlock(label=_("Accordions"))),
     ("stepper", StepperBlock(label=_("Stepper"))),
