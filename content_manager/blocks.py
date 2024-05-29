@@ -499,7 +499,11 @@ class VideoBlock(blocks.StructBlock):
     caption = blocks.CharBlock(label=_("Caption"), required=False)
     url = blocks.URLBlock(
         label=_("Video URL"),
-        help_text="Use embed format (e.g. : https://www.youtube.com/embed/gLzXOViPX-0)",
+        help_text=_(
+            "Use embed format, with a version that doesn't require a consent banner if available."
+            " (e.g. : https://www.youtube-nocookie.com/embed/gLzXOViPX-0)"
+            " For Youtube, use Embed video and check Enable privacy-enhanced mode."
+        ),
     )
 
     width = blocks.ChoiceBlock(
