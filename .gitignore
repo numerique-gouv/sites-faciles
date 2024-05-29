@@ -64,6 +64,7 @@ staticfiles/
 images/
 original_images/
 avatar_images/
+medias/
 
 # Flask stuff:
 instance/
