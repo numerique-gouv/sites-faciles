@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-28 18:23+0200\n"
-"PO-Revision-Date: 2024-05-28 18:24+0200\n"
+"POT-Creation-Date: 2024-05-29 11:45+0200\n"
+"PO-Revision-Date: 2024-05-29 11:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -26,13 +26,13 @@ msgstr "Afficher le titre sur l’image d’en-tête ?"
 msgid "Header image"
 msgstr "Image d’en-tête"
 
-#: content_manager/abstract.py:37 content_manager/blocks.py:548
-#: content_manager/blocks.py:587
+#: content_manager/abstract.py:37 content_manager/blocks.py:552
+#: content_manager/blocks.py:591
 msgid "Background color"
 msgstr "Couleur de fond"
 
-#: content_manager/abstract.py:41 content_manager/blocks.py:550
-#: content_manager/blocks.py:589
+#: content_manager/abstract.py:41 content_manager/blocks.py:554
+#: content_manager/blocks.py:593
 msgid "Uses the French Design System colors"
 msgstr "Utilise les couleurs du système de design de l'État"
 
@@ -164,7 +164,7 @@ msgstr "Badge"
 #: content_manager/blocks.py:300 content_manager/blocks.py:305
 #: content_manager/blocks.py:334 content_manager/blocks.py:404
 #: content_manager/blocks.py:459 content_manager/blocks.py:468
-#: content_manager/blocks.py:489 content_manager/blocks.py:561
+#: content_manager/blocks.py:489 content_manager/blocks.py:565
 #: content_manager/models.py:275
 msgid "Title"
 msgstr "Titre"
@@ -192,7 +192,7 @@ msgstr "Tag"
 
 #: content_manager/blocks.py:216 content_manager/blocks.py:314
 #: content_manager/blocks.py:325 content_manager/blocks.py:406
-#: content_manager/blocks.py:563
+#: content_manager/blocks.py:567
 msgid "Heading level"
 msgstr "Niveau de titre"
 
@@ -202,7 +202,7 @@ msgid "Adapt to the page layout. Defaults to heading 3."
 msgstr "À adapter à la structure de la page. Par défaut en-tête 3."
 
 #: content_manager/blocks.py:221 content_manager/blocks.py:301
-#: content_manager/blocks.py:591
+#: content_manager/blocks.py:595
 msgid "Content"
 msgstr "Contenu"
 
@@ -212,7 +212,7 @@ msgstr "Peut contenir du HTML."
 
 #: content_manager/blocks.py:222 content_manager/blocks.py:349
 #: content_manager/blocks.py:412 content_manager/blocks.py:438
-#: content_manager/blocks.py:527
+#: content_manager/blocks.py:531
 msgid "Image"
 msgstr "Image"
 
@@ -350,7 +350,7 @@ msgid "Image width"
 msgstr "Largeur de l’image"
 
 #: content_manager/blocks.py:367 content_manager/blocks.py:475
-#: content_manager/blocks.py:526 content_manager/blocks.py:599
+#: content_manager/blocks.py:530 content_manager/blocks.py:603
 msgid "Rich text"
 msgstr "Texte avec mise en forme"
 
@@ -383,7 +383,7 @@ msgstr "URL du lien (obsolète)"
 msgid "Alternative text (textual description of the image)"
 msgstr "Alternative textuelle (description textuelle de l’image)"
 
-#: content_manager/blocks.py:418 content_manager/blocks.py:506
+#: content_manager/blocks.py:418 content_manager/blocks.py:510
 msgid "Witdh"
 msgstr "Largeur"
 
@@ -391,8 +391,8 @@ msgstr "Largeur"
 msgid "Caption"
 msgstr "Légende"
 
-#: content_manager/blocks.py:439 content_manager/blocks.py:530
-#: content_manager/blocks.py:605
+#: content_manager/blocks.py:439 content_manager/blocks.py:534
+#: content_manager/blocks.py:609
 msgid "Quote"
 msgstr "Citation"
 
@@ -452,40 +452,51 @@ msgstr "Titre de la vidéo"
 msgid "Video URL"
 msgstr "URL de la vidéo"
 
-#: content_manager/blocks.py:512
+#: content_manager/blocks.py:503
+msgid ""
+"Use embed format, with a version that doesn't require a consent banner if "
+"available. (e.g. : https://www.youtube-nocookie.com/embed/gLzXOViPX-0) For "
+"Youtube, use Embed video and check Enable privacy-enhanced mode."
+msgstr ""
+"Utiliser le format d’intégration, avec une version qui ne nécessite pas de "
+"bannière de consentement si possible (par exemple : https://www.youtube-"
+"nocookie.com/embed/gLzXOViPX-0) Pour Youtube, cliquez sur \"Intégrer la "
+"vidéo puis cochez « Activer le mode de confidentialité avancé »."
+
+#: content_manager/blocks.py:516
 msgid "Video ratio"
 msgstr "Ratio de la vidéo"
 
-#: content_manager/blocks.py:517 content_manager/blocks.py:529
-#: content_manager/blocks.py:607
+#: content_manager/blocks.py:521 content_manager/blocks.py:533
+#: content_manager/blocks.py:611
 msgid "Transcription"
 msgstr "Transcription"
 
-#: content_manager/blocks.py:528 content_manager/blocks.py:606
+#: content_manager/blocks.py:532 content_manager/blocks.py:610
 msgid "Video"
 msgstr "Vidéo"
 
-#: content_manager/blocks.py:531
+#: content_manager/blocks.py:535
 msgid "Text and call to action"
 msgstr "Texte et appel à action"
 
-#: content_manager/blocks.py:532
+#: content_manager/blocks.py:536
 msgid "Iframe"
 msgstr "Iframe"
 
-#: content_manager/blocks.py:539
+#: content_manager/blocks.py:543
 msgid "Vertical card"
 msgstr "Carte verticale"
 
-#: content_manager/blocks.py:546 content_manager/blocks.py:585
+#: content_manager/blocks.py:550 content_manager/blocks.py:589
 msgid "Background image"
 msgstr "Image de fond"
 
-#: content_manager/blocks.py:553
+#: content_manager/blocks.py:557
 msgid "Background color, hexadecimal format (obsolete)"
 msgstr "Couleur de fond, format hexadécimal (obsolète)"
 
-#: content_manager/blocks.py:556
+#: content_manager/blocks.py:560
 msgid ""
 "This field is obsolete and will be removed in the near future. Replace it "
 "with the background color."
@@ -493,71 +504,71 @@ msgstr ""
 "Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
 "avec la couleur de fond."
 
-#: content_manager/blocks.py:558
+#: content_manager/blocks.py:562
 msgid "Incorrect color format, must be #fff or #f5f5f5"
 msgstr "Format de couleur incorrect, doit être #fff ou #f5f5f5"
 
-#: content_manager/blocks.py:567
+#: content_manager/blocks.py:571
 msgid "Adapt to the page layout. Defaults to heading 2."
 msgstr "À adapter à la structure de la page. Par défaut en-tête 2."
 
-#: content_manager/blocks.py:569
+#: content_manager/blocks.py:573
 msgid "Columns"
 msgstr "Colonnes"
 
-#: content_manager/blocks.py:577 content_manager/blocks.py:602
+#: content_manager/blocks.py:581 content_manager/blocks.py:606
 msgid "Image and text"
 msgstr "Image et texte"
 
-#: content_manager/blocks.py:578 content_manager/blocks.py:608
+#: content_manager/blocks.py:582 content_manager/blocks.py:612
 msgid "Horizontal card"
 msgstr "Carte horizontale"
 
-#: content_manager/blocks.py:600
+#: content_manager/blocks.py:604
 msgid "Badge list"
 msgstr "Liste de badges"
 
-#: content_manager/blocks.py:603
+#: content_manager/blocks.py:607
 msgid "Alert message"
 msgstr "Message d’alerte"
 
-#: content_manager/blocks.py:604
+#: content_manager/blocks.py:608
 msgid "Callout"
 msgstr "Texte mis en avant"
 
-#: content_manager/blocks.py:609
+#: content_manager/blocks.py:613
 msgid "Accordions"
 msgstr "Accordéons"
 
-#: content_manager/blocks.py:610
+#: content_manager/blocks.py:614
 msgid "Stepper"
 msgstr "Étapier"
 
-#: content_manager/blocks.py:611
+#: content_manager/blocks.py:615
 msgid "Tag list"
 msgstr "Liste de tags"
 
-#: content_manager/blocks.py:612
+#: content_manager/blocks.py:616
 msgid "Markdown"
 msgstr "Markdown"
 
-#: content_manager/blocks.py:613
+#: content_manager/blocks.py:617
 msgid "Separator"
 msgstr "Séparateur"
 
-#: content_manager/blocks.py:614
+#: content_manager/blocks.py:618
 msgid "Multiple columns"
 msgstr "Multi-colonnes"
 
-#: content_manager/blocks.py:614 content_manager/blocks.py:615
+#: content_manager/blocks.py:618 content_manager/blocks.py:619
 msgid "Page structure"
 msgstr "Structure de la page"
 
-#: content_manager/blocks.py:615
+#: content_manager/blocks.py:619
 msgid "Full width background"
 msgstr "Fond pleine largeur"
 
-#: content_manager/blocks.py:629
+#: content_manager/blocks.py:633
 msgid ""
 "Warning: Use HTML block with caution. Malicious code can compromise the "
 "security of the site."
