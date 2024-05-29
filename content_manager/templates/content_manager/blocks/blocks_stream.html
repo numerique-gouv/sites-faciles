@@ -1,9 +1,7 @@
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtailmarkdown %}
 
 {% for block in stream %}
-  {% if block.block_type == 'alert' %}
-    {% include "content_manager/blocks/alert.html" %}
-  {% elif block.block_type == 'callout' %}
+  {% if block.block_type == 'callout' %}
     {% include "content_manager/blocks/callout.html" %}
   {% elif block.block_type == 'image' %}
     <div class="fr-container fr-my-3w">

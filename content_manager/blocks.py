@@ -9,7 +9,15 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import HEADING_CHOICES, HORIZONTAL_CARD_IMAGE_RATIOS, LEVEL_CHOICES, MEDIA_WIDTH_CHOICES
+from content_manager.constants import (
+    BUTTON_TYPE_CHOICES,
+    HEADING_CHOICES,
+    HORIZONTAL_CARD_IMAGE_RATIOS,
+    LEVEL_CHOICES,
+    LINK_ICON_CHOICES,
+    LINK_SIZE_CHOICES,
+    MEDIA_WIDTH_CHOICES,
+)
 from content_manager.widgets import DsfrIconPickerWidget
 
 
@@ -26,21 +34,34 @@ class BackgroundColorChoiceBlock(blocks.ChoiceBlock):
 
 class LinkStructValue(blocks.StructValue):
     def url(self):
-        external_url = self.get("external_url")
+        link = self.get("external_url", "")
+
         page = self.get("page")
-        return external_url or page.url
+        document = self.get("document")
+
+        if page:
+            link = page.url
+        elif document:
+            link = document.file
+
+        return link
 
 
 class LinkWithoutLabelBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(
         label=_("Page"),
         required=False,
-        help_text=_("Link to a page of this site. Use either this or the external URL parameter."),
+        help_text=_("Link to a page of this site. Use either this, the document, or the external URL parameter."),
     )
     external_url = blocks.URLBlock(
         label=_("External URL"),
         required=False,
-        help_text=_("Use either this or the Page parameter."),
+        help_text=_("Use either this, the document or the page parameter."),
+    )
+    document = DocumentChooserBlock(
+        label=_("Document"),
+        help_text=_("Use either this, the external URL or the page parameter."),
+        required=False,
     )
 
     class Meta:
@@ -64,16 +85,8 @@ class LinksVerticalListBlock(blocks.StreamBlock):
         template = "content_manager/blocks/links_vertical_list.html"
 
 
-button_type_choices = (
-    ("fr-btn", _("Primary")),
-    ("fr-btn fr-btn--secondary", _("Secundary")),
-    ("fr-btn fr-btn--tertiary", _("Tertiary")),
-    ("fr-btn fr-btn--tertiary-no-outline", _("Tertiary without border")),
-)
-
-
 class ButtonBlock(LinkBlock):
-    button_type = blocks.ChoiceBlock(label=_("Button type"), choices=button_type_choices, required=False)
+    button_type = blocks.ChoiceBlock(label=_("Button type"), choices=BUTTON_TYPE_CHOICES, required=False)
 
     class Meta:
         value_class = LinkStructValue
@@ -115,6 +128,27 @@ class IconPickerBlock(blocks.FieldBlock):
 
     class Meta:
         icon = "radio-full"
+
+
+class SingleLinkBlock(LinkBlock):
+    icon = blocks.ChoiceBlock(
+        label=_("Icon"),
+        help_text=_("Only used for internal links."),
+        choices=LINK_ICON_CHOICES,
+        required=False,
+        default="",
+    )
+    size = blocks.ChoiceBlock(
+        label=_("Size"),
+        choices=LINK_SIZE_CHOICES,
+        required=False,
+        default="",
+    )
+
+    class Meta:
+        value_class = LinkStructValue
+        icon = "link"
+        template = "content_manager/blocks/link.html"
 
 
 ## Badges and Tags
@@ -316,6 +350,10 @@ class AlertBlock(blocks.StructBlock):
         default="h3",
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
+
+    class Meta:
+        icon = "info-circle"
+        template = "content_manager/blocks/alert.html"
 
 
 class CalloutBlock(blocks.StructBlock):
@@ -601,20 +639,21 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
 
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
-    ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("image", ImageBlock()),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
-    ("callout", CalloutBlock(label=_("Callout"))),
-    ("quote", QuoteBlock(label=_("Quote"))),
+    ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
+    ("quote", QuoteBlock(label=_("Quote"), group=_("DSFR components"))),
     ("video", VideoBlock(label=_("Video"))),
     ("transcription", TranscriptionBlock(label=_("Transcription"))),
-    ("card", HorizontalCardBlock(label=_("Horizontal card"))),
-    ("accordions", AccordionsBlock(label=_("Accordions"))),
-    ("stepper", StepperBlock(label=_("Stepper"))),
+    ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
-    ("markdown", MarkdownBlock(label=_("Markdown"))),
-    ("separator", SeparatorBlock(label=_("Separator"))),
+    ("link", SingleLinkBlock(label=_("Link"))),
+    ("card", HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))),
+    ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
+    ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
+    ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),
+    ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
 ]
@@ -632,6 +671,7 @@ if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
                 help_text=_(
                     "Warning: Use HTML block with caution. Malicious code can compromise the security of the site."
                 ),
+                group=_("Expert syntax"),
             ),
         )
     ]
