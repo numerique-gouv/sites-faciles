@@ -215,7 +215,7 @@ class CardstructValue(StructValue):
         top_detail_badges_tags = self.get("top_detail_badges_tags")
         call_to_action = self.get("call_to_action")
 
-        if not (link or url or document):
+        if not ((link and link.url()) or url or document):
             return False
 
         enlarge = True
