@@ -42,7 +42,7 @@ class LinkStructValue(blocks.StructValue):
         if page:
             link = page.url
         elif document:
-            link = document.file
+            link = document.url
 
         return link
 
@@ -53,15 +53,15 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
         required=False,
         help_text=_("Link to a page of this site. Use either this, the document, or the external URL parameter."),
     )
-    external_url = blocks.URLBlock(
-        label=_("External URL"),
-        required=False,
-        help_text=_("Use either this, the document or the page parameter."),
-    )
     document = DocumentChooserBlock(
         label=_("Document"),
         help_text=_("Use either this, the external URL or the page parameter."),
         required=False,
+    )
+    external_url = blocks.URLBlock(
+        label=_("External URL"),
+        required=False,
+        help_text=_("Use either this, the document or the page parameter."),
     )
 
     class Meta:
@@ -403,7 +403,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         default="3",
     )
     text = blocks.RichTextBlock(label=_("Rich text"))
-    link = LinkBlock(
+    link = SingleLinkBlock(
         label=_("Link"),
         required=False,
         help_text=_("The link is shown at the bottom of the text block, with an arrow"),

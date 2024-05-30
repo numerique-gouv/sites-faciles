@@ -242,6 +242,8 @@ HOST_PORT = os.getenv("HOST_PORT", "")
 if HOST_PORT != "":
     WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
 
+WAGTAILADMIN_PATH = os.getenv("WAGTAILADMIN_PATH", "cms-admin/")
+
 # Disable Gravatar service
 WAGTAIL_GRAVATAR_PROVIDER_URL = None
 
