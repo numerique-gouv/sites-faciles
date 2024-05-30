@@ -1,10 +1,17 @@
-{% load wagtailimages_tags wagtailcore_tags dsfr_tags %}
+{% load i18n wagtailimages_tags wagtailcore_tags dsfr_tags %}
 <div class="fr-card {% if value.enlarge_link %}fr-enlarge-link{% endif %} {% if value.grey_background %}fr-card--grey{% elif value.no_background %}fr-card--no-background{% endif %} {% if value.no_border %}fr-card--no-border{% endif %} {% if value.shadow %}fr-card--shadow{% endif %}">
   <div class="fr-card__body">
     <div class="fr-card__content">
       {# djlint: off #}
       <{{ value.heading_tag | default:"h3" }} class="fr-card__title">
-        {% if value.url %}
+        {% if value.link and value.link.url %}
+          <a href="{{ value.link.url }}" {% if value.link.url.0 != '/' and request.get_host not in value.link.url %}target="_blank" rel="noopener noreferrer"{% endif %}>
+            {{ value.title }} {{value.link.url}}
+            {% if value.link.url.0 != '/' and request.get_host not in value.link.url %}
+            <span class="fr-sr-only">{% translate "Opens a new window" %}</span>
+            {% endif %}
+          </a>
+        {% elif value.url %}
           <a href="{{ value.url }}">{{ value.title }}</a>
         {% elif value.document %}
           <a href="{{ value.document.url }}">{{ value.title }}</a>
@@ -43,7 +50,6 @@
         {% endfor %}
       </div>
     {% endif %}
-
   </div>
   <div class="fr-card__header">
     {% if value.image %}

@@ -7,7 +7,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 
 urlpatterns = [
-    path("cms-admin/", include(wagtailadmin_urls)),
+    path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

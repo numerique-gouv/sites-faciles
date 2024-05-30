@@ -9,7 +9,15 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import HEADING_CHOICES, HORIZONTAL_CARD_IMAGE_RATIOS, LEVEL_CHOICES, MEDIA_WIDTH_CHOICES
+from content_manager.constants import (
+    BUTTON_TYPE_CHOICES,
+    HEADING_CHOICES,
+    HORIZONTAL_CARD_IMAGE_RATIOS,
+    LEVEL_CHOICES,
+    LINK_ICON_CHOICES,
+    LINK_SIZE_CHOICES,
+    MEDIA_WIDTH_CHOICES,
+)
 from content_manager.widgets import DsfrIconPickerWidget
 
 
@@ -26,21 +34,34 @@ class BackgroundColorChoiceBlock(blocks.ChoiceBlock):
 
 class LinkStructValue(blocks.StructValue):
     def url(self):
-        external_url = self.get("external_url")
+        link = self.get("external_url", "")
+
         page = self.get("page")
-        return external_url or page.url
+        document = self.get("document")
+
+        if page:
+            link = page.url
+        elif document:
+            link = document.url
+
+        return link
 
 
 class LinkWithoutLabelBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(
         label=_("Page"),
         required=False,
-        help_text=_("Link to a page of this site. Use either this or the external URL parameter."),
+        help_text=_("Link to a page of this site. Use either this, the document, or the external URL parameter."),
+    )
+    document = DocumentChooserBlock(
+        label=_("Document"),
+        help_text=_("Use either this, the external URL or the page parameter."),
+        required=False,
     )
     external_url = blocks.URLBlock(
         label=_("External URL"),
         required=False,
-        help_text=_("Use either this or the Page parameter."),
+        help_text=_("Use either this, the document or the page parameter."),
     )
 
     class Meta:
@@ -64,16 +85,8 @@ class LinksVerticalListBlock(blocks.StreamBlock):
         template = "content_manager/blocks/links_vertical_list.html"
 
 
-button_type_choices = (
-    ("fr-btn", _("Primary")),
-    ("fr-btn fr-btn--secondary", _("Secundary")),
-    ("fr-btn fr-btn--tertiary", _("Tertiary")),
-    ("fr-btn fr-btn--tertiary-no-outline", _("Tertiary without border")),
-)
-
-
 class ButtonBlock(LinkBlock):
-    button_type = blocks.ChoiceBlock(label=_("Button type"), choices=button_type_choices, required=False)
+    button_type = blocks.ChoiceBlock(label=_("Button type"), choices=BUTTON_TYPE_CHOICES, required=False)
 
     class Meta:
         value_class = LinkStructValue
@@ -115,6 +128,27 @@ class IconPickerBlock(blocks.FieldBlock):
 
     class Meta:
         icon = "radio-full"
+
+
+class SingleLinkBlock(LinkBlock):
+    icon = blocks.ChoiceBlock(
+        label=_("Icon"),
+        help_text=_("Only used for internal links."),
+        choices=LINK_ICON_CHOICES,
+        required=False,
+        default="",
+    )
+    size = blocks.ChoiceBlock(
+        label=_("Size"),
+        choices=LINK_SIZE_CHOICES,
+        required=False,
+        default="",
+    )
+
+    class Meta:
+        value_class = LinkStructValue
+        icon = "link"
+        template = "content_manager/blocks/link.html"
 
 
 ## Badges and Tags
@@ -167,8 +201,6 @@ class TagListBlock(blocks.StreamBlock):
 
 
 ## Cards
-
-
 class CardstructValue(StructValue):
     def enlarge_link(self):
         """
@@ -177,12 +209,13 @@ class CardstructValue(StructValue):
         - That a link is present
         - That no other link is used on the card (such as a tag with a link, or a call-to-action)
         """
+        link = self.get("link")
         url = self.get("url")
         document = self.get("document")
         top_detail_badges_tags = self.get("top_detail_badges_tags")
         call_to_action = self.get("call_to_action")
 
-        if not (url or document):
+        if not ((link and link.url()) or url or document):
             return False
 
         enlarge = True
@@ -191,7 +224,11 @@ class CardstructValue(StructValue):
         elif len(top_detail_badges_tags) and top_detail_badges_tags.raw_data[0]["type"] == "tags":
             tags_list = top_detail_badges_tags.raw_data[0]["value"]
             for tag in tags_list:
-                if tag["value"]["link"]["page"] is not None or tag["value"]["link"]["external_url"] != "":
+                if (
+                    tag["value"]["link"]["page"] is not None
+                    or tag["value"]["link"]["document"] is not None
+                    or tag["value"]["link"]["external_url"] != ""
+                ):
                     enlarge = False
 
         return enlarge
@@ -229,12 +266,25 @@ class CardBlock(blocks.StructBlock):
     image_badge = BadgesListBlock(
         label=_("Image area badge"), required=False, help_text=_("Only used if the card has an image."), max_num=1
     )
-    url = blocks.URLBlock(label=_("Link"), required=False, group="target")
-    document = DocumentChooserBlock(
-        label=_("or Document"),
-        help_text=_("Select a document to make the card link to it (if the 'Link' field is not populated.)"),
+    link = LinkWithoutLabelBlock(
+        label=_("Link"),
+        required=False,
+    )
+    url = blocks.URLBlock(
+        label=_("Link (obsolete)"),
         required=False,
         group="target",
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+    )
+    document = DocumentChooserBlock(
+        label=_("or Document (obsolete)"),
+        required=False,
+        group="target",
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
     )
     top_detail_text = blocks.CharBlock(label=_("Top detail: text"), required=False)
     top_detail_icon = IconPickerBlock(label=_("Top detail: icon"), required=False)
@@ -249,7 +299,7 @@ class CardBlock(blocks.StructBlock):
     )
     bottom_detail_text = blocks.CharBlock(
         label=_("Bottom detail: text"),
-        help_text=_("Incompatible with the bottom call-to-action"),
+        help_text=_("Incompatible with the bottom call-to-action."),
         required=False,
     )
     bottom_detail_icon = IconPickerBlock(label=_("Bottom detail: icon"), required=False)
@@ -259,7 +309,7 @@ class CardBlock(blocks.StructBlock):
             ("buttons", ButtonsHorizontalListBlock()),
         ],
         label=_("Bottom call-to-action: links or buttons"),
-        help_text=_("Incompatible with the bottom detail text"),
+        help_text=_("Incompatible with the bottom detail text."),
         max_num=1,
         required=False,
     )
@@ -280,6 +330,14 @@ class HorizontalCardBlock(CardBlock):
         choices=HORIZONTAL_CARD_IMAGE_RATIOS,
         required=False,
         default="h3",
+    )
+    bottom_detail_text = blocks.CharBlock(
+        label=_("Bottom detail: text"),
+        help_text=_(
+            "Incompatible with the bottom call-to-action. "
+            "If the card links to a downloadable document, the values are pre-filled."
+        ),
+        required=False,
     )
 
     class Meta:
@@ -316,6 +374,10 @@ class AlertBlock(blocks.StructBlock):
         default="h3",
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
+
+    class Meta:
+        icon = "info-circle"
+        template = "content_manager/blocks/alert.html"
 
 
 class CalloutBlock(blocks.StructBlock):
@@ -365,7 +427,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         default="3",
     )
     text = blocks.RichTextBlock(label=_("Rich text"))
-    link = LinkBlock(
+    link = SingleLinkBlock(
         label=_("Link"),
         required=False,
         help_text=_("The link is shown at the bottom of the text block, with an arrow"),
@@ -533,6 +595,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     transcription = TranscriptionBlock(label=_("Transcription"))
     quote = QuoteBlock(label=_("Quote"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
+    link = SingleLinkBlock(label=_("Single link"))
     iframe = IframeBlock(label=_("Iframe"))
 
     class Meta:
@@ -601,20 +664,22 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
 
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
-    ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("image", ImageBlock()),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
-    ("callout", CalloutBlock(label=_("Callout"))),
-    ("quote", QuoteBlock(label=_("Quote"))),
+    ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
+    ("quote", QuoteBlock(label=_("Quote"), group=_("DSFR components"))),
     ("video", VideoBlock(label=_("Video"))),
     ("transcription", TranscriptionBlock(label=_("Transcription"))),
-    ("card", HorizontalCardBlock(label=_("Horizontal card"))),
-    ("accordions", AccordionsBlock(label=_("Accordions"))),
-    ("stepper", StepperBlock(label=_("Stepper"))),
+    ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
-    ("markdown", MarkdownBlock(label=_("Markdown"))),
-    ("separator", SeparatorBlock(label=_("Separator"))),
+    ("link", SingleLinkBlock(label=_("Single link"))),
+    ("card", HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))),
+    ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
+    ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
+    ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),
+    ("iframe", IframeBlock(label=_("Iframe"))),
+    ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
 ]
@@ -632,6 +697,7 @@ if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
                 help_text=_(
                     "Warning: Use HTML block with caution. Malicious code can compromise the security of the site."
                 ),
+                group=_("Expert syntax"),
             ),
         )
     ]
