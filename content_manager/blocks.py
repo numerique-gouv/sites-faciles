@@ -201,8 +201,6 @@ class TagListBlock(blocks.StreamBlock):
 
 
 ## Cards
-
-
 class CardstructValue(StructValue):
     def enlarge_link(self):
         """
@@ -211,12 +209,13 @@ class CardstructValue(StructValue):
         - That a link is present
         - That no other link is used on the card (such as a tag with a link, or a call-to-action)
         """
+        link = self.get("link")
         url = self.get("url")
         document = self.get("document")
         top_detail_badges_tags = self.get("top_detail_badges_tags")
         call_to_action = self.get("call_to_action")
 
-        if not (url or document):
+        if not (link or url or document):
             return False
 
         enlarge = True
@@ -225,7 +224,11 @@ class CardstructValue(StructValue):
         elif len(top_detail_badges_tags) and top_detail_badges_tags.raw_data[0]["type"] == "tags":
             tags_list = top_detail_badges_tags.raw_data[0]["value"]
             for tag in tags_list:
-                if tag["value"]["link"]["page"] is not None or tag["value"]["link"]["external_url"] != "":
+                if (
+                    tag["value"]["link"]["page"] is not None
+                    or tag["value"]["link"]["document"] is not None
+                    or tag["value"]["link"]["external_url"] != ""
+                ):
                     enlarge = False
 
         return enlarge
@@ -263,12 +266,25 @@ class CardBlock(blocks.StructBlock):
     image_badge = BadgesListBlock(
         label=_("Image area badge"), required=False, help_text=_("Only used if the card has an image."), max_num=1
     )
-    url = blocks.URLBlock(label=_("Link"), required=False, group="target")
-    document = DocumentChooserBlock(
-        label=_("or Document"),
-        help_text=_("Select a document to make the card link to it (if the 'Link' field is not populated.)"),
+    link = LinkWithoutLabelBlock(
+        label=_("Link"),
+        required=False,
+    )
+    url = blocks.URLBlock(
+        label=_("Link (obsolete)"),
         required=False,
         group="target",
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+    )
+    document = DocumentChooserBlock(
+        label=_("or Document (obsolete)"),
+        required=False,
+        group="target",
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
     )
     top_detail_text = blocks.CharBlock(label=_("Top detail: text"), required=False)
     top_detail_icon = IconPickerBlock(label=_("Top detail: icon"), required=False)
@@ -283,7 +299,7 @@ class CardBlock(blocks.StructBlock):
     )
     bottom_detail_text = blocks.CharBlock(
         label=_("Bottom detail: text"),
-        help_text=_("Incompatible with the bottom call-to-action"),
+        help_text=_("Incompatible with the bottom call-to-action."),
         required=False,
     )
     bottom_detail_icon = IconPickerBlock(label=_("Bottom detail: icon"), required=False)
@@ -293,7 +309,7 @@ class CardBlock(blocks.StructBlock):
             ("buttons", ButtonsHorizontalListBlock()),
         ],
         label=_("Bottom call-to-action: links or buttons"),
-        help_text=_("Incompatible with the bottom detail text"),
+        help_text=_("Incompatible with the bottom detail text."),
         max_num=1,
         required=False,
     )
@@ -314,6 +330,14 @@ class HorizontalCardBlock(CardBlock):
         choices=HORIZONTAL_CARD_IMAGE_RATIOS,
         required=False,
         default="h3",
+    )
+    bottom_detail_text = blocks.CharBlock(
+        label=_("Bottom detail: text"),
+        help_text=_(
+            "Incompatible with the bottom call-to-action. "
+            "If the card links to a downloadable document, the values are pre-filled."
+        ),
+        required=False,
     )
 
     class Meta:
@@ -571,6 +595,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     transcription = TranscriptionBlock(label=_("Transcription"))
     quote = QuoteBlock(label=_("Quote"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
+    link = SingleLinkBlock(label=_("Single link"))
     iframe = IframeBlock(label=_("Iframe"))
 
     class Meta:
@@ -648,11 +673,12 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("transcription", TranscriptionBlock(label=_("Transcription"))),
     ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
-    ("link", SingleLinkBlock(label=_("Link"))),
+    ("link", SingleLinkBlock(label=_("Single link"))),
     ("card", HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))),
     ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
     ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),
+    ("iframe", IframeBlock(label=_("Iframe"))),
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),

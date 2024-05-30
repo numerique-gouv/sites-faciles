@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-30 17:15+0200\n"
-"PO-Revision-Date: 2024-05-30 17:16+0200\n"
+"POT-Creation-Date: 2024-05-30 17:29+0200\n"
+"PO-Revision-Date: 2024-05-30 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -108,7 +108,7 @@ msgstr "Utilisez soit ce champ, soit le champ Document, soit le champ Page."
 msgid "Link label"
 msgstr "Libellé du lien"
 
-#: content_manager/blocks.py:81 content_manager/blocks.py:272
+#: content_manager/blocks.py:81 content_manager/blocks.py:270
 #: content_manager/blocks.py:431 content_manager/blocks.py:492
 #: content_manager/blocks.py:543
 msgid "Link"
@@ -166,7 +166,7 @@ msgstr "Masquer l’icône du badge"
 msgid "Badge"
 msgstr "Badge"
 
-#: content_manager/blocks.py:180 content_manager/blocks.py:253
+#: content_manager/blocks.py:180 content_manager/blocks.py:251
 #: content_manager/blocks.py:358 content_manager/blocks.py:363
 #: content_manager/blocks.py:396 content_manager/blocks.py:466
 #: content_manager/blocks.py:521 content_manager/blocks.py:530
@@ -192,50 +192,50 @@ msgctxt "DSFR Tag"
 msgid "Tag"
 msgstr "Tag"
 
-#: content_manager/blocks.py:255 content_manager/blocks.py:372
+#: content_manager/blocks.py:253 content_manager/blocks.py:372
 #: content_manager/blocks.py:387 content_manager/blocks.py:468
 #: content_manager/blocks.py:630
 msgid "Heading level"
 msgstr "Niveau de titre"
 
-#: content_manager/blocks.py:258 content_manager/blocks.py:375
+#: content_manager/blocks.py:256 content_manager/blocks.py:375
 #: content_manager/blocks.py:390 content_manager/blocks.py:472
 msgid "Adapt to the page layout. Defaults to heading 3."
 msgstr "À adapter à la structure de la page. Par défaut en-tête 3."
 
-#: content_manager/blocks.py:260 content_manager/blocks.py:359
+#: content_manager/blocks.py:258 content_manager/blocks.py:359
 #: content_manager/blocks.py:658
 msgid "Content"
 msgstr "Contenu"
 
-#: content_manager/blocks.py:260
+#: content_manager/blocks.py:258
 msgid "Can contain HTML."
 msgstr "Peut contenir du HTML."
 
-#: content_manager/blocks.py:261 content_manager/blocks.py:411
+#: content_manager/blocks.py:259 content_manager/blocks.py:411
 #: content_manager/blocks.py:474 content_manager/blocks.py:500
 #: content_manager/blocks.py:593
 msgid "Image"
 msgstr "Image"
 
-#: content_manager/blocks.py:263 content_manager/blocks.py:331
+#: content_manager/blocks.py:261 content_manager/blocks.py:329
 #: content_manager/blocks.py:486
 msgid "Image ratio"
 msgstr "Ratio de l’image"
 
-#: content_manager/blocks.py:269
+#: content_manager/blocks.py:267
 msgid "Image area badge"
 msgstr "Badge de la zone image"
 
-#: content_manager/blocks.py:269
+#: content_manager/blocks.py:267
 msgid "Only used if the card has an image."
 msgstr "Uniquement utilisé si la carte a une image."
 
-#: content_manager/blocks.py:276
+#: content_manager/blocks.py:274
 msgid "Link (obsolete)"
 msgstr "Lien (obsolète)"
 
-#: content_manager/blocks.py:280 content_manager/blocks.py:288
+#: content_manager/blocks.py:278 content_manager/blocks.py:286
 #: content_manager/blocks.py:439 content_manager/blocks.py:447
 #: content_manager/blocks.py:455
 msgid ""
@@ -245,59 +245,59 @@ msgstr ""
 "Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
 "avec le champ Lien ci-dessus."
 
-#: content_manager/blocks.py:284
+#: content_manager/blocks.py:282
 msgid "or Document (obsolete)"
 msgstr "ou Document (obsolète)"
 
-#: content_manager/blocks.py:291
+#: content_manager/blocks.py:289
 msgid "Top detail: text"
 msgstr "Détail du haut : texte"
 
-#: content_manager/blocks.py:292
+#: content_manager/blocks.py:290
 msgid "Top detail: icon"
 msgstr "Détail du haut : icône"
 
-#: content_manager/blocks.py:298
+#: content_manager/blocks.py:296
 msgid "Top detail: badges or tags"
 msgstr "Détail du haut : badges ou tags"
 
-#: content_manager/blocks.py:303 content_manager/blocks.py:337
+#: content_manager/blocks.py:301 content_manager/blocks.py:335
 msgid "Bottom detail: text"
 msgstr "Détail du bas : texte"
 
-#: content_manager/blocks.py:304
+#: content_manager/blocks.py:302
 msgid "Incompatible with the bottom call-to-action."
 msgstr "Incompatible avec l’appel à action en bas de carte."
 
-#: content_manager/blocks.py:307
+#: content_manager/blocks.py:305
 msgid "Bottom detail: icon"
 msgstr "Détail du bas : icône"
 
-#: content_manager/blocks.py:313
+#: content_manager/blocks.py:311
 msgid "Bottom call-to-action: links or buttons"
 msgstr "Appel à action en bas de la carte"
 
-#: content_manager/blocks.py:314
+#: content_manager/blocks.py:312
 msgid "Incompatible with the bottom detail text."
 msgstr "Incompatible avec le détail du bas."
 
-#: content_manager/blocks.py:318
+#: content_manager/blocks.py:316
 msgid "Card with grey background"
 msgstr "Carte avec arrière-plan gris"
 
-#: content_manager/blocks.py:319
+#: content_manager/blocks.py:317
 msgid "Card without background"
 msgstr "Carte sans arrière-plan"
 
-#: content_manager/blocks.py:320
+#: content_manager/blocks.py:318
 msgid "Card without border"
 msgstr "Carte sans bordure"
 
-#: content_manager/blocks.py:321
+#: content_manager/blocks.py:319
 msgid "Card with a shadow"
 msgstr "Carte avec une ombre"
 
-#: content_manager/blocks.py:339
+#: content_manager/blocks.py:337
 msgid ""
 "Incompatible with the bottom call-to-action. If the card links to a "
 "downloadable document, the values are pre-filled."
