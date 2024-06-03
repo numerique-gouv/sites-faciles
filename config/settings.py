@@ -218,6 +218,7 @@ else:
 # Django Sass
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "static/css")
 SASS_PROCESSOR_AUTO_INCLUDE = False
+SASS_OUTPUT_STYLE = "compressed"
 
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
