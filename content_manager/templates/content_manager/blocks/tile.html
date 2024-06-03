@@ -1,0 +1,29 @@
+
+{% load dsfr_tags wagtailcore_tags wagtailimages_tags %}
+<div class="fr-tile{% if value.enlarge_link %} fr-enlarge-link{% endif %}{% if value.is_horizontal %} fr-tile--horizontal{% endif %} {% if value.grey_background %}fr-tile--grey{% elif value.no_background %}fr-tile--no-background{% endif %} {% if value.no_border %}fr-tile--no-border{% endif %} {% if value.shadow %}fr-tile--shadow{% endif %}">
+  <div class="fr-tile__body">
+    <div class="fr-tile__content">
+      {# djlint: off #}
+      <{{ value.heading_tag | default:"h3" }} class="fr-tile__title">
+        {% if value.link and value.link.url %}
+          <a class="fr-tile__link" href="{{ value.url }}">{{ value.title }}</a>
+        {% else %}
+          {{ value.title }}
+        {% endif %}
+      </{{ value.heading_tag | default:"h3" }}>
+      {# djlint: on #}
+      {% if value.description %}<p class="fr-tile__desc">{{ value.description|safe }}</p>{% endif %}
+      {% if value.detail_text %}<p class="fr-tile__detail">{{ value.detail_text }}</p>{% endif %}
+      {% if value.top_detail_badges_tags %}
+        <div class="fr-tile__start">
+          {% for block in value.top_detail_badges_tags %}
+            {% include_block block %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="fr-tile__header">
+    <div class="fr-tile__img">{% image value.image width-1200 class="fr-responsive-img" alt="" %}</div>
+  </div>
+</div>
