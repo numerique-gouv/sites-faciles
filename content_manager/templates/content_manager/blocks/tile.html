@@ -24,6 +24,22 @@
     </div>
   </div>
   <div class="fr-tile__header">
-    <div class="fr-tile__img">{% image value.image width-1200 class="fr-responsive-img" alt="" %}</div>
+    {% image value.image original as pictogram %}
+
+    {% if '.svg' in pictogram.url %}
+      <div class="fr-tile__pictogram">
+        <svg aria-hidden="true"
+             class="fr-artwork"
+             viewBox="0 0 80 80"
+             width="80px"
+             height="80px">
+          <use class="fr-artwork-decorative" href="{{ pictogram.full_url }}#artwork-decorative"></use>
+          <use class="fr-artwork-minor" href="{{ pictogram.full_url }}#artwork-minor"></use>
+          <use class="fr-artwork-major" href="{{ pictogram.full_url }}#artwork-major"></use>
+        </svg>
+      </div>
+    {% else %}
+      <div class="fr-tile__img">{% image value.image width-80 %}</div>
+    {% endif %}
   </div>
 </div>
