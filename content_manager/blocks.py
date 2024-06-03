@@ -602,8 +602,34 @@ class CommonStreamBlock(blocks.StreamBlock):
         icon = "dots-horizontal"
 
 
+class ColumnBlock(CommonStreamBlock):
+    card = VerticalCardBlock(label=_("Vertical card"))
+
+
+class AdjustableColumnBlock(blocks.StructBlock):
+    width = blocks.ChoiceBlock(
+        label=_("Column width"),
+        choices=[
+            ("3", "3/12"),
+            ("4", "4/12"),
+            ("5", "5/12"),
+            ("6", "6/12"),
+            ("7", "7/12"),
+            ("8", "8/12"),
+            ("9", "9/12"),
+        ],
+        help_text=_("The total width of all columns should be 12."),
+        required=False,
+    )
+    content = ColumnBlock(label=_("Column content"))
+
+    class Meta:
+        icon = "order-down"
+
+
 class MultiColumnsBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"))
+    column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
 
     class Meta:
         icon = "dots-horizontal"
