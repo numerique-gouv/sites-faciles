@@ -200,7 +200,7 @@ class TagListBlock(blocks.StreamBlock):
         template = "content_manager/blocks/tags_list.html"
 
 
-## Cards
+## Cards and tiles
 class CardstructValue(StructValue):
     def enlarge_link(self):
         """
@@ -213,7 +213,7 @@ class CardstructValue(StructValue):
         url = self.get("url")
         document = self.get("document")
         top_detail_badges_tags = self.get("top_detail_badges_tags")
-        call_to_action = self.get("call_to_action")
+        call_to_action = self.get("call_to_action", "")
 
         if not ((link and link.url()) or url or document):
             return False
@@ -350,6 +350,47 @@ class VerticalCardBlock(CardBlock):
     class Meta:
         icon = "tablet-alt"
         template = "content_manager/blocks/card_vertical.html"
+        value_class = CardstructValue
+
+
+class TileBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+    description = blocks.TextBlock(label=_("Content"), help_text=_("Can contain HTML."), required=False)
+    image = ImageChooserBlock(label=_("Image"), help_text=_("Prefer SVG files."), required=False)
+    link = LinkWithoutLabelBlock(
+        label=_("Link"),
+        required=False,
+    )
+    top_detail_badges_tags = blocks.StreamBlock(
+        [
+            ("badges", BadgesListBlock()),
+            ("tags", TagListBlock()),
+        ],
+        label=_("Top detail: badges or tags"),
+        max_num=1,
+        required=False,
+    )
+    detail_text = blocks.CharBlock(
+        label=_("Detail text"),
+        required=False,
+        help_text=_("If the tile links to a downloadable document, the values are pre-filled."),
+    )
+    is_small = blocks.BooleanBlock(label=_("Small tile"), required=False)
+    grey_background = blocks.BooleanBlock(label=_("Tile with grey background"), required=False)
+    no_background = blocks.BooleanBlock(label=_("Tile without background"), required=False)
+    no_border = blocks.BooleanBlock(label=_("Tile without border"), required=False)
+    shadow = blocks.BooleanBlock(label=_("Tile with a shadow"), required=False)
+    is_horizontal = blocks.BooleanBlock(label=_("Horizontal tile"), required=False)
+
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/tile.html"
         value_class = CardstructValue
 
 
@@ -593,17 +634,18 @@ class CommonStreamBlock(blocks.StreamBlock):
     image = ImageBlock(label=_("Image"))
     video = VideoBlock(label=_("Video"))
     transcription = TranscriptionBlock(label=_("Transcription"))
-    quote = QuoteBlock(label=_("Quote"))
+    quote = QuoteBlock(label=_("Quote"), group=_("DSFR components"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     link = SingleLinkBlock(label=_("Single link"))
-    iframe = IframeBlock(label=_("Iframe"))
+    iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
+    tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
 
     class Meta:
         icon = "dots-horizontal"
 
 
 class ColumnBlock(CommonStreamBlock):
-    card = VerticalCardBlock(label=_("Vertical card"))
+    card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
 
 
 class AdjustableColumnBlock(blocks.StructBlock):
@@ -628,7 +670,7 @@ class AdjustableColumnBlock(blocks.StructBlock):
 
 
 class MultiColumnsBlock(CommonStreamBlock):
-    card = VerticalCardBlock(label=_("Vertical card"))
+    card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
     column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
 
     class Meta:
@@ -668,7 +710,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 
 class FullWidthBlock(CommonStreamBlock):
     image_and_text = ImageAndTextBlock(label=_("Image and text"))
-    card = HorizontalCardBlock(label=_("Horizontal card"))
+    card = HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))
 
     class Meta:
         icon = "minus"
@@ -701,6 +743,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("tags_list", TagListBlock(label=_("Tag list"))),
     ("link", SingleLinkBlock(label=_("Single link"))),
     ("card", HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))),
+    ("tile", TileBlock(label=_("Tile"), group=_("DSFR components"))),
     ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
     ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),

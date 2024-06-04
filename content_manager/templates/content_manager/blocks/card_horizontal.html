@@ -6,7 +6,7 @@
       <{{ value.heading_tag | default:"h3" }} class="fr-card__title">
         {% if value.link and value.link.url %}
           <a href="{{ value.link.url }}" {% if value.link.url.0 != '/' and request.get_host not in value.link.url %}target="_blank" rel="noopener noreferrer"{% endif %}>
-            {{ value.title }} {{value.link.url}}
+            {{ value.title }}
             {% if value.link.url.0 != '/' and request.get_host not in value.link.url %}
             <span class="fr-sr-only">{% translate "Opens a new window" %}</span>
             {% endif %}
@@ -44,17 +44,7 @@
       {% elif value.link.document %}
         <div class="fr-card__end">
           <p class="fr-card__detail{% if value.bottom_detail_icon %} {{ value.bottom_detail_icon }}{% endif %}">
-            {% if value.link.document.file_extension %}
-              {{ value.link.document.file_extension|upper }}
-            {% else %}
-              {% translate "Unknown file format" %}
-            {% endif %}
-            -
-            {% if value.link.document.file_size %}
-              {{ value.link.document.file_size|filesizeformat }}
-            {% else %}
-              {% translate "Unknown file size" %}
-            {% endif %}
+            {% include "content_manager/blocks/download_info.html" with document=value.link.document %}
           </p>
         </div>
       {% endif %}
