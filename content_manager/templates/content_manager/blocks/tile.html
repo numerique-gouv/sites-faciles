@@ -1,6 +1,6 @@
 
 {% load dsfr_tags wagtailcore_tags wagtailimages_tags %}
-<div class="fr-tile{% if value.enlarge_link %} fr-enlarge-link{% endif %}{% if value.is_horizontal %} fr-tile--horizontal{% endif %} {% if value.grey_background %}fr-tile--grey{% elif value.no_background %}fr-tile--no-background{% endif %} {% if value.no_border %}fr-tile--no-border{% endif %} {% if value.shadow %}fr-tile--shadow{% endif %}">
+<div class="fr-tile{% if value.is_small %} fr-tile--sm{% endif %}{% if value.enlarge_link %} fr-enlarge-link{% endif %}{% if value.is_horizontal %} fr-tile--horizontal{% endif %}{% if value.grey_background %} fr-tile--grey{% elif value.no_background %} fr-tile--no-background{% endif %}{% if value.no_border %} fr-tile--no-border{% endif %}{% if value.shadow %} fr-tile--shadow{% endif %}{% if value.link.document %} fr-tile--download{% endif %}">
   <div class="fr-tile__body">
     <div class="fr-tile__content">
       {# djlint: off #}
@@ -26,7 +26,7 @@
   <div class="fr-tile__header">
     {% image value.image original as pictogram %}
 
-    {% if '.svg' in pictogram.url %}
+    {% if pictogram.url|slice:"-4:" == ".svg" %}
       <div class="fr-tile__pictogram">
         <svg aria-hidden="true"
              class="fr-artwork"

@@ -380,6 +380,7 @@ class TileBlock(blocks.StructBlock):
         label=_("Detail text"),
         required=False,
     )
+    is_small = blocks.BooleanBlock(label=_("Small tile"), required=False)
     grey_background = blocks.BooleanBlock(label=_("Tile with grey background"), required=False)
     no_background = blocks.BooleanBlock(label=_("Tile without background"), required=False)
     no_border = blocks.BooleanBlock(label=_("Tile without border"), required=False)
