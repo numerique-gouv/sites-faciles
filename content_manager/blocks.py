@@ -746,7 +746,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
     ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),
-    ("iframe", IframeBlock(label=_("Iframe"))),
+    ("iframe", IframeBlock(label=_("Iframe"), group=_("Expert syntax"))),
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
