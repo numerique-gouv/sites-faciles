@@ -15,6 +15,8 @@
     {% include_block block %}
   {% elif block.block_type == 'paragraph' %}
     <div class="fr-container">{{ block.value|richtext }}</div>
+  {% elif block.block_type == 'alert' %}
+    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
   {% elif block.block_type == 'card' %}
     <div class="fr-container fr-mb-4w">{% include_block block %}</div>
   {% elif block.block_type == 'tile' %}

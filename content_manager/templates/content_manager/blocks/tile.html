@@ -13,7 +13,13 @@
       </{{ value.heading_tag | default:"h3" }}>
       {# djlint: on #}
       {% if value.description %}<p class="fr-tile__desc">{{ value.description|safe }}</p>{% endif %}
-      {% if value.detail_text %}<p class="fr-tile__detail">{{ value.detail_text }}</p>{% endif %}
+      {% if value.detail_text %}
+        <p class="fr-tile__detail">{{ value.detail_text }}</p>
+      {% elif value.link.document %}
+        <p class="fr-tile__detail">
+          {% include "content_manager/blocks/download_info.html" with document=value.link.document %}
+        </p>
+      {% endif %}
       {% if value.top_detail_badges_tags %}
         <div class="fr-tile__start">
           {% for block in value.top_detail_badges_tags %}

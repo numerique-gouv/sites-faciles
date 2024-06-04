@@ -10,17 +10,7 @@
     {% endif %}
     {% if value.document %}
       <span class="fr-link__detail">
-        {% if value.document.file_extension %}
-          {{ value.document.file_extension|upper }}
-        {% else %}
-          {% translate "Unknown file format" %}
-        {% endif %}
-        -
-        {% if value.document.file_size %}
-          {{ value.document.file_size|filesizeformat }}
-        {% else %}
-          {% translate "Unknown file size" %}
-        {% endif %}
+        {% include "content_manager/blocks/download_info.html" with document=value.document %}
       </span>
     {% endif %}
   </a>

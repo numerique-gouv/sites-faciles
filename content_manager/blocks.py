@@ -379,6 +379,7 @@ class TileBlock(blocks.StructBlock):
     detail_text = blocks.CharBlock(
         label=_("Detail text"),
         required=False,
+        help_text=_("If the tile links to a downloadable document, the values are pre-filled."),
     )
     is_small = blocks.BooleanBlock(label=_("Small tile"), required=False)
     grey_background = blocks.BooleanBlock(label=_("Tile with grey background"), required=False)
@@ -388,7 +389,7 @@ class TileBlock(blocks.StructBlock):
     is_horizontal = blocks.BooleanBlock(label=_("Horizontal tile"), required=False)
 
     class Meta:
-        icon = "tile"
+        icon = "tablet-alt"
         template = "content_manager/blocks/tile.html"
         value_class = CardstructValue
 
