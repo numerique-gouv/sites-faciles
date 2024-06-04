@@ -1,5 +1,4 @@
 from django import forms
-from django.conf import settings
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
@@ -753,20 +752,18 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
 ]
 
-
 # See warning on https://docs.wagtail.org/en/latest/reference/streamfield/blocks.html#wagtail.blocks.RawHTMLBlock
 # There is currently no way to restrict a type of block depending on user permissions,
 # pending issue https://github.com/wagtail/wagtail/issues/6323
-if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
-    STREAMFIELD_COMMON_BLOCKS += [
-        (
-            "html",
-            blocks.RawHTMLBlock(
-                readonly=True,
-                help_text=_(
-                    "Warning: Use HTML block with caution. Malicious code can compromise the security of the site."
-                ),
-                group=_("Expert syntax"),
+STREAMFIELD_COMMON_BLOCKS += [
+    (
+        "html",
+        blocks.RawHTMLBlock(
+            readonly=True,
+            help_text=_(
+                "Warning: Use HTML block with caution. Malicious code can compromise the security of the site."
             ),
-        )
-    ]
+            group=_("Expert syntax"),
+        ),
+    )
+]
