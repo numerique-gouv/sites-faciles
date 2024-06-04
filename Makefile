@@ -51,6 +51,7 @@ init:
 	$(EXEC_CMD) poetry run python manage.py migrate
 	make collectstatic
 	$(EXEC_CMD) poetry run python manage.py set_config
+	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) poetry run python manage.py create_starter_pages
 
 .PHONY: demo

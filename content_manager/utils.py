@@ -5,7 +5,7 @@ from io import BytesIO
 from bs4 import BeautifulSoup
 from django.core.files.images import ImageFile
 from wagtail.images.models import Image
-from wagtail.models import Site
+from wagtail.models import Collection, Site
 from wagtailmenus.models.menus import FlatMenu
 
 
@@ -20,6 +20,16 @@ def import_image(full_path: str, title: str) -> Image:
         )
         image.save()
         return image
+
+
+def get_or_create_collection(col_name: str) -> Collection:
+    qs = Collection.objects.filter(name=col_name)
+    if qs.count():
+        return qs.first()
+    else:
+        root_coll = Collection.get_first_root_node()
+        result = root_coll.add_child(name=col_name)
+        return result
 
 
 def get_or_create_footer_menu() -> FlatMenu:
