@@ -634,17 +634,18 @@ class CommonStreamBlock(blocks.StreamBlock):
     image = ImageBlock(label=_("Image"))
     video = VideoBlock(label=_("Video"))
     transcription = TranscriptionBlock(label=_("Transcription"))
-    quote = QuoteBlock(label=_("Quote"))
+    quote = QuoteBlock(label=_("Quote"), group=_("DSFR components"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     link = SingleLinkBlock(label=_("Single link"))
-    iframe = IframeBlock(label=_("Iframe"))
+    iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
+    tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
 
     class Meta:
         icon = "dots-horizontal"
 
 
 class ColumnBlock(CommonStreamBlock):
-    card = VerticalCardBlock(label=_("Vertical card"))
+    card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
 
 
 class AdjustableColumnBlock(blocks.StructBlock):
@@ -669,7 +670,7 @@ class AdjustableColumnBlock(blocks.StructBlock):
 
 
 class MultiColumnsBlock(CommonStreamBlock):
-    card = VerticalCardBlock(label=_("Vertical card"))
+    card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
     column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
 
     class Meta:
@@ -709,7 +710,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 
 class FullWidthBlock(CommonStreamBlock):
     image_and_text = ImageAndTextBlock(label=_("Image and text"))
-    card = HorizontalCardBlock(label=_("Horizontal card"))
+    card = HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))
 
     class Meta:
         icon = "minus"
