@@ -750,6 +750,15 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
+    (
+        "subpageslist",
+        blocks.StaticBlock(
+            label=_("Subpages list"),
+            admin_text=_("A simple, alphabetical list of the subpages of the current page."),
+            template="content_manager/blocks/subpages_list.html",
+            group=_("Website structure"),
+        ),
+    ),
 ]
 
 # See warning on https://docs.wagtail.org/en/latest/reference/streamfield/blocks.html#wagtail.blocks.RawHTMLBlock
