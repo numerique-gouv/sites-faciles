@@ -2,7 +2,7 @@
 
 {% for block in stream %}
   {% if block.block_type == 'callout' %}
-    {% include "content_manager/blocks/callout.html" %}
+    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
   {% elif block.block_type == 'image' %}
     <div class="fr-container fr-my-3w">
       <div class="fr-grid-row fr-grid-row--gutters">
