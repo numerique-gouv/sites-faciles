@@ -9,7 +9,7 @@
     {{ value.caption }}
     <a class="fr-link" href="{{ value.caption }}">{% translate "Watch on the site" %}</a>
   </figcaption>
-  {% if value.transcription %}
+  {% if value.transcription.content %}
     {% include_block value.transcription %}
   {% endif %}
 </figure>
