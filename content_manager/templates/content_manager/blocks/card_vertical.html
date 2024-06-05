@@ -6,7 +6,7 @@
       <{{ value.heading_tag | default:"h3" }} class="fr-card__title">
         {% if value.link and value.link.url %}
           <a href="{{ value.link.url }}" {% if value.link.url.0 != '/' and request.get_host not in value.link.url %}target="_blank" rel="noopener noreferrer"{% endif %}>
-            {{ value.title }} {{value.link.url}}
+            {{ value.title }}
             {% if value.link.url.0 != '/' and request.get_host not in value.link.url %}
             <span class="fr-sr-only">{% translate "Opens a new window" %}</span>
             {% endif %}
