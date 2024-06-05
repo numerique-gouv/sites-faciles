@@ -423,6 +423,12 @@ class AlertBlock(blocks.StructBlock):
 class CalloutBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Callout title"), required=False)
     text = blocks.TextBlock(label=_("Callout text"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
 
 
 class IframeBlock(blocks.StructBlock):
