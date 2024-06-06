@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 <ul>
-  {% for subpage in page.get_children.all|dictsort:"title" %}
+  {% for subpage in page.get_children.live.all|dictsort:"title" %}
     <li>
       <a href="{% pageurl subpage %}">{{ subpage.title }}</a>
     </li>
