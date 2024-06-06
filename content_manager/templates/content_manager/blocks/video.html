@@ -7,7 +7,7 @@
           allowfullscreen></iframe>
   <figcaption class="fr-content-media__caption">
     {{ value.caption }}
-    <a class="fr-link" href="{{ value.caption }}">{% translate "Watch on the site" %}</a>
+    <a class="fr-link" href="{{ value.url }}">{% translate "Watch on the site" %}</a>
   </figcaption>
   {% if value.transcription.content %}
     {% include_block value.transcription %}
