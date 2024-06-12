@@ -1,6 +1,6 @@
 from django import forms
 
-from formations.models import TargetAudience, Theme
+from formations.models import Theme
 
 
 class FormationsFilterForm(forms.Form):
