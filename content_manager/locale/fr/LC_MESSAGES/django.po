@@ -727,14 +727,17 @@ msgid "Warning"
 msgstr "Avertissement"
 
 #: content_manager/constants.py:44 content_manager/constants.py:56
+#: content_manager/constants.py:62
 msgid "Small"
 msgstr "Petit"
 
 #: content_manager/constants.py:45 content_manager/constants.py:57
+#: content_manager/constants.py:63
 msgid "Medium"
 msgstr "Medium"
 
 #: content_manager/constants.py:46 content_manager/constants.py:58
+#: content_manager/constants.py:64
 msgid "Large"
 msgstr "Large"
 

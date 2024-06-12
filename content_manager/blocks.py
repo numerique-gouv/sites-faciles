@@ -16,6 +16,7 @@ from content_manager.constants import (
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
     MEDIA_WIDTH_CHOICES,
+    TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
 
@@ -430,7 +431,7 @@ class CalloutBlock(blocks.StructBlock):
     )
     icon_class = IconPickerBlock(label=_("Icon"), required=False)
 
-    text = blocks.TextBlock(label=_("Content"), required=False)
+    text = blocks.TextBlock(label=_("Content"), required=False, help_text=_("Can contain HTML."))
     button = ButtonBlock(label=_("Button"), required=False)
     color = blocks.ChoiceBlock(
         label=_("Color"),
@@ -441,6 +442,24 @@ class CalloutBlock(blocks.StructBlock):
     class Meta:
         icon = "info-circle"
         template = "content_manager/blocks/callout.html"
+
+
+class HighlightBlock(blocks.StructBlock):
+    text = blocks.TextBlock(label=_("Content"), help_text=_("Can contain HTML."))
+    color = blocks.ChoiceBlock(
+        label=_("Color"),
+        choices=COLOR_CHOICES_ILLUSTRATION,
+        required=False,
+    )
+    size = blocks.ChoiceBlock(
+        label=_("Size"),
+        choices=TEXT_SIZE_CHOICES,
+        required=False,
+    )
+
+    class Meta:
+        icon = "info-circle"
+        template = "content_manager/blocks/highlight.html"
 
 
 class IframeBlock(blocks.StructBlock):
@@ -645,6 +664,8 @@ class CommonStreamBlock(blocks.StreamBlock):
     image = ImageBlock(label=_("Image"))
     video = VideoBlock(label=_("Video"))
     transcription = TranscriptionBlock(label=_("Transcription"))
+    callout = CalloutBlock(label=_("Callout"), group=_("DSFR components"))
+    highlight = HighlightBlock(label=_("Highlight"), group=_("DSFR components"))
     quote = QuoteBlock(label=_("Quote"), group=_("DSFR components"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     link = SingleLinkBlock(label=_("Single link"))
@@ -747,6 +768,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
     ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
+    ("highlight", HighlightBlock(label=_("Highlight"), group=_("DSFR components"))),
     ("quote", QuoteBlock(label=_("Quote"), group=_("DSFR components"))),
     ("video", VideoBlock(label=_("Video"))),
     ("transcription", TranscriptionBlock(label=_("Transcription"))),
