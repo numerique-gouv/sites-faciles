@@ -1,13 +1,4 @@
 
-
-.hero
-    background-repeat: no-repeat
-    background-position: center
-
-@media (max-width:64em)
-    .hero
-        background-size: 0
-
 .vh
     position: absolute !important
     clip: rect(1px, 1px, 1px, 1px)
@@ -16,3 +7,38 @@
     height: 1px !important
     width: 1px !important
     overflow: hidden
+
+/* Prefix the classes defined here with cmsfr- */
+
+.cmsfr-hero
+    background-size: cover
+    background-position: center
+    background-repeat: no-repeat
+
+@media (max-width:64em)
+    .cmsfr-hero
+        background-size: 0
+
+
+.cmsfr-hero-large
+    display: flex
+    justify-content: center
+    align-items: center
+    text-align: center
+
+.cmsfr-hero-dark
+    & h1, p
+        color: white
+
+.fr-header__service-title em
+    font-weight: lighter
+
+.cmsfr-author_card__header
+    flex: 0 0 6rem !important
+    width: 6rem !important
+
+.cmsfr-author-img
+    border-radius: 50%
+    height: 4.5rem !important
+    margin: 1.5rem
+    width: 4.5rem

@@ -35,14 +35,13 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("DEBUG") == "True" else False
 
-HOST_URL = os.getenv("HOST_URL", "127.0.0.1, localhost")
-
-ALLOWED_HOSTS = HOST_URL.replace(" ", "").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1, localhost").replace(" ", "").split(",")
 
 # Application definition
 
 INSTALLED_APPS = [
     "storages",
+    "dashboard",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
     "wagtail.embeds",
@@ -52,8 +51,9 @@ INSTALLED_APPS = [
     "wagtail.images",
     "wagtail.admin",
     "wagtail.search",
+    "wagtail.snippets",
     "wagtail",
-    "wagtail.contrib.modeladmin",
+    "wagtailmarkdown",
     "wagtailmenus",
     "wagtail_airtable",
     "taggit",
@@ -66,8 +66,15 @@ INSTALLED_APPS = [
     "dsfr",
     "sass_processor",
     "content_manager",
+    "blog",
     "formations",
 ]
+
+if DEBUG:
+    INSTALLED_APPS += [
+        "django_extensions",
+        "wagtail.contrib.styleguide",
+    ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -96,9 +103,10 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "dsfr.context_processors.site_config",
                 "wagtail.contrib.settings.context_processors.settings",
                 "wagtailmenus.context_processors.wagtailmenus",
+                "content_manager.context_processors.skiplinks",
+                "content_manager.context_processors.mega_menus",
             ],
         },
     },
@@ -111,13 +119,16 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-DATABASES = {
-    "default": dj_database_url.parse(
-        DATABASE_URL,
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    raise ValueError("Please set the DATABASE_URL environment variable")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -137,11 +148,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = "fr-FR"
+LANGUAGE_CODE = "fr"
 
 TIME_ZONE = "Europe/Paris"
 
@@ -153,35 +166,51 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-# https://whitenoise.evans.io/en/latest/
+# https://docs.djangoproject.com/en/5.0/howto/static-files/
+STORAGES = {}
+STORAGES["staticfiles"] = {
+    "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+}
 
 STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "sass_processor.finders.CssFinder",
-    "django.contrib.staticfiles.finders.FileSystemFinder",
 ]
 
 # S3 uploads & MEDIA CONFIGURATION
-# ------------------------------------------------------------------------------
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 
 if os.getenv("S3_HOST"):
-    AWS_S3_ACCESS_KEY_ID = os.getenv("S3_KEY_ID", "123")
-    AWS_S3_SECRET_ACCESS_KEY = os.getenv("S3_KEY_SECRET", "secret")
-    AWS_S3_ENDPOINT_URL = f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST', 'set-var-env.com/')}"
-    AWS_STORAGE_BUCKET_NAME = os.getenv("S3_BUCKET_NAME", "set-bucket-name")
-    AWS_S3_STORAGE_BUCKET_REGION = os.getenv("S3_BUCKET_REGION", "fr")
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = f"https://{AWS_S3_ENDPOINT_URL}/"  # noqa
+    endpoint_url = f"{os.getenv('S3_PROTOCOL', 'https')}://{os.getenv('S3_HOST')}"
+
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "bucket_name": os.getenv("S3_BUCKET_NAME", "set-bucket-name"),
+            "access_key": os.getenv("S3_KEY_ID", "123"),
+            "secret_key": os.getenv("S3_KEY_SECRET", "secret"),
+            "endpoint_url": endpoint_url,
+            "region_name": os.getenv("S3_BUCKET_REGION", "fr"),
+            "file_overwrite": False,
+            "location": os.getenv("S3_LOCATION", ""),
+        },
+    }
+
+    MEDIA_URL = f"{endpoint_url}/"
 else:
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    STORAGES["default"] = {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    }
     MEDIA_URL = "medias/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, os.getenv("MEDIA_ROOT", ""))
 
 # Django Sass
-SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "static")
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "static/css")
+SASS_PROCESSOR_AUTO_INCLUDE = False
 
 STATIC_URL = "static/"
-STATIC_ROOT = "staticfiles"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
@@ -193,11 +222,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 # Wagtail settings
 # https://docs.wagtail.org/en/stable/reference/settings.html
 
-WAGTAIL_SITE_NAME = "Gestionnaire de contenu avec le Système de Design de l'État"
+WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Sites faciles")
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{HOST_URL[-1]}"
+WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{os.getenv('HOST_URL', 'localhost')}"
+
+HOST_PORT = os.getenv("HOST_PORT", "")
+if HOST_PORT != "":
+    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
 
 # Disable Gravatar service
 WAGTAIL_GRAVATAR_PROVIDER_URL = None
@@ -219,7 +252,25 @@ WAGTAIL_MODERATION_ENABLED = False
 WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("header_tools", "Menu en haut à droite"),
     ("footer", "Menu en pied de page"),
+    ("mega_menu_section_1", "Catégorie de méga-menu 1"),
+    ("mega_menu_section_2", "Catégorie de méga-menu 2"),
+    ("mega_menu_section_3", "Catégorie de méga-menu 3"),
+    ("mega_menu_section_4", "Catégorie de méga-menu 4"),
+    ("mega_menu_section_5", "Catégorie de méga-menu 5"),
+    ("mega_menu_section_6", "Catégorie de méga-menu 6"),
+    ("mega_menu_section_7", "Catégorie de méga-menu 7"),
+    ("mega_menu_section_8", "Catégorie de méga-menu 8"),
+    ("mega_menu_section_9", "Catégorie de méga-menu 9"),
+    ("mega_menu_section_10", "Catégorie de méga-menu 10"),
+    ("mega_menu_section_11", "Catégorie de méga-menu 11"),
+    ("mega_menu_section_12", "Catégorie de méga-menu 12"),
+    ("mega_menu_section_13", "Catégorie de méga-menu 13"),
+    ("mega_menu_section_14", "Catégorie de méga-menu 14"),
+    ("mega_menu_section_15", "Catégorie de méga-menu 15"),
+    ("mega_menu_section_16", "Catégorie de méga-menu 16"),
 )
+
+WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 
 # Wagtail Airtable
 AIRTABLE_API_KEY = os.getenv("AIRTABLE_API_KEY")
@@ -245,3 +296,5 @@ AIRTABLE_IMPORT_SETTINGS = {
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
     CSRF_TRUSTED_ORIGINS.append("https://" + host)
+
+SF_ALLOW_RAW_HTML_BLOCKS = os.getenv("SF_ALLOW_RAW_HTML_BLOCKS", "False").lower() == "true"

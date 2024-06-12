@@ -1,114 +1,62 @@
-{% extends 'base.html' %}
-{% load static dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% extends "base.html" %}
+
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags i18n %}
+
 {% block title %}
-    <title>{{ page.seo_title|default:page.title }} — {{ SITE_CONFIG.site_title }}</title>
+    <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
 {% endblock title %}
+
 {% if page.search_description %}
     {% block description %}
         <meta name="description" content="{{ page.search_description }}" />
     {% endblock description %}
 {% endif %}
-{% block content %}
-    {% include "content_manager/breadcrumb.html" %}
-    {# Display Django message info from previous form #}
-    {% if messages %}
-        <div class="fr-container fr-mt-6w">
-            <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12">
-                    {% for message in messages %}
-                        {% if message.tags == "success" %}
-                            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-5w"
-                                 role="status">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% elif message.tags == "info" %}
-                            <div class="fr-alert fr-alert--info fr-alert--sm fr-mb-5w" role="status">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% elif message.tags == "error" %}
-                            <div class="fr-alert fr-alert--error fr-alert--sm fr-mb-5w" role="alert">
-                                <p>{{ message }}</p>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+
+{% block social_media %}
+    <meta property="og:site_name" content="{{ request.get_host }}" />
+    <meta property="og:title"
+          content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{ page.full_url }}" />
+    <meta property="og:description" content="{{ page.search_description }}" />
+    <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
+
+    {% if page.get_translations.live %}
+        {% for translation in page.get_translations.live %}
+            <meta property="og:locale:alternate"
+                  content="{{ translation.locale.language_code }}" />
+        {% endfor %}
     {% endif %}
-    {% for block in page.body %}
-        {% if block.block_type == 'hero' %}
-            {% include "content_manager/blocks/hero.html" %}
-        {% elif block.block_type == 'title' %}
-            <div class="fr-container fr-mt-6w">
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12{% if not block.value.large %} fr-col-offset-md-2 fr-col-md-8{% endif %}">
-                        <h1 class="fr-display--sm">{{ block.value.title }}</h1>
-                    </div>
-                </div>
-            </div>
-        {% elif block.block_type == 'imageandtext' %}
-            {% include "content_manager/blocks/imageandtext.html" %}
-        {% elif block.block_type == 'alert' %}
-            <div class="fr-container fr-py-3w">
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">
-                        {% dsfr_alert title=block.value.title type=block.value.level content=block.value.description %}
-                    </div>
-                </div>
-            </div>
-        {% elif block.block_type == 'callout' %}
-            <div class="fr-container fr-py-3w">
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8 fr-p-1w">
-                        {% dsfr_callout title=block.value.title text=block.value.text %}
-                    </div>
-                </div>
-            </div>
-        {% elif block.block_type == 'quote' %}
-            <div class="fr-background-alt--blue-france fr-my-6w fr-py-6w">
-                <div class="fr-container">
-                    <div class="fr-grid-row fr-grid-row--gutters">
-                        <div class="fr-col-8 fr-col-offset-2">
-                            {% image block.value.image original as img %}
-                            {% dsfr_quote text=block.value.quote author=block.value.author_name source=block.value.author_title image_url=img.url %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% elif block.block_type == 'image' %}
-            <div class="fr-container fr-my-3w">
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12">{% include "content_manager/blocks/image.html"  %}</div>
-                </div>
-            </div>
-        {% elif block.block_type == 'video' %}
-            <div class="fr-container fr-my-3w">
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">{% include "content_manager/blocks/video.html"  %}</div>
-                </div>
-            </div>
-        {% elif block.block_type == 'multicolumns' %}
-            {% include "content_manager/blocks/multicolumns.html"  %}
-        {% elif block.block_type == 'paragraph' %}
-            <div class="fr-container">
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">{{ block.value|richtext }}</div>
-                </div>
-            </div>
-        {% elif block.block_type == 'paragraphlarge' %}
-            <div class="fr-container">
-                <div class="fr-grid-row fr-grid-row--gutters">
-                    <div class="fr-col-12">{{ block.value|richtext }}</div>
-                </div>
-            </div>
-        {% elif block.block_type == 'accordions' %}
-            {% include "content_manager/blocks/accordions.html" with accordions_id=forloop.counter0|lower %}
-        {% elif block.block_type == 'stepper' %}
-            {% include "content_manager/blocks/stepper.html" %}
-        {% elif block.block_type == 'separator' %}
-            <div class="fr-container">
-                <hr class="fr-mt-{{ block.value.top_margin }}w fr-mb-{{ block.value.bottom_margin }}w fr-py-1v">
-            </div>
-        {% endif %}
-    {% endfor %}
+
+    <meta name="twitter:title"
+          content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+    <meta name="twitter:description" content="{{ page.search_description }}" />
+
+    {% if page.header_image %}
+        <meta name="twitter:card" content="summary_large_image" />
+        {% image page.header_image fill-1200x627 as header_image %}
+        <meta property="og:image" content="{{ header_image.full_url }}" />
+        <meta name="twitter:image" content="{{ header_image.full_url }}" />
+    {% else %}
+        <meta name="twitter:card" content="summary" />
+    {% endif %}
+{% endblock social_media %}
+
+{% block content %}
+    {% include "content_manager/blocks/heading.html" %}
+    <div class="fr-container fr-pt-4w">
+        {% include "content_manager/blocks/breadcrumbs.html" %}
+        {% if not page.header_with_title %}<h1>{{ page.title }}</h1>{% endif %}
+    </div>
+
+    {% include "content_manager/blocks/messages.html" %}
+
+    {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
+
+    <div class="fr-container fr-my-6w">
+        {% for tag in page.tags.all|dictsort:"slug" %}
+            <a class="fr-tag" target="_self" href="{% url 'global_tag' tag.slug %}">{{ tag }}</a>
+        {% endfor %}
+    </div>
+
 {% endblock content %}

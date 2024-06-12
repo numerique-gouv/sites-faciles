@@ -1,6 +1,7 @@
 #!/bin/sh -l
 set -ex
 
-python manage.py migrate
+export PATH="${PATH}:${POETRY_VENV}/bin"
+poetry run python manage.py migrate
 
 exec "$@"

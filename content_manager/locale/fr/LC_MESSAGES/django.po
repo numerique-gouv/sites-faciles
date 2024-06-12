@@ -1,0 +1,146 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 14:39+0100\n"
+"PO-Revision-Date: 2024-03-20 15:31+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4\n"
+
+#: content_manager/abstract.py:25
+msgid "Show title in header image?"
+msgstr "Afficher le titre sur l’image d’en-tête ?"
+
+#: content_manager/abstract.py:33
+msgid "Header image"
+msgstr "Image d’en-tête"
+
+#: content_manager/abstract.py:37
+msgid "Background color"
+msgstr "Couleur de fond"
+
+#: content_manager/abstract.py:41
+msgid "Uses the French Design System colors"
+msgstr "Utilise les couleurs du système de design de l'État"
+
+#: content_manager/abstract.py:44
+msgid "Full width"
+msgstr "Pleine largeur"
+
+#: content_manager/abstract.py:45
+msgid "Darken background image"
+msgstr "Assombrir l’image de fond"
+
+#: content_manager/abstract.py:48
+msgid "Call to action text"
+msgstr "Texte de l’appel à action"
+
+#: content_manager/abstract.py:54
+msgid "Call to action label"
+msgstr "Libellé de l’appel à action"
+
+#: content_manager/abstract.py:60
+msgid "Call to action link"
+msgstr "Lien de l’appel à action"
+
+#: content_manager/abstract.py:66
+msgid "Body"
+msgstr "Corps"
+
+#: content_manager/abstract.py:70
+msgid "Common page configuration"
+msgstr "Configuration commune"
+
+#: content_manager/abstract.py:82
+msgid "Header options"
+msgstr "Options d’en-tête"
+
+#: content_manager/abstract.py:102
+msgid "Base page"
+msgstr "Page de base"
+
+#: content_manager/abstract.py:103
+msgid "Base pages"
+msgstr "Pages de base"
+
+#: content_manager/blocks.py:31
+msgid "Link text"
+msgstr "Texte du lien"
+
+#: content_manager/blocks.py:32
+msgid "Page"
+msgstr "Page"
+
+#: content_manager/blocks.py:33
+msgid "External URL"
+msgstr "URL externe"
+
+#: content_manager/models.py:21
+msgid "Content page"
+msgstr "Page de contenu"
+
+#: content_manager/models.py:161
+msgid "Category"
+msgstr "Catégorie"
+
+#: content_manager/models.py:164
+msgid "Mega menu category"
+msgstr "Catégorie de méga menu"
+
+#: content_manager/models.py:165
+msgid "Mega menu categories"
+msgstr "Catégories de méga menu"
+
+#: content_manager/models.py:170
+msgid "Name"
+msgstr "Nom"
+
+#: content_manager/models.py:174
+msgid "Description"
+msgstr "Description"
+
+#: content_manager/models.py:175
+msgid "Main link"
+msgstr "Lien principal"
+
+#: content_manager/models.py:185
+msgid "Categories"
+msgstr "Catégories"
+
+#: content_manager/models.py:186
+msgid "Maximum 4 categories, each with maximum 8 links."
+msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
+
+#: content_manager/models.py:197
+msgid "Mega menu"
+msgstr "Méga menu"
+
+#: content_manager/templates/content_manager/tags_list_page.html:31
+#: content_manager/views.py:46 content_manager/views.py:77
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: content_manager/views.py:52
+msgid "List of all the tags."
+msgstr "Liste de toutes les étiquettes"
+
+#: content_manager/views.py:73
+#, python-brace-format
+msgid "Pages tagged with {tag}"
+msgstr "Pages avec l’étiquette {tag}"
+
+#: content_manager/views.py:82
+#, python-brace-format
+msgid "List of pages tagged with {tag}"
+msgstr "Liste de pages avec l’étiquette {tag}"

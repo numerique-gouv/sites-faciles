@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-27 14:39+0100\n"
+"PO-Revision-Date: 2024-03-27 14:55+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4\n"
+
+#: blog/blocks.py:9 blog/models.py:291
+msgid "Name"
+msgstr "Nom"
+
+#: blog/blocks.py:10 blog/models.py:292
+msgid "Role"
+msgstr "Fonction"
+
+#: blog/blocks.py:11 blog/models.py:293
+msgid "Organization"
+msgstr "Organisation"
+
+#: blog/blocks.py:12 blog/models.py:294
+msgid "Contact info"
+msgstr "Informations de contact"
+
+#: blog/blocks.py:28
+msgid "Contact card"
+msgstr "Carte contact"
+
+#: blog/models.py:37
+msgid "Posts per page"
+msgstr "Articles par page"
+
+#: blog/models.py:47
+msgid "Blog index"
+msgstr "Index de blog"
+
+#: blog/models.py:75 blog/templates/blog/tags_list_page.html:20
+#: blog/views.py:149
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: blog/models.py:98 blog/models.py:171 blog/models.py:266
+#: blog/templates/blog/categories_list_page.html:20 blog/views.py:117
+msgid "Categories"
+msgstr "Catégories"
+
+#: blog/models.py:110 blog/templates/blog/blog_index_page.html:59
+msgid "Posts written by"
+msgstr "Articles écrits par"
+
+#: blog/models.py:173
+msgid "Post date"
+msgstr "Date de publication"
+
+#: blog/models.py:175
+msgid "Author entries can be created in Snippets > Persons"
+msgstr "Les auteurs peuvent être créés via Fragments > Personnes"
+
+#: blog/models.py:194
+msgid "Scheduled publishing"
+msgstr "Publication planifiée"
+
+#: blog/models.py:202
+msgid "Tags and Categories"
+msgstr "Étiquettes et Catégories"
+
+#: blog/models.py:210
+msgid "Blog page"
+msgstr "Page de blog"
+
+#: blog/models.py:215
+msgid "Category name"
+msgstr "Nom de la catégorie"
+
+#: blog/models.py:222
+msgid "Parent category"
+msgstr "Catégorie parente"
+
+#: blog/models.py:228
+msgid "Description"
+msgstr "Description"
+
+#: blog/models.py:229
+msgid "Displayed on the top of the category page"
+msgstr "Affiché en haut de la page de la catégorie"
+
+#: blog/models.py:235
+msgid "Text displayed at the end of every page in the category"
+msgstr "Texte affiché à la fin de chaque page de la catégorie"
+
+#: blog/models.py:246
+msgid "Parent category cannot be self."
+msgstr "La catégorie ne peut être sa propre parente."
+
+#: blog/models.py:248
+msgid "Cannot have circular Parents."
+msgstr "Il est impossible d’avoir des parents circulaires."
+
+#: blog/models.py:265 blog/models.py:277
+msgid "Category"
+msgstr "Catégorie"
+
+#: blog/models.py:311
+msgid "Person"
+msgstr "Personne"
+
+#: blog/templates/blog/blog_entry_page.html:75
+msgid "Posted by:"
+msgstr "Écrit par :"
+
+#: blog/templates/blog/blog_index_page.html:52
+#, python-format
+msgid "Posts in category %(category)s"
+msgstr "Articles dans la catégorie %(category)s"
+
+#: blog/templates/blog/blog_index_page.html:56
+#, python-format
+msgid "Posts tagged with %(tag)s"
+msgstr "Articles avec l’étiquette %(tag)s"
+
+#: blog/templates/blog/blog_index_page.html:61
+#, python-format
+msgid "Posts published in %(year)s"
+msgstr "Articles publiés en %(year)s"
+
+#~ msgid "Colophon"
+#~ msgstr "Colophon"
+
+#~ msgid "Author"
+#~ msgstr "Auteur"
+
+#~ msgid "Header image"
+#~ msgstr "Image d’en-tête"
+
+#~ msgid "body"
+#~ msgstr "corps"

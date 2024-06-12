@@ -6,7 +6,7 @@
                 <li>
                     <a class="fr-nav__link"
                        href="{{ item.href }}"
-                       {% if item.active_class %} aria-current="page"{% endif %}
+                       {% if item.active_class %}aria-current="page"{% endif %}
                        target="_self">{{ item.text }}</a>
                 </li>
             {% endfor %}

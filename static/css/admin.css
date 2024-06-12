@@ -1,0 +1,15 @@
+:root {
+    --w-color-primary-hue: 240;
+    --w-color-secondary-hue: 173;
+}
+
+.sidebar-custom-branding {
+    background-color: white;
+    padding: 25px;
+    border-radius: 50%;
+}
+
+.sidebar--slim .sidebar-custom-branding {
+    padding: 10px;
+    margin: 5px;
+}

@@ -1,45 +1,67 @@
-{% load static dsfr_tags wagtailsettings_tags sass_tags %}
+{% load static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
 {% get_settings %}
-<!doctype html>
-<html lang="fr" {% if SITE_CONFIG.mourning %}data-fr-mourning{% endif %}>
+<!DOCTYPE html>
+<html lang="fr"
+      {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {% block title %}
+      <title>
+        {% if title %}{{ title }} —{% endif %}
+      {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+    {% endblock title %}
+    {% dsfr_favicon %}
 
-  {% dsfr_css %}
-  {% dsfr_favicon %}
-  {% block extra_css %}
-    <link href="{% sass_src 'css/style.sass' %}" rel="stylesheet" type="text/css"/>
-  {% endblock extra_css %}
+    {% dsfr_css %}
+    <link href="{% static 'dsfr/dist/utility/utility.min.css' %}"
+          rel="stylesheet"
+          type="text/css" />
+    <link href="{% sass_src 'css/style.sass' %}"
+          rel="stylesheet"
+          type="text/css" />
 
-  {% block title %}<title>{% if title %}{{ title }} — {{ SITE_CONFIG.site_title }}{% else %}{{ SITE_CONFIG.site_title }}{% endif %}</title>{% endblock title %}
-  {% block tracking %}
-    {% if settings.content_manager.AnalyticsSettings.head_scripts %}
-      {{settings.content_manager.AnalyticsSettings.head_scripts|safe}}
-    {% endif %}
-  {% endblock %}
-</head>
+    {% block extra_css %}
+      <link href="{% sass_src 'css/style.sass' %}" rel="stylesheet" type="text/css"/>
+    {% endblock extra_css %}
 
-<body>
+    {% block tracking %}
+      {% if settings.content_manager.AnalyticsSettings.head_scripts %}
+        {{ settings.content_manager.AnalyticsSettings.head_scripts|safe }}
+      {% endif %}
+    {% endblock tracking %}
+
+    {% block social_media %}
+    {% endblock social_media %}
+  </head>
+
+  <body>
     {% block skiplinks %}
-        {% dsfr_skiplinks skiplinks %}
+      {% dsfr_skiplinks skiplinks %}
     {% endblock skiplinks %}
+
     {% include "blocks/header.html" %}
     {% dsfr_theme_modale %}
-      <main id="content" role="main">
-        {% block content %}{% endblock content %}
-      </main>
+    {% wagtailuserbar %}
+
+    <main id="content" role="main">
+      {% block content %}
+      {% endblock content %}
+    </main>
+
     {% include "blocks/footer.html" %}
 
-  {% dsfr_js nonce=request.csp_nonce %}
-  {% block extra_js %}{% endblock extra_js %}
+    {% dsfr_js nonce=request.csp_nonce %}
+    {% block extra_js %}
+    {% endblock extra_js %}
 
-  {% block body_tracking_scripts %}
-    {% if settings.content_manager.AnalyticsSettings.body_scripts %}
-      {{settings.content_manager.AnalyticsSettings.body_scripts|safe}}
-    {% endif %}
-  {% endblock %}
-</body>
+    {% block body_tracking_scripts %}
+      {% if settings.content_manager.AnalyticsSettings.body_scripts %}
+        {{ settings.content_manager.AnalyticsSettings.body_scripts|safe }}
+      {% endif %}
+    {% endblock %}
+  </body>
 
 </html>

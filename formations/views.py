@@ -1,7 +1,7 @@
 from django.views.generic.list import ListView
 
 from formations.form import FormationsFilterForm
-from formations.models import FormationPage, Theme
+from formations.models import FormationPage
 
 
 class FormationsListView(ListView):

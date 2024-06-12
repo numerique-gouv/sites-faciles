@@ -1,10 +1,7 @@
-from django.core import management
-from django.core.management.base import CommandError
 from django.test import TestCase
 from django.urls import reverse
 
-from content_manager.factories import ContentPageFactory
-from formations.factories import FormationPageFactory, TargetAudienceFactory, ThemeFactory
+from formations.factories import FormationPageFactory, ThemeFactory
 
 
 class FormationsTest(TestCase):
