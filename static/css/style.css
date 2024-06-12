@@ -1,12 +1,3 @@
-
-.hero {
-  background-repeat: no-repeat;
-  background-position: center; }
-
-@media (max-width: 64em) {
-  .hero {
-    background-size: 0; } }
-
 .vh {
   position: absolute !important;
   clip: rect(1px, 1px, 1px, 1px);
@@ -21,6 +12,10 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; }
+
+@media (max-width: 64em) {
+  .cmsfr-hero {
+    background-size: 0; } }
 
 .cmsfr-hero-large {
   display: flex;
