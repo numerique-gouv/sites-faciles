@@ -1,5 +1,5 @@
 {% extends "dsfr/footer.html" %}
-{% load i18n wagtailcore_tags wagtailimages_tags menu_tags %}
+{% load i18n wagtailcore_tags wagtailimages_tags menu_tags wagtail_dsfr_tags %}
 
 {% block footer_brand %}
   {% translate "Back to home page" as back_to_home_label %}
@@ -36,7 +36,7 @@
 {% endblock footer_brand %}
 
 {% block footer_description %}
-  {{ settings.content_manager.CmsDsfrConfig.footer_description | richtext }}
+  {{ settings.content_manager.CmsDsfrConfig.footer_description | richtext | richtext_p_add_class:"fr-footer__content-desc" }}
 {% endblock footer_description %}
 
 {% block footer_links %}

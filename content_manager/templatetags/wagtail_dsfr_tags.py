@@ -1,6 +1,7 @@
 from django import template
 from django.conf import settings
 from django.template.context import Context
+from django.utils.html import SafeString, mark_safe
 
 from content_manager.models import MegaMenu
 
@@ -21,3 +22,16 @@ def mega_menu(context: Context, parent_menu_id: int) -> dict:
 @register.simple_tag
 def settings_value(name):
     return getattr(settings, name, "")
+
+
+@register.filter
+def richtext_p_add_class(value, class_name: str):
+    """
+    Adds a CSS class to a Richtext-generated paragraph.
+
+    Intended to be used right after a |richext filter
+    """
+    if isinstance(value, SafeString):
+        return mark_safe(value.replace("<p data-block-key", f'<p class="{class_name}" data-block-key'))
+    else:
+        return value
