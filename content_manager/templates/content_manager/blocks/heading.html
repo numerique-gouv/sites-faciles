@@ -8,7 +8,7 @@
     {% if page.header_with_title or page.header_cta_link and page.header_cta_label %}
       <div class="fr-container fr-py-14w">
         <div class="fr-grid-row fr-grid-row--gutters">
-          <div class="fr-col fr-col-12{% if not page.header_large %}fr-col-md-6{% endif %}">
+          <div class="fr-col fr-col-12{% if not page.header_large %} fr-col-md-6{% endif %}">
             {% if page.header_with_title %}
               <h1 {% if block.value.large %}class="fr-display--sm"{% endif %}>{{ page.title }}</h1>
             {% endif %}
