@@ -1,6 +1,5 @@
 from django.db import models
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from wagtail.admin.panels import FieldPanel
+from modelcluster.fields import ParentalManyToManyField
 from wagtail.models import Page
 from wagtail_airtable.mixins import AirtableMixin
 
