@@ -13,6 +13,7 @@ from content_manager.constants import (
     HEADING_CHOICES,
     HORIZONTAL_CARD_IMAGE_RATIOS,
     LEVEL_CHOICES,
+    LIMITED_RICHTEXTFIELD_FEATURES,
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
     MEDIA_WIDTH_CHOICES,
@@ -431,7 +432,7 @@ class CalloutBlock(blocks.StructBlock):
     )
     icon_class = IconPickerBlock(label=_("Icon"), required=False)
 
-    text = blocks.TextBlock(label=_("Content"), required=False, help_text=_("Can contain HTML."))
+    text = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
     button = ButtonBlock(label=_("Button"), required=False)
     color = blocks.ChoiceBlock(
         label=_("Color"),
@@ -445,7 +446,7 @@ class CalloutBlock(blocks.StructBlock):
 
 
 class HighlightBlock(blocks.StructBlock):
-    text = blocks.TextBlock(label=_("Content"), help_text=_("Can contain HTML."))
+    text = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES)
     color = blocks.ChoiceBlock(
         label=_("Color"),
         choices=COLOR_CHOICES_ILLUSTRATION,

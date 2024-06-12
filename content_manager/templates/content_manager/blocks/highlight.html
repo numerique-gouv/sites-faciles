@@ -1,9 +1,9 @@
-{% load dsfr_tags %}
+{% load wagtailcore_tags wagtail_dsfr_tags %}
 
-{% if value.color %}
-  {% with "fr-highlight--"|concatenate:value.color as extra_classes %}
-    {% dsfr_highlight content=value.text size_class=value.size extra_classes=extra_classes %}
-  {% endwith %}
-{% else %}
-  {% dsfr_highlight content=value.text size_class=value.size %}
-{% endif %}
+<div class="fr-highlight{% if value.color %} fr-highlight--{{ value.color }}{% endif %}">
+  {% if value.size %}
+    {{ value.text | richtext | richtext_p_add_class:value.size }}
+  {% else %}
+    {{ value.text | richtext }}
+  {% endif %}
+</div>
