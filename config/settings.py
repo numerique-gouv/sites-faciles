@@ -14,6 +14,7 @@ https://github.com/betagouv/tous-a-bord/blob/main/config/settings.py
 """
 
 import os
+import sys
 from pathlib import Path
 
 import dj_database_url
@@ -38,6 +39,12 @@ DEBUG = True if os.getenv("DEBUG") == "True" else False
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1, localhost").replace(" ", "").split(",")
 
 HOST_URL = os.getenv("HOST_URL", "localhost")
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+TESTING = "test" in sys.argv
 
 # Application definition
 
@@ -72,11 +79,12 @@ INSTALLED_APPS = [
     "blog",
 ]
 
-# Only add these on a dev machine
-if DEBUG and "localhost" in HOST_URL:
+# Only add these on a dev machine, outside of tests
+if not TESTING and DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
         "django_extensions",
         "wagtail.contrib.styleguide",
+        "debug_toolbar",
     ]
 
 MIDDLEWARE = [
@@ -90,6 +98,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
+
+# Only add this on a dev machine, outside of tests
+if not TESTING and DEBUG and "localhost" in HOST_URL:
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
 
 ROOT_URLCONF = "config.urls"
 
