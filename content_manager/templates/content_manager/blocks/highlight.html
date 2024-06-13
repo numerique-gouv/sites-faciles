@@ -1,9 +1,5 @@
 {% load wagtailcore_tags wagtail_dsfr_tags %}
 
 <div class="fr-highlight{% if value.color %} fr-highlight--{{ value.color }}{% endif %}">
-  {% if value.size %}
-    {{ value.text | richtext | richtext_p_add_class:value.size }}
-  {% else %}
-    {{ value.text | richtext }}
-  {% endif %}
+  {{ value.text | richtext_p_add_class:value.size }}
 </div>
