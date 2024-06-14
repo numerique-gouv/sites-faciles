@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from django.template.context import Context
 
 from content_manager.models import MegaMenu
@@ -15,3 +16,8 @@ def mega_menu(context: Context, parent_menu_id: int) -> dict:
     menu = MegaMenu.objects.filter(parent_menu_item_id=parent_menu_id).first()
 
     return {"request": context["request"], "menu": menu}
+
+
+@register.simple_tag
+def settings_value(name):
+    return getattr(settings, name, "")

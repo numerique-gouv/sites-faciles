@@ -1,3 +1,35 @@
+from django.utils.translation import gettext_lazy as _
+
+
+BUTTON_TYPE_CHOICES = (
+    ("fr-btn", _("Primary")),
+    ("fr-btn fr-btn--secondary", _("Secundary")),
+    ("fr-btn fr-btn--tertiary", _("Tertiary")),
+    ("fr-btn fr-btn--tertiary-no-outline", _("Tertiary without border")),
+)
+
+HEADING_CHOICES = [
+    ("h2", _("Heading 2")),
+    ("h3", _("Heading 3")),
+    ("h4", _("Heading 4")),
+    ("h5", _("Heading 5")),
+    ("h6", _("Heading 6")),
+    ("p", _("Paragraph")),
+]
+
+
+HORIZONTAL_CARD_IMAGE_RATIOS = [
+    ("fr-card--horizontal-tier", "1/3"),
+    ("fr-card--horizontal-half", "50/50"),
+]
+
+LEVEL_CHOICES = [
+    ("error", _("Error")),
+    ("success", _("Success")),
+    ("info", _("Information")),
+    ("warning", _("Warning")),
+]
+
 LIMITED_RICHTEXTFIELD_FEATURES = [
     "bold",
     "italic",
@@ -8,18 +40,20 @@ LIMITED_RICHTEXTFIELD_FEATURES = [
     "strikethrough",
 ]
 
-HEADING_CHOICES = [
-    ("h2", "En-tête 2"),
-    ("h3", "En-tête 3"),
-    ("h4", "En-tête 4"),
-    ("h5", "En-tête 5"),
-    ("h6", "En-tête 6"),
-    ("p", "Paragraphe"),
+LINK_SIZE_CHOICES = [
+    ("fr-link--sm", _("Small")),
+    ("", _("Medium")),
+    ("fr-link--lg", _("Large")),
 ]
 
-LEVEL_CHOICES = [
-    ("error", "Erreur"),
-    ("success", "Succès"),
-    ("info", "Information"),
-    ("warning", "Attention"),
+LINK_ICON_CHOICES = [
+    ("", _("No icon")),
+    ("fr-icon-arrow-right-line fr-link--icon-right", _("Icon on the right side")),
+    ("fr-icon-arrow-right-line fr-link--icon-left", _("Icon on the left side")),
+]
+
+MEDIA_WIDTH_CHOICES = [
+    ("fr-content-media--sm", _("Small")),
+    ("", _("Medium")),
+    ("fr-content-media--lg", _("Large")),
 ]

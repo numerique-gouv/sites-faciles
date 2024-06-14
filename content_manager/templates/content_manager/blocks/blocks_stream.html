@@ -1,9 +1,7 @@
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtailmarkdown %}
 
 {% for block in stream %}
-  {% if block.block_type == 'alert' %}
-    {% include "content_manager/blocks/alert.html" %}
-  {% elif block.block_type == 'callout' %}
+  {% if block.block_type == 'callout' %}
     {% include "content_manager/blocks/callout.html" %}
   {% elif block.block_type == 'image' %}
     <div class="fr-container fr-my-3w">
@@ -17,6 +15,12 @@
     {% include_block block %}
   {% elif block.block_type == 'paragraph' %}
     <div class="fr-container">{{ block.value|richtext }}</div>
+  {% elif block.block_type == 'alert' %}
+    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
+  {% elif block.block_type == 'card' %}
+    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
+  {% elif block.block_type == 'tile' %}
+    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
   {% elif block.block_type == 'accordions' %}
     {% include "content_manager/blocks/accordions.html" with accordions_id=forloop.counter0|lower %}
   {% elif block.block_type == 'stepper' %}
