@@ -1,12 +1,14 @@
 from django.conf import settings
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.urls import reverse
+from wagtail.images.models import Image
 from wagtail.models import Page, Site
 from wagtail.rich_text import RichText
 from wagtailmenus.models.menuitems import FlatMenuItem
 
 from content_manager.models import ContentPage
-from content_manager.utils import get_or_create_footer_menu, import_image
+from content_manager.utils import get_or_create_footer_menu
 
 
 ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite"]
@@ -24,6 +26,10 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
+        pictograms_exist = Image.objects.filter(title__contains="Pictogrammes DSFR").count()
+        if not pictograms_exist:
+            call_command("import_dsfr_pictograms")
+
         slugs = kwargs.get("slug")
 
         if not slugs:
@@ -92,10 +98,7 @@ class Command(BaseCommand):
         body = []
         title = "Votre nouveau site avec Sites faciles"
 
-        image = import_image(
-            full_path="static/artwork/coding.svg",
-            title="Pictogrammes DSFR — Internet",
-        )
+        image = Image.objects.filter(title="Pictogrammes DSFR — Digital — Coding").first()
 
         text_raw = """<p>Bienvenue !</p>
 

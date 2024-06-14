@@ -64,6 +64,7 @@ staticfiles/
 images/
 original_images/
 avatar_images/
+medias/
 
 # Flask stuff:
 instance/
@@ -148,3 +149,4 @@ dmypy.json
 # Project-specific stuff
 config.json
 cron.json
+temp.json
