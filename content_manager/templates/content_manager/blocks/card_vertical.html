@@ -1,4 +1,4 @@
-{% load i18n wagtailimages_tags wagtailcore_tags dsfr_tags %}
+{% load i18n wagtailimages_tags wagtailcore_tags dsfr_tags wagtail_dsfr_tags %}
 <div class="fr-card {% if value.enlarge_link %}fr-enlarge-link{% endif %} {% if value.grey_background %}fr-card--grey{% elif value.no_background %}fr-card--no-background{% endif %} {% if value.no_border %}fr-card--no-border{% endif %} {% if value.shadow %}fr-card--shadow{% endif %}">
   <div class="fr-card__body">
     <div class="fr-card__content">
@@ -20,7 +20,7 @@
         {% endif %}
       </{{ value.heading_tag | default:"h3" }}>
       {# djlint: on #}
-      <p class="fr-card__desc">{{ value.description|safe }}</p>
+      {% if value.description %}{{ value.description | richtext_p_add_class:"fr-card__desc" }}{% endif %}
       {% if value.top_detail_badges_tags or value.top_detail_text %}
         <div class="fr-card__start">
           {% if value.top_detail_badges_tags %}

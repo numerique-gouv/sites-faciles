@@ -57,3 +57,9 @@ MEDIA_WIDTH_CHOICES = [
     ("", _("Medium")),
     ("fr-content-media--lg", _("Large")),
 ]
+
+TEXT_SIZE_CHOICES = [
+    ("fr-text--sm", _("Small")),
+    ("", _("Medium")),
+    ("fr-text--lg", _("Large")),
+]
