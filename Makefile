@@ -35,8 +35,7 @@ sass:
 .PHONY: quality
 quality:
 	$(EXEC_CMD) poetry run black --check --exclude=venv .
-	$(EXEC_CMD) poetry run isort --check --skip-glob="**/migrations" --extend-skip-glob="venv" .
-	$(EXEC_CMD) poetry run flake8 --count --show-source --statistics --exclude="venv,**/migrations" .
+	$(EXEC_CMD) ruff check .
 
 .PHONY: fix
 fix:

@@ -34,7 +34,7 @@ jobs:
       - name: 📄 Copy empty .env.test to .env
         run: |
           cp .env.test .env
-      - name: ✨ Black, isort, flake8 & djlint
+      - name: ✨ Black & ruff
         run: |
           make quality
       - name: 🚧 Check pending migrations # continue-on-error: true
