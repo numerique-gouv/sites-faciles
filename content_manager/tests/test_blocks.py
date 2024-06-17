@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from wagtail.models import Page
+from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 
 from content_manager.models import ContentPage
@@ -12,7 +13,15 @@ class HorizontalCardBlockCase(WagtailPageTestCase):
         self.admin = User.objects.create_superuser("test", "test@test.test", "pass")
         self.admin.save()
 
-        body = [("card", {"title": "Sample card", "description": "This is a sample card."})]
+        body = [
+            (
+                "card",
+                {
+                    "title": "Sample card",
+                    "description": RichText('<p data-block-key="test">This is a sample card.</p>'),
+                },
+            )
+        ]
         self.content_page = home.add_child(
             instance=ContentPage(title="Sample cards page", slug="content-page", owner=self.admin, body=body)
         )
@@ -30,7 +39,9 @@ class HorizontalCardBlockCase(WagtailPageTestCase):
             "fr-card fr-card--horizontal",
         )
         self.assertInHTML("""<h3 class="fr-card__title">Sample card</h3>""", response.content.decode())
-        self.assertInHTML("""<p class="fr-card__desc">This is a sample card.</p>""", response.content.decode())
+        self.assertInHTML(
+            """<p class="fr-card__desc" data-block-key="test">This is a sample card.</p>""", response.content.decode()
+        )
 
     def test_card_with_no_link_does_not_have_enlarge_class(self):
         url = self.content_page.url
