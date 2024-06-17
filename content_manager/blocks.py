@@ -256,7 +256,7 @@ class CardBlock(blocks.StructBlock):
         default="h3",
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
-    description = blocks.TextBlock(label=_("Content"), help_text=_("Can contain HTML."), required=False)
+    description = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
     image = ImageChooserBlock(label=_("Image"), required=False)
     image_ratio = blocks.ChoiceBlock(
         label=_("Image ratio"),
@@ -362,7 +362,7 @@ class TileBlock(blocks.StructBlock):
         default="h3",
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
-    description = blocks.TextBlock(label=_("Content"), help_text=_("Can contain HTML."), required=False)
+    description = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
     image = ImageChooserBlock(label=_("Image"), help_text=_("Prefer SVG files."), required=False)
     link = LinkWithoutLabelBlock(
         label=_("Link"),

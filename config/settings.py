@@ -105,6 +105,18 @@ if not TESTING and DEBUG and "localhost" in HOST_URL:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 
+    # Don't show the toolbar on admin previews
+    def show_toolbar(request):
+        request.META["wsgi.multithread"] = True
+        request.META["wsgi.multiprocess"] = True
+        excluded_urls = ["/pages/preview/", "/pages/preview_loading/", "/edit/preview/"]
+        excluded = any(request.path.endswith(url) for url in excluded_urls)
+        return DEBUG and not excluded
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    }
+
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
