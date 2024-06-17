@@ -1,6 +1,5 @@
 from django.utils.translation import gettext_lazy as _
 
-
 BUTTON_TYPE_CHOICES = (
     ("fr-btn", _("Primary")),
     ("fr-btn fr-btn--secondary", _("Secundary")),

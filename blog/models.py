@@ -25,7 +25,6 @@ from blog.managers import CategoryManager
 from content_manager.abstract import SitesFacilesBasePage
 from content_manager.models import Tag
 
-
 User = get_user_model()
 
 

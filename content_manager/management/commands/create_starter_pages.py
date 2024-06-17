@@ -10,7 +10,6 @@ from wagtailmenus.models.menuitems import FlatMenuItem
 from content_manager.models import ContentPage
 from content_manager.utils import get_or_create_footer_menu
 
-
 ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite"]
 
 
