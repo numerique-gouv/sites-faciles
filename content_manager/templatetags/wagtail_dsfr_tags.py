@@ -7,7 +7,6 @@ from wagtail.rich_text import RichText
 
 from content_manager.models import MegaMenu
 
-
 register = template.Library()
 
 

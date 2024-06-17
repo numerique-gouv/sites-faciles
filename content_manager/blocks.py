@@ -21,7 +21,6 @@ from content_manager.constants import (
 )
 from content_manager.widgets import DsfrIconPickerWidget
 
-
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
 

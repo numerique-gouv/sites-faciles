@@ -54,6 +54,13 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line_length = 119
 
+extend-exclude = '''
+/(
+  | migrations
+)/
+'''
+
+
 [tool.pyright]
 reportAttributeAccessIssue = false
 reportArgumentType = false
@@ -64,3 +71,44 @@ reportIncompatibleVariableOverride = false
 reportOptionalCall = false
 reportOptionalMemberAccess = false
 reportUnboundVariable = false
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "migrations"
+]
+
+line-length = 119
+
+lint.select = ["E", "F", "I"]
+lint.ignore = ["E203", "E266"]
+# E203: Whitespace before ':', used to please Black in `yield items[i : i + n]`
+# E266: Too many leading '#' for block comment
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
