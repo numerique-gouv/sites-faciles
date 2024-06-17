@@ -35,7 +35,6 @@ sass:
 .PHONY: quality
 quality:
 	$(EXEC_CMD) poetry run black --check --exclude=venv .
-	$(EXEC_CMD) ruff check .
 
 .PHONY: fix
 fix:

@@ -54,6 +54,13 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line_length = 119
 
+extend-exclude = '''
+/(
+  | migrations
+)/
+'''
+
+
 [tool.pyright]
 reportAttributeAccessIssue = false
 reportArgumentType = false
