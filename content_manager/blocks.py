@@ -473,6 +473,11 @@ class IframeBlock(blocks.StructBlock):
         help_text=_("Example for Tally: https://tally.so/embed/w2jMRa"),
     )
     height = blocks.IntegerBlock(label=_("Height (in pixels)"))
+    parameters = blocks.CharBlock(
+        label=_("Parameters"),
+        help_text=_("""For example: "allow='geolocation'"."""),
+        required=False,
+    )
 
     class Meta:
         icon = "globe"
