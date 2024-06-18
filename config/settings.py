@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     "sass_processor",
     "content_manager",
     "blog",
+    "numerique_gouv",
 ]
 
 # Only add these on a dev machine, outside of tests
