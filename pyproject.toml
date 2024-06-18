@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "content-manager"
-version = "1.4.2"
+version = "1.5.1"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l'État, accessible et responsive"
 authors = [
   "Sébastien Reuiller <sebastien.reuiller@beta.gouv.fr>",
@@ -14,7 +14,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 django = "^5.0.2"
-wagtail = "^6.0"
+wagtail = "^6.1"
 django-dsfr = "^1.1.2"
 psycopg2-binary = "^2.9.9"
 python-dotenv = "^1.0.0"
@@ -45,6 +45,7 @@ ipython = "^8.18.1"
 libsass = "^0.22.0"
 django-compressor = "^4.4"
 faker = "^24.3.0"
+django-debug-toolbar = "^4.4.2"
 
 [build-system]
 requires = ["poetry-core"]
@@ -52,6 +53,13 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line_length = 119
+
+extend-exclude = '''
+/(
+  | migrations
+)/
+'''
+
 
 [tool.pyright]
 reportAttributeAccessIssue = false
@@ -63,3 +71,44 @@ reportIncompatibleVariableOverride = false
 reportOptionalCall = false
 reportOptionalMemberAccess = false
 reportUnboundVariable = false
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "migrations"
+]
+
+line-length = 119
+
+lint.select = ["E", "F", "I"]
+lint.ignore = ["E203", "E266"]
+# E203: Whitespace before ':', used to please Black in `yield items[i : i + n]`
+# E266: Too many leading '#' for block comment
+
+[tool.ruff.lint.isort]
+combine-as-imports = true

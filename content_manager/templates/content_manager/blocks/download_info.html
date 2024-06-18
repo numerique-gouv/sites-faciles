@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if document.file_extension %}
+  {{ document.file_extension|upper }}
+{% else %}
+  {% translate "Unknown file format" %}
+{% endif %}
+-
+{% if document.file_size %}
+  {{ document.file_size|filesizeformat }}
+{% else %}
+  {% translate "Unknown file size" %}
+{% endif %}

@@ -1,0 +1,13 @@
+{% load static wagtailcore_tags %}
+
+<ul class="fr-links-group">
+  {% for link in block.value %}
+    <li>
+      {% if link.value.external_url %}
+        <a href="{{ link.value.url }}" target="_blank" rel="noopener external">{{ link.value.text }}</a>
+      {% else %}
+        <a href="{{ link.value.url }}">{{ link.value.text }}</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

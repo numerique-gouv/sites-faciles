@@ -9,7 +9,6 @@ from wagtailmenus.models.menus import FlatMenu, MainMenu
 from blog.models import BlogIndexPage
 from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
 
-
 ALL_ALLOWED_SLUGS = ["blog_index", "publications"]
 
 fake = Faker("fr_FR")

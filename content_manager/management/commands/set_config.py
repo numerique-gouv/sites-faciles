@@ -10,9 +10,19 @@ from content_manager.models import CmsDsfrConfig
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        """Sets the site hostname, and imports contents from the config.json file if present"""
+        """
+        Sets the site hostname and site_name,
+        and imports contents from the config.json file if present.
+        """
+        if "http://" in settings.HOST_URL or "https://" in settings.HOST_URL:
+            raise ValueError(
+                """The HOST_URL environment variable must contain the domain name only,
+                without the port or http/https protocol."""
+            )
+
         site = Site.objects.filter(is_default_site=True).first()
         site.hostname = settings.HOST_URL
+        site.site_name = settings.WAGTAIL_SITE_NAME
         site.save()
 
         if isfile("config.json"):

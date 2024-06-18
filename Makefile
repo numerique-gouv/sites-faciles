@@ -25,7 +25,7 @@ collectstatic:
 
 .PHONY: messages
 messages:
-	$(EXEC_CMD) poetry run django-admin makemessages -l fr --ignore=manage.py --ignore=medias --ignore=setup.py --ignore=staticfiles --ignore=templates
+	$(EXEC_CMD) poetry run django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
 
 .PHONY: sass
 sass:
@@ -35,8 +35,6 @@ sass:
 .PHONY: quality
 quality:
 	$(EXEC_CMD) poetry run black --check --exclude=venv .
-	$(EXEC_CMD) poetry run isort --check --skip-glob="**/migrations" --extend-skip-glob="venv" .
-	$(EXEC_CMD) poetry run flake8 --count --show-source --statistics --exclude="venv,**/migrations" .
 
 .PHONY: fix
 fix:
@@ -51,6 +49,7 @@ init:
 	$(EXEC_CMD) poetry run python manage.py migrate
 	make collectstatic
 	$(EXEC_CMD) poetry run python manage.py set_config
+	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) poetry run python manage.py create_starter_pages
 
 .PHONY: demo

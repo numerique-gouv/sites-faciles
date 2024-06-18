@@ -5,9 +5,8 @@ from django.urls import include, path
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
-
 urlpatterns = [
-    path("cms-admin/", include(wagtailadmin_urls)),
+    path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
@@ -16,3 +15,7 @@ urlpatterns += i18n_patterns(
     path("", include("content_manager.urls")),
     prefix_default_language=False,
 )
+
+# Only add this on a dev machine, outside of tests
+if not settings.TESTING and settings.DEBUG and "localhost" in settings.HOST_URL:
+    urlpatterns += (path("__debug__/", include("debug_toolbar.urls")),)
