@@ -20,7 +20,7 @@ msgstr ""
 
 #: content_manager/abstract.py:25
 msgid "Show title in header image?"
-msgstr "Afficher le titre sur l’image d’en-tête ?"
+msgstr "Afficher le titre sur l’image d’en-tête ?"
 
 #: content_manager/abstract.py:33
 msgid "Header image"
@@ -252,15 +252,15 @@ msgstr "ou Document (obsolète)"
 
 #: content_manager/blocks.py:290
 msgid "Top detail: text"
-msgstr "Détail du haut : texte"
+msgstr "Détail du haut : texte"
 
 #: content_manager/blocks.py:291
 msgid "Top detail: icon"
-msgstr "Détail du haut : icône"
+msgstr "Détail du haut : icône"
 
 #: content_manager/blocks.py:297 content_manager/blocks.py:376
 msgid "Top detail: badges or tags"
-msgstr "Détail du haut : badges ou tags"
+msgstr "Détail du haut : badges ou tags"
 
 #: content_manager/blocks.py:302 content_manager/blocks.py:336
 msgid "Bottom detail: text"
@@ -272,7 +272,7 @@ msgstr "Incompatible avec l’appel à action en bas de carte."
 
 #: content_manager/blocks.py:306
 msgid "Bottom detail: icon"
-msgstr "Détail du bas : icône"
+msgstr "Détail du bas : icône"
 
 #: content_manager/blocks.py:312
 msgid "Bottom call-to-action: links or buttons"
@@ -380,7 +380,7 @@ msgstr "URL de l‘iframe"
 
 #: content_manager/blocks.py:473
 msgid "Example for Tally: https://tally.so/embed/w2jMRa"
-msgstr "Exemple pour Tally : https://tally.so/embed/w2jMRa"
+msgstr "Exemple pour Tally : https://tally.so/embed/w2jMRa"
 
 #: content_manager/blocks.py:475
 msgid "Height (in pixels)"
@@ -392,7 +392,7 @@ msgstr "Paramètres"
 
 #: content_manager/blocks.py:478
 msgid "For example: \"allow='geolocation'\"."
-msgstr "Par exemple : « allow='geolocation' »."
+msgstr "Par exemple : « allow='geolocation' »."
 
 #: content_manager/blocks.py:490
 msgid "Side where the image is displayed"
@@ -508,8 +508,8 @@ msgid ""
 msgstr ""
 "Utiliser le format d’intégration, avec une version qui ne nécessite pas de "
 "bannière de consentement si possible (par exemple : https://www.youtube-"
-"nocookie.com/embed/gLzXOViPX-0) Pour Youtube, cliquez sur « Intégrer la "
-"vidéo » puis cochez « Activer le mode de confidentialité avancé »."
+"nocookie.com/embed/gLzXOViPX-0) Pour Youtube, cliquez sur « Intégrer la "
+"vidéo » puis cochez « Activer le mode de confidentialité avancé »."
 
 #: content_manager/blocks.py:655
 msgid "Video ratio"
@@ -1002,7 +1002,7 @@ msgstr "Liste de pages avec l’étiquette {tag}"
 #~ "populated.)"
 #~ msgstr ""
 #~ "Sélectionnez un document pour faire pointer la carte dessus (si le champ "
-#~ "« Lien » est vide.)"
+#~ "« Lien » est vide.)"
 
 #~ msgid "Card"
 #~ msgstr "Carte"
