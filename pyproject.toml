@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "sites-faciles"
+name = "content-manager"
 version = "1.5.2"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l'État, accessible et responsive"
 authors = [
@@ -10,7 +10,6 @@ maintainers = [
   "Sylvain Boissel <sylvain.boissel@beta.gouv.fr>",
 ]
 readme = "README.md"
-package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
