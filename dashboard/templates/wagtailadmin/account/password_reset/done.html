@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load widget_tweaks wagtailadmin_tags i18n static dsfr_tags %}
+{% block content %}
+  <div class="fr-container fr-my-md-14v">
+    <h1>{% translate "Check your email" %}</h1>
+    <div role="alert" class="fr-alert fr-alert--success fr-alert--sm">
+      <p>{% translate "A link to reset your password has been emailed to you if an account exists for this address." %}</p>
+    </div>
+  </div>
+{% endblock content %}

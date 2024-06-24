@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-24 12:48+0200\n"
-"PO-Revision-Date: 2024-06-24 12:48+0200\n"
+"POT-Creation-Date: 2024-06-24 15:24+0200\n"
+"PO-Revision-Date: 2024-06-24 15:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,6 +18,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.4.2\n"
+
+#: dashboard/templates/wagtailadmin/account/password_reset/complete.html:5
+msgid "Password change successful"
+msgstr "Mot de passe changé avec succès"
+
+#: dashboard/templates/wagtailadmin/account/password_reset/complete.html:6
+msgid "Log in"
+msgstr "Connexion"
+
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:11
+msgid "Set your new password"
+msgstr "Définissez votre nouveau mot de passe"
+
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:20
+#: dashboard/templates/wagtailadmin/account/password_reset/form.html:18
+msgid "Reset password"
+msgstr "Réinitialiser le mot de passe"
+
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:28
+msgid "Invalid password reset link"
+msgstr "Lien de réinitialisation de mot de passe invalide"
+
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:30
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used."
+msgstr ""
+"Le lien de réinitialisation de mot de passe était invalide, probablement "
+"parce qu’il a déjà été utilisé."
+
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:34
+msgid "Request a new password reset"
+msgstr "Demander une nouvelle réinitialisation de mot de passe"
+
+#: dashboard/templates/wagtailadmin/account/password_reset/done.html:5
+msgid "Check your email"
+msgstr "Consultez vos e-mails"
+
+#: dashboard/templates/wagtailadmin/account/password_reset/done.html:7
+msgid ""
+"A link to reset your password has been emailed to you if an account exists "
+"for this address."
+msgstr ""
+"Un lien pour réinitialiser votre mot de passe vous a été envoyé par e-mail "
+"si un compte existe pour cette adresse."
+
+#: dashboard/templates/wagtailadmin/account/password_reset/form.html:10
+msgid "Reset your password"
+msgstr "Réinitialisez votre mot de passe"
 
 #: dashboard/templates/wagtailadmin/login.html:10
 msgid "Connection"
