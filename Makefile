@@ -46,19 +46,8 @@ fix:
 index:
 	poetry run python manage.py update_index
 
-.PHONY: init-dev
-init-dev:
-	$(EXEC_CMD) poetry install
-	$(EXEC_CMD) poetry run pre-commit install
-	$(EXEC_CMD) poetry run python manage.py migrate
-	make collectstatic
-	$(EXEC_CMD) poetry run python manage.py set_config
-	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
-	$(EXEC_CMD) poetry run python manage.py create_starter_pages
-	make index
-
-.PHONY: init-prod
-init-dev:
+.PHONY: init
+init:
 	$(EXEC_CMD) poetry install --without dev
 	$(EXEC_CMD) poetry run python manage.py migrate
 	make collectstatic
@@ -66,6 +55,13 @@ init-dev:
 	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) poetry run python manage.py create_starter_pages
 	make index
+
+.PHONY: init-dev
+init-dev:
+	make init
+	$(EXEC_CMD) poetry install
+	$(EXEC_CMD) poetry run pre-commit install
+
 
 .PHONY: update
 init:
