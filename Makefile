@@ -64,7 +64,7 @@ init-dev:
 
 
 .PHONY: update
-init:
+update:
 	$(EXEC_CMD) poetry install --without dev
 	$(EXEC_CMD) poetry run python manage.py migrate
 	make collectstatic
