@@ -39,7 +39,7 @@ quality:
 
 .PHONY: fix
 fix:
-	$(EXEC_CMD) ruff check .  --fix
+	$(EXEC_CMD) ruff check . --fix
 	$(EXEC_CMD) poetry run black --exclude=venv .
 
 .PHONY: index
