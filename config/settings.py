@@ -50,6 +50,7 @@ TESTING = "test" in sys.argv
 INSTALLED_APPS = [
     "storages",
     "dashboard",
+    "forms",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
