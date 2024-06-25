@@ -34,16 +34,20 @@ sass:
 
 .PHONY: quality
 quality:
+	$(EXEC_CMD) ruff check .
 	$(EXEC_CMD) poetry run black --check --exclude=venv .
 
 .PHONY: fix
 fix:
+	$(EXEC_CMD) ruff check .  --fix
 	$(EXEC_CMD) poetry run black --exclude=venv .
-	$(EXEC_CMD) poetry run isort --skip-glob="**/migrations" --extend-skip-glob="venv" .
 
+.PHONY: index
+index:
+	poetry run python manage.py update_index
 
-.PHONY: init
-init:
+.PHONY: init-dev
+init-dev:
 	$(EXEC_CMD) poetry install
 	$(EXEC_CMD) poetry run pre-commit install
 	$(EXEC_CMD) poetry run python manage.py migrate
@@ -51,6 +55,25 @@ init:
 	$(EXEC_CMD) poetry run python manage.py set_config
 	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) poetry run python manage.py create_starter_pages
+	make index
+
+.PHONY: init-prod
+init-dev:
+	$(EXEC_CMD) poetry install --without dev
+	$(EXEC_CMD) poetry run python manage.py migrate
+	make collectstatic
+	$(EXEC_CMD) poetry run python manage.py set_config
+	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
+	$(EXEC_CMD) poetry run python manage.py create_starter_pages
+	make index
+
+.PHONY: update
+init:
+	$(EXEC_CMD) poetry install --without dev
+	$(EXEC_CMD) poetry run python manage.py migrate
+	make collectstatic
+	make index
+
 
 .PHONY: demo
 demo:
