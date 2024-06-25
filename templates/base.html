@@ -2,7 +2,7 @@
 {% get_settings %}
 <!DOCTYPE html>
 <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}"
-      {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %} data-fr-scheme="system" {% else %} data-fr-scheme="light" {% endif %}
+      {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}data-fr-scheme="system"{% else %}data-fr-scheme="light"{% endif %}
       {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
   <head>
     <meta charset="utf-8" />
