@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import widgets
+from django.forms.widgets import Textarea
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
@@ -47,7 +47,7 @@ class MonospaceField(models.TextField):
     """
 
     def formfield(self, **kwargs):
-        kwargs["widget"] = widgets.Textarea(
+        kwargs["widget"] = Textarea(
             attrs={
                 "rows": 12,
                 "class": "monospace",
