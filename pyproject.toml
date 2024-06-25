@@ -46,6 +46,7 @@ libsass = "^0.22.0"
 django-compressor = "^4.4"
 faker = "^24.3.0"
 django-debug-toolbar = "^4.4.2"
+ruff = "^0.4.10"
 
 [build-system]
 requires = ["poetry-core"]
