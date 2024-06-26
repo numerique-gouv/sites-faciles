@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-25 10:02+0200\n"
-"PO-Revision-Date: 2024-06-25 10:10+0200\n"
+"POT-Creation-Date: 2024-06-26 16:26+0200\n"
+"PO-Revision-Date: 2024-06-26 17:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -49,14 +49,18 @@ msgstr "Paramètres d’affichage"
 msgid "Home page"
 msgstr "Accueil"
 
-#: templates/blocks/header.html:53
+#: templates/blocks/header.html:53 templates/blocks/header.html:78
 msgid "Search"
 msgstr "Rechercher"
 
-#: templates/blocks/header.html:57 templates/blocks/header.html:86
+#: templates/blocks/header.html:57 templates/blocks/header.html:101
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/blocks/header.html:91
+#: templates/blocks/header.html:87
+msgid "Menu"
+msgstr "Menu"
+
+#: templates/blocks/header.html:106
 msgid "Main menu"
 msgstr "Menu principal"

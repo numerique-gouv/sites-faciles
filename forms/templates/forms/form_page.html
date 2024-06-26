@@ -1,6 +1,9 @@
 {% extends "base.html" %}
-
 {% load wagtailcore_tags dsfr_tags %}
+
+{% block title %}
+  <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+{% endblock title %}
 
 {% block content %}
   <div class="fr-container fr-my-6w">
@@ -11,15 +14,7 @@
         <form action="{% pageurl page %}" method="post">
           {% csrf_token %}
           {% dsfr_form %}
-
           <input class="fr-btn" type="submit">
-
-          <ul>
-            {% for field in form %}
-              <li>{{ field.label }}, {{ field.type }}, {{ field.field.widget.attrs }} {{ field.field.widget }}</li>
-            {% endfor %}
-          </ul>
-
         </form>
       </div>
     </div>

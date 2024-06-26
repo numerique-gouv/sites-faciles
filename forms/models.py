@@ -1,30 +1,69 @@
+from django import forms
 from django.db import models
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext_lazy as _
+from dsfr.forms import DsfrDjangoTemplates
 from dsfr.utils import dsfr_input_class_attr
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
+from wagtail.contrib.forms.forms import BaseForm, FormBuilder
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from wagtail.fields import RichTextField
 
 
 class FormField(AbstractFormField):
-    FORM_FIELD_CHOICES = (
-        ("singleline", _("Single line text")),
-        ("multiline", _("Multi-line text")),
+    CHOICES = (
+        ("singleline", _("Text field")),
+        ("multiline", _("Text area")),
         ("email", _("Email")),
         ("number", _("Number")),
         ("url", _("URL")),
         ("checkbox", _("Checkbox")),
-        ("cmsfr_checkboxes", _("Checkboxes")),
+        ("checkboxes", _("Checkboxes")),
         ("dropdown", _("Drop down")),
-        ("cmsfr_radio", _("Radio buttons")),
+        ("radio", _("Radio buttons")),
         ("date", _("Date")),
+        # ("datetime", _("Date/time")),
         ("hidden", _("Hidden field")),
     )
 
     page = ParentalKey("FormPage", on_delete=models.CASCADE, related_name="form_fields")
+
+    field_type = models.CharField(verbose_name=_("Field type"), max_length=16, choices=CHOICES)
+
+    class Meta:
+        verbose_name = _("Form field")
+        verbose_name_plural = _("Form fields")
+
+
+class SitesFacilesBaseForm(BaseForm):
+    """
+    A base form that adds the necessary class on relevant fields
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            dsfr_input_class_attr(visible)
+
+    @property
+    def default_renderer(self):
+        return DsfrDjangoTemplates  # Settings wasn't modified
+
+
+class SitesFacilesFormBuilder(FormBuilder):
+    def create_date_field(self, field, options):
+        options["widget"] = forms.DateInput(attrs={"type": "date"})
+        return forms.DateField(**options)
+
+    # Datetime is currently not managed
+    def create_datetime_field(self, field, options):
+        options["widget"] = forms.DateInput(attrs={"type": "datetime-local"})
+        return forms.DateField(**options)
+
+    def get_form_class(self):
+        return type("WagtailForm", (SitesFacilesBaseForm,), self.formfields)
 
 
 class FormPage(AbstractEmailForm):
@@ -33,9 +72,9 @@ class FormPage(AbstractEmailForm):
 
     content_panels = AbstractEmailForm.content_panels + [
         FormSubmissionsPanel(),
-        FieldPanel("intro", heading="Introduction"),
-        InlinePanel("form_fields", label="Champs de formulaire"),
-        FieldPanel("thank_you_text", heading="Texte de remerciement"),
+        FieldPanel("intro", heading=_("Introduction")),
+        InlinePanel("form_fields", label=_("Form field"), heading=_("Form fields")),
+        FieldPanel("thank_you_text", heading=_("Thank you text")),
         MultiFieldPanel(
             [
                 FieldRowPanel(
@@ -46,14 +85,14 @@ class FormPage(AbstractEmailForm):
                 ),
                 FieldPanel("subject"),
             ],
-            "Courriel",
-            help_text="Facultatif",
+            _("E-mail notification when an answer is sent"),
+            help_text=_("Optional, will only work if SMTP parameters have been set."),
         ),
     ]
 
     class Meta:
-        verbose_name = "Page de formulaire"
-        verbose_name_plural = "Pages de formulaire"
+        verbose_name = _("Form page")
+        verbose_name_plural = _("Form pages")
 
     def serve(self, request, *args, **kwargs):
         if request.method == "POST":
@@ -65,9 +104,8 @@ class FormPage(AbstractEmailForm):
         else:
             form = self.get_form(page=self, user=request.user)
 
-        for visible in form.visible_fields():
-            dsfr_input_class_attr(visible)
-
         context = self.get_context(request)
         context["form"] = form
         return TemplateResponse(request, self.get_template(request), context)
+
+    form_builder = SitesFacilesFormBuilder

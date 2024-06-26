@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load i18n wagtailcore_tags %}
 
 {% block content %}
   <div class="fr-container fr-mt-6w">
     <h1>{{ page.title }}</h1>
-    {{ page.thank_you_text|richtext }}
+    {% if page.thank_you_text %}
+      {{ page.thank_you_text|richtext }}
+    {% else %}
+      <p>{% translate "Your form has been successfully submitted. Thank you!" %}</p>
+    {% endif %}
   </div>
 {% endblock content %}
