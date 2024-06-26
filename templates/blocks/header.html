@@ -74,9 +74,24 @@
   {% endif %}
 {% endblock header_search %}
 
-{# Leave burger_menu and main_menu blocks empty if the main menu is not used #}
-{# block burger_menu #}
-{# endblock burger_menu #}
+{% block burger_menu %}
+  {% translate "Search" as search_label %}
+  <div class="fr-header__navbar">
+    {% if settings.content_manager.CmsDsfrConfig.search_bar %}
+      <button class="fr-btn--search fr-btn"
+              data-fr-opened="false"
+              aria-controls="modal-search"
+              id="fr-btn-search-mobile"
+              title="{{ search_label }}">{{ search_label }}</button>
+    {% endif %}
+    {% translate "Menu" as menu_label %}
+    <button class="fr-btn--menu fr-btn"
+            data-fr-opened="false"
+            aria-controls="fr-menu-mobile"
+            id="fr-btn-menu-mobile"
+            title="{{ menu_label }}">{{ menu_label }}</button>
+  </div>
+{% endblock burger_menu %}
 
 {% block main_menu %}
   <div class="fr-header__menu fr-modal"
