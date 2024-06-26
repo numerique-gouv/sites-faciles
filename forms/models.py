@@ -1,7 +1,7 @@
 from django.db import models
-from django.forms import widgets
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext_lazy as _
+from dsfr.utils import dsfr_input_class_attr
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
@@ -20,8 +20,7 @@ class FormField(AbstractFormField):
         ("cmsfr_checkboxes", _("Checkboxes")),
         ("dropdown", _("Drop down")),
         ("cmsfr_radio", _("Radio buttons")),
-        ("cmsfr_date", _("Date")),
-        ("cmsfr_datetime", _("Date/time")),
+        ("date", _("Date")),
         ("hidden", _("Hidden field")),
     )
 
@@ -57,7 +56,6 @@ class FormPage(AbstractEmailForm):
         verbose_name_plural = "Pages de formulaire"
 
     def serve(self, request, *args, **kwargs):
-        # These input widgets don't need the fr-input class
         if request.method == "POST":
             form = self.get_form(request.POST, request.FILES, page=self, user=request.user)
 
@@ -67,36 +65,8 @@ class FormPage(AbstractEmailForm):
         else:
             form = self.get_form(page=self, user=request.user)
 
-        WIDGETS_NO_FR_INPUT = [
-            widgets.CheckboxInput,
-            widgets.FileInput,
-            widgets.ClearableFileInput,
-        ]
-
         for visible in form.visible_fields():
-            """
-            Depending on the widget, we have to add some classes:
-            - on the outer group
-            - on the form field itsef
-            If a class is already set, we don't force the DSFR-specific classes.
-            """
-            if "class" not in visible.field.widget.attrs:
-                if type(visible.field.widget) in [
-                    widgets.Select,
-                    widgets.SelectMultiple,
-                ]:
-                    visible.field.widget.attrs["class"] = "fr-select"
-                    visible.field.widget.group_class = "fr-select-group"
-                elif isinstance(visible.field.widget, widgets.DateInput):
-                    visible.field.widget.attrs["class"] = "fr-input"
-                    visible.field.widget.attrs["type"] = "date"
-                elif isinstance(visible.field.widget, widgets.RadioSelect):
-                    visible.field.widget.attrs["dsfr"] = "dsfr"
-                    visible.field.widget.group_class = "fr-radio-group"
-                elif isinstance(visible.field.widget, widgets.CheckboxSelectMultiple):
-                    visible.field.widget.attrs["dsfr"] = "dsfr"
-                elif type(visible.field.widget) not in WIDGETS_NO_FR_INPUT:
-                    visible.field.widget.attrs["class"] = "fr-input"
+            dsfr_input_class_attr(visible)
 
         context = self.get_context(request)
         context["form"] = form
