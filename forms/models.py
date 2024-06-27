@@ -39,7 +39,7 @@ class FormField(AbstractFormField):
 
 class SitesFacilesBaseForm(BaseForm):
     """
-    A base form that adds the necessary class on relevant fields
+    A base form that adds the necessary DSFR class on relevant fields
     """
 
     def __init__(self, *args, **kwargs):
@@ -49,7 +49,7 @@ class SitesFacilesBaseForm(BaseForm):
 
     @property
     def default_renderer(self):
-        return DsfrDjangoTemplates  # Settings wasn't modified
+        return DsfrDjangoTemplates
 
 
 class SitesFacilesFormBuilder(FormBuilder):
