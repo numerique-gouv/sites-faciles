@@ -178,9 +178,7 @@ class MenusTestCase(WagtailPageTestCase):
         self.site = Site.objects.filter(is_default_site=True).first()
         self.home_page = self.site.root_page
 
-        self.main_menu = MainMenu.objects.create(site=self.site)
-
-        MainMenuItem.objects.create(link_page=self.home_page, menu=self.main_menu, link_text="Accueil", sort_order=0)
+        self.main_menu = MainMenu.objects.first()
 
         body = []
 
