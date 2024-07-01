@@ -50,6 +50,7 @@ TESTING = "test" in sys.argv
 INSTALLED_APPS = [
     "storages",
     "dashboard",
+    "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
     "wagtail.embeds",
@@ -76,6 +77,7 @@ INSTALLED_APPS = [
     "sass_processor",
     "content_manager",
     "blog",
+    "forms",
 ]
 
 # Only add these on a dev machine, outside of tests
