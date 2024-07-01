@@ -14,6 +14,7 @@ from content_manager.constants import (
     HORIZONTAL_CARD_IMAGE_RATIOS,
     LEVEL_CHOICES,
     LIMITED_RICHTEXTFIELD_FEATURES,
+    LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS,
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
     MEDIA_WIDTH_CHOICES,
@@ -361,7 +362,9 @@ class TileBlock(blocks.StructBlock):
         default="h3",
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
-    description = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
+    description = blocks.RichTextBlock(
+        label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS, required=False
+    )
     image = ImageChooserBlock(label=_("Image"), help_text=_("Prefer SVG files."), required=False)
     link = LinkWithoutLabelBlock(
         label=_("Link"),

@@ -39,6 +39,14 @@ LIMITED_RICHTEXTFIELD_FEATURES = [
     "strikethrough",
 ]
 
+LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS = [
+    "bold",
+    "italic",
+    "superscript",
+    "subscript",
+    "strikethrough",
+]
+
 LINK_SIZE_CHOICES = [
     ("fr-link--sm", _("Small")),
     ("", _("Medium")),

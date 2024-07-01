@@ -83,4 +83,4 @@ runserver:
 
 .PHONY: test
 test:
-	$(EXEC_CMD) poetry run python manage.py test --buffer
+	$(EXEC_CMD) poetry run python manage.py test --buffer --parallel

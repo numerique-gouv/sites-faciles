@@ -4,6 +4,7 @@ from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 
 from content_manager.models import ContentPage
+from content_manager.utils import import_image
 
 
 class HorizontalCardBlockCase(WagtailPageTestCase):
@@ -261,3 +262,58 @@ class HorizontalCardBlockCase(WagtailPageTestCase):
             </ul>""",
             response.content.decode(),
         )
+
+
+class TileBlockCase(WagtailPageTestCase):
+    def setUp(self):
+        home = Page.objects.get(slug="home")
+        self.admin = User.objects.create_superuser("test", "test@test.test", "pass")
+        self.admin.save()
+
+        body = [
+            (
+                "tile",
+                {
+                    "title": "Sample tile",
+                    "description": RichText('<p data-block-key="test">This is a sample tile.</p>'),
+                },
+            )
+        ]
+        self.content_page = home.add_child(
+            instance=ContentPage(title="Sample tiles page", slug="content-page", owner=self.admin, body=body)
+        )
+        self.content_page.save()
+
+    def test_basic_tile_is_renderable(self):
+        self.assertPageIsRenderable(self.content_page)
+
+    def test_basic_tile_has_no_header_div(self):
+        url = self.content_page.url
+
+        response = self.client.get(url)
+
+        self.assertNotContains(response, "fr-tile__header")
+
+    def test_tile_with_image_has_div(self):
+        image_file = "static/artwork/technical-error.svg"
+        image = import_image(image_file, "Sample image")
+
+        body = [
+            (
+                "tile",
+                {
+                    "title": "Sample tile",
+                    "description": RichText('<p data-block-key="test">This is a sample tile.</p>'),
+                    "image": image,
+                },
+            )
+        ]
+
+        self.content_page.body = body
+        self.content_page.save()
+
+        url = self.content_page.url
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "fr-tile__header")
