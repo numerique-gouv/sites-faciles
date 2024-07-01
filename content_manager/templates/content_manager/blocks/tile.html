@@ -1,12 +1,17 @@
 
-{% load dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags %}
+{% load i18n dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags %}
 <div class="fr-tile{% if value.is_small %} fr-tile--sm{% endif %}{% if value.enlarge_link %} fr-enlarge-link{% endif %}{% if value.is_horizontal %} fr-tile--horizontal{% endif %}{% if value.grey_background %} fr-tile--grey{% elif value.no_background %} fr-tile--no-background{% endif %}{% if value.no_border %} fr-tile--no-border{% endif %}{% if value.shadow %} fr-tile--shadow{% endif %}{% if value.link.document %} fr-tile--download{% endif %}">
   <div class="fr-tile__body">
     <div class="fr-tile__content">
       {# djlint: off #}
       <{{ value.heading_tag | default:"h3" }} class="fr-tile__title">
         {% if value.link and value.link.url %}
-          <a class="fr-tile__link" href="{{ value.url }}">{{ value.title }}</a>
+          <a href="{{ value.link.url }}" {% if value.link.url.0 != '/' and request.get_host not in value.link.url %}target="_blank" rel="noopener noreferrer"{% endif %}>
+            {{ value.title }}
+            {% if value.link.url.0 != '/' and request.get_host not in value.link.url %}
+            <span class="fr-sr-only">{% translate "Opens a new window" %}</span>
+            {% endif %}
+          </a>
         {% else %}
           {{ value.title }}
         {% endif %}
@@ -29,23 +34,25 @@
       {% endif %}
     </div>
   </div>
-  <div class="fr-tile__header">
-    {% image value.image original as pictogram %}
+  {% if pictogram %}
+    <div class="fr-tile__header">
+      {% image value.image original as pictogram %}
 
-    {% if pictogram.url|slice:"-4:" == ".svg" %}
-      <div class="fr-tile__pictogram">
-        <svg aria-hidden="true"
-             class="fr-artwork"
-             viewBox="0 0 80 80"
-             width="80px"
-             height="80px">
-          <use class="fr-artwork-decorative" href="{{ pictogram.full_url }}#artwork-decorative"></use>
-          <use class="fr-artwork-minor" href="{{ pictogram.full_url }}#artwork-minor"></use>
-          <use class="fr-artwork-major" href="{{ pictogram.full_url }}#artwork-major"></use>
-        </svg>
-      </div>
-    {% else %}
-      <div class="fr-tile__img">{% image value.image width-80 %}</div>
-    {% endif %}
-  </div>
+      {% if pictogram.url|slice:"-4:" == ".svg" %}
+        <div class="fr-tile__pictogram">
+          <svg aria-hidden="true"
+               class="fr-artwork"
+               viewBox="0 0 80 80"
+               width="80px"
+               height="80px">
+            <use class="fr-artwork-decorative" href="{{ pictogram.full_url }}#artwork-decorative"></use>
+            <use class="fr-artwork-minor" href="{{ pictogram.full_url }}#artwork-minor"></use>
+            <use class="fr-artwork-major" href="{{ pictogram.full_url }}#artwork-major"></use>
+          </svg>
+        </div>
+      {% else %}
+        <div class="fr-tile__img">{% image value.image width-80 %}</div>
+      {% endif %}
+    </div>
+  {% endif %}
 </div>

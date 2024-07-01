@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "content-manager"
-version = "1.5.1"
+version = "1.5.2"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l'État, accessible et responsive"
 authors = [
   "Sébastien Reuiller <sebastien.reuiller@beta.gouv.fr>",
@@ -46,6 +46,7 @@ libsass = "^0.22.0"
 django-compressor = "^4.4"
 faker = "^24.3.0"
 django-debug-toolbar = "^4.4.2"
+ruff = "^0.4.10"
 
 [build-system]
 requires = ["poetry-core"]

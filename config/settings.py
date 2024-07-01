@@ -144,7 +144,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -177,9 +176,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
-WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -311,6 +307,24 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 
+# Email settings
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "")
+
+if DEFAULT_FROM_EMAIL:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = os.getenv("EMAIL_HOST", None)
+    EMAIL_PORT = os.getenv("EMAIL_PORT", None)
+    EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", None)
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", None)
+    EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", None)
+    EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", None)
+    EMAIL_TIMEOUT = int(os.getenv("EMAIL_TIMEOUT", 30))
+    EMAIL_SSL_KEYFILE = os.getenv("EMAIL_SSL_KEYFILE", None)
+    EMAIL_SSL_CERTFILE = os.getenv("EMAIL_SSL_CERTFILE", None)
+
+WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
+
+# CSRF
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
     CSRF_TRUSTED_ORIGINS.append("https://" + host)
