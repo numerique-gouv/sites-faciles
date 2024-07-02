@@ -7,6 +7,11 @@ BUTTON_TYPE_CHOICES = (
     ("fr-btn fr-btn--tertiary-no-outline", _("Tertiary without border")),
 )
 
+BUTTON_ICON_SIDE = (
+    ("fr-btn--icon-left", _("Left")),
+    ("fr-btn--icon-right", _("Right")),
+)
+
 HEADING_CHOICES = [
     ("h2", _("Heading 2")),
     ("h3", _("Heading 3")),
