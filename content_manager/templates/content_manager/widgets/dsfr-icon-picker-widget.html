@@ -1,6 +1,6 @@
 {% load static i18n %}
 <div class="icon-picker-widget">
-  <div style="display: none;">{% include "django/forms/widgets/text.html" %}</div>
+  <div class="admin-hidden">{% include "django/forms/widgets/text.html" %}</div>
 
   {% with widget.attrs.id as widget_id %}
     <button id="{{ widget_id }}-button"
