@@ -12,8 +12,12 @@
     text-align: center
 
 .cmsfr-background-dark
-    & h1, p
+    & h1, p, ul
         color: white
+
+\:root[data-fr-theme=light]
+    .cmsfr-background-dark .fr-btn--secondary
+        background-color: rgba(255, 255, 255, 0.3)
 
 .fr-header__service-title em
     font-weight: lighter
