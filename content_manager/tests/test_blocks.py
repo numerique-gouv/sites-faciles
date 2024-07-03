@@ -155,7 +155,7 @@ class HorizontalCardBlockCase(WagtailPageTestCase):
         self.assertInHTML("""<a href="https://www.info.gouv.fr">Sample card</a>""", response.content.decode())
 
         self.assertInHTML(
-            """<ul class="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
+            """<ul class="fr-btns-group fr-btns-group--inline-lg">
                 <li>
                     <a class="fr-btn fr-btn--secondary"
                     href="https://numerique.gouv.fr"
