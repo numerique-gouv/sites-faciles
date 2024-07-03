@@ -3,13 +3,13 @@
   {{ value.text|richtext }}
 
   {% if value.cta_buttons %}
-    <div class="fr-mb-5w">
+    <div>
       {% for block in value.cta_buttons %}
         {% include_block block %}
       {% endfor %}
     </div>
   {% elif value.cta_url and value.cta_label %}
-    <p class="fr-mb-5w">
+    <p>
       {# It doesn't use dsfr_link or dsfr_button because it's a link with a button style #}
       <a href="{{ value.cta_url }}" class="fr-btn fr-btn--primary">{{ value.cta_label }}</a>
     </p>

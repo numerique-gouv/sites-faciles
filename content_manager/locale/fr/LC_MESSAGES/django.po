@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-02 19:06+0200\n"
-"PO-Revision-Date: 2024-07-02 19:11+0200\n"
+"POT-Creation-Date: 2024-07-03 15:09+0200\n"
+"PO-Revision-Date: 2024-07-03 15:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -48,31 +48,53 @@ msgstr "Assombrir l’image de fond"
 msgid "Call to action text"
 msgstr "Texte de l’appel à action"
 
-#: content_manager/abstract.py:54
+#: content_manager/abstract.py:58 content_manager/blocks.py:321
+#: content_manager/blocks.py:635
+msgid ""
+"Please use only one primary button. If you use icons, align them on the same "
+"side."
+msgstr ""
+"Merci de n’utiliser qu’un seul bouton primaire. Si vous utilisez des icônes, "
+"alignez-les du même côté."
+
+#: content_manager/abstract.py:67
 msgid "Call to action label"
 msgstr "Libellé de l’appel à action"
 
-#: content_manager/abstract.py:60
+#: content_manager/abstract.py:69 content_manager/abstract.py:78
+#: content_manager/blocks.py:646 content_manager/blocks.py:653
+msgid ""
+"This field is obsolete and will be removed in the near future. Please "
+"replace with the CTA buttons above."
+msgstr ""
+"Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
+"avec les boutons de l’appel à action ci-dessus."
+
+#: content_manager/abstract.py:76
 msgid "Call to action link"
 msgstr "Lien de l’appel à action"
 
-#: content_manager/abstract.py:66
+#: content_manager/abstract.py:85
 msgid "Body"
 msgstr "Corps"
 
-#: content_manager/abstract.py:70
+#: content_manager/abstract.py:89
 msgid "Common page configuration"
 msgstr "Configuration commune"
 
-#: content_manager/abstract.py:82
+#: content_manager/abstract.py:100 content_manager/blocks.py:639
+msgid "Call-to-action buttons"
+msgstr "Boutons de l’appel à action"
+
+#: content_manager/abstract.py:105
 msgid "Header options"
 msgstr "Options d’en-tête"
 
-#: content_manager/abstract.py:102
+#: content_manager/abstract.py:125
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:103
+#: content_manager/abstract.py:126
 msgid "Base pages"
 msgstr "Pages de base"
 
@@ -277,14 +299,6 @@ msgstr "Incompatible avec l’appel à action en bas de carte."
 #: content_manager/blocks.py:314
 msgid "Bottom detail: icon"
 msgstr "Détail du bas : icône"
-
-#: content_manager/blocks.py:321 content_manager/blocks.py:635
-msgid ""
-"Please use only one primary button. If you use icons, align them on the same "
-"side."
-msgstr ""
-"Merci de n’utiliser qu’un seul bouton primaire. Si vous utilisez des icônes, "
-"alignez-les du même côté."
 
 #: content_manager/blocks.py:325
 msgid "Bottom call-to-action: links or buttons"
@@ -496,21 +510,9 @@ msgstr "Étape actuelle"
 msgid "Steps"
 msgstr "Étapes"
 
-#: content_manager/blocks.py:639
-msgid "Call-to-action buttons"
-msgstr "Boutons de l’appel à action"
-
 #: content_manager/blocks.py:644
 msgid "Call to action label  (obsolete)"
 msgstr "Libellé de l’appel à action (obsolète)"
-
-#: content_manager/blocks.py:646 content_manager/blocks.py:653
-msgid ""
-"This field is obsolete and will be removed in the near future. Please "
-"replace with the CTA buttons above."
-msgstr ""
-"Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
-"avec les boutons de l’appel à action ci-dessus."
 
 #: content_manager/blocks.py:665
 msgid "Transcription content"
