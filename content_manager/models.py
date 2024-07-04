@@ -145,7 +145,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         ),
     )
 
-    beta_tag = models.BooleanField(_("Show the BETA tag next to the title"), default=False)  # type: ignore
+    beta_tag = models.BooleanField(_("Show the BETA tag next to the title"), default=False)
 
     footer_description = RichTextField(
         _("Description"),

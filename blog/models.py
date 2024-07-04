@@ -15,7 +15,7 @@ from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
 from wagtail.admin.widgets.slug import SlugInput
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models.i18n import Locale, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -23,6 +23,7 @@ from wagtail.snippets.models import register_snippet
 from blog.blocks import COLOPHON_BLOCKS
 from blog.managers import CategoryManager
 from content_manager.abstract import SitesFacilesBasePage
+from content_manager.constants import LIMITED_RICHTEXTFIELD_FEATURES
 from content_manager.models import Tag
 
 User = get_user_model()
@@ -35,8 +36,25 @@ class BlogIndexPage(SitesFacilesBasePage):
         verbose_name=_("Posts per page"),
     )
 
+    # Filters
+    filter_by_category = models.BooleanField(_("Filter by category"), default=True)
+    filter_by_tag = models.BooleanField(_("Filter by tag"), default=True)
+    filter_by_author = models.BooleanField(_("Filter by author"), default=False)
+    filter_by_source = models.BooleanField(
+        _("Filter by source"), help_text=_("The source is the organization of the post author"), default=False
+    )
+
     settings_panels = SitesFacilesBasePage.settings_panels + [
         FieldPanel("posts_per_page"),
+        MultiFieldPanel(
+            [
+                FieldPanel("filter_by_category"),
+                FieldPanel("filter_by_tag"),
+                FieldPanel("filter_by_author"),
+                FieldPanel("filter_by_source"),
+            ],
+            heading=_("Show filters"),
+        ),
     ]
 
     subpage_types = ["blog.BlogEntryPage"]
@@ -59,6 +77,7 @@ class BlogIndexPage(SitesFacilesBasePage):
         locale = Locale.objects.get(language_code=get_language())
 
         breadcrumb = None
+        title = self.title
 
         if tag is None:
             tag = request.GET.get("tag")
@@ -75,6 +94,7 @@ class BlogIndexPage(SitesFacilesBasePage):
                 ],
                 "current": tag,
             }
+            title = _("Posts tagged with %(tag)s") % {"tag": tag}
 
         if category is None:  # Not coming from category_view in views.py
             if request.GET.get("category"):
@@ -98,6 +118,7 @@ class BlogIndexPage(SitesFacilesBasePage):
                 ],
                 "current": category.name,
             }
+            title = _("Posts in category %(category)s") % {"category": category.name}
         if author:
             author = get_object_or_404(User, id=author)
 
@@ -108,9 +129,14 @@ class BlogIndexPage(SitesFacilesBasePage):
                 "current": _("Posts written by") + f" {author.first_name} {author.last_name}",
             }
             posts = posts.filter(owner=author)
+            title = _("Posts written by %(first_name)s %(last_name)s") % {
+                "first_name": author.first_name,
+                "last_name": author.last_name,
+            }
 
         if year:
             posts = posts.filter(date__year=year)
+            title = _("Posts published in %(year)s") % {"year": year}
 
         # Pagination
         page = request.GET.get("page")
@@ -126,12 +152,15 @@ class BlogIndexPage(SitesFacilesBasePage):
 
         context["posts"] = posts
         if category is not None:
-            context["category"] = category.name
-            context["category_description"] = category.description
+            context["current_category"] = category
         context["tag"] = tag
         context["author"] = author
         context["year"] = year
         context["paginator"] = paginator
+        context["title"] = title
+
+        # Filters
+        context["categories"] = Category.objects.all()
 
         if breadcrumb:
             context["breadcrumb"] = breadcrumb
@@ -220,8 +249,9 @@ class Category(TranslatableMixin, index.Indexed, models.Model):
         verbose_name=_("Parent category"),
         on_delete=models.SET_NULL,
     )
-    description = models.CharField(
+    description = RichTextField(
         max_length=500,
+        features=LIMITED_RICHTEXTFIELD_FEATURES,
         blank=True,
         verbose_name=_("Description"),
         help_text=_("Displayed on the top of the category page"),
