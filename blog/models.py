@@ -71,7 +71,7 @@ class BlogIndexPage(SitesFacilesBasePage):
         )
         return posts
 
-    def get_context(self, request, tag=None, category=None, author=None, year=None, *args, **kwargs):  # NOSONAR
+    def get_context(self, request, tag=None, category=None, author=None, source=None, year=None, *args, **kwargs):
         context = super(BlogIndexPage, self).get_context(request, *args, **kwargs)
         posts = self.posts
         locale = Locale.objects.get(language_code=get_language())
@@ -96,16 +96,10 @@ class BlogIndexPage(SitesFacilesBasePage):
             }
             title = _("Posts tagged with %(tag)s") % {"tag": tag}
 
-        if category is None:  # Not coming from category_view in views.py
-            if request.GET.get("category"):
-                category = get_object_or_404(
-                    Category,
-                    slug=request.GET.get("category"),
-                    locale=locale,
-                )
+        if category is None:
+            category = request.GET.get("category")
         if category:
-            if not request.GET.get("category"):
-                category = get_object_or_404(Category, slug=category, locale=locale)
+            category = get_object_or_404(Category, slug=category, locale=locale)
             posts = posts.filter(blog_categories__slug=category.slug)
 
             breadcrumb = {
@@ -119,20 +113,33 @@ class BlogIndexPage(SitesFacilesBasePage):
                 "current": category.name,
             }
             title = _("Posts in category %(category)s") % {"category": category.name}
+
+        if source is None:
+            source = request.GET.get("source")
+        if source:
+            source = get_object_or_404(Organization, slug=source)
+            posts = posts.filter(authors__organization=source)
+            breadcrumb = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                ],
+                "current": _("Posts written by") + f" {source.name}",
+            }
+            title = _("Posts written by") + f" {source.name}"
+
+        if author is None:
+            author = request.GET.get("author")
         if author:
-            author = get_object_or_404(User, id=author)
+            author = get_object_or_404(Person, id=author)
 
             breadcrumb = {
                 "links": [
                     {"url": self.get_url(), "title": self.title},
                 ],
-                "current": _("Posts written by") + f" {author.first_name} {author.last_name}",
+                "current": _("Posts written by") + f" {author.name}",
             }
-            posts = posts.filter(owner=author)
-            title = _("Posts written by %(first_name)s %(last_name)s") % {
-                "first_name": author.first_name,
-                "last_name": author.last_name,
-            }
+            posts = posts.filter(authors=author)
+            title = _("Posts written by") + f" {author.name}"
 
         if year:
             posts = posts.filter(date__year=year)
@@ -151,16 +158,25 @@ class BlogIndexPage(SitesFacilesBasePage):
             posts = paginator.page(paginator.num_pages)
 
         context["posts"] = posts
-        if category is not None:
-            context["current_category"] = category
-        context["tag"] = tag
-        context["author"] = author
+        context["current_category"] = category
+        context["current_tag"] = tag
+        context["current_source"] = source
+        context["current_author"] = author
         context["year"] = year
         context["paginator"] = paginator
         context["title"] = title
 
         # Filters
-        context["categories"] = Category.objects.all()
+        context["categories"] = Category.objects.all().order_by("name")
+
+        author_ids = BlogEntryPage.objects.all().values_list("authors", flat=True)
+        context["authors"] = Person.objects.filter(id__in=author_ids).order_by("name")
+
+        source_ids = BlogEntryPage.objects.all().values_list("authors__organization", flat=True)
+        context["sources"] = Organization.objects.filter(id__in=source_ids).order_by("name")
+
+        tag_ids = BlogEntryPage.objects.all().values_list("tags", flat=True)
+        context["tags"] = Tag.objects.filter(id__in=tag_ids).order_by("name")
 
         if breadcrumb:
             context["breadcrumb"] = breadcrumb
@@ -315,10 +331,27 @@ class TagEntryPage(TaggedItemBase):
 
 
 @register_snippet
+class Organization(models.Model):
+    name = models.CharField(_("Name"), max_length=255)
+    slug = models.SlugField(max_length=80)
+
+    panels = [
+        TitleFieldPanel("name"),
+        FieldPanel("slug", widget=SlugInput),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Organization")
+
+
+@register_snippet
 class Person(models.Model):
     name = models.CharField(_("Name"), max_length=255)
     role = models.CharField(_("Role"), max_length=255)
-    organization = models.CharField(_("Organization"), max_length=255)
+    organization = models.ForeignKey("Organization", null=True, on_delete=models.SET_NULL)
     contact_info = models.CharField(_("Contact info"), max_length=500, blank=True)
     image = models.ForeignKey(
         "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
