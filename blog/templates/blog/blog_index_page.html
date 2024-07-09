@@ -47,7 +47,12 @@
 
   <div class="fr-container fr-pt-4w">
     {% include "content_manager/blocks/breadcrumbs.html" %}
-    {% if not page.header_with_title %}<h1>{{ page.title }}</h1>{% endif %}
+    {% if not page.header_with_title %}
+      <h1>
+        {{ page.title }}
+        {% if extra_title %}: {{ extra_title }}{% endif %}
+      </h1>
+    {% endif %}
 
     {% if current_category.description %}
       {{ current_category.description|richtext }}
@@ -57,7 +62,7 @@
 
     {% if categories and page.filter_by_category %}
       <div class="fr-my-3w">
-        <h2>{% translate "Filter by category" %}</h2>
+        <h2 class="fr-h6">{% translate "Filter by category" %}</h2>
         <ul class="fr-tags-group">
           {% for category in categories %}
             <li>
@@ -74,7 +79,7 @@
 
     {% if tags and page.filter_by_tag %}
       <div class="fr-my-3w">
-        <h2>{% translate "Filter by tag" %}</h2>
+        <h2 class="fr-h6">{% translate "Filter by tag" %}</h2>
         <ul class="fr-tags-group">
           {% for tag in tags %}
             <li>
@@ -91,7 +96,7 @@
 
     {% if authors and page.filter_by_author %}
       <div class="fr-my-3w">
-        <h2>{% translate "Filter by author" %}</h2>
+        <h2 class="fr-h6">{% translate "Filter by author" %}</h2>
         <ul class="fr-tags-group">
           {% for author in authors %}
             <li>
@@ -106,7 +111,7 @@
 
     {% if sources and page.filter_by_source %}
       <div class="fr-my-3w">
-        <h2>{% translate "Filter by source" %}</h2>
+        <h2 class="fr-h6">{% translate "Filter by source" %}</h2>
         <ul class="fr-tags-group">
           {% for source in sources %}
             <li>

@@ -39,6 +39,7 @@ class Tag(TaggitTag):
 
     class Meta:
         proxy = True
+        verbose_name = _("Tag")
 
 
 class MonospaceField(models.TextField):

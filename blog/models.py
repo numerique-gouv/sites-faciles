@@ -77,13 +77,13 @@ class BlogIndexPage(SitesFacilesBasePage):
         locale = Locale.objects.get(language_code=get_language())
 
         breadcrumb = None
-        title = self.title
+        extra_title = ""
 
         if tag is None:
             tag = request.GET.get("tag")
         if tag:
             tag = get_object_or_404(Tag, slug=tag)
-            posts = posts.filter(tags__slug=tag.slug)
+            posts = posts.filter(tags=tag)
             breadcrumb = {
                 "links": [
                     {"url": self.get_url(), "title": self.title},
@@ -94,13 +94,13 @@ class BlogIndexPage(SitesFacilesBasePage):
                 ],
                 "current": tag,
             }
-            title = _("Posts tagged with %(tag)s") % {"tag": tag}
+            extra_title = _("Posts tagged with %(tag)s") % {"tag": tag}
 
         if category is None:
             category = request.GET.get("category")
         if category:
             category = get_object_or_404(Category, slug=category, locale=locale)
-            posts = posts.filter(blog_categories__slug=category.slug)
+            posts = posts.filter(blog_categories=category)
 
             breadcrumb = {
                 "links": [
@@ -112,7 +112,7 @@ class BlogIndexPage(SitesFacilesBasePage):
                 ],
                 "current": category.name,
             }
-            title = _("Posts in category %(category)s") % {"category": category.name}
+            extra_title = _("Posts in category %(category)s") % {"category": category.name}
 
         if source is None:
             source = request.GET.get("source")
@@ -125,7 +125,7 @@ class BlogIndexPage(SitesFacilesBasePage):
                 ],
                 "current": _("Posts written by") + f" {source.name}",
             }
-            title = _("Posts written by") + f" {source.name}"
+            extra_title = _("Posts written by") + f" {source.name}"
 
         if author is None:
             author = request.GET.get("author")
@@ -139,11 +139,11 @@ class BlogIndexPage(SitesFacilesBasePage):
                 "current": _("Posts written by") + f" {author.name}",
             }
             posts = posts.filter(authors=author)
-            title = _("Posts written by") + f" {author.name}"
+            extra_title = _("Posts written by") + f" {author.name}"
 
         if year:
             posts = posts.filter(date__year=year)
-            title = _("Posts published in %(year)s") % {"year": year}
+            extra_title = _("Posts published in %(year)s") % {"year": year}
 
         # Pagination
         page = request.GET.get("page")
@@ -164,7 +164,7 @@ class BlogIndexPage(SitesFacilesBasePage):
         context["current_author"] = author
         context["year"] = year
         context["paginator"] = paginator
-        context["title"] = title
+        context["extra_title"] = extra_title
 
         # Filters
         context["categories"] = Category.objects.all().order_by("name")

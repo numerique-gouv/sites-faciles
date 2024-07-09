@@ -6,12 +6,14 @@ from wagtail import blocks
 from wagtail.blocks import StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
 from content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
     HEADING_CHOICES,
+    HEADING_CHOICES_2_5,
     HORIZONTAL_CARD_IMAGE_RATIOS,
     LEVEL_CHOICES,
     LIMITED_RICHTEXTFIELD_FEATURES,
@@ -804,6 +806,61 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
         template = "content_manager/blocks/full_width_background.html"
 
 
+# Other apps
+class BlogRecentEntriesStructValue(blocks.StructValue):
+    def posts(self):
+        blog = self.get("blog")
+        blog_posts = blog.posts
+
+        category_filter = self.get("category_filter")
+        if category_filter:
+            blog_posts = blog_posts.filter(blog_categories=category_filter)
+
+        tag_filter = self.get("tag_filter")
+        if tag_filter:
+            blog_posts = blog_posts.filter(tags=tag_filter)
+
+        author_filter = self.get("author_filter")
+        if author_filter:
+            blog_posts = blog_posts.filter(authors=author_filter)
+
+        source_filter = self.get("source_filter")
+        if source_filter:
+            blog_posts = blog_posts.filter(authors__organization=source_filter)
+
+        entries_count = self.get("entries_count")
+        return blog_posts[:entries_count]
+
+
+class BlogRecentEntriesBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES_2_5,
+        required=False,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
+    entries_count = blocks.IntegerBlock(
+        label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
+    )
+    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
+    tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
+    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
+    source_filter = SnippetChooserBlock(
+        "blog.Organization",
+        label=_("Filter by source"),
+        help_text=_("The source is the organization of the post author"),
+        required=False,
+    )
+
+    class Meta:
+        icon = "placeholder"
+        template = ("content_manager/blocks/blog_recent_entries.html",)
+        value_class = BlogRecentEntriesStructValue
+
+
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     ("image", ImageBlock()),
@@ -834,6 +891,10 @@ STREAMFIELD_COMMON_BLOCKS = [
             template="content_manager/blocks/subpages_list.html",
             group=_("Website structure"),
         ),
+    ),
+    (
+        "blog_recent_entries",
+        BlogRecentEntriesBlock(label=_("Blog recent entries"), group=_("Website structure")),
     ),
 ]
 
