@@ -21,6 +21,12 @@ HEADING_CHOICES = [
     ("p", _("Paragraph")),
 ]
 
+HEADING_CHOICES_2_5 = [
+    ("h2", _("Heading 2")),
+    ("h3", _("Heading 3")),
+    ("h4", _("Heading 4")),
+    ("h5", _("Heading 5")),
+]
 
 HORIZONTAL_CARD_IMAGE_RATIOS = [
     ("fr-card--horizontal-tier", "1/3"),
