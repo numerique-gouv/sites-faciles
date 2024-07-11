@@ -3,7 +3,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
-from wagtail.blocks import StructValue
+from wagtail.blocks import BooleanBlock, StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
@@ -702,6 +702,94 @@ class VideoBlock(blocks.StructBlock):
         template = "content_manager/blocks/video.html"
 
 
+## Other apps-related blocks
+class BlogRecentEntriesStructValue(blocks.StructValue):
+    def posts(self):
+        blog = self.get("blog")
+        blog_posts = blog.posts
+
+        category_filter = self.get("category_filter")
+        if category_filter:
+            blog_posts = blog_posts.filter(blog_categories=category_filter)
+
+        tag_filter = self.get("tag_filter")
+        if tag_filter:
+            blog_posts = blog_posts.filter(tags=tag_filter)
+
+        author_filter = self.get("author_filter")
+        if author_filter:
+            blog_posts = blog_posts.filter(authors=author_filter)
+
+        source_filter = self.get("source_filter")
+        if source_filter:
+            blog_posts = blog_posts.filter(authors__organization=source_filter)
+
+        entries_count = self.get("entries_count")
+        return blog_posts[:entries_count]
+
+    def current_filters(self) -> dict:
+        filters = {}
+
+        category_filter = self.get("category_filter")
+        if category_filter:
+            filters["category"] = category_filter.slug
+
+        tag_filter = self.get("tag_filter")
+        if tag_filter:
+            filters["tag"] = tag_filter.slug
+
+        author_filter = self.get("author_filter")
+        if author_filter:
+            filters["author"] = author_filter.id
+
+        source_filter = self.get("source_filter")
+        if source_filter:
+            filters["source"] = source_filter.slug
+
+        return filters
+
+    def sub_heading_tag(self):
+        heading_tag = self.get("heading_tag")
+        if heading_tag == "h2":
+            return "h3"
+        elif heading_tag == "h3":
+            return "h4"
+        elif heading_tag == "h4":
+            return "h5"
+        else:
+            return "h6"
+
+
+class BlogRecentEntriesBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES_2_5,
+        required=False,
+        default="h2",
+        help_text=_("Adapt to the page layout. Defaults to heading 2."),
+    )
+    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
+    entries_count = blocks.IntegerBlock(
+        label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
+    )
+    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
+    tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
+    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
+    source_filter = SnippetChooserBlock(
+        "blog.Organization",
+        label=_("Filter by source"),
+        help_text=_("The source is the organization of the post author"),
+        required=False,
+    )
+    show_filters = BooleanBlock(label=_("Show filters"), default=False, required=False)
+
+    class Meta:
+        icon = "placeholder"
+        template = ("content_manager/blocks/blog_recent_entries.html",)
+        value_class = BlogRecentEntriesStructValue
+
+
 ## Page structure blocks
 class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
@@ -715,6 +803,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     link = SingleLinkBlock(label=_("Single link"))
     iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
     tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
+    blog_recent_entries = BlogRecentEntriesBlock(label=_("Blog recent entries"), group=_("Website structure"))
 
     class Meta:
         icon = "dots-horizontal"
@@ -804,61 +893,6 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
     class Meta:
         icon = "minus"
         template = "content_manager/blocks/full_width_background.html"
-
-
-# Other apps
-class BlogRecentEntriesStructValue(blocks.StructValue):
-    def posts(self):
-        blog = self.get("blog")
-        blog_posts = blog.posts
-
-        category_filter = self.get("category_filter")
-        if category_filter:
-            blog_posts = blog_posts.filter(blog_categories=category_filter)
-
-        tag_filter = self.get("tag_filter")
-        if tag_filter:
-            blog_posts = blog_posts.filter(tags=tag_filter)
-
-        author_filter = self.get("author_filter")
-        if author_filter:
-            blog_posts = blog_posts.filter(authors=author_filter)
-
-        source_filter = self.get("source_filter")
-        if source_filter:
-            blog_posts = blog_posts.filter(authors__organization=source_filter)
-
-        entries_count = self.get("entries_count")
-        return blog_posts[:entries_count]
-
-
-class BlogRecentEntriesBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label=_("Title"), required=False)
-    heading_tag = blocks.ChoiceBlock(
-        label=_("Heading level"),
-        choices=HEADING_CHOICES_2_5,
-        required=False,
-        default="h3",
-        help_text=_("Adapt to the page layout. Defaults to heading 3."),
-    )
-    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
-    entries_count = blocks.IntegerBlock(
-        label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
-    )
-    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
-    tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
-    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
-    source_filter = SnippetChooserBlock(
-        "blog.Organization",
-        label=_("Filter by source"),
-        help_text=_("The source is the organization of the post author"),
-        required=False,
-    )
-
-    class Meta:
-        icon = "placeholder"
-        template = ("content_manager/blocks/blog_recent_entries.html",)
-        value_class = BlogRecentEntriesStructValue
 
 
 STREAMFIELD_COMMON_BLOCKS = [

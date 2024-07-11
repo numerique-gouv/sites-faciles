@@ -54,28 +54,33 @@ def richtext_p_add_class(value, class_name: str):
 @register.simple_tag(takes_context=True)
 def toggle_url_filter(context, *_, **kwargs):
     """
-    Sets a singular URL filter, or removes it if it is already in use.
+    Sets a URL filter, or removes it if it is already in use.
+
+    The other filters can be passed through a dictionary or the GET parameters
     """
-    url_string = ""
 
-    author = kwargs.get("author", "")
-    current_author = context.get("current_author", "")
-    if author and author != current_author:
-        url_string = f"?author={author.id}"
+    filters_dict = kwargs.get("filters_dict", {})
+    if filters_dict:
+        url_params = filters_dict.copy()
+    else:
+        url_params = context["request"].GET.copy()
 
-    category = kwargs.get("category", "")
-    current_category = context.get("current_category", "")
-    if category and category != current_category:
-        url_string = f"?category={category.slug}"
+    filters = [("author", "id"), ("category", "slug"), ("source", "slug"), ("tag", "slug")]
 
-    source = kwargs.get("source", "")
-    current_source = context.get("current_source", "")
-    if source and source != current_source:
-        url_string = f"?source={source.slug}"
+    for f in filters:
+        param = f[0]
+        attr = f[1]
+        val = kwargs.get(param, "")
+        current_val = context.get(f"current_{param}", "")
 
-    tag = kwargs.get("tag", "")
-    current_tag = context.get("current_tag", "")
-    if tag and tag != current_tag:
-        url_string = f"?tag={tag.slug}"
+        if val and val != current_val:
+            url_params[param] = getattr(val, attr)
+        elif val and val == current_val:
+            url_params.pop(param)
 
-    return url_string
+    url_string = "&".join(["{}={}".format(x[0], x[1]) for x in url_params.items()])
+
+    if url_string:
+        return f"?{url_string}"
+    else:
+        return ""

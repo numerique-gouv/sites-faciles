@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models import Count
+from django.db.models import BooleanField, Count, QuerySet
 from django.db.models.expressions import F
 from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
@@ -167,21 +167,31 @@ class BlogIndexPage(SitesFacilesBasePage):
         context["extra_title"] = extra_title
 
         # Filters
-        context["categories"] = Category.objects.all().order_by("name")
-
-        author_ids = BlogEntryPage.objects.all().values_list("authors", flat=True)
-        context["authors"] = Person.objects.filter(id__in=author_ids).order_by("name")
-
-        source_ids = BlogEntryPage.objects.all().values_list("authors__organization", flat=True)
-        context["sources"] = Organization.objects.filter(id__in=source_ids).order_by("name")
-
-        tag_ids = BlogEntryPage.objects.all().values_list("tags", flat=True)
-        context["tags"] = Tag.objects.filter(id__in=tag_ids).order_by("name")
+        context["categories"] = self.get_categories()
+        context["authors"] = self.get_authors()
+        context["sources"] = self.get_sources()
+        context["tags"] = self.get_tags()
 
         if breadcrumb:
             context["breadcrumb"] = breadcrumb
 
         return context
+
+    def get_authors(self) -> QuerySet:
+        ids = self.posts.specific().values_list("authors", flat=True)
+        return Person.objects.filter(id__in=ids).order_by("name")
+
+    def get_categories(self) -> QuerySet:
+        ids = self.posts.specific().values_list("blog_categories", flat=True)
+        return Category.objects.filter(id__in=ids).order_by("name")
+
+    def get_sources(self) -> QuerySet:
+        ids = self.posts.specific().values_list("authors__organization", flat=True)
+        return Organization.objects.filter(id__in=ids).order_by("name")
+
+    def get_tags(self) -> QuerySet:
+        ids = self.posts.specific().values_list("tags", flat=True)
+        return Tag.objects.filter(id__in=ids).order_by("name")
 
     def list_categories(self) -> list:
         posts = self.posts.specific()
@@ -203,6 +213,9 @@ class BlogIndexPage(SitesFacilesBasePage):
             .filter(tag_count__gte=min_count)
             .order_by("-tag_count")
         )
+
+    def show_filters(self) -> bool | BooleanField:
+        return self.filter_by_category or self.filter_by_tag or self.filter_by_author or self.filter_by_source
 
 
 class BlogEntryPage(SitesFacilesBasePage):
