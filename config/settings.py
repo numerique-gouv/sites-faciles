@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "sass_processor",
     "content_manager",
     "blog",
+    "events",
     "forms",
 ]
 
