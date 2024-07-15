@@ -1,3 +1,4 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
@@ -7,8 +8,9 @@ from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel
 
-from blog.models import Category
+from blog.models import Category, Organization, Person
 from content_manager.abstract import SitesFacilesBasePage
+from content_manager.models import Tag
 
 
 class EventsIndexPage(SitesFacilesBasePage):
@@ -30,11 +32,70 @@ class EventsIndexPage(SitesFacilesBasePage):
     @property
     def posts(self):
         # Get list of event pages that are descendants of this page
-        posts = EventEntryPage.objects.descendant_of(self).live()
         posts = (
-            posts.order_by("-date").select_related("owner").prefetch_related("tags", "event_categories", "date__year")
+            EventEntryPage.objects.descendant_of(self)
+            .live()
+            .order_by("-event_date_start")
+            .select_related("owner")
+            .prefetch_related("tags", "event_categories", "date__year")
         )
         return posts
+
+    def get_context(self, request, tag=None, category=None, author=None, source=None, year=None, *args, **kwargs):
+        context = super(EventsIndexPage, self).get_context(request, *args, **kwargs)
+        posts = self.posts
+        # locale = Locale.objects.get(language_code=get_language())
+
+        breadcrumb = None
+        extra_title = ""
+
+        # Pagination
+        page = request.GET.get("page")
+        page_size = self.posts_per_page
+
+        paginator = Paginator(posts, page_size)  # Show <page_size> posts per page
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+
+        context["posts"] = posts
+        context["current_category"] = category
+        context["current_tag"] = tag
+        context["current_source"] = source
+        context["current_author"] = author
+        context["year"] = year
+        context["paginator"] = paginator
+        context["extra_title"] = extra_title
+
+        # Filters
+        context["categories"] = self.get_categories()
+        context["authors"] = self.get_authors()
+        context["sources"] = self.get_sources()
+        context["tags"] = self.get_tags()
+
+        if breadcrumb:
+            context["breadcrumb"] = breadcrumb
+
+        return context
+
+    def get_authors(self) -> models.QuerySet:
+        ids = self.posts.specific().values_list("authors", flat=True)
+        return Person.objects.filter(id__in=ids).order_by("name")
+
+    def get_categories(self) -> models.QuerySet:
+        ids = self.posts.specific().values_list("event_categories", flat=True)
+        return Category.objects.filter(id__in=ids).order_by("name")
+
+    def get_sources(self) -> models.QuerySet:
+        ids = self.posts.specific().values_list("authors__organization", flat=True)
+        return Organization.objects.filter(id__in=ids).order_by("name")
+
+    def get_tags(self) -> models.QuerySet:
+        ids = self.posts.specific().values_list("tags", flat=True)
+        return Tag.objects.filter(id__in=ids).order_by("name")
 
 
 class EventEntryPage(SitesFacilesBasePage):

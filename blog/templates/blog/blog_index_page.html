@@ -145,12 +145,12 @@
             <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination posts %}</div>
           {% endif %}
         </div>
-      {% else %}
-        <div class="fr-grid-row fr-grid-row--gutters">{% include "blog/blocks/blog_index_posts_list.html" %}</div>
-        {% if posts.paginator.num_pages > 1 %}
-          <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination posts %}</div>
-        {% endif %}
+      </div>
+    {% else %}
+      <div class="fr-grid-row fr-grid-row--gutters">{% include "blog/blocks/blog_index_posts_list.html" %}</div>
+      {% if posts.paginator.num_pages > 1 %}
+        <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination posts %}</div>
       {% endif %}
-    </div>
+    {% endif %}
   </div>
 {% endblock content %}
