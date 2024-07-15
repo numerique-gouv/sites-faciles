@@ -32,9 +32,11 @@ class EventsIndexPage(SitesFacilesBasePage):
     @property
     def posts(self):
         # Get list of event pages that are descendants of this page
+        today = timezone.now().date()
         posts = (
             EventEntryPage.objects.descendant_of(self)
             .live()
+            .filter(event_date_start__date__gte=today)
             .order_by("-event_date_start")
             .select_related("owner")
             .prefetch_related("tags", "event_categories", "date__year")
