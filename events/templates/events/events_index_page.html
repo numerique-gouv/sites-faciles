@@ -70,6 +70,11 @@
                     aria-expanded="false">{% translate "Filters" %}</button>
             <div class="fr-collapse" id="fr-sidemenu-wrapper">
               <div class="fr-sidemenu__title" id="fr-sidemenu-title">{% translate "Filters" %}</div>
+
+              <h2 class="fr-h6">{% translate "Filter by date" %}</h2>
+
+              {{ form }}
+
               {% if categories and page.filter_by_category %}
                 <div class="fr-my-3w">
                   <h2 class="fr-h6">{% translate "Filter by category" %}</h2>
@@ -146,5 +151,8 @@
       </div>
     </div>
   </div>
-
 {% endblock content %}
+
+{% block extra_js %}
+  <script src="{% static 'events/filters.js' %}"></script>
+{% endblock extra_js %}

@@ -1,27 +1,47 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language, gettext_lazy as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel
+from wagtail.models.i18n import Locale
 
 from blog.models import Category, Organization, Person
 from content_manager.abstract import SitesFacilesBasePage
 from content_manager.models import Tag
+from events.forms import EventSearchForm
 
 
 class EventsIndexPage(SitesFacilesBasePage):
     posts_per_page = models.PositiveSmallIntegerField(
         default=10,
         validators=[MaxValueValidator(100), MinValueValidator(1)],
-        verbose_name=_("Posts per page"),
+        verbose_name=_("Events per page"),
+    )
+
+    # Filters
+    filter_by_category = models.BooleanField(_("Filter by category"), default=True)
+    filter_by_tag = models.BooleanField(_("Filter by tag"), default=True)
+    filter_by_author = models.BooleanField(_("Filter by author"), default=False)
+    filter_by_source = models.BooleanField(
+        _("Filter by source"), help_text=_("The source is the organization of the event author"), default=False
     )
 
     settings_panels = SitesFacilesBasePage.settings_panels + [
         FieldPanel("posts_per_page"),
+        MultiFieldPanel(
+            [
+                FieldPanel("filter_by_category"),
+                FieldPanel("filter_by_tag"),
+                FieldPanel("filter_by_author"),
+                FieldPanel("filter_by_source"),
+            ],
+            heading=_("Show filters"),
+        ),
     ]
 
     subpage_types = ["events.EventEntryPage"]
@@ -46,10 +66,78 @@ class EventsIndexPage(SitesFacilesBasePage):
     def get_context(self, request, tag=None, category=None, author=None, source=None, year=None, *args, **kwargs):
         context = super(EventsIndexPage, self).get_context(request, *args, **kwargs)
         posts = self.posts
-        # locale = Locale.objects.get(language_code=get_language())
+        locale = Locale.objects.get(language_code=get_language())
 
         breadcrumb = None
         extra_title = ""
+
+        if tag is None:
+            tag = request.GET.get("tag")
+        if tag:
+            tag = get_object_or_404(Tag, slug=tag)
+            posts = posts.filter(tags=tag)
+            breadcrumb = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                ],
+                "current": tag,
+            }
+            extra_title = _("Events tagged with %(tag)s") % {"tag": tag}
+
+        if category is None:
+            category = request.GET.get("category")
+        if category:
+            category = get_object_or_404(Category, slug=category, locale=locale)
+            posts = posts.filter(event_categories=category)
+
+            breadcrumb = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                ],
+                "current": category.name,
+            }
+            extra_title = _("Events in category %(category)s") % {"category": category.name}
+
+        if source is None:
+            source = request.GET.get("source")
+        if source:
+            source = get_object_or_404(Organization, slug=source)
+            posts = posts.filter(authors__organization=source)
+            breadcrumb = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                ],
+                "current": _("Events created by") + f" {source.name}",
+            }
+            extra_title = _("Events created by") + f" {source.name}"
+
+        if author is None:
+            author = request.GET.get("author")
+        if author:
+            author = get_object_or_404(Person, id=author)
+
+            breadcrumb = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                ],
+                "current": _("Events created by") + f" {author.name}",
+            }
+            posts = posts.filter(authors=author)
+            extra_title = _("Events created by") + f" {author.name}"
+
+        if year:
+            posts = posts.filter(date__year=year)
+            extra_title = _("Events published in %(year)s") % {"year": year}
+
+        date_from = request.GET.get("date_from", "")
+        if date_from:
+            posts = posts.filter(event_date_end__date__gte=date_from)
+
+        date_to = request.GET.get("date_to", "")
+        if date_to:
+            posts = posts.filter(event_date_start__date__lte=date_to)
+
+        form = EventSearchForm(initial={"date_from": date_from, "date_to": date_to})
 
         # Pagination
         page = request.GET.get("page")
@@ -73,6 +161,7 @@ class EventsIndexPage(SitesFacilesBasePage):
         context["extra_title"] = extra_title
 
         # Filters
+        context["form"] = form
         context["categories"] = self.get_categories()
         context["authors"] = self.get_authors()
         context["sources"] = self.get_sources()
@@ -113,6 +202,10 @@ class EventEntryPage(SitesFacilesBasePage):
     date = models.DateTimeField(verbose_name=_("Post date"), default=timezone.now)
     event_date_start = models.DateTimeField(verbose_name=_("Event start date"), default=timezone.now)
     event_date_end = models.DateTimeField(verbose_name=_("Event end date"), default=timezone.now)
+
+    location = models.CharField(max_length=200, verbose_name=_("Location"), blank=True, null=True)
+    registration_url = models.URLField(verbose_name=_("Registration URL"), blank=True, null=True)
+
     authors = ParentalManyToManyField(
         "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
@@ -132,8 +225,10 @@ class EventEntryPage(SitesFacilesBasePage):
                     ],
                     classname="label-above",
                 ),
+                FieldPanel("location"),
+                FieldPanel("registration_url"),
             ],
-            _("Event date"),
+            _("Event date and place"),
         ),
         MultiFieldPanel(
             [

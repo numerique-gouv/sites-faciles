@@ -90,7 +90,6 @@
             {% endfor %}
           </div>
         </div>
-
       {% endif %}
     {% endwith %}
 
@@ -102,11 +101,33 @@
   {% endwith %}
 
   <div class="fr-container fr-my-6w">
-    {% for tag in page.tags.all|dictsort:"slug" %}
-      <a class="fr-tag"
-         target="_self"
-         href="{% url 'blog:tag' page.get_parent.slug tag.slug %}">{{ tag }}</a>
-    {% endfor %}
+    <div class="fr-tile fr-tile--horizontal">
+      <div class="fr-tile__body">
+        <div class="fr-tile__content">
+          <h2 class="fr-tile__title">{{ page.title }}</h2>
+          <ul class="fr-tile__desc">
+            <li>
+              <strong>{% translate "Date:" %}</strong> {{ page.event_date_start }} - {{ page.event_date_end }}
+            </li>
+            <li>
+              <strong>{% translate "Location:" %}</strong> {{ page.location }}
+            </li>
+            {% if page.registration_url %}
+              <li>
+                <strong>{% translate "Registration link:" %}</strong> <a href="{{ page.registration_url }}">{{ page.registration_url }}</a>
+              </li>
+            {% endif %}
+          </ul>
+          <div class="fr-tile__start">
+            {% for tag in page.tags.all|dictsort:"slug" %}
+              <a class="fr-tag"
+                 target="_self"
+                 href="{% pageurl page.get_parent %}?tag={{ tag.slug }}">{{ tag }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 {% endblock content %}

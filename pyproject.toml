@@ -61,6 +61,10 @@ extend-exclude = '''
 )/
 '''
 
+[tool.djlint]
+max_blank_lines = 1
+ignore = "H030,H031,H006"
+indent = 2
 
 [tool.pyright]
 reportAttributeAccessIssue = false
