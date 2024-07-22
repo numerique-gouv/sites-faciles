@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags i18n %}
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags wagtail_dsfr_tags i18n %}
 
 {% block title %}
   <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
@@ -69,7 +69,7 @@
                     aria-controls="fr-sidemenu-wrapper"
                     aria-expanded="false">{% translate "Filters" %}</button>
             <div class="fr-collapse" id="fr-sidemenu-wrapper">
-              <div class="fr-sidemenu__title" id="fr-sidemenu-title">{% translate "Filters" %}</div>
+              <div class="fr-sidemenu__title" id="fr-sidemenu-title">{% translate "Filters and export" %}</div>
 
               <h2 class="fr-h6">{% translate "Filter by date" %}</h2>
 
@@ -78,7 +78,7 @@
               {% if categories and page.filter_by_category %}
                 <div class="fr-my-3w">
                   <h2 class="fr-h6">{% translate "Filter by category" %}</h2>
-                  <ul class="fr-tags-group">
+                  <ul class="fr-tags-group fr-mt-1w">
                     {% for category in categories %}
                       <li>
                         <a class="fr-tag"
@@ -95,7 +95,7 @@
               {% if tags and page.filter_by_tag %}
                 <div class="fr-my-3w">
                   <h2 class="fr-h6">{% translate "Filter by tag" %}</h2>
-                  <ul class="fr-tags-group">
+                  <ul class="fr-tags-group fr-mt-1w">
                     {% for tag in tags %}
                       <li>
                         <a class="fr-tag"
@@ -112,7 +112,7 @@
               {% if authors and page.filter_by_author %}
                 <div class="fr-my-3w">
                   <h2 class="fr-h6">{% translate "Filter by author" %}</h2>
-                  <ul class="fr-tags-group">
+                  <ul class="fr-tags-group fr-mt-1w">
                     {% for author in authors %}
                       <li>
                         <a class="fr-tag"
@@ -127,7 +127,7 @@
               {% if sources and page.filter_by_source %}
                 <div class="fr-my-3w">
                   <h2 class="fr-h6">{% translate "Filter by source" %}</h2>
-                  <ul class="fr-tags-group">
+                  <ul class="fr-tags-group fr-mt-1w">
                     {% for source in sources %}
                       <li>
                         <a class="fr-tag"
@@ -138,6 +138,14 @@
                   </ul>
                 </div>
               {% endif %}
+
+              <h2 class="fr-h6">{% translate "Export" %}</h2>
+              <ul class="fr-btns-group fr-mt-1w">
+                <li>
+                  <a href="{% routablepageurl page 'ical_view' %}"
+                     class="fr-btn fr-btn--secondary">{% translate "Add to your calendar (iCal)" %}</a>
+                </li>
+              </ul>
             </div>
           </div>
         </nav>

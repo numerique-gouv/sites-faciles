@@ -1,22 +1,27 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.utils.text import slugify
 from django.utils.translation import get_language, gettext_lazy as _
+from icalendar import Calendar, Event, vText
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel
+from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.models.i18n import Locale
+from wagtail.search import index
 
 from blog.models import Category, Organization, Person
 from content_manager.abstract import SitesFacilesBasePage
-from content_manager.models import Tag
+from content_manager.models import CmsDsfrConfig, Tag
 from events.forms import EventSearchForm
 
 
-class EventsIndexPage(SitesFacilesBasePage):
+class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
     posts_per_page = models.PositiveSmallIntegerField(
         default=10,
         validators=[MaxValueValidator(100), MinValueValidator(1)],
@@ -57,7 +62,7 @@ class EventsIndexPage(SitesFacilesBasePage):
             EventEntryPage.objects.descendant_of(self)
             .live()
             .filter(event_date_start__date__gte=today)
-            .order_by("-event_date_start")
+            .order_by("event_date_start")
             .select_related("owner")
             .prefetch_related("tags", "event_categories", "date__year")
         )
@@ -188,8 +193,39 @@ class EventsIndexPage(SitesFacilesBasePage):
         ids = self.posts.specific().values_list("tags", flat=True)
         return Tag.objects.filter(id__in=ids).order_by("name")
 
+    @path("ical/")
+    def ical_view(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+        Render the full calendar as an iCal file
+        """
+        cal = Calendar()
 
-class EventEntryPage(SitesFacilesBasePage):
+        cms_settings = CmsDsfrConfig.for_request(request=request)
+        site_name = cms_settings.site_title
+        language_code = get_language()
+
+        # See https://www.kanzaki.com/docs/ical/prodid.html
+        prodid = [
+            "-",
+            f"{site_name} – {self.title}",
+            "Sites faciles",
+            language_code.upper(),
+        ]
+
+        cal.add("prodid", "//".join(prodid))
+        cal.add("version", "2.0")
+
+        dtstamp = timezone.now()
+        for entry in self.posts:
+            event = entry.ical_event(dtstamp)
+            cal.add_component(event)
+
+        response = HttpResponse(cal.to_ical(), content_type="text/calendar")
+        response["Content-Disposition"] = f'attachment; filename="{slugify(site_name)}.ics"'
+        return response
+
+
+class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     tags = ClusterTaggableManager(through="TagEventEntryPage", blank=True)
 
     event_categories = ParentalManyToManyField(
@@ -212,6 +248,14 @@ class EventEntryPage(SitesFacilesBasePage):
 
     parent_page_types = ["events.EventsIndexPage"]
     subpage_types = []
+
+    search_fields = SitesFacilesBasePage.search_fields + [
+        index.SearchField("event_categories"),
+        index.SearchField("event_date_start"),
+        index.SearchField("event_date_end"),
+        index.SearchField("location"),
+        index.SearchField("registration_url"),
+    ]
 
     settings_panels = SitesFacilesBasePage.settings_panels + [
         FieldPanel("authors"),
@@ -254,6 +298,54 @@ class EventEntryPage(SitesFacilesBasePage):
 
     def get_absolute_url(self):
         return self.url
+
+    def ical_event(self, dtstamp=None):
+        """
+        Formats the event as an iCalendar event
+        """
+        if not dtstamp:
+            dtstamp = timezone.now()
+
+        event = Event()
+        event.add("summary", self.title)
+        event.add("dtstart", self.event_date_start)
+        event.add("dtend", self.event_date_end)
+        event.add("dtstamp", dtstamp)
+        event.add("uid", str(self.pk))
+        event["location"] = vText(self.location)
+
+        return event
+
+    @path("ical/")
+    def ical_view(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+        Render the event as an iCal file
+        """
+        cal = Calendar()
+
+        cms_settings = CmsDsfrConfig.for_request(request=request)
+        site_name = cms_settings.site_title
+        language_code = get_language()
+
+        title = f"{site_name} – {self.title}"
+
+        # See https://www.kanzaki.com/docs/ical/prodid.html for format
+        prodid = [
+            "-",
+            title,
+            "Sites faciles",
+            language_code.upper(),
+        ]
+
+        cal.add("prodid", "//".join(prodid))
+        cal.add("version", "2.0")
+
+        event = self.ical_event()
+        cal.add_component(event)
+
+        response = HttpResponse(cal.to_ical(), content_type="text/calendar")
+        response["Content-Disposition"] = f'attachment; filename="{slugify(title)}.ics"'
+        return response
 
     class Meta:
         verbose_name = _("Event page")
