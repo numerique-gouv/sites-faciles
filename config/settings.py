@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "dashboard",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
+    "wagtail.contrib.routable_page",
     "wagtail.contrib.settings",
     "wagtail.embeds",
     "wagtail.sites",
@@ -77,6 +78,7 @@ INSTALLED_APPS = [
     "sass_processor",
     "content_manager",
     "blog",
+    "events",
     "forms",
 ]
 

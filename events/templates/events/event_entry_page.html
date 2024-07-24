@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n static dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags %}
+{% load i18n static dsfr_tags wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
 
 {% block title %}
   <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
@@ -46,7 +46,8 @@
   {% include "content_manager/blocks/heading.html" %}
   {% include "content_manager/blocks/messages.html" %}
 
-  {% with categories=page.blog_categories.all %}
+  {% with categories=page.event_categories.all %}
+
     <div class="fr-container fr-mt-6w">
       <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12">
@@ -55,11 +56,22 @@
         </div>
       </div>
       <p>
-        Publié le <a href="{% pageurl page.get_parent %}{% toggle_url_filter year=page.date.year %}">{{ page.date |date:'l j F Y' }}</a>
+        <strong>
+          <span class="fr-icon-calendar-event-fill click-to-copy" aria-hidden="true"></span>
+          {% if page.event_date_start.date == page.event_date_end.date %}
+            {{ page.event_date_start.date }}
+          {% elif page.event_date_start.year == page.event_date_end.year and page.event_date_start.month == page.event_date_end.month %}
+            {{ page.event_date_start.day }} – {{ page.event_date_end.date }}
+          {% elif page.event_date_start.year == page.event_date_end.year %}
+            {{ page.event_date_start|date:"j F" }} – {{ page.event_date_end|date:"j F Y" }}
+          {% else %}
+            {{ page.event_date_start.date }} – {{ page.event_date_end.date }}
+          {% endif %}
+        </strong>
         {% if categories %}
           |
           {% for category in categories %}
-            <a href="{% pageurl page.get_parent %}{% toggle_url_filter category=category %}">{{ category.name }}</a>
+            <a href="{% pageurl page.get_parent %}?category={{ category.slug }}">{{ category.name }}</a>
             {% if not forloop.last %},{% endif %}
           {% endfor %}
         {% endif %}
@@ -78,7 +90,6 @@
             {% endfor %}
           </div>
         </div>
-
       {% endif %}
     {% endwith %}
 
@@ -90,11 +101,62 @@
   {% endwith %}
 
   <div class="fr-container fr-my-6w">
-    {% for tag in page.tags.all|dictsort:"slug" %}
-      <a class="fr-tag"
-         target="_self"
-         href="{% pageurl page.get_parent %}{% toggle_url_filter tag=tag %}">{{ tag }}</a>
-    {% endfor %}
+
+    <div class="fr-card{% if page.header_image %} fr-card--horizontal{% else %} fr-card--download{% endif %}">
+      <div class="fr-card__body">
+        <div class="fr-card__content">
+          <h2 class="fr-card__title">{{ page.title }}</h2>
+          <ul class="fr-card__desc">
+            <li>
+              <strong>{% translate "Date:" %}</strong> {{ page.event_date_start }} - {{ page.event_date_end }}
+            </li>
+            <li>
+              <strong>{% translate "Location:" %}</strong> {{ page.location }}
+            </li>
+            {% if page.registration_url %}
+              <li>
+                <strong>{% translate "Registration link:" %}</strong> <a href="{{ page.registration_url }}">{{ page.registration_url }}</a>
+              </li>
+            {% endif %}
+          </ul>
+
+          <div class="fr-card__start">
+            <ul class="fr-tags-group">
+              {% for tag in page.tags.all|dictsort:"slug" %}
+                <a class="fr-tag"
+                   target="_self"
+                   href="{% pageurl page.get_parent %}?tag={{ tag.slug }}">{{ tag }}</a>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        <div class="fr-card__footer">
+          <ul class="fr-btns-group fr-btns-group--inline-lg">
+            <li>
+              <a href="{% routablepageurl page 'ical_view' %}"
+                 class="fr-btn fr-btn--secondary">{% translate "Add to your calendar (iCal)" %}</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <div class="fr-card__header">
+        <div class="fr-card__img">
+          {% if page.header_image %}
+            {% image page.header_image width-450 as header_image %}
+            <img class="fr-responsive-img" src="{{ header_image.full_url }}" alt="" />
+
+          {% else %}
+            <img class="fr-responsive-img"
+                 src="{% static 'dsfr/dist/artwork/pictograms/digital/calendar.svg' %}"
+                 alt="" />
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
   </div>
 
 {% endblock content %}
