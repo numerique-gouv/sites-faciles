@@ -16,9 +16,20 @@
             </li>
           {% endif %}
         {% endfor %}
-        <li>
-          <a class="fr-breadcrumb__link" aria-current="page">{{ self.title|truncatewords:4 }}</a>
-        </li>
+        {% if extra_breadcrumbs %}
+          {% for link in extra_breadcrumbs.links %}
+            <li>
+              <a class="fr-breadcrumb__link" href="{{ link.url }}">{{ link.title|truncatewords:4 }}</a>
+            </li>
+          {% endfor %}
+          <li>
+            <a class="fr-breadcrumb__link" aria-current="page">{{ extra_breadcrumbs.current|truncatewords:6 }}</a>
+          </li>
+        {% else %}
+          <li>
+            <a class="fr-breadcrumb__link" aria-current="page">{{ self.title|truncatewords:6 }}</a>
+          </li>
+        {% endif %}
       </ol>
     </div>
   </nav>

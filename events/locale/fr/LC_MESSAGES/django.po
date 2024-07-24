@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-22 17:04+0200\n"
-"PO-Revision-Date: 2024-07-22 17:06+0200\n"
+"POT-Creation-Date: 2024-07-24 18:07+0200\n"
+"PO-Revision-Date: 2024-07-24 18:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -59,71 +59,74 @@ msgstr "Afficher les filtres"
 msgid "Event calendar index"
 msgstr "Index de l’agenda"
 
-#: events/models.py:90
+#: events/models.py:96
 #, python-format
 msgid "Events tagged with %(tag)s"
 msgstr "Événements avec l’étiquette %(tag)s"
 
-#: events/models.py:104
+#: events/models.py:108
 #, python-format
 msgid "Events in category %(category)s"
 msgstr "Événements dans la catégorie %(category)s"
 
-#: events/models.py:115 events/models.py:117 events/models.py:128
-#: events/models.py:131
+#: events/models.py:120 events/models.py:131
 msgid "Events created by"
 msgstr "Événements créés par"
 
-#: events/models.py:135
+#: events/models.py:231
+msgid "Past events"
+msgstr "Événements terminés"
+
+#: events/models.py:238
 #, python-format
 msgid "Events published in %(year)s"
 msgstr "Événements publiés en %(year)s"
 
-#: events/models.py:235
+#: events/models.py:279
 msgid "Categories"
 msgstr "Catégories"
 
-#: events/models.py:238
+#: events/models.py:282
 msgid "Post date"
 msgstr "Date de publication"
 
-#: events/models.py:239
+#: events/models.py:283
 msgid "Event start date"
 msgstr "Date de début de l’événement"
 
-#: events/models.py:240
+#: events/models.py:284
 msgid "Event end date"
 msgstr "Date de fin de l’événement"
 
-#: events/models.py:242
+#: events/models.py:286
 msgid "Location"
 msgstr "Lieu"
 
-#: events/models.py:243
+#: events/models.py:287
 msgid "Registration URL"
 msgstr "Lien d’inscription"
 
-#: events/models.py:246
+#: events/models.py:290
 msgid "Author entries can be created in Snippets > Persons"
 msgstr "Les auteurs peuvent être créés via Fragments > Personnes"
 
-#: events/models.py:275
+#: events/models.py:319
 msgid "Event date and place"
 msgstr "Date et lieu de l’événement"
 
-#: events/models.py:287
+#: events/models.py:331
 msgid "Scheduled publishing"
 msgstr "Publication programmée"
 
-#: events/models.py:295
+#: events/models.py:339
 msgid "Tags and Categories"
 msgstr "Étiquettes et Catégories"
 
-#: events/models.py:351
+#: events/models.py:395
 msgid "Event page"
 msgstr "Page d’événement"
 
-#: events/models.py:359
+#: events/models.py:403
 msgid "Category"
 msgstr "Catégorie"
 
@@ -152,13 +155,19 @@ msgstr "Lien d’inscription :"
 msgid "Add to your calendar (iCal)"
 msgstr "Ajouter à votre calendrier (iCal)"
 
+#: events/templates/events/events_archive_page.html:70
 #: events/templates/events/events_index_page.html:70
 msgid "Filters"
 msgstr "Filtres"
 
+#: events/templates/events/events_archive_page.html:72
 #: events/templates/events/events_index_page.html:72
 msgid "Filters and export"
 msgstr "Filtres et export"
+
+#: events/templates/events/events_archive_page.html:75
+msgid "Filter by year"
+msgstr "Filtrer par année"
 
 #: events/templates/events/events_index_page.html:74
 msgid "Filter by date"
@@ -167,6 +176,14 @@ msgstr "Filtrer par date"
 #: events/templates/events/events_index_page.html:142
 msgid "Export"
 msgstr "Export"
+
+#: events/templates/events/events_index_page.html:151
+msgid "Archives"
+msgstr "Archives"
+
+#: events/templates/events/events_index_page.html:156
+msgid "See archives"
+msgstr "Voir les archives"
 
 #~ msgid "Event date"
 #~ msgstr "Date de l’événement"

@@ -146,6 +146,18 @@
                      class="fr-btn fr-btn--secondary">{% translate "Add to your calendar (iCal)" %}</a>
                 </li>
               </ul>
+
+              {% if page.past_events.count %}
+                <h2 class="fr-h6">{% translate "Archives" %}</h2>
+
+                <ul class="fr-btns-group fr-mt-1w">
+                  <li>
+                    <a href="{% routablepageurl page 'archives_view' %}"
+                       class="fr-btn fr-btn--tertiary">{% translate "See archives" %}</a>
+                  </li>
+                </ul>
+              {% endif %}
+
             </div>
           </div>
         </nav>

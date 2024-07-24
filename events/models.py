@@ -58,7 +58,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
     def posts(self):
         # Get list of event pages that are descendants of this page
         today = timezone.now().date()
-        posts = (
+        entries = (
             EventEntryPage.objects.descendant_of(self)
             .live()
             .filter(event_date_start__date__gte=today)
@@ -66,73 +66,76 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
             .select_related("owner")
             .prefetch_related("tags", "event_categories", "date__year")
         )
-        return posts
+        return entries
 
-    def get_context(self, request, tag=None, category=None, author=None, source=None, year=None, *args, **kwargs):
+    @property
+    def past_events(self):
+        today = timezone.now().date()
+        entries = (
+            EventEntryPage.objects.descendant_of(self)
+            .live()
+            .filter(event_date_end__date__lte=today)
+            .order_by("-event_date_start")
+            .select_related("owner")
+            .prefetch_related("tags", "event_categories", "date__year")
+        )
+        return entries
+
+    def get_context(self, request, *args, **kwargs):
         context = super(EventsIndexPage, self).get_context(request, *args, **kwargs)
         posts = self.posts
         locale = Locale.objects.get(language_code=get_language())
 
-        breadcrumb = None
+        extra_breadcrumbs = None
         extra_title = ""
 
-        if tag is None:
-            tag = request.GET.get("tag")
+        tag = request.GET.get("tag")
         if tag:
             tag = get_object_or_404(Tag, slug=tag)
             posts = posts.filter(tags=tag)
-            breadcrumb = {
+            extra_title = _("Events tagged with %(tag)s") % {"tag": tag}
+            extra_breadcrumbs = {
                 "links": [
                     {"url": self.get_url(), "title": self.title},
                 ],
-                "current": tag,
+                "current": extra_title,
             }
-            extra_title = _("Events tagged with %(tag)s") % {"tag": tag}
 
-        if category is None:
-            category = request.GET.get("category")
+        category = request.GET.get("category")
         if category:
             category = get_object_or_404(Category, slug=category, locale=locale)
             posts = posts.filter(event_categories=category)
-
-            breadcrumb = {
+            extra_title = _("Events in category %(category)s") % {"category": category.name}
+            extra_breadcrumbs = {
                 "links": [
                     {"url": self.get_url(), "title": self.title},
                 ],
-                "current": category.name,
+                "current": extra_title,
             }
-            extra_title = _("Events in category %(category)s") % {"category": category.name}
 
-        if source is None:
-            source = request.GET.get("source")
+        source = request.GET.get("source")
         if source:
             source = get_object_or_404(Organization, slug=source)
             posts = posts.filter(authors__organization=source)
-            breadcrumb = {
+            extra_title = _("Events created by") + f" {source.name}"
+            extra_breadcrumbs = {
                 "links": [
                     {"url": self.get_url(), "title": self.title},
                 ],
-                "current": _("Events created by") + f" {source.name}",
+                "current": extra_title,
             }
-            extra_title = _("Events created by") + f" {source.name}"
 
-        if author is None:
-            author = request.GET.get("author")
+        author = request.GET.get("author")
         if author:
             author = get_object_or_404(Person, id=author)
-
-            breadcrumb = {
+            extra_title = _("Events created by") + f" {author.name}"
+            extra_breadcrumbs = {
                 "links": [
                     {"url": self.get_url(), "title": self.title},
                 ],
-                "current": _("Events created by") + f" {author.name}",
+                "current": extra_title,
             }
             posts = posts.filter(authors=author)
-            extra_title = _("Events created by") + f" {author.name}"
-
-        if year:
-            posts = posts.filter(date__year=year)
-            extra_title = _("Events published in %(year)s") % {"year": year}
 
         date_from = request.GET.get("date_from", "")
         if date_from:
@@ -161,7 +164,6 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         context["current_tag"] = tag
         context["current_source"] = source
         context["current_author"] = author
-        context["year"] = year
         context["paginator"] = paginator
         context["extra_title"] = extra_title
 
@@ -172,8 +174,8 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         context["sources"] = self.get_sources()
         context["tags"] = self.get_tags()
 
-        if breadcrumb:
-            context["breadcrumb"] = breadcrumb
+        if extra_breadcrumbs:
+            context["extra_breadcrumbs"] = extra_breadcrumbs
 
         return context
 
@@ -223,6 +225,48 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         response = HttpResponse(cal.to_ical(), content_type="text/calendar")
         response["Content-Disposition"] = f'attachment; filename="{slugify(site_name)}.ics"'
         return response
+
+    @path("archives/")
+    def archives_view(self, request):
+        extra_title = _("Past events")
+
+        past_events = self.past_events
+
+        year = request.GET.get("year")
+        if year:
+            past_events = past_events.filter(event_date_start__year=year)
+            extra_title = _("Events published in %(year)s") % {"year": year}
+            year = int(year)
+
+        extra_breadcrumbs = {
+            "links": [
+                {"url": self.get_url(), "title": self.title},
+            ],
+            "current": extra_title,
+        }
+        # Pagination
+        page = request.GET.get("page")
+        page_size = self.posts_per_page
+
+        paginator = Paginator(past_events, page_size)  # Show <page_size> posts per page
+        try:
+            past_events = paginator.page(page)
+        except PageNotAnInteger:
+            past_events = paginator.page(1)
+        except EmptyPage:
+            past_events = paginator.page(paginator.num_pages)
+
+        return self.render(
+            request,
+            context_overrides={
+                "extra_title": extra_title,
+                "extra_breadcrumbs": extra_breadcrumbs,
+                "posts": past_events,
+                "years": sorted(self.past_events.values_list("event_date_start__year", flat=True), reverse=True),
+                "current_year": year,
+            },
+            template="events/events_archive_page.html",
+        )
 
 
 class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):

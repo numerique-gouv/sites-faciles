@@ -14,22 +14,22 @@ def get_localized_index(slug):
     return get_object_or_404(BlogIndexPage, locale=locale, slug=slug)
 
 
-def tag_view(request, blog_slug, tag):
+def tag_view(request, blog_slug: str, tag: str):
     index = get_localized_index(blog_slug)
     return index.serve(request, tag=tag)
 
 
-def category_view(request, blog_slug, category):
+def category_view(request, blog_slug: str, category: str):
     index = get_localized_index(blog_slug)
     return index.serve(request, category=category)
 
 
-def author_view(request, blog_slug, author_id):
+def author_view(request, blog_slug: str, author_id: str):
     index = get_localized_index(blog_slug)
     return index.serve(request, author=author_id)
 
 
-def year_view(request, blog_slug, year):
+def year_view(request, blog_slug: str, year: str):
     index = get_localized_index(blog_slug)
     return index.serve(request, year=year)
 

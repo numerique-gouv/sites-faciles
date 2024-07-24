@@ -1,101 +1,100 @@
 {% extends "base.html" %}
 
-{% load i18n static dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% load i18n static dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags %}
 
 {% block title %}
-    <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+  <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
 {% endblock title %}
 
 {% if page.search_description %}
-    {% block description %}
-        <meta name="description" content="{{ page.search_description }}" />
-    {% endblock description %}
+  {% block description %}
+    <meta name="description" content="{{ page.search_description }}" />
+  {% endblock description %}
 {% endif %}
 
 {% block social_media %}
-    <meta property="og:site_name" content="{{ request.get_host }}" />
-    <meta property="og:title"
-          content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="{{ page.full_url }}" />
-    <meta property="og:description" content="{{ page.search_description }}" />
-    <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
+  <meta property="og:site_name" content="{{ request.get_host }}" />
+  <meta property="og:title"
+        content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="{{ page.full_url }}" />
+  <meta property="og:description" content="{{ page.search_description }}" />
+  <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
 
-    {% if page.get_translations.live %}
-        {% for translation in page.get_translations.live %}
-            <meta property="og:locale:alternate"
-                  content="{{ translation.locale.language_code }}" />
-        {% endfor %}
-    {% endif %}
+  {% if page.get_translations.live %}
+    {% for translation in page.get_translations.live %}
+      <meta property="og:locale:alternate"
+            content="{{ translation.locale.language_code }}" />
+    {% endfor %}
+  {% endif %}
 
-    <meta name="twitter:title"
-          content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
-    <meta name="twitter:description" content="{{ page.search_description }}" />
+  <meta name="twitter:title"
+        content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+  <meta name="twitter:description" content="{{ page.search_description }}" />
 
-    {% if page.header_image %}
-        <meta name="twitter:card" content="summary_large_image" />
-        {% image page.header_image fill-1200x627 as header_image %}
-        <meta property="og:image" content="{{ header_image.full_url }}" />
-        <meta name="twitter:image" content="{{ header_image.full_url }}" />
-    {% else %}
-        <meta name="twitter:card" content="summary" />
-    {% endif %}
+  {% if page.header_image %}
+    <meta name="twitter:card" content="summary_large_image" />
+    {% image page.header_image fill-1200x627 as header_image %}
+    <meta property="og:image" content="{{ header_image.full_url }}" />
+    <meta name="twitter:image" content="{{ header_image.full_url }}" />
+  {% else %}
+    <meta name="twitter:card" content="summary" />
+  {% endif %}
 {% endblock social_media %}
 
 {% block content %}
-    {% include "content_manager/blocks/heading.html" %}
-    {% include "content_manager/blocks/messages.html" %}
+  {% include "content_manager/blocks/heading.html" %}
+  {% include "content_manager/blocks/messages.html" %}
 
-    {% with categories=page.blog_categories.all %}
+  {% with categories=page.blog_categories.all %}
+    <div class="fr-container fr-mt-6w">
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12">
+          {% include "content_manager/blocks/breadcrumbs.html" %}
+          <h1 class="fr-display--sm">{{ page.title }}</h1>
+        </div>
+      </div>
+      <p>
+        Publié le <a href="{% pageurl page.get_parent %}{% toggle_url_filter year=page.date.year %}">{{ page.date |date:'l j F Y' }}</a>
+        {% if categories %}
+          |
+          {% for category in categories %}
+            <a href="{% pageurl page.get_parent %}{% toggle_url_filter category=category %}">{{ category.name }}</a>
+            {% if not forloop.last %},{% endif %}
+          {% endfor %}
+        {% endif %}
+      </p>
+    </div>
 
-        <div class="fr-container fr-mt-6w">
-            <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12">
-                    {% include "content_manager/blocks/breadcrumbs.html" %}
-                    <h1 class="fr-display--sm">{{ page.title }}</h1>
-                </div>
-            </div>
-            <p>
-                Publié le <a href="{% url 'blog:archive_year' page.get_parent.slug page.date.year %}">{{ page.date |date:'l j F Y' }}</a>
-                {% if categories %}
-                    |
-                    {% for category in categories %}
-                        <a href="{% url 'blog:category' page.get_parent.slug category.slug %}">{{ category.name }}</a>
-                        {% if not forloop.last %},{% endif %}
-                    {% endfor %}
-                {% endif %}
-            </p>
+    {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
+
+    {% with authors=page.authors.all %}
+      {% if authors %}
+        <div class="fr-container fr-my-6w">
+          <h2>{% translate "Posted by:" %}</h2>
+          <div class="fr-grid-row fr-grid-row--gutters">
+            {% for author in authors %}
+              {% include "blog/blocks/contact_card.html" with value=author %}
+            {% endfor %}
+          </div>
         </div>
 
-        {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
-
-        {% with authors=page.authors.all %}
-            {% if authors %}
-                <div class="fr-container fr-my-6w">
-                    <h2>{% translate "Posted by:" %}</h2>
-                    <div class="fr-grid-row fr-grid-row--gutters">
-                        {% for author in authors %}
-                            {% include "blog/blocks/contact_card.html" with value=author %}
-                        {% endfor %}
-                    </div>
-                </div>
-
-            {% endif %}
-        {% endwith %}
-
-        {% if categories %}
-            {% for category in categories %}
-                {% include "content_manager/blocks/blocks_stream.html" with stream=category.colophon %}
-            {% endfor %}
-        {% endif %}
+      {% endif %}
     {% endwith %}
 
-    <div class="fr-container fr-my-6w">
-        {% for tag in page.tags.all|dictsort:"slug" %}
-            <a class="fr-tag"
-               target="_self"
-               href="{% url 'blog:tag' page.get_parent.slug tag.slug %}">{{ tag }}</a>
-        {% endfor %}
-    </div>
+    {% if categories %}
+      {% for category in categories %}
+        {% include "content_manager/blocks/blocks_stream.html" with stream=category.colophon %}
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="fr-container fr-my-6w">
+    {% for tag in page.tags.all|dictsort:"slug" %}
+      <a class="fr-tag"
+         target="_self"
+         href="{% pageurl page.get_parent %}{% toggle_url_filter tag=tag %}">{{ tag }}</a>
+    {% endfor %}
+  </div>
 
 {% endblock content %}
