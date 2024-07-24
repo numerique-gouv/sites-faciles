@@ -102,10 +102,10 @@
 
   <div class="fr-container fr-my-6w">
 
-    <div class="fr-card fr-card--download">
+    <div class="fr-card{% if page.header_image %} fr-card--horizontal{% else %} fr-card--download{% endif %}">
       <div class="fr-card__body">
         <div class="fr-card__content">
-          <h3 class="fr-card__title">{{ page.title }}</h3>
+          <h2 class="fr-card__title">{{ page.title }}</h2>
           <ul class="fr-card__desc">
             <li>
               <strong>{% translate "Date:" %}</strong> {{ page.event_date_start }} - {{ page.event_date_end }}
