@@ -66,9 +66,9 @@
           <div class="fr-sidemenu__inner">
             <button class="fr-sidemenu__btn"
                     hidden
-                    aria-controls="fr-sidemenu-wrapper"
+                    aria-controls="fr-sidemenu-wrapper-{{ page.slug }}"
                     aria-expanded="false">{% translate "Filters" %}</button>
-            <div class="fr-collapse" id="fr-sidemenu-wrapper">
+            <div class="fr-collapse" id="fr-sidemenu-wrapper-{{ page.slug }}">
               <div class="fr-sidemenu__title" id="fr-sidemenu-title">{% translate "Filters and export" %}</div>
 
               <h2 class="fr-h6">{% translate "Filter by date" %}</h2>
