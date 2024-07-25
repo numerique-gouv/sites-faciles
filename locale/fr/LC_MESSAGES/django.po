@@ -45,6 +45,10 @@ msgstr "Retourner à l’accueil"
 msgid "Display settings"
 msgstr "Paramètres d’affichage"
 
+#: templates/blocks/footer.html:55
+msgid "This website was made with"
+msgstr "Ce site a été fait avec"
+
 #: templates/blocks/header.html:5 templates/blocks/header.html:13
 msgid "Home page"
 msgstr "Accueil"
