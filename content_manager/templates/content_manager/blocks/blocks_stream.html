@@ -13,6 +13,8 @@
     {% include_block block %}
   {% elif block.block_type == 'fullwidthbackground' %}
     {% include_block block %}
+  {% elif block.block_type == 'fullwidthbackgroundwithsidemenu' %}
+    {% include_block block %}
   {% elif block.block_type == 'paragraph' %}
     <div class="fr-container">{{ block.value|richtext }}</div>
   {% elif block.block_type == 'alert' %}
