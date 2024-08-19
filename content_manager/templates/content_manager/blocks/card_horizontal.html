@@ -58,8 +58,8 @@
     {% endif %}
 
   </div>
-  <div class="fr-card__header">
-    {% if value.image %}
+  {% if value.image %}
+    <div class="fr-card__header">
       <div class="fr-card__img">{% image value.image width-1200 class="fr-responsive-img" alt="" %}</div>
       {% if value.image_badge %}
         <ul class="fr-badges-group">
@@ -68,6 +68,6 @@
           {% endfor %}
         </ul>
       {% endif %}
-    {% endif %}
-  </div>
+    </div>
+  {% endif %}
 </div>
