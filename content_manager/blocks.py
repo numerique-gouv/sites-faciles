@@ -944,12 +944,16 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
         template = "content_manager/blocks/full_width_background.html"
 
 
+class PageTreeBlock(blocks.StructBlock):
+    page = blocks.PageChooserBlock(label=_("Parent page"))
+
+
 class SideMenuBlock(blocks.StreamBlock):
     html = blocks.RawHTMLBlock(
         label="HTML",
         help_text=_("Warning: Use HTML block with caution. Malicious code can compromise the security of the site."),
-        group=_("Expert syntax"),
     )
+    pagetree = PageTreeBlock(label=_("Page tree"))
 
     class Meta:
         icon = "minus"
