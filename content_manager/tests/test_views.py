@@ -83,8 +83,9 @@ class ConfigTestCase(WagtailPageTestCase):
 
         self.assertInHTML(
             """<div class="fr-footer__brand fr-enlarge-link">
-                <a id="footer-operator" href="/"
-                    title="Retour à l’accueil du site - Site title - République française">
+                    <a id="footer-operator"
+                    href="/"
+                    title="Retourner à l’accueil - Site title - République française">
                     <p class="fr-logo">
                         République<br />française
                     </p>
