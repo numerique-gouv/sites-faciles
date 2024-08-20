@@ -51,6 +51,13 @@
     </li>
   {% endif %}
 {% endblock footer_links %}
+
 {% block footer_bottom_extra %}
-| {% translate "Ce site a été fait avec" %} <a href="https://sites-faciles.beta.numerique.gouv.fr/?mtm_campaign=footer-link" target="_blank" title="Créez un site internet DSFR et RGAA">Sites faciles</a>
+  {% translate "Opens a new window" as new_window %}
+  <span class="cmsfr-footer__bottom-extra">
+    {% translate "This website is made with" %} <a href="https://sites-faciles.beta.numerique.gouv.fr/?mtm_campaign=footer-link"
+    target="_blank"
+    rel="noopener external"
+    title="Sites faciles - {{ new_window }}">Sites faciles</a>
+  </span>
 {% endblock footer_bottom_extra %}
