@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms.widgets import Textarea
 from django.utils.translation import gettext_lazy as _
+from dsfr.constants import NOTICE_TYPE_CHOICES
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from modelcluster.tags import ClusterTaggableManager
@@ -135,16 +136,48 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         blank=True,
     )
 
-    notice = RichTextField(
-        _("Important notice"),
+    notice_title = RichTextField(
+        _("Notice title"),
         default="",
         blank=True,
         features=LIMITED_RICHTEXTFIELD_FEATURES,
+        help_text=_("Can include HTML"),
+    )
+
+    notice_description = RichTextField(
+        _("Notice description"),
+        default="",
+        blank=True,
+        help_text=_("Can include HTML"),
+    )
+    notice_type = models.CharField(
+        _("Notice type"),
+        choices=NOTICE_TYPE_CHOICES,
+        default="info",
+        blank=True,
+        max_length=20,
         help_text=_(
-            "The important notice banner should only be used for essential and temporary information. \
-            (Excessive or continuous use risks “drowning” the message.)"
+            'Use is strictly regulated, see \
+            <a href="https://www.systeme-de-design.gouv.fr/composants-et-modeles/composants/bandeau-d-information-importante/">documentation</a>.'
         ),
     )
+
+    notice_link = models.URLField(
+        _("Notice link"),
+        default="",
+        blank=True,
+        help_text=_("Standardized consultation link at the end of the notice."),
+    )
+
+    notice_icon_class = models.CharField(
+        _("Notice icon class"),
+        max_length=200,
+        default="",
+        blank=True,
+        help_text=_("For weather alerts only"),
+    )
+
+    notice_is_collapsible = models.BooleanField(_("Collapsible?"), default=False)  # type: ignore
 
     beta_tag = models.BooleanField(_("Show the BETA tag next to the title"), default=False)
 
@@ -199,7 +232,21 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         FieldPanel("site_title"),
         FieldPanel("site_tagline"),
         FieldPanel("footer_description"),
-        FieldPanel("notice"),
+        MultiFieldPanel(
+            [
+                FieldPanel("notice_title"),
+                FieldPanel("notice_description"),
+                FieldPanel("notice_type"),
+                FieldPanel("notice_link"),
+                FieldPanel("notice_icon_class", widget=DsfrIconPickerWidget),
+                FieldPanel("notice_is_collapsible"),
+            ],
+            heading=_("Important notice"),
+            help_text=_(
+                "The important notice banner should only be used for essential and temporary information. \
+                (Excessive or continuous use risks “drowning” the message.)"
+            ),
+        ),
         MultiFieldPanel(
             [
                 FieldPanel("operator_logo_file"),

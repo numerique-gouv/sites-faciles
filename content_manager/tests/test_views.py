@@ -118,7 +118,7 @@ class ConfigTestCase(WagtailPageTestCase):
         )
 
     def test_notice_can_be_set(self):
-        self.config.notice = "Ceci est une information <b>importante</b> et <i>temporaire</i>."
+        self.config.notice_title = "Ceci est une information <b>importante</b> et <i>temporaire</i>."
         self.config.save()
 
         url = self.content_page.url
