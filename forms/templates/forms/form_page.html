@@ -18,7 +18,7 @@
     {{ page.intro|richtext }}
     <form action="{% pageurl page %}" method="post">
       {% csrf_token %}
-      {% dsfr_form %}
+      {{ form }}
       <input class="fr-btn" type="submit">
     </form>
   </div>
