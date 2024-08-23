@@ -5,7 +5,7 @@ from config.forms.baseform import SitesFacilesBaseForm
 
 
 class EventSearchForm(SitesFacilesBaseForm):
-    """Main form for search engine."""
+    """Main form for events page list."""
 
     date_from = forms.DateField(
         label=_("From…"),

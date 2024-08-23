@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-20 11:23+0200\n"
-"PO-Revision-Date: 2024-08-20 11:25+0200\n"
+"POT-Creation-Date: 2024-08-23 16:16+0200\n"
+"PO-Revision-Date: 2024-08-23 16:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -45,7 +45,7 @@ msgstr "Retourner à l’accueil"
 msgid "Display settings"
 msgstr "Paramètres d’affichage"
 
-#: templates/blocks/footer.html:56
+#: templates/blocks/footer.html:56 templates/blocks/notice.html:4
 msgid "Opens a new window"
 msgstr "Ouvre une nouvelle fenêtre"
 
@@ -72,3 +72,11 @@ msgstr "Menu"
 #: templates/blocks/header.html:106
 msgid "Main menu"
 msgstr "Menu principal"
+
+#: templates/blocks/notice.html:2
+msgid "Hide message"
+msgstr "Masquer le message"
+
+#: templates/blocks/notice.html:3
+msgid "Consultation link"
+msgstr "Lien de consultation"

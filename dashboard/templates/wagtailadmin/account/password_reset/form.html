@@ -13,7 +13,7 @@
               <form method="post" novalidate>
                 {% csrf_token %}
 
-                {% dsfr_form %}
+                {% dsfr_form_field form.email %}
 
                 <button type="submit" class="fr-btn">{% translate "Reset password" %}</button>
               </form>

@@ -37,10 +37,12 @@ class FormField(AbstractFormField):
         verbose_name_plural = _("Form fields")
 
 
-class SitesFacilesBaseForm(BaseForm):
+class SitesFacilesCustomForm(BaseForm):
     """
     A base form that adds the necessary DSFR class on relevant fields
     """
+
+    template_name = "dsfr/form_snippet.html"  # type: ignore
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -63,7 +65,7 @@ class SitesFacilesFormBuilder(FormBuilder):
         return forms.DateField(**options)
 
     def get_form_class(self):
-        return type("WagtailForm", (SitesFacilesBaseForm,), self.formfields)
+        return type("WagtailForm", (SitesFacilesCustomForm,), self.formfields)
 
 
 class FormPage(AbstractEmailForm):
