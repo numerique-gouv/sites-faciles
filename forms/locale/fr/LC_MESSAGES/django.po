@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-02 13:15+0200\n"
-"PO-Revision-Date: 2024-07-02 15:21+0200\n"
+"POT-Creation-Date: 2024-08-26 15:14+0200\n"
+"PO-Revision-Date: 2024-08-26 15:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -67,35 +67,35 @@ msgstr "Champ caché"
 msgid "Field type"
 msgstr "Type de champ"
 
-#: forms/models.py:36 forms/models.py:76
+#: forms/models.py:36 forms/models.py:78
 msgid "Form field"
 msgstr "Champ de formulaire"
 
-#: forms/models.py:37 forms/models.py:76
+#: forms/models.py:37 forms/models.py:78
 msgid "Form fields"
 msgstr "Champs de formulaire"
 
-#: forms/models.py:75
+#: forms/models.py:77
 msgid "Introduction"
 msgstr "Introduction"
 
-#: forms/models.py:77
+#: forms/models.py:79
 msgid "Thank you text"
 msgstr "Texte de remerciement"
 
-#: forms/models.py:88
+#: forms/models.py:90
 msgid "E-mail notification when an answer is sent"
 msgstr "Notification par e-mail quand une réponse est envoyée"
 
-#: forms/models.py:89
+#: forms/models.py:91
 msgid "Optional, will only work if SMTP parameters have been set."
 msgstr "Optionnel, ne fonctionnera que si les paramètres SMTP ont été configurés."
 
-#: forms/models.py:94
+#: forms/models.py:96
 msgid "Form page"
 msgstr "Page de formulaire"
 
-#: forms/models.py:95
+#: forms/models.py:97
 msgid "Form pages"
 msgstr "Pages de formulaire"
 

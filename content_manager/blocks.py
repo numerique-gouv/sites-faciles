@@ -944,6 +944,41 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
         template = "content_manager/blocks/full_width_background.html"
 
 
+class PageTreeBlock(blocks.StructBlock):
+    page = blocks.PageChooserBlock(label=_("Parent page"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/blocks/pagetree.html"
+
+
+class SideMenuBlock(blocks.StreamBlock):
+    html = blocks.RawHTMLBlock(
+        label="HTML",
+        help_text=_("Warning: Use HTML block with caution. Malicious code can compromise the security of the site."),
+    )
+    pagetree = PageTreeBlock(label=_("Page tree"))
+
+    class Meta:
+        icon = "minus"
+
+
+class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
+    bg_image = ImageChooserBlock(label=_("Background image"), required=False)
+    bg_color_class = BackgroundColorChoiceBlock(
+        label=_("Background color"),
+        required=False,
+        help_text=_("Uses the French Design System colors"),
+    )
+    main_content = FullWidthBlock(label=_("Main content"))
+    sidemenu_title = blocks.CharBlock(label=_("Side menu title"), required=False)
+    sidemenu_content = SideMenuBlock(label=_("Side menu content"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/blocks/full_width_background_with_sidemenu.html"
+
+
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     ("image", ImageBlock()),
@@ -966,6 +1001,12 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
+    (
+        "fullwidthbackgroundwithsidemenu",
+        FullWidthBackgroundWithSidemenuBlock(
+            label=_("Full width background with side menu"), group=_("Page structure")
+        ),
+    ),
     (
         "subpageslist",
         blocks.StaticBlock(
