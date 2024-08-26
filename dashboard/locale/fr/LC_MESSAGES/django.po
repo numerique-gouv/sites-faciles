@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-24 15:24+0200\n"
-"PO-Revision-Date: 2024-06-24 15:26+0200\n"
+"POT-Creation-Date: 2024-08-26 15:14+0200\n"
+"PO-Revision-Date: 2024-08-26 15:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -31,16 +31,16 @@ msgstr "Connexion"
 msgid "Set your new password"
 msgstr "Définissez votre nouveau mot de passe"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:20
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:21
 #: dashboard/templates/wagtailadmin/account/password_reset/form.html:18
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:28
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:29
 msgid "Invalid password reset link"
 msgstr "Lien de réinitialisation de mot de passe invalide"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:30
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:31
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used."
@@ -48,7 +48,7 @@ msgstr ""
 "Le lien de réinitialisation de mot de passe était invalide, probablement "
 "parce qu’il a déjà été utilisé."
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:34
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:35
 msgid "Request a new password reset"
 msgstr "Demander une nouvelle réinitialisation de mot de passe"
 

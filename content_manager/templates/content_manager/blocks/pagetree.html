@@ -1,0 +1,33 @@
+<ul class="fr-sidemenu__list">
+  <li class="fr-sidemenu__item fr-sidemenu__item--active">
+    <a class="fr-sidemenu__link"
+       href="{{ value.page.url }}"
+       target="_self"
+       aria-current="page">{{ value.page.title }}</a>
+    {% if value.page.get_children.live.count %}
+      <ul class="fr-sidemenu__list">
+        {% for child_page in value.page.get_children.live %}
+          <li class="fr-sidemenu__item">
+            <a class="fr-sidemenu__link"
+               href="{{ child_page.url }}"
+               {% if child_page.slug == page.slug or child_page.slug == page.get_parent.slug %}aria-current="page"{% endif %}>
+              {{ child_page.title }}
+            </a>
+
+            {% if child_page.get_children.live.count %}
+              <ul class="fr-sidemenu__list">
+                {% for grandchild_page in child_page.get_children.live %}
+                  <li class="fr-sidemenu__item">
+                    <a class="fr-sidemenu__link"
+                       href="{{ grandchild_page.url }}"
+                       {% if grandchild_page.slug == page.slug %}aria-current="page"{% endif %}>{{ grandchild_page.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+</ul>

@@ -947,6 +947,10 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
 class PageTreeBlock(blocks.StructBlock):
     page = blocks.PageChooserBlock(label=_("Parent page"))
 
+    class Meta:
+        icon = "minus"
+        template = "content_manager/blocks/pagetree.html"
+
 
 class SideMenuBlock(blocks.StreamBlock):
     html = blocks.RawHTMLBlock(
@@ -967,7 +971,7 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
         help_text=_("Uses the French Design System colors"),
     )
     main_content = FullWidthBlock(label=_("Main content"))
-    sidemenu_title = blocks.CharBlock(label=_("Side menu title"))
+    sidemenu_title = blocks.CharBlock(label=_("Side menu title"), required=False)
     sidemenu_content = SideMenuBlock(label=_("Side menu content"))
 
     class Meta:
