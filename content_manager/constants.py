@@ -12,6 +12,12 @@ BUTTON_ICON_SIDE = (
     ("fr-btn--icon-right", _("Right")),
 )
 
+GRID_3_4_6_CHOICES = [
+    ("3", "3/12"),
+    ("4", "4/12"),
+    ("6", "6/12"),
+]
+
 HEADING_CHOICES = [
     ("h2", _("Heading 2")),
     ("h3", _("Heading 3")),

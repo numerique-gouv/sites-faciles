@@ -12,6 +12,7 @@ from wagtailmarkdown.blocks import MarkdownBlock
 from content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
+    GRID_3_4_6_CHOICES,
     HEADING_CHOICES,
     HEADING_CHOICES_2_5,
     HORIZONTAL_CARD_IMAGE_RATIOS,
@@ -369,6 +370,19 @@ class VerticalCardBlock(CardBlock):
         value_class = CardstructValue
 
 
+class CardListBlock(blocks.StructBlock):
+    column_width = blocks.ChoiceBlock(
+        label=_("Column width"),
+        choices=GRID_3_4_6_CHOICES,
+        default="4",
+    )
+    items = blocks.ListBlock(VerticalCardBlock, label=_("Cards"))
+
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/grid_list.html"
+
+
 class TileBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"))
     heading_tag = blocks.ChoiceBlock(
@@ -410,6 +424,19 @@ class TileBlock(blocks.StructBlock):
         icon = "tablet-alt"
         template = "content_manager/blocks/tile.html"
         value_class = CardstructValue
+
+
+class TileListBlock(blocks.StructBlock):
+    column_width = blocks.ChoiceBlock(
+        label=_("Column width"),
+        choices=GRID_3_4_6_CHOICES,
+        default="4",
+    )
+    items = blocks.ListBlock(TileBlock, label=_("Tiles"))
+
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/grid_list.html"
 
 
 ## Basic blocks
@@ -848,7 +875,9 @@ class CommonStreamBlock(blocks.StreamBlock):
     text_cta = TextAndCTA(label=_("Text and call to action"))
     link = SingleLinkBlock(label=_("Single link"))
     iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
+    cards_list = CardListBlock(label=_("Card list"), group=_("Page structure"))
     tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
+    tile_list = TileListBlock(label=_("Tile list"), group=_("Page structure"))
     blog_recent_entries = BlogRecentEntriesBlock(label=_("Blog recent entries"), group=_("Website structure"))
     events_recent_entries = EventsRecentEntriesBlock(
         label=_("Event calendar recent entries"), group=_("Website structure")
