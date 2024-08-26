@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-26 15:14+0200\n"
-"PO-Revision-Date: 2024-08-26 15:15+0200\n"
+"PO-Revision-Date: 2024-08-26 15:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -724,7 +724,7 @@ msgstr ""
 
 #: content_manager/blocks.py:960
 msgid "Page tree"
-msgstr "Arbre des sous-pages"
+msgstr "Arborescence de pages"
 
 #: content_manager/blocks.py:973
 msgid "Main content"
