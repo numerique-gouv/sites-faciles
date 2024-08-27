@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-27 18:47+0200\n"
-"PO-Revision-Date: 2024-08-27 18:49+0200\n"
+"PO-Revision-Date: 2024-08-27 18:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1178,39 +1178,3 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
-
-#~ msgid "Cards"
-#~ msgstr "Cartes"
-
-#~ msgid "Tiles"
-#~ msgstr "Tuiles"
-
-#~ msgid "Card list"
-#~ msgstr "Liste de cartes"
-
-#~ msgid "Tile list"
-#~ msgstr "Liste de tuiles"
-
-#~ msgid "The link appears as a button under the text block"
-#~ msgstr "Le lien apparaît comme un bouton sous le bloc de texte"
-
-#~ msgid "Callout title"
-#~ msgstr "Titre de l’appel à action"
-
-#~ msgid "Callout text"
-#~ msgstr "Texte de l’appel à action"
-
-#~ msgid ""
-#~ "Select a document to make the card link to it (if the 'Link' field is not "
-#~ "populated.)"
-#~ msgstr ""
-#~ "Sélectionnez un document pour faire pointer la carte dessus (si le champ "
-#~ "« Lien » est vide.)"
-
-#~ msgid "Link to a page, use this or the external URL parameter"
-#~ msgstr ""
-#~ "Lien vers une page du site. Utilisez soit ce champ soit le champ URL "
-#~ "externe."
-
-#~ msgid "Use this or the Page parameter"
-#~ msgstr "Utilisez soit ce champ soit le champ Page."
