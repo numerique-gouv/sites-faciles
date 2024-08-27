@@ -370,19 +370,6 @@ class VerticalCardBlock(CardBlock):
         value_class = CardstructValue
 
 
-class CardListBlock(blocks.StructBlock):
-    column_width = blocks.ChoiceBlock(
-        label=_("Column width"),
-        choices=GRID_3_4_6_CHOICES,
-        default="4",
-    )
-    items = blocks.ListBlock(VerticalCardBlock, label=_("Cards"))
-
-    class Meta:
-        icon = "tablet-alt"
-        template = "content_manager/blocks/grid_list.html"
-
-
 class TileBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"))
     heading_tag = blocks.ChoiceBlock(
@@ -424,19 +411,6 @@ class TileBlock(blocks.StructBlock):
         icon = "tablet-alt"
         template = "content_manager/blocks/tile.html"
         value_class = CardstructValue
-
-
-class TileListBlock(blocks.StructBlock):
-    column_width = blocks.ChoiceBlock(
-        label=_("Column width"),
-        choices=GRID_3_4_6_CHOICES,
-        default="4",
-    )
-    items = blocks.ListBlock(TileBlock, label=_("Tiles"))
-
-    class Meta:
-        icon = "tablet-alt"
-        template = "content_manager/blocks/grid_list.html"
 
 
 ## Basic blocks
@@ -875,9 +849,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     text_cta = TextAndCTA(label=_("Text and call to action"))
     link = SingleLinkBlock(label=_("Single link"))
     iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
-    cards_list = CardListBlock(label=_("Card list"), group=_("Page structure"))
     tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
-    tile_list = TileListBlock(label=_("Tile list"), group=_("Page structure"))
     blog_recent_entries = BlogRecentEntriesBlock(label=_("Blog recent entries"), group=_("Website structure"))
     events_recent_entries = EventsRecentEntriesBlock(
         label=_("Event calendar recent entries"), group=_("Website structure")
@@ -889,6 +861,19 @@ class CommonStreamBlock(blocks.StreamBlock):
 
 class ColumnBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
+
+
+class ItemGridBlock(blocks.StructBlock):
+    column_width = blocks.ChoiceBlock(
+        label=_("Column width"),
+        choices=GRID_3_4_6_CHOICES,
+        default="4",
+    )
+    items = ColumnBlock(label=_("Items"))
+
+    class Meta:
+        icon = "grip"
+        template = "content_manager/blocks/item_grid.html"
 
 
 class AdjustableColumnBlock(blocks.StructBlock):
@@ -954,6 +939,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 class FullWidthBlock(CommonStreamBlock):
     image_and_text = ImageAndTextBlock(label=_("Image and text"))
     card = HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))
+    item_grid = ItemGridBlock(label=_("Item grid"), group=_("Page structure"))
 
     class Meta:
         icon = "minus"
@@ -1029,6 +1015,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("iframe", IframeBlock(label=_("Iframe"), group=_("Expert syntax"))),
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
+    ("item_grid", ItemGridBlock(label=_("Item grid"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
     (
         "fullwidthbackgroundwithsidemenu",
