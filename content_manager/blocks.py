@@ -12,6 +12,7 @@ from wagtailmarkdown.blocks import MarkdownBlock
 from content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
+    GRID_3_4_6_CHOICES,
     HEADING_CHOICES,
     HEADING_CHOICES_2_5,
     HORIZONTAL_CARD_IMAGE_RATIOS,
@@ -862,6 +863,19 @@ class ColumnBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
 
 
+class ItemGridBlock(blocks.StructBlock):
+    column_width = blocks.ChoiceBlock(
+        label=_("Column width"),
+        choices=GRID_3_4_6_CHOICES,
+        default="4",
+    )
+    items = ColumnBlock(label=_("Items"))
+
+    class Meta:
+        icon = "grip"
+        template = "content_manager/blocks/item_grid.html"
+
+
 class AdjustableColumnBlock(blocks.StructBlock):
     width = blocks.ChoiceBlock(
         label=_("Column width"),
@@ -925,6 +939,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 class FullWidthBlock(CommonStreamBlock):
     image_and_text = ImageAndTextBlock(label=_("Image and text"))
     card = HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))
+    item_grid = ItemGridBlock(label=_("Item grid"), group=_("Page structure"))
 
     class Meta:
         icon = "minus"
@@ -1000,6 +1015,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("iframe", IframeBlock(label=_("Iframe"), group=_("Expert syntax"))),
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
+    ("item_grid", ItemGridBlock(label=_("Item grid"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
     (
         "fullwidthbackgroundwithsidemenu",
