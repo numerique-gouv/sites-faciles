@@ -32,9 +32,13 @@
       {% block extra_css %}
       {% endblock extra_css %}
 
+      {% block cookie_banner %}
+        {% include "blocks/cookie_banner.html" %}
+      {% endblock cookie_banner %}
+
       {% block tracking %}
-        {% if settings.content_manager.AnalyticsSettings.head_scripts %}
-          {{ settings.content_manager.AnalyticsSettings.head_scripts|safe }}
+        {% if settings.content_manager.CustomScriptsSettings.head_scripts %}
+          {{ settings.content_manager.CustomScriptsSettings.head_scripts|safe }}
         {% endif %}
       {% endblock tracking %}
 
@@ -73,8 +77,8 @@
       {% endblock extra_js %}
 
       {% block body_tracking_scripts %}
-        {% if settings.content_manager.AnalyticsSettings.body_scripts %}
-          {{ settings.content_manager.AnalyticsSettings.body_scripts|safe }}
+        {% if settings.content_manager.CustomScriptsSettings.body_scripts %}
+          {{ settings.content_manager.CustomScriptsSettings.body_scripts|safe }}
         {% endif %}
       {% endblock body_tracking_scripts %}
     </body>

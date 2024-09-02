@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms.widgets import Textarea
+from django.forms.widgets import Textarea, mark_safe
 from django.utils.translation import gettext_lazy as _
 from dsfr.constants import NOTICE_TYPE_CHOICES
 from modelcluster.fields import ParentalKey
@@ -60,31 +60,45 @@ class MonospaceField(models.TextField):
 
 
 @register_setting(icon="code")
-class AnalyticsSettings(BaseSiteSetting):
+class CustomScriptsSettings(BaseSiteSetting):
     class Meta:
-        verbose_name = "Scripts de suivi"
+        verbose_name = _("Custom scripts")
 
     head_scripts = MonospaceField(
         blank=True,
         null=True,
-        verbose_name="Scripts de suivi <head>",
-        help_text="Ajoutez des scripts de suivi entre les balises <head>.",
+        verbose_name=_("Scripts in the <head> section"),
+        help_text=_("Allows for scripts to be placed in the <head> tag of the website pages."),
     )
 
     body_scripts = MonospaceField(
         blank=True,
         null=True,
-        verbose_name="Scripts de suivi <body>",
-        help_text="Ajoutez des scripts de suivi vers la fermeture de la balise <body>.",
+        verbose_name=_("Scripts in the <body> section"),
+        help_text=_("Allows for scripts to be placed at the end of the <body> tag of the website pages."),
+    )
+
+    use_tarteaucitron = models.BooleanField(
+        _("Use Tarteaucitron?"),
+        default=False,
+        help_text=mark_safe(
+            _(
+                'See <a href="https://sites-faciles.beta.numerique.gouv.fr/documentation/gestion-des-cookies/">Documentation</a>'
+            )
+        ),
     )
 
     panels = [
         MultiFieldPanel(
             [
+                FieldPanel(
+                    "use_tarteaucitron",
+                ),
                 FieldPanel("head_scripts"),
                 FieldPanel("body_scripts"),
             ],
-            heading="Scripts de suivi",
+            heading=_("Custom scripts"),
+            help_text=_("Allows to add custom CSS and JS to the site, for example for Matomo, Tarteaucitron…"),
         ),
     ]
 
@@ -99,7 +113,11 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         _("Institution (header)"),
         max_length=200,
         default="Intitulé officiel",
-        help_text=_("Institution brand as defined on page https://www.info.gouv.fr/marque-de-letat/le-bloc-marque"),
+        help_text=mark_safe(
+            _(
+                'Institution brand as defined on <a href="https://www.info.gouv.fr/marque-de-letat/le-bloc-marque">official page</a>.'  # noqa
+            )
+        ),
         blank=True,
     )
     header_brand_html = models.CharField(
@@ -156,9 +174,11 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         default="info",
         blank=True,
         max_length=20,
-        help_text=_(
-            'Use is strictly regulated, see \
+        help_text=mark_safe(
+            _(
+                'Use is strictly regulated, see \
             <a href="https://www.systeme-de-design.gouv.fr/composants-et-modeles/composants/bandeau-d-information-importante/">documentation</a>.'
+            )
         ),
     )
 

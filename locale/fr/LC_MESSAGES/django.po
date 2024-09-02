@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-23 16:16+0200\n"
-"PO-Revision-Date: 2024-08-23 16:17+0200\n"
+"POT-Creation-Date: 2024-09-02 17:14+0200\n"
+"PO-Revision-Date: 2024-09-02 17:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -42,14 +42,18 @@ msgid "Back to home page"
 msgstr "Retourner à l’accueil"
 
 #: templates/blocks/footer.html:50
+msgid "Cookie settings"
+msgstr "Gestion des cookies"
+
+#: templates/blocks/footer.html:59
 msgid "Display settings"
 msgstr "Paramètres d’affichage"
 
-#: templates/blocks/footer.html:56 templates/blocks/notice.html:4
+#: templates/blocks/footer.html:65 templates/blocks/notice.html:4
 msgid "Opens a new window"
 msgstr "Ouvre une nouvelle fenêtre"
 
-#: templates/blocks/footer.html:58
+#: templates/blocks/footer.html:67
 msgid "This website is made with"
 msgstr "Ce site est fait avec"
 
