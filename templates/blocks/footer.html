@@ -41,6 +41,15 @@
 
 {% block footer_links %}
   {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html" %}
+  {% if settings.content_manager.CustomScriptsSettings.use_tarteaucitron %}
+    <li class="fr-footer__bottom-item">
+      <button id="tarteaucitronManager"
+              aria-controls="tarteaucitron"
+              data-fr-opened="false"
+              class="fr-footer__bottom-link"
+              data-fr-js-modal-button="true">{% translate "Cookie settings" %}</button>
+    </li>
+  {% endif %}
   {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}
     <li class="fr-footer__bottom-item">
       <button id="footer__bottom-link__parametres-affichage"
