@@ -1,0 +1,28 @@
+publiccodeYmlVersion: "0.2"
+name: sites-faciles
+url: https://github.com/numerique-gouv/sites-faciles
+landingURL: https://sites-faciles.beta.numerique.gouv.fr/
+creationDate: 2023-01-10
+latestRelease:
+  date: ""
+  version: ""
+logo: https://github.com/numerique-gouv.png
+usedBy: []
+fundedBy:
+  - name: Direction interministérielle du numérique
+    url: https://lannuaire.service-public.fr/gouvernement/d1a97841-b4bf-46df-a089-1003e4e266b4
+roadmap: ""
+softwareType: ""
+description:
+  fr:
+    shortDescription: Gestionnaire de contenu permettant de créer et gérer un site
+      internet basé sur le Système de design de l'État, accessible et responsive
+    documentation: ""
+legal:
+  license: agpl-3.0
+  authorsFile: ""
+maintenance:
+  type: community
+  contacts:
+    - name: ""
+      email: ""
