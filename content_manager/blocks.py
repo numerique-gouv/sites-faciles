@@ -876,6 +876,19 @@ class ItemGridBlock(blocks.StructBlock):
         template = "content_manager/blocks/item_grid.html"
 
 
+class TabBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    content = ColumnBlock(label=_("Content"))
+
+
+class TabsBlock(blocks.StreamBlock):
+    tabs = TabBlock(label=_("Tab"), min_num=1, max_num=15)
+
+    class Meta:
+        icon = "grip"
+        template = "content_manager/blocks/tabs.html"
+
+
 class AdjustableColumnBlock(blocks.StructBlock):
     width = blocks.ChoiceBlock(
         label=_("Column width"),
@@ -1016,6 +1029,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("item_grid", ItemGridBlock(label=_("Item grid"), group=_("Page structure"))),
+    ("tabs", TabsBlock(label=_("Tabs"), group=_("Page structure"))),
     ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
     (
         "fullwidthbackgroundwithsidemenu",
