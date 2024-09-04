@@ -1,0 +1,42 @@
+publiccodeYmlVersion: "0.2"
+name: Sites faciles
+url: https://github.com/numerique-gouv/sites-faciles
+landingURL: https://sites-faciles.beta.numerique.gouv.fr/
+creationDate: 2023-01-10
+latestRelease:
+  date: "2024-09-03"
+  version: "v1.8.0"
+latestCommitDate: 2024-09-03
+latestTestedInstallationDate: ""
+logo: https://github.com/numerique-gouv.png
+usedBy: []
+fundedBy: ["DINUM"]
+roadmap: ""
+softwareType: "standalone/web"
+packages: []
+description:
+  fr:
+    shortDescription: Gestionnaire de contenu permettant de créer et gérer un site
+      internet basé sur le Système de design de l'État, accessible et responsive
+    documentation: ""
+legal:
+  license: agpl-3.0
+  authorsFile: ""
+authors:
+  distinctAuthorsCount: 0
+  distinctOrganizationsCount: 0
+maintenance:
+  type: community
+  contacts:
+    - name: ""
+      email: ""
+metadataFiles:
+  readme: README.md
+  license: LICENSE
+  contributing: null
+  changelog: null
+  codeOfConduct: null
+  governance: null
+lastUpdated: 2024-09-03
+awesomeScore: 5
+awesomeShield: https://img.shields.io/badge/awesome-codegouvfr_5/10-blue
