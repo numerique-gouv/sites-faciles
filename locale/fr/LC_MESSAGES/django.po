@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-02 17:14+0200\n"
-"PO-Revision-Date: 2024-09-02 17:19+0200\n"
+"POT-Creation-Date: 2024-09-04 14:57+0200\n"
+"PO-Revision-Date: 2024-09-04 17:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -50,6 +50,7 @@ msgid "Display settings"
 msgstr "Paramètres d’affichage"
 
 #: templates/blocks/footer.html:65 templates/blocks/notice.html:4
+#: templates/blocks/share.html:2
 msgid "Opens a new window"
 msgstr "Ouvre une nouvelle fenêtre"
 
@@ -84,3 +85,31 @@ msgstr "Masquer le message"
 #: templates/blocks/notice.html:3
 msgid "Consultation link"
 msgstr "Lien de consultation"
+
+#: templates/blocks/share.html:6
+msgid "Share this page"
+msgstr "Partager cette page"
+
+#: templates/blocks/share.html:10
+msgid "Share on Facebook"
+msgstr "Partager sur Facebook"
+
+#: templates/blocks/share.html:22
+msgid "Share on X (previously Twitter)"
+msgstr "Partager sur X (anciennement Twitter)"
+
+#: templates/blocks/share.html:36
+msgid "Share on LinkedIn"
+msgstr "Partager sur LinkedIn"
+
+#: templates/blocks/share.html:50
+msgid "Share via email"
+msgstr "Partager par email"
+
+#: templates/blocks/share.html:63
+msgid "Page URL copied to clipboard."
+msgstr "Adresse de la page copiée dans le presse-papiers."
+
+#: templates/blocks/share.html:67
+msgid "Copy to clipboard"
+msgstr "Copier dans le presse-papiers"

@@ -158,5 +158,7 @@
 
     </div>
   </div>
-
+  {% if settings.content_manager.CmsDsfrConfig.show_share_links and settings.content_manager.CmsDsfrConfig.share_links_events %}
+    {% include "blocks/share.html" %}
+  {% endif %}
 {% endblock content %}

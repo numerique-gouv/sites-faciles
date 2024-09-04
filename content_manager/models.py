@@ -236,9 +236,9 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         ),
     )
 
-    search_bar = models.BooleanField("Barre de recherche dans l’en-tête", default=False)  # type: ignore
-    theme_modale_button = models.BooleanField("Choix du thème clair/sombre", default=False)  # type: ignore
-    mourning = models.BooleanField("Mise en berne", default=False)  # type: ignore
+    search_bar = models.BooleanField(_("Display search bar in the header"), default=False)  # type: ignore
+    theme_modale_button = models.BooleanField(_("Display theme modale button"), default=False)  # type: ignore
+    mourning = models.BooleanField(_("Mourning"), default=False)  # type: ignore
 
     newsletter_description = models.TextField(_("Newsletter description"), default="", blank=True)
 
@@ -246,6 +246,24 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         _("Newsletter registration URL"),
         default="",
         blank=True,
+    )
+
+    share_links_content_pages = models.BooleanField(_("Activate share links on content_pages"), default=False)
+    share_links_blog_posts = models.BooleanField(_("Activate share links on blog posts"), default=False)
+    share_links_events = models.BooleanField(_("Activate share links on event pages"), default=False)
+
+    share_links_facebook = models.BooleanField(
+        _("Display a Share on Facebook link at the bottom of pages"), default=False
+    )
+    share_links_twitter = models.BooleanField(
+        _("Display a Share on X (previously Twitter) link at the bottom of pages"), default=False
+    )
+    share_links_linkedin = models.BooleanField(
+        _("Display a Share on LinkedIn link at the bottom of pages"), default=False
+    )
+    share_links_email = models.BooleanField(_("Display a Share via email link at the bottom of pages"), default=True)
+    share_links_clipboard = models.BooleanField(
+        _("Display a Copy to clipboard link at the bottom of pages"), default=True
     )
 
     site_panels = [
@@ -312,12 +330,30 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
             heading=_("Newsletter"),
         ),
         InlinePanel("social_media_items", label=_("Social media items")),
+        MultiFieldPanel(
+            [
+                FieldPanel("share_links_content_pages"),
+                FieldPanel("share_links_blog_posts"),
+                FieldPanel("share_links_events"),
+            ],
+            heading=_("Activate share links by type of page"),
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("share_links_facebook"),
+                FieldPanel("share_links_twitter"),
+                FieldPanel("share_links_linkedin"),
+                FieldPanel("share_links_email"),
+                FieldPanel("share_links_clipboard"),
+            ],
+            heading=_("Types of share links"),
+        ),
     ]
     edit_handler = TabbedInterface(
         [
             ObjectList(site_panels, heading=_("Generic")),
             ObjectList(brand_panels, heading=_("Brand block")),
-            ObjectList(newsletter_social_media_panels, heading=_("Newsletter and social media")),
+            ObjectList(newsletter_social_media_panels, heading=_("Newsletter, social media and share links")),
         ]
     )
 
@@ -336,6 +372,15 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
             return True
         else:
             return False
+
+    def show_share_links(self):
+        return (
+            self.share_links_facebook
+            or self.share_links_twitter
+            or self.share_links_linkedin
+            or self.share_links_email
+            or self.share_links_clipboard
+        )
 
 
 class SocialMediaItem(Orderable):
