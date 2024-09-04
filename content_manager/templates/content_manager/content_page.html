@@ -3,57 +3,62 @@
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags i18n %}
 
 {% block title %}
-    <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+  <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
 {% endblock title %}
 
 {% block description %}
-    {% if page.search_description %}<meta name="description" content="{{ page.search_description }}" />{% endif %}
+  {% if page.search_description %}<meta name="description" content="{{ page.search_description }}" />{% endif %}
 {% endblock description %}
 
 {% block social_media %}
-    <meta property="og:site_name" content="{{ request.get_host }}" />
-    <meta property="og:title"
-          content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="{{ page.full_url }}" />
-    <meta property="og:description" content="{{ page.search_description }}" />
-    <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
+  <meta property="og:site_name" content="{{ request.get_host }}" />
+  <meta property="og:title"
+        content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="{{ page.full_url }}" />
+  <meta property="og:description" content="{{ page.search_description }}" />
+  <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
 
-    {% if page.get_translations.live %}
-        {% for translation in page.get_translations.live %}
-            <meta property="og:locale:alternate"
-                  content="{{ translation.locale.language_code }}" />
-        {% endfor %}
-    {% endif %}
+  {% if page.get_translations.live %}
+    {% for translation in page.get_translations.live %}
+      <meta property="og:locale:alternate"
+            content="{{ translation.locale.language_code }}" />
+    {% endfor %}
+  {% endif %}
 
-    <meta name="twitter:title"
-          content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
-    <meta name="twitter:description" content="{{ page.search_description }}" />
+  <meta name="twitter:title"
+        content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+  <meta name="twitter:description" content="{{ page.search_description }}" />
 
-    {% if page.header_image %}
-        <meta name="twitter:card" content="summary_large_image" />
-        {% image page.header_image fill-1200x627 as header_image %}
-        <meta property="og:image" content="{{ header_image.full_url }}" />
-        <meta name="twitter:image" content="{{ header_image.full_url }}" />
-    {% else %}
-        <meta name="twitter:card" content="summary" />
-    {% endif %}
+  {% if page.header_image %}
+    <meta name="twitter:card" content="summary_large_image" />
+    {% image page.header_image fill-1200x627 as header_image %}
+    <meta property="og:image" content="{{ header_image.full_url }}" />
+    <meta name="twitter:image" content="{{ header_image.full_url }}" />
+  {% else %}
+    <meta name="twitter:card" content="summary" />
+  {% endif %}
 {% endblock social_media %}
 
 {% block content %}
-    {% include "content_manager/blocks/heading.html" %}
-    <div class="fr-container fr-pt-4w">
-        {% include "content_manager/blocks/breadcrumbs.html" %}
-        {% if not page.header_with_title %}<h1>{{ page.title }}</h1>{% endif %}
-    </div>
+  {% include "content_manager/blocks/heading.html" %}
+  <div class="fr-container fr-pt-4w">
+    {% include "content_manager/blocks/breadcrumbs.html" %}
+    {% if not page.header_with_title %}<h1>{{ page.title }}</h1>{% endif %}
+  </div>
 
-    {% include "content_manager/blocks/messages.html" %}
+  {% include "content_manager/blocks/messages.html" %}
 
-    {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
+  {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
 
-    <div class="fr-container fr-my-6w">
-        {% for tag in page.tags.all|dictsort:"slug" %}
-            <a class="fr-tag" target="_self" href="{% url 'global_tag' tag.slug %}">{{ tag }}</a>
-        {% endfor %}
-    </div>
+  <div class="fr-container fr-my-4w">
+    {% for tag in page.tags.all|dictsort:"slug" %}
+      <a class="fr-tag" target="_self" href="{% url 'global_tag' tag.slug %}">{{ tag }}</a>
+    {% endfor %}
+  </div>
+
+  {% if settings.content_manager.CmsDsfrConfig.show_share_links and settings.content_manager.CmsDsfrConfig.share_links_content_pages %}
+    {% include "blocks/share.html" %}
+  {% endif %}
+
 {% endblock content %}

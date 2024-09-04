@@ -89,7 +89,7 @@
     {% endif %}
   {% endwith %}
 
-  <div class="fr-container fr-my-6w">
+  <div class="fr-container fr-my-4w">
     {% for tag in page.tags.all|dictsort:"slug" %}
       <a class="fr-tag"
          target="_self"
@@ -97,4 +97,7 @@
     {% endfor %}
   </div>
 
+  {% if settings.content_manager.CmsDsfrConfig.show_share_links and settings.content_manager.CmsDsfrConfig.share_links_blog_posts %}
+    {% include "blocks/share.html" %}
+  {% endif %}
 {% endblock content %}

@@ -1,8 +1,7 @@
 {% load i18n wagtailcore_tags %}
 <div class="fr-tabs fr-mb-2w">
-  <ul class="fr-tabs__list"
-      role="tablist"
-      aria-label="{% translate 'Tabs group' %}">
+  {% translate "Tabs group" as tabs_group %}
+  <ul class="fr-tabs__list" role="tablist" aria-label="{{ tabs_group }}">
     {% for tab_block in block.value %}
       <li role="presentation">
         <button id="tabpanel-{{ block.id }}-{{ forloop.counter }}"
