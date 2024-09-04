@@ -1159,3 +1159,7 @@ ul[style="display: block;"] .tarteaucitronLine {
 #tarteaucitronRoot #tarteaucitronSaveButton::before {
     content: none;
 }
+
+.tac_visually-hidden {
+    visibility: hidden;
+}
