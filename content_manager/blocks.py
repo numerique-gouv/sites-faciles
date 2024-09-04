@@ -885,7 +885,6 @@ class TabsBlock(blocks.StreamBlock):
     tabs = TabBlock(label=_("Tab"), min_num=1, max_num=15)
 
     class Meta:
-        icon = "grip"
         template = "content_manager/blocks/tabs.html"
 
 
@@ -912,7 +911,6 @@ class AdjustableColumnBlock(blocks.StructBlock):
 
 class MultiColumnsBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
-    tabs = TabsBlock(label=_("Tabs"), group=_("DSFR components"))
     column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
 
     class Meta:
