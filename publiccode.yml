@@ -4,8 +4,8 @@ url: https://github.com/numerique-gouv/sites-faciles
 landingURL: https://sites-faciles.beta.numerique.gouv.fr/
 creationDate: 2023-01-10
 latestRelease:
-  date: "2024-09-03"
-  version: "v1.8.0"
+  date:
+  version:
 latestCommitDate: 2024-09-03
 latestTestedInstallationDate: ""
 logo: https://github.com/numerique-gouv.png
@@ -16,9 +16,10 @@ softwareType: "standalone/web"
 packages: []
 description:
   fr:
-    shortDescription: Gestionnaire de contenu permettant de créer et gérer un site
+    shortDescription:
+      Gestionnaire de contenu permettant de créer et gérer un site
       internet basé sur le Système de design de l'État, accessible et responsive
-    documentation: ""
+    documentation: "https://sites-faciles.beta.numerique.gouv.fr/documentation/"
 legal:
   license: agpl-3.0
   authorsFile: ""
