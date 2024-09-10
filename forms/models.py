@@ -6,6 +6,7 @@ from dsfr.forms import DsfrDjangoTemplates
 from dsfr.utils import dsfr_input_class_attr
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
+from wagtail.api import APIField
 from wagtail.contrib.forms.forms import BaseForm, FormBuilder
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
@@ -90,6 +91,12 @@ class FormPage(AbstractEmailForm):
             _("E-mail notification when an answer is sent"),
             help_text=_("Optional, will only work if SMTP parameters have been set."),
         ),
+    ]
+
+    api_fields = [
+        APIField("intro"),
+        APIField("thank_you_text"),
+        APIField("form_fields"),
     ]
 
     class Meta:

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-24 18:07+0200\n"
-"PO-Revision-Date: 2024-07-24 18:08+0200\n"
+"POT-Creation-Date: 2024-09-10 18:18+0200\n"
+"PO-Revision-Date: 2024-09-10 18:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -27,106 +27,106 @@ msgstr "Du…"
 msgid "To…"
 msgstr "Au…"
 
-#: events/models.py:28
+#: events/models.py:29
 msgid "Events per page"
 msgstr "Événements par page"
 
-#: events/models.py:32 events/templates/events/events_index_page.html:80
+#: events/models.py:33 events/templates/events/events_index_page.html:80
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
-#: events/models.py:33 events/templates/events/events_index_page.html:97
+#: events/models.py:34 events/templates/events/events_index_page.html:97
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
-#: events/models.py:34 events/templates/events/events_index_page.html:114
+#: events/models.py:35 events/templates/events/events_index_page.html:114
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
-#: events/models.py:36 events/templates/events/events_index_page.html:129
+#: events/models.py:37 events/templates/events/events_index_page.html:129
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
-#: events/models.py:36
+#: events/models.py:37
 msgid "The source is the organization of the event author"
 msgstr "La source est l’organisation à laquelle appartient l’auteur de l’événement"
 
-#: events/models.py:48
+#: events/models.py:49
 msgid "Show filters"
 msgstr "Afficher les filtres"
 
-#: events/models.py:55
+#: events/models.py:56
 msgid "Event calendar index"
 msgstr "Index de l’agenda"
 
-#: events/models.py:96
+#: events/models.py:97
 #, python-format
 msgid "Events tagged with %(tag)s"
 msgstr "Événements avec l’étiquette %(tag)s"
 
-#: events/models.py:108
+#: events/models.py:109
 #, python-format
 msgid "Events in category %(category)s"
 msgstr "Événements dans la catégorie %(category)s"
 
-#: events/models.py:120 events/models.py:131
+#: events/models.py:121 events/models.py:132
 msgid "Events created by"
 msgstr "Événements créés par"
 
-#: events/models.py:231
+#: events/models.py:232
 msgid "Past events"
 msgstr "Événements terminés"
 
-#: events/models.py:238
+#: events/models.py:239
 #, python-format
 msgid "Events published in %(year)s"
 msgstr "Événements publiés en %(year)s"
 
-#: events/models.py:279
+#: events/models.py:280
 msgid "Categories"
 msgstr "Catégories"
 
-#: events/models.py:282
+#: events/models.py:283
 msgid "Post date"
 msgstr "Date de publication"
 
-#: events/models.py:283
+#: events/models.py:284
 msgid "Event start date"
 msgstr "Date de début de l’événement"
 
-#: events/models.py:284
+#: events/models.py:285
 msgid "Event end date"
 msgstr "Date de fin de l’événement"
 
-#: events/models.py:286
+#: events/models.py:287
 msgid "Location"
 msgstr "Lieu"
 
-#: events/models.py:287
+#: events/models.py:288
 msgid "Registration URL"
 msgstr "Lien d’inscription"
 
-#: events/models.py:290
+#: events/models.py:291
 msgid "Author entries can be created in Snippets > Persons"
 msgstr "Les auteurs peuvent être créés via Fragments > Personnes"
 
-#: events/models.py:319
+#: events/models.py:320
 msgid "Event date and place"
 msgstr "Date et lieu de l’événement"
 
-#: events/models.py:331
+#: events/models.py:332
 msgid "Scheduled publishing"
 msgstr "Publication programmée"
 
-#: events/models.py:339
+#: events/models.py:340
 msgid "Tags and Categories"
 msgstr "Étiquettes et Catégories"
 
-#: events/models.py:395
+#: events/models.py:408
 msgid "Event page"
 msgstr "Page d’événement"
 
-#: events/models.py:403
+#: events/models.py:416
 msgid "Category"
 msgstr "Catégorie"
 
