@@ -4,13 +4,13 @@ url: https://github.com/numerique-gouv/sites-faciles
 landingURL: https://sites-faciles.beta.numerique.gouv.fr/
 creationDate: 2023-01-10
 latestRelease:
-  date:
-  version:
-latestCommitDate: 2024-09-03
-latestTestedInstallationDate: ""
+  date: ""
+  version: ""
 logo: https://github.com/numerique-gouv.png
 usedBy: []
-fundedBy: ["DINUM"]
+fundedBy:
+  - name: Direction interministérielle du numérique
+    url: https://lannuaire.service-public.fr/gouvernement/d1a97841-b4bf-46df-a089-1003e4e266b4
 roadmap: ""
 softwareType: "standalone/web"
 packages: []
