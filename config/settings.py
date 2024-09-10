@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "wagtail_localize",
     "wagtail_localize.locales",
     "taggit",
+    "wagtail.api.v2",
+    "rest_framework",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",

@@ -15,6 +15,7 @@ from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
 from wagtail.admin.widgets.slug import SlugInput
+from wagtail.api import APIField
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models.i18n import Locale, TranslatableMixin
 from wagtail.search import index
@@ -259,6 +260,14 @@ class BlogEntryPage(SitesFacilesBasePage):
         ),
     ]
 
+    api_fields = SitesFacilesBasePage.api_fields + [
+        APIField("tags"),
+        APIField("blog_categories"),
+        APIField("authors"),
+        APIField("go_live_at"),
+        APIField("expire_at"),
+    ]
+
     def get_absolute_url(self):
         return self.url
 
@@ -315,6 +324,14 @@ class Category(TranslatableMixin, index.Indexed, models.Model):
         FieldPanel("description"),
         FieldPanel("colophon"),
         FieldPanel("parent"),
+    ]
+
+    api_fields = [
+        APIField("name"),
+        APIField("slug"),
+        APIField("description"),
+        APIField("colophon"),
+        APIField("parent"),
     ]
 
     class Meta:
