@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 18:18+0200\n"
-"PO-Revision-Date: 2024-09-10 18:19+0200\n"
+"POT-Creation-Date: 2024-09-10 18:28+0200\n"
+"PO-Revision-Date: 2024-09-10 18:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -98,6 +98,10 @@ msgstr "Page de formulaire"
 #: forms/models.py:104
 msgid "Form pages"
 msgstr "Pages de formulaire"
+
+#: forms/templates/forms/form_page.html:9
+msgid "Submit form"
+msgstr "Envoyer le formulaire"
 
 #: forms/templates/forms/form_page_landing.html:22
 msgid "Your form has been successfully submitted. Thank you!"
