@@ -42,7 +42,7 @@ jobs:
         continue-on-error: true
       - name: Execute migrations in one-off container
         run: |
-          scalingo --app ${PREPROD_APP} run python manage.py migrate
+          scalingo --app ${PREPROD_APP} run python manage.py migrate && python manage.py update_index
 
   sync_prod_to_preprod_s3:
     name: Copy Prod s3 bucket to Copy Preprod s3 bucket
