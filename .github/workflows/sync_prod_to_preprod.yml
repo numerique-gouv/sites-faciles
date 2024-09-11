@@ -1,0 +1,57 @@
+name: Sync databases and s3 buckets from prod to preprod
+
+on:
+  workflow_dispatch:
+
+env:
+  DUPLICATE_API_TOKEN: ${{ secrets.DUPLICATE_API_TOKEN }}
+  PREPROD_APP: ${{ secrets.SCALINGO_PREPROD_APP }}
+  PREPROD_DATABASE_URL: ${{ secrets.PREPROD_DATABASE_URL }}
+  PRODUCTION_APP: ${{ secrets.SCALINGO_PRODUCTION_APP }}
+  S3_HOST: ${{ secrets.S3_HOST }}
+  S3_PREPROD_BUCKET: ${{ secrets.S3_PREPROD_BUCKET }}
+  S3_PRODUCTION_BUCKET: ${{ secrets.S3_PRODUCTION_BUCKET }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_KEY }}
+
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  sync_prod_to_preprod_db:
+    name: Sync production database to preprod and run migrations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Scalingo CLI
+        run: |
+          curl -O https://cli-dl.scalingo.com/install && bash install
+      - name: Login Scalingo CLI
+        run: scalingo login --api-token "${DUPLICATE_API_TOKEN}"
+      - name: Execute sync script in one-off container
+        run: |
+          scalingo --app ${PREPROD_APP} run \
+          --env DUPLICATE_API_TOKEN="${DUPLICATE_API_TOKEN}" \
+          --env PREPROD_DATABASE_URL="${PREPROD_DATABASE_URL}" \
+          --env PRODUCTION_APP="${PRODUCTION_APP}" \
+          --file ./scripts/restore_prod_to_preprod.sh \
+          /tmp/uploads/restore_prod_to_preprod.sh
+        continue-on-error: true
+      - name: Execute migrations in one-off container
+        run: |
+          scalingo --app ${PREPROD_APP} run python manage.py migrate && python manage.py update_index
+
+  sync_prod_to_preprod_s3:
+    name: Copy Prod s3 bucket to Preprod s3 bucket
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install AWS CLI dependencies
+        run: |
+          pip install awscli
+      - name: Push to S3 bucket preprod
+        run: aws --endpoint-url ${{ env.S3_HOST }} s3 sync --delete --quiet ${{ env.S3_PRODUCTION_BUCKET }} ${{ env.S3_PREPROD_BUCKET }}
