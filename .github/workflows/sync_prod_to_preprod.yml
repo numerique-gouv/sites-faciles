@@ -45,7 +45,7 @@ jobs:
           scalingo --app ${PREPROD_APP} run python manage.py migrate && python manage.py update_index
 
   sync_prod_to_preprod_s3:
-    name: Copy Prod s3 bucket to Copy Preprod s3 bucket
+    name: Copy Prod s3 bucket to Preprod s3 bucket
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
