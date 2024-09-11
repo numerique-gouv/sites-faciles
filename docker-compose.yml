@@ -21,6 +21,7 @@ services:
       - "${HOST_PORT}:${HOST_PORT}"
     volumes:
       - .:/app
+      - "/app/staticfiles"
     depends_on:
       - db
 
