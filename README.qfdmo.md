@@ -24,12 +24,7 @@ Attention, un ensemble de `secret key` sont à configurer sur l'interface github
 
 On remettra régulièrement ce fork à jour à partir de [numerique-gouv/sites-faciles](https://github.com/numerique-gouv/sites-faciles)
 
-```sh
-git remote add sites-faciles https://github.com/numerique-gouv/sites-faciles.git
-git fetch -ap sites-faciles
-git co main
-git rebase sites-faciles/main
-```
+Utiliser les boutons `Sync fork` sur l'interface de ce projet Github (cf. [syncing-a-fork](https://docs.github.com/fr/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
 
 ## Déploiement
 
