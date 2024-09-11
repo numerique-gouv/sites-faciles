@@ -44,7 +44,7 @@ fix:
 
 .PHONY: index
 index:
-	poetry run python manage.py update_index
+	$(EXEC_CMD) poetry run python manage.py update_index
 
 .PHONY: init
 init:
