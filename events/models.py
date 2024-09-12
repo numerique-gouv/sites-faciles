@@ -11,11 +11,12 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel
+from wagtail.api import APIField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.models.i18n import Locale
 from wagtail.search import index
 
-from blog.models import Category, Organization, Person
+from blog.models import Category, CategorySerializer, Organization, Person, PersonSerializer
 from content_manager.abstract import SitesFacilesBasePage
 from content_manager.models import CmsDsfrConfig, Tag
 from events.forms import EventSearchForm
@@ -338,6 +339,18 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
             ],
             heading=_("Tags and Categories"),
         ),
+    ]
+
+    api_fields = SitesFacilesBasePage.api_fields + [
+        APIField("tags"),
+        APIField("event_categories", serializer=CategorySerializer(many=True)),
+        APIField("authors", serializer=PersonSerializer(many=True)),
+        APIField("event_date_start"),
+        APIField("event_date_end"),
+        APIField("location"),
+        APIField("registration_url"),
+        APIField("go_live_at"),
+        APIField("expire_at"),
     ]
 
     def get_absolute_url(self):

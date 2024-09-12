@@ -2,8 +2,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from dsfr.constants import COLOR_CHOICES
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.api import APIField
 from wagtail.fields import RichTextField, StreamField
 from wagtail.images import get_image_model_string
+from wagtail.images.api.fields import ImageRenditionField
 from wagtail.models import Page
 from wagtail.search import index
 
@@ -108,6 +110,22 @@ class SitesFacilesBasePage(Page):
 
     search_fields = Page.search_fields + [
         index.SearchField("body"),
+    ]
+
+    # Export fields over the API
+    api_fields = [
+        APIField("body"),
+        APIField("header_image"),
+        APIField("header_image_render", serializer=ImageRenditionField("fill-1200x627", source="header_image")),
+        APIField("header_image_thumbnail", serializer=ImageRenditionField("fill-376x211", source="header_image")),
+        APIField("header_with_title"),
+        APIField("header_color_class"),
+        APIField("header_large"),
+        APIField("header_darken"),
+        APIField("header_cta_text"),
+        APIField("header_cta_buttons"),
+        APIField("header_cta_label"),
+        APIField("header_cta_link"),
     ]
 
     def get_absolute_url(self):

@@ -43,11 +43,11 @@ class FormsTestCase(WagtailPageTestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertInHTML(
-            """<li class="fr-error-text">Saisissez une adresse de courriel valide.</li>""",
+            """<li class="fr-error-text">Saisissez une adresse e-mail valide.</li>""",
             response.content.decode(),
         )
 
         self.assertInHTML(
-            """<li class="fr-error-text">Champ requis.</li>""",
+            """<li class="fr-error-text">Ce champ est obligatoire.</li>""",
             response.content.decode(),
         )
