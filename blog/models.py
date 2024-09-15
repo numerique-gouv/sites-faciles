@@ -12,10 +12,13 @@ from django.utils import timezone
 from django.utils.translation import get_language, gettext_lazy as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
+from rest_framework import serializers
 from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
 from wagtail.admin.widgets.slug import SlugInput
+from wagtail.api import APIField
 from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Orderable
 from wagtail.models.i18n import Locale, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
@@ -27,6 +30,166 @@ from content_manager.constants import LIMITED_RICHTEXTFIELD_FEATURES
 from content_manager.models import Tag
 
 User = get_user_model()
+
+
+@register_snippet
+class Organization(Orderable):
+    name = models.CharField(_("Name"), max_length=255)
+    slug = models.SlugField(max_length=80)
+
+    panels = [
+        TitleFieldPanel("name"),
+        FieldPanel("slug", widget=SlugInput),
+    ]
+
+    api_fields = [
+        APIField("name"),
+        APIField("slug"),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Organization")
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = ("id", "name", "slug")
+
+
+@register_snippet
+class Person(Orderable):
+    name = models.CharField(_("Name"), max_length=255)
+    role = models.CharField(_("Role"), max_length=255)
+    organization = models.ForeignKey("Organization", null=True, on_delete=models.SET_NULL)
+    contact_info = models.CharField(_("Contact info"), max_length=500, blank=True)
+    image = models.ForeignKey(
+        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("role"),
+        FieldPanel("organization"),
+        FieldPanel("contact_info"),
+        FieldPanel("image"),
+    ]
+
+    api_fields = [
+        APIField("name"),
+        APIField("role"),
+        APIField("organization", serializer=OrganizationSerializer()),
+        APIField("contact_info"),
+        APIField("image"),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Person")
+
+
+class PersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ("id", "name", "role", "organization", "contact_info", "image")
+        depth = 1
+
+
+@register_snippet
+class Category(TranslatableMixin, index.Indexed, Orderable):
+    name = models.CharField(max_length=80, unique=True, verbose_name=_("Category name"))
+    slug = models.SlugField(unique=True, max_length=80)
+    parent = models.ForeignKey(
+        "self",
+        blank=True,
+        null=True,
+        related_name="children",
+        verbose_name=_("Parent category"),
+        on_delete=models.SET_NULL,
+    )
+    description = RichTextField(
+        max_length=500,
+        features=LIMITED_RICHTEXTFIELD_FEATURES,
+        blank=True,
+        verbose_name=_("Description"),
+        help_text=_("Displayed on the top of the category page"),
+    )
+    colophon = StreamField(
+        COLOPHON_BLOCKS,
+        blank=True,
+        use_json_field=True,
+        help_text=_("Text displayed at the end of every page in the category"),
+    )
+    objects = CategoryManager()
+
+    panels = [
+        TitleFieldPanel("name"),
+        FieldPanel("slug", widget=SlugInput),
+        FieldPanel("description"),
+        FieldPanel("colophon"),
+        FieldPanel("parent"),
+    ]
+
+    api_fields = [
+        APIField("name"),
+        APIField("slug"),
+        APIField("description"),
+        APIField("colophon"),
+        APIField("parent"),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    def clean(self):
+        if self.parent:
+            parent = self.parent
+            if self.parent == self:
+                raise ValidationError(_("Parent category cannot be self."))
+            if parent.parent and parent.parent == self:
+                raise ValidationError(_("Cannot have circular Parents."))
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super(Category, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
+        unique_together = [
+            ("translation_key", "locale"),
+            ("name", "locale"),
+            ("slug", "locale"),
+        ]
+
+    search_fields = [index.SearchField("name")]
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ("id", "name", "slug", "description", "colophon", "parent")
+        depth = 1
+
+
+class CategoryEntryPage(models.Model):
+    category = models.ForeignKey(Category, related_name="+", verbose_name=_("Category"), on_delete=models.CASCADE)
+    page = ParentalKey("BlogEntryPage", related_name="entry_categories")
+    panels = [FieldPanel("category")]
+
+    def __str__(self):
+        return self.category
+
+
+class TagEntryPage(TaggedItemBase):
+    content_object = ParentalKey("BlogEntryPage", related_name="entry_tags")
 
 
 class BlogIndexPage(SitesFacilesBasePage):
@@ -259,127 +422,16 @@ class BlogEntryPage(SitesFacilesBasePage):
         ),
     ]
 
+    api_fields = SitesFacilesBasePage.api_fields + [
+        APIField("tags"),
+        APIField("blog_categories", serializer=CategorySerializer(many=True)),
+        APIField("authors", serializer=PersonSerializer(many=True)),
+        APIField("go_live_at"),
+        APIField("expire_at"),
+    ]
+
     def get_absolute_url(self):
         return self.url
 
     class Meta:
         verbose_name = _("Blog page")
-
-
-@register_snippet
-class Category(TranslatableMixin, index.Indexed, models.Model):
-    name = models.CharField(max_length=80, unique=True, verbose_name=_("Category name"))
-    slug = models.SlugField(unique=True, max_length=80)
-    parent = models.ForeignKey(
-        "self",
-        blank=True,
-        null=True,
-        related_name="children",
-        verbose_name=_("Parent category"),
-        on_delete=models.SET_NULL,
-    )
-    description = RichTextField(
-        max_length=500,
-        features=LIMITED_RICHTEXTFIELD_FEATURES,
-        blank=True,
-        verbose_name=_("Description"),
-        help_text=_("Displayed on the top of the category page"),
-    )
-    colophon = StreamField(
-        COLOPHON_BLOCKS,
-        blank=True,
-        use_json_field=True,
-        help_text=_("Text displayed at the end of every page in the category"),
-    )
-    objects = CategoryManager()
-
-    def __str__(self):
-        return self.name
-
-    def clean(self):
-        if self.parent:
-            parent = self.parent
-            if self.parent == self:
-                raise ValidationError(_("Parent category cannot be self."))
-            if parent.parent and parent.parent == self:
-                raise ValidationError(_("Cannot have circular Parents."))
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        return super(Category, self).save(*args, **kwargs)
-
-    panels = [
-        TitleFieldPanel("name"),
-        FieldPanel("slug", widget=SlugInput),
-        FieldPanel("description"),
-        FieldPanel("colophon"),
-        FieldPanel("parent"),
-    ]
-
-    class Meta:
-        ordering = ["name"]
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
-        unique_together = [
-            ("translation_key", "locale"),
-            ("name", "locale"),
-            ("slug", "locale"),
-        ]
-
-    search_fields = [index.SearchField("name")]
-
-
-class CategoryEntryPage(models.Model):
-    category = models.ForeignKey(Category, related_name="+", verbose_name=_("Category"), on_delete=models.CASCADE)
-    page = ParentalKey("BlogEntryPage", related_name="entry_categories")
-    panels = [FieldPanel("category")]
-
-    def __str__(self):
-        return self.category
-
-
-class TagEntryPage(TaggedItemBase):
-    content_object = ParentalKey("BlogEntryPage", related_name="entry_tags")
-
-
-@register_snippet
-class Organization(models.Model):
-    name = models.CharField(_("Name"), max_length=255)
-    slug = models.SlugField(max_length=80)
-
-    panels = [
-        TitleFieldPanel("name"),
-        FieldPanel("slug", widget=SlugInput),
-    ]
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _("Organization")
-
-
-@register_snippet
-class Person(models.Model):
-    name = models.CharField(_("Name"), max_length=255)
-    role = models.CharField(_("Role"), max_length=255)
-    organization = models.ForeignKey("Organization", null=True, on_delete=models.SET_NULL)
-    contact_info = models.CharField(_("Contact info"), max_length=500, blank=True)
-    image = models.ForeignKey(
-        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
-    )
-
-    panels = [
-        FieldPanel("name"),
-        FieldPanel("role"),
-        FieldPanel("organization"),
-        FieldPanel("contact_info"),
-        FieldPanel("image"),
-    ]
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _("Person")

@@ -1,25 +1,25 @@
 {% load dsfr_tags wagtailcore_tags %}
 <div class="fr-container fr-py-3w">
-    <div class="fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">
-            {% for subblock in block.value %}
-                {% if subblock.block_type == 'title' %}
-                    <div class="fr-col-12">
-                        <h2>{{ subblock.value }}</h2>
-                    </div>
-                {% endif %}
-            {% endfor %}
-            <div class="fr-accordions-group">
-                {% for subblock in block.value %}
-                    {% if subblock.block_type == 'accordion' %}
-                        {% with forloop.counter0|lower as str_counter %}
-                            {% with "accordion-"|add:accordions_id|add:"-"|add:str_counter as accordion_id %}  
-                                {% dsfr_accordion id=accordion_id title=subblock.value.title content=subblock.value.content|richtext %}
-                            {% endwith %}
-                        {% endwith %}
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">
+      {% for subblock in block.value %}
+        {% if subblock.block_type == 'title' %}
+          <div class="fr-col-12">
+            <h2>{{ subblock.value }}</h2>
+          </div>
+        {% endif %}
+      {% endfor %}
+      <div class="fr-accordions-group">
+        {% for subblock in block.value %}
+          {% if subblock.block_type == 'accordion' %}
+            {% with forloop.counter0|lower as str_counter %}
+              {% with "accordion-"|add:accordions_id|add:"-"|add:str_counter as accordion_id %}
+                {% dsfr_accordion id=accordion_id title=subblock.value.title content=subblock.value.content|richtext %}
+              {% endwith %}
+            {% endwith %}
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
+  </div>
 </div>

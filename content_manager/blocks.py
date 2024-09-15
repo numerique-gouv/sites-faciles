@@ -876,6 +876,18 @@ class ItemGridBlock(blocks.StructBlock):
         template = "content_manager/blocks/item_grid.html"
 
 
+class TabBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    content = ColumnBlock(label=_("Content"))
+
+
+class TabsBlock(blocks.StreamBlock):
+    tabs = TabBlock(label=_("Tab"), min_num=1, max_num=15)
+
+    class Meta:
+        template = "content_manager/blocks/tabs.html"
+
+
 class AdjustableColumnBlock(blocks.StructBlock):
     width = blocks.ChoiceBlock(
         label=_("Column width"),
@@ -939,6 +951,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 class FullWidthBlock(CommonStreamBlock):
     image_and_text = ImageAndTextBlock(label=_("Image and text"))
     card = HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))
+    tabs = TabsBlock(label=_("Tabs"), group=_("DSFR components"))
     item_grid = ItemGridBlock(label=_("Item grid"), group=_("Page structure"))
 
     class Meta:
@@ -1010,6 +1023,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("card", HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))),
     ("tile", TileBlock(label=_("Tile"), group=_("DSFR components"))),
     ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
+    ("tabs", TabsBlock(label=_("Tabs"), group=_("DSFR components"))),
     ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
     ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),
     ("iframe", IframeBlock(label=_("Iframe"), group=_("Expert syntax"))),

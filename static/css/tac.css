@@ -1147,6 +1147,8 @@ ul[style="display: block;"] .tarteaucitronLine {
 }
 
 
+#tarteaucitronAlertBig #tarteaucitronAllDenied2,
+#tarteaucitronAlertBig #tarteaucitronPersonalize2,
 #tarteaucitronRoot #tarteaucitronSaveButton {
     background: var(--bf500);
     color: var(--w);
@@ -1156,6 +1158,16 @@ ul[style="display: block;"] .tarteaucitronLine {
     font-size: inherit;
 }
 
+#tarteaucitronAlertBig #tarteaucitronAllDenied2::before,
+#tarteaucitronAlertBig #tarteaucitronPersonalize2::before,
 #tarteaucitronRoot #tarteaucitronSaveButton::before {
     content: none;
+}
+
+.tarteaucitronCTAButton {
+    margin: 0 0.5em;
+}
+
+.tac_visually-hidden {
+    display: none;
 }

@@ -51,9 +51,9 @@
         {% dsfr_skiplinks skiplinks %}
       {% endblock skiplinks %}
 
+      {% wagtailuserbar %}
       {% include "blocks/header.html" %}
       {% dsfr_theme_modale %}
-      {% wagtailuserbar %}
 
       {% if SiteConfig.notice_title or SiteConfig.notice_description %}
         {% include "blocks/notice.html" %}

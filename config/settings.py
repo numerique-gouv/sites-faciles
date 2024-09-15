@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "wagtail_localize",
     "wagtail_localize.locales",
     "taggit",
+    "wagtail.api.v2",
+    "rest_framework",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -267,6 +269,7 @@ WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{HOST_URL}"
 HOST_PORT = os.getenv("HOST_PORT", "")
 if HOST_PORT != "":
     WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
+WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 WAGTAILADMIN_PATH = os.getenv("WAGTAILADMIN_PATH", "cms-admin/")
 
