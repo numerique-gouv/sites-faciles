@@ -51,6 +51,7 @@
       <h1>
         {{ page.title }}
         {% if extra_title %}: {{ extra_title }}{% endif %}
+        {% include "content_manager/blocks/page_visibility.html" %}
       </h1>
     {% endif %}
 

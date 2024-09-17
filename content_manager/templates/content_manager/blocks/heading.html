@@ -13,6 +13,7 @@
               <h1 {% if block.value.large %}class="fr-display--sm"{% endif %}>
                 {{ page.title }}
                 {% if extra_title %}: {{ extra_title }}{% endif %}
+                {% include "content_manager/blocks/page_visibility.html" %}
               </h1>
             {% endif %}
             {% if page.header_cta_text %}{{ page.header_cta_text|richtext }}{% endif %}
