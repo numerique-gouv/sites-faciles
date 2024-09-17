@@ -1,0 +1,20 @@
+{% load i18n %}
+{% if page.get_view_restrictions %}
+  {% if page.get_view_restrictions.first.restriction_type == "login" %}
+    {% translate "Page visibility restricted to logged in users only" as page_visibility %}
+  {% elif page.get_view_restrictions.first.restriction_type == "groups" %}
+    {% translate "Page visibility restricted by group" as page_visibility %}
+  {% elif page.get_view_restrictions.first.restriction_type == "password" %}
+    {% translate "Page visibility restricted by password" as page_visibility %}
+  {% else %}
+    {% translate "Page with restricted visibility" as page_visibility %}
+  {% endif %}
+  <button class="fr-icon-eye-off-line fr-btn fr-btn--tertiary-no-outline"
+          type="button"
+          id="cmsfr-page-visibility-btn"
+          aria-describedby="cmsfr-page-visibility">{{ page_visibility }}</button>
+  <span class="fr-tooltip fr-placement"
+        id="cmsfr-page-visibility"
+        role="tooltip"
+        aria-hidden="true">{{ page_visibility }}</span>
+{% endif %}

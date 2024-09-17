@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 18:18+0200\n"
-"PO-Revision-Date: 2024-09-10 18:18+0200\n"
+"POT-Creation-Date: 2024-09-17 12:04+0200\n"
+"PO-Revision-Date: 2024-09-17 12:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -87,19 +87,19 @@ msgstr "Catégories"
 msgid "Posts per page"
 msgstr "Articles par page"
 
-#: blog/models.py:203 blog/templates/blog/blog_index_page.html:76
+#: blog/models.py:203 blog/templates/blog/blog_index_page.html:77
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
-#: blog/models.py:204 blog/templates/blog/blog_index_page.html:93
+#: blog/models.py:204 blog/templates/blog/blog_index_page.html:94
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
-#: blog/models.py:205 blog/templates/blog/blog_index_page.html:110
+#: blog/models.py:205 blog/templates/blog/blog_index_page.html:111
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
-#: blog/models.py:207 blog/templates/blog/blog_index_page.html:125
+#: blog/models.py:207 blog/templates/blog/blog_index_page.html:126
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
@@ -167,8 +167,8 @@ msgstr "Aucun article trouvé."
 msgid "Posted by:"
 msgstr "Écrit par :"
 
-#: blog/templates/blog/blog_index_page.html:71
-#: blog/templates/blog/blog_index_page.html:73
+#: blog/templates/blog/blog_index_page.html:72
+#: blog/templates/blog/blog_index_page.html:74
 msgid "Filters"
 msgstr "Filtres"
 

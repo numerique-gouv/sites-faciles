@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 18:18+0200\n"
-"PO-Revision-Date: 2024-09-10 18:18+0200\n"
+"POT-Creation-Date: 2024-09-17 12:04+0200\n"
+"PO-Revision-Date: 2024-09-17 12:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1255,6 +1255,22 @@ msgstr "Dans cette rubrique"
 msgid "Go to page"
 msgstr "Aller à la page"
 
+#: content_manager/templates/content_manager/blocks/page_visibility.html:4
+msgid "Page visibility restricted to logged in users only"
+msgstr "Visibilité de la page restreinte aux utilisateurs connectés"
+
+#: content_manager/templates/content_manager/blocks/page_visibility.html:6
+msgid "Page visibility restricted by group"
+msgstr "Visibilité de la page restreinte par groupe"
+
+#: content_manager/templates/content_manager/blocks/page_visibility.html:8
+msgid "Page visibility restricted by password"
+msgstr "Visibilité de la page restreinte par mot de passe"
+
+#: content_manager/templates/content_manager/blocks/page_visibility.html:10
+msgid "Page with restricted visibility"
+msgstr "Visibilité de la page restreinte"
+
 #: content_manager/templates/content_manager/blocks/tabs.html:3
 msgid "Tabs group"
 msgstr "Groupe d’onglets"
@@ -1262,6 +1278,31 @@ msgstr "Groupe d’onglets"
 #: content_manager/templates/content_manager/blocks/video.html:10
 msgid "Watch on the site"
 msgstr "Voir sur le site"
+
+#: content_manager/templates/content_manager/password_required.html:5
+#: content_manager/templates/content_manager/password_required.html:15
+msgid "Password required"
+msgstr "Mot de passe requis"
+
+#: content_manager/templates/content_manager/password_required.html:24
+msgid "You need a password to access this page."
+msgstr "L’accès à cette page nécessite un mot de passe."
+
+#: content_manager/templates/content_manager/password_required.html:35
+msgid "Password:"
+msgstr "Mot de passe :"
+
+#: content_manager/templates/content_manager/password_required.html:42
+msgid "Show password"
+msgstr "Afficher le mot de passe"
+
+#: content_manager/templates/content_manager/password_required.html:47
+msgid "Show"
+msgstr "Afficher"
+
+#: content_manager/templates/content_manager/password_required.html:63
+msgid "Continue"
+msgstr "Continuer"
 
 #: content_manager/templates/content_manager/tags_list_page.html:31
 #: content_manager/views.py:46 content_manager/views.py:77
