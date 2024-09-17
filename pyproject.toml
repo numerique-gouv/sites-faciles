@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "content-manager"
-version = "1.8.0"
-description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l'État, accessible et responsive"
+version = "1.9.0"
+description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
   "Sébastien Reuiller <sebastien.reuiller@beta.gouv.fr>",
   "Sylvain Boissel <sylvain.boissel@beta.gouv.fr>",

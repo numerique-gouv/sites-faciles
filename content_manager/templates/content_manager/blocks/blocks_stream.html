@@ -23,10 +23,6 @@
     <div class="fr-container fr-mb-4w">{% include_block block %}</div>
   {% elif block.block_type == "tile" %}
     <div class="fr-container fr-mb-4w">{% include_block block %}</div>
-  {% elif block.block_type == "accordions" %}
-    {% include "content_manager/blocks/accordions.html" with accordions_id=forloop.counter0|lower %}
-  {% elif block.block_type == "stepper" %}
-    {% include "content_manager/blocks/stepper.html" %}
   {% elif block.block_type == "separator" %}
     <div class="fr-container">
       <hr class="fr-mt-{{ block.value.top_margin }}w fr-mb-{{ block.value.bottom_margin }}w fr-py-1v">
