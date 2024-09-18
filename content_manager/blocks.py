@@ -423,6 +423,9 @@ class AccordionsBlock(blocks.StreamBlock):
     title = blocks.CharBlock(label=_("Title"))
     accordion = AccordionBlock(label=_("Accordion"), min_num=1, max_num=15)
 
+    class Meta:
+        template = "content_manager/blocks/accordions.html"
+
 
 class AlertBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Message title"), required=False)
@@ -623,9 +626,12 @@ class StepsListBlock(blocks.StreamBlock):
 
 class StepperBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"))
-    total = blocks.IntegerBlock(label=_("Number of steps"))
-    current = blocks.IntegerBlock(label=_("Current step"))
+    total = blocks.IntegerBlock(label=_("Number of steps"), min_value=1, max_value=8)
+    current = blocks.IntegerBlock(label=_("Current step"), min_value=1, max_value=8)
     steps = StepsListBlock(label=_("Steps"))
+
+    class Meta:
+        template = "content_manager/blocks/stepper.html"
 
 
 class TextAndCTA(blocks.StructBlock):
@@ -843,9 +849,11 @@ class CommonStreamBlock(blocks.StreamBlock):
     image = ImageBlock(label=_("Image"))
     video = VideoBlock(label=_("Video"))
     transcription = TranscriptionBlock(label=_("Transcription"))
+    accordions = AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))
     callout = CalloutBlock(label=_("Callout"), group=_("DSFR components"))
     highlight = HighlightBlock(label=_("Highlight"), group=_("DSFR components"))
     quote = QuoteBlock(label=_("Quote"), group=_("DSFR components"))
+    stepper = StepperBlock(label=_("Stepper"), group=_("DSFR components"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     link = SingleLinkBlock(label=_("Single link"))
     iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
@@ -1012,6 +1020,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("image", ImageBlock()),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
+    ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
     ("highlight", HighlightBlock(label=_("Highlight"), group=_("DSFR components"))),
     ("quote", QuoteBlock(label=_("Quote"), group=_("DSFR components"))),
@@ -1020,11 +1029,10 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
     ("link", SingleLinkBlock(label=_("Single link"))),
+    ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
     ("card", HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))),
     ("tile", TileBlock(label=_("Tile"), group=_("DSFR components"))),
-    ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("tabs", TabsBlock(label=_("Tabs"), group=_("DSFR components"))),
-    ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
     ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),
     ("iframe", IframeBlock(label=_("Iframe"), group=_("Expert syntax"))),
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),

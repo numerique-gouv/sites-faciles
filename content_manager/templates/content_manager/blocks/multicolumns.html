@@ -15,13 +15,13 @@
     {% endif %}
     <div class="fr-grid-row fr-grid-row--gutters fr-py-3w">
       {% for subblock in value.columns %}
-        {% if subblock.block_type == 'column' %}
+        {% if subblock.block_type == "column" %}
           <div class="fr-col-12{% if subblock.value.width %} fr-col-lg-{{ subblock.value.width }}{% endif %}">
             {% include_block subblock.value.content %}
           </div>
-        {% elif subblock.block_type == 'text' %}
+        {% elif subblock.block_type == "text" %}
           <div class="fr-col-12 fr-col-sm">{{ subblock.value|richtext }}</div>
-        {% elif subblock.block_type == 'video' %}
+        {% elif subblock.block_type == "video" %}
           <div class="fr-col-12 fr-col-sm">
             <h2>{{ subblock.value.title }}</h2>
             {% include_block subblock %}
