@@ -83,6 +83,13 @@ class SitesFacilesBasePage(Page):
         blank=True,
     )
 
+    source_url = models.URLField(
+        _("Source URL"),
+        help_text=_("For imported pages, to allow updates."),
+        null=True,
+        blank=True,
+    )
+
     content_panels = Page.content_panels + [
         FieldPanel("body", heading=_("Body")),
     ]
