@@ -1,0 +1,905 @@
+{
+  "image_ids": [
+    81,
+    74,
+    84,
+    77,
+    84,
+    6
+  ],
+  "pages": {
+    "32": {
+      "id": 32,
+      "meta": {
+        "type": "content_manager.ContentPage",
+        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/32/",
+        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/template-landing-page/",
+        "slug": "template-landing-page",
+        "show_in_menus": true,
+        "first_published_at": "2024-09-16T17:38:17.932779+02:00",
+        "alias_of": null,
+        "locale": "fr"
+      },
+      "title": "Landing page d'un service num\u00e9rique",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p data-block-key=\"u2yld\">Voici un exemple de page que vous pouvez utiliser pour promouvoir un service num\u00e9rique.</p>"
+        },
+        {
+          "type": "multicolumns",
+          "value": {
+            "bg_image": null,
+            "bg_color_class": "",
+            "bg_color": "",
+            "title": "",
+            "heading_tag": "h2",
+            "columns": [
+              {
+                "type": "text_cta",
+                "value": {
+                  "text": "<h2 data-block-key=\"x3mw8\"><b>Une phrase accrocheuse \u00e0 propos de votre service</b></h2><p data-block-key=\"9im3i\">Un texte explicatif pour que les visiteurs du site comprennent de quoi il s'agit et aient envie d'en savoir plus sur votre service.</p>",
+                  "cta_buttons": [
+                    {
+                      "type": "buttons",
+                      "value": [
+                        {
+                          "type": "button",
+                          "value": {
+                            "page": 29,
+                            "document": null,
+                            "external_url": "",
+                            "text": "Appel \u00e0 action",
+                            "button_type": "fr-btn",
+                            "icon_class": "",
+                            "icon_side": ""
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "cta_label": "",
+                  "cta_url": ""
+                }
+              },
+              {
+                "type": "image",
+                "value": {
+                  "title": "",
+                  "heading_tag": "h3",
+                  "image": 81,
+                  "alt": "",
+                  "width": "fr-content-media--sm",
+                  "image_ratio": "fr-ratio-3x2",
+                  "caption": "",
+                  "url": ""
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "fullwidthbackground",
+          "value": {
+            "bg_image": null,
+            "bg_color_class": "grey",
+            "content": [
+              {
+                "type": "text",
+                "value": "<h2 data-block-key=\"d8v03\"><b>Pourquoi utiliser ce service ?</b></h2>"
+              },
+              {
+                "type": "item_grid",
+                "value": {
+                  "column_width": "4",
+                  "items": [
+                    {
+                      "type": "card",
+                      "value": {
+                        "title": "Argument #1",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"6jqfl\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                        "image": 77,
+                        "image_ratio": "fr-ratio-1x1",
+                        "image_badge": [],
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "url": "",
+                        "document": null,
+                        "top_detail_text": "",
+                        "top_detail_icon": "",
+                        "top_detail_badges_tags": [],
+                        "bottom_detail_text": "",
+                        "bottom_detail_icon": "",
+                        "call_to_action": [],
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false
+                      }
+                    },
+                    {
+                      "type": "card",
+                      "value": {
+                        "title": "Argument #2",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"6jqfl\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                        "image": 77,
+                        "image_ratio": "fr-ratio-1x1",
+                        "image_badge": [],
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "url": "",
+                        "document": null,
+                        "top_detail_text": "",
+                        "top_detail_icon": "",
+                        "top_detail_badges_tags": [],
+                        "bottom_detail_text": "",
+                        "bottom_detail_icon": "",
+                        "call_to_action": [],
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false
+                      }
+                    },
+                    {
+                      "type": "card",
+                      "value": {
+                        "title": "Argument #3",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"6jqfl\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                        "image": 77,
+                        "image_ratio": "fr-ratio-1x1",
+                        "image_badge": [],
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "url": "",
+                        "document": null,
+                        "top_detail_text": "",
+                        "top_detail_icon": "",
+                        "top_detail_badges_tags": [],
+                        "bottom_detail_text": "",
+                        "bottom_detail_icon": "",
+                        "call_to_action": [],
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "fullwidthbackground",
+          "value": {
+            "bg_image": null,
+            "bg_color_class": "blue-france",
+            "content": [
+              {
+                "type": "text",
+                "value": "<h2 data-block-key=\"5y1zw\"><b>Quelles sont les fonctionnalit\u00e9s principales de votre service ?</b></h2>"
+              },
+              {
+                "type": "item_grid",
+                "value": {
+                  "column_width": "3",
+                  "items": [
+                    {
+                      "type": "tile",
+                      "value": {
+                        "title": "Fonctionnalit\u00e9 #1",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"pkphn\">Vous pouvez expliquer ici l'une des fonctionnalit\u00e9s phares de votre service.</p>",
+                        "image": 74,
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "top_detail_badges_tags": [],
+                        "detail_text": "",
+                        "is_small": false,
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false,
+                        "is_horizontal": false
+                      }
+                    },
+                    {
+                      "type": "tile",
+                      "value": {
+                        "title": "Fonctionnalit\u00e9 #2",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"pkphn\">Vous pouvez expliquer ici l'une des fonctionnalit\u00e9s phares de votre service.</p>",
+                        "image": 74,
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "top_detail_badges_tags": [],
+                        "detail_text": "",
+                        "is_small": false,
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false,
+                        "is_horizontal": false
+                      }
+                    },
+                    {
+                      "type": "tile",
+                      "value": {
+                        "title": "Fonctionnalit\u00e9 #3",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"pkphn\">Vous pouvez expliquer ici l'une des fonctionnalit\u00e9s phares de votre service.</p>",
+                        "image": 74,
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "top_detail_badges_tags": [],
+                        "detail_text": "",
+                        "is_small": false,
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false,
+                        "is_horizontal": false
+                      }
+                    },
+                    {
+                      "type": "tile",
+                      "value": {
+                        "title": "Fonctionnalit\u00e9 #4",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"pkphn\">Vous pouvez expliquer ici l'une des fonctionnalit\u00e9s phares de votre service.</p>",
+                        "image": 74,
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "top_detail_badges_tags": [],
+                        "detail_text": "",
+                        "is_small": false,
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false,
+                        "is_horizontal": false
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "imageandtext",
+          "value": {
+            "image": 84,
+            "image_side": "right",
+            "image_ratio": "5",
+            "text": "<h2 data-block-key=\"8jec0\"><b>\u00c0 qui s'adresse votre service ?</b></h2><h3 data-block-key=\"4jjcu\"><b>Vous pouvez expliquer ici le p\u00e9rim\u00e8tre d'usage du service :</b></h3><ul><li data-block-key=\"aap7e\">Exemple type d'utilisateur avec son cas d'usage</li><li data-block-key=\"19n35\">Exemple type d'utilisateur avec son cas d'usage</li><li data-block-key=\"eoo5q\">Exemple type d'utilisateur avec son cas d'usage</li></ul>",
+            "link": {
+              "page": null,
+              "document": null,
+              "external_url": "",
+              "text": "",
+              "icon": "",
+              "size": ""
+            },
+            "link_label": "",
+            "page": null,
+            "link_url": ""
+          }
+        },
+        {
+          "type": "fullwidthbackground",
+          "value": {
+            "bg_image": null,
+            "bg_color_class": "blue-france",
+            "content": [
+              {
+                "type": "text",
+                "value": "<h2 data-block-key=\"8fa3l\">Quelques exemples de cas d'usage</h2>"
+              },
+              {
+                "type": "item_grid",
+                "value": {
+                  "column_width": "6",
+                  "items": [
+                    {
+                      "type": "card",
+                      "value": {
+                        "title": "Exemple #1",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"vgd43\">Expliquez ici le cas d'usage que vous voulez mettre en valeur pour que vos utilisateurs puissent se projeter dans l'usage de votre service.</p>",
+                        "image": 81,
+                        "image_ratio": "",
+                        "image_badge": [],
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "url": "",
+                        "document": null,
+                        "top_detail_text": "",
+                        "top_detail_icon": "",
+                        "top_detail_badges_tags": [
+                          {
+                            "type": "tags",
+                            "value": [
+                              {
+                                "type": "tag",
+                                "value": {
+                                  "label": "Exemple de tag 1",
+                                  "is_small": true,
+                                  "color": "green-tilleul-verveine",
+                                  "icon_class": "",
+                                  "link": {
+                                    "page": 3,
+                                    "document": null,
+                                    "external_url": ""
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "bottom_detail_text": "",
+                        "bottom_detail_icon": "",
+                        "call_to_action": [],
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false
+                      }
+                    },
+                    {
+                      "type": "card",
+                      "value": {
+                        "title": "Exemple #2",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"vgd43\">Expliquez ici le cas d'usage que vous voulez mettre en valeur pour que vos utilisateurs puissent se projeter dans l'usage de votre service.</p>",
+                        "image": 81,
+                        "image_ratio": "",
+                        "image_badge": [],
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "url": "",
+                        "document": null,
+                        "top_detail_text": "",
+                        "top_detail_icon": "",
+                        "top_detail_badges_tags": [
+                          {
+                            "type": "tags",
+                            "value": [
+                              {
+                                "type": "tag",
+                                "value": {
+                                  "label": "Exemple de tag 1",
+                                  "is_small": true,
+                                  "color": "green-tilleul-verveine",
+                                  "icon_class": "",
+                                  "link": {
+                                    "page": 3,
+                                    "document": null,
+                                    "external_url": ""
+                                  }
+                                }
+                              },
+                              {
+                                "type": "tag",
+                                "value": {
+                                  "label": "Exemple de tag 2",
+                                  "is_small": true,
+                                  "color": "green-bourgeon",
+                                  "icon_class": "",
+                                  "link": {
+                                    "page": 19,
+                                    "document": null,
+                                    "external_url": ""
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "bottom_detail_text": "",
+                        "bottom_detail_icon": "",
+                        "call_to_action": [],
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false
+                      }
+                    },
+                    {
+                      "type": "card",
+                      "value": {
+                        "title": "Exemple #3",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"vgd43\">Expliquez ici le cas d'usage que vous voulez mettre en valeur pour que vos utilisateurs puissent se projeter dans l'usage de votre service.</p>",
+                        "image": 81,
+                        "image_ratio": "",
+                        "image_badge": [],
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "url": "",
+                        "document": null,
+                        "top_detail_text": "",
+                        "top_detail_icon": "",
+                        "top_detail_badges_tags": [
+                          {
+                            "type": "tags",
+                            "value": [
+                              {
+                                "type": "tag",
+                                "value": {
+                                  "label": "Exemple de tag 2",
+                                  "is_small": true,
+                                  "color": "green-bourgeon",
+                                  "icon_class": "",
+                                  "link": {
+                                    "page": 19,
+                                    "document": null,
+                                    "external_url": ""
+                                  }
+                                }
+                              },
+                              {
+                                "type": "tag",
+                                "value": {
+                                  "label": "Exemple de tag 3",
+                                  "is_small": true,
+                                  "color": "orange-terre-battue",
+                                  "icon_class": "",
+                                  "link": {
+                                    "page": 18,
+                                    "document": null,
+                                    "external_url": ""
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "bottom_detail_text": "",
+                        "bottom_detail_icon": "",
+                        "call_to_action": [],
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false
+                      }
+                    },
+                    {
+                      "type": "card",
+                      "value": {
+                        "title": "Exemple #4",
+                        "heading_tag": "h3",
+                        "description": "<p data-block-key=\"vgd43\">Expliquez ici le cas d'usage que vous voulez mettre en valeur pour que vos utilisateurs puissent se projeter dans l'usage de votre service.</p>",
+                        "image": 81,
+                        "image_ratio": "",
+                        "image_badge": [],
+                        "link": {
+                          "page": null,
+                          "document": null,
+                          "external_url": ""
+                        },
+                        "url": "",
+                        "document": null,
+                        "top_detail_text": "",
+                        "top_detail_icon": "",
+                        "top_detail_badges_tags": [
+                          {
+                            "type": "tags",
+                            "value": [
+                              {
+                                "type": "tag",
+                                "value": {
+                                  "label": "Exemple de tag 3",
+                                  "is_small": true,
+                                  "color": "orange-terre-battue",
+                                  "icon_class": "",
+                                  "link": {
+                                    "page": 18,
+                                    "document": null,
+                                    "external_url": ""
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "bottom_detail_text": "",
+                        "bottom_detail_icon": "",
+                        "call_to_action": [],
+                        "grey_background": false,
+                        "no_background": false,
+                        "no_border": false,
+                        "shadow": false
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "accordions",
+          "value": [
+            {
+              "type": "title",
+              "value": "Questions fr\u00e9quentes de vos utilisateurs"
+            },
+            {
+              "type": "accordion",
+              "value": {
+                "title": "Question fr\u00e9quente #1 ?",
+                "content": "<p data-block-key=\"psp9j\">Saisissez la r\u00e9ponse dans ce champ.</p>"
+              }
+            },
+            {
+              "type": "accordion",
+              "value": {
+                "title": "Question fr\u00e9quente #2 ?",
+                "content": "<p data-block-key=\"psp9j\">Saisissez la r\u00e9ponse dans ce champ.</p>"
+              }
+            },
+            {
+              "type": "accordion",
+              "value": {
+                "title": "Question fr\u00e9quente #3 ?",
+                "content": "<p data-block-key=\"psp9j\">Saisissez la r\u00e9ponse dans ce champ.</p>"
+              }
+            },
+            {
+              "type": "accordion",
+              "value": {
+                "title": "Question fr\u00e9quente #4 ?",
+                "content": "<p data-block-key=\"psp9j\">Saisissez la r\u00e9ponse dans ce champ.</p>"
+              }
+            }
+          ]
+        },
+        {
+          "type": "stepper",
+          "value": {
+            "title": "Votre feuille de route",
+            "total": 3,
+            "current": 2,
+            "steps": [
+              {
+                "type": "step",
+                "value": {
+                  "title": "Date",
+                  "detail": "Premi\u00e8re \u00e9tape \r\nCourte description des enjeux"
+                }
+              },
+              {
+                "type": "step",
+                "value": {
+                  "title": "Date",
+                  "detail": "Etape actuelle\r\nCourte description des enjeux"
+                }
+              },
+              {
+                "type": "step",
+                "value": {
+                  "title": "Date",
+                  "detail": "Prochaine \u00e9tape\r\nCourte description des enjeux"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "fullwidthbackground",
+          "value": {
+            "bg_image": null,
+            "bg_color_class": "blue-france",
+            "content": [
+              {
+                "type": "text_cta",
+                "value": {
+                  "text": "<h3 data-block-key=\"ourr0\">Utilisez ce dernier bloc pour inciter \u00e0 une action</h3>",
+                  "cta_buttons": [
+                    {
+                      "type": "buttons",
+                      "value": [
+                        {
+                          "type": "button",
+                          "value": {
+                            "page": 31,
+                            "document": null,
+                            "external_url": "",
+                            "text": "Appel \u00e0 action",
+                            "button_type": "fr-btn fr-btn--secondary",
+                            "icon_class": "fr-icon-mail-open-line",
+                            "icon_side": "fr-btn--icon-left"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "cta_label": "",
+                  "cta_url": ""
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "header_image": null,
+      "header_image_render": null,
+      "header_image_thumbnail": null,
+      "header_with_title": false,
+      "header_color_class": null,
+      "header_large": false,
+      "header_darken": false,
+      "header_cta_text": "",
+      "header_cta_buttons": [],
+      "header_cta_label": null,
+      "header_cta_link": null
+    },
+    "37": {
+      "id": 37,
+      "meta": {
+        "type": "content_manager.ContentPage",
+        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/37/",
+        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/en-t%C3%AAtes-et-bandeaux-dappel-%C3%A0-action/",
+        "slug": "en-t\u00eates-et-bandeaux-dappel-\u00e0-action",
+        "show_in_menus": true,
+        "first_published_at": "2024-09-16T17:34:36.937313+02:00",
+        "alias_of": null,
+        "locale": "fr"
+      },
+      "title": "En-t\u00eates et bandeaux d'appel \u00e0 action",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<h2 data-block-key=\"kpxyk\">Autres exemples</h2><p data-block-key=\"6f2pa\">Il est \u00e9galement possible de cr\u00e9er des bandeaux d'appel \u00e0 action avec d'autres types de blocs. Voici quelques exemples.</p>"
+        },
+        {
+          "type": "fullwidthbackground",
+          "value": {
+            "bg_image": 6,
+            "bg_color_class": "",
+            "content": [
+              {
+                "type": "text_cta",
+                "value": {
+                  "text": "<h2 data-block-key=\"xmc3p\">Texte avec appel \u00e0 action, sur fond pleine largeur</h2><p data-block-key=\"51v2r\">Le \"fond pleine largeur\" peut \u00eatre une image de votre choix, ou l'une des couleurs du Syst\u00e8me de Design de l'Etat (DSFR).</p><p data-block-key=\"433ba\">Pour cet exemple, nous avons opt\u00e9 pour une image en fond.</p>",
+                  "cta_buttons": [
+                    {
+                      "type": "buttons",
+                      "value": [
+                        {
+                          "type": "button",
+                          "value": {
+                            "page": null,
+                            "document": null,
+                            "external_url": "",
+                            "text": "Bouton primaire avec ic\u00f4ne",
+                            "button_type": "fr-btn",
+                            "icon_class": "fr-icon-award-line",
+                            "icon_side": "fr-btn--icon-left"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "cta_label": "",
+                  "cta_url": ""
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "fullwidthbackground",
+          "value": {
+            "bg_image": null,
+            "bg_color_class": "grey",
+            "content": [
+              {
+                "type": "text_cta",
+                "value": {
+                  "text": "<h2 data-block-key=\"beife\">Texte avec appel \u00e0 action, sur fond pleine largeur</h2><p data-block-key=\"9imau\">Pour cet exemple, nous avons opt\u00e9 pour un \"fond pleine largeur\" de couleur grise, et nous y avons ins\u00e9r\u00e9 un \"texte avec appel action\".</p><p data-block-key=\"b573u\"></p><p data-block-key=\"9jepn\">Voici les diff\u00e9rents types de bouton (\"appel \u00e0 action\") disponibles :</p>",
+                  "cta_buttons": [
+                    {
+                      "type": "buttons",
+                      "value": [
+                        {
+                          "type": "button",
+                          "value": {
+                            "page": null,
+                            "document": null,
+                            "external_url": "",
+                            "text": "Un bouton primaire",
+                            "button_type": "fr-btn",
+                            "icon_class": "",
+                            "icon_side": ""
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "value": {
+                            "page": null,
+                            "document": null,
+                            "external_url": "",
+                            "text": "Un bouton secondaire",
+                            "button_type": "fr-btn fr-btn--secondary",
+                            "icon_class": "",
+                            "icon_side": ""
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "value": {
+                            "page": null,
+                            "document": null,
+                            "external_url": "",
+                            "text": "Un bouton tertiaire",
+                            "button_type": "fr-btn fr-btn--tertiary",
+                            "icon_class": "",
+                            "icon_side": ""
+                          }
+                        },
+                        {
+                          "type": "button",
+                          "value": {
+                            "page": null,
+                            "document": null,
+                            "external_url": "",
+                            "text": "Un bouton tertiaire sans bordure",
+                            "button_type": "fr-btn fr-btn--tertiary-no-outline",
+                            "icon_class": "",
+                            "icon_side": ""
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "cta_label": "",
+                  "cta_url": ""
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "multicolumns",
+          "value": {
+            "bg_image": null,
+            "bg_color_class": "beige-gris-galet",
+            "bg_color": "",
+            "title": "Multi-colonnes",
+            "heading_tag": "",
+            "columns": [
+              {
+                "type": "text_cta",
+                "value": {
+                  "text": "<p data-block-key=\"alpf0\">Pour cet exemple, nous avons opt\u00e9 pour un bloc \"multi-colonne\", en ins\u00e9rant :</p><ul><li data-block-key=\"bv8ev\">un \"texte et appel \u00e0 action\" dans la colonne 1</li><li data-block-key=\"7p7kg\">une image dans la colonne 2</li></ul><p data-block-key=\"9hhgu\">Il est possible de choisir une couleur de fond pour votre bloc \"multi-colonne\". Nous avons s\u00e9lectionn\u00e9 ici \"gris galet\".</p><p data-block-key=\"9maco\"></p>",
+                  "cta_buttons": [
+                    {
+                      "type": "buttons",
+                      "value": [
+                        {
+                          "type": "button",
+                          "value": {
+                            "page": 34,
+                            "document": null,
+                            "external_url": "",
+                            "text": "Bouton primaire",
+                            "button_type": "fr-btn",
+                            "icon_class": "",
+                            "icon_side": ""
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "cta_label": "",
+                  "cta_url": ""
+                }
+              },
+              {
+                "type": "image",
+                "value": {
+                  "title": "",
+                  "heading_tag": "",
+                  "image": 84,
+                  "alt": "",
+                  "width": "fr-content-media--sm",
+                  "image_ratio": "fr-ratio-3x2",
+                  "caption": "",
+                  "url": ""
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "header_image": {
+        "id": 96,
+        "meta": {
+          "type": "wagtailimages.Image",
+          "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/96/",
+          "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Design_sans_titre.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ab3eb3fcf01e64cb0103a7e9bed52a309faed74f61dee554ec87f63ab9fef88c"
+        },
+        "title": "Header"
+      },
+      "header_image_render": {
+        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-1200x627.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=fef87600ad89bf1a87e4a1061ae82afbc1f836893d2d6e1324d355aabe3c1ff9",
+        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-1200x627.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=fef87600ad89bf1a87e4a1061ae82afbc1f836893d2d6e1324d355aabe3c1ff9",
+        "width": 839,
+        "height": 438,
+        "alt": "Header"
+      },
+      "header_image_thumbnail": {
+        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-376x211.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9bfd82e786b7f78d58a4792a517689aa82c770b613f516603119c18e5a9b9ede",
+        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-376x211.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9bfd82e786b7f78d58a4792a517689aa82c770b613f516603119c18e5a9b9ede",
+        "width": 376,
+        "height": 211,
+        "alt": "Header"
+      },
+      "header_with_title": true,
+      "header_color_class": null,
+      "header_large": false,
+      "header_darken": true,
+      "header_cta_text": "<p data-block-key=\"irw4q\">Vous pouvez cr\u00e9er une en-t\u00eate comme celle-ci, en vous rendant dans l'onglet \"Promotion\" de votre page, puis en choisissant les \"Options d'en-t\u00eate\".</p><p data-block-key=\"9u080\"></p><p data-block-key=\"eujil\">Vous pourrez y ins\u00e9rer une image ou une couleur de fond, ainsi que du texte format\u00e9 et des boutons d'appel \u00e0 action.</p><p data-block-key=\"cpkig\"></p><p data-block-key=\"172l8\">Cette en-t\u00eate appara\u00eetra lorsque des aper\u00e7us de votre page seront g\u00e9n\u00e9r\u00e9s.</p>",
+      "header_cta_buttons": [
+        {
+          "type": "buttons",
+          "value": [
+            {
+              "type": "button",
+              "value": {
+                "page": 37,
+                "document": null,
+                "external_url": "",
+                "text": "Bouton d'appel \u00e0 action",
+                "button_type": "fr-btn",
+                "icon_class": "",
+                "icon_side": ""
+              },
+              "id": "0ee1a462-98a6-4261-a117-e56c331fcbb3"
+            }
+          ],
+          "id": "7a709cda-d544-492b-812b-26e7f5b41fe4"
+        }
+      ],
+      "header_cta_label": null,
+      "header_cta_link": null
+    }
+  }
+}

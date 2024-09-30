@@ -1,0 +1,65 @@
+{
+  "6": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/6/",
+      "tags": [],
+      "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Home.original.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a4c130cd6d0719dcdde1c4d660f41d1182e4e95159ac48060316e18bde0779b0"
+    },
+    "filename": "Home.original.png",
+    "is_pictogram": false,
+    "title": "Home.original"
+  },
+  "74": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/74/",
+      "tags": [
+        "DSFR",
+        "Pictogrammes",
+        "System"
+      ],
+      "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Pictogrammes_DSFR__System__Information?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a2ad715db962bef2b285df60e362f51925b29c9191089e0a91e30ccc22c97f45"
+    },
+    "filename": "Pictogrammes DSFR \u2014 System \u2014 Information",
+    "is_pictogram": true,
+    "title": "Pictogrammes DSFR \u2014 System \u2014 Information"
+  },
+  "77": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/77/",
+      "tags": [
+        "DSFR",
+        "Pictogrammes",
+        "System"
+      ],
+      "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Pictogrammes_DSFR__System__Success?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=040557aa51b406fbcb811a42b4e373dbffc348f5655d6d4bd2e48dc56bd32b5f"
+    },
+    "filename": "Pictogrammes DSFR \u2014 System \u2014 Success",
+    "is_pictogram": true,
+    "title": "Pictogrammes DSFR \u2014 System \u2014 Success"
+  },
+  "81": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/81/",
+      "tags": [],
+      "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/undraw_Website_builder_re_ii6e.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b179f4f6acb8e749142ec7252473ad559f5b00e863737cc8269d9e26e323b849"
+    },
+    "filename": "undraw_Website_builder_re_ii6e.png",
+    "is_pictogram": false,
+    "title": "Illustration CMS"
+  },
+  "84": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/84/",
+      "tags": [],
+      "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/undraw_building_websites_i78t_1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=19bba3e8554a6010eafa5cc08762d234ff36e7faea4d6989ef87ce8ba6eac762"
+    },
+    "filename": "undraw_building_websites_i78t_1.png",
+    "is_pictogram": false,
+    "title": "Illustration CMS 2"
+  }
+}
