@@ -173,7 +173,6 @@ class ImportExportImages:
             file_hash = hash_filelike(image_file)
 
             image = Image.objects.filter(file_hash=file_hash).first()
-
             if not image:
                 image = Image(
                     file=ImageFile(BytesIO(image_file.read()), name=imported_filename),
