@@ -16,10 +16,6 @@ Construisez vos pages à l'aide de composants prêts à l'emploi issus du Systè
 
 Le contenu des pages générées par le CMS est partiellement conforme selon la norme RGAA 4.1 et responsive
 
-
-
-
-
 ## Prérequis
 
 - Python 3.10
@@ -110,3 +106,17 @@ Il est recommandé de faire de même pour les déploiements sur d’autres plate
 ```
 0 3 * * SUN python manage.py update_index
 ```
+
+## Droit d’utilisation du DSFR
+
+Ce projet utilise le DSFR et est donc tenu par les conditions d’utilisations suivantes :
+
+#### ⚠️ Utilisation interdite en dehors des sites Internet de l’État
+
+>Il est formellement interdit à tout autre acteur d’utiliser le Système de Design de l’État (les administrations territoriales ou tout autre acteur privé) pour des sites web ou des applications. Le Système de Design de l’État représente l’identité numérique de l’État. En cas d’usage à des fins trompeuses ou frauduleuses, l’État se réserve le droit d’entreprendre les actions nécessaires pour y mettre un terme.
+
+Voir les [conditions générales d'utilisation](https://github.com/GouvernementFR/dsfr/blob/main/doc/legal/cgu.md).
+
+#### ⚠️ Prohibited Use Outside Government Websites
+
+>This Design System is only meant to be used by official French public services' websites and apps. Its main purpose is to make it easy to identify governmental websites for citizens. See terms.
