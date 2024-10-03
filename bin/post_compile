@@ -3,4 +3,4 @@
 export PYTHONPATH=/build/${REQUEST_ID}/.apt/usr/lib/python3/dist-packages/:${PYTHONPATH}
 
 # collect static
-python manage.py collectstatic --noinput
+python manage.py collectstatic --no-input --ignore=*.sass
