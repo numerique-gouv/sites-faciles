@@ -22,12 +22,12 @@ IMAGES_DATA_FILE = PAGE_TEMPLATES_ROOT / "image_data.json"
 User = get_user_model()
 
 
-class ImportExportPage:
+class ExportPage:
     """
-    Generic class for import/export of a ContentPage from a wagtail instance
+    Generic class for export of a ContentPage from a wagtail instance
     """
 
-    def __init__(self, source_site, source_page_id) -> None:
+    def __init__(self, source_page_id, source_site) -> None:
         self.source_site = source_site
         self.source_page_id = source_page_id
         self.source_content = self.get_content_from_source_page()
@@ -64,8 +64,7 @@ class ImportExportPage:
         header_image = self.source_content.get("header_image", None)
         if header_image:
             header_image["local_image"] = None
-            img_id = header_image["id"]
-            self.images[img_id] = header_image
+            self.image_ids.append(header_image["id"])
 
         # Images from the body
         self.locate_image_ids(self.source_body)
@@ -89,12 +88,48 @@ class ImportExportPage:
             self.content["meta"].pop(key, None)
 
 
+class ImportPages:
+    """
+    Generic class for import of a list of ContentPages from a previously made export
+    """
+
+    def __init__(self) -> None:
+        with open(TEMPLATES_DATA_FILE, "r") as json_file:
+            page_templates_data = json.load(json_file)
+
+        self.pages = page_templates_data["pages"]
+        self.image_ids = page_templates_data["image_ids"]
+
+        self.image_importer = ImportExportImages(self.image_ids)
+
+    def import_pages(self):
+        self.image_importer.import_images()
+
+        for page_id in self.pages.keys():
+            self.update_image_ids(page_id)
+            self.import_page(page_id)
+
+    def import_page(self, page_id: str):
+        pass
+
+    def update_image_ids(self, page_id):
+        page = self.pages[page_id]
+
+        if page["header_image"]:
+            source_image_id = str(page["header_image"]["id"])
+            local_image_id = self.image_importer.image_data[source_image_id]["local_id"]
+
+            page["header_image"]["id"] = local_image_id
+
+
 class ImportExportImages:
     """
-    Generic class for import/export of an Image from a wagtail instance
+    Generic class for import/export of a list of Images from a wagtail instance
     """
 
     def __init__(self, image_ids, source_site=None) -> None:
+        self.user = User.objects.filter(is_superuser=True).first()
+
         self.image_ids = set(image_ids)
         self.source_site = source_site
 
@@ -161,8 +196,6 @@ class ImportExportImages:
             else:
                 image = self.get_or_create_image(image_data)
                 image_data["local_id"] = image.id
-
-        print(self.image_data)
 
     def get_or_create_image(self, image_data) -> Image:
         filename = image_data["filename"]

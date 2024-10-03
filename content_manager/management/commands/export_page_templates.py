@@ -2,7 +2,7 @@ import json
 
 from django.core.management.base import BaseCommand
 
-from content_manager.services.import_export import TEMPLATES_DATA_FILE, ImportExportImages, ImportExportPage
+from content_manager.services.import_export import TEMPLATES_DATA_FILE, ExportPage, ImportExportImages
 
 SOURCE_URL = "https://sites-faciles.beta.numerique.gouv.fr/"
 
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         pages = {}
 
         for page_id in page_ids:
-            page = ImportExportPage(SOURCE_URL, page_id)
+            page = ExportPage(page_id, SOURCE_URL)
             pages[page_id] = page.json_export
             image_ids += page.image_ids
 

@@ -1,8 +1,6 @@
-import json
-
 from django.core.management.base import BaseCommand
 
-from content_manager.services.import_export import TEMPLATES_DATA_FILE, ImportExportImages
+from content_manager.services.import_export import ImportPages
 
 
 class Command(BaseCommand):
@@ -11,9 +9,5 @@ class Command(BaseCommand):
         Import template pages
         """
 
-        with open(TEMPLATES_DATA_FILE, "r") as json_file:
-            page_templates_data = json.load(json_file)
-
-        image_importer = ImportExportImages(page_templates_data["image_ids"])
-
-        image_importer.import_images()
+        page_importer = ImportPages()
+        page_importer.import_pages()

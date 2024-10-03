@@ -1,9 +1,13 @@
 {
   "image_ids": [
-    81,
     74,
-    84,
     77,
+    112,
+    81,
+    84,
+    116,
+    117,
+    96,
     84,
     6
   ],
@@ -23,62 +27,6 @@
       "title": "Landing page d'un service num\u00e9rique",
       "body": [
         {
-          "type": "paragraph",
-          "value": "<p data-block-key=\"u2yld\">Voici un exemple de page que vous pouvez utiliser pour promouvoir un service num\u00e9rique.</p>"
-        },
-        {
-          "type": "multicolumns",
-          "value": {
-            "bg_image": null,
-            "bg_color_class": "",
-            "bg_color": "",
-            "title": "",
-            "heading_tag": "h2",
-            "columns": [
-              {
-                "type": "text_cta",
-                "value": {
-                  "text": "<h2 data-block-key=\"x3mw8\"><b>Une phrase accrocheuse \u00e0 propos de votre service</b></h2><p data-block-key=\"9im3i\">Un texte explicatif pour que les visiteurs du site comprennent de quoi il s'agit et aient envie d'en savoir plus sur votre service.</p>",
-                  "cta_buttons": [
-                    {
-                      "type": "buttons",
-                      "value": [
-                        {
-                          "type": "button",
-                          "value": {
-                            "page": 29,
-                            "document": null,
-                            "external_url": "",
-                            "text": "Appel \u00e0 action",
-                            "button_type": "fr-btn",
-                            "icon_class": "",
-                            "icon_side": ""
-                          }
-                        }
-                      ]
-                    }
-                  ],
-                  "cta_label": "",
-                  "cta_url": ""
-                }
-              },
-              {
-                "type": "image",
-                "value": {
-                  "title": "",
-                  "heading_tag": "h3",
-                  "image": 81,
-                  "alt": "",
-                  "width": "fr-content-media--sm",
-                  "image_ratio": "fr-ratio-3x2",
-                  "caption": "",
-                  "url": ""
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "fullwidthbackground",
           "value": {
             "bg_image": null,
@@ -94,87 +42,69 @@
                   "column_width": "4",
                   "items": [
                     {
-                      "type": "card",
+                      "type": "tile",
                       "value": {
                         "title": "Argument #1",
                         "heading_tag": "h3",
-                        "description": "<p data-block-key=\"6jqfl\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                        "description": "<p data-block-key=\"y6r6z\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
                         "image": 77,
-                        "image_ratio": "fr-ratio-1x1",
-                        "image_badge": [],
                         "link": {
                           "page": null,
                           "document": null,
                           "external_url": ""
                         },
-                        "url": "",
-                        "document": null,
-                        "top_detail_text": "",
-                        "top_detail_icon": "",
                         "top_detail_badges_tags": [],
-                        "bottom_detail_text": "",
-                        "bottom_detail_icon": "",
-                        "call_to_action": [],
+                        "detail_text": "",
+                        "is_small": false,
                         "grey_background": false,
                         "no_background": false,
                         "no_border": false,
-                        "shadow": false
+                        "shadow": false,
+                        "is_horizontal": false
                       }
                     },
                     {
-                      "type": "card",
+                      "type": "tile",
                       "value": {
                         "title": "Argument #2",
                         "heading_tag": "h3",
-                        "description": "<p data-block-key=\"6jqfl\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                        "description": "<p data-block-key=\"y6r6z\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
                         "image": 77,
-                        "image_ratio": "fr-ratio-1x1",
-                        "image_badge": [],
                         "link": {
                           "page": null,
                           "document": null,
                           "external_url": ""
                         },
-                        "url": "",
-                        "document": null,
-                        "top_detail_text": "",
-                        "top_detail_icon": "",
                         "top_detail_badges_tags": [],
-                        "bottom_detail_text": "",
-                        "bottom_detail_icon": "",
-                        "call_to_action": [],
+                        "detail_text": "",
+                        "is_small": false,
                         "grey_background": false,
                         "no_background": false,
                         "no_border": false,
-                        "shadow": false
+                        "shadow": false,
+                        "is_horizontal": false
                       }
                     },
                     {
-                      "type": "card",
+                      "type": "tile",
                       "value": {
                         "title": "Argument #3",
                         "heading_tag": "h3",
-                        "description": "<p data-block-key=\"6jqfl\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                        "description": "<p data-block-key=\"y6r6z\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
                         "image": 77,
-                        "image_ratio": "fr-ratio-1x1",
-                        "image_badge": [],
                         "link": {
                           "page": null,
                           "document": null,
                           "external_url": ""
                         },
-                        "url": "",
-                        "document": null,
-                        "top_detail_text": "",
-                        "top_detail_icon": "",
                         "top_detail_badges_tags": [],
-                        "bottom_detail_text": "",
-                        "bottom_detail_icon": "",
-                        "call_to_action": [],
+                        "detail_text": "",
+                        "is_small": false,
                         "grey_background": false,
                         "no_background": false,
                         "no_border": false,
-                        "shadow": false
+                        "shadow": false,
+                        "is_horizontal": false
                       }
                     }
                   ]
@@ -419,7 +349,7 @@
                                   "color": "green-bourgeon",
                                   "icon_class": "",
                                   "link": {
-                                    "page": 19,
+                                    "page": 29,
                                     "document": null,
                                     "external_url": ""
                                   }
@@ -467,7 +397,7 @@
                                   "color": "green-bourgeon",
                                   "icon_class": "",
                                   "link": {
-                                    "page": 19,
+                                    "page": 29,
                                     "document": null,
                                     "external_url": ""
                                   }
@@ -554,6 +484,52 @@
           }
         },
         {
+          "type": "fullwidthbackground",
+          "value": {
+            "bg_image": null,
+            "bg_color_class": "grey",
+            "content": [
+              {
+                "type": "text_cta",
+                "value": {
+                  "text": "<h2 data-block-key=\"qc55l\">Ce qu'en pensent vos utilisateurs</h2>",
+                  "cta_buttons": [],
+                  "cta_label": "",
+                  "cta_url": ""
+                }
+              },
+              {
+                "type": "item_grid",
+                "value": {
+                  "column_width": "6",
+                  "items": [
+                    {
+                      "type": "quote",
+                      "value": {
+                        "image": 116,
+                        "quote": "T\u00e9moignage d'une usag\u00e8re de votre service sous forme de citation.",
+                        "author_name": "Nom de l'usag\u00e8re",
+                        "author_title": "Titre de l'usag\u00e8re",
+                        "color": ""
+                      }
+                    },
+                    {
+                      "type": "quote",
+                      "value": {
+                        "image": 117,
+                        "quote": "T\u00e9moignage d'un usager de votre service sous forme de citation.",
+                        "author_name": "Nom de l'usager",
+                        "author_title": "Titre de l'usager",
+                        "color": ""
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "accordions",
           "value": [
             {
@@ -591,31 +567,40 @@
           ]
         },
         {
-          "type": "stepper",
+          "type": "fullwidthbackground",
           "value": {
-            "title": "Votre feuille de route",
-            "total": 3,
-            "current": 2,
-            "steps": [
+            "bg_image": null,
+            "bg_color_class": "grey",
+            "content": [
               {
-                "type": "step",
+                "type": "stepper",
                 "value": {
-                  "title": "Date",
-                  "detail": "Premi\u00e8re \u00e9tape \r\nCourte description des enjeux"
-                }
-              },
-              {
-                "type": "step",
-                "value": {
-                  "title": "Date",
-                  "detail": "Etape actuelle\r\nCourte description des enjeux"
-                }
-              },
-              {
-                "type": "step",
-                "value": {
-                  "title": "Date",
-                  "detail": "Prochaine \u00e9tape\r\nCourte description des enjeux"
+                  "title": "Votre feuille de route",
+                  "total": 3,
+                  "current": 2,
+                  "steps": [
+                    {
+                      "type": "step",
+                      "value": {
+                        "title": "Date",
+                        "detail": "Premi\u00e8re \u00e9tape \r\nCourte description des enjeux"
+                      }
+                    },
+                    {
+                      "type": "step",
+                      "value": {
+                        "title": "Date",
+                        "detail": "Etape actuelle\r\nCourte description des enjeux"
+                      }
+                    },
+                    {
+                      "type": "step",
+                      "value": {
+                        "title": "Date",
+                        "detail": "Prochaine \u00e9tape\r\nCourte description des enjeux"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -625,7 +610,7 @@
           "type": "fullwidthbackground",
           "value": {
             "bg_image": null,
-            "bg_color_class": "blue-france",
+            "bg_color_class": "",
             "content": [
               {
                 "type": "text_cta",
@@ -638,12 +623,12 @@
                         {
                           "type": "button",
                           "value": {
-                            "page": 31,
+                            "page": 29,
                             "document": null,
                             "external_url": "",
                             "text": "Appel \u00e0 action",
                             "button_type": "fr-btn fr-btn--secondary",
-                            "icon_class": "fr-icon-mail-open-line",
+                            "icon_class": "fr-icon-send-plane-fill",
                             "icon_side": "fr-btn--icon-left"
                           }
                         }
@@ -658,15 +643,55 @@
           }
         }
       ],
-      "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
-      "header_with_title": false,
+      "header_image": {
+        "id": 112,
+        "meta": {
+          "type": "wagtailimages.Image",
+          "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/112/",
+          "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Design_sans_titre_1.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091829Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=7bb10d1af3a622d97bf1708dc06757e979fb55d830c71da5e3d692a62ab79a97"
+        },
+        "title": "Design sans titre (3)"
+      },
+      "header_image_render": {
+        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre_1.2e16d0ba.fill-1200x627.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091829Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6828841e027ced00ec658c395e9941d9b62f2ec3adbc68a82a7fb776e8ea1ba7",
+        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre_1.2e16d0ba.fill-1200x627.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091829Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6828841e027ced00ec658c395e9941d9b62f2ec3adbc68a82a7fb776e8ea1ba7",
+        "width": 518,
+        "height": 270,
+        "alt": "Design sans titre (3)"
+      },
+      "header_image_thumbnail": {
+        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre_1.2e16d0ba.fill-376x211.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091832Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=79d904e3a9cb1ac73e41be35eb8af8e37afd329aa5095fbd2ccf7ca79124455f",
+        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre_1.2e16d0ba.fill-376x211.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091832Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=79d904e3a9cb1ac73e41be35eb8af8e37afd329aa5095fbd2ccf7ca79124455f",
+        "width": 376.0,
+        "height": 211.0,
+        "alt": "Design sans titre (3)"
+      },
+      "header_with_title": true,
       "header_color_class": null,
       "header_large": false,
       "header_darken": false,
-      "header_cta_text": "",
-      "header_cta_buttons": [],
+      "header_cta_text": "<p data-block-key=\"4k2ok\"><b>Voici un exemple de page que vous pouvez utiliser pour promouvoir un service num\u00e9rique.</b></p><p data-block-key=\"4i4tf\">Utilisez cette <a linktype=\"page\" id=\"37\">en-t\u00eate</a> pour ins\u00e9rer une phrase d'accroche.<br/>Vous pouvez \u00e9galement ajouter un court paragraphe d'explication, et un appel \u00e0 action.</p>",
+      "header_cta_buttons": [
+        {
+          "type": "buttons",
+          "value": [
+            {
+              "type": "button",
+              "value": {
+                "page": 34,
+                "document": null,
+                "external_url": "",
+                "text": "Appel \u00e0 action",
+                "button_type": "fr-btn",
+                "icon_class": "",
+                "icon_side": ""
+              },
+              "id": "e3bb30c0-d0bb-433a-b688-2a2200978885"
+            }
+          ],
+          "id": "639058db-5850-43cc-a67a-c26818cd39d6"
+        }
+      ],
       "header_cta_label": null,
       "header_cta_link": null
     },
@@ -854,20 +879,20 @@
         "meta": {
           "type": "wagtailimages.Image",
           "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/96/",
-          "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Design_sans_titre.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ab3eb3fcf01e64cb0103a7e9bed52a309faed74f61dee554ec87f63ab9fef88c"
+          "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Design_sans_titre.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091833Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=201cd1c5a240d33620af2a0a6235ab58376d9ebdad65078d8bfd32b8aef26147"
         },
         "title": "Header"
       },
       "header_image_render": {
-        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-1200x627.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=fef87600ad89bf1a87e4a1061ae82afbc1f836893d2d6e1324d355aabe3c1ff9",
-        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-1200x627.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=fef87600ad89bf1a87e4a1061ae82afbc1f836893d2d6e1324d355aabe3c1ff9",
+        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-1200x627.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091833Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ca12b2d04b21c362d0ed32d39286dcf2d61271fe772001a060aa2b468991307f",
+        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-1200x627.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091833Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ca12b2d04b21c362d0ed32d39286dcf2d61271fe772001a060aa2b468991307f",
         "width": 839,
         "height": 438,
         "alt": "Header"
       },
       "header_image_thumbnail": {
-        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-376x211.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9bfd82e786b7f78d58a4792a517689aa82c770b613f516603119c18e5a9b9ede",
-        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-376x211.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20240930%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20240930T161307Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9bfd82e786b7f78d58a4792a517689aa82c770b613f516603119c18e5a9b9ede",
+        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-376x211.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091833Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3358baaa812873bb494b0646fa5696195d34b73004f5a7ee91c92cacfe3667bd",
+        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-376x211.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241003%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241003T091833Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3358baaa812873bb494b0646fa5696195d34b73004f5a7ee91c92cacfe3667bd",
         "width": 376,
         "height": 211,
         "alt": "Header"
