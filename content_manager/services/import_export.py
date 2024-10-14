@@ -12,7 +12,9 @@ from django.utils import timezone
 from wagtail.images.models import Image
 from wagtail.utils.file import hash_filelike
 
-from content_manager.utils import get_or_create_collection
+from content_manager.constants import HEADER_FIELDS
+from content_manager.models import ContentPage
+from content_manager.services.get_or_create import get_or_create_collection, get_or_create_content_page
 
 PAGE_TEMPLATES_ROOT = settings.BASE_DIR / "content_manager/page_templates"
 TEMPLATES_DATA_FILE = PAGE_TEMPLATES_ROOT / "pages_data.json"
@@ -101,16 +103,63 @@ class ImportPages:
         self.image_ids = page_templates_data["image_ids"]
 
         self.image_importer = ImportExportImages(self.image_ids)
+        self.page_templates_index = None
+
+    def get_or_create_page_templates_index(self) -> ContentPage:
+        body = [("subpageslist", None)]
+        return get_or_create_content_page(
+            slug="page_templates_index", title="Modèles de pages", body=body, restriction_type="login"
+        )
 
     def import_pages(self):
         self.image_importer.import_images()
+        self.page_templates_index = self.get_or_create_page_templates_index()
 
         for page_id in self.pages.keys():
             self.update_image_ids(page_id)
-            self.import_page(page_id)
 
-    def import_page(self, page_id: str):
-        pass
+            raw_page = self.pages[page_id]
+            source_url = raw_page["meta"]["html_url"]
+
+            page_exists = ContentPage.objects.filter(source_url=source_url).first()
+            if page_exists:
+                self.update_page(page_id, page_exists)
+            else:
+                self.import_page(page_id)
+
+    def import_page(self, page_id: str) -> ContentPage:
+        raw_page = self.pages[page_id]
+        source_url = raw_page["meta"]["html_url"]
+
+        page_dict = {
+            "slug": raw_page["meta"]["slug"],
+            "title": raw_page["title"],
+            "body": raw_page["body"],
+            "restriction_type": "login",
+            "parent_page": self.page_templates_index,
+        }
+
+        page_fields = {"source_url": source_url}
+
+        for field in HEADER_FIELDS:
+            if raw_page[field]:
+                page_fields[field] = raw_page[field]
+
+        page_dict["page_fields"] = page_fields
+        return get_or_create_content_page(**page_dict)
+
+    def update_page(self, page_id, page):
+        raw_page = self.pages[page_id]
+        page.slug = raw_page["meta"]["slug"]
+        page.title = raw_page["title"]
+        page.body = raw_page["body"]
+
+        for field in HEADER_FIELDS:
+            if raw_page[field]:
+                setattr(page, field, raw_page[field])
+
+        page.save()
+        return page
 
     def update_image_ids(self, page_id):
         page = self.pages[page_id]
@@ -119,7 +168,10 @@ class ImportPages:
             source_image_id = str(page["header_image"]["id"])
             local_image_id = self.image_importer.image_data[source_image_id]["local_id"]
 
-            page["header_image"]["id"] = local_image_id
+            # We need to replace the dictionary with the image itself
+            page["header_image"] = Image.objects.get(pk=local_image_id)
+
+        page["body"] = update_streamfield_image_ids(page["body"], self.image_importer.image_data)
 
 
 class ImportExportImages:
@@ -222,10 +274,26 @@ class ImportExportImages:
 
 def remove_block_ids(json_object):
     """
-    Parse a page JSON representation and strip the block IDs
+    Parse a page JSON StreamField representation and strip the block IDs
     """
     if not isinstance(json_object, (dict, list)):
         return json_object
     if isinstance(json_object, list):
         return [remove_block_ids(v) for v in json_object]
     return {k: remove_block_ids(v) for k, v in json_object.items() if k != "id"}
+
+
+def update_streamfield_image_ids(json_object, image_ids):
+    """
+    Parse a page JSON StreamField representation and update the image IDs
+    """
+    if isinstance(json_object, dict):
+        for k, v in json_object.items():
+            v_str = str(v)
+            if k in ["image", "bg_image"] and v_str in image_ids:
+                json_object[k] = image_ids[v_str]["local_id"]
+            else:
+                update_streamfield_image_ids(v, image_ids)
+    elif isinstance(json_object, list):
+        return [update_streamfield_image_ids(v, image_ids) for v in json_object]
+    return json_object
