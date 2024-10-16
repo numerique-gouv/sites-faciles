@@ -12,7 +12,12 @@ class Command(BaseCommand):
     help = """Import all the pictograms from the DSFR"""
 
     def handle(self, *args, **kwargs):
-        call_command("collectstatic", interactive=False, clear=True)
+        call_command(
+            "collectstatic",
+            "--ignore=*.sass",
+            interactive=False,
+            clear=True,
+        )
 
         picto_root = "staticfiles/dsfr/dist/artwork/pictograms/"
         picto_folders = os.listdir(picto_root)
