@@ -16,7 +16,6 @@ class Command(BaseCommand):
             "collectstatic",
             "--ignore=*.sass",
             interactive=False,
-            clear=True,
         )
 
         picto_root = "staticfiles/dsfr/dist/artwork/pictograms/"
