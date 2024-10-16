@@ -54,6 +54,7 @@ init:
 	$(EXEC_CMD) poetry run python manage.py set_config
 	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) poetry run python manage.py create_starter_pages
+	$(EXEC_CMD) poetry run python manage.py import_page_templates
 	make index
 
 .PHONY: init-dev

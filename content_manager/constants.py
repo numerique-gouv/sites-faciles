@@ -1,5 +1,17 @@
 from django.utils.translation import gettext_lazy as _
 
+HEADER_FIELDS = [
+    "header_image",
+    "header_with_title",
+    "header_color_class",
+    "header_large",
+    "header_darken",
+    "header_cta_text",
+    "header_cta_buttons",
+    "header_cta_label",
+    "header_cta_link",
+]
+
 BUTTON_TYPE_CHOICES = (
     ("fr-btn", _("Primary")),
     ("fr-btn fr-btn--secondary", _("Secundary")),
