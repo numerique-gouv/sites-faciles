@@ -4,7 +4,7 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
 
-from content_manager.services.get_or_create import get_or_create_collection
+from content_manager.services.accessors import get_or_create_collection
 from content_manager.utils import import_image
 
 

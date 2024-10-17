@@ -10,6 +10,11 @@ from content_manager.models import ContentPage
 
 style = color_style()
 
+"""
+Methods to get or create various type of contents.
+Moved from utils to avoid circular module dependencies.
+"""
+
 
 def get_or_create_collection(col_name: str) -> Collection:
     qs = Collection.objects.filter(name=col_name)
@@ -55,7 +60,6 @@ def get_or_create_content_page(
 
     if page_fields and len(page_fields):
         for k, v in page_fields.items():
-            # Manage the actual image id
             if k in HEADER_FIELDS:
                 setattr(new_page, k, v)
         new_page.save()

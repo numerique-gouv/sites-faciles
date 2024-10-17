@@ -10,16 +10,19 @@ SOURCE_URL = "https://sites-faciles.beta.numerique.gouv.fr/"
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         """
-        Export template pages
+        Export template pages.
+
+        List is manually set for now
         """
 
-        page_ids = ["32", "37"]
+        page_ids = ["32", "36", "37", "38", "39", "40", "41", "42", "43", "44"]
 
         image_ids = []
 
         pages = {}
 
         for page_id in page_ids:
+            self.stdout.write(f"Exporting page {page_id}")
             page = ExportPage(page_id, SOURCE_URL)
             pages[page_id] = page.json_export
             image_ids += page.image_ids
