@@ -133,7 +133,14 @@ class SitesFacilesBasePage(Page):
         APIField("header_cta_buttons"),
         APIField("header_cta_label"),
         APIField("header_cta_link"),
+        APIField("public_child_pages"),
     ]
+
+    @property
+    def public_child_pages(self):
+        return [
+            {"id": child.id, "slug": child.slug, "title": child.title} for child in self.get_children().live().public()
+        ]
 
     def get_absolute_url(self):
         return self.url
