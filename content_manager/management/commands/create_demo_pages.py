@@ -8,7 +8,7 @@ from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from blog.models import BlogIndexPage
 from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
-from content_manager.utils import get_or_create_content_page
+from content_manager.services.accessors import get_or_create_content_page
 from forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form"]
@@ -36,6 +36,7 @@ class Command(BaseCommand):
 
         # First, add the home page to the main menu if not already done
         home_page = site.root_page
+        locale = home_page.locale
         main_menu = MainMenu.objects.first()
         if not main_menu:
             main_menu = MainMenu.objects.create(site=site)
@@ -67,7 +68,7 @@ class Command(BaseCommand):
                 contact_menu_entry.save()
 
             elif slug == "form":
-                menu_page = ContentPage.objects.get(slug="menu_page")
+                menu_page = ContentPage.objects.get(slug="menu_page", locale=locale)
                 self.create_form_page("form_with_all_fields", parent_page=menu_page)
             else:
                 raise ValueError(f"Valeur inconnue : {slug}")
@@ -159,7 +160,7 @@ class Command(BaseCommand):
         """
 
         # Don't replace a manually created page
-        already_exists = ContentPage.objects.filter(slug=slug).first()
+        already_exists = FormPage.objects.filter(slug=slug).first()
         if already_exists:
             self.stdout.write(f"The page seem to already exist with id {already_exists.id}")
             return
