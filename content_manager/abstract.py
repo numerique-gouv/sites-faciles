@@ -139,7 +139,13 @@ class SitesFacilesBasePage(Page):
     @property
     def public_child_pages(self):
         return [
-            {"id": child.id, "slug": child.slug, "title": child.title} for child in self.get_children().live().public()
+            {
+                "id": child.id,
+                "slug": child.slug,
+                "title": child.title,
+                "type": f"{child.content_type.app_label}.{child.content_type.model}",
+            }
+            for child in self.get_children().live().public()
         ]
 
     def get_absolute_url(self):
