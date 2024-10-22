@@ -14,10 +14,6 @@ endif
 web-prompt:
 	$(EXEC_CMD) bash
 
-.PHONY: test-unit
-test-unit:
-	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test
-
 .PHONY: collectstatic
 collectstatic:
 	$(EXEC_CMD) poetry run python manage.py collectstatic --noinput --ignore=*.sass
@@ -54,6 +50,7 @@ init:
 	$(EXEC_CMD) poetry run python manage.py set_config
 	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) poetry run python manage.py create_starter_pages
+	$(EXEC_CMD) poetry run python manage.py import_page_templates
 	make index
 
 .PHONY: init-dev
@@ -84,3 +81,7 @@ runserver:
 .PHONY: test
 test:
 	$(EXEC_CMD) poetry run python manage.py test --buffer --parallel
+
+.PHONY: test-unit
+test-unit:
+	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test

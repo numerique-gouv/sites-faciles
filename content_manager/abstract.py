@@ -83,6 +83,13 @@ class SitesFacilesBasePage(Page):
         blank=True,
     )
 
+    source_url = models.URLField(
+        _("Source URL"),
+        help_text=_("For imported pages, to allow updates."),
+        null=True,
+        blank=True,
+    )
+
     content_panels = Page.content_panels + [
         FieldPanel("body", heading=_("Body")),
     ]
@@ -126,7 +133,20 @@ class SitesFacilesBasePage(Page):
         APIField("header_cta_buttons"),
         APIField("header_cta_label"),
         APIField("header_cta_link"),
+        APIField("public_child_pages"),
     ]
+
+    @property
+    def public_child_pages(self):
+        return [
+            {
+                "id": child.id,
+                "slug": child.slug,
+                "title": child.title,
+                "type": f"{child.content_type.app_label}.{child.content_type.model}",
+            }
+            for child in self.get_children().live().public()
+        ]
 
     def get_absolute_url(self):
         return self.url
