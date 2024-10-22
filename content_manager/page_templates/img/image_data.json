@@ -1,0 +1,162 @@
+{
+  "96": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/96/",
+      "tags": []
+    },
+    "title": "Header",
+    "filename": "Design_sans_titre.png",
+    "is_pictogram": false
+  },
+  "1": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/1/",
+      "tags": []
+    },
+    "title": "CMS",
+    "filename": "undraw_cms_re_asu0.png",
+    "is_pictogram": false
+  },
+  "66": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/66/",
+      "tags": [
+        "DSFR",
+        "Leisure",
+        "Pictogrammes"
+      ]
+    },
+    "title": "Pictogrammes DSFR \u2014 Leisure \u2014 Digital Art",
+    "filename": "Pictogrammes DSFR \u2014 Leisure \u2014 Digital Art",
+    "is_pictogram": true
+  },
+  "6": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/6/",
+      "tags": []
+    },
+    "title": "Home.original",
+    "filename": "Home.original.png",
+    "is_pictogram": false
+  },
+  "74": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/74/",
+      "tags": [
+        "DSFR",
+        "Pictogrammes",
+        "System"
+      ]
+    },
+    "title": "Pictogrammes DSFR \u2014 System \u2014 Information",
+    "filename": "Pictogrammes DSFR \u2014 System \u2014 Information",
+    "is_pictogram": true
+  },
+  "77": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/77/",
+      "tags": [
+        "DSFR",
+        "Pictogrammes",
+        "System"
+      ]
+    },
+    "title": "Pictogrammes DSFR \u2014 System \u2014 Success",
+    "filename": "Pictogrammes DSFR \u2014 System \u2014 Success",
+    "is_pictogram": true
+  },
+  "78": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/78/",
+      "tags": [
+        "DSFR",
+        "Pictogrammes",
+        "System"
+      ]
+    },
+    "title": "Pictogrammes DSFR \u2014 System \u2014 System",
+    "filename": "Pictogrammes DSFR \u2014 System \u2014 System",
+    "is_pictogram": true
+  },
+  "112": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/112/",
+      "tags": []
+    },
+    "title": "Design sans titre (3)",
+    "filename": "Design_sans_titre_1.svg",
+    "is_pictogram": false
+  },
+  "81": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/81/",
+      "tags": []
+    },
+    "title": "Illustration CMS",
+    "filename": "undraw_Website_builder_re_ii6e.png",
+    "is_pictogram": false
+  },
+  "82": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/82/",
+      "tags": []
+    },
+    "title": "picto accessibility",
+    "filename": "accessibility.png",
+    "is_pictogram": false
+  },
+  "84": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/84/",
+      "tags": []
+    },
+    "title": "Illustration CMS 2",
+    "filename": "undraw_building_websites_i78t_1.png",
+    "is_pictogram": false
+  },
+  "116": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/116/",
+      "tags": []
+    },
+    "title": "undraw_female_avatar_efig",
+    "filename": "undraw_female_avatar_efig.svg",
+    "is_pictogram": false
+  },
+  "117": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/117/",
+      "tags": []
+    },
+    "title": "undraw_male_avatar_g98d",
+    "filename": "undraw_male_avatar_g98d.svg",
+    "is_pictogram": false
+  },
+  "28": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/28/",
+      "tags": [
+        "Digital",
+        "DSFR",
+        "Pictogrammes"
+      ]
+    },
+    "title": "Pictogrammes DSFR \u2014 Digital \u2014 Avatar",
+    "filename": "Pictogrammes DSFR \u2014 Digital \u2014 Avatar",
+    "is_pictogram": true
+  }
+}

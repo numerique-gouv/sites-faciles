@@ -660,24 +660,9 @@
         "id": 112,
         "meta": {
           "type": "wagtailimages.Image",
-          "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/112/",
-          "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Design_sans_titre_1.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150223Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=707af07bef74bb659ac1e063b523a1816e921287390fd08728392ccd51a5a023"
+          "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/112/"
         },
         "title": "Design sans titre (3)"
-      },
-      "header_image_render": {
-        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre_1.2e16d0ba.fill-1200x627.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150223Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f743ef14d0b81f88bc5b46a05b5851b145a8fa9ab8aee50aa798479eafab7382",
-        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre_1.2e16d0ba.fill-1200x627.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150223Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f743ef14d0b81f88bc5b46a05b5851b145a8fa9ab8aee50aa798479eafab7382",
-        "width": 518,
-        "height": 270,
-        "alt": "Design sans titre (3)"
-      },
-      "header_image_thumbnail": {
-        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre_1.2e16d0ba.fill-376x211.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150223Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=df61c9fc0994f92970046839b0f6c5149505b60b87e45c07b010fc53e501349b",
-        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre_1.2e16d0ba.fill-376x211.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150223Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=df61c9fc0994f92970046839b0f6c5149505b60b87e45c07b010fc53e501349b",
-        "width": 376,
-        "height": 211,
-        "alt": "Design sans titre (3)"
       },
       "header_with_title": true,
       "header_color_class": null,
@@ -1037,8 +1022,6 @@
         }
       ],
       "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
       "header_with_title": false,
       "header_color_class": null,
       "header_large": false,
@@ -1231,24 +1214,9 @@
         "id": 96,
         "meta": {
           "type": "wagtailimages.Image",
-          "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/96/",
-          "download_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/original_images/Design_sans_titre.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d578177d1962d7eef7a556e8a835eb75463adb54b2e30c9058e5c53503b57cc2"
+          "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/96/"
         },
         "title": "Header"
-      },
-      "header_image_render": {
-        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-1200x627.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c18c4159c4fb17af683f4a9044bd30c81bd7ad763586acb8b8c1d40934dc9279",
-        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-1200x627.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c18c4159c4fb17af683f4a9044bd30c81bd7ad763586acb8b8c1d40934dc9279",
-        "width": 839,
-        "height": 438,
-        "alt": "Header"
-      },
-      "header_image_thumbnail": {
-        "url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-376x211.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c083418f12b716205bda368fcc066ee79737ad33f8b977aed3db251a829ef296",
-        "full_url": "https://cellar-c2.services.clever-cloud.com/storage-demo/images/Design_sans_titre.319bb898.fill-376x211.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZWM9OJBMLHVWM86C0Y2S%2F20241017%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20241017T150224Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c083418f12b716205bda368fcc066ee79737ad33f8b977aed3db251a829ef296",
-        "width": 376,
-        "height": 211,
-        "alt": "Header"
       },
       "header_with_title": true,
       "header_color_class": null,
@@ -1377,8 +1345,6 @@
         }
       ],
       "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
       "header_with_title": false,
       "header_color_class": null,
       "header_large": false,
@@ -1467,8 +1433,6 @@
         }
       ],
       "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
       "header_with_title": false,
       "header_color_class": null,
       "header_large": false,
@@ -1614,8 +1578,6 @@
         }
       ],
       "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
       "header_with_title": false,
       "header_color_class": null,
       "header_large": false,
@@ -1913,8 +1875,6 @@
         }
       ],
       "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
       "header_with_title": false,
       "header_color_class": null,
       "header_large": false,
@@ -1981,8 +1941,6 @@
         }
       ],
       "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
       "header_with_title": false,
       "header_color_class": null,
       "header_large": false,
@@ -2457,8 +2415,6 @@
         }
       ],
       "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
       "header_with_title": false,
       "header_color_class": null,
       "header_large": false,
@@ -2526,8 +2482,6 @@
         }
       ],
       "header_image": null,
-      "header_image_render": null,
-      "header_image_thumbnail": null,
       "header_with_title": false,
       "header_color_class": null,
       "header_large": false,
