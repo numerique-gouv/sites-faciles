@@ -33,3 +33,4 @@ class Command(BaseCommand):
         export_data = {"image_ids": image_ids, "pages": pages}
         with open(TEMPLATES_DATA_FILE, "w") as json_file:
             json.dump(export_data, json_file, indent=2)
+            json_file.write("\n")

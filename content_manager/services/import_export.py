@@ -2,6 +2,7 @@ import copy
 import json
 import os
 from io import BytesIO
+from pathlib import PosixPath
 from urllib.request import urlretrieve
 
 import requests
@@ -19,7 +20,6 @@ from content_manager.services.accessors import get_or_create_collection, get_or_
 PAGE_TEMPLATES_ROOT = settings.BASE_DIR / "content_manager/page_templates"
 TEMPLATES_DATA_FILE = PAGE_TEMPLATES_ROOT / "pages_data.json"
 IMAGES_FOLDER = PAGE_TEMPLATES_ROOT / "img"
-IMAGES_DATA_FILE = PAGE_TEMPLATES_ROOT / "image_data.json"
 
 User = get_user_model()
 
@@ -39,6 +39,8 @@ class ExportPage:
         self.content = copy.deepcopy(self.source_content)
         self.content["body"] = remove_block_ids(self.source_body)
         self.content.pop("tags", None)
+        self.content.pop("header_image_render", None)
+        self.content.pop("header_image_thumbnail", None)
         self.clear_meta_keys()
 
         self.images = {}
@@ -67,6 +69,9 @@ class ExportPage:
         if header_image:
             header_image["local_image"] = None
             self.image_ids.append(header_image["id"])
+            self.content["header_image"]["meta"].pop("download_url")
+
+        # Remove fields with credentials
 
         # Images from the body
         self.locate_image_ids(self.source_body)
@@ -95,25 +100,38 @@ class ImportPages:
     Generic class for import of a list of ContentPages from a previously made export
     """
 
-    def __init__(self) -> None:
-        with open(TEMPLATES_DATA_FILE, "r") as json_file:
-            page_templates_data = json.load(json_file)
+    def __init__(
+        self,
+        pages_data: dict | None = None,
+        parent_page_slug: str | None = None,
+        image_folder: PosixPath | None = IMAGES_FOLDER,
+    ) -> None:
+        if pages_data is None:
+            with open(TEMPLATES_DATA_FILE, "r") as json_file:
+                pages_data = json.load(json_file)
 
-        self.pages = page_templates_data["pages"]
-        self.image_ids = page_templates_data["image_ids"]
+        self.pages = pages_data["pages"]  # type: ignore
+        self.image_ids = pages_data["image_ids"]  # type: ignore
 
-        self.image_importer = ImportExportImages(self.image_ids)
-        self.page_templates_index = None
+        self.image_importer = ImportExportImages(self.image_ids, image_folder=image_folder)
+
+        if parent_page_slug:
+            self.parent_page = ContentPage.objects.get(slug=parent_page_slug)
+        else:
+            # Do not create the parent page at this step if it doesn't exit
+            self.parent_page = None
 
     def get_or_create_page_templates_index(self) -> ContentPage:
         body = [("subpageslist", None)]
         return get_or_create_content_page(
-            slug="page_templates_index", title="Modèles de pages", body=body, restriction_type="login"
+            slug="page_templates_index", title="Modèles de pages à copier", body=body, restriction_type="login"
         )
 
     def import_pages(self):
         self.image_importer.import_images()
-        self.page_templates_index = self.get_or_create_page_templates_index()
+
+        if not self.parent_page:
+            self.parent_page = self.get_or_create_page_templates_index()
 
         for page_id in self.pages.keys():
             self.update_image_ids(page_id)
@@ -136,7 +154,7 @@ class ImportPages:
             "title": raw_page["title"],
             "body": raw_page["body"],
             "restriction_type": "login",
-            "parent_page": self.page_templates_index,
+            "parent_page": self.parent_page,
         }
 
         page_fields = {"source_url": source_url}
@@ -179,14 +197,17 @@ class ImportExportImages:
     Generic class for import/export of a list of Images from a wagtail instance
     """
 
-    def __init__(self, image_ids, source_site=None) -> None:
+    def __init__(self, image_ids, source_site=None, image_folder: PosixPath | None = IMAGES_FOLDER) -> None:
         self.user = User.objects.filter(is_superuser=True).first()
 
         self.image_ids = set(image_ids)
         self.source_site = source_site
 
         # Create the folder for the files if it doesn't exist
-        os.makedirs(IMAGES_FOLDER, exist_ok=True)
+        self.image_folder = image_folder
+        os.makedirs(image_folder, exist_ok=True)
+
+        self.image_data_file = self.image_folder / "image_data.json"  # type: ignore
 
         # Create the collection if it doesn't exit
         self.collection = get_or_create_collection("Images des modèles de page")
@@ -194,8 +215,8 @@ class ImportExportImages:
         self.image_data = self.get_image_data()
 
     def get_image_data(self) -> dict:
-        if os.path.isfile(IMAGES_DATA_FILE):
-            with open(IMAGES_DATA_FILE, "r") as json_file:
+        if os.path.isfile(self.image_data_file):
+            with open(self.image_data_file, "r") as json_file:
                 image_data = json.load(json_file)
         else:
             image_data = {}
@@ -219,7 +240,7 @@ class ImportExportImages:
             self.image_data[i]["meta"] = image["meta"]
             self.image_data[i]["title"] = image["title"]
 
-            image_url = image["meta"]["download_url"]
+            image_url = image["meta"].pop("download_url")
             image_name = image_url.split("?")[0].split("/")[-1]
 
             # No need to export the pictograms, as they should already be present
@@ -229,12 +250,13 @@ class ImportExportImages:
                 self.image_data[i]["is_pictogram"] = True
 
             else:
-                urlretrieve(image_url, IMAGES_FOLDER / image_name)
+                urlretrieve(image_url, self.image_folder / image_name)
                 self.image_data[i]["filename"] = image_name
                 self.image_data[i]["is_pictogram"] = False
 
-        with open(IMAGES_DATA_FILE, "w") as json_file:
+        with open(self.image_data_file, "w") as json_file:
             json.dump(self.image_data, json_file, indent=2)
+            json_file.write("\n")
 
     def import_images(self) -> None:
         for i in self.image_ids:
@@ -254,7 +276,7 @@ class ImportExportImages:
         imported_filename = f"template_image_{filename.lower()}"
         title = image_data["title"]
 
-        with open(IMAGES_FOLDER / filename, "rb") as image_file:
+        with open(self.image_folder / filename, "rb") as image_file:
             file_hash = hash_filelike(image_file)
 
             image = Image.objects.filter(file_hash=file_hash).first()
