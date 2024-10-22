@@ -194,7 +194,7 @@ class ImportExportImages:
     Generic class for import/export of a list of Images from a wagtail instance
     """
 
-    def __init__(self, image_ids, source_site=None, image_folder: str | PosixPath = IMAGES_FOLDER) -> None:
+    def __init__(self, image_ids, source_site=None, image_folder: PosixPath = IMAGES_FOLDER) -> None:
         self.user = User.objects.filter(is_superuser=True).first()
 
         self.image_ids = set(image_ids)
