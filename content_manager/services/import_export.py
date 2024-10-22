@@ -101,7 +101,10 @@ class ImportPages:
     """
 
     def __init__(
-        self, pages_data: dict | None = None, parent_page_slug: str | None = None, image_folder: str | None = None
+        self,
+        pages_data: dict | None = None,
+        parent_page_slug: str | None = None,
+        image_folder: PosixPath | None = IMAGES_FOLDER,
     ) -> None:
         if pages_data is None:
             with open(TEMPLATES_DATA_FILE, "r") as json_file:
@@ -194,7 +197,7 @@ class ImportExportImages:
     Generic class for import/export of a list of Images from a wagtail instance
     """
 
-    def __init__(self, image_ids, source_site=None, image_folder: PosixPath = IMAGES_FOLDER) -> None:
+    def __init__(self, image_ids, source_site=None, image_folder: PosixPath | None = IMAGES_FOLDER) -> None:
         self.user = User.objects.filter(is_superuser=True).first()
 
         self.image_ids = set(image_ids)
