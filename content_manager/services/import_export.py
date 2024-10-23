@@ -1,6 +1,7 @@
 import copy
 import json
 import os
+import sys
 from io import BytesIO
 from pathlib import PosixPath
 from urllib.request import urlretrieve
@@ -11,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.core.files.images import ImageFile
 from django.utils import timezone
 from wagtail.images.models import Image
+from wagtail.models import Page
 from wagtail.utils.file import hash_filelike
 
 from content_manager.constants import HEADER_FIELDS
@@ -122,9 +124,11 @@ class ImportPages:
             self.parent_page = None
 
     def get_or_create_page_templates_index(self) -> ContentPage:
+        # The templates index is created right under the Root page, like a site
+        parent_page = Page.objects.first()
         body = [("subpageslist", None)]
         return get_or_create_content_page(
-            slug="page_templates_index", title="Modèles de pages à copier", body=body, restriction_type="login"
+            slug="page_templates_index", title="Modèles de pages à copier", body=body, parent_page=parent_page
         )
 
     def import_pages(self):
@@ -153,7 +157,6 @@ class ImportPages:
             "slug": raw_page["meta"]["slug"],
             "title": raw_page["title"],
             "body": raw_page["body"],
-            "restriction_type": "login",
             "parent_page": self.parent_page,
         }
 
@@ -162,22 +165,22 @@ class ImportPages:
         for field in HEADER_FIELDS:
             if raw_page[field]:
                 page_fields[field] = raw_page[field]
-
         page_dict["page_fields"] = page_fields
         return get_or_create_content_page(**page_dict)
 
-    def update_page(self, page_id, page):
-        raw_page = self.pages[page_id]
-        page.slug = raw_page["meta"]["slug"]
-        page.title = raw_page["title"]
-        page.body = raw_page["body"]
+    def update_page(self, source_page_id, existing_page):
+        raw_page = self.pages[source_page_id]
+        existing_page.slug = raw_page["meta"]["slug"]
+        existing_page.title = raw_page["title"]
+        existing_page.body = raw_page["body"]
 
         for field in HEADER_FIELDS:
             if raw_page[field]:
-                setattr(page, field, raw_page[field])
+                setattr(existing_page, field, raw_page[field])
 
-        page.save()
-        return page
+        existing_page.save()
+        sys.stdout.write(f"Page {existing_page.slug} has been updated.\n")
+        return existing_page
 
     def update_image_ids(self, page_id):
         page = self.pages[page_id]

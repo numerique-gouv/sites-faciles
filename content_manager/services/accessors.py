@@ -46,7 +46,7 @@ def get_or_create_content_page(
     # Don't replace or duplicate an already existing page
     already_exists = ContentPage.objects.filter(slug=slug).first()
     if already_exists:
-        sys.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}")
+        sys.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}\n")
         return already_exists
 
     new_page = parent_page.add_child(
@@ -58,9 +58,10 @@ def get_or_create_content_page(
         )
     )
 
+    allowed_page_fields = HEADER_FIELDS + ["source_url"]
     if page_fields and len(page_fields):
         for k, v in page_fields.items():
-            if k in HEADER_FIELDS:
+            if k in allowed_page_fields:
                 setattr(new_page, k, v)
         new_page.save()
 
