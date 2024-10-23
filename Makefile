@@ -64,6 +64,7 @@ init-dev:
 update:
 	$(EXEC_CMD) poetry install --without dev
 	$(EXEC_CMD) poetry run python manage.py migrate
+	$(EXEC_CMD) poetry run python manage.py import_page_templates
 	make collectstatic
 	make index
 
