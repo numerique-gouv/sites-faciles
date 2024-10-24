@@ -324,7 +324,8 @@ class CardBlock(blocks.StructBlock):
                     help_text=_(
                         """Please use only one primary button.
                         If you use icons, use them on all buttons and align them on the same side."""
-                    )
+                    ),
+                    label=_("Buttons"),
                 ),
             ),
         ],
@@ -647,7 +648,8 @@ class TextAndCTA(blocks.StructBlock):
                     help_text=_(
                         """Please use only one primary button.
                         If you use icons, use them on all buttons and align them on the same side."""
-                    )
+                    ),
+                    label=_("Buttons"),
                 ),
             ),
         ],
