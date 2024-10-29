@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-24 18:07+0200\n"
-"PO-Revision-Date: 2024-07-22 18:54+0200\n"
+"POT-Creation-Date: 2024-09-17 12:04+0200\n"
+"PO-Revision-Date: 2024-09-17 12:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: blog/blocks.py:9 blog/models.py:348 blog/models.py:365
+#: blog/blocks.py:9 blog/models.py:37 blog/models.py:65
 msgid "Name"
 msgstr "Nom"
 
-#: blog/blocks.py:10 blog/models.py:366
+#: blog/blocks.py:10 blog/models.py:66
 msgid "Role"
 msgstr "Fonction"
 
-#: blog/blocks.py:11 blog/models.py:360
+#: blog/blocks.py:11 blog/models.py:54
 msgid "Organization"
 msgstr "Organisation"
 
-#: blog/blocks.py:12 blog/models.py:368
+#: blog/blocks.py:12 blog/models.py:68
 msgid "Contact info"
 msgstr "Informations de contact"
 
@@ -42,123 +42,122 @@ msgstr "Texte riche"
 msgid "Contact card"
 msgstr "Carte contact"
 
-#: blog/models.py:36
-msgid "Posts per page"
-msgstr "Articles par page"
+#: blog/models.py:93
+msgid "Person"
+msgstr "Personne"
 
-#: blog/models.py:40 blog/templates/blog/blog_index_page.html:76
-msgid "Filter by category"
-msgstr "Filtrer par catégorie"
+#: blog/models.py:105
+msgid "Category name"
+msgstr "Nom de la catégorie"
 
-#: blog/models.py:41 blog/templates/blog/blog_index_page.html:93
-msgid "Filter by tag"
-msgstr "Filtrer par étiquette"
+#: blog/models.py:112
+msgid "Parent category"
+msgstr "Catégorie parente"
 
-#: blog/models.py:42 blog/templates/blog/blog_index_page.html:110
-msgid "Filter by author"
-msgstr "Filtrer par auteur"
+#: blog/models.py:119
+msgid "Description"
+msgstr "Description"
 
-#: blog/models.py:44 blog/templates/blog/blog_index_page.html:125
-msgid "Filter by source"
-msgstr "Filtrer par source"
+#: blog/models.py:120
+msgid "Displayed on the top of the category page"
+msgstr "Affiché en haut de la page de la catégorie"
 
-#: blog/models.py:44
-msgid "The source is the organization of the post author"
-msgstr ""
-"La source est l’organisation à laquelle appartient l’auteur de l’article"
+#: blog/models.py:126
+msgid "Text displayed at the end of every page in the category"
+msgstr "Texte affiché à la fin de chaque page de la catégorie"
 
-#: blog/models.py:56
-msgid "Show filters"
-msgstr "Afficher les filtres"
+#: blog/models.py:153
+msgid "Parent category cannot be self."
+msgstr "La catégorie ne peut être sa propre parente."
 
-#: blog/models.py:63
-msgid "Blog index"
-msgstr "Index de blog"
+#: blog/models.py:155
+msgid "Cannot have circular Parents."
+msgstr "Il est impossible d’avoir des parents circulaires."
 
-#: blog/models.py:92 blog/templates/blog/tags_list_page.html:20
-#: blog/views.py:149
-msgid "Tags"
-msgstr "Étiquettes"
+#: blog/models.py:164 blog/models.py:183
+msgid "Category"
+msgstr "Catégorie"
 
-#: blog/models.py:97
-#, python-format
-msgid "Posts tagged with %(tag)s"
-msgstr "Articles avec l’étiquette %(tag)s"
-
-#: blog/models.py:110 blog/models.py:227 blog/models.py:323
+#: blog/models.py:165 blog/models.py:273 blog/models.py:390
 #: blog/templates/blog/categories_list_page.html:20 blog/views.py:117
 msgid "Categories"
 msgstr "Catégories"
 
-#: blog/models.py:115
+#: blog/models.py:199
+msgid "Posts per page"
+msgstr "Articles par page"
+
+#: blog/models.py:203 blog/templates/blog/blog_index_page.html:77
+msgid "Filter by category"
+msgstr "Filtrer par catégorie"
+
+#: blog/models.py:204 blog/templates/blog/blog_index_page.html:94
+msgid "Filter by tag"
+msgstr "Filtrer par étiquette"
+
+#: blog/models.py:205 blog/templates/blog/blog_index_page.html:111
+msgid "Filter by author"
+msgstr "Filtrer par auteur"
+
+#: blog/models.py:207 blog/templates/blog/blog_index_page.html:126
+msgid "Filter by source"
+msgstr "Filtrer par source"
+
+#: blog/models.py:207
+msgid "The source is the organization of the post author"
+msgstr "La source est l’organisation à laquelle appartient l’auteur de l’article"
+
+#: blog/models.py:219
+msgid "Show filters"
+msgstr "Afficher les filtres"
+
+#: blog/models.py:226
+msgid "Blog index"
+msgstr "Index de blog"
+
+#: blog/models.py:255 blog/templates/blog/tags_list_page.html:20
+#: blog/views.py:149
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: blog/models.py:260
+#, python-format
+msgid "Posts tagged with %(tag)s"
+msgstr "Articles avec l’étiquette %(tag)s"
+
+#: blog/models.py:278
 #, python-format
 msgid "Posts in category %(category)s"
 msgstr "Articles dans la catégorie %(category)s"
 
-#: blog/models.py:126 blog/models.py:128 blog/models.py:139 blog/models.py:142
+#: blog/models.py:289 blog/models.py:291 blog/models.py:302 blog/models.py:305
 msgid "Posts written by"
 msgstr "Articles écrits par"
 
-#: blog/models.py:146
+#: blog/models.py:309
 #, python-format
 msgid "Posts published in %(year)s"
 msgstr "Articles publiés en %(year)s"
 
-#: blog/models.py:229
+#: blog/models.py:392
 msgid "Post date"
 msgstr "Date de publication"
 
-#: blog/models.py:231
+#: blog/models.py:394
 msgid "Author entries can be created in Snippets > Persons"
 msgstr "Les auteurs peuvent être créés via Fragments > Personnes"
 
-#: blog/models.py:250
+#: blog/models.py:413
 msgid "Scheduled publishing"
 msgstr "Publication planifiée"
 
-#: blog/models.py:258
+#: blog/models.py:421
 msgid "Tags and Categories"
 msgstr "Étiquettes et Catégories"
 
-#: blog/models.py:266
+#: blog/models.py:437
 msgid "Blog page"
 msgstr "Page de blog"
-
-#: blog/models.py:271
-msgid "Category name"
-msgstr "Nom de la catégorie"
-
-#: blog/models.py:278
-msgid "Parent category"
-msgstr "Catégorie parente"
-
-#: blog/models.py:285
-msgid "Description"
-msgstr "Description"
-
-#: blog/models.py:286
-msgid "Displayed on the top of the category page"
-msgstr "Affiché en haut de la page de la catégorie"
-
-#: blog/models.py:292
-msgid "Text displayed at the end of every page in the category"
-msgstr "Texte affiché à la fin de chaque page de la catégorie"
-
-#: blog/models.py:303
-msgid "Parent category cannot be self."
-msgstr "La catégorie ne peut être sa propre parente."
-
-#: blog/models.py:305
-msgid "Cannot have circular Parents."
-msgstr "Il est impossible d’avoir des parents circulaires."
-
-#: blog/models.py:322 blog/models.py:334
-msgid "Category"
-msgstr "Catégorie"
-
-#: blog/models.py:385
-msgid "Person"
-msgstr "Personne"
 
 #: blog/templates/blog/blocks/blog_index_posts_list.html:37
 msgid "No article found."
@@ -168,8 +167,8 @@ msgstr "Aucun article trouvé."
 msgid "Posted by:"
 msgstr "Écrit par :"
 
-#: blog/templates/blog/blog_index_page.html:71
-#: blog/templates/blog/blog_index_page.html:73
+#: blog/templates/blog/blog_index_page.html:72
+#: blog/templates/blog/blog_index_page.html:74
 msgid "Filters"
 msgstr "Filtres"
 

@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "wagtail_localize",
     "wagtail_localize.locales",
     "taggit",
+    "wagtail.api.v2",
+    "rest_framework",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -267,8 +269,12 @@ WAGTAILADMIN_BASE_URL = f"{os.getenv('HOST_PROTO', 'https')}://{HOST_URL}"
 HOST_PORT = os.getenv("HOST_PORT", "")
 if HOST_PORT != "":
     WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
+WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 WAGTAILADMIN_PATH = os.getenv("WAGTAILADMIN_PATH", "cms-admin/")
+
+WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL = f"/{WAGTAILADMIN_PATH}login/"
+WAGTAIL_PASSWORD_REQUIRED_TEMPLATE = "content_manager/password_required.html"
 
 # Disable Gravatar service
 WAGTAIL_GRAVATAR_PROVIDER_URL = None
@@ -309,6 +315,9 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
 )
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
+
+# Allows for complex Streamfields without completely removing checks
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 # Email settings
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "")

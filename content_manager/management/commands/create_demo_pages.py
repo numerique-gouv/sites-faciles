@@ -8,6 +8,7 @@ from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from blog.models import BlogIndexPage
 from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
+from content_manager.services.accessors import get_or_create_content_page
 from forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form"]
@@ -35,6 +36,7 @@ class Command(BaseCommand):
 
         # First, add the home page to the main menu if not already done
         home_page = site.root_page
+        locale = home_page.locale
         main_menu = MainMenu.objects.first()
         if not main_menu:
             main_menu = MainMenu.objects.create(site=site)
@@ -50,12 +52,12 @@ class Command(BaseCommand):
                 # to/do add example blog pages
 
             elif slug == "publications":
-                self.create_publication_pages(site, home_page, main_menu)
+                self.create_publication_pages(site, main_menu)
 
             elif slug == "menu_page":
                 # A blank page that is just destined to have a list of its subpages.
                 body = [("subpageslist", None)]
-                menu_page = self.create_content_page(slug, title="Pages d’exemple", body=body, parent_page=home_page)
+                menu_page = get_or_create_content_page(slug, title="Pages d’exemple", body=body, parent_page=home_page)
 
                 # Inserts it right before the last entry
                 contact_menu_entry = MainMenuItem.objects.filter(menu=main_menu).last()
@@ -66,7 +68,7 @@ class Command(BaseCommand):
                 contact_menu_entry.save()
 
             elif slug == "form":
-                menu_page = ContentPage.objects.get(slug="menu_page")
+                menu_page = ContentPage.objects.get(slug="menu_page", locale=locale)
                 self.create_form_page("form_with_all_fields", parent_page=menu_page)
             else:
                 raise ValueError(f"Valeur inconnue : {slug}")
@@ -101,24 +103,7 @@ class Command(BaseCommand):
 
         return blog_index
 
-    def create_content_page(self, slug: str, title: str, body: list, parent_page: ContentPage) -> ContentPage:
-        """
-        Creates a page for the site.
-        """
-
-        # Don't replace or duplicate an already existing page
-        already_exists = ContentPage.objects.filter(slug=slug).first()
-        if already_exists:
-            self.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}")
-            return already_exists
-
-        new_page = parent_page.add_child(instance=ContentPage(title=title, body=body, slug=slug, show_in_menus=True))
-
-        self.stdout.write(self.style.SUCCESS(f"Page {slug} created with id {new_page.id}"))
-
-        return new_page
-
-    def create_publication_pages(self, site, home_page, main_menu):
+    def create_publication_pages(self, site, main_menu):
         slug = "publications"
         title = "Publications"
         body = []
@@ -126,7 +111,7 @@ class Command(BaseCommand):
         text_raw = """<p>Veuillez trouver ici une liste de publications</p>"""
         body.append(("paragraph", RichText(text_raw)))
 
-        publications_page = self.create_content_page(slug=slug, title=title, body=body, parent_page=home_page)
+        publications_page = get_or_create_content_page(slug=slug, title=title, body=body)
         publications_menu_item, _created = MainMenuItem.objects.update_or_create(
             link_page=publications_page, menu=main_menu, defaults={"sort_order": 2}
         )
@@ -160,7 +145,7 @@ class Command(BaseCommand):
                     text += f"<p>{p}</p>\n"
                     body.append(("paragraph", RichText(text)))
 
-                new_page = self.create_content_page(
+                new_page = get_or_create_content_page(
                     slug=slugify(title), title=title, body=body, parent_page=publications_page
                 )
 
@@ -175,7 +160,7 @@ class Command(BaseCommand):
         """
 
         # Don't replace a manually created page
-        already_exists = ContentPage.objects.filter(slug=slug).first()
+        already_exists = FormPage.objects.filter(slug=slug).first()
         if already_exists:
             self.stdout.write(f"The page seem to already exist with id {already_exists.id}")
             return

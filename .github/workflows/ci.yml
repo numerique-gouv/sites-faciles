@@ -44,5 +44,9 @@ jobs:
       - name: 🤹‍ Run the unit tests
         run: |
           make test-unit
+      - name: 🎨 Deploy starter content
+        run: |
+          make init
+          poetry run python manage.py create_demo_pages
         env:
           DJANGO_DEBUG: True

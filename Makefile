@@ -5,7 +5,7 @@ ifneq (,$(wildcard ./.env))
 endif
 
 ifeq ($(USE_DOCKER),1)
-	EXEC_CMD := docker-compose exec -ti web
+	EXEC_CMD := docker compose exec -ti web
 else
 	EXEC_CMD :=
 endif
@@ -13,10 +13,6 @@ endif
 .PHONY: web-prompt
 web-prompt:
 	$(EXEC_CMD) bash
-
-.PHONY: test-unit
-test-unit:
-	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test
 
 .PHONY: collectstatic
 collectstatic:
@@ -44,7 +40,7 @@ fix:
 
 .PHONY: index
 index:
-	poetry run python manage.py update_index
+	$(EXEC_CMD) poetry run python manage.py update_index
 
 .PHONY: init
 init:
@@ -54,6 +50,7 @@ init:
 	$(EXEC_CMD) poetry run python manage.py set_config
 	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) poetry run python manage.py create_starter_pages
+	$(EXEC_CMD) poetry run python manage.py import_page_templates
 	make index
 
 .PHONY: init-dev
@@ -67,6 +64,7 @@ init-dev:
 update:
 	$(EXEC_CMD) poetry install --without dev
 	$(EXEC_CMD) poetry run python manage.py migrate
+	$(EXEC_CMD) poetry run python manage.py import_page_templates
 	make collectstatic
 	make index
 
@@ -84,3 +82,7 @@ runserver:
 .PHONY: test
 test:
 	$(EXEC_CMD) poetry run python manage.py test --buffer --parallel
+
+.PHONY: test-unit
+test-unit:
+	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test
