@@ -7,6 +7,7 @@ from forms.models import FormPage
 class FormsTestCase(WagtailPageTestCase):
     @classmethod
     def setUpTestData(cls) -> None:
+        call_command("collectstatic", "--ignore=*.sass", interactive=False)
         call_command("create_starter_pages")
 
     def test_form_page_is_renderable(self):
