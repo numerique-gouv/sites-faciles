@@ -1,6 +1,5 @@
 import os
 
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from wagtail.images.models import Image
 
@@ -9,15 +8,13 @@ from content_manager.utils import import_image
 
 
 class Command(BaseCommand):
-    help = """Import all the pictograms from the DSFR"""
+    help = """
+    Import all the pictograms from the DSFR.
+
+    Should only be launched if the statics have been collected at least once.
+    """
 
     def handle(self, *args, **kwargs):
-        call_command(
-            "collectstatic",
-            "--ignore=*.sass",
-            interactive=False,
-        )
-
         picto_root = "staticfiles/dsfr/dist/artwork/pictograms/"
         picto_folders = os.listdir(picto_root)
         picto_folders.sort()

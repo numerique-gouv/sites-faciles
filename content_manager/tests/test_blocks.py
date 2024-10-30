@@ -322,6 +322,30 @@ class TileBlockTestCase(WagtailPageTestCase):
 
         self.assertContains(response, "fr-tile__header")
 
+    def test_tile_manages_svg_image(self):
+        image_file = "static/artwork/technical-error.svg"
+        image = import_image(image_file, "Sample image")
+
+        body = [
+            (
+                "tile",
+                {
+                    "title": "Sample tile",
+                    "description": RichText('<p data-block-key="test">This is a sample tile.</p>'),
+                    "image": image,
+                },
+            )
+        ]
+
+        self.content_page.body = body
+        self.content_page.save()
+
+        url = self.content_page.url
+
+        response = self.client.get(url)
+
+        self.assertContains(response, "fr-tile__pictogram")
+
 
 class BlogRecentEntriesBlockTestCase(WagtailPageTestCase):
     def setUp(self):
