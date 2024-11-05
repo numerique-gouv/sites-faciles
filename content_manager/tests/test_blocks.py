@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.test import override_settings
 from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
@@ -322,7 +323,8 @@ class TileBlockTestCase(WagtailPageTestCase):
 
         self.assertContains(response, "fr-tile__header")
 
-    def test_tile_manages_svg_image(self):
+    @override_settings(SF_SCHEME_DEPENDENT_SVGS=True)
+    def test_tile_manages_svg_image_if_setting_allows(self):
         image_file = "static/artwork/technical-error.svg"
         image = import_image(image_file, "Sample image")
 
