@@ -26,6 +26,13 @@ On remettra régulièrement ce fork à jour à partir de [numerique-gouv/sites-f
 
 Utiliser les boutons `Sync fork` sur l'interface de ce projet Github (cf. [syncing-a-fork](https://docs.github.com/fr/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
 
+synchroniser aussi les tags :
+
+```sh
+git remote add numerique-gouv/sites-faciles https://github.com/numerique-gouv/sites-faciles.git
+git fetch numerique-gouv/sites-faciles --tags
+```
+
 ## Déploiement
 
 Déploiement sur scalingo, on déploiera des VERSIONS plutôt sur des branches
@@ -40,6 +47,7 @@ git push qfdmo-preprod-cms VERSION:master
 ### en prod
 
 ```sh
-git remote add qfdmo-preprod-cms SCALINGO_PROD_APP
+git remote add qfdmo-cms SCALINGO_PROD_APP
 git push qfdmo-cms VERSION:master
 ```
+
