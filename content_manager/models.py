@@ -20,6 +20,25 @@ from content_manager.managers import TagManager
 from content_manager.widgets import DsfrIconPickerWidget
 
 
+class CatalogPage(SitesFacilesBasePage):
+    tags = ClusterTaggableManager(through="TagCatalogPage", blank=True)
+
+    class Meta:
+        verbose_name = _("Catalog page")
+
+    settings_panels = SitesFacilesBasePage.settings_panels + [
+        FieldPanel("tags"),
+    ]
+
+    api_fields = SitesFacilesBasePage.api_fields + [
+        APIField("tags"),
+    ]
+
+
+class TagCatalogPage(TaggedItemBase):
+    content_object = ParentalKey("CatalogPage", related_name="catalogpage_tags")
+
+
 class ContentPage(SitesFacilesBasePage):
     tags = ClusterTaggableManager(through="TagContentPage", blank=True)
 

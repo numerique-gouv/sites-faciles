@@ -717,6 +717,19 @@ class VideoBlock(blocks.StructBlock):
         template = "content_manager/blocks/video.html"
 
 
+## Custom blocks
+class ContactCardBlock(blocks.StructBlock):
+    name = blocks.CharBlock(label=_("Name"), max_length=255)
+    role = blocks.CharBlock(label=_("Role"), max_length=255)
+    organization = blocks.CharBlock(label=_("Organization"), max_length=255)
+    contact_info = blocks.CharBlock(label=_("Contact info"), max_length=500, required=False)
+    image = ImageChooserBlock(label="Image")
+
+    class Meta:
+        icon = "user"
+        template = ("blog/blocks/contact_card.html",)
+
+
 ## Other apps-related blocks
 class RecentEntriesStructValue(blocks.StructValue):
     """
@@ -870,6 +883,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     events_recent_entries = EventsRecentEntriesBlock(
         label=_("Event calendar recent entries"), group=_("Website structure")
     )
+    contact_card = ContactCardBlock(label=_("Contact card"))
 
     class Meta:
         icon = "dots-horizontal"
@@ -1028,6 +1042,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("image", ImageBlock()),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
+    ("contact_card", ContactCardBlock(label=_("Contact card"))),
     ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
     ("highlight", HighlightBlock(label=_("Highlight"), group=_("DSFR components"))),
