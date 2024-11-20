@@ -37,8 +37,9 @@
   {% if value.image %}
     <div class="fr-tile__header">
       {% image value.image original as pictogram %}
+      {% settings_value "SF_SCHEME_DEPENDENT_SVGS" as scheme_dependent_svgs %}
 
-      {% if pictogram.url|slice:"-4:" == ".svg" %}
+      {% if scheme_dependent_svgs and pictogram.file.name|slice:"-4:" == ".svg" %}
         <div class="fr-tile__pictogram">
           <svg aria-hidden="true"
                class="fr-artwork"

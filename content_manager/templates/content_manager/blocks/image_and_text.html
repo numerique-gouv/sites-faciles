@@ -3,7 +3,9 @@
   <div class="fr-grid-row fr-grid-row--gutters">
     {% if value.image_side == "left" %}
       <div class="fr-col-12 fr-col-sm-{{ value.image_ratio }}">
-        <div class="bordered fr-px-2w">{% image value.image original class="fr-responsive-img" alt="" %}</div>
+        <div class="bordered fr-px-2w">
+          {% include "content_manager/blocks/image_svg_or_raster.html" with extra_classes="fr-responsive-img" alt="" %}
+        </div>
       </div>
       <div class="fr-col-12 fr-col-sm{{ -12|add:value.image_ratio }}">
         {{ value.text|richtext }}
@@ -33,7 +35,9 @@
         {% endif %}
       </div>
       <div class="fr-col-12 fr-col-sm-{{ value.image_ratio }}">
-        <div class="bordered fr-px-2w">{% image value.image original class="fr-responsive-img" alt="" %}</div>
+        <div class="bordered fr-px-2w">
+          {% include "content_manager/blocks/image_svg_or_raster.html" with extra_classes="fr-responsive-img" alt="" %}
+        </div>
       </div>
     {% endif %}
   </div>
