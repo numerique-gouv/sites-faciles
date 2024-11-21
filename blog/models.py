@@ -430,7 +430,7 @@ class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
             link=self.full_url,
             description=self.search_description,
             language=self.locale.language_code,
-            feed_url=f"{self.full_url}feed/",
+            feed_url=f"{self.full_url}{self.reverse_subpage('rss_feed')}",
         )
         feed = self.feed_posts(feed, request)
 
@@ -453,7 +453,7 @@ class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
             link=self.full_url,
             description=self.search_description,
             language=self.locale.language_code,
-            feed_url=f"{self.full_url}feed/",
+            feed_url=f"{self.full_url}{self.reverse_subpage('atom_feed')}",
         )
         feed = self.feed_posts(feed, request)
 
