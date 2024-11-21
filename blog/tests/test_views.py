@@ -1,5 +1,6 @@
-from datetime import UTC, datetime
+from datetime import datetime
 
+import zoneinfo
 from django.contrib.auth.models import User
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
@@ -22,10 +23,11 @@ class BlogTestCase(WagtailPageTestCase):
         )
         self.blog_index_page.save()
 
+        self.paris_tz = zoneinfo.ZoneInfo("Europe/Paris")
         self.blog_post = self.blog_index_page.add_child(
             instance=BlogEntryPage(
                 title="J’accuse",
-                date=datetime(1898, 6, 13, 6, 0, 0, tzinfo=UTC),
+                date=datetime(1898, 6, 13, 6, 0, 0, tzinfo=self.paris_tz),
                 owner=self.admin,
             )
         )
@@ -93,7 +95,7 @@ class BlogTestCase(WagtailPageTestCase):
         new_blog_post = deep_blog_index_page.add_child(
             instance=BlogEntryPage(
                 title="Livres d’aujourd’hui et de demain",
-                date=datetime(1869, 9, 7, 6, 0, 0, tzinfo=UTC),
+                date=datetime(1869, 9, 7, 6, 0, 0, tzinfo=self.paris_tz),
                 owner=self.admin,
             )
         )
