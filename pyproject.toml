@@ -1,3 +1,6 @@
+[project]
+requires-python = ">=3.10"
+
 [tool.poetry]
 name = "content-manager"
 version = "1.10.2"
@@ -118,4 +121,3 @@ lint.ignore = ["E203", "E266"]
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
-extra-standard-library = ["zoneinfo"]
