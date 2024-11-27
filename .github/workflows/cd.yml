@@ -22,5 +22,5 @@ jobs:
         with:
           push: true
           tags: ${{ env.GITHUB_REPOSITORY_OWNER_PART_SLUG }}/sites-faciles:${{ env.GITHUB_REF_SLUG }}
-          build-args: |
-            DATABASE_URL=postgres://user:password@localhost:5432/db
+          cache-from: type=registry,ref=${{ env.GITHUB_REPOSITORY_OWNER_PART_SLUG }}/sites-faciles:${{ env.GITHUB_REF_SLUG }}
+          cache-to: type=inline
