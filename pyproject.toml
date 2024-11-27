@@ -118,3 +118,4 @@ lint.ignore = ["E203", "E266"]
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
+extra-standard-library = ["zoneinfo"]

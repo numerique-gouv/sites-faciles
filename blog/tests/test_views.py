@@ -1,6 +1,6 @@
+import zoneinfo
 from datetime import datetime
 
-import zoneinfo
 from django.contrib.auth.models import User
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
