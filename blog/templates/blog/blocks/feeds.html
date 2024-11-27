@@ -1,0 +1,27 @@
+
+{% load wagtailroutablepage_tags i18n %}
+
+<div class="fr-mt-2w">
+    <ul class="fr-btns-group fr-btns-group--inline-sm fr-btns-group--icon-left fr-btns-group--right">
+        <li>
+            <a class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-rss-fill"
+               href="{% routablepageurl page 'atom_feed' %}{% if current_category %}?category={{ current_category.slug }}{% endif %}">
+                {% if current_category %}
+                    {% translate "Atom feed for the category" %}
+                {% else %}
+                    {% translate "Atom feed" %}
+                {% endif %}
+            </a>
+        </li>
+        <li>
+            <a class="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-rss-fill"
+               href="{% routablepageurl page 'rss_feed' %}{% if current_category %}?category={{ current_category.slug }}{% endif %}">
+                {% if current_category %}
+                    {% translate "RSS feed for the category" %}
+                {% else %}
+                    {% translate "RSS feed" %}
+                {% endif %}
+            </a>
+        </li>
+    </ul>
+</div>
