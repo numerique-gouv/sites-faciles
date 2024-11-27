@@ -13,6 +13,7 @@ ENV POETRY_HOME=/opt/poetry
 ENV POETRY_VENV=/opt/poetry-venv
 ENV POETRY_CACHE_DIR=/opt/.cache
 
+# Needed for docker build to succeed
 ENV DATABASE_URL=postgres://user:password@localhost:5432/db
 
 # Add new user to run the whole thing as non-root.
