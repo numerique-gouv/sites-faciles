@@ -51,7 +51,12 @@
       <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12">
           {% include "content_manager/blocks/breadcrumbs.html" %}
-          <h1 class="fr-display--sm">{{ page.title }}</h1>
+          {% if not page.header_with_title %}
+            <h1>
+              {{ page.title }}
+              {% include "content_manager/blocks/page_visibility.html" %}
+            </h1>
+          {% endif %}
         </div>
       </div>
       <p>

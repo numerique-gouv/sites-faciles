@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags i18n %}
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags wagtail_dsfr_tags i18n %}
 
 {% block title %}
   <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
@@ -19,6 +19,14 @@
   <meta property="og:url" content="{{ page.full_url }}" />
   <meta property="og:description" content="{{ page.search_description }}" />
   <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
+  <link rel="alternate"
+        type="application/atom+xml"
+        title="Atom"
+        href="{% routablepageurl page 'atom_feed' %}">
+  <link rel="alternate"
+        type="application/rss+xml"
+        title="RSS"
+        href="{% routablepageurl page 'rss_feed' %}">
 
   {% if page.get_translations.live %}
     {% for translation in page.get_translations.live %}
@@ -145,6 +153,7 @@
           {% if posts.paginator.num_pages > 1 %}
             <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination posts %}</div>
           {% endif %}
+          {% include "blog/blocks/feeds.html" %}
         </div>
       </div>
     {% else %}
@@ -152,6 +161,7 @@
       {% if posts.paginator.num_pages > 1 %}
         <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination posts %}</div>
       {% endif %}
+      {% include "blog/blocks/feeds.html" %}
     {% endif %}
   </div>
 {% endblock content %}

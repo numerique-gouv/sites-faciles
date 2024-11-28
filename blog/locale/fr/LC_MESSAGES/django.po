@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-17 12:04+0200\n"
-"PO-Revision-Date: 2024-09-17 12:04+0200\n"
+"POT-Creation-Date: 2024-11-27 14:45+0100\n"
+"PO-Revision-Date: 2024-11-27 14:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: blog/blocks.py:9 blog/models.py:37 blog/models.py:65
+#: blog/blocks.py:9 blog/models.py:39 blog/models.py:67
 msgid "Name"
 msgstr "Nom"
 
-#: blog/blocks.py:10 blog/models.py:66
+#: blog/blocks.py:10 blog/models.py:68
 msgid "Role"
 msgstr "Fonction"
 
-#: blog/blocks.py:11 blog/models.py:54
+#: blog/blocks.py:11 blog/models.py:56
 msgid "Organization"
 msgstr "Organisation"
 
-#: blog/blocks.py:12 blog/models.py:68
+#: blog/blocks.py:12 blog/models.py:70
 msgid "Contact info"
 msgstr "Informations de contact"
 
@@ -42,120 +42,124 @@ msgstr "Texte riche"
 msgid "Contact card"
 msgstr "Carte contact"
 
-#: blog/models.py:93
+#: blog/models.py:95
 msgid "Person"
 msgstr "Personne"
 
-#: blog/models.py:105
+#: blog/models.py:107
 msgid "Category name"
 msgstr "Nom de la catégorie"
 
-#: blog/models.py:112
+#: blog/models.py:114
 msgid "Parent category"
 msgstr "Catégorie parente"
 
-#: blog/models.py:119
+#: blog/models.py:121
 msgid "Description"
 msgstr "Description"
 
-#: blog/models.py:120
+#: blog/models.py:122
 msgid "Displayed on the top of the category page"
 msgstr "Affiché en haut de la page de la catégorie"
 
-#: blog/models.py:126
+#: blog/models.py:128
 msgid "Text displayed at the end of every page in the category"
 msgstr "Texte affiché à la fin de chaque page de la catégorie"
 
-#: blog/models.py:153
+#: blog/models.py:155
 msgid "Parent category cannot be self."
 msgstr "La catégorie ne peut être sa propre parente."
 
-#: blog/models.py:155
+#: blog/models.py:157
 msgid "Cannot have circular Parents."
 msgstr "Il est impossible d’avoir des parents circulaires."
 
-#: blog/models.py:164 blog/models.py:183
+#: blog/models.py:166 blog/models.py:185
 msgid "Category"
 msgstr "Catégorie"
 
-#: blog/models.py:165 blog/models.py:273 blog/models.py:390
-#: blog/templates/blog/categories_list_page.html:20 blog/views.py:117
+#: blog/models.py:167 blog/models.py:279 blog/models.py:460 blog/models.py:467
+#: blog/models.py:518
 msgid "Categories"
 msgstr "Catégories"
 
-#: blog/models.py:199
+#: blog/models.py:201
 msgid "Posts per page"
 msgstr "Articles par page"
 
-#: blog/models.py:203 blog/templates/blog/blog_index_page.html:77
+#: blog/models.py:207
+msgid "Post limit in the RSS/Atom feeds"
+msgstr "Nombre d’articles dans les flux RSS/Atom"
+
+#: blog/models.py:211 blog/templates/blog/blog_index_page.html:85
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
-#: blog/models.py:204 blog/templates/blog/blog_index_page.html:94
+#: blog/models.py:212 blog/templates/blog/blog_index_page.html:102
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
-#: blog/models.py:205 blog/templates/blog/blog_index_page.html:111
+#: blog/models.py:213 blog/templates/blog/blog_index_page.html:119
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
-#: blog/models.py:207 blog/templates/blog/blog_index_page.html:126
+#: blog/models.py:215 blog/templates/blog/blog_index_page.html:134
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
-#: blog/models.py:207
+#: blog/models.py:215
 msgid "The source is the organization of the post author"
 msgstr "La source est l’organisation à laquelle appartient l’auteur de l’article"
 
-#: blog/models.py:219
+#: blog/models.py:228
 msgid "Show filters"
 msgstr "Afficher les filtres"
 
-#: blog/models.py:226
+#: blog/models.py:235
 msgid "Blog index"
 msgstr "Index de blog"
 
-#: blog/models.py:255 blog/templates/blog/tags_list_page.html:20
-#: blog/views.py:149
+#: blog/models.py:262 blog/models.py:483 blog/models.py:497
+#: blog/templates/blog/tags_list_page.html:20
 msgid "Tags"
 msgstr "Étiquettes"
 
-#: blog/models.py:260
+#: blog/models.py:267
 #, python-format
 msgid "Posts tagged with %(tag)s"
 msgstr "Articles avec l’étiquette %(tag)s"
 
-#: blog/models.py:278
+#: blog/models.py:284
 #, python-format
 msgid "Posts in category %(category)s"
 msgstr "Articles dans la catégorie %(category)s"
 
-#: blog/models.py:289 blog/models.py:291 blog/models.py:302 blog/models.py:305
+#: blog/models.py:294 blog/models.py:296 blog/models.py:306 blog/models.py:309
 msgid "Posts written by"
 msgstr "Articles écrits par"
 
-#: blog/models.py:309
+#: blog/models.py:314
 #, python-format
 msgid "Posts published in %(year)s"
 msgstr "Articles publiés en %(year)s"
 
-#: blog/models.py:392
+#: blog/models.py:520
 msgid "Post date"
 msgstr "Date de publication"
 
-#: blog/models.py:394
+#: blog/models.py:522
 msgid "Author entries can be created in Snippets > Persons"
 msgstr "Les auteurs peuvent être créés via Fragments > Personnes"
 
-#: blog/models.py:413
+#: blog/models.py:541
 msgid "Scheduled publishing"
 msgstr "Publication planifiée"
 
-#: blog/models.py:421
+#: blog/models.py:549
 msgid "Tags and Categories"
 msgstr "Étiquettes et Catégories"
 
-#: blog/models.py:437
+#: blog/models.py:565
 msgid "Blog page"
 msgstr "Page de blog"
 
@@ -163,12 +167,28 @@ msgstr "Page de blog"
 msgid "No article found."
 msgstr "Aucun article trouvé."
 
-#: blog/templates/blog/blog_entry_page.html:74
+#: blog/templates/blog/blocks/feeds.html:10
+msgid "Atom feed for the category"
+msgstr "Flux Atom pour la catégorie"
+
+#: blog/templates/blog/blocks/feeds.html:12
+msgid "Atom feed"
+msgstr "Flux Atom"
+
+#: blog/templates/blog/blocks/feeds.html:20
+msgid "RSS feed for the category"
+msgstr "Flux RSS pour la catégorie"
+
+#: blog/templates/blog/blocks/feeds.html:22
+msgid "RSS feed"
+msgstr "Flux RSS"
+
+#: blog/templates/blog/blog_entry_page.html:79
 msgid "Posted by:"
 msgstr "Écrit par :"
 
-#: blog/templates/blog/blog_index_page.html:72
-#: blog/templates/blog/blog_index_page.html:74
+#: blog/templates/blog/blog_index_page.html:80
+#: blog/templates/blog/blog_index_page.html:82
 msgid "Filters"
 msgstr "Filtres"
 

@@ -5,21 +5,23 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import BooleanField, Count, QuerySet
 from django.db.models.expressions import F
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
-from django.urls import reverse
-from django.utils import timezone
-from django.utils.translation import get_language, gettext_lazy as _
+from django.utils import feedgenerator, timezone
+from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from rest_framework import serializers
 from taggit.models import TaggedItemBase
+from unidecode import unidecode
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel, TitleFieldPanel
 from wagtail.admin.widgets.slug import SlugInput
 from wagtail.api import APIField
+from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Orderable
-from wagtail.models.i18n import Locale, TranslatableMixin
+from wagtail.models.i18n import TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
@@ -192,11 +194,17 @@ class TagEntryPage(TaggedItemBase):
     content_object = ParentalKey("BlogEntryPage", related_name="entry_tags")
 
 
-class BlogIndexPage(SitesFacilesBasePage):
+class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
     posts_per_page = models.PositiveSmallIntegerField(
         default=10,
         validators=[MaxValueValidator(100), MinValueValidator(1)],
         verbose_name=_("Posts per page"),
+    )
+
+    feed_posts_limit = models.PositiveSmallIntegerField(
+        default=20,
+        validators=[MaxValueValidator(100), MinValueValidator(1)],
+        verbose_name=_("Post limit in the RSS/Atom feeds"),
     )
 
     # Filters
@@ -209,6 +217,7 @@ class BlogIndexPage(SitesFacilesBasePage):
 
     settings_panels = SitesFacilesBasePage.settings_panels + [
         FieldPanel("posts_per_page"),
+        FieldPanel("feed_posts_limit"),
         MultiFieldPanel(
             [
                 FieldPanel("filter_by_category"),
@@ -234,16 +243,14 @@ class BlogIndexPage(SitesFacilesBasePage):
         )
         return posts
 
-    def get_context(self, request, tag=None, category=None, author=None, source=None, year=None, *args, **kwargs):
+    def get_context(self, request, *args, **kwargs):
         context = super(BlogIndexPage, self).get_context(request, *args, **kwargs)
         posts = self.posts
-        locale = Locale.objects.get(language_code=get_language())
 
         extra_breadcrumbs = None
         extra_title = ""
 
-        if tag is None:
-            tag = request.GET.get("tag")
+        tag = request.GET.get("tag")
         if tag:
             tag = get_object_or_404(Tag, slug=tag)
             posts = posts.filter(tags=tag)
@@ -251,7 +258,7 @@ class BlogIndexPage(SitesFacilesBasePage):
                 "links": [
                     {"url": self.get_url(), "title": self.title},
                     {
-                        "url": reverse("blog:tags_list", kwargs={"blog_slug": self.slug}),
+                        "url": f"{self.get_url()}{self.reverse_subpage('tags_list')}",
                         "title": _("Tags"),
                     },
                 ],
@@ -259,17 +266,16 @@ class BlogIndexPage(SitesFacilesBasePage):
             }
             extra_title = _("Posts tagged with %(tag)s") % {"tag": tag}
 
-        if category is None:
-            category = request.GET.get("category")
+        category = request.GET.get("category")
         if category:
-            category = get_object_or_404(Category, slug=category, locale=locale)
+            category = get_object_or_404(Category, slug=category, locale=self.locale)
             posts = posts.filter(blog_categories=category)
 
             extra_breadcrumbs = {
                 "links": [
                     {"url": self.get_url(), "title": self.title},
                     {
-                        "url": reverse("blog:categories_list", kwargs={"blog_slug": self.slug}),
+                        "url": f"{self.get_url()}{self.reverse_subpage('categories_list')}",
                         "title": _("Categories"),
                     },
                 ],
@@ -277,8 +283,7 @@ class BlogIndexPage(SitesFacilesBasePage):
             }
             extra_title = _("Posts in category %(category)s") % {"category": category.name}
 
-        if source is None:
-            source = request.GET.get("source")
+        source = request.GET.get("source")
         if source:
             source = get_object_or_404(Organization, slug=source)
             posts = posts.filter(authors__organization=source)
@@ -290,8 +295,7 @@ class BlogIndexPage(SitesFacilesBasePage):
             }
             extra_title = _("Posts written by") + f" {source.name}"
 
-        if author is None:
-            author = request.GET.get("author")
+        author = request.GET.get("author")
         if author:
             author = get_object_or_404(Person, id=author)
 
@@ -304,6 +308,7 @@ class BlogIndexPage(SitesFacilesBasePage):
             posts = posts.filter(authors=author)
             extra_title = _("Posts written by") + f" {author.name}"
 
+        year = request.GET.get("year")
         if year:
             posts = posts.filter(date__year=year)
             extra_title = _("Posts published in %(year)s") % {"year": year}
@@ -379,6 +384,129 @@ class BlogIndexPage(SitesFacilesBasePage):
 
     def show_filters(self) -> bool | BooleanField:
         return self.filter_by_category or self.filter_by_tag or self.filter_by_author or self.filter_by_source
+
+    def feed_posts(self, feed, request):
+        """
+        Returns the posts for a RSS or ATOM feed relative to the parameters
+        """
+        posts = self.posts
+
+        category = request.GET.get("category")
+        if category:
+            category = get_object_or_404(Category, slug=category, locale=self.locale)
+            posts = posts.filter(blog_categories=category)
+
+        limit = int(request.GET.get("limit", self.feed_posts_limit))
+        posts = posts[:limit]
+
+        for post in posts:
+            feed.add_item(
+                post.title,
+                post.full_url,
+                pubdate=post.date,
+                description=post.search_description,
+            )
+
+        return feed
+
+    @path("rss/", name="rss_feed")
+    def rss_view(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+        Return the current blog as a RSS feed
+        """
+
+        if self.seo_title:
+            title = self.seo_title
+        else:
+            title = self.title
+
+        feed = feedgenerator.Rss201rev2Feed(
+            title=title,
+            link=self.full_url,
+            description=self.search_description,
+            language=self.locale.language_code,
+            feed_url=f"{self.full_url}{self.reverse_subpage('rss_feed')}",
+        )
+        feed = self.feed_posts(feed, request)
+
+        response = HttpResponse(feed.writeString("UTF-8"), content_type="application/xml")
+        return response
+
+    @path("atom/", name="atom_feed")
+    def atom_view(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+        Return the current blog as an Atom feed
+        """
+
+        if self.seo_title:
+            title = self.seo_title
+        else:
+            title = self.title
+
+        feed = feedgenerator.Atom1Feed(
+            title=title,
+            link=self.full_url,
+            description=self.search_description,
+            language=self.locale.language_code,
+            feed_url=f"{self.full_url}{self.reverse_subpage('atom_feed')}",
+        )
+        feed = self.feed_posts(feed, request)
+
+        response = HttpResponse(feed.writeString("UTF-8"), content_type="application/xml")
+        return response
+
+    @path("categories/", name="categories_list")
+    def categories_list(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        extra_title = _("Categories")
+        categories = self.list_categories()
+
+        extra_breadcrumbs = {
+            "links": [
+                {"url": self.get_url(), "title": self.title},
+            ],
+            "current": _("Categories"),
+        }
+
+        return self.render(
+            request,
+            context_overrides={
+                "categories": categories,
+                "page": self,
+                "extra_title": extra_title,
+                "extra_breadcrumbs": extra_breadcrumbs,
+            },
+            template="blog/categories_list_page.html",
+        )
+
+    @path("tags/", name="tags_list")
+    def tags_list(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        extra_title = _("Tags")
+        tags = self.list_tags()
+
+        tags_by_first_letter = {}
+        for tag in tags:
+            first_letter = unidecode(tag["tag_slug"][0].upper())
+            if first_letter not in tags_by_first_letter:
+                tags_by_first_letter[first_letter] = []
+            tags_by_first_letter[first_letter].append(tag)
+
+        extra_breadcrumbs = {
+            "links": [
+                {"url": self.get_url(), "title": self.title},
+            ],
+            "current": _("Tags"),
+        }
+
+        return self.render(
+            request,
+            context_overrides={
+                "sorted_tags": tags_by_first_letter,
+                "page": self,
+                "extra_title": extra_title,
+                "extra_breadcrumbs": extra_breadcrumbs,
+            },
+            template="blog/tags_list_page.html",
+        )
 
 
 class BlogEntryPage(SitesFacilesBasePage):
