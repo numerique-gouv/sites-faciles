@@ -3,7 +3,7 @@ name: 📦 CD
 on:
   push:
     branches:
-      - main
+      - "**"
 
 jobs:
   docker:
@@ -26,6 +26,6 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ env.GITHUB_REPOSITORY_OWNER_PART_SLUG }}/sites-faciles:${{ env.GITHUB_REF_SLUG }}
-            ghcr.io/${{ env.GITHUB_REPOSITORY_OWNER_PART_SLUG }}/sites-faciles:latest
+            ${{ github.ref_name == 'main' && format('ghcr.io/{0}/sites-faciles:latest', env.GITHUB_REPOSITORY_OWNER_PART_SLUG) || '' }}
           cache-from: type=registry,ref=ghcr.io/${{ env.GITHUB_REPOSITORY_OWNER_PART_SLUG }}/sites-faciles:${{ env.GITHUB_REF_SLUG }}
           cache-to: type=inline
