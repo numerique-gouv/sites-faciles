@@ -717,6 +717,19 @@ class VideoBlock(blocks.StructBlock):
         template = "content_manager/blocks/video.html"
 
 
+class VerticalContactCardBlock(blocks.StructBlock):
+    name = blocks.CharBlock(label=_("Name"), max_length=255)
+    role = blocks.CharBlock(label=_("Role"), max_length=255)
+    organization = blocks.CharBlock(label=_("Organization"), max_length=255)
+    contact_info = blocks.CharBlock(label=_("Contact info"), max_length=500, required=False)
+    image = ImageChooserBlock(label="Image")
+    tags = TagListBlock(label=_("Tags"), required=False)
+
+    class Meta:
+        icon = "user"
+        template = ("content_manager/blocks/contact_card_vertical.html",)
+
+
 ## Other apps-related blocks
 class RecentEntriesStructValue(blocks.StructValue):
     """
@@ -877,6 +890,7 @@ class CommonStreamBlock(blocks.StreamBlock):
 
 class ColumnBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
+    # contact_card = VerticalContactCardBlock(label=_("Contact card"), group=_("Extra components"))
 
 
 class ItemGridBlock(blocks.StructBlock):
