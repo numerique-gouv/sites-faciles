@@ -18,13 +18,13 @@ ENV DATABASE_URL=postgres://user:password@localhost:5432/db
 
 # Add new user to run the whole thing as non-root.
 RUN set -ex \
-  && addgroup --gid 1000 app \
-  && adduser --uid 1000 --gid 1000 --home ${APP_DIR} --disabled-password app;
+    && addgroup --gid 1000 app \
+    && adduser --uid 1000 --gid 1000 --home ${APP_DIR} --disabled-password app;
 
 # Install poetry separated from system interpreter
 RUN python3 -m venv ${POETRY_VENV} \
-  && ${POETRY_VENV}/bin/pip install -U pip setuptools \
-  && ${POETRY_VENV}/bin/pip install poetry==${POETRY_VERSION}
+    && ${POETRY_VENV}/bin/pip install -U pip setuptools \
+    && ${POETRY_VENV}/bin/pip install poetry==${POETRY_VERSION}
 
 # Add `poetry` to PATH
 ENV PATH="${PATH}:${POETRY_VENV}/bin"
