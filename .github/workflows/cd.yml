@@ -1,4 +1,4 @@
-name: 📦 CD
+name: 📦 Docker Image Build & Push
 
 on:
   push:
