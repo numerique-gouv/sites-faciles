@@ -717,16 +717,50 @@ class VideoBlock(blocks.StructBlock):
         template = "content_manager/blocks/video.html"
 
 
+class VerticalContactCardStructValue(blocks.StructValue):
+    def display(self):
+        contact = self.get("contact", None)
+
+        name = self.get("name", "")
+        if contact and not name:
+            name = contact.name
+
+        role = self.get("role", "")
+        if contact and not role:
+            role = contact.role
+
+        organization = self.get("organization", "")
+        if contact and not organization:
+            organization = contact.organization.name
+
+        image = self.get("image", "")
+        if contact and not image:
+            organization = contact.organization.image
+
+        return {"name": name, "role": role, "organization": organization, "image": image}
+
+
 class VerticalContactCardBlock(blocks.StructBlock):
-    name = blocks.CharBlock(label=_("Name"), max_length=255)
-    role = blocks.CharBlock(label=_("Role"), max_length=255)
-    organization = blocks.CharBlock(label=_("Organization"), max_length=255)
+    contact = SnippetChooserBlock(
+        "blog.Person",
+        label=_("Person"),
+        help_text=_("Optional, all values can be manually specified or overriden below"),
+        required=False,
+    )
+    link = LinkWithoutLabelBlock(
+        label=_("Link"),
+        required=False,
+    )
+    name = blocks.CharBlock(label=_("Name"), max_length=255, required=False)
+    role = blocks.CharBlock(label=_("Role"), max_length=255, required=False)
+    organization = blocks.CharBlock(label=_("Organization"), max_length=255, required=False)
     contact_info = blocks.CharBlock(label=_("Contact info"), max_length=500, required=False)
-    image = ImageChooserBlock(label="Image")
+    image = ImageChooserBlock(label="Image", required=False)
     tags = TagListBlock(label=_("Tags"), required=False)
 
     class Meta:
         icon = "user"
+        value_class = VerticalContactCardStructValue
         template = ("content_manager/blocks/contact_card_vertical.html",)
 
 
@@ -890,7 +924,7 @@ class CommonStreamBlock(blocks.StreamBlock):
 
 class ColumnBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
-    # contact_card = VerticalContactCardBlock(label=_("Contact card"), group=_("Extra components"))
+    contact_card = VerticalContactCardBlock(label=_("Contact card"), group=_("Extra components"))
 
 
 class ItemGridBlock(blocks.StructBlock):

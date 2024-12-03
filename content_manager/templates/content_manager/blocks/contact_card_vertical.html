@@ -5,8 +5,8 @@
 <div class="fr-card fr-card--grey">
   <div class="fr-card__body">
     <div class="fr-card__content">
-      <h3 class="fr-card__title">{{ value.name }}</h3>
-      <p class="fr-card__desc">{{ value.role }} – {{ value.organization }}</p>
+      <h3 class="fr-card__title">{{ value.display.name }}</h3>
+      <p class="fr-card__desc">{{ value.display.role }} – {{ value.display.organization }}</p>
 
       {% if value.contact_info or value.tags %}
         <div class="fr-card__end">
@@ -26,7 +26,7 @@
   <div class="fr-card__header">
     <div class="fr-card__img">
       <div class="cmsfr-vertical_contact_card__header fr-py-2w">
-        {% image value.image fill-200x200 as contact_image %}
+        {% image value.display.image fill-200x200 as contact_image %}
         <img class="cmsfr-vertical_contact_card-img fr-py-2w"
              src="{{ contact_image.url }}"
              width="4.5em"
