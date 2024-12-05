@@ -735,9 +735,40 @@ class VerticalContactCardStructValue(blocks.StructValue):
 
         image = self.get("image", "")
         if contact and not image:
-            organization = contact.organization.image
+            image = contact.image
 
         return {"name": name, "role": role, "organization": organization, "image": image}
+
+    def enlarge_link(self):
+        """
+        Determine if we need (and can) enlarge the link on the card.
+        This requires:
+        - That a link is present
+        - That no other link is used on the card (such as a tag with a link, or a call-to-action)
+        """
+        link = self.get("link")
+        tags = self.get("tags")
+        call_to_action = self.get("call_to_action", "")
+
+        if not (link and link.url()):
+            return False
+
+        enlarge = True
+        if len(call_to_action):
+            enlarge = False
+        elif len(tags):
+            print(tags)
+            print(tags.raw_data)
+            tags_list = tags.raw_data
+            for tag in tags_list:
+                if (
+                    tag["value"]["link"]["page"] is not None
+                    or tag["value"]["link"]["document"] is not None
+                    or tag["value"]["link"]["external_url"] != ""
+                ):
+                    enlarge = False
+
+        return enlarge
 
 
 class VerticalContactCardBlock(blocks.StructBlock):
@@ -750,6 +781,13 @@ class VerticalContactCardBlock(blocks.StructBlock):
     link = LinkWithoutLabelBlock(
         label=_("Link"),
         required=False,
+    )
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        required=False,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
     name = blocks.CharBlock(label=_("Name"), max_length=255, required=False)
     role = blocks.CharBlock(label=_("Role"), max_length=255, required=False)

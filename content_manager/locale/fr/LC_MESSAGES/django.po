@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-24 15:55+0200\n"
-"PO-Revision-Date: 2024-10-24 15:55+0200\n"
+"POT-Creation-Date: 2024-12-05 15:22+0100\n"
+"PO-Revision-Date: 2024-12-05 15:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -26,13 +26,13 @@ msgstr "Afficher le titre sur l’image d’en-tête ?"
 msgid "Header image"
 msgstr "Image d’en-tête"
 
-#: content_manager/abstract.py:39 content_manager/blocks.py:939
-#: content_manager/blocks.py:980 content_manager/blocks.py:1013
+#: content_manager/abstract.py:39 content_manager/blocks.py:1025
+#: content_manager/blocks.py:1066 content_manager/blocks.py:1099
 msgid "Background color"
 msgstr "Couleur de fond"
 
-#: content_manager/abstract.py:43 content_manager/blocks.py:941
-#: content_manager/blocks.py:982 content_manager/blocks.py:1015
+#: content_manager/abstract.py:43 content_manager/blocks.py:1027
+#: content_manager/blocks.py:1068 content_manager/blocks.py:1101
 msgid "Uses the French Design System colors"
 msgstr "Utilise les couleurs du système de design de l'État"
 
@@ -147,7 +147,7 @@ msgstr "Libellé du lien"
 
 #: content_manager/blocks.py:107 content_manager/blocks.py:282
 #: content_manager/blocks.py:390 content_manager/blocks.py:533
-#: content_manager/blocks.py:594
+#: content_manager/blocks.py:594 content_manager/blocks.py:782
 msgid "Link"
 msgstr "Lien"
 
@@ -214,9 +214,9 @@ msgstr "Badge"
 #: content_manager/blocks.py:427 content_manager/blocks.py:451
 #: content_manager/blocks.py:493 content_manager/blocks.py:568
 #: content_manager/blocks.py:623 content_manager/blocks.py:632
-#: content_manager/blocks.py:681 content_manager/blocks.py:795
-#: content_manager/blocks.py:825 content_manager/blocks.py:896
-#: content_manager/blocks.py:952 content_manager/models.py:393
+#: content_manager/blocks.py:681 content_manager/blocks.py:880
+#: content_manager/blocks.py:910 content_manager/blocks.py:982
+#: content_manager/blocks.py:1038 content_manager/models.py:393
 msgid "Title"
 msgstr "Titre"
 
@@ -239,27 +239,28 @@ msgstr "Tag"
 
 #: content_manager/blocks.py:265 content_manager/blocks.py:380
 #: content_manager/blocks.py:439 content_manager/blocks.py:453
-#: content_manager/blocks.py:570 content_manager/blocks.py:797
-#: content_manager/blocks.py:827 content_manager/blocks.py:954
+#: content_manager/blocks.py:570 content_manager/blocks.py:786
+#: content_manager/blocks.py:882 content_manager/blocks.py:912
+#: content_manager/blocks.py:1040
 msgid "Heading level"
 msgstr "Niveau de titre"
 
 #: content_manager/blocks.py:268 content_manager/blocks.py:383
 #: content_manager/blocks.py:442 content_manager/blocks.py:456
-#: content_manager/blocks.py:574
+#: content_manager/blocks.py:574 content_manager/blocks.py:790
 msgid "Adapt to the page layout. Defaults to heading 3."
 msgstr "À adapter à la structure de la page. Par défaut en-tête 3."
 
 #: content_manager/blocks.py:270 content_manager/blocks.py:386
 #: content_manager/blocks.py:423 content_manager/blocks.py:460
-#: content_manager/blocks.py:474 content_manager/blocks.py:897
-#: content_manager/blocks.py:984
+#: content_manager/blocks.py:474 content_manager/blocks.py:983
+#: content_manager/blocks.py:1070
 msgid "Content"
 msgstr "Contenu"
 
 #: content_manager/blocks.py:271 content_manager/blocks.py:388
 #: content_manager/blocks.py:513 content_manager/blocks.py:576
-#: content_manager/blocks.py:602 content_manager/blocks.py:857
+#: content_manager/blocks.py:602 content_manager/blocks.py:942
 msgid "Image"
 msgstr "Image"
 
@@ -455,7 +456,7 @@ msgid "Image width"
 msgstr "Largeur de l’image"
 
 #: content_manager/blocks.py:531 content_manager/blocks.py:642
-#: content_manager/blocks.py:856 content_manager/blocks.py:1027
+#: content_manager/blocks.py:941 content_manager/blocks.py:1113
 msgid "Rich text"
 msgstr "Texte avec mise en forme"
 
@@ -487,8 +488,8 @@ msgstr "Largeur"
 msgid "Caption"
 msgstr "Légende"
 
-#: content_manager/blocks.py:603 content_manager/blocks.py:863
-#: content_manager/blocks.py:1034
+#: content_manager/blocks.py:603 content_manager/blocks.py:948
+#: content_manager/blocks.py:1120
 msgid "Quote"
 msgstr "Citation"
 
@@ -559,169 +560,209 @@ msgstr ""
 msgid "Video ratio"
 msgstr "Ratio de la vidéo"
 
-#: content_manager/blocks.py:713 content_manager/blocks.py:859
-#: content_manager/blocks.py:1036
+#: content_manager/blocks.py:713 content_manager/blocks.py:944
+#: content_manager/blocks.py:1122
 msgid "Transcription"
 msgstr "Transcription"
 
-#: content_manager/blocks.py:801 content_manager/blocks.py:831
-#: content_manager/blocks.py:958
+#: content_manager/blocks.py:777
+msgid "Person"
+msgstr "Personne"
+
+#: content_manager/blocks.py:778
+msgid "Optional, all values can be manually specified or overriden below"
+msgstr ""
+"Optionnel, toutes les valeurs peuvent être spécifiées ou surchargées ci-"
+"dessous"
+
+#: content_manager/blocks.py:792 content_manager/models.py:425
+msgid "Name"
+msgstr "Nom"
+
+#: content_manager/blocks.py:793
+msgid "Role"
+msgstr "Fonction"
+
+#: content_manager/blocks.py:794
+msgid "Organization"
+msgstr "Organisation"
+
+#: content_manager/blocks.py:795
+msgid "Contact info"
+msgstr "Informations de contact"
+
+#: content_manager/blocks.py:797
+#: content_manager/templates/content_manager/tags_list_page.html:31
+#: content_manager/views.py:46 content_manager/views.py:77
+msgid "Tags"
+msgstr "Étiquettes"
+
+#: content_manager/blocks.py:886 content_manager/blocks.py:916
+#: content_manager/blocks.py:1044
 msgid "Adapt to the page layout. Defaults to heading 2."
 msgstr "À adapter à la structure de la page. Par défaut en-tête 2."
 
-#: content_manager/blocks.py:803
+#: content_manager/blocks.py:888
 msgid "Blog"
 msgstr "Blog"
 
-#: content_manager/blocks.py:805 content_manager/blocks.py:835
+#: content_manager/blocks.py:890 content_manager/blocks.py:920
 msgid "Number of entries"
 msgstr "Nombre d’articles"
 
-#: content_manager/blocks.py:807 content_manager/blocks.py:837
+#: content_manager/blocks.py:892 content_manager/blocks.py:922
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:11
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:11
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
-#: content_manager/blocks.py:808 content_manager/blocks.py:838
+#: content_manager/blocks.py:893 content_manager/blocks.py:923
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:28
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:28
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
-#: content_manager/blocks.py:809 content_manager/blocks.py:839
+#: content_manager/blocks.py:894 content_manager/blocks.py:924
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:45
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:45
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
-#: content_manager/blocks.py:812 content_manager/blocks.py:842
+#: content_manager/blocks.py:897 content_manager/blocks.py:927
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:60
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:60
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
-#: content_manager/blocks.py:813 content_manager/blocks.py:843
+#: content_manager/blocks.py:898 content_manager/blocks.py:928
 msgid "The source is the organization of the post author"
 msgstr ""
 "La source est l’organisation à laquelle appartient l’auteur de l’article"
 
-#: content_manager/blocks.py:816 content_manager/blocks.py:846
+#: content_manager/blocks.py:901 content_manager/blocks.py:931
 msgid "Show filters"
 msgstr "Afficher les filtres"
 
-#: content_manager/blocks.py:833
+#: content_manager/blocks.py:918
 msgid "Event calendar"
 msgstr "Agenda"
 
-#: content_manager/blocks.py:858 content_manager/blocks.py:1035
+#: content_manager/blocks.py:943 content_manager/blocks.py:1121
 msgid "Video"
 msgstr "Vidéo"
 
-#: content_manager/blocks.py:860 content_manager/blocks.py:1031
+#: content_manager/blocks.py:945 content_manager/blocks.py:1117
 msgid "Accordions"
 msgstr "Accordéons"
 
-#: content_manager/blocks.py:860 content_manager/blocks.py:861
-#: content_manager/blocks.py:862 content_manager/blocks.py:863
-#: content_manager/blocks.py:864 content_manager/blocks.py:867
-#: content_manager/blocks.py:868 content_manager/blocks.py:879
-#: content_manager/blocks.py:929 content_manager/blocks.py:969
-#: content_manager/blocks.py:970 content_manager/blocks.py:1031
-#: content_manager/blocks.py:1032 content_manager/blocks.py:1033
-#: content_manager/blocks.py:1034 content_manager/blocks.py:1040
-#: content_manager/blocks.py:1041 content_manager/blocks.py:1042
-#: content_manager/blocks.py:1043
+#: content_manager/blocks.py:945 content_manager/blocks.py:946
+#: content_manager/blocks.py:947 content_manager/blocks.py:948
+#: content_manager/blocks.py:949 content_manager/blocks.py:952
+#: content_manager/blocks.py:953 content_manager/blocks.py:964
+#: content_manager/blocks.py:1015 content_manager/blocks.py:1055
+#: content_manager/blocks.py:1056 content_manager/blocks.py:1117
+#: content_manager/blocks.py:1118 content_manager/blocks.py:1119
+#: content_manager/blocks.py:1120 content_manager/blocks.py:1126
+#: content_manager/blocks.py:1127 content_manager/blocks.py:1128
+#: content_manager/blocks.py:1129
 msgid "DSFR components"
 msgstr "Composants du DSFR"
 
-#: content_manager/blocks.py:861 content_manager/blocks.py:1032
+#: content_manager/blocks.py:946 content_manager/blocks.py:1118
 msgid "Callout"
 msgstr "Mise en avant"
 
-#: content_manager/blocks.py:862 content_manager/blocks.py:1033
+#: content_manager/blocks.py:947 content_manager/blocks.py:1119
 msgid "Highlight"
 msgstr "Mise en exergue"
 
-#: content_manager/blocks.py:864 content_manager/blocks.py:1040
+#: content_manager/blocks.py:949 content_manager/blocks.py:1126
 msgid "Stepper"
 msgstr "Étapier"
 
-#: content_manager/blocks.py:865
+#: content_manager/blocks.py:950
 msgid "Text and call to action"
 msgstr "Texte et appel à action"
 
-#: content_manager/blocks.py:866 content_manager/blocks.py:1039
+#: content_manager/blocks.py:951 content_manager/blocks.py:1125
 msgid "Single link"
 msgstr "Lien isolé"
 
-#: content_manager/blocks.py:867 content_manager/blocks.py:1045
+#: content_manager/blocks.py:952 content_manager/blocks.py:1131
 msgid "Iframe"
 msgstr "Iframe"
 
-#: content_manager/blocks.py:868 content_manager/blocks.py:1042
+#: content_manager/blocks.py:953 content_manager/blocks.py:1128
 msgid "Tile"
 msgstr "Tuile"
 
-#: content_manager/blocks.py:869 content_manager/blocks.py:1067
+#: content_manager/blocks.py:954 content_manager/blocks.py:1153
 msgid "Blog recent entries"
 msgstr "Articles récents du blog"
 
-#: content_manager/blocks.py:869 content_manager/blocks.py:871
-#: content_manager/blocks.py:1062 content_manager/blocks.py:1067
-#: content_manager/blocks.py:1071
+#: content_manager/blocks.py:954 content_manager/blocks.py:956
+#: content_manager/blocks.py:1148 content_manager/blocks.py:1153
+#: content_manager/blocks.py:1157
 msgid "Website structure"
 msgstr "Structure du site"
 
-#: content_manager/blocks.py:871 content_manager/blocks.py:1071
+#: content_manager/blocks.py:956 content_manager/blocks.py:1157
 msgid "Event calendar recent entries"
 msgstr "Articles récents de l’agenda"
 
-#: content_manager/blocks.py:879 content_manager/blocks.py:929
+#: content_manager/blocks.py:964 content_manager/blocks.py:1015
 msgid "Vertical card"
 msgstr "Carte verticale"
 
-#: content_manager/blocks.py:884 content_manager/blocks.py:909
+#: content_manager/blocks.py:965
+msgid "Contact card"
+msgstr "Carte contact"
+
+#: content_manager/blocks.py:965
+msgid "Extra components"
+msgstr "Composants supplémentaires"
+
+#: content_manager/blocks.py:970 content_manager/blocks.py:995
 msgid "Column width"
 msgstr "Largeur de colonne"
 
-#: content_manager/blocks.py:888
+#: content_manager/blocks.py:974
 msgid "Items"
 msgstr "Éléments"
 
-#: content_manager/blocks.py:901
+#: content_manager/blocks.py:987
 msgid "Tab"
 msgstr "Onglet"
 
-#: content_manager/blocks.py:919
+#: content_manager/blocks.py:1005
 msgid "The total width of all columns should be 12."
 msgstr "La largeur totale de toutes les colonnes doit être 12."
 
-#: content_manager/blocks.py:922
+#: content_manager/blocks.py:1008
 msgid "Column content"
 msgstr "Contenu de la colonnne"
 
-#: content_manager/blocks.py:930
+#: content_manager/blocks.py:1016
 msgid "Adjustable column"
 msgstr "Colonne ajustable"
 
-#: content_manager/blocks.py:930 content_manager/blocks.py:971
-#: content_manager/blocks.py:1046 content_manager/blocks.py:1047
-#: content_manager/blocks.py:1048 content_manager/blocks.py:1049
-#: content_manager/blocks.py:1053
+#: content_manager/blocks.py:1016 content_manager/blocks.py:1057
+#: content_manager/blocks.py:1132 content_manager/blocks.py:1133
+#: content_manager/blocks.py:1134 content_manager/blocks.py:1135
+#: content_manager/blocks.py:1139
 msgid "Page structure"
 msgstr "Structure de la page"
 
-#: content_manager/blocks.py:937 content_manager/blocks.py:978
-#: content_manager/blocks.py:1011
+#: content_manager/blocks.py:1023 content_manager/blocks.py:1064
+#: content_manager/blocks.py:1097
 msgid "Background image"
 msgstr "Image de fond"
 
-#: content_manager/blocks.py:944
+#: content_manager/blocks.py:1030
 msgid "Background color, hexadecimal format (obsolete)"
 msgstr "Couleur de fond, format hexadécimal (obsolète)"
 
-#: content_manager/blocks.py:947
+#: content_manager/blocks.py:1033
 msgid ""
 "This field is obsolete and will be removed in the near future. Replace it "
 "with the background color."
@@ -729,35 +770,35 @@ msgstr ""
 "Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
 "avec la couleur de fond."
 
-#: content_manager/blocks.py:949
+#: content_manager/blocks.py:1035
 msgid "Incorrect color format, must be #fff or #f5f5f5"
 msgstr "Format de couleur incorrect, doit être #fff ou #f5f5f5"
 
-#: content_manager/blocks.py:960
+#: content_manager/blocks.py:1046
 msgid "Columns"
 msgstr "Colonnes"
 
-#: content_manager/blocks.py:968 content_manager/blocks.py:1029
+#: content_manager/blocks.py:1054 content_manager/blocks.py:1115
 msgid "Image and text"
 msgstr "Image et texte"
 
-#: content_manager/blocks.py:969 content_manager/blocks.py:1041
+#: content_manager/blocks.py:1055 content_manager/blocks.py:1127
 msgid "Horizontal card"
 msgstr "Carte horizontale"
 
-#: content_manager/blocks.py:970 content_manager/blocks.py:1043
+#: content_manager/blocks.py:1056 content_manager/blocks.py:1129
 msgid "Tabs"
 msgstr "Onglets"
 
-#: content_manager/blocks.py:971 content_manager/blocks.py:1048
+#: content_manager/blocks.py:1057 content_manager/blocks.py:1134
 msgid "Item grid"
 msgstr "Grille d’éléments"
 
-#: content_manager/blocks.py:992
+#: content_manager/blocks.py:1078
 msgid "Parent page"
 msgstr "Page parente"
 
-#: content_manager/blocks.py:1002 content_manager/blocks.py:1084
+#: content_manager/blocks.py:1088 content_manager/blocks.py:1170
 msgid ""
 "Warning: Use HTML block with caution. Malicious code can compromise the "
 "security of the site."
@@ -765,64 +806,64 @@ msgstr ""
 "Avertissement : Utilisez le bloc HTML avec précaution. Un code malveillant "
 "peut compromettre la sécurité du site."
 
-#: content_manager/blocks.py:1004
+#: content_manager/blocks.py:1090
 msgid "Page tree"
 msgstr "Arborescence de pages"
 
-#: content_manager/blocks.py:1017
+#: content_manager/blocks.py:1103
 msgid "Main content"
 msgstr "Contenu principal"
 
-#: content_manager/blocks.py:1018
+#: content_manager/blocks.py:1104
 msgid "Side menu title"
 msgstr "Titre du menu latéral"
 
-#: content_manager/blocks.py:1019
+#: content_manager/blocks.py:1105
 msgid "Side menu content"
 msgstr "Contenu du menu latéral"
 
-#: content_manager/blocks.py:1030
+#: content_manager/blocks.py:1116
 msgid "Alert message"
 msgstr "Message d’alerte"
 
-#: content_manager/blocks.py:1037
+#: content_manager/blocks.py:1123
 msgid "Badge list"
 msgstr "Liste de badges"
 
-#: content_manager/blocks.py:1038
+#: content_manager/blocks.py:1124
 msgid "Tag list"
 msgstr "Liste de tags"
 
-#: content_manager/blocks.py:1044
+#: content_manager/blocks.py:1130
 msgid "Markdown"
 msgstr "Markdown"
 
-#: content_manager/blocks.py:1044 content_manager/blocks.py:1045
-#: content_manager/blocks.py:1086
+#: content_manager/blocks.py:1130 content_manager/blocks.py:1131
+#: content_manager/blocks.py:1172
 msgid "Expert syntax"
 msgstr "Syntaxe experte"
 
-#: content_manager/blocks.py:1046
+#: content_manager/blocks.py:1132
 msgid "Separator"
 msgstr "Séparateur"
 
-#: content_manager/blocks.py:1047
+#: content_manager/blocks.py:1133
 msgid "Multiple columns"
 msgstr "Multi-colonnes"
 
-#: content_manager/blocks.py:1049
+#: content_manager/blocks.py:1135
 msgid "Full width background"
 msgstr "Fond pleine largeur"
 
-#: content_manager/blocks.py:1053
+#: content_manager/blocks.py:1139
 msgid "Full width background with side menu"
 msgstr "Fond pleine largeur avec menu latéral"
 
-#: content_manager/blocks.py:1059
+#: content_manager/blocks.py:1145
 msgid "Subpages list"
 msgstr "Liste des sous-pages"
 
-#: content_manager/blocks.py:1060
+#: content_manager/blocks.py:1146
 msgid "A simple, alphabetical list of the subpages of the current page."
 msgstr ""
 "Une liste alphabétique toute simple des sous-pages de la page actuelle."
@@ -1215,10 +1256,6 @@ msgstr "Catégorie de méga menu"
 msgid "Mega menu categories"
 msgstr "Catégories de méga menu"
 
-#: content_manager/models.py:425
-msgid "Name"
-msgstr "Nom"
-
 #: content_manager/models.py:430
 msgid "Main link"
 msgstr "Lien principal"
@@ -1246,6 +1283,7 @@ msgstr "Voir tous les articles"
 
 #: content_manager/templates/content_manager/blocks/card_horizontal.html:11
 #: content_manager/templates/content_manager/blocks/card_vertical.html:11
+#: content_manager/templates/content_manager/blocks/contact_card_vertical.html:14
 #: content_manager/templates/content_manager/blocks/link.html:9
 #: content_manager/templates/content_manager/blocks/tile.html:12
 msgid "Opens a new window"
@@ -1319,11 +1357,6 @@ msgstr "Afficher"
 #: content_manager/templates/content_manager/password_required.html:63
 msgid "Continue"
 msgstr "Continuer"
-
-#: content_manager/templates/content_manager/tags_list_page.html:31
-#: content_manager/views.py:46 content_manager/views.py:77
-msgid "Tags"
-msgstr "Étiquettes"
 
 #: content_manager/templates/content_manager/widgets/dsfr-icon-picker-widget.html:9
 msgid "Select icon"
