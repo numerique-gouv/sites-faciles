@@ -38,13 +38,16 @@ def get_or_create_catalog_index_page(
     Get a CatalogIndexPage if it exists, or creates it instead.
     """
 
+    site = Site.objects.filter(is_default_site=True).first()
+    root_page = site.root_page
+    locale = root_page.locale
+
     # If parent_page is not passed as parameter, use the Home page of the default site.
     if not parent_page:
-        site = Site.objects.filter(is_default_site=True).first()
-        parent_page = site.root_page
+        parent_page = root_page
 
     # Don't replace or duplicate an already existing page
-    already_exists = CatalogIndexPage.objects.filter(slug=slug).first()
+    already_exists = CatalogIndexPage.objects.filter(slug=slug, locale=locale).first()
     if already_exists:
         sys.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}\n")
         return already_exists
@@ -85,13 +88,16 @@ def get_or_create_content_page(
     Get a ContentPage if it exists, or creates it instead.
     """
 
+    site = Site.objects.filter(is_default_site=True).first()
+    root_page = site.root_page
+    locale = root_page.locale
+
     # If parent_page is not passed as parameter, use the Home page of the default site.
     if not parent_page:
-        site = Site.objects.filter(is_default_site=True).first()
-        parent_page = site.root_page
+        parent_page = root_page
 
     # Don't replace or duplicate an already existing page
-    already_exists = ContentPage.objects.filter(slug=slug).first()
+    already_exists = ContentPage.objects.filter(slug=slug, locale=locale).first()
     if already_exists:
         sys.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}\n")
         return already_exists

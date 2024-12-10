@@ -2,7 +2,7 @@
 {% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags i18n %}
 
 {% block title %}
-  <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+  <title>{{ page.seo_title|default:page.title }} —  {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
 {% endblock title %}
 
 {% if page.search_description %}
@@ -144,16 +144,16 @@
           <div class="fr-grid-row fr-grid-row--gutters">
             {% include "content_manager/blocks/catalog_index_entries_list.html" %}
           </div>
-          {% if posts.paginator.num_pages > 1 %}
+          {% if entries.paginator.num_pages > 1 %}
             <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination entries %}</div>
           {% endif %}
         </div>
       </div>
     {% else %}
-      <div class="fr-grid-row fr-grid-row--gutters">
+      <div class="fr-grid-row fr-grid-row--gutters fr-mb-4w">
         {% include "content_manager/blocks/catalog_index_entries_list.html" %}
       </div>
-      {% if posts.paginator.num_pages > 1 %}
+      {% if entries.paginator.num_pages > 1 %}
         <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination entries %}</div>
       {% endif %}
     {% endif %}
