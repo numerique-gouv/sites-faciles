@@ -27,7 +27,7 @@ class UserbarPageAPILinkItem:
     """
 
     def render(self, request) -> str:
-        if hasattr(request, "_wagtail_route_for_request"):
+        if hasattr(request, "_wagtail_route_for_request") and hasattr(request._wagtail_route_for_request, "page"):
             page = request._wagtail_route_for_request.page
             page_url = reverse("wagtailapi:pages:detail", kwargs={"pk": page.id})
             page_in_api_label = _("See page entry in API")
