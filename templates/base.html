@@ -1,6 +1,6 @@
 {% load i18n static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
 
-{% get_settings %}
+{% get_settings use_default_site=True %}
 {% with SiteConfig=settings.content_manager.CmsDsfrConfig %}
   <!DOCTYPE html>
   <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}"
