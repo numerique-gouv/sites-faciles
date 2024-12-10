@@ -36,7 +36,7 @@ beautifulsoup4 = "^4.12.3"
 django-taggit = "^5.0.1"
 wagtail-localize = "^1.9"
 icalendar = "^5.0.13"
-
+faker = "^24.3.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.3.0"
@@ -47,7 +47,6 @@ djlint = "^1.34.0"
 django-extensions = "^3.2.3"
 ipython = "^8.18.1"
 django-compressor = "^4.4"
-faker = "^24.3.0"
 django-debug-toolbar = "^4.4.2"
 ruff = "^0.4.10"
 
