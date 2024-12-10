@@ -382,6 +382,7 @@ class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
             .order_by("-tag_count")
         )
 
+    @property
     def show_filters(self) -> bool | BooleanField:
         return self.filter_by_category or self.filter_by_tag or self.filter_by_author or self.filter_by_source
 

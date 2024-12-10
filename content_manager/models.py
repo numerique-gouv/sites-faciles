@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.forms.widgets import Textarea, mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -37,6 +38,41 @@ class ContentPage(SitesFacilesBasePage):
 
 class TagContentPage(TaggedItemBase):
     content_object = ParentalKey("ContentPage", related_name="contentpage_tags")
+
+
+class CatalogIndexPage(SitesFacilesBasePage):
+    entries_per_page = models.PositiveSmallIntegerField(
+        default=10,
+        validators=[MaxValueValidator(100), MinValueValidator(1)],
+        verbose_name=_("Entries per page"),
+    )
+
+    # Filters
+    filter_by_tag = models.BooleanField(_("Filter by tag"), default=True)
+
+    settings_panels = SitesFacilesBasePage.settings_panels + [
+        FieldPanel("entries_per_page"),
+        MultiFieldPanel(
+            [
+                FieldPanel("filter_by_tag"),
+            ],
+            heading=_("Show filters"),
+        ),
+    ]
+
+    subpage_types = ["content_manager.ContentPage"]
+
+    class Meta:
+        verbose_name = _("Catalog index page")
+
+    @property
+    def entries(self):
+        # Get a list of live content pages that are children of this page
+        return ContentPage.objects.child_of(self).live().prefetch_related("tags")
+
+    @property
+    def show_filters(self) -> bool | models.BooleanField:
+        return self.filter_by_tag
 
 
 @register_snippet
