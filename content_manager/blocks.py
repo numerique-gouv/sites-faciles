@@ -1116,6 +1116,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("alert", AlertBlock(label=_("Alert message"))),
     ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
+    ("text_cta", TextAndCTA(label=_("Text and call to action"))),
     ("highlight", HighlightBlock(label=_("Highlight"), group=_("DSFR components"))),
     ("quote", QuoteBlock(label=_("Quote"), group=_("DSFR components"))),
     ("video", VideoBlock(label=_("Video"))),
