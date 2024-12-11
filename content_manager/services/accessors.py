@@ -6,7 +6,7 @@ from wagtailmenus.models.menuitems import MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from content_manager.constants import HEADER_FIELDS
-from content_manager.models import ContentPage
+from content_manager.models import CatalogIndexPage, ContentPage
 
 style = color_style()
 
@@ -26,25 +26,78 @@ def get_or_create_collection(col_name: str) -> Collection:
         return result
 
 
-def get_or_create_content_page(
+def get_or_create_catalog_index_page(
     slug: str,
     title: str,
     body: list,
     parent_page: ContentPage | None = None,
     restriction_type: str | None = None,
     page_fields: dict | None = None,
-) -> ContentPage:
+) -> CatalogIndexPage:
     """
-    Get a ContentPage, or creates it if it exists.
+    Get a CatalogIndexPage if it exists, or creates it instead.
     """
+
+    site = Site.objects.filter(is_default_site=True).first()
+    root_page = site.root_page
+    locale = root_page.locale
 
     # If parent_page is not passed as parameter, use the Home page of the default site.
     if not parent_page:
-        site = Site.objects.filter(is_default_site=True).first()
-        parent_page = site.root_page
+        parent_page = root_page
 
     # Don't replace or duplicate an already existing page
-    already_exists = ContentPage.objects.filter(slug=slug).first()
+    already_exists = CatalogIndexPage.objects.filter(slug=slug, locale=locale).first()
+    if already_exists:
+        sys.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}\n")
+        return already_exists
+
+    new_page = parent_page.add_child(
+        instance=CatalogIndexPage(
+            title=title,
+            body=body,
+            slug=slug,
+            show_in_menus=True,
+        )
+    )
+
+    allowed_page_fields = HEADER_FIELDS + ["source_url"]
+    if page_fields and len(page_fields):
+        for k, v in page_fields.items():
+            if k in allowed_page_fields:
+                setattr(new_page, k, v)
+        new_page.save()
+
+    if restriction_type:
+        PageViewRestriction.objects.create(page=new_page, restriction_type=restriction_type)
+
+    sys.stdout.write(style.SUCCESS(f"Page {slug} created with id {new_page.id}"))
+
+    return new_page
+
+
+def get_or_create_content_page(
+    slug: str,
+    title: str,
+    body: list,
+    parent_page: ContentPage | CatalogIndexPage | None = None,
+    restriction_type: str | None = None,
+    page_fields: dict | None = None,
+) -> ContentPage:
+    """
+    Get a ContentPage if it exists, or creates it instead.
+    """
+
+    site = Site.objects.filter(is_default_site=True).first()
+    root_page = site.root_page
+    locale = root_page.locale
+
+    # If parent_page is not passed as parameter, use the Home page of the default site.
+    if not parent_page:
+        parent_page = root_page
+
+    # Don't replace or duplicate an already existing page
+    already_exists = ContentPage.objects.filter(slug=slug, locale=locale).first()
     if already_exists:
         sys.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}\n")
         return already_exists

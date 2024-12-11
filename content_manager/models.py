@@ -1,13 +1,19 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.forms.widgets import Textarea, mark_safe
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from dsfr.constants import NOTICE_TYPE_CHOICES
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import Tag as TaggitTag, TaggedItemBase
+from unidecode import unidecode
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface
 from wagtail.api import APIField
+from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.fields import RichTextField
 from wagtail.images import get_image_model_string
@@ -37,6 +43,124 @@ class ContentPage(SitesFacilesBasePage):
 
 class TagContentPage(TaggedItemBase):
     content_object = ParentalKey("ContentPage", related_name="contentpage_tags")
+
+
+class CatalogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
+    entries_per_page = models.PositiveSmallIntegerField(
+        default=10,
+        validators=[MaxValueValidator(100), MinValueValidator(1)],
+        verbose_name=_("Entries per page"),
+    )
+
+    # Filters
+    filter_by_tag = models.BooleanField(_("Filter by tag"), default=True)
+
+    settings_panels = SitesFacilesBasePage.settings_panels + [
+        FieldPanel("entries_per_page"),
+        MultiFieldPanel(
+            [
+                FieldPanel("filter_by_tag"),
+            ],
+            heading=_("Show filters"),
+        ),
+    ]
+
+    subpage_types = ["content_manager.ContentPage"]
+
+    class Meta:
+        verbose_name = _("Catalog index page")
+
+    @property
+    def entries(self):
+        # Get a list of live content pages that are children of this page
+        return ContentPage.objects.child_of(self).live().specific().prefetch_related("tags")
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(CatalogIndexPage, self).get_context(request, *args, **kwargs)
+        entries = self.entries
+
+        extra_breadcrumbs = None
+        extra_title = ""
+
+        tag = request.GET.get("tag")
+        if tag:
+            tag = get_object_or_404(Tag, slug=tag)
+            entries = entries.filter(tags=tag)
+            extra_breadcrumbs = {
+                "links": [
+                    {"url": self.get_url(), "title": self.title},
+                    {
+                        "url": f"{self.get_url()}{self.reverse_subpage('tags_list')}",
+                        "title": _("Tags"),
+                    },
+                ],
+                "current": tag,
+            }
+            extra_title = _("Pages tagged with %(tag)s") % {"tag": tag}
+
+        # Pagination
+        page = request.GET.get("page")
+        page_size = self.entries_per_page
+
+        paginator = Paginator(entries, page_size)  # Show <page_size> entries per page
+        try:
+            entries = paginator.page(page)
+        except PageNotAnInteger:
+            entries = paginator.page(1)
+        except EmptyPage:
+            entries = paginator.page(paginator.num_pages)
+
+        context["entries"] = entries
+        context["current_tag"] = tag
+        context["paginator"] = paginator
+        context["extra_title"] = extra_title
+
+        # Filters
+        context["tags"] = self.get_tags()
+
+        if extra_breadcrumbs:
+            context["extra_breadcrumbs"] = extra_breadcrumbs
+
+        return context
+
+    def get_tags(self) -> models.QuerySet:
+        ids = self.entries.values_list("tags", flat=True)
+        return Tag.objects.tags_with_usecount(1).filter(id__in=ids).order_by("name")
+
+    @property
+    def show_filters(self) -> bool | models.BooleanField:
+        return self.filter_by_tag and self.get_tags().count() > 0
+
+    @path("tags/", name="tags_list")
+    def tags_list(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        extra_title = _("Tags")
+        tags = self.get_tags()
+
+        tags_by_first_letter = {}
+        for tag in tags:
+            first_letter = unidecode(tag.slug[0].upper())
+            if first_letter not in tags_by_first_letter:
+                tags_by_first_letter[first_letter] = []
+            tags_by_first_letter[first_letter].append(tag)
+
+        extra_breadcrumbs = {
+            "links": [
+                {"url": self.get_url(), "title": self.title},
+            ],
+            "current": _("Tags"),
+        }
+
+        return self.render(
+            request,
+            context_overrides={
+                "title": _("Tags"),
+                "sorted_tags": tags_by_first_letter,
+                "page": self,
+                "extra_title": extra_title,
+                "extra_breadcrumbs": extra_breadcrumbs,
+            },
+            template="content_manager/tags_list_page.html",
+        )
 
 
 @register_snippet

@@ -8,7 +8,7 @@ from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from blog.models import BlogIndexPage
 from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
-from content_manager.services.accessors import get_or_create_content_page
+from content_manager.services.accessors import get_or_create_catalog_index_page, get_or_create_content_page
 from forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form"]
@@ -111,7 +111,7 @@ class Command(BaseCommand):
         text_raw = """<p>Veuillez trouver ici une liste de publications</p>"""
         body.append(("paragraph", RichText(text_raw)))
 
-        publications_page = get_or_create_content_page(slug=slug, title=title, body=body)
+        publications_page = get_or_create_catalog_index_page(slug=slug, title=title, body=body)
         publications_menu_item, _created = MainMenuItem.objects.update_or_create(
             link_page=publications_page, menu=main_menu, defaults={"sort_order": 2}
         )

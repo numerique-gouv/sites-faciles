@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 14:45+0100\n"
-"PO-Revision-Date: 2024-11-27 14:47+0100\n"
+"POT-Creation-Date: 2024-12-10 14:32+0100\n"
+"PO-Revision-Date: 2024-12-10 14:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -78,8 +78,8 @@ msgstr "Il est impossible d’avoir des parents circulaires."
 msgid "Category"
 msgstr "Catégorie"
 
-#: blog/models.py:167 blog/models.py:279 blog/models.py:460 blog/models.py:467
-#: blog/models.py:518
+#: blog/models.py:167 blog/models.py:279 blog/models.py:461 blog/models.py:468
+#: blog/models.py:519
 msgid "Categories"
 msgstr "Catégories"
 
@@ -119,7 +119,7 @@ msgstr "Afficher les filtres"
 msgid "Blog index"
 msgstr "Index de blog"
 
-#: blog/models.py:262 blog/models.py:483 blog/models.py:497
+#: blog/models.py:262 blog/models.py:484 blog/models.py:498
 #: blog/templates/blog/tags_list_page.html:20
 msgid "Tags"
 msgstr "Étiquettes"
@@ -143,23 +143,23 @@ msgstr "Articles écrits par"
 msgid "Posts published in %(year)s"
 msgstr "Articles publiés en %(year)s"
 
-#: blog/models.py:520
+#: blog/models.py:521
 msgid "Post date"
 msgstr "Date de publication"
 
-#: blog/models.py:522
+#: blog/models.py:523
 msgid "Author entries can be created in Snippets > Persons"
 msgstr "Les auteurs peuvent être créés via Fragments > Personnes"
 
-#: blog/models.py:541
+#: blog/models.py:542
 msgid "Scheduled publishing"
 msgstr "Publication planifiée"
 
-#: blog/models.py:549
+#: blog/models.py:550
 msgid "Tags and Categories"
 msgstr "Étiquettes et Catégories"
 
-#: blog/models.py:565
+#: blog/models.py:566
 msgid "Blog page"
 msgstr "Page de blog"
 

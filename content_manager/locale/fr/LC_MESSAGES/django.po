@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-05 15:22+0100\n"
-"PO-Revision-Date: 2024-12-05 15:23+0100\n"
+"POT-Creation-Date: 2024-12-10 14:35+0100\n"
+"PO-Revision-Date: 2024-12-10 14:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -216,7 +216,7 @@ msgstr "Badge"
 #: content_manager/blocks.py:623 content_manager/blocks.py:632
 #: content_manager/blocks.py:681 content_manager/blocks.py:880
 #: content_manager/blocks.py:910 content_manager/blocks.py:982
-#: content_manager/blocks.py:1038 content_manager/models.py:393
+#: content_manager/blocks.py:1038 content_manager/models.py:518
 msgid "Title"
 msgstr "Titre"
 
@@ -575,7 +575,7 @@ msgstr ""
 "Optionnel, toutes les valeurs peuvent être spécifiées ou surchargées ci-"
 "dessous"
 
-#: content_manager/blocks.py:792 content_manager/models.py:425
+#: content_manager/blocks.py:792 content_manager/models.py:550
 msgid "Name"
 msgstr "Nom"
 
@@ -591,8 +591,10 @@ msgstr "Organisation"
 msgid "Contact info"
 msgstr "Informations de contact"
 
-#: content_manager/blocks.py:797
-#: content_manager/templates/content_manager/tags_list_page.html:31
+#: content_manager/blocks.py:797 content_manager/models.py:95
+#: content_manager/models.py:137 content_manager/models.py:151
+#: content_manager/models.py:157
+#: content_manager/templates/content_manager/tags_list_page.html:49
 #: content_manager/views.py:46 content_manager/views.py:77
 msgid "Tags"
 msgstr "Étiquettes"
@@ -613,24 +615,29 @@ msgstr "Nombre d’articles"
 #: content_manager/blocks.py:892 content_manager/blocks.py:922
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:11
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:11
+#: content_manager/templates/content_manager/catalog_index_page.html:77
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
 #: content_manager/blocks.py:893 content_manager/blocks.py:923
+#: content_manager/models.py:57
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:28
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:28
+#: content_manager/templates/content_manager/catalog_index_page.html:94
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
 #: content_manager/blocks.py:894 content_manager/blocks.py:924
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:45
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:45
+#: content_manager/templates/content_manager/catalog_index_page.html:111
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
 #: content_manager/blocks.py:897 content_manager/blocks.py:927
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:60
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:60
+#: content_manager/templates/content_manager/catalog_index_page.html:126
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
@@ -640,6 +647,7 @@ msgstr ""
 "La source est l’organisation à laquelle appartient l’auteur de l’article"
 
 #: content_manager/blocks.py:901 content_manager/blocks.py:931
+#: content_manager/models.py:65
 msgid "Show filters"
 msgstr "Afficher les filtres"
 
@@ -951,43 +959,56 @@ msgstr "Icône du côté droit"
 msgid "Icon on the left side"
 msgstr "Icône du côté gauche"
 
-#: content_manager/models.py:27
+#: content_manager/models.py:34
 msgid "Content page"
 msgstr "Page de contenu"
 
-#: content_manager/models.py:48
+#: content_manager/models.py:53
+msgid "Entries per page"
+msgstr "Entrées par page"
+
+#: content_manager/models.py:72
+msgid "Catalog index page"
+msgstr "Index de catalogue"
+
+#: content_manager/models.py:100
+#, python-format
+msgid "Pages tagged with %(tag)s"
+msgstr "Pages avec l’étiquette %(tag)s"
+
+#: content_manager/models.py:173
 msgid "Tag"
 msgstr "Étiquette"
 
-#: content_manager/models.py:70 content_manager/models.py:105
+#: content_manager/models.py:195 content_manager/models.py:230
 msgid "Custom scripts"
 msgstr "Scripts personnalisés"
 
-#: content_manager/models.py:75
+#: content_manager/models.py:200
 msgid "Scripts in the <head> section"
 msgstr "Scripts dans la section <head>"
 
-#: content_manager/models.py:76
+#: content_manager/models.py:201
 msgid "Allows for scripts to be placed in the <head> tag of the website pages."
 msgstr ""
 "Permet de placer des scripts à l’intérieur du tag <head> des pages du site."
 
-#: content_manager/models.py:82
+#: content_manager/models.py:207
 msgid "Scripts in the <body> section"
 msgstr "Scripts dans la section <body>"
 
-#: content_manager/models.py:83
+#: content_manager/models.py:208
 msgid ""
 "Allows for scripts to be placed at the end of the <body> tag of the website "
 "pages."
 msgstr ""
 "Permet de placer des scripts à l’intérieur du tag <body> des pages du site."
 
-#: content_manager/models.py:87
+#: content_manager/models.py:212
 msgid "Use Tarteaucitron?"
 msgstr "Utiliser Tarteaucitron ?"
 
-#: content_manager/models.py:91
+#: content_manager/models.py:216
 msgid ""
 "See <a href=\"https://sites-faciles.beta.numerique.gouv.fr/documentation/"
 "gestion-des-cookies/\">Documentation</a>"
@@ -995,7 +1016,7 @@ msgstr ""
 "Voir <a href=\"https://sites-faciles.beta.numerique.gouv.fr/documentation/"
 "gestion-des-cookies/\">Documentation</a>"
 
-#: content_manager/models.py:106
+#: content_manager/models.py:231
 msgid ""
 "Allows to add custom CSS and JS to the site, for example for Matomo, "
 "Tarteaucitron…"
@@ -1003,19 +1024,19 @@ msgstr ""
 "Permet d’ajouter du CSS et du JS personnalisé au site, par exemple pour "
 "Matomo, Tarteaucitron…"
 
-#: content_manager/models.py:114
+#: content_manager/models.py:239
 msgid "Site configuration"
 msgstr "Configuration du site"
 
-#: content_manager/models.py:115
+#: content_manager/models.py:240
 msgid "Site configurations"
 msgstr "Configurations du site"
 
-#: content_manager/models.py:118
+#: content_manager/models.py:243
 msgid "Institution (header)"
 msgstr "Institution (en-tête)"
 
-#: content_manager/models.py:123
+#: content_manager/models.py:248
 msgid ""
 "Institution brand as defined on <a href=\"https://www.info.gouv.fr/marque-de-"
 "letat/le-bloc-marque\">official page</a>."
@@ -1023,47 +1044,47 @@ msgstr ""
 "Nom de l’institution tel que défini sur la <a href=\"https://www.info.gouv."
 "fr/marque-de-letat/le-bloc-marque\">page officielle</a>."
 
-#: content_manager/models.py:129
+#: content_manager/models.py:254
 msgid "Institution with line break (header)"
 msgstr "Institution avec césure (en-tête)"
 
-#: content_manager/models.py:133
+#: content_manager/models.py:258
 msgid "Institution brand with <br /> tags for line breaks"
 msgstr "Nom de l’institution avec des <br /> pour les retours à la ligne"
 
-#: content_manager/models.py:136
+#: content_manager/models.py:261
 msgid "Institution (footer)"
 msgstr "Institution (pied)"
 
-#: content_manager/models.py:143
+#: content_manager/models.py:268
 msgid "Institution with line break (footer)"
 msgstr "Institution avec césure (pied)"
 
-#: content_manager/models.py:150 content_manager/models.py:152
+#: content_manager/models.py:275 content_manager/models.py:277
 msgid "Site title"
 msgstr "Titre du site"
 
-#: content_manager/models.py:156 content_manager/models.py:158
+#: content_manager/models.py:281 content_manager/models.py:283
 msgid "Site tagline"
 msgstr "Sous-titre du site"
 
-#: content_manager/models.py:163
+#: content_manager/models.py:288
 msgid "Notice title"
 msgstr "Titre du bandeau"
 
-#: content_manager/models.py:167 content_manager/models.py:174
+#: content_manager/models.py:292 content_manager/models.py:299
 msgid "Can include HTML"
 msgstr "Peut inclure du HTML"
 
-#: content_manager/models.py:171
+#: content_manager/models.py:296
 msgid "Notice description"
 msgstr "Description du bandeau"
 
-#: content_manager/models.py:177
+#: content_manager/models.py:302
 msgid "Notice type"
 msgstr "Type de bandeau"
 
-#: content_manager/models.py:184
+#: content_manager/models.py:309
 msgid ""
 "Use is strictly regulated, see             <a href=\"https://www.systeme-de-"
 "design.gouv.fr/composants-et-modeles/composants/bandeau-d-information-"
@@ -1073,51 +1094,51 @@ msgstr ""
 "systeme-de-design.gouv.fr/composants-et-modeles/composants/bandeau-d-"
 "information-importante/\">documentation</a>."
 
-#: content_manager/models.py:191
+#: content_manager/models.py:316
 msgid "Notice link"
 msgstr "Lien du bandeau"
 
-#: content_manager/models.py:194
+#: content_manager/models.py:319
 msgid "Standardized consultation link at the end of the notice."
 msgstr "Lien de consultation standardisé à la fin du bandeau."
 
-#: content_manager/models.py:198
+#: content_manager/models.py:323
 msgid "Notice icon class"
 msgstr "Classe d’icône du bandeau"
 
-#: content_manager/models.py:202
+#: content_manager/models.py:327
 msgid "For weather alerts only"
 msgstr "Pour les bandeaux de vigilance météo uniquement"
 
-#: content_manager/models.py:205
+#: content_manager/models.py:330
 msgid "Collapsible?"
 msgstr "Refermable ?"
 
-#: content_manager/models.py:207
+#: content_manager/models.py:332
 msgid "Show the BETA tag next to the title"
 msgstr "Afficher la mention BETA à côté du titre"
 
-#: content_manager/models.py:210 content_manager/models.py:429
+#: content_manager/models.py:335 content_manager/models.py:554
 msgid "Description"
 msgstr "Description"
 
-#: content_manager/models.py:223 content_manager/models.py:299
+#: content_manager/models.py:348 content_manager/models.py:424
 msgid "Operator logo"
 msgstr "Logo opérateur"
 
-#: content_manager/models.py:227
+#: content_manager/models.py:352
 msgid "Logo alt text"
 msgstr "Alternative textuelle du logo"
 
-#: content_manager/models.py:230
+#: content_manager/models.py:355
 msgid "Must contain the text present in the image."
 msgstr "Doit impérativement contenir le texte présent dans l’image."
 
-#: content_manager/models.py:233
+#: content_manager/models.py:358
 msgid "Width (em)"
 msgstr "Largeur (em)"
 
-#: content_manager/models.py:239
+#: content_manager/models.py:364
 msgid ""
 "To be adjusted according to the width of the logo.            Example for a "
 "vertical logo: 3.5, Example for a horizontal logo: 8."
@@ -1125,64 +1146,64 @@ msgstr ""
 "À ajuster en fonction de la largeur du logo.  Exemple pour un logo vertical: "
 "3.5, Exemple pour un logo horizontal: 8."
 
-#: content_manager/models.py:244
+#: content_manager/models.py:369
 msgid "Display search bar in the header"
 msgstr "Afficher la barre de recherche dans l’en-tête"
 
-#: content_manager/models.py:245
+#: content_manager/models.py:370
 msgid "Display theme modale button"
 msgstr "Afficher le bouton de choix du thème"
 
-#: content_manager/models.py:246
+#: content_manager/models.py:371
 msgid "Mourning"
 msgstr "Mise en berne"
 
-#: content_manager/models.py:248
+#: content_manager/models.py:373
 msgid "Newsletter description"
 msgstr "Description de la lettre d’information"
 
-#: content_manager/models.py:251
+#: content_manager/models.py:376
 msgid "Newsletter registration URL"
 msgstr "URL d‘inscription à la lettre d’information"
 
-#: content_manager/models.py:256
+#: content_manager/models.py:381
 msgid "Activate share links on content_pages"
 msgstr "Activer les liens de partage sur les pages de contenu"
 
-#: content_manager/models.py:257
+#: content_manager/models.py:382
 msgid "Activate share links on blog posts"
 msgstr "Activer les liens de partage sur les articles de blog"
 
-#: content_manager/models.py:258
+#: content_manager/models.py:383
 msgid "Activate share links on event pages"
 msgstr "Activer les liens de partage sur les pages d’événement"
 
-#: content_manager/models.py:261
+#: content_manager/models.py:386
 msgid "Display a Share on Facebook link at the bottom of pages"
 msgstr "Afficher un lien de partage sur Facebook en bas des pages"
 
-#: content_manager/models.py:264
+#: content_manager/models.py:389
 msgid "Display a Share on X (previously Twitter) link at the bottom of pages"
 msgstr ""
 "Afficher un lien de partage sur X (anciennement Twitter) en bas des pages"
 
-#: content_manager/models.py:267
+#: content_manager/models.py:392
 msgid "Display a Share on LinkedIn link at the bottom of pages"
 msgstr "Afficher un lien de partage sur LinkedIn en bas des pages"
 
-#: content_manager/models.py:269
+#: content_manager/models.py:394
 msgid "Display a Share via email link at the bottom of pages"
 msgstr "Afficher un lien de partage par courrier électronique en bas des pages"
 
-#: content_manager/models.py:271
+#: content_manager/models.py:396
 msgid "Display a Copy to clipboard link at the bottom of pages"
 msgstr "Afficher un lien de copie dans le presse-papiers en bas des pages"
 
-#: content_manager/models.py:287
+#: content_manager/models.py:412
 msgid "Important notice"
 msgstr "Bandeau d’information importante"
 
-#: content_manager/models.py:289
+#: content_manager/models.py:414
 msgid ""
 "The important notice banner should only be used for essential and temporary "
 "information.                 (Excessive or continuous use risks “drowning” "
@@ -1192,83 +1213,83 @@ msgstr ""
 "information primordiale et temporaire.  (Une utilisation excessive ou "
 "continue risque de “noyer” le message)"
 
-#: content_manager/models.py:308
+#: content_manager/models.py:433
 msgid "Advanced settings"
 msgstr "Paramètres avancés"
 
-#: content_manager/models.py:318
+#: content_manager/models.py:443
 msgid "Header"
 msgstr "En-tête"
 
-#: content_manager/models.py:325
+#: content_manager/models.py:450
 msgid "Footer"
 msgstr "Pied de page"
 
-#: content_manager/models.py:335
+#: content_manager/models.py:460
 msgid "Newsletter"
 msgstr "Lettre d’information"
 
-#: content_manager/models.py:337 content_manager/models.py:410
+#: content_manager/models.py:462 content_manager/models.py:535
 msgid "Social media items"
 msgstr "Liens de réseaux sociaux"
 
-#: content_manager/models.py:344
+#: content_manager/models.py:469
 msgid "Activate share links by type of page"
 msgstr "Activer les liens de partage par type de page"
 
-#: content_manager/models.py:354
+#: content_manager/models.py:479
 msgid "Types of share links"
 msgstr "Types de liens de partage"
 
-#: content_manager/models.py:359
+#: content_manager/models.py:484
 msgid "Generic"
 msgstr "Génériques"
 
-#: content_manager/models.py:360
+#: content_manager/models.py:485
 msgid "Brand block"
 msgstr "Bloc-marque"
 
-#: content_manager/models.py:361
+#: content_manager/models.py:486
 msgid "Newsletter, social media and share links"
 msgstr "Lettre d’information, réseaux sociaux et liens de partage"
 
-#: content_manager/models.py:396
+#: content_manager/models.py:521
 msgid "URL"
 msgstr "URL"
 
-#: content_manager/models.py:400
+#: content_manager/models.py:525
 msgid "Icon class"
 msgstr "Classe d’icône"
 
-#: content_manager/models.py:409
+#: content_manager/models.py:534
 msgid "Social media item"
 msgstr "Lien de réseau social"
 
-#: content_manager/models.py:416
+#: content_manager/models.py:541
 msgid "Category"
 msgstr "Catégorie"
 
-#: content_manager/models.py:419
+#: content_manager/models.py:544
 msgid "Mega menu category"
 msgstr "Catégorie de méga menu"
 
-#: content_manager/models.py:420
+#: content_manager/models.py:545
 msgid "Mega menu categories"
 msgstr "Catégories de méga menu"
 
-#: content_manager/models.py:430
+#: content_manager/models.py:555
 msgid "Main link"
 msgstr "Lien principal"
 
-#: content_manager/models.py:440
+#: content_manager/models.py:565
 msgid "Categories"
 msgstr "Catégories"
 
-#: content_manager/models.py:441
+#: content_manager/models.py:566
 msgid "Maximum 4 categories, each with maximum 8 links."
 msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 
-#: content_manager/models.py:452
+#: content_manager/models.py:577
 msgid "Mega menu"
 msgstr "Méga menu"
 
@@ -1288,6 +1309,10 @@ msgstr "Voir tous les articles"
 #: content_manager/templates/content_manager/blocks/tile.html:12
 msgid "Opens a new window"
 msgstr "Ouvre une nouvelle fenêtre"
+
+#: content_manager/templates/content_manager/blocks/catalog_index_entries_list.html:37
+msgid "No page found."
+msgstr "Aucune page trouvée."
 
 #: content_manager/templates/content_manager/blocks/download_info.html:5
 msgid "Unknown file format"
@@ -1332,6 +1357,11 @@ msgstr "Groupe d’onglets"
 #: content_manager/templates/content_manager/blocks/video.html:10
 msgid "Watch on the site"
 msgstr "Voir sur le site"
+
+#: content_manager/templates/content_manager/catalog_index_page.html:72
+#: content_manager/templates/content_manager/catalog_index_page.html:74
+msgid "Filters"
+msgstr "Filtres"
 
 #: content_manager/templates/content_manager/password_required.html:5
 #: content_manager/templates/content_manager/password_required.html:15
