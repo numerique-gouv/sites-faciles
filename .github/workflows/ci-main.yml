@@ -1,4 +1,4 @@
-name: 🔮 CI
+name: 🔮 CI - Main checks
 
 on: [push]
 
@@ -38,10 +38,6 @@ jobs:
       - name: ✨ Black & ruff
         run: |
           make quality
-      - name: 🚧 Check pending migrations # continue-on-error: true
-        if: github.event.pull_request.draft == false
-        run: |
-          poetry run django-admin makemigrations --check --dry-run --noinput
       - name: 🤹‍ Run the unit tests
         run: |
           make test-unit
