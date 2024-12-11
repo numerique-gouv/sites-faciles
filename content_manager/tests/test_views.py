@@ -6,7 +6,7 @@ from wagtail.test.utils import WagtailPageTestCase
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from content_manager.models import CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
+from content_manager.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
 
 
 class ContentPageTestCase(WagtailPageTestCase):
@@ -279,5 +279,48 @@ class MenusTestCase(WagtailPageTestCase):
                 target="_self">
                     Publication 1
                 </a>""",
+            response.content.decode(),
+        )
+
+
+class CatalogIndexPageTestCase(WagtailPageTestCase):
+    def setUp(self):
+        home = Page.objects.get(slug="home")
+        self.admin = User.objects.create_superuser("test", "test@test.test", "pass")
+        self.admin.save()
+        self.catalog_index_page = home.add_child(
+            instance=CatalogIndexPage(
+                title="Index de catalogue",
+                slug="catalog-index",
+                owner=self.admin,
+            )
+        )
+        self.catalog_index_page.save()
+
+        self.catalog_entry = self.catalog_index_page.add_child(
+            instance=ContentPage(
+                title="Entrée de catalogue",
+                slug="catalog-entry",
+                owner=self.admin,
+            )
+        )
+
+        self.catalog_entry.save()
+
+    def test_catalog_index_page_is_renderable(self):
+        self.assertPageIsRenderable(self.catalog_index_page)
+
+    def test_catalog_index_page_has_minimal_content(self):
+        url = self.catalog_index_page.url
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertInHTML(
+            "<title>Index de catalogue — Titre du site</title>",
+            response.content.decode(),
+        )
+
+        self.assertInHTML(
+            '<a href="/catalog-index/catalog-entry/">Entrée de catalogue</a>',
             response.content.decode(),
         )
