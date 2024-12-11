@@ -1,9 +1,13 @@
+from django.contrib.admin.utils import quote
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
+from wagtail.admin.ui.components import Component
+from wagtail.models import Site
 
 
 @hooks.register("insert_global_admin_css")
@@ -45,3 +49,35 @@ class UserbarPageAPILinkItem:
 @hooks.register("construct_wagtail_userbar")
 def add_page_api_link_item(request, items):
     return items.append(UserbarPageAPILinkItem())
+
+
+class MainLinksPanel(Component):
+    order = 50
+
+    def render_html(self, parent_context):
+        site = Site.objects.filter(is_default_site=True).first()
+        home_page = site.root_page
+        home_page_edit = reverse("wagtailadmin_pages:edit", args=(quote(home_page.pk),))
+
+        pages_list = reverse("wagtailadmin_explore", args=(quote(home_page.pk),))
+
+        return mark_safe(
+            f"""<section class="panel">
+                <ul>
+                    <li>
+                        <a href="{home_page_edit}">{_("Edit home page")}</a>
+                    </li>
+                    <li>
+                        <a href="{pages_list}">{_("See pages")}</a>
+                    </li>
+                    <li>
+                        <a href="/cms-admin/users/">{_("Manage users")}</a>
+                    </li>
+                </ul>
+            </section>"""
+        )
+
+
+@hooks.register("construct_homepage_panels")
+def add_main_links_panel(request, panels):
+    panels.append(MainLinksPanel())
