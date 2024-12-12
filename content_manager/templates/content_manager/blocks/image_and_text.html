@@ -4,7 +4,7 @@
     {% if value.image_side == "left" %}
       <div class="fr-col-12 fr-col-sm-{{ value.image_ratio }}">
         <div class="bordered fr-px-2w">
-          {% include "content_manager/blocks/image_svg_or_raster.html" with extra_classes="fr-responsive-img" alt="" %}
+          {% include "content_manager/blocks/image_svg_or_raster.html" with extra_classes="fr-responsive-img" %}
         </div>
       </div>
       <div class="fr-col-12 fr-col-sm{{ -12|add:value.image_ratio }}">
@@ -36,7 +36,7 @@
       </div>
       <div class="fr-col-12 fr-col-sm-{{ value.image_ratio }}">
         <div class="bordered fr-px-2w">
-          {% include "content_manager/blocks/image_svg_or_raster.html" with extra_classes="fr-responsive-img" alt="" %}
+          {% include "content_manager/blocks/image_svg_or_raster.html" with extra_classes="fr-responsive-img" %}
         </div>
       </div>
     {% endif %}
