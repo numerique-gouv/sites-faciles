@@ -5,7 +5,7 @@ from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOI
 from wagtail import blocks
 from wagtail.blocks import BooleanBlock, StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
@@ -510,7 +510,7 @@ class IframeBlock(blocks.StructBlock):
 
 
 class ImageAndTextBlock(blocks.StructBlock):
-    image = ImageChooserBlock(label=_("Image"))
+    image = ImageBlock(label=_("Image"))
     image_side = blocks.ChoiceBlock(
         label=_("Side where the image is displayed"),
         choices=[
@@ -564,7 +564,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         template = "content_manager/blocks/image_and_text.html"
 
 
-class ImageBlock(blocks.StructBlock):
+class CenteredImageBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
     heading_tag = blocks.ChoiceBlock(
         label=_("Heading level"),
@@ -621,7 +621,7 @@ class SeparatorBlock(blocks.StructBlock):
 
 class StepBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"))
-    detail = blocks.TextBlock(label=_("Detail"))
+    detail = blocks.TextBlock(label=_("Detail"), required=False)
 
 
 class StepsListBlock(blocks.StreamBlock):
@@ -939,15 +939,19 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 ## Page structure blocks
 class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
-    image = ImageBlock(label=_("Image"))
+    image = CenteredImageBlock(label=_("Image"))
+    imageandtext = ImageAndTextBlock(label=_("Image and text"))
+    alert = AlertBlock(label=_("Alert message"))
+    text_cta = TextAndCTA(label=_("Text and call to action"))
     video = VideoBlock(label=_("Video"))
     transcription = TranscriptionBlock(label=_("Transcription"))
+    badges_list = BadgesListBlock(label=_("Badge list"))
+    tags_list = TagListBlock(label=_("Tag list"))
     accordions = AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))
     callout = CalloutBlock(label=_("Callout"), group=_("DSFR components"))
     highlight = HighlightBlock(label=_("Highlight"), group=_("DSFR components"))
     quote = QuoteBlock(label=_("Quote"), group=_("DSFR components"))
     stepper = StepperBlock(label=_("Stepper"), group=_("DSFR components"))
-    text_cta = TextAndCTA(label=_("Text and call to action"))
     link = SingleLinkBlock(label=_("Single link"))
     iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
     tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
@@ -955,6 +959,15 @@ class CommonStreamBlock(blocks.StreamBlock):
     events_recent_entries = EventsRecentEntriesBlock(
         label=_("Event calendar recent entries"), group=_("Website structure")
     )
+    stepper = StepperBlock(label=_("Stepper"), group=_("DSFR components"))
+    markdown = MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))
+    iframe = IframeBlock(label=_("Iframe"), group=_("Expert syntax"))
+    html = blocks.RawHTMLBlock(
+        readonly=True,
+        help_text=_("Warning: Use HTML block with caution. Malicious code can compromise the security of the site."),
+        group=_("Expert syntax"),
+    )
+    separator = SeparatorBlock(label=_("Separator"), group=_("Page structure"))
 
     class Meta:
         icon = "dots-horizontal"
@@ -1111,24 +1124,35 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
 
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
-    ("image", ImageBlock()),
+    ("image", CenteredImageBlock()),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
-    ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
-    ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
-    ("highlight", HighlightBlock(label=_("Highlight"), group=_("DSFR components"))),
-    ("quote", QuoteBlock(label=_("Quote"), group=_("DSFR components"))),
+    ("text_cta", TextAndCTA(label=_("Text and call to action"))),
     ("video", VideoBlock(label=_("Video"))),
     ("transcription", TranscriptionBlock(label=_("Transcription"))),
     ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
     ("link", SingleLinkBlock(label=_("Single link"))),
+    ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
+    ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
+    ("highlight", HighlightBlock(label=_("Highlight"), group=_("DSFR components"))),
+    ("quote", QuoteBlock(label=_("Quote"), group=_("DSFR components"))),
     ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
     ("card", HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))),
     ("tile", TileBlock(label=_("Tile"), group=_("DSFR components"))),
     ("tabs", TabsBlock(label=_("Tabs"), group=_("DSFR components"))),
     ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),
     ("iframe", IframeBlock(label=_("Iframe"), group=_("Expert syntax"))),
+    (
+        "html",
+        blocks.RawHTMLBlock(
+            readonly=True,
+            help_text=_(
+                "Warning: Use HTML block with caution. Malicious code can compromise the security of the site."
+            ),
+            group=_("Expert syntax"),
+        ),
+    ),
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("item_grid", ItemGridBlock(label=_("Item grid"), group=_("Page structure"))),
@@ -1156,20 +1180,4 @@ STREAMFIELD_COMMON_BLOCKS = [
         "events_recent_entries",
         EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
     ),
-]
-
-# See warning on https://docs.wagtail.org/en/latest/reference/streamfield/blocks.html#wagtail.blocks.RawHTMLBlock
-# There is currently no way to restrict a type of block depending on user permissions,
-# pending issue https://github.com/wagtail/wagtail/issues/6323
-STREAMFIELD_COMMON_BLOCKS += [
-    (
-        "html",
-        blocks.RawHTMLBlock(
-            readonly=True,
-            help_text=_(
-                "Warning: Use HTML block with caution. Malicious code can compromise the security of the site."
-            ),
-            group=_("Expert syntax"),
-        ),
-    )
 ]

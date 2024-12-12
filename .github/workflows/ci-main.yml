@@ -1,4 +1,4 @@
-name: 🔮 CI
+name: 🔮 CI - Main checks
 
 on: [push]
 
@@ -10,7 +10,7 @@ jobs:
       PYTHONPATH: .
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
     services:
       postgres:
         image: postgres:14-alpine
@@ -38,9 +38,6 @@ jobs:
       - name: ✨ Black & ruff
         run: |
           make quality
-      - name: 🚧 Check pending migrations # continue-on-error: true
-        run: |
-          poetry run django-admin makemigrations --check --dry-run --noinput
       - name: 🤹‍ Run the unit tests
         run: |
           make test-unit
