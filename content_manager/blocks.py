@@ -621,7 +621,7 @@ class SeparatorBlock(blocks.StructBlock):
 
 class StepBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"))
-    detail = blocks.TextBlock(label=_("Detail"))
+    detail = blocks.TextBlock(label=_("Detail"), required=False)
 
 
 class StepsListBlock(blocks.StreamBlock):
@@ -955,6 +955,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     events_recent_entries = EventsRecentEntriesBlock(
         label=_("Event calendar recent entries"), group=_("Website structure")
     )
+    stepper = StepperBlock(label=_("Stepper"), group=_("DSFR components"))
 
     class Meta:
         icon = "dots-horizontal"
