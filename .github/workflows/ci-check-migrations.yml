@@ -2,10 +2,15 @@ name: 🔮 CI - Migrations Check
 
 on:
   pull_request:
-    types: [review_requested, ready_for_review]
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
 jobs:
   build:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     env:
       DJANGO_SETTINGS_MODULE: config.settings_test
