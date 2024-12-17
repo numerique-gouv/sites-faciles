@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User
 from django.core.management import call_command
-from wagtail.models import Page, Site
+from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from content_manager.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
+from content_manager.utils import get_default_site
 
 
 class ContentPageTestCase(WagtailPageTestCase):
@@ -163,7 +164,7 @@ class MenusTestCase(WagtailPageTestCase):
         call_command("create_starter_pages")
 
     def setUp(self) -> None:
-        self.site = Site.objects.filter(is_default_site=True).first()
+        self.site = get_default_site()
         self.home_page = self.site.root_page
 
         self.main_menu = MainMenu.objects.first()

@@ -107,6 +107,4 @@ class BlogTestCase(WagtailPageTestCase):
         self.assertPageIsRenderable(new_blog_post)
 
         response = self.client.get(deep_blog_index_page.url + "rss/")
-        print(deep_blog_index_page.url + "rss/")
-        print(response)
         self.assertEqual(response.status_code, 200)
