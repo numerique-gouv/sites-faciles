@@ -5,6 +5,7 @@ from io import BytesIO
 from bs4 import BeautifulSoup
 from django.core.files.images import ImageFile
 from wagtail.images.models import Image
+from wagtail.models import Site
 
 
 def import_image(full_path: str, title: str) -> Image:
@@ -18,6 +19,17 @@ def import_image(full_path: str, title: str) -> Image:
         )
         image.save()
         return image
+
+
+def get_default_site() -> Site:
+    """
+    Returns the default site, or the first one if none is set.
+    """
+    site = Site.objects.filter(is_default_site=True).first()
+    if not site:
+        site = Site.objects.filter().first()
+
+    return site
 
 
 def get_streamblock_raw_text(block) -> str:

@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
 from faker import Faker
 from taggit.models import slugify
-from wagtail.models import Site
 from wagtail.rich_text import RichText
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
@@ -9,6 +8,7 @@ from wagtailmenus.models.menus import FlatMenu, MainMenu
 from blog.models import BlogIndexPage
 from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
 from content_manager.services.accessors import get_or_create_catalog_index_page, get_or_create_content_page
+from content_manager.utils import get_default_site
 from forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form"]
@@ -32,7 +32,7 @@ class Command(BaseCommand):
         if not slugs:
             slugs = ALL_ALLOWED_SLUGS
 
-        site = Site.objects.filter(is_default_site=True).first()
+        site = get_default_site()
 
         # First, add the home page to the main menu if not already done
         home_page = site.root_page
