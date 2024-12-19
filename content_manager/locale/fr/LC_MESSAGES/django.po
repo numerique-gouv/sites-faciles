@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-12 12:25+0100\n"
-"PO-Revision-Date: 2024-12-12 17:54+0100\n"
+"PO-Revision-Date: 2024-12-19 11:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1354,7 +1354,7 @@ msgstr "Visibilité de la page restreinte"
 #: content_manager/templates/content_manager/blocks/stepper.html:8
 #, python-format
 msgid "Step %(current_step)s of %(total_steps)s"
-msgstr "Étape %(current_step)s suréta %(total_steps)s"
+msgstr "Étape %(current_step)s sur %(total_steps)s"
 
 #: content_manager/templates/content_manager/blocks/tabs.html:3
 msgid "Tabs group"
