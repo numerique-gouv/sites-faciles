@@ -29,6 +29,7 @@ dj-static = "^0.0.6"
 wagtailmenus = "^4.0"
 wagtail-modeladmin = "^2.0.0"
 wagtail-markdown = "^0.11.1"
+wagtail-airtable = "^0.6.0"
 unidecode = "^1.3.8"
 django-storages = {extras = ["s3"], version = "^1.14.2"}
 boto3 = "^1.34.56"
@@ -37,6 +38,7 @@ django-taggit = "^5.0.1"
 wagtail-localize = "^1.9"
 icalendar = "^5.0.13"
 faker = "^24.3.0"
+factory-boy = "^3.2.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.3.0"

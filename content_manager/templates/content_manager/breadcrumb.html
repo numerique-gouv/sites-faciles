@@ -1,0 +1,31 @@
+{% if self.get_ancestors|length > 1 %}
+    <div class="fr-container fr-mt-1w">
+        <div class="fr-grid-row fr-grid-row--gutters">
+            <div class="fr-col-12">
+                <nav role="navigation" class="fr-breadcrumb" aria-label="vous êtes ici :">
+                    <button type="button"
+                            class="fr-breadcrumb__button"
+                            aria-expanded="false"
+                            aria-controls="breadcrumb-1">
+                        Voir le fil d’Ariane
+                    </button>
+                    <div class="fr-collapse" id="breadcrumb-1">
+                        <ol class="fr-breadcrumb__list">
+                            {% for link in self.get_ancestors %}
+                                {% if link.is_root == False %}
+                                    <li>
+                                        <a class="fr-breadcrumb__link" href="{{ link.url }}">{{ link.title }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            <li>
+                                <a aria-current="page"
+                                   class="fr-breadcrumb__link router-link-exact-active">{{ page.title }}</a>
+                            </li>
+                        </ol>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endif %}

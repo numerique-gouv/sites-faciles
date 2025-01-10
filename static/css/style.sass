@@ -1,9 +1,24 @@
+
+.vh
+    position: absolute !important
+    clip: rect(1px, 1px, 1px, 1px)
+    padding: 0 !important
+    border: 0 !important
+    height: 1px !important
+    width: 1px !important
+    overflow: hidden
+
 /* Prefix the classes defined here with cmsfr- */
 
 .cmsfr-hero
     background-size: cover
     background-position: center
     background-repeat: no-repeat
+
+@media (max-width:64em)
+    .cmsfr-hero
+        background-size: 0
+
 
 .cmsfr-hero-large
     display: flex

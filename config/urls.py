@@ -11,6 +11,8 @@ urlpatterns = [
     path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
+    path("", include("formations.urls")),
+    path("", include("content_manager.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
