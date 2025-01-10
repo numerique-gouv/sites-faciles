@@ -1,0 +1,19 @@
+[class*=" fr-icon-"]::after,
+[class*=" fr-icon-"]::before,
+[class^="fr-icon-"]::after,
+[class^="fr-icon-"]::before {
+    --icon-size: 1.5rem;
+    background-color: currentColor;
+    display: inline-block;
+    flex: 0 0 auto;
+    height: var(--icon-size);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    vertical-align: calc((.75em - var(--icon-size))*.5);
+    width: var(--icon-size);
+}
+
+[class*=" fr-icon-"]::before,
+[class^="fr-icon-"]::before {
+    content: "";
+}

@@ -1,15 +1,17 @@
 from django.conf import settings
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.urls import reverse
+from wagtail.images.models import Image
 from wagtail.models import Page, Site
 from wagtail.rich_text import RichText
-from wagtailmenus.models.menuitems import FlatMenuItem
+from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 
 from content_manager.models import ContentPage
-from content_manager.utils import get_or_create_footer_menu, import_image
+from content_manager.services.accessors import get_or_create_footer_menu, get_or_create_main_menu
+from forms.models import FormField, FormPage
 
-
-ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite"]
+ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite", "contact"]
 
 
 class Command(BaseCommand):
@@ -24,6 +26,10 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
+        pictograms_exist = Image.objects.filter(title__contains="Pictogrammes DSFR").count()
+        if not pictograms_exist:
+            call_command("import_dsfr_pictograms")
+
         slugs = kwargs.get("slug")
 
         if not slugs:
@@ -75,6 +81,8 @@ class Command(BaseCommand):
 
                 body.append(("alert", alert_block))
                 self.create_page(slug=slug, title=title, body=body, footer_label="Accessibilité : non conforme")
+            elif slug == "contact":
+                self.create_contact_page(slug)
             else:
                 raise ValueError(f"Valeur inconnue : {slug}")
 
@@ -92,10 +100,7 @@ class Command(BaseCommand):
         body = []
         title = "Votre nouveau site avec Sites faciles"
 
-        image = import_image(
-            full_path="static/artwork/coding.svg",
-            title="Pictogrammes DSFR — Internet",
-        )
+        image = Image.objects.filter(title="Pictogrammes DSFR — Digital — Coding").first()
 
         text_raw = """<p>Bienvenue !</p>
 
@@ -110,8 +115,7 @@ class Command(BaseCommand):
             "image": image,
             "image_ratio": "3",
             "text": RichText(text_raw),
-            "link_url": admin_url,
-            "link_label": "Gérer le site",
+            "link": {"external_url": admin_url, "text": "Gérer le site"},
         }
 
         body.append(("imageandtext", image_and_text_block))
@@ -170,3 +174,99 @@ class Command(BaseCommand):
         FlatMenuItem.objects.create(**footer_item)
 
         self.stdout.write(self.style.SUCCESS(f"Page {slug} created with id {new_page.id}"))
+
+    def create_contact_page(self, slug: str = "contact") -> None:
+        """
+        Creates a contact page for the site and adds it the main menu
+        """
+
+        # Don't replace a manually created page
+        already_exists = ContentPage.objects.filter(slug=slug).first()
+        if already_exists:
+            self.stdout.write(f"The contact page seem to already exist with id {already_exists.id}")
+            return
+
+        # Create the form page
+        title = "Contact"
+        intro = RichText(
+            """
+            <p>Bonjour, n’hésitez pas à nous contacter via le formulaire ci-dessous.</p>
+            <p></p>
+            <p>Vous pouvez également nous contacter via &lt;autres méthodes&gt;.</p>
+            <p></p>
+            <p>Les champs marqués d’une astérisque (*) sont obligatoires.</p>"""
+        )
+
+        thank_you_text = RichText("<p>Merci pour votre message ! Nous reviendrons vers vous rapidement.</p>")
+
+        default_site = Site.objects.filter(is_default_site=True).first()
+        home_page = default_site.root_page
+        contact_page = home_page.add_child(
+            instance=FormPage(title=title, slug=slug, intro=intro, thank_you_text=thank_you_text, show_in_menus=True)
+        )
+
+        # Create the form fields
+        fields = [
+            {
+                "sort_order": 0,
+                "clean_name": "votre_nom_complet",
+                "label": "Votre nom complet",
+                "required": True,
+                "page": contact_page,
+                "field_type": "singleline",
+            },
+            {
+                "sort_order": 1,
+                "clean_name": "votre_adresse_electronique",
+                "label": "Votre adresse électronique",
+                "required": True,
+                "choices": "",
+                "default_value": "",
+                "help_text": "Format attendu : nom@domaine.fr",
+                "page": contact_page,
+                "field_type": "email",
+            },
+            {
+                "sort_order": 2,
+                "clean_name": "votre_numero_de_telephone",
+                "label": "Votre numéro de téléphone",
+                "required": False,
+                "page": contact_page,
+                "field_type": "singleline",
+            },
+            {
+                "sort_order": 3,
+                "clean_name": "titre_de_votre_message",
+                "label": "Titre de votre message",
+                "required": True,
+                "page": contact_page,
+                "field_type": "singleline",
+            },
+            {
+                "sort_order": 4,
+                "clean_name": "votre_message",
+                "label": "Votre message",
+                "required": True,
+                "choices": "",
+                "default_value": "",
+                "help_text": "",
+                "page": contact_page,
+                "field_type": "multiline",
+            },
+        ]
+
+        for field_data in fields:
+            FormField.objects.create(**field_data)
+
+        # Menu item
+        main_menu = get_or_create_main_menu()
+
+        menu_item = {
+            "sort_order": MainMenuItem.objects.filter(menu=main_menu).count(),
+            "link_page": contact_page,
+            "link_text": title,
+            "menu": main_menu,
+        }
+        MainMenuItem.objects.create(**menu_item)
+
+        self.stdout.write(self.style.SUCCESS(f"Form page {slug} created with id {contact_page.id}"))

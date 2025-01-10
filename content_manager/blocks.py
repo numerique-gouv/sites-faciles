@@ -1,13 +1,30 @@
-from django.conf import settings
-from django.utils.translation import gettext_lazy as _
-from dsfr.constants import COLOR_CHOICES
+from django import forms
+from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _, pgettext_lazy
+from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
+from wagtail.blocks import BooleanBlock, StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.images.blocks import ImageBlock, ImageChooserBlock
+from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import HEADING_CHOICES, LEVEL_CHOICES
-
+from content_manager.constants import (
+    BUTTON_ICON_SIDE,
+    BUTTON_TYPE_CHOICES,
+    GRID_3_4_6_CHOICES,
+    HEADING_CHOICES,
+    HEADING_CHOICES_2_5,
+    HORIZONTAL_CARD_IMAGE_RATIOS,
+    LEVEL_CHOICES,
+    LIMITED_RICHTEXTFIELD_FEATURES,
+    LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS,
+    LINK_ICON_CHOICES,
+    LINK_SIZE_CHOICES,
+    MEDIA_WIDTH_CHOICES,
+    TEXT_SIZE_CHOICES,
+)
+from content_manager.widgets import DsfrIconPickerWidget
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
@@ -20,117 +37,490 @@ class BackgroundColorChoiceBlock(blocks.ChoiceBlock):
         icon = "view"
 
 
+class IconPickerBlock(blocks.FieldBlock):
+    def __init__(self, required=True, help_text=None, validators=(), **kwargs):
+        self.field_options = {
+            "required": required,
+            "help_text": help_text,
+            "max_length": 70,
+            "min_length": 0,
+            "validators": [],
+        }
+        super().__init__(**kwargs)
+
+    @cached_property
+    def field(self):
+        field_kwargs = {"widget": DsfrIconPickerWidget()}
+        field_kwargs.update(self.field_options)
+        return forms.CharField(**field_kwargs)
+
+    class Meta:
+        icon = "radio-full"
+
+
 class LinkStructValue(blocks.StructValue):
     def url(self):
-        external_url = self.get("external_url")
+        link = self.get("external_url", "")
+
         page = self.get("page")
-        return external_url or page.url
+        document = self.get("document")
+
+        if page:
+            link = page.url
+        elif document:
+            link = document.url
+
+        return link
 
 
-class LinkBlock(blocks.StructBlock):
-    text = blocks.CharBlock(label=_("Link text"), required=False)
-    page = blocks.PageChooserBlock(label=_("Page"), required=False)
-    external_url = blocks.URLBlock(label=_("External URL"), required=False)
+class LinkWithoutLabelBlock(blocks.StructBlock):
+    page = blocks.PageChooserBlock(
+        label=_("Page"),
+        required=False,
+        help_text=_("Link to a page of this site. Use either this, the document, or the external URL parameter."),
+    )
+    document = DocumentChooserBlock(
+        label=_("Document"),
+        help_text=_("Use either this, the external URL or the page parameter."),
+        required=False,
+    )
+    external_url = blocks.URLBlock(
+        label=_("External URL"),
+        required=False,
+        help_text=_("Use either this, the document or the page parameter."),
+    )
 
     class Meta:
         value_class = LinkStructValue
+        icon = "link"
 
 
-## Basic blocks
-class AccordionBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre")
-    content = blocks.RichTextBlock(label="Contenu")
+class LinkBlock(LinkWithoutLabelBlock):
+    text = blocks.CharBlock(label=_("Link label"), required=False)
+
+    class Meta:
+        value_class = LinkStructValue
+        icon = "link"
 
 
-class AccordionsBlock(blocks.StreamBlock):
-    title = blocks.CharBlock(label="Titre")
-    accordion = AccordionBlock(label="Accordéon", min_num=1, max_num=15)
+class LinksVerticalListBlock(blocks.StreamBlock):
+    link = LinkBlock(label=_("Link"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/links_vertical_list.html"
 
 
-class AlertBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre du message", required=False)
-    description = blocks.TextBlock(label="Texte du message", required=False)
-    level = blocks.ChoiceBlock(label="Type de message", choices=LEVEL_CHOICES)
-    heading_tag = blocks.ChoiceBlock(
-        label="Niveau de titre",
-        choices=HEADING_CHOICES,
-        default="h3",
-        help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
+class ButtonBlock(LinkBlock):
+    button_type = blocks.ChoiceBlock(label=_("Button type"), choices=BUTTON_TYPE_CHOICES, required=False)
+    icon_class = IconPickerBlock(label=_("Icon"), required=False)
+    icon_side = blocks.ChoiceBlock(
+        label=_("Icon side"),
+        choices=BUTTON_ICON_SIDE,
+        required=False,
+        default="",
     )
 
+    class Meta:
+        value_class = LinkStructValue
+        icon = "link"
 
-badge_level_choices = [
-    ("error", "Erreur"),
-    ("success", "Succès"),
-    ("info", "Information"),
-    ("warning", "Attention"),
-    ("new", "Nouveau"),
-    ("grey", "Gris"),
-    ("green-emeraude", "Vert"),
-    ("blue-ecume", "Bleu"),
-]
+
+class ButtonsHorizontalListBlock(blocks.StreamBlock):
+    button = ButtonBlock(label=_("Button"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/buttons_horizontal_list.html"
+
+
+class ButtonsVerticalListBlock(blocks.StreamBlock):
+    button = ButtonBlock(label=_("Button"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/buttons_vertical_list.html"
+
+
+class SingleLinkBlock(LinkBlock):
+    icon = blocks.ChoiceBlock(
+        label=_("Icon"),
+        help_text=_("Only used for internal links."),
+        choices=LINK_ICON_CHOICES,
+        required=False,
+        default="",
+    )
+    size = blocks.ChoiceBlock(
+        label=_("Size"),
+        choices=LINK_SIZE_CHOICES,
+        required=False,
+        default="",
+    )
+
+    class Meta:
+        value_class = LinkStructValue
+        icon = "link"
+        template = "content_manager/blocks/link.html"
+
+
+## Badges and Tags
+badge_level_choices = (
+    ("", [("new", _("New")), ("grey", _("Grey"))]),
+    (_("System colors"), COLOR_CHOICES_SYSTEM),
+    (_("Illustration colors"), COLOR_CHOICES_ILLUSTRATION),
+)
 
 
 class BadgeBlock(blocks.StructBlock):
-    text = blocks.CharBlock(label="Texte du badge", required=False)
-    color = blocks.ChoiceBlock(label="Couleur de badge", choices=badge_level_choices, required=False)
-    hide_icon = blocks.BooleanBlock(label="Masquer l’icône du badge", required=False)
+    text = blocks.CharBlock(label=_("Badge label"), required=False)
+    color = blocks.ChoiceBlock(label=_("Badge color"), choices=badge_level_choices, required=False)
+    hide_icon = blocks.BooleanBlock(label=_("Hide badge icon"), required=False)
+
+    class Meta:
+        template = ("content_manager/blocks/badge.html",)
 
 
 class BadgesListBlock(blocks.StreamBlock):
-    badge = BadgeBlock(label="Badge")
+    badge = BadgeBlock(label=_("Badge"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/badges_list.html"
 
 
-class CalloutBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre de la mise en avant", required=False)
-    text = blocks.TextBlock(label="Texte mis en avant", required=False)
-    heading_tag = blocks.ChoiceBlock(
-        label="Niveau de titre",
-        choices=HEADING_CHOICES,
-        default="h3",
-        help_text="À adapter à la structure de la page. Par défaut en-tête 3.",
+class TagBlock(blocks.StructBlock):
+    label = blocks.CharBlock(label=_("Title"))
+    is_small = blocks.BooleanBlock(label=_("Small tag"), required=False)
+    color = blocks.ChoiceBlock(
+        label=_("Tag color"),
+        choices=COLOR_CHOICES_ILLUSTRATION,
+        required=False,
+        help_text=_("Only for clickable tags"),
     )
+    icon_class = IconPickerBlock(label=_("Icon"), required=False)
+    link = LinkWithoutLabelBlock(required=False)
+
+    class Meta:
+        template = "content_manager/blocks/tag.html"
+
+
+class TagListBlock(blocks.StreamBlock):
+    tag = TagBlock(label=pgettext_lazy("DSFR Tag", "Tag"))
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/tags_list.html"
+
+
+## Cards and tiles
+class CardstructValue(StructValue):
+    def enlarge_link(self):
+        """
+        Determine if we need (and can) enlarge the link on the card.
+        This requires:
+        - That a link is present
+        - That no other link is used on the card (such as a tag with a link, or a call-to-action)
+        """
+        link = self.get("link")
+        url = self.get("url")
+        document = self.get("document")
+        top_detail_badges_tags = self.get("top_detail_badges_tags")
+        call_to_action = self.get("call_to_action", "")
+
+        if not ((link and link.url()) or url or document):
+            return False
+
+        enlarge = True
+        if len(call_to_action):
+            enlarge = False
+        elif len(top_detail_badges_tags) and top_detail_badges_tags.raw_data[0]["type"] == "tags":
+            tags_list = top_detail_badges_tags.raw_data[0]["value"]
+            for tag in tags_list:
+                if (
+                    tag["value"]["link"]["page"] is not None
+                    or tag["value"]["link"]["document"] is not None
+                    or tag["value"]["link"]["external_url"] != ""
+                ):
+                    enlarge = False
+
+        return enlarge
+
+    def image_classes(self):
+        """
+        Determine the image classes for a vertical card. Not used in horizontal card.
+        """
+        ratio_class = self.get("image_ratio")
+
+        if ratio_class:
+            image_classes = f"fr-responsive-img {ratio_class}"
+        else:
+            image_classes = "fr-responsive-img"
+
+        return image_classes
 
 
 class CardBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre")
-    description = blocks.TextBlock(label="Texte")
-    image = ImageChooserBlock(label="Image")
-    url = blocks.URLBlock(label="Lien", required=False)
+    title = blocks.CharBlock(label=_("Title"))
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+    description = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
+    image = ImageChooserBlock(label=_("Image"), required=False)
+    image_ratio = blocks.ChoiceBlock(
+        label=_("Image ratio"),
+        choices=IMAGE_RATIOS,
+        required=False,
+        default="h3",
+    )
+    image_badge = BadgesListBlock(
+        label=_("Image area badge"), required=False, help_text=_("Only used if the card has an image."), max_num=1
+    )
+    link = LinkWithoutLabelBlock(
+        label=_("Link"),
+        required=False,
+    )
+    url = blocks.URLBlock(
+        label=_("Link (obsolete)"),
+        required=False,
+        group="target",
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+    )
     document = DocumentChooserBlock(
-        label="ou Document",
-        help_text=(
-            "Sélectionnez un document pour rendre la carte cliquable vers "
-            "celui ci (si le champ « Lien » n’est pas renseigné)."
+        label=_("or Document (obsolete)"),
+        required=False,
+        group="target",
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+    )
+    top_detail_text = blocks.CharBlock(label=_("Top detail: text"), required=False)
+    top_detail_icon = IconPickerBlock(label=_("Top detail: icon"), required=False)
+    top_detail_badges_tags = blocks.StreamBlock(
+        [
+            ("badges", BadgesListBlock()),
+            ("tags", TagListBlock()),
+        ],
+        label=_("Top detail: badges or tags"),
+        max_num=1,
+        required=False,
+    )
+    bottom_detail_text = blocks.CharBlock(
+        label=_("Bottom detail: text"),
+        help_text=_("Incompatible with the bottom call-to-action."),
+        required=False,
+    )
+    bottom_detail_icon = IconPickerBlock(label=_("Bottom detail: icon"), required=False)
+    call_to_action = blocks.StreamBlock(
+        [
+            ("links", LinksVerticalListBlock()),
+            (
+                "buttons",
+                ButtonsHorizontalListBlock(
+                    help_text=_(
+                        """Please use only one primary button.
+                        If you use icons, use them on all buttons and align them on the same side."""
+                    ),
+                    label=_("Buttons"),
+                ),
+            ),
+        ],
+        label=_("Bottom call-to-action: links or buttons"),
+        help_text=_("Incompatible with the bottom detail text."),
+        max_num=1,
+        required=False,
+    )
+    grey_background = blocks.BooleanBlock(label=_("Card with grey background"), required=False)
+    no_background = blocks.BooleanBlock(label=_("Card without background"), required=False)
+    no_border = blocks.BooleanBlock(label=_("Card without border"), required=False)
+    shadow = blocks.BooleanBlock(label=_("Card with a shadow"), required=False)
+
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/card.html"
+        value_class = CardstructValue
+
+
+class HorizontalCardBlock(CardBlock):
+    image_ratio = blocks.ChoiceBlock(
+        label=_("Image ratio"),
+        choices=HORIZONTAL_CARD_IMAGE_RATIOS,
+        required=False,
+        default="h3",
+    )
+    bottom_detail_text = blocks.CharBlock(
+        label=_("Bottom detail: text"),
+        help_text=_(
+            "Incompatible with the bottom call-to-action. "
+            "If the card links to a downloadable document, the values are pre-filled."
         ),
         required=False,
     )
 
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/card_horizontal.html"
+        value_class = CardstructValue
+
+
+class VerticalCardBlock(CardBlock):
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/card_vertical.html"
+        value_class = CardstructValue
+
+
+class TileBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+    description = blocks.RichTextBlock(
+        label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS, required=False
+    )
+    image = ImageChooserBlock(label=_("Image"), help_text=_("Prefer SVG files."), required=False)
+    link = LinkWithoutLabelBlock(
+        label=_("Link"),
+        required=False,
+    )
+    top_detail_badges_tags = blocks.StreamBlock(
+        [
+            ("badges", BadgesListBlock()),
+            ("tags", TagListBlock()),
+        ],
+        label=_("Top detail: badges or tags"),
+        max_num=1,
+        required=False,
+    )
+    detail_text = blocks.CharBlock(
+        label=_("Detail text"),
+        required=False,
+        help_text=_("If the tile links to a downloadable document, the values are pre-filled."),
+    )
+    is_small = blocks.BooleanBlock(label=_("Small tile"), required=False)
+    grey_background = blocks.BooleanBlock(label=_("Tile with grey background"), required=False)
+    no_background = blocks.BooleanBlock(label=_("Tile without background"), required=False)
+    no_border = blocks.BooleanBlock(label=_("Tile without border"), required=False)
+    shadow = blocks.BooleanBlock(label=_("Tile with a shadow"), required=False)
+    is_horizontal = blocks.BooleanBlock(label=_("Horizontal tile"), required=False)
+
+    class Meta:
+        icon = "tablet-alt"
+        template = "content_manager/blocks/tile.html"
+        value_class = CardstructValue
+
+
+## Basic blocks
+class AccordionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    content = blocks.RichTextBlock(label=_("Content"))
+
+
+class AccordionsBlock(blocks.StreamBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    accordion = AccordionBlock(label=_("Accordion"), min_num=1, max_num=15)
+
+    class Meta:
+        template = "content_manager/blocks/accordions.html"
+
+
+class AlertBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Message title"), required=False)
+    description = blocks.TextBlock(label=_("Message text"), required=False)
+    level = blocks.ChoiceBlock(label=_("Message type"), choices=LEVEL_CHOICES)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+
+    class Meta:
+        icon = "info-circle"
+        template = "content_manager/blocks/alert.html"
+
+
+class CalloutBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+    icon_class = IconPickerBlock(label=_("Icon"), required=False)
+
+    text = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
+    button = ButtonBlock(label=_("Button"), required=False)
+    color = blocks.ChoiceBlock(
+        label=_("Color"),
+        choices=COLOR_CHOICES_ILLUSTRATION,
+        required=False,
+    )
+
+    class Meta:
+        icon = "info-circle"
+        template = "content_manager/blocks/callout.html"
+
+
+class HighlightBlock(blocks.StructBlock):
+    text = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES)
+    color = blocks.ChoiceBlock(
+        label=_("Color"),
+        choices=COLOR_CHOICES_ILLUSTRATION,
+        required=False,
+    )
+    size = blocks.ChoiceBlock(
+        label=_("Size"),
+        choices=TEXT_SIZE_CHOICES,
+        required=False,
+    )
+
+    class Meta:
+        icon = "info-circle"
+        template = "content_manager/blocks/highlight.html"
+
 
 class IframeBlock(blocks.StructBlock):
     title = blocks.CharBlock(
-        label="Titre",
-        help_text="Accessibilité : Le titre doit décrire, de façon claire et concise, le contenu embarqué.",
+        label=_("Title"),
+        help_text=_("Accessibility: The title should describe, in a clear and concise manner, the embedded content."),
     )
     url = blocks.URLBlock(
-        label="Lien du cadre intégré",
-        help_text="Exemple pour Tally : https://tally.so/embed/w2jMRa",
+        label=_("URL of the iframe"),
+        help_text=_("Example for Tally: https://tally.so/embed/w2jMRa"),
     )
-    height = blocks.IntegerBlock(label="Hauteur en pixels")
+    height = blocks.IntegerBlock(label=_("Height (in pixels)"))
+    parameters = blocks.CharBlock(
+        label=_("Parameters"),
+        help_text=_("""For example: "allow='geolocation'"."""),
+        required=False,
+    )
+
+    class Meta:
+        icon = "globe"
+        template = "content_manager/blocks/iframe.html"
 
 
 class ImageAndTextBlock(blocks.StructBlock):
-    image = ImageChooserBlock(label="Illustration")
+    image = ImageBlock(label=_("Image"))
     image_side = blocks.ChoiceBlock(
-        label="Côté où afficher l’image",
+        label=_("Side where the image is displayed"),
         choices=[
-            ("left", "Gauche"),
-            ("right", "Droite"),
+            ("left", _("Left")),
+            ("right", _("Right")),
         ],
         default="right",
     )
     image_ratio = blocks.ChoiceBlock(
-        label="Largeur de l’image",
+        label=_("Image width"),
         choices=[
             ("3", "3/12"),
             ("5", "5/12"),
@@ -138,131 +528,656 @@ class ImageAndTextBlock(blocks.StructBlock):
         ],
         default="3",
     )
-    text = blocks.RichTextBlock(label="Texte avec mise en forme")
-    link = LinkBlock(required=False)
+    text = blocks.RichTextBlock(label=_("Rich text"))
+    link = SingleLinkBlock(
+        label=_("Link"),
+        required=False,
+        help_text=_("The link is shown at the bottom of the text block, with an arrow"),
+    )
     link_label = blocks.CharBlock(
-        label="Titre du lien",
-        help_text="Le lien apparait en bas du bloc de droite, avec une flèche",
+        label=_("Link label (obsolete)"),
+        required=False,
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+        group="obsolete",
+    )
+    page = blocks.PageChooserBlock(
+        label=_("Internal link (obsolete)"),
+        required=False,
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+        group="obsolete",
+    )
+    link_url = blocks.URLBlock(
+        label=_("Link URL (obsolete)"),
+        required=False,
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+        ),
+        group="obsolete",
+    )
+
+    class Meta:
+        icon = "image"
+        template = "content_manager/blocks/image_and_text.html"
+
+
+class CenteredImageBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        required=False,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+    image = ImageChooserBlock(label=_("Image"))
+    alt = blocks.CharBlock(
+        label=_("Alternative text (textual description of the image)"),
         required=False,
     )
-    page = blocks.PageChooserBlock(label="Lien interne", required=False)
-    link_url = blocks.URLBlock(label="Lien externe", required=False)
+    width = blocks.ChoiceBlock(
+        label=_("Witdh"),
+        choices=MEDIA_WIDTH_CHOICES,
+        required=False,
+        default="",
+    )
+    image_ratio = blocks.ChoiceBlock(
+        label=_("Image ratio"),
+        choices=IMAGE_RATIOS,
+        required=False,
+        default="h3",
+    )
+    caption = blocks.CharBlock(label=_("Caption"), required=False)
+    url = blocks.URLBlock(label=_("Link"), required=False)
 
-
-class ImageBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre", required=False)
-    image = ImageChooserBlock(label="Illustration")
-    alt = blocks.CharBlock(label="Texte alternatif (description textuelle de l’image)", required=False)
-    caption = blocks.CharBlock(label="Légende", required=False)
-    url = blocks.URLBlock(label="Lien", required=False)
+    class Meta:
+        icon = "image"
+        template = "content_manager/blocks/image.html"
 
 
 class QuoteBlock(blocks.StructBlock):
-    image = ImageChooserBlock(label="Illustration (à gauche)", required=False)
-    quote = blocks.CharBlock(label="Citation")
-    author_name = blocks.CharBlock(label="Nom de l’auteur")
-    author_title = blocks.CharBlock(label="Titre de l’auteur")
+    image = ImageChooserBlock(label=_("Image"), required=False)
+    quote = blocks.CharBlock(label=_("Quote"))
+    author_name = blocks.CharBlock(label=_("Author name"), required=False)
+    author_title = blocks.CharBlock(label=_("Author title"), required=False)
+    color = blocks.ChoiceBlock(
+        label=_("Color"),
+        choices=COLOR_CHOICES_ILLUSTRATION,
+        required=False,
+    )
+
+    class Meta:
+        icon = "openquote"
+        template = "content_manager/blocks/quote.html"
 
 
 class SeparatorBlock(blocks.StructBlock):
-    top_margin = blocks.IntegerBlock(label="Espacement au dessus", min_value=0, max_value=15, default=3)
-    bottom_margin = blocks.IntegerBlock(label="Espacement en dessous", min_value=0, max_value=15, default=3)
+    top_margin = blocks.IntegerBlock(label=_("Top margin"), min_value=0, max_value=15, default=3)
+    bottom_margin = blocks.IntegerBlock(label=_("Bottom margin"), min_value=0, max_value=15, default=3)
 
 
 class StepBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre de l’étape")
-    detail = blocks.TextBlock(label="Détail")
+    title = blocks.CharBlock(label=_("Title"))
+    detail = blocks.TextBlock(label=_("Detail"), required=False)
 
 
 class StepsListBlock(blocks.StreamBlock):
-    step = StepBlock(label="Étape")
+    step = StepBlock(label=_("Step"))
 
 
 class StepperBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre")
-    total = blocks.IntegerBlock(label="Nombre d’étapes")
-    current = blocks.IntegerBlock(label="Étape en cours")
-    steps = StepsListBlock(label="Les étapes")
+    title = blocks.CharBlock(label=_("Title"))
+    total = blocks.IntegerBlock(label=_("Number of steps"), min_value=1, max_value=8)
+    current = blocks.IntegerBlock(label=_("Current step"), min_value=1, max_value=8)
+    steps = StepsListBlock(label=_("Steps"))
+
+    class Meta:
+        template = "content_manager/blocks/stepper.html"
 
 
 class TextAndCTA(blocks.StructBlock):
-    text = blocks.RichTextBlock(label="Texte avec mise en forme", required=False)
-    cta_label = blocks.CharBlock(
-        label="Titre de l’appel à l’action",
-        help_text="Le lien apparait comme un bouton sous le bloc de texte",
+    text = blocks.RichTextBlock(label=_("Rich text"), required=False)
+    cta_buttons = blocks.StreamBlock(
+        [
+            (
+                "buttons",
+                ButtonsHorizontalListBlock(
+                    help_text=_(
+                        """Please use only one primary button.
+                        If you use icons, use them on all buttons and align them on the same side."""
+                    ),
+                    label=_("Buttons"),
+                ),
+            ),
+        ],
+        label=_("Call-to-action buttons"),
+        max_num=1,
         required=False,
     )
-    cta_url = blocks.CharBlock(label="Lien", required=False)
+    cta_label = blocks.CharBlock(
+        label=_("Call to action label  (obsolete)"),
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
+        ),
+        required=False,
+    )
+    cta_url = blocks.CharBlock(
+        label=_("Link (obsolete)"),
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
+        ),
+        required=False,
+    )
+
+    class Meta:
+        icon = "link"
+        template = "content_manager/blocks/text_and_cta.html"
+
+
+class TranscriptionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"), default="Transcription", required=False)
+    content = blocks.RichTextBlock(label=_("Transcription content"), required=False)
+
+    class Meta:
+        icon = "media"
+        template = "content_manager/blocks/transcription.html"
 
 
 class VideoBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label="Titre", required=False)
-    caption = blocks.CharBlock(label="Légende")
+    title = blocks.CharBlock(label=_("Video title"), required=False)
+    caption = blocks.CharBlock(label=_("Caption"), required=False)
     url = blocks.URLBlock(
-        label="Lien de la vidéo",
-        help_text="URL au format « embed » (Ex. : https://www.youtube.com/embed/gLzXOViPX-0)",
+        label=_("Video URL"),
+        help_text=_(
+            "Use embed format, with a version that doesn't require a consent banner if available."
+            " (e.g. : https://www.youtube-nocookie.com/embed/gLzXOViPX-0)"
+            " For Youtube, use Embed video and check Enable privacy-enhanced mode."
+        ),
     )
 
+    width = blocks.ChoiceBlock(
+        label=_("Witdh"),
+        choices=MEDIA_WIDTH_CHOICES,
+        required=False,
+        default="",
+    )
+    video_ratio = blocks.ChoiceBlock(
+        label=_("Video ratio"),
+        choices=VIDEO_RATIOS,
+        required=False,
+        default="h3",
+    )
+    transcription = TranscriptionBlock(label=_("Transcription"), required=False)
 
-## Multi-column blocks
-class MultiColumnsBlock(blocks.StreamBlock):
-    text = blocks.RichTextBlock(label="Texte avec mise en forme")
-    image = ImageBlock(label="Image")
-    video = VideoBlock(label="Vidéo")
-    card = CardBlock(label="Carte")
-    quote = QuoteBlock(label="Citation")
-    text_cta = TextAndCTA(label="Texte et appel à l’action")
-    iframe = IframeBlock(label="Cadre intégré")
+    class Meta:
+        icon = "media"
+        template = "content_manager/blocks/video.html"
+
+
+class VerticalContactCardStructValue(blocks.StructValue):
+    def display(self):
+        contact = self.get("contact", None)
+
+        name = self.get("name", "")
+        if contact and not name:
+            name = contact.name
+
+        role = self.get("role", "")
+        if contact and not role:
+            role = contact.role
+
+        organization = self.get("organization", "")
+        if contact and not organization:
+            organization = contact.organization.name
+
+        image = self.get("image", "")
+        if contact and not image:
+            image = contact.image
+
+        return {"name": name, "role": role, "organization": organization, "image": image}
+
+    def enlarge_link(self):
+        """
+        Determine if we need (and can) enlarge the link on the card.
+        This requires:
+        - That a link is present
+        - That no other link is used on the card (such as a tag with a link, or a call-to-action)
+        """
+        link = self.get("link")
+        tags = self.get("tags")
+        call_to_action = self.get("call_to_action", "")
+
+        if not (link and link.url()):
+            return False
+
+        enlarge = True
+        if len(call_to_action):
+            enlarge = False
+        elif len(tags):
+            print(tags)
+            print(tags.raw_data)
+            tags_list = tags.raw_data
+            for tag in tags_list:
+                if (
+                    tag["value"]["link"]["page"] is not None
+                    or tag["value"]["link"]["document"] is not None
+                    or tag["value"]["link"]["external_url"] != ""
+                ):
+                    enlarge = False
+
+        return enlarge
+
+
+class VerticalContactCardBlock(blocks.StructBlock):
+    contact = SnippetChooserBlock(
+        "blog.Person",
+        label=_("Person"),
+        help_text=_("Optional, all values can be manually specified or overriden below"),
+        required=False,
+    )
+    link = LinkWithoutLabelBlock(
+        label=_("Link"),
+        required=False,
+    )
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        required=False,
+        default="h3",
+        help_text=_("Adapt to the page layout. Defaults to heading 3."),
+    )
+    name = blocks.CharBlock(label=_("Name"), max_length=255, required=False)
+    role = blocks.CharBlock(label=_("Role"), max_length=255, required=False)
+    organization = blocks.CharBlock(label=_("Organization"), max_length=255, required=False)
+    contact_info = blocks.CharBlock(label=_("Contact info"), max_length=500, required=False)
+    image = ImageChooserBlock(label="Image", required=False)
+    tags = TagListBlock(label=_("Tags"), required=False)
+
+    class Meta:
+        icon = "user"
+        value_class = VerticalContactCardStructValue
+        template = ("content_manager/blocks/contact_card_vertical.html",)
+
+
+## Other apps-related blocks
+class RecentEntriesStructValue(blocks.StructValue):
+    """
+    Get and filter the recent entries for either a blog index or an events page index
+    """
+
+    def posts(self):
+        index_page = self.get("index_page")
+        is_blog = False
+
+        if not index_page:
+            is_blog = True
+            index_page = self.get("blog")
+
+        posts = index_page.posts
+
+        category_filter = self.get("category_filter")
+        if category_filter:
+            if is_blog:
+                posts = posts.filter(blog_categories=category_filter)
+            else:
+                posts = posts.filter(event_categories=category_filter)
+
+        tag_filter = self.get("tag_filter")
+        if tag_filter:
+            posts = posts.filter(tags=tag_filter)
+
+        author_filter = self.get("author_filter")
+        if author_filter:
+            posts = posts.filter(authors=author_filter)
+
+        source_filter = self.get("source_filter")
+        if source_filter:
+            posts = posts.filter(authors__organization=source_filter)
+
+        entries_count = self.get("entries_count")
+        return posts[:entries_count]
+
+    def current_filters(self) -> dict:
+        filters = {}
+
+        category_filter = self.get("category_filter")
+        if category_filter:
+            filters["category"] = category_filter.slug
+
+        tag_filter = self.get("tag_filter")
+        if tag_filter:
+            filters["tag"] = tag_filter.slug
+
+        author_filter = self.get("author_filter")
+        if author_filter:
+            filters["author"] = author_filter.id
+
+        source_filter = self.get("source_filter")
+        if source_filter:
+            filters["source"] = source_filter.slug
+
+        return filters
+
+    def sub_heading_tag(self):
+        """
+        Used for the filters section titles
+        """
+        heading_tag = self.get("heading_tag")
+        if heading_tag == "h2":
+            return "h3"
+        elif heading_tag == "h3":
+            return "h4"
+        elif heading_tag == "h4":
+            return "h5"
+        else:
+            return "h6"
+
+
+class BlogRecentEntriesBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES_2_5,
+        required=False,
+        default="h2",
+        help_text=_("Adapt to the page layout. Defaults to heading 2."),
+    )
+    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
+    entries_count = blocks.IntegerBlock(
+        label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
+    )
+    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
+    tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
+    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
+    source_filter = SnippetChooserBlock(
+        "blog.Organization",
+        label=_("Filter by source"),
+        help_text=_("The source is the organization of the post author"),
+        required=False,
+    )
+    show_filters = BooleanBlock(label=_("Show filters"), default=False, required=False)
+
+    class Meta:
+        icon = "placeholder"
+        template = ("content_manager/blocks/blog_recent_entries.html",)
+        value_class = RecentEntriesStructValue
+
+
+class EventsRecentEntriesBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES_2_5,
+        required=False,
+        default="h2",
+        help_text=_("Adapt to the page layout. Defaults to heading 2."),
+    )
+    index_page = blocks.PageChooserBlock(label=_("Event calendar"), page_type="events.EventsIndexPage")
+    entries_count = blocks.IntegerBlock(
+        label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
+    )
+    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
+    tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
+    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
+    source_filter = SnippetChooserBlock(
+        "blog.Organization",
+        label=_("Filter by source"),
+        help_text=_("The source is the organization of the post author"),
+        required=False,
+    )
+    show_filters = BooleanBlock(label=_("Show filters"), default=False, required=False)
+
+    class Meta:
+        icon = "placeholder"
+        template = ("content_manager/blocks/events_recent_entries.html",)
+        value_class = RecentEntriesStructValue
+
+
+## Page structure blocks
+class CommonStreamBlock(blocks.StreamBlock):
+    text = blocks.RichTextBlock(label=_("Rich text"))
+    image = CenteredImageBlock(label=_("Image"))
+    imageandtext = ImageAndTextBlock(label=_("Image and text"))
+    alert = AlertBlock(label=_("Alert message"))
+    text_cta = TextAndCTA(label=_("Text and call to action"))
+    video = VideoBlock(label=_("Video"))
+    transcription = TranscriptionBlock(label=_("Transcription"))
+    badges_list = BadgesListBlock(label=_("Badge list"))
+    tags_list = TagListBlock(label=_("Tag list"))
+    accordions = AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))
+    callout = CalloutBlock(label=_("Callout"), group=_("DSFR components"))
+    highlight = HighlightBlock(label=_("Highlight"), group=_("DSFR components"))
+    quote = QuoteBlock(label=_("Quote"), group=_("DSFR components"))
+    stepper = StepperBlock(label=_("Stepper"), group=_("DSFR components"))
+    link = SingleLinkBlock(label=_("Single link"))
+    iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
+    tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
+    blog_recent_entries = BlogRecentEntriesBlock(label=_("Blog recent entries"), group=_("Website structure"))
+    events_recent_entries = EventsRecentEntriesBlock(
+        label=_("Event calendar recent entries"), group=_("Website structure")
+    )
+    stepper = StepperBlock(label=_("Stepper"), group=_("DSFR components"))
+    markdown = MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))
+    iframe = IframeBlock(label=_("Iframe"), group=_("Expert syntax"))
+    html = blocks.RawHTMLBlock(
+        readonly=True,
+        help_text=_("Warning: Use HTML block with caution. Malicious code can compromise the security of the site."),
+        group=_("Expert syntax"),
+    )
+    separator = SeparatorBlock(label=_("Separator"), group=_("Page structure"))
+
+    class Meta:
+        icon = "dots-horizontal"
+
+
+class ColumnBlock(CommonStreamBlock):
+    card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
+    contact_card = VerticalContactCardBlock(label=_("Contact card"), group=_("Extra components"))
+
+
+class ItemGridBlock(blocks.StructBlock):
+    column_width = blocks.ChoiceBlock(
+        label=_("Column width"),
+        choices=GRID_3_4_6_CHOICES,
+        default="4",
+    )
+    items = ColumnBlock(label=_("Items"))
+
+    class Meta:
+        icon = "grip"
+        template = "content_manager/blocks/item_grid.html"
+
+
+class TabBlock(blocks.StructBlock):
+    title = blocks.CharBlock(label=_("Title"))
+    content = ColumnBlock(label=_("Content"))
+
+
+class TabsBlock(blocks.StreamBlock):
+    tabs = TabBlock(label=_("Tab"), min_num=1, max_num=15)
+
+    class Meta:
+        template = "content_manager/blocks/tabs.html"
+
+
+class AdjustableColumnBlock(blocks.StructBlock):
+    width = blocks.ChoiceBlock(
+        label=_("Column width"),
+        choices=[
+            ("3", "3/12"),
+            ("4", "4/12"),
+            ("5", "5/12"),
+            ("6", "6/12"),
+            ("7", "7/12"),
+            ("8", "8/12"),
+            ("9", "9/12"),
+        ],
+        help_text=_("The total width of all columns should be 12."),
+        required=False,
+    )
+    content = ColumnBlock(label=_("Column content"))
+
+    class Meta:
+        icon = "order-down"
+
+
+class MultiColumnsBlock(CommonStreamBlock):
+    card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
+    column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
+
+    class Meta:
+        icon = "dots-horizontal"
 
 
 class MultiColumnsWithTitleBlock(blocks.StructBlock):
-    bg_image = ImageChooserBlock(label="Image d’arrière plan", required=False)
+    bg_image = ImageChooserBlock(label=_("Background image"), required=False)
     bg_color_class = BackgroundColorChoiceBlock(
-        label="Couleur d’arrière-plan",
+        label=_("Background color"),
         required=False,
-        help_text="Utilise les couleurs du système de design de l’État",
+        help_text=_("Uses the French Design System colors"),
     )
     bg_color = blocks.RegexBlock(
-        label="Couleur d’arrière-plan au format hexa (Ex: #f5f5fe)",
+        label=_("Background color, hexadecimal format (obsolete)"),
         regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        help_text="(Obsolète, sera retiré dans une future mise à jour. Remplacez-le par la couleur d’arrière-plan)",
-        error_messages={"invalid": "La couleur n’est pas correcte, le format doit être #fff ou #f5f5fe"},
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. Replace it with the background color."  # noqa
+        ),
+        error_messages={"invalid": _("Incorrect color format, must be #fff or #f5f5f5")},
         required=False,
     )
-    title = blocks.CharBlock(label="Titre", required=False)
-    columns = MultiColumnsBlock(label="Multi-colonnes")
+    title = blocks.CharBlock(label=_("Title"), required=False)
+    heading_tag = blocks.ChoiceBlock(
+        label=_("Heading level"),
+        choices=HEADING_CHOICES,
+        required=False,
+        default="h2",
+        help_text=_("Adapt to the page layout. Defaults to heading 2."),
+    )
+    columns = MultiColumnsBlock(label=_("Columns"))
+
+    class Meta:
+        icon = "dots-horizontal"
+        template = "content_manager/blocks/multicolumns.html"
+
+
+class FullWidthBlock(CommonStreamBlock):
+    image_and_text = ImageAndTextBlock(label=_("Image and text"))
+    card = HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))
+    tabs = TabsBlock(label=_("Tabs"), group=_("DSFR components"))
+    item_grid = ItemGridBlock(label=_("Item grid"), group=_("Page structure"))
+
+    class Meta:
+        icon = "minus"
+
+
+class FullWidthBackgroundBlock(blocks.StructBlock):
+    bg_image = ImageChooserBlock(label=_("Background image"), required=False)
+    bg_color_class = BackgroundColorChoiceBlock(
+        label=_("Background color"),
+        required=False,
+        help_text=_("Uses the French Design System colors"),
+    )
+    content = FullWidthBlock(label=_("Content"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/blocks/full_width_background.html"
+
+
+class PageTreeBlock(blocks.StructBlock):
+    page = blocks.PageChooserBlock(label=_("Parent page"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/blocks/pagetree.html"
+
+
+class SideMenuBlock(blocks.StreamBlock):
+    html = blocks.RawHTMLBlock(
+        label="HTML",
+        help_text=_("Warning: Use HTML block with caution. Malicious code can compromise the security of the site."),
+    )
+    pagetree = PageTreeBlock(label=_("Page tree"))
+
+    class Meta:
+        icon = "minus"
+
+
+class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
+    bg_image = ImageChooserBlock(label=_("Background image"), required=False)
+    bg_color_class = BackgroundColorChoiceBlock(
+        label=_("Background color"),
+        required=False,
+        help_text=_("Uses the French Design System colors"),
+    )
+    main_content = FullWidthBlock(label=_("Main content"))
+    sidemenu_title = blocks.CharBlock(label=_("Side menu title"), required=False)
+    sidemenu_content = SideMenuBlock(label=_("Side menu content"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/blocks/full_width_background_with_sidemenu.html"
 
 
 STREAMFIELD_COMMON_BLOCKS = [
-    ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
-    ("image", ImageBlock()),
+    ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
+    ("image", CenteredImageBlock()),
+    ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
+    ("alert", AlertBlock(label=_("Alert message"))),
+    ("text_cta", TextAndCTA(label=_("Text and call to action"))),
+    ("video", VideoBlock(label=_("Video"))),
+    ("transcription", TranscriptionBlock(label=_("Transcription"))),
+    ("badges_list", BadgesListBlock(label=_("Badge list"))),
+    ("tags_list", TagListBlock(label=_("Tag list"))),
+    ("link", SingleLinkBlock(label=_("Single link"))),
+    ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
+    ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
+    ("highlight", HighlightBlock(label=_("Highlight"), group=_("DSFR components"))),
+    ("quote", QuoteBlock(label=_("Quote"), group=_("DSFR components"))),
+    ("stepper", StepperBlock(label=_("Stepper"), group=_("DSFR components"))),
+    ("card", HorizontalCardBlock(label=_("Horizontal card"), group=_("DSFR components"))),
+    ("tile", TileBlock(label=_("Tile"), group=_("DSFR components"))),
+    ("tabs", TabsBlock(label=_("Tabs"), group=_("DSFR components"))),
+    ("markdown", MarkdownBlock(label=_("Markdown"), group=_("Expert syntax"))),
+    ("iframe", IframeBlock(label=_("Iframe"), group=_("Expert syntax"))),
     (
-        "imageandtext",
-        ImageAndTextBlock(label="Bloc image et texte"),
-    ),
-    ("alert", AlertBlock(label="Message d’alerte")),
-    ("callout", CalloutBlock(label="Texte mise en avant")),
-    ("quote", QuoteBlock(label="Citation")),
-    ("video", VideoBlock(label="Vidéo")),
-    ("multicolumns", MultiColumnsWithTitleBlock(label="Multi-colonnes")),
-    ("accordions", AccordionsBlock(label="Accordéons")),
-    ("stepper", StepperBlock(label="Étapes")),
-    ("separator", SeparatorBlock(label="Séparateur")),
-    ("markdown", MarkdownBlock()),
-]
-
-
-# See warning on https://docs.wagtail.org/en/latest/reference/streamfield/blocks.html#wagtail.blocks.RawHTMLBlock
-# There is currently no way to restrict a type of block depending on user permissions,
-# pending issue https://github.com/wagtail/wagtail/issues/6323
-if settings.SF_ALLOW_RAW_HTML_BLOCKS is True:
-    STREAMFIELD_COMMON_BLOCKS += [
-        (
-            "html",
-            blocks.RawHTMLBlock(
-                readonly=True,
-                help_text="""Avertissement : Utilisez le bloc HTML avec précaution.
-                Un code malveillant peut compromettre la sécurité du site.""",
+        "html",
+        blocks.RawHTMLBlock(
+            readonly=True,
+            help_text=_(
+                "Warning: Use HTML block with caution. Malicious code can compromise the security of the site."
             ),
-        )
-    ]
+            group=_("Expert syntax"),
+        ),
+    ),
+    ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
+    ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
+    ("item_grid", ItemGridBlock(label=_("Item grid"), group=_("Page structure"))),
+    ("fullwidthbackground", FullWidthBackgroundBlock(label=_("Full width background"), group=_("Page structure"))),
+    (
+        "fullwidthbackgroundwithsidemenu",
+        FullWidthBackgroundWithSidemenuBlock(
+            label=_("Full width background with side menu"), group=_("Page structure")
+        ),
+    ),
+    (
+        "subpageslist",
+        blocks.StaticBlock(
+            label=_("Subpages list"),
+            admin_text=_("A simple, alphabetical list of the subpages of the current page."),
+            template="content_manager/blocks/subpages_list.html",
+            group=_("Website structure"),
+        ),
+    ),
+    (
+        "blog_recent_entries",
+        BlogRecentEntriesBlock(label=_("Blog recent entries"), group=_("Website structure")),
+    ),
+    (
+        "events_recent_entries",
+        EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
+    ),
+]

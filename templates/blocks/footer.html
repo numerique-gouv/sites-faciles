@@ -1,23 +1,72 @@
 {% extends "dsfr/footer.html" %}
-{% load menu_tags %}
+{% load i18n wagtailcore_tags wagtailimages_tags menu_tags wagtail_dsfr_tags %}
 
-{% block brand %}
-  <p class="fr-logo" title="{{ settings.content_manager.CmsDsfrConfig.footer_brand|default:'Gouvernement' }}">
-    {{ settings.content_manager.CmsDsfrConfig.footer_brand_html| default_if_none:'Gouvernement' | safe }}
-  </p>
-{% endblock brand %}
+{% block footer_brand %}
+  {% translate "Back to home page" as back_to_home_label %}
+  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file and settings.content_manager.CmsDsfrConfig.operator_logo_alt %}
+    {% image settings.content_manager.CmsDsfrConfig.operator_logo_file original as logo_img %}
+    <div class="fr-footer__brand fr-enlarge-link">
+      <p class="fr-logo"
+         title="{{ settings.content_manager.CmsDsfrConfig.footer_brand|default:'république française' }}">
+        {{ settings.content_manager.CmsDsfrConfig.footer_brand_html| default_if_none:'république<br />française' | safe }}
+      </p>
+      <a class="fr-footer__brand-link"
+         href="/"
+         title="{{ back_to_home_label }} - {{ settings.content_manager.CmsDsfrConfig.operator_logo_alt }} - {{ settings.content_manager.CmsDsfrConfig.footer_brand|default:'république française' }}">
+        <img class="fr-footer__logo"
+             src="{{ logo_img.url }}"
+             alt="{{ settings.content_manager.CmsDsfrConfig.operator_logo_alt }}"
+             {% if settings.content_manager.CmsDsfrConfig.operator_logo_width >= 1 %}style="max-width:{{ settings.content_manager.CmsDsfrConfig.operator_logo_width }}rem;"{% endif %} />
+        {# L’alternative de l’image (attribut alt) doit impérativement être renseignée et reprendre le texte visible dans l’image #}
+      </a>
+    </div>
+  {% else %}
+    <div class="fr-footer__brand fr-enlarge-link">
+      <a id="footer-operator"
+         href="/"
+         title="{{ back_to_home_label }} - {{ settings.content_manager.CmsDsfrConfig.site_title }} - {{ settings.content_manager.CmsDsfrConfig.footer_brand|default:'république française' }}">
+        {% block brand %}
+          <p class="fr-logo">
+            {{ settings.content_manager.CmsDsfrConfig.footer_brand_html| default_if_none:'république<br />française' | safe }}
+          </p>
+        {% endblock brand %}
+      </a>
+    </div>
+  {% endif %}
+{% endblock footer_brand %}
 
-{% block footer_content %}
-  {{ settings.content_manager.CmsDsfrConfig.footer_description | safe }}
-{% endblock footer_content %}
+{% block footer_description %}
+  {{ settings.content_manager.CmsDsfrConfig.footer_description | richtext | richtext_p_add_class:"fr-footer__content-desc" }}
+{% endblock footer_description %}
 
 {% block footer_links %}
-  {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html"  %}
+  {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html" %}
+  {% if settings.content_manager.CustomScriptsSettings.use_tarteaucitron %}
+    <li class="fr-footer__bottom-item">
+      <button id="tarteaucitronManager"
+              aria-controls="tarteaucitron"
+              data-fr-opened="false"
+              class="fr-footer__bottom-link"
+              data-fr-js-modal-button="true">{% translate "Cookie settings" %}</button>
+    </li>
+  {% endif %}
   {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}
     <li class="fr-footer__bottom-item">
-      <button id="footer__bottom-link__parametres-affichage" aria-controls="fr-theme-modal" data-fr-opened="false" class="fr-icon-theme-fill fr-link--icon-left fr-footer__bottom-link" data-fr-js-modal-button="true">
-        Paramètres d’affichage
-      </button>
+      <button id="footer__bottom-link__parametres-affichage"
+              aria-controls="fr-theme-modal"
+              data-fr-opened="false"
+              class="fr-icon-theme-fill fr-link--icon-left fr-footer__bottom-link"
+              data-fr-js-modal-button="true">{% translate "Display settings" %}</button>
     </li>
   {% endif %}
 {% endblock footer_links %}
+
+{% block footer_bottom_extra %}
+  {% translate "Opens a new window" as new_window %}
+  <span class="cmsfr-footer__bottom-extra">
+    {% translate "This website is made with" %} <a href="https://sites-faciles.beta.numerique.gouv.fr/?mtm_campaign=footer-link"
+    target="_blank"
+    rel="noopener external"
+    title="Sites faciles - {{ new_window }}">Sites faciles</a>
+  </span>
+{% endblock footer_bottom_extra %}

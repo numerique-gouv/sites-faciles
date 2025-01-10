@@ -1,8 +1,15 @@
-<div class="fr-content-media">
-    <iframe title="{{ block.value.title }}"
-            class="fr-responsive-vid"
-            src="{{ block.value.url }}"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
-    <div class="fr-content-media__caption">{{ block.value.caption }}</div>
-</div>
+{% load i18n wagtailcore_tags %}
+<figure role="group" class="fr-content-media {{ value.width }}">
+  <iframe title="{{ value.title }}"
+          class="fr-responsive-vid{% if value.video_ratio %} {{ value.video_ratio }}{% endif %}"
+          src="{{ value.url }}"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+  <figcaption class="fr-content-media__caption">
+    {{ value.caption }}
+    <a class="fr-link" href="{{ value.url }}">{% translate "Watch on the site" %}</a>
+  </figcaption>
+  {% if value.transcription.content %}
+    {% include_block value.transcription %}
+  {% endif %}
+</figure>

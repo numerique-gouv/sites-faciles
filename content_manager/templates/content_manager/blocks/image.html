@@ -1,8 +1,21 @@
-{% load wagtailimages_tags %}
-{% if block.value.title %}<h5>{{ block.value.title }}</h5>{% endif %}
-<div class="{% if block.value.url %} fr-enlarge-link{% endif %}">
-    {% if block.value.url %}<a href="{{ block.value.url }}" />{% endif %}
-    {% image block.value.image original class="fr-responsive-img" alt=block.value.alt %}
-    {% if block.value.url %}</a>{% endif %}
-    {% if block.value.caption %}<div class="fr-content-media__caption">{{ block.value.caption }}</div>{% endif %}
-</div>
+{% load i18n wagtailimages_tags dsfr_tags %}
+{% if value.title %}
+  <{{ value.heading_tag|default:"h3" }}>{{ value.title }}</{{ value.heading_tag|default:"h3" }}>
+{% endif %}
+<figure class="fr-content-media {{ value.width }}{% if value.url %} fr-enlarge-link{% endif %}"
+        role="group"
+        aria-label="{{ value.caption }}">
+  <div class="fr-content-media__img">
+    {% with "fr-responsive-img "|concatenate:value.image_ratio as extra_classes %}
+      {% if value.url %}
+        <a href="{{ value.url }}">
+          {% image value.image original class=extra_classes alt=value.alt %}
+          <span class="fr-sr-only">{% translate "Go to page" %} {{ value.url }}</span>
+        </a>
+      {% else %}
+        {% image value.image original class=extra_classes alt=value.alt %}
+      {% endif %}
+    {% endwith %}
+  </div>
+  {% if value.caption %}<figcaption class="fr-content-media__caption">{{ value.caption }}</figcaption>{% endif %}
+</figure>

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load widget_tweaks wagtailadmin_tags i18n static dsfr_tags %}
+{% block content %}
+  <div class="fr-container fr-container--fluid fr-my-md-14v">
+    <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+      <div class="fr-col-12 fr-col-md-8 fr-col-lg-6">
+        <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-py-10v fr-py-md-14v">
+          <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+            <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
+              <h1>{% translate "Reset your password" %}</h1>
+              {% include "wagtailadmin/shared/non_field_errors.html" %}
+
+              <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% dsfr_form_field form.email %}
+
+                <button type="submit" class="fr-btn">{% translate "Reset password" %}</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

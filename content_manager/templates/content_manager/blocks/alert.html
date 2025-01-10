@@ -1,8 +1,2 @@
 {% load dsfr_tags %}
-<div class="fr-container fr-py-3w">
-    <div class="fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8">
-            {% dsfr_alert title=block.value.title type=block.value.level content=block.value.description heading_tag=block.value.heading_tag %}
-        </div>
-    </div>
-</div>
+{% dsfr_alert title=block.value.title type=block.value.level content=block.value.description heading_tag=block.value.heading_tag %}

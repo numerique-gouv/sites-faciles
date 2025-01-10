@@ -18,7 +18,7 @@ class ContactCardBlock(blocks.StructBlock):
 
 
 COLOPHON_BLOCKS = [
-    ("paragraph", blocks.RichTextBlock(label="Texte avec mise en forme")),
+    ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     (
         "imageandtext",
         ImageAndTextBlock(label="Bloc image et texte"),

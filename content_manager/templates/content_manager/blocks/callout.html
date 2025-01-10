@@ -1,8 +1,12 @@
-{% load dsfr_tags wagtailcore_tags %}
-<div class="fr-container fr-py-3w">
-    <div class="fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-8 fr-p-1w">
-            {% dsfr_callout title=block.value.title text=block.value.text heading_tag=block.value.heading_tag %}
-        </div>
-    </div>
+{% load wagtailcore_tags wagtail_dsfr_tags %}
+<div class="fr-callout {% if value.icon_class %}{{ value.icon_class }}{% endif %}{% if value.color %} fr-callout--{{ value.color }}{% endif %}">
+  {% if value.title %}
+    <{{ value.heading_tag | default:"p" }} class="fr-callout__title">
+    {{ value.title }}
+    </{{ value.heading_tag | default:"p" }}>
+  {% endif %}
+  {{ value.text | richtext_p_add_class:"fr-callout__text" }}
+  {% if value.button.url %}
+    {% include "content_manager/blocks/button.html" with button=value.button %}
+  {% endif %}
 </div>
