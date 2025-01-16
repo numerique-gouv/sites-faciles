@@ -36,6 +36,7 @@ dependencies = [
 ]
 
 [tool.poetry]
+requires-poetry = ">=2.0"
 package-mode = false
 
 [tool.poetry.group.dev.dependencies]
