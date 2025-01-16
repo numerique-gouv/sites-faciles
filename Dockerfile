@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.13
 
 EXPOSE ${CONTAINER_PORT}
 
@@ -8,7 +8,7 @@ ENV GECKODRIVER_URL=https://github.com/mozilla/geckodriver/releases/download/v0.
 ENV APP_DIR="/app"
 
 # Configure Poetry
-ENV POETRY_VERSION=1.8.2
+ENV POETRY_VERSION=2.0.1
 ENV POETRY_HOME=/opt/poetry
 ENV POETRY_VENV=/opt/poetry-venv
 ENV POETRY_CACHE_DIR=/opt/.cache
