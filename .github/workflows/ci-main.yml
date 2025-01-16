@@ -31,7 +31,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
           pip install ruff
-          poetry install --no-root
+          poetry install --no-root  --with dev
       - name: 📄 Copy empty .env.test to .env
         run: |
           cp .env.test .env
