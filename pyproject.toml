@@ -1,8 +1,8 @@
 [project]
 requires-python = ">=3.10"
+name = "sites-faciles"
 
 [tool.poetry]
-name = "content-manager"
 version = "1.11.1"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
