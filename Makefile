@@ -44,7 +44,7 @@ index:
 
 .PHONY: init
 init:
-	$(EXEC_CMD) poetry install --without dev
+	$(EXEC_CMD) poetry install --no-root --without dev
 	$(EXEC_CMD) poetry run python manage.py migrate
 	make collectstatic
 	$(EXEC_CMD) poetry run python manage.py set_config
@@ -56,13 +56,13 @@ init:
 .PHONY: init-dev
 init-dev:
 	make init
-	$(EXEC_CMD) poetry install
+	$(EXEC_CMD) poetry install --no-root
 	$(EXEC_CMD) poetry run pre-commit install
 
 
 .PHONY: update
 update:
-	$(EXEC_CMD) poetry install --without dev
+	$(EXEC_CMD) poetry install --no-root --without dev
 	$(EXEC_CMD) poetry run python manage.py migrate
 	make collectstatic
 	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
