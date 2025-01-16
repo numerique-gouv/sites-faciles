@@ -757,8 +757,6 @@ class VerticalContactCardStructValue(blocks.StructValue):
         if len(call_to_action):
             enlarge = False
         elif len(tags):
-            print(tags)
-            print(tags.raw_data)
             tags_list = tags.raw_data
             for tag in tags_list:
                 if (
