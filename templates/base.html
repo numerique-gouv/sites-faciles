@@ -1,6 +1,6 @@
 {% load i18n static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
 
-{% get_settings %}
+{% get_settings use_default_site=True %}
 <!DOCTYPE html>
 <html lang="fr"
       {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
