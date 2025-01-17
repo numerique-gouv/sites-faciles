@@ -28,8 +28,8 @@
     {% endblock extra_css %}
 
     {% block tracking %}
-      {% if settings.content_manager.AnalyticsSettings.head_scripts %}
-        {{ settings.content_manager.AnalyticsSettings.head_scripts|safe }}
+      {% if settings.content_manager.CustomScriptsSettings.head_scripts %}
+        {{ settings.content_manager.CustomScriptsSettings.head_scripts|safe }}
       {% endif %}
     {% endblock tracking %}
 
