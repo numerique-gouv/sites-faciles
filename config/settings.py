@@ -381,6 +381,8 @@ if PROCONNECT_ACTIVATED:
 
     LOGOUT_URL = "/oidc/logout/"
 
+SITE_ID = 1
+
 # Wagtail Airtable
 AIRTABLE_API_KEY = os.getenv("AIRTABLE_API_KEY")
 WAGTAIL_AIRTABLE_ENABLED = True
