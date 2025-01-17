@@ -18,7 +18,7 @@ def mega_menu(context: Context, parent_menu_id: int) -> dict:
     """
     menu = MegaMenu.objects.filter(parent_menu_item_id=parent_menu_id).first()
 
-    return {"request": context["request"], "menu": menu}
+    return {"request": context["request"] if "request" in context else None, "menu": menu}
 
 
 @register.simple_tag
