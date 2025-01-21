@@ -54,7 +54,8 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 ### En local
 #### Installer poetry s’il ne l’est pas
 
-Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
+- Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
+- mettre la variable d’environnement `USE_POETRY` à `1` dans le fichier `.env`
 
 #### Installer le projet
 

@@ -10,80 +10,90 @@ else
 	EXEC_CMD :=
 endif
 
+ifeq ($(USE_POETRY),1)
+	POETRY_CMD := poetry run
+else
+	POETRY_CMD :=
+endif
+
 .PHONY: web-prompt
 web-prompt:
 	$(EXEC_CMD) bash
 
 .PHONY: collectstatic
 collectstatic:
-	$(EXEC_CMD) poetry run python manage.py collectstatic --noinput --ignore=*.sass
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py collectstatic --noinput --ignore=*.sass
 
 
 .PHONY: messages
 messages:
-	$(EXEC_CMD) poetry run django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
+	$(EXEC_CMD) $(POETRY_CMD) django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
 
 .PHONY: sass
 sass:
-	$(EXEC_CMD) poetry run python manage.py compilescss
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py compilescss
 	make collectstatic
 
 .PHONY: quality
 quality:
 	$(EXEC_CMD) ruff check .
-	$(EXEC_CMD) poetry run black --check --exclude=venv .
+	$(EXEC_CMD) $(POETRY_CMD) black --check --exclude=venv .
 
 .PHONY: fix
 fix:
 	$(EXEC_CMD) ruff check . --fix
-	$(EXEC_CMD) poetry run black --exclude=venv .
+	$(EXEC_CMD) $(POETRY_CMD) black --exclude=venv .
 
 .PHONY: index
 index:
-	$(EXEC_CMD) poetry run python manage.py update_index
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py update_index
 
 .PHONY: init
 init:
 	$(EXEC_CMD) poetry install --no-root --without dev
-	$(EXEC_CMD) poetry run python manage.py migrate
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py migrate
 	make collectstatic
-	$(EXEC_CMD) poetry run python manage.py set_config
-	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
-	$(EXEC_CMD) poetry run python manage.py create_starter_pages
-	$(EXEC_CMD) poetry run python manage.py import_page_templates
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py set_config
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_dsfr_pictograms
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py create_starter_pages
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_page_templates
 	make index
 
 .PHONY: init-dev
 init-dev:
 	make init
 	$(EXEC_CMD) poetry install --no-root
-	$(EXEC_CMD) poetry run pre-commit install
+	$(EXEC_CMD) $(POETRY_CMD) pre-commit install
 
 
 .PHONY: update
 update:
 	$(EXEC_CMD) poetry install --no-root --without dev
-	$(EXEC_CMD) poetry run python manage.py migrate
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py migrate
 	make collectstatic
-	$(EXEC_CMD) poetry run python manage.py import_dsfr_pictograms
-	$(EXEC_CMD) poetry run python manage.py import_page_templates
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_dsfr_pictograms
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_page_templates
 	make index
 
 
 .PHONY: demo
 demo:
 	make init
-	$(EXEC_CMD) poetry run python manage.py create_demo_pages
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py create_demo_pages
 
 .PHONY: runserver
 runserver:
-	$(EXEC_CMD) poetry run python manage.py runserver $(HOST_URL):$(HOST_PORT)
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py runserver $(HOST_URL):$(HOST_PORT)
 
+
+.PHONY: shell
+shell:
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py shell_plus
 
 .PHONY: test
 test:
-	$(EXEC_CMD) poetry run python manage.py test --buffer --parallel
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --buffer --parallel
 
 .PHONY: test-unit
 test-unit:
-	$(EXEC_CMD) poetry run python manage.py test --settings config.settings_test
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --settings config.settings_test
