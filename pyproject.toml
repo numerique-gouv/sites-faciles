@@ -1,42 +1,43 @@
 [project]
-requires-python = ">=3.10"
-
-[tool.poetry]
-name = "content-manager"
-version = "1.11.1"
+name = "sites-faciles"
+requires-python = "<4.0,>=3.10"
+version = "1.11.2"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
-  "Sébastien Reuiller <sebastien.reuiller@beta.gouv.fr>",
-  "Sylvain Boissel <sylvain.boissel@beta.gouv.fr>",
+    {name = "Sébastien Reuiller", email = "sebastien.reuiller@beta.gouv.fr"},
+    {name = "Sylvain Boissel", email = "sylvain.boissel@beta.gouv.fr"}
 ]
 maintainers = [
-  "Sylvain Boissel <sylvain.boissel@beta.gouv.fr>",
+    {name = "Sylvain Boissel", email = "sylvain.boissel@beta.gouv.fr"}
 ]
 readme = "README.md"
+dependencies = [
+    "django<6.0.0,>=5.1.4",
+    "wagtail<7.0,>=6.1",
+    "django-dsfr<2.0.0,>=1.1.2",
+    "psycopg2-binary<3.0.0,>=2.9.9",
+    "python-dotenv<2.0.0,>=1.0.0",
+    "dj-database-url<3.0.0,>=2.1.0",
+    "gunicorn<23.0.0,>=22.0.0",
+    "django-sass-processor<2.0,>=1.3",
+    "libsass<1.0.0,>=0.22.0",
+    "dj-static<1.0.0,>=0.0.6",
+    "wagtailmenus<5.0,>=4.0",
+    "wagtail-modeladmin<3.0.0,>=2.0.0",
+    "wagtail-markdown<1.0.0,>=0.11.1",
+    "unidecode<2.0.0,>=1.3.8",
+    "django-storages[s3]<2.0.0,>=1.14.2",
+    "boto3<2.0.0,>=1.34.56",
+    "beautifulsoup4<5.0.0,>=4.12.3",
+    "django-taggit<6.0.0,>=5.0.1",
+    "wagtail-localize<2.0,>=1.9",
+    "icalendar<6.0.0,>=5.0.13",
+    "faker<25.0.0,>=24.3.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-django = "^5.1.4"
-wagtail = "^6.1"
-django-dsfr = "^1.1.2"
-psycopg2-binary = "^2.9.9"
-python-dotenv = "^1.0.0"
-dj-database-url = "^2.1.0"
-gunicorn = "^22.0.0"
-django-sass-processor = "^1.3"
-libsass = "^0.22.0"
-dj-static = "^0.0.6"
-wagtailmenus = "^4.0"
-wagtail-modeladmin = "^2.0.0"
-wagtail-markdown = "^0.11.1"
-unidecode = "^1.3.8"
-django-storages = {extras = ["s3"], version = "^1.14.2"}
-boto3 = "^1.34.56"
-beautifulsoup4 = "^4.12.3"
-django-taggit = "^5.0.1"
-wagtail-localize = "^1.9"
-icalendar = "^5.0.13"
-faker = "^24.3.0"
+[tool.poetry]
+requires-poetry = ">=2.0"
+package-mode = false
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.3.0"
@@ -51,7 +52,7 @@ django-debug-toolbar = "^4.4.2"
 ruff = "^0.4.10"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]

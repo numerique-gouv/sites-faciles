@@ -33,7 +33,9 @@ class Command(BaseCommand):
                 image_exists = Image.objects.filter(title=full_image_title).first()
                 if image_exists:
                     file_hash = image_exists.get_file_hash()
-                    print(f"A file named {full_image_title} already exists, skipping (file_hash: {file_hash})")
+                    self.stdout.write(
+                        f"A file named {full_image_title} already exists, skipping (file_hash: {file_hash})"
+                    )
                 else:
                     image = import_image(
                         full_path=os.path.join(folder_path, filename),
@@ -49,4 +51,4 @@ class Command(BaseCommand):
                     image.tags.add("DSFR")
                     image.tags.add("Pictogrammes")
                     image.tags.add(folder_title)
-                    print(f"File {full_image_title} imported")
+                    self.stdout.write(f"File {full_image_title} imported")
