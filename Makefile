@@ -47,9 +47,8 @@ fix:
 index:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py update_index
 
-.PHONY: init
-init:
-	$(EXEC_CMD) poetry install --no-root --without dev
+.PHONY: first-deploy
+first-deploy:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py migrate
 	make collectstatic
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py set_config
@@ -58,21 +57,29 @@ init:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_page_templates
 	make index
 
+.PHONY: init
+init:
+	$(EXEC_CMD) poetry install --no-root --without dev
+	make first-deploy
+
 .PHONY: init-dev
 init-dev:
-	make init
 	$(EXEC_CMD) poetry install --no-root
+	make first-deploy
 	$(EXEC_CMD) $(POETRY_CMD) pre-commit install
 
-
-.PHONY: update
-update:
-	$(EXEC_CMD) poetry install --no-root --without dev
+.PHONY: deploy
+deploy:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py migrate
 	make collectstatic
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_page_templates
 	make index
+
+.PHONY: update
+update:
+	$(EXEC_CMD) poetry install --no-root --without dev
+	make deploy
 
 .PHONY: demo
 demo:
