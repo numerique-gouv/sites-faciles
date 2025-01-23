@@ -24,7 +24,6 @@ web-prompt:
 collectstatic:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py collectstatic --noinput --ignore=*.sass
 
-
 .PHONY: messages
 messages:
 	$(EXEC_CMD) $(POETRY_CMD) django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
@@ -74,7 +73,6 @@ update:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_page_templates
 	make index
-
 
 .PHONY: demo
 demo:
