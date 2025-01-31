@@ -13,3 +13,15 @@
     padding: 10px;
     margin: 5px;
 }
+
+.admin-hidden {
+    display: none;
+}
+
+/*** Changes to the editor to style it closer than the DSFR ***/
+
+/* Force li at all indent levels to have discs */
+.public-DraftStyleDefault-unorderedListItem.public-DraftStyleDefault-depth1,
+.public-DraftStyleDefault-unorderedListItem {
+    list-style-type: disc !important;
+}

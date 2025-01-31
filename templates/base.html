@@ -1,9 +1,9 @@
-{% load static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
-{% get_settings %}
+{% load i18n static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
+
+{% get_settings use_default_site=True %}
 <!DOCTYPE html>
 <html lang="fr"
       {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
-
   <head>
     <meta charset="utf-8" />
     <meta name="viewport"
@@ -28,11 +28,16 @@
     {% endblock extra_css %}
 
     {% block tracking %}
-      {% if settings.content_manager.AnalyticsSettings.head_scripts %}
-        {{ settings.content_manager.AnalyticsSettings.head_scripts|safe }}
+      {% if settings.content_manager.CustomScriptsSettings.head_scripts %}
+        {{ settings.content_manager.CustomScriptsSettings.head_scripts|safe }}
       {% endif %}
     {% endblock tracking %}
 
+    {% block cookie_banner %}
+      {% include "blocks/cookie_banner.html" %}
+    {% endblock cookie_banner %}
+
+  
     {% block social_media %}
     {% endblock social_media %}
   </head>
@@ -42,14 +47,24 @@
       {% dsfr_skiplinks skiplinks %}
     {% endblock skiplinks %}
 
+    {% wagtailuserbar %}
     {% include "blocks/header.html" %}
     {% dsfr_theme_modale %}
-    {% wagtailuserbar %}
+
+    {% if SiteConfig.notice_title or SiteConfig.notice_description %}
+      {% include "blocks/notice.html" %}
+    {% endif %}
 
     <main id="content" role="main">
       {% block content %}
       {% endblock content %}
     </main>
+
+    {% block follow_newsletter_social_media %}
+      {% if SiteConfig.show_newsletter_and_social_block %}
+        {% include "blocks/follow.html" %}
+      {% endif %}
+    {% endblock follow_newsletter_social_media %}
 
     {% include "blocks/footer.html" %}
 
@@ -58,10 +73,9 @@
     {% endblock extra_js %}
 
     {% block body_tracking_scripts %}
-      {% if settings.content_manager.AnalyticsSettings.body_scripts %}
-        {{ settings.content_manager.AnalyticsSettings.body_scripts|safe }}
+      {% if settings.content_manager.CustomScriptsSettings.body_scripts %}
+        {{ settings.content_manager.CustomScriptsSettings.body_scripts|safe }}
       {% endif %}
-    {% endblock %}
+    {% endblock body_tracking_scripts %}
   </body>
-
 </html>

@@ -1,0 +1,115 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-04 14:57+0200\n"
+"PO-Revision-Date: 2024-09-04 17:00+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: templates/blocks/follow.html:9
+msgctxt "Section title"
+msgid "Subscribe to our newsletter"
+msgstr "Abonnez-vous à notre lettre d’information"
+
+#: templates/blocks/follow.html:13
+msgctxt "Button title"
+msgid "Subscribe to our newsletter"
+msgstr "S'abonner à notre lettre d’information"
+
+#: templates/blocks/follow.html:18
+msgid "Subscribe"
+msgstr "S’abonner"
+
+#: templates/blocks/follow.html:30
+msgid "Follow us <br /> on social media"
+msgstr "Suivez-nous<br />sur les réseaux sociaux"
+
+#: templates/blocks/footer.html:5
+msgid "Back to home page"
+msgstr "Retourner à l’accueil"
+
+#: templates/blocks/footer.html:50
+msgid "Cookie settings"
+msgstr "Gestion des cookies"
+
+#: templates/blocks/footer.html:59
+msgid "Display settings"
+msgstr "Paramètres d’affichage"
+
+#: templates/blocks/footer.html:65 templates/blocks/notice.html:4
+#: templates/blocks/share.html:2
+msgid "Opens a new window"
+msgstr "Ouvre une nouvelle fenêtre"
+
+#: templates/blocks/footer.html:67
+msgid "This website is made with"
+msgstr "Ce site est fait avec"
+
+#: templates/blocks/header.html:5 templates/blocks/header.html:13
+msgid "Home page"
+msgstr "Accueil"
+
+#: templates/blocks/header.html:53 templates/blocks/header.html:78
+msgid "Search"
+msgstr "Rechercher"
+
+#: templates/blocks/header.html:57 templates/blocks/header.html:101
+msgid "Close"
+msgstr "Fermer"
+
+#: templates/blocks/header.html:87
+msgid "Menu"
+msgstr "Menu"
+
+#: templates/blocks/header.html:106
+msgid "Main menu"
+msgstr "Menu principal"
+
+#: templates/blocks/notice.html:2
+msgid "Hide message"
+msgstr "Masquer le message"
+
+#: templates/blocks/notice.html:3
+msgid "Consultation link"
+msgstr "Lien de consultation"
+
+#: templates/blocks/share.html:6
+msgid "Share this page"
+msgstr "Partager cette page"
+
+#: templates/blocks/share.html:10
+msgid "Share on Facebook"
+msgstr "Partager sur Facebook"
+
+#: templates/blocks/share.html:22
+msgid "Share on X (previously Twitter)"
+msgstr "Partager sur X (anciennement Twitter)"
+
+#: templates/blocks/share.html:36
+msgid "Share on LinkedIn"
+msgstr "Partager sur LinkedIn"
+
+#: templates/blocks/share.html:50
+msgid "Share via email"
+msgstr "Partager par email"
+
+#: templates/blocks/share.html:63
+msgid "Page URL copied to clipboard."
+msgstr "Adresse de la page copiée dans le presse-papiers."
+
+#: templates/blocks/share.html:67
+msgid "Copy to clipboard"
+msgstr "Copier dans le presse-papiers"

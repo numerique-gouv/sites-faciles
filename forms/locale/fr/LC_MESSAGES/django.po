@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-10 18:28+0200\n"
+"PO-Revision-Date: 2024-09-10 18:29+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: forms/models.py:18
+msgid "Text field"
+msgstr "Champ de texte"
+
+#: forms/models.py:19
+msgid "Text area"
+msgstr "Zone de texte"
+
+#: forms/models.py:20
+msgid "Email"
+msgstr "Adresse e-mail"
+
+#: forms/models.py:21
+msgid "Number"
+msgstr "Nombre"
+
+#: forms/models.py:22
+msgid "URL"
+msgstr "URL"
+
+#: forms/models.py:23
+msgid "Checkbox"
+msgstr "Case à cocher"
+
+#: forms/models.py:24
+msgid "Checkboxes"
+msgstr "Cases à cocher"
+
+#: forms/models.py:25
+msgid "Drop down"
+msgstr "Liste déroulante"
+
+#: forms/models.py:26
+msgid "Radio buttons"
+msgstr "Boutons radio"
+
+#: forms/models.py:27
+msgid "Date"
+msgstr "Date"
+
+#: forms/models.py:29
+msgid "Hidden field"
+msgstr "Champ caché"
+
+#: forms/models.py:34
+msgid "Field type"
+msgstr "Type de champ"
+
+#: forms/models.py:37 forms/models.py:79
+msgid "Form field"
+msgstr "Champ de formulaire"
+
+#: forms/models.py:38 forms/models.py:79
+msgid "Form fields"
+msgstr "Champs de formulaire"
+
+#: forms/models.py:78
+msgid "Introduction"
+msgstr "Introduction"
+
+#: forms/models.py:80
+msgid "Thank you text"
+msgstr "Texte de remerciement"
+
+#: forms/models.py:91
+msgid "E-mail notification when an answer is sent"
+msgstr "Notification par e-mail quand une réponse est envoyée"
+
+#: forms/models.py:92
+msgid "Optional, will only work if SMTP parameters have been set."
+msgstr "Optionnel, ne fonctionnera que si les paramètres SMTP ont été configurés."
+
+#: forms/models.py:103
+msgid "Form page"
+msgstr "Page de formulaire"
+
+#: forms/models.py:104
+msgid "Form pages"
+msgstr "Pages de formulaire"
+
+#: forms/templates/forms/form_page.html:9
+msgid "Submit form"
+msgstr "Envoyer le formulaire"
+
+#: forms/templates/forms/form_page_landing.html:22
+msgid "Your form has been successfully submitted. Thank you!"
+msgstr "Votre formulaire a été envoyé avec succès. Merci !"
+
+#~ msgid "Single line text"
+#~ msgstr "Texte sur une ligne"
+
+#~ msgid "Multi-line text"
+#~ msgstr "Texte sur plusieurs lignes"
+
+#~ msgid "Date/time"
+#~ msgstr "Date et heure"

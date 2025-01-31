@@ -1,18 +1,48 @@
 import json
 from os.path import isfile
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
-from wagtail.models import Site
+from wagtail.models import Group, Site
 
 from content_manager.models import CmsDsfrConfig
 
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
+        """
+        Sets the site hostname and site_name,
+        and imports contents from the config.json file if present.
+        """
+
+        # Set the site hostname and site_name
+        if "http://" in settings.HOST_URL or "https://" in settings.HOST_URL:
+            raise ValueError(
+                """The HOST_URL environment variable must contain the domain name only,
+                without the port or http/https protocol."""
+            )
+
+        site = Site.objects.filter(is_default_site=True).first()
+        site.hostname = settings.HOST_URL
+        site.site_name = settings.WAGTAIL_SITE_NAME
+        site.save()
+
+        # Translate the names of the default user groups.
+        mods_group = Group.objects.filter(name="Moderators").first()
+        if mods_group:
+            mods_group.name = "Modérateurs"
+            mods_group.save()
+
+        editors_group = Group.objects.filter(name="Editors").first()
+        if editors_group:
+            editors_group.name = "Éditeurs"
+            editors_group.save()
+
+        # Import config.json
         if isfile("config.json"):
             with open("config.json") as config_file:
                 config_data = json.load(config_file)
-                site = Site.objects.filter(is_default_site=True).first()
+
                 config_data["site_id"] = site.id
 
                 _config, created = CmsDsfrConfig.objects.get_or_create(id=1, defaults=config_data)

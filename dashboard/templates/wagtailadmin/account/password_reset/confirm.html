@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load widget_tweaks wagtailadmin_tags i18n static dsfr_tags %}
+{% block content %}
+  <div class="fr-container fr-container--fluid fr-my-md-14v">
+    {% if validlink %}
+      <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+        <div class="fr-col-12 fr-col-md-8 fr-col-lg-6">
+          <div class="fr-container fr-background-alt--grey fr-px-md-0 fr-py-10v fr-py-md-14v">
+            <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
+              <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
+                <h1>{% translate "Set your new password" %}</h1>
+
+                {% include "wagtailadmin/shared/non_field_errors.html" %}
+
+                <form method="post" novalidate>
+                  {% csrf_token %}
+
+                  {% dsfr_form_field form.new_password1 %}
+                  {% dsfr_form_field form.new_password2 %}
+
+                  <button type="submit" class="fr-btn">{% translate "Reset password" %}</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <h1>{% translate "Invalid password reset link" %}</h1>
+      <div role="alert" class="fr-alert fr-alert--error fr-alert--sm fr-my-2w">
+        <p>{% translate "The password reset link was invalid, possibly because it has already been used." %}</p>
+      </div>
+
+      <div class="form-actions">
+        <a href="{% url 'wagtailadmin_password_reset' %}" class="fr-btn">{% translate "Request a new password reset" %}</a>
+      </div>
+    {% endif %}
+  </div>
+{% endblock content %}

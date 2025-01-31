@@ -1,59 +1,35 @@
 {% load dsfr_tags wagtailcore_tags wagtailimages_tags %}
-{% image block.value.bg_image original as bg_img %}
+{% image value.bg_image original as bg_img %}
 <div class="fr-py-5w fr-my-5w"
-     {% if block.value.bg_color_class %}style="background: var(--background-alt-{{ block.value.bg_color_class }});"{% elif bg_img %} style="background: url({{ bg_img.url }}) {{ block.value.bg_color }} no-repeat center" {% elif block.value.bg_color %} style="background: {{ block.value.bg_color }}" {% endif %}>
-    <div class="fr-container">
-        {% if block.value.title %}
-            <div class="fr-grid-row fr-grid-row--gutters">
-                <div class="fr-col-12 fr-mt-3w">
-                    <h2>{{ block.value.title }}</h2>
-                </div>
-            </div>
-        {% endif %}
-        <div class="fr-grid-row fr-grid-row--gutters fr-py-3w">
-            {% for subblock in block.value.columns %}
-                {% if subblock.block_type == 'text' %}
-                    <div class="fr-col-12 fr-col-sm">{{ subblock.value|richtext }}</div>
-                {% elif subblock.block_type == 'text_cta' %}
-                    <div class="fr-col-12 fr-col-sm">
-                        {{ subblock.value.text|richtext }}
-                        {% if subblock.value.cta_url and subblock.value.cta_label %}
-                            <p class="fr-mb-5w">
-                                {# It doesn't use dsfr_link or dsfr_button because it's a link with a button style #}
-                                <a href="{{ subblock.value.cta_url }}" class="fr-btn fr-btn--primary">{{ subblock.value.cta_label }}</a>
-                            </p>
-                        {% endif %}
-                    </div>
-                {% elif subblock.block_type == 'image' %}
-                    <div class="fr-col-12 fr-col-sm">{% include "content_manager/blocks/image.html" with block=subblock %}</div>
-                {% elif subblock.block_type == 'video' %}
-                    <div class="fr-col-12 fr-col-sm">
-                        <h2>{{ subblock.value.title }}</h2>
-                        <div class="fr-content-media">
-                            <iframe title="{{ subblock.value.title }}"
-                                    class="fr-responsive-vid"
-                                    src="{{ subblock.value.url }}"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
-                            <div class="fr-content-media__caption">{{ subblock.value.caption }}</div>
-                        </div>
-                    </div>
-                {% elif subblock.block_type == 'card' %}
-                    <div class="fr-col-12 fr-col-sm">{% include "content_manager/blocks/card.html" with block=subblock %}</div>
-                {% elif subblock.block_type == 'quote' %}
-                    <div class="fr-col-12 fr-col-sm">
-                        {% image subblock.value.image original as img %}
-                        {% dsfr_quote text=subblock.value.quote author=subblock.value.author_name source=subblock.value.author_title image_url=img.url %}
-                    </div>
-                {% elif subblock.block_type == 'iframe' %}
-                    <div class="fr-col-12 fr-col-sm">
-                        <iframe title="{{ subblock.value.title }}"
-                                src="{{ subblock.value.url }}"
-                                height="{{ subblock.value.height }}px"
-                                width="100%"></iframe>
-                    </div>
-                {% endif %}
-            {% endfor %}
+     {% if value.bg_color_class or bg_img or value.bg_color %}style="background:{% endif %}
+     {% if bg_img %}no-repeat center url({{ bg_img.url }}){% endif %}
+     {% if value.bg_color_class %} var(--background-alt-{{ value.bg_color_class }}) {% elif value.bg_color %}{{ value.bg_color }}{% endif %}
+     {% if value.bg_color_class or bg_img or value.bg_color %};"{% endif %}>
+  <div class="fr-container">
+    {% if value.title %}
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-mt-3w">
+          <{{ value.heading_tag|default:"h2" }}>{{ value.title }}</{{ value.heading_tag|default:"h2" }}>
         </div>
+      </div>
+    {% endif %}
+    <div class="fr-grid-row fr-grid-row--gutters fr-py-3w">
+      {% for subblock in value.columns %}
+        {% if subblock.block_type == "column" %}
+          <div class="fr-col-12{% if subblock.value.width %} fr-col-lg-{{ subblock.value.width }}{% endif %}">
+            {% include_block subblock.value.content %}
+          </div>
+        {% elif subblock.block_type == "text" %}
+          <div class="fr-col-12 fr-col-sm">{{ subblock.value|richtext }}</div>
+        {% elif subblock.block_type == "video" %}
+          <div class="fr-col-12 fr-col-sm">
+            <h2>{{ subblock.value.title }}</h2>
+            {% include_block subblock %}
+          </div>
+        {% else %}
+          <div class="fr-col-12 fr-col-sm">{% include_block subblock %}</div>
+        {% endif %}
+      {% endfor %}
     </div>
+  </div>
 </div>

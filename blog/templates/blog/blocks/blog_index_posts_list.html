@@ -1,0 +1,39 @@
+{% load i18n %}
+{% for post in posts %}
+  <div class="fr-col fr-col-md-6">
+    <div class="fr-card fr-enlarge-link">
+      <div class="fr-card__body">
+        <div class="fr-card__content">
+          <h2 class="fr-card__title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </h2>
+          <p class="fr-card__desc">Publié le {{ post.date |date:'l j F Y' }}</p>
+          {% if post.blog_categories.all %}
+            <div class="fr-card__start">
+              <ul class="fr-tags-group">
+                {% for cat in post.blog_categories.all %}
+                  <li>
+                    <p class="fr-tag">{{ cat.name }}</p>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {% if post.header_image %}
+        <div class="fr-card__header">
+          <div class="fr-card__img">
+            <img class="fr-responsive-img"
+                 src="{{ post.header_image.file.url }}"
+                 alt="">
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% empty %}
+  <div class="fr-col">
+    <p>{% translate "No article found." %}</p>
+  </div>
+{% endfor %}

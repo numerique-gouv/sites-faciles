@@ -1,0 +1,53 @@
+{% load static i18n %}
+<div class="icon-picker-widget">
+  <div class="admin-hidden">{% include "django/forms/widgets/text.html" %}</div>
+
+  {% with widget.attrs.id as widget_id %}
+    <button id="{{ widget_id }}-button"
+            class="button bicolor button--icon button-secondary"
+            type="button">
+      <span id="{{ widget_id }}-icon" class="icon-wrapper"></span>{% translate "Select icon" %}
+    </button>
+    <script>
+      (async () => {
+        let widgetInput = document.getElementById('{{ widget_id }}');
+        let widgetIcon = document.getElementById('{{ widget_id }}-icon');
+
+        const options = {
+          iconLibraries: ['dsfr-buildings.json', 'dsfr-business.json', 'dsfr-communication.json', 'dsfr-design.json', 'dsfr-development.json', 'dsfr-device.json', 'dsfr-document.json', 'dsfr-editor.json', 'dsfr-finance.json', 'dsfr-health.json', 'dsfr-logo.json', 'dsfr-map.json', 'dsfr-media.json', 'dsfr-others.json', 'dsfr-system.json', 'dsfr-user.json', 'dsfr-weather.json'],
+          allowEmpty: true,
+          onSelect: function (jsonIconData) {
+            if (jsonIconData.iconClass) {
+              widgetInput.value = jsonIconData.iconClass;
+              widgetIcon.classList.add(jsonIconData.iconClass, "fr-icon--lg", "fr-mt-1w");
+            } else {
+              widgetInput.value = "";
+              widgetIcon.className = "icon-wrapper";
+            }
+          },
+          onReset: function () {
+            widgetInput.innerHTML = "";
+            widgetIcon.className = "";
+          }
+        }
+
+        let _uip = new UniversalIconPicker('#{{ widget_id }}-button', options);
+      })();
+    </script>
+    <script defer>
+        window.addEventListener('DOMContentLoaded', function() {
+          // Set the icon on page load if any
+          let widgetInput = document.getElementById('{{ widget_id }}');
+          let widgetIcon = document.getElementById('{{ widget_id }}-icon');
+
+          if (widgetInput.value) {
+          widgetIcon.classList.add(widgetInput.value, "fr-icon--lg", "fr-mt-1w");
+          console.log("value updated: " + widgetIcon.classList)
+          } else {
+          console.log("no value")
+          }
+        }, false);
+
+    </script>
+  {% endwith %}
+</div>

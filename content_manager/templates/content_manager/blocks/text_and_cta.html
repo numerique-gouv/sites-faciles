@@ -1,0 +1,17 @@
+{% load wagtailcore_tags %}
+<div class="fr-col-12 fr-col-sm">
+  {{ value.text|richtext }}
+
+  {% if value.cta_buttons %}
+    <div>
+      {% for block in value.cta_buttons %}
+        {% include_block block %}
+      {% endfor %}
+    </div>
+  {% elif value.cta_url and value.cta_label %}
+    <p>
+      {# It doesn't use dsfr_link or dsfr_button because it's a link with a button style #}
+      <a href="{{ value.cta_url }}" class="fr-btn fr-btn--primary">{{ value.cta_label }}</a>
+    </p>
+  {% endif %}
+</div>

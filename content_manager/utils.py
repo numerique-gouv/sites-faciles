@@ -5,8 +5,6 @@ from io import BytesIO
 from bs4 import BeautifulSoup
 from django.core.files.images import ImageFile
 from wagtail.images.models import Image
-from wagtail.models import Site
-from wagtailmenus.models.menus import FlatMenu
 
 
 def import_image(full_path: str, title: str) -> Image:
@@ -20,22 +18,6 @@ def import_image(full_path: str, title: str) -> Image:
         )
         image.save()
         return image
-
-
-def get_or_create_footer_menu() -> FlatMenu:
-    """
-    Get the footer menu or create it if it doesn't already exist
-
-    In any case, return it.
-    """
-
-    footer_menu = FlatMenu.objects.filter(handle="footer").first()
-
-    if not footer_menu:
-        default_site = Site.objects.filter(is_default_site=True).first()
-        footer_menu = FlatMenu.objects.create(title="Pied de page", handle="footer", site=default_site)
-
-    return footer_menu
 
 
 def get_streamblock_raw_text(block) -> str:

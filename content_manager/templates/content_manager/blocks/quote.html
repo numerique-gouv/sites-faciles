@@ -1,0 +1,10 @@
+{% load dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% image value.image original as img %}
+
+{% if value.color %}
+  {% with "fr-quote--"|concatenate:value.color as extra_classes %}
+    {% dsfr_quote text=value.quote author=value.author_name source=value.author_title image_url=img.url extra_classes=extra_classes %}
+  {% endwith %}
+{% else %}
+  {% dsfr_quote text=value.quote author=value.author_name source=value.author_title image_url=img.url %}
+{% endif %}

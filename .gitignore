@@ -14,7 +14,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -52,7 +51,7 @@ coverage.xml
 .pytest_cache/
 
 # Translations
-*.mo
+# *.mo
 *.pot
 
 # Django stuff:
@@ -64,6 +63,7 @@ staticfiles/
 images/
 original_images/
 avatar_images/
+medias/
 
 # Flask stuff:
 instance/
@@ -114,6 +114,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# JS stuff
+node_modules/
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -148,3 +151,4 @@ dmypy.json
 # Project-specific stuff
 config.json
 cron.json
+temp.json
