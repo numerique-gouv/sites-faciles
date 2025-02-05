@@ -6,12 +6,18 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from config.api import api_router
+from dashboard.authentication import urls as oidc_urls
 
 urlpatterns = [
     path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.USE_PROCONNECT:
+    urlpatterns += [
+        path("oidc/", include(oidc_urls)),
+    ]
 
 urlpatterns += i18n_patterns(
     path("", include("content_manager.urls")),
