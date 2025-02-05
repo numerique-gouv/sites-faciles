@@ -8,6 +8,20 @@
           <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
             <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
               <h1>{% translate "Connection" %}</h1>
+              <div class="fr-connect-group">
+                <a class="fr-connect" href="{% url 'oidc_authentication_init' %}">
+                  <span class="fr-connect__login">{% translate "Login with" %}</span> <span class="fr-connect__brand">ProConnect</span>
+                </a>
+                <p>
+                  {% translate "What is ProConnect?" as what_is_pro_connect %}
+                  {% translate "Opens a new window" as new_window %}
+                  <a href="https://www.proconnect.gouv.fr/"
+                     target="_blank"
+                     rel="noopener"
+                     title="{{ what_is_pro_connect }} — {{ new_window }}">{{ what_is_pro_connect }}</a>
+                </p>
+              </div>
+
               <div>
                 <form id="login-form" action="{% url 'wagtailadmin_login' %}" method="post">
                   <fieldset class="fr-fieldset"

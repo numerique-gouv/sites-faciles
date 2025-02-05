@@ -338,6 +338,33 @@ if DEFAULT_FROM_EMAIL:
 
 WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
 
+# (Optional) ProConnect settings
+USE_PROCONNECT = os.getenv("USE_PROCONNECT", False)
+OIDC_CREATE_USER = os.getenv("OIDC_CREATE_USER", True)
+OIDC_RP_CLIENT_ID = os.getenv("OIDC_RP_CLIENT_ID", "")
+OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_RP_CLIENT_SECRET", "")
+OIDC_RP_SCOPES = os.getenv("OIDC_RP_SCOPES", "openid given_name usual_name email siret organizational_unit uid")
+OIDC_RP_SIGN_ALGO = os.getenv("OIDC_RP_SIGN_ALGO", "RS256")
+PROCONNECT_DOMAIN = os.getenv("PROCONNECT_DOMAIN", "fca.integ01.dev-agentconnect.fr")
+PROCONNECT_API_ROOT = os.getenv("PROCONNECT_API_ROOT", f"https://{PROCONNECT_DOMAIN}/api/v2")
+OIDC_OP_JWKS_ENDPOINT = f"{PROCONNECT_API_ROOT}/jwks"
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"{PROCONNECT_API_ROOT}/authorize"
+OIDC_OP_TOKEN_ENDPOINT = f"{PROCONNECT_API_ROOT}/token"
+OIDC_OP_USER_ENDPOINT = f"{PROCONNECT_API_ROOT}/userinfo"
+OIDC_OP_LOGOUT_ENDPOINT = f"{PROCONNECT_API_ROOT}/session/end"
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+if USE_PROCONNECT:
+    INSTALLED_APPS += [
+        "mozilla_django_oidc",
+    ]
+    AUTHENTICATION_BACKENDS = [
+        "django.contrib.auth.backends.ModelBackend",
+        "mozilla_django_oidc.auth.OIDCAuthenticationBackend",
+    ]
+
 # CSRF
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
