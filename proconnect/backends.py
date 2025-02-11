@@ -6,12 +6,15 @@ import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import SuspiciousOperation
+from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
 from mozilla_django_oidc.auth import (
     OIDCAuthenticationBackend as MozillaOIDCAuthenticationBackend,
 )
 
-from dashboard.authentication.exceptions import DuplicateEmailError
+from proconnect.exceptions import DuplicateEmailError
+from proconnect.models import UserOIDC
+from proconnect.utils import get_user_by_sub_or_email
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -42,7 +45,6 @@ class OIDCAuthenticationBackend(MozillaOIDCAuthenticationBackend):
         Returns:
         - dict: User details dictionary obtained from the OpenID Connect user endpoint.
         """
-
         user_response = requests.get(
             self.OIDC_OP_USER_ENDPOINT,
             headers={"Authorization": f"Bearer {access_token}"},
@@ -78,7 +80,6 @@ class OIDCAuthenticationBackend(MozillaOIDCAuthenticationBackend):
 
     def get_or_create_user(self, access_token, id_token, payload):
         """Return a User based on userinfo. Create a new user if no match is found."""
-
         user_info = self.get_userinfo(access_token, id_token, payload)
 
         if not self.verify_claims(user_info):
@@ -86,40 +87,29 @@ class OIDCAuthenticationBackend(MozillaOIDCAuthenticationBackend):
 
         sub = user_info["sub"]
         email = user_info.get("email")
+        first_name = user_info.get("given_name")
+        last_name = user_info.get("usual_name")
 
-        # Get user's full name from OIDC fields defined in settings
-        full_name = self.compute_full_name(user_info)
-        short_name = user_info.get(settings.USER_OIDC_FIELD_TO_SHORTNAME)
-
-        claims = {
-            "email": email,
-            "full_name": full_name,
-            "short_name": short_name,
-        }
+        user_properties = {"email": email, "first_name": first_name, "last_name": last_name}
 
         try:
-            user = User.objects.get_user_by_sub_or_email(sub, email)
+            user = get_user_by_sub_or_email(sub, email)
         except DuplicateEmailError as err:
             raise SuspiciousOperation(err.message) from err
 
         if user:
             if not user.is_active:
                 raise SuspiciousOperation(_("User account is disabled"))
-            self.update_user_if_needed(user, claims)
+            self.update_user_if_needed(user, user_properties)
         elif self.get_settings("OIDC_CREATE_USER", True):
-            user = User.objects.create(sub=sub, password="!", **claims)  # noqa: S106
+            user = User.objects.create(password=get_random_string(42), **user_properties)
+            _user_claims = UserOIDC.objects.create(user=user, sub=sub)
 
         return user
 
-    def compute_full_name(self, user_info):
-        """Compute user's full name based on OIDC fields in settings."""
-        name_fields = settings.USER_OIDC_FIELDS_TO_FULLNAME
-        full_name = " ".join(user_info[field] for field in name_fields if user_info.get(field))
-        return full_name or None
-
-    def update_user_if_needed(self, user, claims):
-        """Update user claims if they have changed."""
-        has_changed = any(value and value != getattr(user, key) for key, value in claims.items())
+    def update_user_if_needed(self, user, user_properties):
+        """Update user properties if they have changed."""
+        has_changed = any(value and value != getattr(user, key) for key, value in user_properties.items())
         if has_changed:
-            updated_claims = {key: value for key, value in claims.items() if value}
-            self.UserModel.objects.filter(id=user.id).update(**updated_claims)
+            updated_properties = {key: value for key, value in user_properties.items() if value}
+            self.UserModel.objects.filter(id=user.id).update(**updated_properties)
