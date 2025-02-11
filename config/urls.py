@@ -8,7 +8,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from config.api import api_router
-from dashboard.authentication import urls as oidc_urls
+from proconnect import urls as oidc_urls
 
 urlpatterns = [
     path("sitemap.xml", sitemap,),

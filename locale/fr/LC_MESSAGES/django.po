@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-04 14:57+0200\n"
-"PO-Revision-Date: 2024-09-04 17:00+0200\n"
+"POT-Creation-Date: 2025-02-11 18:21+0100\n"
+"PO-Revision-Date: 2025-02-11 18:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,6 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.4.2\n"
+
+#: proconnect/backends.py:63
+msgid "Invalid response format or token verification failed"
+msgstr "Format de réponse invalide ou vérification du jeton échouée"
+
+#: proconnect/backends.py:102
+msgid "User account is disabled"
+msgstr "Compte utilisateur désactivé"
+
+#: proconnect/models.py:15
+msgid "sub"
+msgstr "sub"
+
+#: proconnect/models.py:16
+msgid ""
+"Required. 255 characters or fewer. Letters, numbers, and @/./+/-/_/: "
+"characters only."
+msgstr ""
+"Obligatoire. 255 caractères ou moins, parmi lettres, nombres et @/./+/-/_/: "
+"uniquement."
+
+#: proconnect/validators.py:6
+msgid ""
+"Enter a valid sub. This value may contain only letters, numbers, and @/./+/-/"
+"_/: characters."
+msgstr ""
+"Entrez un sub valide. Cette valeur ne peut contenir que des lettres, nombres "
+"et @/./+/-/_/: uniquement."
 
 #: templates/blocks/follow.html:9
 msgctxt "Section title"
@@ -62,19 +90,31 @@ msgstr "Ce site est fait avec"
 msgid "Home page"
 msgstr "Accueil"
 
-#: templates/blocks/header.html:53 templates/blocks/header.html:78
+#: templates/blocks/header.html:53
+msgid "Hello"
+msgstr "Bonjour"
+
+#: templates/blocks/header.html:53
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: templates/blocks/header.html:58
+msgid "Log in"
+msgstr "Connexion"
+
+#: templates/blocks/header.html:64 templates/blocks/header.html:89
 msgid "Search"
 msgstr "Rechercher"
 
-#: templates/blocks/header.html:57 templates/blocks/header.html:101
+#: templates/blocks/header.html:68 templates/blocks/header.html:112
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/blocks/header.html:87
+#: templates/blocks/header.html:98
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/blocks/header.html:106
+#: templates/blocks/header.html:117
 msgid "Main menu"
 msgstr "Menu principal"
 
