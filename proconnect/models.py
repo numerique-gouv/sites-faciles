@@ -21,5 +21,11 @@ class UserOIDC(models.Model):
         null=True,
     )
 
+    siret = models.CharField(
+        _("SIRET"),
+        max_length=14,
+        blank=True,
+    )
+
     def __str__(self):
         return self.user.get_username()

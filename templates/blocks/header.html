@@ -49,8 +49,14 @@
   {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
   {% if user.is_authenticated %}
     <li>
-      <a class="fr-btn fr-icon-logout-box-r-line"
-         href="{% settings_value 'LOGOUT_URL' %}">{% translate "Hello" %}, {{ user.get_full_name }} ({% translate "Log out" %})</a>
+      {# The logout operation has to be performed via a POST with a csrf token for security reasons, so using a form. #}
+      {# Cf. https://docs.djangoproject.com/en/5.1/releases/4.1/#log-out-via-get #}
+      <form action="{% url 'oidc_logout_custom' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="fr-btn fr-icon-logout-box-r-line">
+          {% translate "Hello" %}, {{ user.get_full_name }} ({% translate "Log out" %})
+        </button>
+      </form>
     </li>
   {% elif settings.content_manager.CmsDsfrConfig.header_login_button %}
     <li>

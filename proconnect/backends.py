@@ -4,9 +4,11 @@ import logging
 
 import requests
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.core.exceptions import SuspiciousOperation
 from django.utils.crypto import get_random_string
+from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
 from mozilla_django_oidc.auth import (
     OIDCAuthenticationBackend as MozillaOIDCAuthenticationBackend,
@@ -39,7 +41,7 @@ class OIDCAuthenticationBackend(MozillaOIDCAuthenticationBackend):
         but were kept to preserve base method signature.
 
         Note: It handles signed and/or encrypted UserInfo Response. It is required by
-        Agent Connect, which follows the OIDC standard. It forces us to override the
+        ProConnect, which follows the OIDC standard. It forces us to override the
         base method, which deal with 'application/json' response.
 
         Returns:
@@ -89,11 +91,17 @@ class OIDCAuthenticationBackend(MozillaOIDCAuthenticationBackend):
         email = user_info.get("email")
         first_name = user_info.get("given_name")
         last_name = user_info.get("usual_name")
+        siret = user_info.get("siret", "")
 
-        user_properties = {"email": email, "first_name": first_name, "last_name": last_name}
+        user_properties = {
+            "username": email,
+            "email": email,
+            "first_name": first_name,
+            "last_name": last_name,
+        }
 
         try:
-            user = get_user_by_sub_or_email(sub, email)
+            user = get_user_by_sub_or_email(sub, email, siret)
         except DuplicateEmailError as err:
             raise SuspiciousOperation(err.message) from err
 
@@ -102,8 +110,27 @@ class OIDCAuthenticationBackend(MozillaOIDCAuthenticationBackend):
                 raise SuspiciousOperation(_("User account is disabled"))
             self.update_user_if_needed(user, user_properties)
         elif self.get_settings("OIDC_CREATE_USER", True):
-            user = User.objects.create(password=get_random_string(42), **user_properties)
-            _user_claims = UserOIDC.objects.create(user=user, sub=sub)
+            user_creation_filter = self.get_settings("PROCONNECT_USER_CREATION_FILTER", None)
+            if user_creation_filter:
+                user_creation_filter_method = import_string(user_creation_filter)
+                filter_passed = user_creation_filter_method(user_info)
+                if filter_passed["status"] == "success":
+                    user = self.create_user_custom(sub, user_info, user_properties)
+                else:
+                    messages.add_message(self.request, messages.ERROR, filter_passed["message"])
+                    raise SuspiciousOperation(filter_passed["message"])
+            else:
+                user = self.create_user_custom(sub, user_info, user_properties)
+
+        return user
+
+    def create_user_custom(self, sub, user_info, user_properties):
+        """
+        The actual creation of the user
+        """
+        user = User.objects.create(password=get_random_string(42), **user_properties)
+        siret = user_info.get("siret", "")
+        _user_claims = UserOIDC.objects.create(user=user, sub=sub, siret=siret)
 
         return user
 
