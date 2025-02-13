@@ -345,7 +345,7 @@ USE_PROCONNECT = os.getenv("USE_PROCONNECT", False)
 OIDC_CREATE_USER = os.getenv("OIDC_CREATE_USER", True)
 OIDC_RP_CLIENT_ID = os.getenv("OIDC_RP_CLIENT_ID", "")
 OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_RP_CLIENT_SECRET", "")
-OIDC_RP_SCOPES = os.getenv("OIDC_RP_SCOPES", "openid given_name usual_name email uid")
+OIDC_RP_SCOPES = os.getenv("OIDC_RP_SCOPES", "openid given_name usual_name email siret uid")
 OIDC_RP_SIGN_ALGO = os.getenv("OIDC_RP_SIGN_ALGO", "RS256")
 PROCONNECT_DOMAIN = os.getenv("PROCONNECT_DOMAIN", "fca.integ01.dev-agentconnect.fr")
 PROCONNECT_API_ROOT = os.getenv("PROCONNECT_API_ROOT", f"https://{PROCONNECT_DOMAIN}/api/v2")
@@ -356,8 +356,8 @@ OIDC_OP_USER_ENDPOINT = f"{PROCONNECT_API_ROOT}/userinfo"
 OIDC_OP_LOGOUT_ENDPOINT = f"{PROCONNECT_API_ROOT}/session/end"
 USER_OIDC_ESSENTIAL_CLAIMS = ["email"]
 OIDC_AUTH_REQUEST_EXTRA_PARAMS = {"acr_values": "eidas1"}
-OIDC_USERNAME_ALGO = "proconnect.utils.generate_username_as_email"
 OIDC_REDIRECT_ALLOWED_HOSTS = ALLOWED_HOSTS
+PROCONNECT_USER_CREATION_FILTER = os.getenv("PROCONNECT_USER_CREATION_FILTER", None)
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
@@ -373,7 +373,7 @@ if USE_PROCONNECT:
         "proconnect.backends.OIDCAuthenticationBackend",
     ]
 
-    LOGOUT_URL = "oidc/logout/"
+    LOGOUT_URL = "/oidc/logout/"
 
 # CSRF
 CSRF_TRUSTED_ORIGINS = []

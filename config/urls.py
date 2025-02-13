@@ -18,6 +18,7 @@ urlpatterns = [
     path("favicon.ico", RedirectView.as_view(url="/static/dsfr/dist/favicon/favicon.ico", permanent=True)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+
 if settings.USE_PROCONNECT:
     urlpatterns += [
         path("oidc/", include(oidc_urls)),
