@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from wagtail.models import Page
 from wagtail.rich_text import RichText
@@ -8,6 +8,8 @@ from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from content_manager.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
 from content_manager.utils import get_default_site
+
+User = get_user_model()
 
 
 class ContentPageTestCase(WagtailPageTestCase):
