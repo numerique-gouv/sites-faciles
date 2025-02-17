@@ -1,10 +1,12 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 
 from content_manager.models import ContentPage
+
+User = get_user_model()
 
 
 class APITestCase(WagtailPageTestCase):
