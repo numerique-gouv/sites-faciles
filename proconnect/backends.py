@@ -111,9 +111,11 @@ class OIDCAuthenticationBackend(MozillaOIDCAuthenticationBackend):
             self.update_user_if_needed(user, user_properties)
         elif self.get_settings("OIDC_CREATE_USER", True):
             user_creation_filter = self.get_settings("PROCONNECT_USER_CREATION_FILTER", None)
+            print(f"user_creation_filter: {user_creation_filter}")
             if user_creation_filter:
                 user_creation_filter_method = import_string(user_creation_filter)
                 filter_passed = user_creation_filter_method(user_info)
+                print(filter_passed)
                 if filter_passed["status"] == "success":
                     user = self.create_user_custom(sub, user_info, user_properties)
                 else:
