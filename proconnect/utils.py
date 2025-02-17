@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from proconnect.models import UserOIDC
+from proconnect.models import UserOIDC, WhitelistedEmailDomain
 
 User = get_user_model()
 
@@ -24,17 +24,30 @@ def get_user_by_sub_or_email(sub: str, email: str, siret: str):
     return user
 
 
-def email_domain_whitelist(user_info: dict) -> dict:
+def email_domain_basic_whitelist(user_info: dict) -> dict:
     """
-    Example method of a filter for ProConnect.
+    Example method of a filter for account creation when using ProConnect.
 
     Checks the email domain and returns True if it is a gov domain.
-
-    For now just checking if it ends in .gouv.fr but this method should be able to take a
-    proper whitelist at some point
     """
     email = user_info.get("email")
     if email.endswith(".gouv.fr"):
+        result = {"status": "success"}
+    else:
+        result = {"status": "error", "message": _("User email domain not allowed.")}
+
+    return result
+
+
+def email_domain_db_whitelist(user_info: dict) -> dict:
+    """
+    Example method of a filter for account creation when using ProConnect.
+
+    Checks the email domain against the database and returns True if it is a gov domain.
+    """
+    email = user_info.get("email")
+    domain = email.split("@")[1]
+    if WhitelistedEmailDomain.objects.filter(domain=domain).count():
         result = {"status": "success"}
     else:
         result = {"status": "error", "message": _("User email domain not allowed.")}

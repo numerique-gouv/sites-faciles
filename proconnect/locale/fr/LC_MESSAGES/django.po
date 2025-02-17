@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 17:55+0100\n"
-"PO-Revision-Date: 2025-02-13 17:56+0100\n"
+"POT-Creation-Date: 2025-02-17 16:36+0100\n"
+"PO-Revision-Date: 2025-02-17 16:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -27,11 +27,11 @@ msgstr "Format de réponse invalide ou vérification du jeton échouée"
 msgid "User account is disabled"
 msgstr "Le compte utilisateur est désactivé"
 
-#: proconnect/models.py:15
+#: proconnect/models.py:19
 msgid "sub"
 msgstr "sub"
 
-#: proconnect/models.py:16
+#: proconnect/models.py:20
 msgid ""
 "Required. 255 characters or fewer. Letters, numbers, and @/./+/-/_/: "
 "characters only."
@@ -39,11 +39,28 @@ msgstr ""
 "Obligatoire. 255 caractères ou moins, parmi lettres, nombres et @/./+/-/_/: "
 "uniquement."
 
-#: proconnect/models.py:25
+#: proconnect/models.py:29
 msgid "SIRET"
 msgstr "SIRET"
 
-#: proconnect/utils.py:40
+#: proconnect/models.py:45
+msgid "domain name"
+msgstr "nom de domaine"
+
+#: proconnect/models.py:46
+msgid "Required. 255 characters or fewer. Needs to be a valid domain name."
+msgstr ""
+"Obligatoire. 255 caractères ou moins. Doit être un nom de domaine valide."
+
+#: proconnect/models.py:66
+msgid "whitelisted email domain"
+msgstr "domaine email en liste blanche"
+
+#: proconnect/models.py:67
+msgid "whitelisted email domains"
+msgstr "domaines email en liste blanche"
+
+#: proconnect/utils.py:37 proconnect/utils.py:53
 msgid "User email domain not allowed."
 msgstr "Le domaine de l’adresse électronique n’est pas autorisé."
 
