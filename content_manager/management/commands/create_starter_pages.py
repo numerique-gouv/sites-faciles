@@ -3,12 +3,13 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.urls import reverse
 from wagtail.images.models import Image
-from wagtail.models import Page, Site
+from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 
 from content_manager.models import ContentPage
 from content_manager.services.accessors import get_or_create_footer_menu, get_or_create_main_menu
+from content_manager.utils import get_default_site
 from forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite", "contact"]
@@ -134,7 +135,7 @@ class Command(BaseCommand):
         home_page = root.add_child(instance=ContentPage(title=title, body=body, show_in_menus=True))
 
         # Define it as default for the default site
-        site = Site.objects.filter(is_default_site=True).first()
+        site = get_default_site()
 
         site.root_page_id = home_page.id
         site.save()
@@ -159,7 +160,7 @@ class Command(BaseCommand):
             self.stdout.write(f"The {slug} page seem to already exist with id {already_exists.id}")
             return
 
-        home_page = Site.objects.filter(is_default_site=True).first().root_page
+        home_page = get_default_site().root_page
         new_page = home_page.add_child(instance=ContentPage(title=title, body=body, slug=slug, show_in_menus=True))
 
         footer_menu = get_or_create_footer_menu()
@@ -199,7 +200,7 @@ class Command(BaseCommand):
 
         thank_you_text = RichText("<p>Merci pour votre message ! Nous reviendrons vers vous rapidement.</p>")
 
-        default_site = Site.objects.filter(is_default_site=True).first()
+        default_site = get_default_site()
         home_page = default_site.root_page
         contact_page = home_page.add_child(
             instance=FormPage(title=title, slug=slug, intro=intro, thank_you_text=thank_you_text, show_in_menus=True)

@@ -1,9 +1,9 @@
 from pathlib import Path
 
 from django.core.management.base import BaseCommand
-from wagtail.models import Site
 
 from content_manager.services.import_export import ExportPage, ImportExportImages, ImportPages
+from content_manager.utils import get_default_site
 
 SOURCE_URL = "https://sites-faciles.beta.numerique.gouv.fr/"
 
@@ -37,7 +37,7 @@ class Command(BaseCommand):
 
         parent_page_slug = kwargs.get("parent_page_slug")
         if not parent_page_slug:
-            site = Site.objects.filter(is_default_site=True).first()
+            site = get_default_site()
             parent_page_slug = site.root_page.slug
 
         image_folder = Path("/tmp/sf_img")
