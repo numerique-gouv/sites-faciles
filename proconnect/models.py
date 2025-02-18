@@ -4,7 +4,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.panels import FieldPanel
 from wagtail.search import index
-from wagtail.snippets.models import register_snippet
 
 from proconnect.validators import sub_validator
 
@@ -35,7 +34,6 @@ class UserOIDC(models.Model):
         return self.user.get_username()
 
 
-@register_snippet
 class WhitelistedEmailDomain(index.Indexed, models.Model):
     """
     Used for the domain whitelist validation
