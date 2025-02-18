@@ -341,8 +341,8 @@ if DEFAULT_FROM_EMAIL:
 WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
 
 # (Optional) ProConnect settings
-USE_PROCONNECT = os.getenv("USE_PROCONNECT", False)
-OIDC_CREATE_USER = os.getenv("OIDC_CREATE_USER", True)
+USE_PROCONNECT = True if os.getenv("USE_PROCONNECT", False) == "True" else False
+OIDC_CREATE_USER = True if os.getenv("OIDC_CREATE_USER", False) == "True" else False
 OIDC_RP_CLIENT_ID = os.getenv("OIDC_RP_CLIENT_ID", "")
 OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_RP_CLIENT_SECRET", "")
 OIDC_RP_SCOPES = os.getenv("OIDC_RP_SCOPES", "openid given_name usual_name email siret uid")
