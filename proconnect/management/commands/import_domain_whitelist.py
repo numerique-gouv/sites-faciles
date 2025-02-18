@@ -13,9 +13,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         api_endpoint = "https://domaines-lasuite.numerique.gouv.fr/v1/domains"
-        api_key = settings.LASUITE_API_KEY
+        api_key = settings.LASUITE_DOMAINE_API_KEY
         if not api_key:
-            raise ValueError("The LASUITE_API_KEY environment variable must be set.")
+            raise ValueError("The LASUITE_DOMAINE_API_KEY environment variable must be set.")
 
         headers = {"Authorization": f"Bearer {api_key}"}
         result = requests.get(api_endpoint, headers=headers)
