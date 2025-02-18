@@ -43,5 +43,5 @@ class UserbarPageAPILinkItem:
 
 
 @hooks.register("construct_wagtail_userbar")
-def add_page_api_link_item(request, items):
+def add_page_api_link_item(request, items, page):
     return items.append(UserbarPageAPILinkItem())
