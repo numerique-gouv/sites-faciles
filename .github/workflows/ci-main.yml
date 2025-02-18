@@ -7,17 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DJANGO_SETTINGS_MODULE: config.settings_test
-      PYTHONPATH: .
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
+        # Only include the first and last supported pgsql versions to limit
+        # the number of jobs
+        postgresql-version: [13, 17]
     services:
       postgres:
-        image: postgres:14-alpine
+        image: postgres:${{ matrix.postgresql-version }}-alpine
         env:
           POSTGRES_USER: dju
           POSTGRES_PASSWORD: djpwd
           POSTGRES_DB: djdb
+          POSTGRESQL_VERSION: ${{ matrix.postgresql-version }}
         ports:
           - 5432:5432
     steps:
