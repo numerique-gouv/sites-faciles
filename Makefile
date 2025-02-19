@@ -102,3 +102,7 @@ test:
 .PHONY: test-unit
 test-unit:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --settings config.settings_test
+
+.PHONY: import_domain_whitelist
+import_domain_whitelist:
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_domain_whitelist
