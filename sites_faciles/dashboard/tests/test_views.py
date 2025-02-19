@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
 
-from content_manager.models import ContentPage
+from sites_faciles.blog.models import ContentPage
 
 
 class DashboardTestCase(WagtailPageTestCase):

@@ -854,7 +854,7 @@ class Migration(migrations.Migration):
                     112: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Blog", "page_type": ["blog.BlogIndexPage"]},
+                        {"label": "Blog", "page_type": ["sites_faciles.blogBlogIndexPage"]},
                     ),
                     113: (
                         "wagtail.blocks.IntegerBlock",
@@ -869,7 +869,7 @@ class Migration(migrations.Migration):
                     ),
                     114: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Category",),
+                        ("sites_faciles.blogCategory",),
                         {"label": "Filter by category", "required": False},
                     ),
                     115: (
@@ -879,12 +879,12 @@ class Migration(migrations.Migration):
                     ),
                     116: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {"label": "Filter by author", "required": False},
                     ),
                     117: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Organization",),
+                        ("sites_faciles.blogOrganization",),
                         {
                             "help_text": "The source is the organization of the post author",
                             "label": "Filter by source",
@@ -1029,7 +1029,7 @@ class Migration(migrations.Migration):
                     ),
                     134: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {
                             "help_text": "Optional, all values can be manually specified or overriden below",
                             "label": "Person",
@@ -2277,7 +2277,7 @@ class Migration(migrations.Migration):
                     112: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Blog", "page_type": ["blog.BlogIndexPage"]},
+                        {"label": "Blog", "page_type": ["sites_faciles.blogBlogIndexPage"]},
                     ),
                     113: (
                         "wagtail.blocks.IntegerBlock",
@@ -2292,7 +2292,7 @@ class Migration(migrations.Migration):
                     ),
                     114: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Category",),
+                        ("sites_faciles.blogCategory",),
                         {"label": "Filter by category", "required": False},
                     ),
                     115: (
@@ -2302,12 +2302,12 @@ class Migration(migrations.Migration):
                     ),
                     116: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {"label": "Filter by author", "required": False},
                     ),
                     117: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Organization",),
+                        ("sites_faciles.blogOrganization",),
                         {
                             "help_text": "The source is the organization of the post author",
                             "label": "Filter by source",
@@ -2452,7 +2452,7 @@ class Migration(migrations.Migration):
                     ),
                     134: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {
                             "help_text": "Optional, all values can be manually specified or overriden below",
                             "label": "Person",
@@ -3601,7 +3601,7 @@ class Migration(migrations.Migration):
                     95: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Blog", "page_type": ["blog.BlogIndexPage"]},
+                        {"label": "Blog", "page_type": ["sites_faciles.blogBlogIndexPage"]},
                     ),
                     96: (
                         "wagtail.blocks.IntegerBlock",
@@ -3616,7 +3616,7 @@ class Migration(migrations.Migration):
                     ),
                     97: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Category",),
+                        ("sites_faciles.blogCategory",),
                         {"label": "Filter by category", "required": False},
                     ),
                     98: (
@@ -3626,12 +3626,12 @@ class Migration(migrations.Migration):
                     ),
                     99: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {"label": "Filter by author", "required": False},
                     ),
                     100: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Organization",),
+                        ("sites_faciles.blogOrganization",),
                         {
                             "help_text": "The source is the organization of the post author",
                             "label": "Filter by source",
@@ -3877,7 +3877,7 @@ class Migration(migrations.Migration):
                     ),
                     137: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {
                             "help_text": "Optional, all values can be manually specified or overriden below",
                             "label": "Person",

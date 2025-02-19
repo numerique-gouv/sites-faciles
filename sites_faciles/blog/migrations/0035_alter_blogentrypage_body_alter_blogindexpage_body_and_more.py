@@ -877,7 +877,7 @@ class Migration(migrations.Migration):
                     116: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Blog", "page_type": ["blog.BlogIndexPage"]},
+                        {"label": "Blog", "page_type": ["sites_faciles.blogBlogIndexPage"]},
                     ),
                     117: (
                         "wagtail.blocks.IntegerBlock",
@@ -892,7 +892,7 @@ class Migration(migrations.Migration):
                     ),
                     118: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Category",),
+                        ("sites_faciles.blogCategory",),
                         {"label": "Filter by category", "required": False},
                     ),
                     119: (
@@ -902,12 +902,12 @@ class Migration(migrations.Migration):
                     ),
                     120: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {"label": "Filter by author", "required": False},
                     ),
                     121: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Organization",),
+                        ("sites_faciles.blogOrganization",),
                         {
                             "help_text": "The source is the organization of the post author",
                             "label": "Filter by source",
@@ -2214,7 +2214,7 @@ class Migration(migrations.Migration):
                     116: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Blog", "page_type": ["blog.BlogIndexPage"]},
+                        {"label": "Blog", "page_type": ["sites_faciles.blogBlogIndexPage"]},
                     ),
                     117: (
                         "wagtail.blocks.IntegerBlock",
@@ -2229,7 +2229,7 @@ class Migration(migrations.Migration):
                     ),
                     118: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Category",),
+                        ("sites_faciles.blogCategory",),
                         {"label": "Filter by category", "required": False},
                     ),
                     119: (
@@ -2239,12 +2239,12 @@ class Migration(migrations.Migration):
                     ),
                     120: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {"label": "Filter by author", "required": False},
                     ),
                     121: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Organization",),
+                        ("sites_faciles.blogOrganization",),
                         {
                             "help_text": "The source is the organization of the post author",
                             "label": "Filter by source",
@@ -3433,7 +3433,7 @@ class Migration(migrations.Migration):
                     98: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Blog", "page_type": ["blog.BlogIndexPage"]},
+                        {"label": "Blog", "page_type": ["sites_faciles.blogBlogIndexPage"]},
                     ),
                     99: (
                         "wagtail.blocks.IntegerBlock",
@@ -3448,7 +3448,7 @@ class Migration(migrations.Migration):
                     ),
                     100: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Category",),
+                        ("sites_faciles.blogCategory",),
                         {"label": "Filter by category", "required": False},
                     ),
                     101: (
@@ -3458,12 +3458,12 @@ class Migration(migrations.Migration):
                     ),
                     102: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Person",),
+                        ("sites_faciles.blogPerson",),
                         {"label": "Filter by author", "required": False},
                     ),
                     103: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("blog.Organization",),
+                        ("sites_faciles.blogOrganization",),
                         {
                             "help_text": "The source is the organization of the post author",
                             "label": "Filter by source",

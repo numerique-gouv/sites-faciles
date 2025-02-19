@@ -5,7 +5,7 @@ from django.template.context import Context
 from django.utils.html import mark_safe
 from wagtail.rich_text import RichText
 
-from content_manager.models import MegaMenu
+from sites_faciles.blog.models import MegaMenu
 
 register = template.Library()
 

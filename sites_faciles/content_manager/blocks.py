@@ -9,7 +9,7 @@ from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import (
+from sites_faciles.blog.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
     GRID_3_4_6_CHOICES,
@@ -24,7 +24,7 @@ from content_manager.constants import (
     MEDIA_WIDTH_CHOICES,
     TEXT_SIZE_CHOICES,
 )
-from content_manager.widgets import DsfrIconPickerWidget
+from sites_faciles.blog.widgets import DsfrIconPickerWidget
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
@@ -771,7 +771,7 @@ class VerticalContactCardStructValue(blocks.StructValue):
 
 class VerticalContactCardBlock(blocks.StructBlock):
     contact = SnippetChooserBlock(
-        "blog.Person",
+        "sites_faciles.blogPerson",
         label=_("Person"),
         help_text=_("Optional, all values can be manually specified or overriden below"),
         required=False,
@@ -883,15 +883,15 @@ class BlogRecentEntriesBlock(blocks.StructBlock):
         default="h2",
         help_text=_("Adapt to the page layout. Defaults to heading 2."),
     )
-    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
+    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="sites_faciles.blogBlogIndexPage")
     entries_count = blocks.IntegerBlock(
         label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
     )
-    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
+    category_filter = SnippetChooserBlock("sites_faciles.blogCategory", label=_("Filter by category"), required=False)
     tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
-    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
+    author_filter = SnippetChooserBlock("sites_faciles.blogPerson", label=_("Filter by author"), required=False)
     source_filter = SnippetChooserBlock(
-        "blog.Organization",
+        "sites_faciles.blogOrganization",
         label=_("Filter by source"),
         help_text=_("The source is the organization of the post author"),
         required=False,
@@ -917,11 +917,11 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
     entries_count = blocks.IntegerBlock(
         label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
     )
-    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
+    category_filter = SnippetChooserBlock("sites_faciles.blogCategory", label=_("Filter by category"), required=False)
     tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
-    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
+    author_filter = SnippetChooserBlock("sites_faciles.blogPerson", label=_("Filter by author"), required=False)
     source_filter = SnippetChooserBlock(
-        "blog.Organization",
+        "sites_faciles.blogOrganization",
         label=_("Filter by source"),
         help_text=_("The source is the organization of the post author"),
         required=False,

@@ -17,8 +17,8 @@ from wagtail.models.i18n import Locale
 from wagtail.search import index
 
 from blog.models import Category, CategorySerializer, Organization, Person, PersonSerializer
-from content_manager.abstract import SitesFacilesBasePage
-from content_manager.models import CmsDsfrConfig, Tag
+from sites_faciles.blog.abstract import SitesFacilesBasePage
+from sites_faciles.blog.models import CmsDsfrConfig, Tag
 from events.forms import EventSearchForm
 
 
@@ -274,7 +274,7 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     tags = ClusterTaggableManager(through="TagEventEntryPage", blank=True)
 
     event_categories = ParentalManyToManyField(
-        "blog.Category",
+        "sites_faciles.blogCategory",
         through="CategoryEventEntryPage",
         blank=True,
         verbose_name=_("Categories"),
@@ -288,7 +288,7 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     registration_url = models.URLField(verbose_name=_("Registration URL"), blank=True, null=True)
 
     authors = ParentalManyToManyField(
-        "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
+        "sites_faciles.blogPerson", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
 
     parent_page_types = ["events.EventsIndexPage"]

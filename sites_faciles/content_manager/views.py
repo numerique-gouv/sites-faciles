@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, TemplateView
 from unidecode import unidecode
 
-from content_manager.models import ContentPage, Tag
+from sites_faciles.blog.models import ContentPage, Tag
 
 
 class SearchResultsView(ListView):

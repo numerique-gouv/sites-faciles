@@ -5,8 +5,8 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from wagtail.models import Group
 
-from content_manager.models import CmsDsfrConfig
-from content_manager.utils import get_default_site
+from sites_faciles.blog.models import CmsDsfrConfig
+from sites_faciles.blog.utils import get_default_site
 
 
 class Command(BaseCommand):

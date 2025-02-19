@@ -4,7 +4,7 @@ from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 
-from content_manager.models import ContentPage
+from sites_faciles.blog.models import ContentPage
 
 
 class APITestCase(WagtailPageTestCase):

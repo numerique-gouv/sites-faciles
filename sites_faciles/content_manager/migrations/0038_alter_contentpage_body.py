@@ -2889,7 +2889,7 @@ class Migration(migrations.Migration):
                                                         (
                                                             "blog",
                                                             wagtail.blocks.PageChooserBlock(
-                                                                label="Blog", page_type=["blog.BlogIndexPage"]
+                                                                label="Blog", page_type=["sites_faciles.blogBlogIndexPage"]
                                                             ),
                                                         ),
                                                         (
@@ -2905,7 +2905,7 @@ class Migration(migrations.Migration):
                                                         (
                                                             "category_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Category",
+                                                                "sites_faciles.blogCategory",
                                                                 label="Filter by category",
                                                                 required=False,
                                                             ),
@@ -2921,13 +2921,13 @@ class Migration(migrations.Migration):
                                                         (
                                                             "author_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Person", label="Filter by author", required=False
+                                                                "sites_faciles.blogPerson", label="Filter by author", required=False
                                                             ),
                                                         ),
                                                         (
                                                             "source_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Organization",
+                                                                "sites_faciles.blogOrganization",
                                                                 help_text="The source is the organization of the post author",
                                                                 label="Filter by source",
                                                                 required=False,
@@ -2986,7 +2986,7 @@ class Migration(migrations.Migration):
                                                         (
                                                             "category_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Category",
+                                                                "sites_faciles.blogCategory",
                                                                 label="Filter by category",
                                                                 required=False,
                                                             ),
@@ -3002,13 +3002,13 @@ class Migration(migrations.Migration):
                                                         (
                                                             "author_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Person", label="Filter by author", required=False
+                                                                "sites_faciles.blogPerson", label="Filter by author", required=False
                                                             ),
                                                         ),
                                                         (
                                                             "source_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Organization",
+                                                                "sites_faciles.blogOrganization",
                                                                 help_text="The source is the organization of the post author",
                                                                 label="Filter by source",
                                                                 required=False,
@@ -5119,7 +5119,7 @@ class Migration(migrations.Migration):
                                                                                     wagtail.blocks.PageChooserBlock(
                                                                                         label="Blog",
                                                                                         page_type=[
-                                                                                            "blog.BlogIndexPage"
+                                                                                            "sites_faciles.blogBlogIndexPage"
                                                                                         ],
                                                                                     ),
                                                                                 ),
@@ -5136,7 +5136,7 @@ class Migration(migrations.Migration):
                                                                                 (
                                                                                     "category_filter",
                                                                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                                        "blog.Category",
+                                                                                        "sites_faciles.blogCategory",
                                                                                         label="Filter by category",
                                                                                         required=False,
                                                                                     ),
@@ -5152,7 +5152,7 @@ class Migration(migrations.Migration):
                                                                                 (
                                                                                     "author_filter",
                                                                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                                        "blog.Person",
+                                                                                        "sites_faciles.blogPerson",
                                                                                         label="Filter by author",
                                                                                         required=False,
                                                                                     ),
@@ -5160,7 +5160,7 @@ class Migration(migrations.Migration):
                                                                                 (
                                                                                     "source_filter",
                                                                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                                        "blog.Organization",
+                                                                                        "sites_faciles.blogOrganization",
                                                                                         help_text="The source is the organization of the post author",
                                                                                         label="Filter by source",
                                                                                         required=False,
@@ -5225,7 +5225,7 @@ class Migration(migrations.Migration):
                                                                                 (
                                                                                     "category_filter",
                                                                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                                        "blog.Category",
+                                                                                        "sites_faciles.blogCategory",
                                                                                         label="Filter by category",
                                                                                         required=False,
                                                                                     ),
@@ -5241,7 +5241,7 @@ class Migration(migrations.Migration):
                                                                                 (
                                                                                     "author_filter",
                                                                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                                        "blog.Person",
+                                                                                        "sites_faciles.blogPerson",
                                                                                         label="Filter by author",
                                                                                         required=False,
                                                                                     ),
@@ -5249,7 +5249,7 @@ class Migration(migrations.Migration):
                                                                                 (
                                                                                     "source_filter",
                                                                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                                        "blog.Organization",
+                                                                                        "sites_faciles.blogOrganization",
                                                                                         help_text="The source is the organization of the post author",
                                                                                         label="Filter by source",
                                                                                         required=False,
@@ -7238,7 +7238,7 @@ class Migration(migrations.Migration):
                                                         (
                                                             "blog",
                                                             wagtail.blocks.PageChooserBlock(
-                                                                label="Blog", page_type=["blog.BlogIndexPage"]
+                                                                label="Blog", page_type=["sites_faciles.blogBlogIndexPage"]
                                                             ),
                                                         ),
                                                         (
@@ -7254,7 +7254,7 @@ class Migration(migrations.Migration):
                                                         (
                                                             "category_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Category",
+                                                                "sites_faciles.blogCategory",
                                                                 label="Filter by category",
                                                                 required=False,
                                                             ),
@@ -7270,13 +7270,13 @@ class Migration(migrations.Migration):
                                                         (
                                                             "author_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Person", label="Filter by author", required=False
+                                                                "sites_faciles.blogPerson", label="Filter by author", required=False
                                                             ),
                                                         ),
                                                         (
                                                             "source_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Organization",
+                                                                "sites_faciles.blogOrganization",
                                                                 help_text="The source is the organization of the post author",
                                                                 label="Filter by source",
                                                                 required=False,
@@ -7335,7 +7335,7 @@ class Migration(migrations.Migration):
                                                         (
                                                             "category_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Category",
+                                                                "sites_faciles.blogCategory",
                                                                 label="Filter by category",
                                                                 required=False,
                                                             ),
@@ -7351,13 +7351,13 @@ class Migration(migrations.Migration):
                                                         (
                                                             "author_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Person", label="Filter by author", required=False
+                                                                "sites_faciles.blogPerson", label="Filter by author", required=False
                                                             ),
                                                         ),
                                                         (
                                                             "source_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "blog.Organization",
+                                                                "sites_faciles.blogOrganization",
                                                                 help_text="The source is the organization of the post author",
                                                                 label="Filter by source",
                                                                 required=False,
@@ -8287,7 +8287,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "blog",
-                                    wagtail.blocks.PageChooserBlock(label="Blog", page_type=["blog.BlogIndexPage"]),
+                                    wagtail.blocks.PageChooserBlock(label="Blog", page_type=["sites_faciles.blogBlogIndexPage"]),
                                 ),
                                 (
                                     "entries_count",
@@ -8298,7 +8298,7 @@ class Migration(migrations.Migration):
                                 (
                                     "category_filter",
                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                        "blog.Category", label="Filter by category", required=False
+                                        "sites_faciles.blogCategory", label="Filter by category", required=False
                                     ),
                                 ),
                                 (
@@ -8310,13 +8310,13 @@ class Migration(migrations.Migration):
                                 (
                                     "author_filter",
                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                        "blog.Person", label="Filter by author", required=False
+                                        "sites_faciles.blogPerson", label="Filter by author", required=False
                                     ),
                                 ),
                                 (
                                     "source_filter",
                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                        "blog.Organization",
+                                        "sites_faciles.blogOrganization",
                                         help_text="The source is the organization of the post author",
                                         label="Filter by source",
                                         required=False,
@@ -8365,7 +8365,7 @@ class Migration(migrations.Migration):
                                 (
                                     "category_filter",
                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                        "blog.Category", label="Filter by category", required=False
+                                        "sites_faciles.blogCategory", label="Filter by category", required=False
                                     ),
                                 ),
                                 (
@@ -8377,13 +8377,13 @@ class Migration(migrations.Migration):
                                 (
                                     "author_filter",
                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                        "blog.Person", label="Filter by author", required=False
+                                        "sites_faciles.blogPerson", label="Filter by author", required=False
                                     ),
                                 ),
                                 (
                                     "source_filter",
                                     wagtail.snippets.blocks.SnippetChooserBlock(
-                                        "blog.Organization",
+                                        "sites_faciles.blogOrganization",
                                         help_text="The source is the organization of the post author",
                                         label="Filter by source",
                                         required=False,
