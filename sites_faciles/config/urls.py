@@ -6,7 +6,7 @@ from django.views.generic.base import RedirectView
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
-from sites_faciles.events.api import api_router
+from sites_faciles.config.api import api_router
 
 urlpatterns = [
     path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
