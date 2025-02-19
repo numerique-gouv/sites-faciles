@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
             model_name="blogentrypage",
             name="blog_categories",
             field=modelcluster.fields.ParentalManyToManyField(
-                blank=True, through="sites_faciles.blogCategoryEntryPage", to="sites_faciles.blogcategory", verbose_name="Categories"
+                blank=True, through="sites_faciles_blog.CategoryEntryPage", to="sites_faciles_blog.category", verbose_name="Categories"
             ),
         ),
         migrations.AlterField(

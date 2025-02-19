@@ -771,7 +771,7 @@ class VerticalContactCardStructValue(blocks.StructValue):
 
 class VerticalContactCardBlock(blocks.StructBlock):
     contact = SnippetChooserBlock(
-        "sites_faciles.blogPerson",
+        "sites_faciles_blog.Person",
         label=_("Person"),
         help_text=_("Optional, all values can be manually specified or overriden below"),
         required=False,
@@ -883,15 +883,15 @@ class BlogRecentEntriesBlock(blocks.StructBlock):
         default="h2",
         help_text=_("Adapt to the page layout. Defaults to heading 2."),
     )
-    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="sites_faciles.blogBlogIndexPage")
+    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="sites_faciles_blog.BlogIndexPage")
     entries_count = blocks.IntegerBlock(
         label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
     )
-    category_filter = SnippetChooserBlock("sites_faciles.blogCategory", label=_("Filter by category"), required=False)
+    category_filter = SnippetChooserBlock("sites_faciles_blog.Category", label=_("Filter by category"), required=False)
     tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
-    author_filter = SnippetChooserBlock("sites_faciles.blogPerson", label=_("Filter by author"), required=False)
+    author_filter = SnippetChooserBlock("sites_faciles_blog.Person", label=_("Filter by author"), required=False)
     source_filter = SnippetChooserBlock(
-        "sites_faciles.blogOrganization",
+        "sites_faciles_blog.Organization",
         label=_("Filter by source"),
         help_text=_("The source is the organization of the post author"),
         required=False,
@@ -917,11 +917,11 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
     entries_count = blocks.IntegerBlock(
         label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
     )
-    category_filter = SnippetChooserBlock("sites_faciles.blogCategory", label=_("Filter by category"), required=False)
+    category_filter = SnippetChooserBlock("sites_faciles_blog.Category", label=_("Filter by category"), required=False)
     tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
-    author_filter = SnippetChooserBlock("sites_faciles.blogPerson", label=_("Filter by author"), required=False)
+    author_filter = SnippetChooserBlock("sites_faciles_blog.Person", label=_("Filter by author"), required=False)
     source_filter = SnippetChooserBlock(
-        "sites_faciles.blogOrganization",
+        "sites_faciles_blog.Organization",
         label=_("Filter by source"),
         help_text=_("The source is the organization of the post author"),
         required=False,

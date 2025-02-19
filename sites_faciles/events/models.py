@@ -274,7 +274,7 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     tags = ClusterTaggableManager(through="TagEventEntryPage", blank=True)
 
     event_categories = ParentalManyToManyField(
-        "sites_faciles.blogCategory",
+        "sites_faciles_blog.Category",
         through="CategoryEventEntryPage",
         blank=True,
         verbose_name=_("Categories"),
@@ -288,7 +288,7 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     registration_url = models.URLField(verbose_name=_("Registration URL"), blank=True, null=True)
 
     authors = ParentalManyToManyField(
-        "sites_faciles.blogPerson", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
+        "sites_faciles_blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
 
     parent_page_types = ["events.EventsIndexPage"]
