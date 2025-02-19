@@ -1,5 +1,5 @@
 [project]
-name = "sites-faciles"
+name = "sites_faciles"
 requires-python = "<4.0,>=3.10"
 version = "1.13.0"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
@@ -38,7 +38,6 @@ dependencies = [
 
 [tool.poetry]
 requires-poetry = ">=2.0"
-package-mode = false
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.3.0"
