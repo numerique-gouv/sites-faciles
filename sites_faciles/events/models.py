@@ -16,10 +16,10 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.models.i18n import Locale
 from wagtail.search import index
 
-from blog.models import Category, CategorySerializer, Organization, Person, PersonSerializer
-from sites_faciles.blog.abstract import SitesFacilesBasePage
-from sites_faciles.blog.models import CmsDsfrConfig, Tag
-from events.forms import EventSearchForm
+from sites_faciles.blog.models import Category, CategorySerializer, Organization, Person, PersonSerializer
+from sites_faciles.content_manager.abstract import SitesFacilesBasePage
+from sites_faciles.content_manager.models import CmsDsfrConfig, Tag
+from sites_faciles.events.forms import EventSearchForm
 
 
 class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
@@ -50,7 +50,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         ),
     ]
 
-    subpage_types = ["events.EventEntryPage"]
+    subpage_types = ["sites_faciles_events.EventEntryPage"]
 
     class Meta:
         verbose_name = _("Event calendar index")
@@ -291,7 +291,7 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
         "sites_faciles_blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
 
-    parent_page_types = ["events.EventsIndexPage"]
+    parent_page_types = ["sites_faciles_events.EventsIndexPage"]
     subpage_types = []
 
     search_fields = SitesFacilesBasePage.search_fields + [

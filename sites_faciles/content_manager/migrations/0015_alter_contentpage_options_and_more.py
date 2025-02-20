@@ -7,11 +7,12 @@ import wagtail.fields
 import wagtail.images.blocks
 import wagtailmarkdown.blocks
 from django.db import migrations, models
+from sites_faciles import content_manager
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0014_alter_contentpage_body"),
+        ("sites_faciles_content_manager", "0014_alter_contentpage_body"),
         ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
     ]
 

@@ -6,7 +6,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("blog", "0036_blogentrypage_source_url_blogindexpage_source_url"),
+        ("sites_faciles_blog", "0036_blogentrypage_source_url_blogindexpage_source_url"),
     ]
 
     operations = [
@@ -295,7 +295,7 @@ class Migration(migrations.Migration):
                         [[("title", 28), ("accordion", 30)]],
                         {"group": "DSFR components", "label": "Accordions"},
                     ),
-                    32: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    32: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     33: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -639,7 +639,7 @@ class Migration(migrations.Migration):
                     ),
                     77: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     78: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -660,7 +660,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     83: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -898,7 +898,7 @@ class Migration(migrations.Migration):
                     ),
                     119: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("content_manager.Tag",),
+                        ("sites_faciles_content_manager.Tag",),
                         {"label": "Filter by tag", "required": False},
                     ),
                     120: (
@@ -940,7 +940,7 @@ class Migration(migrations.Migration):
                     124: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Event calendar", "page_type": ["events.EventsIndexPage"]},
+                        {"label": "Event calendar", "page_type": ["sites_faciles_events.EventsIndexPage"]},
                     ),
                     125: (
                         "wagtail.blocks.StructBlock",
@@ -1397,7 +1397,7 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    5: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    5: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     6: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -1719,7 +1719,7 @@ class Migration(migrations.Migration):
                         [[("title", 28), ("accordion", 30)]],
                         {"group": "DSFR components", "label": "Accordions"},
                     ),
-                    32: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    32: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     33: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -2063,7 +2063,7 @@ class Migration(migrations.Migration):
                     ),
                     77: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     78: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -2084,7 +2084,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     83: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -2322,7 +2322,7 @@ class Migration(migrations.Migration):
                     ),
                     119: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("content_manager.Tag",),
+                        ("sites_faciles_content_manager.Tag",),
                         {"label": "Filter by tag", "required": False},
                     ),
                     120: (
@@ -2364,7 +2364,7 @@ class Migration(migrations.Migration):
                     124: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Event calendar", "page_type": ["events.EventsIndexPage"]},
+                        {"label": "Event calendar", "page_type": ["sites_faciles_events.EventsIndexPage"]},
                     ),
                     125: (
                         "wagtail.blocks.StructBlock",
@@ -2821,7 +2821,7 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    5: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    5: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     6: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -3233,7 +3233,7 @@ class Migration(migrations.Migration):
                             "label": "Heading level",
                         },
                     ),
-                    46: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    46: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     47: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -3628,7 +3628,7 @@ class Migration(migrations.Migration):
                     ),
                     101: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("content_manager.Tag",),
+                        ("sites_faciles_content_manager.Tag",),
                         {"label": "Filter by tag", "required": False},
                     ),
                     102: (
@@ -3670,7 +3670,7 @@ class Migration(migrations.Migration):
                     106: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Event calendar", "page_type": ["events.EventsIndexPage"]},
+                        {"label": "Event calendar", "page_type": ["sites_faciles_events.EventsIndexPage"]},
                     ),
                     107: (
                         "wagtail.blocks.StructBlock",
@@ -3721,7 +3721,7 @@ class Migration(migrations.Migration):
                     ),
                     111: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     112: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -3735,7 +3735,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     114: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),

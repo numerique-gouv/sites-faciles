@@ -65,7 +65,7 @@ class CatalogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         ),
     ]
 
-    subpage_types = ["content_manager.ContentPage"]
+    subpage_types = ["sites_faciles_content_manager.ContentPage"]
 
     class Meta:
         verbose_name = _("Catalog index page")
@@ -536,7 +536,7 @@ class SocialMediaItem(Orderable):
 
 # Mega-Menus
 class MegaMenuCategory(Orderable):
-    mega_menu = ParentalKey("content_manager.MegaMenu", related_name="categories", on_delete=models.CASCADE)
+    mega_menu = ParentalKey("sites_faciles_content_manager.MegaMenu", related_name="categories", on_delete=models.CASCADE)
     category = models.ForeignKey("wagtailmenus.FlatMenu", on_delete=models.CASCADE, verbose_name=_("Category"))
 
     class Meta:
@@ -558,12 +558,12 @@ class MegaMenu(ClusterableModel):
         FieldPanel("parent_menu_item"),
         FieldPanel("description"),
         FieldPanel("main_link"),
-        InlinePanel(
-            "categories",
-            max_num=4,
-            heading=_("Categories"),
-            help_text=_("Maximum 4 categories, each with maximum 8 links."),
-        ),
+        # InlinePanel(
+        #     "categories",
+        #     max_num=4,
+        #     heading=_("Categories"),
+        #     help_text=_("Maximum 4 categories, each with maximum 8 links."),
+        # ),
     ]
 
     def __str__(self):  # type: ignore

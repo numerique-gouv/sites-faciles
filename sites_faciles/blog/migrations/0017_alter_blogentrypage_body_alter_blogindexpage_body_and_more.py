@@ -8,12 +8,13 @@ import wagtail.images.blocks
 import wagtailmarkdown.blocks
 from django.db import migrations
 
-import content_manager.blocks
+import sites_faciles.content_manager.blocks
+from sites_faciles import content_manager
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("blog", "0016_alter_blogentrypage_body_alter_blogindexpage_body"),
+        ("sites_faciles_blog", "0016_alter_blogentrypage_body_alter_blogindexpage_body"),
     ]
 
     operations = [

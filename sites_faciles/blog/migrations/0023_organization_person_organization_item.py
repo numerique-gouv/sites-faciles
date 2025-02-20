@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("blog", "0022_blogindexpage_filter_by_author_and_more"),
+        ("sites_faciles_blog", "0022_blogindexpage_filter_by_author_and_more"),
     ]
 
     operations = [

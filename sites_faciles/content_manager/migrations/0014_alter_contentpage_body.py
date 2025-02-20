@@ -10,7 +10,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0013_alter_contentpage_body"),
+        ("sites_faciles_content_manager", "0013_alter_contentpage_body"),
     ]
 
     operations = [

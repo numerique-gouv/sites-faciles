@@ -16,7 +16,7 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += i18n_patterns(
-    path("", include("content_manager.urls")),
+    path("", include("sites_faciles_content_manager.urls")),
     prefix_default_language=False,
 )
 

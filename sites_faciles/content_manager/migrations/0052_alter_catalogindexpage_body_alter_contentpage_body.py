@@ -7,7 +7,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("content_manager", "0051_alter_catalogindexpage_body_alter_contentpage_body"),
+        ("sites_faciles_content_manager", "0051_alter_catalogindexpage_body_alter_contentpage_body"),
     ]
 
     operations = [
@@ -301,7 +301,7 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    31: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    31: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     32: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -694,7 +694,7 @@ class Migration(migrations.Migration):
                     ),
                     85: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     86: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -715,7 +715,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     91: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -874,7 +874,7 @@ class Migration(migrations.Migration):
                     ),
                     115: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("content_manager.Tag",),
+                        ("sites_faciles_content_manager.Tag",),
                         {"label": "Filter by tag", "required": False},
                     ),
                     116: (
@@ -916,7 +916,7 @@ class Migration(migrations.Migration):
                     120: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Event calendar", "page_type": ["events.EventsIndexPage"]},
+                        {"label": "Event calendar", "page_type": ["sites_faciles_events.EventsIndexPage"]},
                     ),
                     121: (
                         "wagtail.blocks.StructBlock",
@@ -1724,7 +1724,7 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    31: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    31: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     32: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -2117,7 +2117,7 @@ class Migration(migrations.Migration):
                     ),
                     85: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     86: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -2138,7 +2138,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     91: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -2297,7 +2297,7 @@ class Migration(migrations.Migration):
                     ),
                     115: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("content_manager.Tag",),
+                        ("sites_faciles_content_manager.Tag",),
                         {"label": "Filter by tag", "required": False},
                     ),
                     116: (
@@ -2339,7 +2339,7 @@ class Migration(migrations.Migration):
                     120: (
                         "wagtail.blocks.PageChooserBlock",
                         (),
-                        {"label": "Event calendar", "page_type": ["events.EventsIndexPage"]},
+                        {"label": "Event calendar", "page_type": ["sites_faciles_events.EventsIndexPage"]},
                     ),
                     121: (
                         "wagtail.blocks.StructBlock",
