@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
+from wagtail.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 from wagtail.admin import urls as wagtailadmin_urls
@@ -9,6 +10,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from config.api import api_router
 
 urlpatterns = [
+    path("sitemap.xml", sitemap,),
     path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
