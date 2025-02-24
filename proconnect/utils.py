@@ -9,7 +9,7 @@ User = get_user_model()
 def get_user_by_sub_or_email(sub: str, email: str, siret: str):
     """
     Get the user by its sub, and if not found, try by email.
-    If the user is then found, create the UserOIDC entry.
+    If the user is then found, create the UserOIDC entry (or update it if the sub has changed)
     """
     user_oidc = UserOIDC.objects.select_related("user").filter(sub=sub).first()
     if user_oidc:
@@ -18,7 +18,7 @@ def get_user_by_sub_or_email(sub: str, email: str, siret: str):
     user = User.objects.filter(email=email).first()
 
     if user:
-        user_oidc = UserOIDC.objects.create(user=user, sub=sub, siret=siret)
+        user_oidc = UserOIDC.objects.update_or_create(user=user, defaults={"sub": sub, "siret": siret})
         user_oidc.save()
 
     return user
