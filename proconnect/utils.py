@@ -18,7 +18,7 @@ def get_user_by_sub_or_email(sub: str, email: str, siret: str):
     user = User.objects.filter(email=email).first()
 
     if user:
-        user_oidc = UserOIDC.objects.update_or_create(user=user, defaults={"sub": sub, "siret": siret})
+        user_oidc, _created = UserOIDC.objects.update_or_create(user=user, defaults={"sub": sub, "siret": siret})
         user_oidc.save()
 
     return user
