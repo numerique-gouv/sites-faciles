@@ -341,12 +341,13 @@ if DEFAULT_FROM_EMAIL:
 WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
 
 # (Optional) ProConnect settings
-USE_PROCONNECT = True if os.getenv("USE_PROCONNECT", False) == "True" else False
-OIDC_CREATE_USER = True if os.getenv("OIDC_CREATE_USER", "True") == "True" else False
-OIDC_RP_CLIENT_ID = os.getenv("OIDC_RP_CLIENT_ID", "")
-OIDC_RP_CLIENT_SECRET = os.getenv("OIDC_RP_CLIENT_SECRET", "")
-OIDC_RP_SCOPES = os.getenv("OIDC_RP_SCOPES", "openid given_name usual_name email siret uid")
-OIDC_RP_SIGN_ALGO = os.getenv("OIDC_RP_SIGN_ALGO", "RS256")
+PROCONNECT_ACTIVATED = True if os.getenv("PROCONNECT_ACTIVATED", False) == "True" else False
+OIDC_CREATE_USER = True if os.getenv("PROCONNECT_CREATE_USER", "True") == "True" else False
+OIDC_RP_CLIENT_ID = os.getenv("PROCONNECT_CLIENT_ID", "")
+OIDC_RP_CLIENT_SECRET = os.getenv("PROCONNECT_CLIENT_SECRET", "")
+OIDC_RP_SCOPES = os.getenv("PROCONNECT_SCOPES", "openid given_name usual_name email siret uid")
+OIDC_RP_SIGN_ALGO = os.getenv("PROCONNECT_SIGN_ALGO", "RS256")
+# OIDC_STORE_ID_TOKEN = True
 PROCONNECT_DOMAIN = os.getenv("PROCONNECT_DOMAIN", "fca.integ01.dev-agentconnect.fr")
 PROCONNECT_API_ROOT = os.getenv("PROCONNECT_API_ROOT", f"https://{PROCONNECT_DOMAIN}/api/v2")
 OIDC_OP_JWKS_ENDPOINT = f"{PROCONNECT_API_ROOT}/jwks"
@@ -363,7 +364,7 @@ LASUITE_DOMAINE_API_KEY = os.getenv("LASUITE_DOMAINE_API_KEY", None)
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-if USE_PROCONNECT:
+if PROCONNECT_ACTIVATED:
     INSTALLED_APPS += [
         "mozilla_django_oidc",
         "proconnect",

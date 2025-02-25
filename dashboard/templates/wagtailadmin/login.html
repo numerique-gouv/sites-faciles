@@ -8,7 +8,7 @@
           <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
             <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
               <h1>{% translate "Connection" %}</h1>
-              {% settings_value "USE_PROCONNECT" as use_proconnect %}
+              {% settings_value "PROCONNECT_ACTIVATED" as use_proconnect %}
               {% if use_proconnect %}
                 <div class="fr-connect-group">
                   <a class="fr-connect" href="{% url 'oidc_authentication_init' %}">
