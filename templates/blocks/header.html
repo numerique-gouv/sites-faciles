@@ -1,5 +1,5 @@
 {% extends "dsfr/header.html" %}
-{% load i18n static wagtailcore_tags wagtailimages_tags menu_tags %}
+{% load i18n static wagtailcore_tags wagtailimages_tags menu_tags wagtail_dsfr_tags %}
 
 {% block brand %}
   {% translate "Home page" as home_page %}
@@ -47,6 +47,23 @@
 
 {% block header_tools %}
   {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
+  {% if user.is_authenticated %}
+    <li>
+      {# The logout operation has to be performed via a POST with a csrf token for security reasons, so using a form. #}
+      {# Cf. https://docs.djangoproject.com/en/5.1/releases/4.1/#log-out-via-get #}
+      <form action="{% settings_value 'LOGOUT_URL' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="fr-btn fr-icon-logout-box-r-line">
+          {% translate "Hello" %}, {{ user.get_full_name }} ({% translate "Log out" %})
+        </button>
+      </form>
+    </li>
+  {% elif settings.content_manager.CmsDsfrConfig.header_login_button %}
+    <li>
+      <a class="fr-btn fr-icon-lock-line"
+         href="{% settings_value 'LOGIN_URL' %}">{% translate "Log in" %}</a>
+    </li>
+  {% endif %}
 {% endblock header_tools %}
 
 {% block header_search %}
