@@ -32,6 +32,6 @@
   {% elif block.block_type == "html" %}
     <div class="fr-container cmsfr_block__raw_html">{{ block.value|safe }}</div>
   {% else %}
-    <div class="fr-container">{% include_block block %}</div>
+    <div class="fr-container cmsfr_block__{{ block.block_type }}">{% include_block block %}</div>
   {% endif %}
 {% endfor %}
