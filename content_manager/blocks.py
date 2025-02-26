@@ -567,6 +567,19 @@ class ImageAndTextBlock(blocks.StructBlock):
         template = "content_manager/blocks/image_and_text.html"
 
 
+class CenteredImageStructValue(StructValue):
+    def ratio_classes(self):
+        """
+        Define the extra classes for the image, only setting the responsive class if a ratio is defined.
+        """
+        image_ratio = self.get("image_ratio")
+
+        if image_ratio:
+            return f"fr-responsive-img {image_ratio}"
+        else:
+            return ""
+
+
 class CenteredImageBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
     heading_tag = blocks.ChoiceBlock(
@@ -599,6 +612,7 @@ class CenteredImageBlock(blocks.StructBlock):
     class Meta:
         icon = "image"
         template = "content_manager/blocks/image.html"
+        value_class = CenteredImageStructValue
 
 
 class QuoteBlock(blocks.StructBlock):
