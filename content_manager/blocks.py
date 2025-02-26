@@ -514,8 +514,11 @@ class ImageAndTextBlock(blocks.StructBlock):
     image_side = blocks.ChoiceBlock(
         label=_("Side where the image is displayed"),
         choices=[
-            ("left", _("Left")),
+            ("left", _("Left (displayed above text in mobile view)")),
+            ("left_and_below", _("Left (displayed below text in mobile view)")),
             ("right", _("Right")),
+            ("above", _("Above")),
+            ("below", _("Below")),
         ],
         default="right",
     )

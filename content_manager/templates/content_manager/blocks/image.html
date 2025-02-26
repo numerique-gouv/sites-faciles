@@ -9,11 +9,19 @@
     {% with "fr-responsive-img "|concatenate:value.image_ratio as extra_classes %}
       {% if value.url %}
         <a href="{{ value.url }}">
-          {% image value.image original class=extra_classes alt=value.alt %}
+          {% if value.image_ratio %}
+            {% image value.image original class=extra_classes alt=value.alt %}
+          {% else %}
+            {% image value.image original alt=value.alt %}
+          {% endif %}
           <span class="fr-sr-only">{% translate "Go to page" %} {{ value.url }}</span>
         </a>
       {% else %}
-        {% image value.image original class=extra_classes alt=value.alt %}
+        {% if value.image_ratio %}
+          {% image value.image original class=extra_classes alt=value.alt %}
+        {% else %}
+          {% image value.image original alt=value.alt %}
+        {% endif %}
       {% endif %}
     {% endwith %}
   </div>
