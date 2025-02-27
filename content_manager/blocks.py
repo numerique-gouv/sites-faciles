@@ -517,8 +517,6 @@ class ImageAndTextBlock(blocks.StructBlock):
             ("left", _("Left (displayed above text in mobile view)")),
             ("left_and_below", _("Left (displayed below text in mobile view)")),
             ("right", _("Right")),
-            ("above", _("Above")),
-            ("below", _("Below")),
         ],
         default="right",
     )
@@ -526,6 +524,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         label=_("Image width"),
         choices=[
             ("3", "3/12"),
+            ("4", "4/12"),
             ("5", "5/12"),
             ("6", "6/12"),
         ],
@@ -954,7 +953,7 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 ## Page structure blocks
 class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
-    image = CenteredImageBlock(label=_("Image"))
+    image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
     alert = AlertBlock(label=_("Alert message"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
