@@ -512,10 +512,12 @@ class IframeBlock(blocks.StructBlock):
 class ImageAndTextBlock(blocks.StructBlock):
     image = ImageBlock(label=_("Image"))
     image_side = blocks.ChoiceBlock(
-        label=_("Side where the image is displayed"),
+        label=_("Image position"),
         choices=[
-            ("left", _("Left")),
-            ("right", _("Right")),
+            ("left", _("Left (displayed above text in mobile view)")),
+            ("left_below", _("Left (displayed below text in mobile view)")),
+            ("right", _("Right (displayed below text in mobile view)")),
+            ("right_above", _("Right (displayed above text in mobile view)")),
         ],
         default="right",
     )
@@ -523,6 +525,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         label=_("Image width"),
         choices=[
             ("3", "3/12"),
+            ("4", "4/12"),
             ("5", "5/12"),
             ("6", "6/12"),
         ],
@@ -564,6 +567,19 @@ class ImageAndTextBlock(blocks.StructBlock):
         template = "content_manager/blocks/image_and_text.html"
 
 
+class CenteredImageStructValue(StructValue):
+    def ratio_classes(self):
+        """
+        Define the extra classes for the image, only setting the responsive class if a ratio is defined.
+        """
+        image_ratio = self.get("image_ratio")
+
+        if image_ratio:
+            return f"fr-responsive-img {image_ratio}"
+        else:
+            return ""
+
+
 class CenteredImageBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
     heading_tag = blocks.ChoiceBlock(
@@ -596,6 +612,7 @@ class CenteredImageBlock(blocks.StructBlock):
     class Meta:
         icon = "image"
         template = "content_manager/blocks/image.html"
+        value_class = CenteredImageStructValue
 
 
 class QuoteBlock(blocks.StructBlock):
@@ -937,7 +954,7 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 ## Page structure blocks
 class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
-    image = CenteredImageBlock(label=_("Image"))
+    image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
     alert = AlertBlock(label=_("Alert message"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
