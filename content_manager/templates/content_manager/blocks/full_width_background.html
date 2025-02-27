@@ -1,6 +1,6 @@
 {% load dsfr_tags wagtailcore_tags wagtailimages_tags %}
 {% image value.bg_image original as bg_img %}
-<div class="fr-py-5w fr-my-5w cmsfr_block__full_width_background"
+<div class="fr-py-5w fr-my-5w cmsfr-block-full-width-background"
      {% if value.bg_color_class or bg_img or value.bg_color %}style="background:{% endif %}
      {% if bg_img %}no-repeat center url({{ bg_img.url }}){% endif %}
      {% if value.bg_color_class %} var(--background-alt-{{ value.bg_color_class }}) {% elif value.bg_color %}{{ value.bg_color }}{% endif %}
