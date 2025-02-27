@@ -32,7 +32,6 @@ class OIDCLogoutView(MozillaOIDCOIDCLogoutView):
 
     @staticmethod
     def persist_state(request, state):
-        print("persist_state")
         """Persist the given 'state' parameter in the session's 'oidc_states' dictionary
 
         This method is used to store the OIDC state parameter in the session, according to the
@@ -47,7 +46,6 @@ class OIDCLogoutView(MozillaOIDCOIDCLogoutView):
         request.session.save()
 
     def construct_oidc_logout_url(self, request):
-        print("construct_oidc_logout_url")
         """Create the redirect URL for interfacing with the OIDC provider.
 
         Retrieves the necessary parameters from the session and constructs the URL
@@ -61,14 +59,12 @@ class OIDCLogoutView(MozillaOIDCOIDCLogoutView):
         """
 
         oidc_logout_endpoint = self.get_settings("OIDC_OP_LOGOUT_ENDPOINT")
-        print(oidc_logout_endpoint)
 
         if not oidc_logout_endpoint:
             return self.redirect_url
 
         reverse_url = reverse("oidc_logout_callback")
         id_token = request.session.get("oidc_id_token", None)
-        print(f"id_token: {id_token}")
 
         if not id_token:
             return self.redirect_url
@@ -81,12 +77,9 @@ class OIDCLogoutView(MozillaOIDCOIDCLogoutView):
 
         self.persist_state(request, query["state"])
 
-        print(f"{oidc_logout_endpoint}?{urlencode(query)}")
-
         return f"{oidc_logout_endpoint}?{urlencode(query)}"
 
     def post(self, request):
-        print("OIDCLogoutView>post")
         """Handle user logout.
 
         If the user is not authenticated, redirects to the default logout URL.
@@ -122,7 +115,6 @@ class OIDCLogoutCallbackView(MozillaOIDCOIDCLogoutView):
     http_method_names = ["get"]
 
     def get(self, request):
-        print("OIDCLogoutCallbackView>get")
         """Handle the logout callback.
 
         If the user is not authenticated, redirects to the default logout URL.
