@@ -512,11 +512,12 @@ class IframeBlock(blocks.StructBlock):
 class ImageAndTextBlock(blocks.StructBlock):
     image = ImageBlock(label=_("Image"))
     image_side = blocks.ChoiceBlock(
-        label=_("Side where the image is displayed"),
+        label=_("Image position"),
         choices=[
             ("left", _("Left (displayed above text in mobile view)")),
-            ("left_and_below", _("Left (displayed below text in mobile view)")),
-            ("right", _("Right")),
+            ("left_below", _("Left (displayed below text in mobile view)")),
+            ("right", _("Right (displayed below text in mobile view)")),
+            ("right_above", _("Right (displayed above text in mobile view)")),
         ],
         default="right",
     )
