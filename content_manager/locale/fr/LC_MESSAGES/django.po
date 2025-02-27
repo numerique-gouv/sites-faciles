@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-27 11:15+0100\n"
-"PO-Revision-Date: 2025-02-27 11:16+0100\n"
+"PO-Revision-Date: 2025-02-27 11:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -445,11 +445,11 @@ msgstr "Côté où afficher l’image"
 
 #: content_manager/blocks.py:517
 msgid "Left (displayed above text in mobile view)"
-msgstr "Gauche (affiché au-dessus du texte en mode mobile)"
+msgstr "Gauche (affichée au-dessus du texte en mode mobile)"
 
 #: content_manager/blocks.py:518
 msgid "Left (displayed below text in mobile view)"
-msgstr "Gauche (affiché en-dessous du texte en mode mobile)"
+msgstr "Gauche (affichée en-dessous du texte en mode mobile)"
 
 #: content_manager/blocks.py:519 content_manager/constants.py:24
 msgid "Right"
