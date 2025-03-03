@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-04 14:57+0200\n"
-"PO-Revision-Date: 2024-09-04 17:00+0200\n"
+"POT-Creation-Date: 2025-02-13 17:55+0100\n"
+"PO-Revision-Date: 2025-02-13 17:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -62,19 +62,31 @@ msgstr "Ce site est fait avec"
 msgid "Home page"
 msgstr "Accueil"
 
-#: templates/blocks/header.html:53 templates/blocks/header.html:78
+#: templates/blocks/header.html:57
+msgid "Hello"
+msgstr "Bonjour"
+
+#: templates/blocks/header.html:57
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: templates/blocks/header.html:64
+msgid "Log in"
+msgstr "Connexion"
+
+#: templates/blocks/header.html:70 templates/blocks/header.html:95
 msgid "Search"
 msgstr "Rechercher"
 
-#: templates/blocks/header.html:57 templates/blocks/header.html:101
+#: templates/blocks/header.html:74 templates/blocks/header.html:118
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/blocks/header.html:87
+#: templates/blocks/header.html:104
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/blocks/header.html:106
+#: templates/blocks/header.html:123
 msgid "Main menu"
 msgstr "Menu principal"
 
@@ -113,3 +125,18 @@ msgstr "Adresse de la page copiée dans le presse-papiers."
 #: templates/blocks/share.html:67
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papiers"
+
+#~ msgid "Invalid response format or token verification failed"
+#~ msgstr "Format de réponse invalide ou vérification du jeton échouée"
+
+#~ msgid "User account is disabled"
+#~ msgstr "Compte utilisateur désactivé"
+
+#~ msgid "sub"
+#~ msgstr "sub"
+
+#~ msgid "Required. 255 characters or fewer. Letters, numbers, and @/./+/-/_/: characters only."
+#~ msgstr "Obligatoire. 255 caractères ou moins, parmi lettres, nombres et @/./+/-/_/: uniquement."
+
+#~ msgid "Enter a valid sub. This value may contain only letters, numbers, and @/./+/-/_/: characters."
+#~ msgstr "Entrez un sub valide. Cette valeur ne peut contenir que des lettres, nombres et @/./+/-/_/: uniquement."
