@@ -46,7 +46,7 @@ def richtext_p_add_class(value, class_name: str):
     paragraphs = soup.find_all("p")
 
     for p in paragraphs:
-        p["class"] = p.get("class", []) + [class_name]
+        p["class"] = p.get("class", []) + [class_name]  # type: ignore
 
     return mark_safe(str(soup))
 
