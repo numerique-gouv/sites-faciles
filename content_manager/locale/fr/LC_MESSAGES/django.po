@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-27 16:29+0100\n"
-"PO-Revision-Date: 2025-02-27 16:48+0100\n"
+"POT-Creation-Date: 2025-03-03 17:36+0100\n"
+"PO-Revision-Date: 2025-03-03 17:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -216,7 +216,7 @@ msgstr "Badge"
 #: content_manager/blocks.py:640 content_manager/blocks.py:649
 #: content_manager/blocks.py:698 content_manager/blocks.py:895
 #: content_manager/blocks.py:925 content_manager/blocks.py:1010
-#: content_manager/blocks.py:1066 content_manager/models.py:517
+#: content_manager/blocks.py:1066 content_manager/models.py:520
 msgid "Title"
 msgstr "Titre"
 
@@ -583,7 +583,7 @@ msgstr ""
 "Optionnel, toutes les valeurs peuvent être spécifiées ou surchargées ci-"
 "dessous"
 
-#: content_manager/blocks.py:807 content_manager/models.py:549
+#: content_manager/blocks.py:807 content_manager/models.py:552
 msgid "Name"
 msgstr "Nom"
 
@@ -815,16 +815,16 @@ msgstr "Contenu de la colonnne"
 msgid "Adjustable column"
 msgstr "Colonne ajustable"
 
-#: content_manager/blocks.py:1050 content_manager/blocks.py:1091
-#: content_manager/blocks.py:1124
+#: content_manager/blocks.py:1051 content_manager/blocks.py:1092
+#: content_manager/blocks.py:1125
 msgid "Background image"
 msgstr "Image de fond"
 
-#: content_manager/blocks.py:1057
+#: content_manager/blocks.py:1058
 msgid "Background color, hexadecimal format (obsolete)"
 msgstr "Couleur de fond, format hexadécimal (obsolète)"
 
-#: content_manager/blocks.py:1060
+#: content_manager/blocks.py:1061
 msgid ""
 "This field is obsolete and will be removed in the near future. Replace it "
 "with the background color."
@@ -832,63 +832,63 @@ msgstr ""
 "Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
 "avec la couleur de fond."
 
-#: content_manager/blocks.py:1062
+#: content_manager/blocks.py:1063
 msgid "Incorrect color format, must be #fff or #f5f5f5"
 msgstr "Format de couleur incorrect, doit être #fff ou #f5f5f5"
 
-#: content_manager/blocks.py:1073
+#: content_manager/blocks.py:1074
 msgid "Columns"
 msgstr "Colonnes"
 
-#: content_manager/blocks.py:1082 content_manager/blocks.py:1155
+#: content_manager/blocks.py:1083 content_manager/blocks.py:1156
 msgid "Horizontal card"
 msgstr "Carte horizontale"
 
-#: content_manager/blocks.py:1083 content_manager/blocks.py:1157
+#: content_manager/blocks.py:1084 content_manager/blocks.py:1158
 msgid "Tabs"
 msgstr "Onglets"
 
-#: content_manager/blocks.py:1084 content_manager/blocks.py:1172
+#: content_manager/blocks.py:1085 content_manager/blocks.py:1173
 msgid "Item grid"
 msgstr "Grille d’éléments"
 
-#: content_manager/blocks.py:1105
+#: content_manager/blocks.py:1106
 msgid "Parent page"
 msgstr "Page parente"
 
-#: content_manager/blocks.py:1117
+#: content_manager/blocks.py:1118
 msgid "Page tree"
 msgstr "Arborescence de pages"
 
-#: content_manager/blocks.py:1130
+#: content_manager/blocks.py:1131
 msgid "Main content"
 msgstr "Contenu principal"
 
-#: content_manager/blocks.py:1131
+#: content_manager/blocks.py:1132
 msgid "Side menu title"
 msgstr "Titre du menu latéral"
 
-#: content_manager/blocks.py:1132
+#: content_manager/blocks.py:1133
 msgid "Side menu content"
 msgstr "Contenu du menu latéral"
 
-#: content_manager/blocks.py:1171
+#: content_manager/blocks.py:1172
 msgid "Multiple columns"
 msgstr "Multi-colonnes"
 
-#: content_manager/blocks.py:1173
+#: content_manager/blocks.py:1174
 msgid "Full width background"
 msgstr "Fond pleine largeur"
 
-#: content_manager/blocks.py:1177
+#: content_manager/blocks.py:1178
 msgid "Full width background with side menu"
 msgstr "Fond pleine largeur avec menu latéral"
 
-#: content_manager/blocks.py:1183
+#: content_manager/blocks.py:1184
 msgid "Subpages list"
 msgstr "Liste des sous-pages"
 
-#: content_manager/blocks.py:1184
+#: content_manager/blocks.py:1185
 msgid "A simple, alphabetical list of the subpages of the current page."
 msgstr ""
 "Une liste alphabétique toute simple des sous-pages de la page actuelle."
@@ -912,6 +912,10 @@ msgstr "Tertiaire sans bordure"
 #: content_manager/constants.py:23
 msgid "Left"
 msgstr "Gauche"
+
+#: content_manager/constants.py:24
+msgid "Right"
+msgstr "Droite"
 
 #: content_manager/constants.py:34 content_manager/constants.py:43
 msgid "Heading 2"
@@ -1327,6 +1331,7 @@ msgstr "Aucun article trouvé."
 msgid "See all posts"
 msgstr "Voir tous les articles"
 
+#: content_manager/templates/content_manager/blocks/button.html:6
 #: content_manager/templates/content_manager/blocks/card_horizontal.html:11
 #: content_manager/templates/content_manager/blocks/card_vertical.html:11
 #: content_manager/templates/content_manager/blocks/contact_card_vertical.html:14
