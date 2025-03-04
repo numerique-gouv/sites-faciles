@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 17:55+0100\n"
-"PO-Revision-Date: 2025-02-13 17:57+0100\n"
+"POT-Creation-Date: 2025-03-03 17:36+0100\n"
+"PO-Revision-Date: 2025-03-03 17:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -62,31 +62,31 @@ msgstr "Ce site est fait avec"
 msgid "Home page"
 msgstr "Accueil"
 
-#: templates/blocks/header.html:57
+#: templates/blocks/header.html:56
 msgid "Hello"
 msgstr "Bonjour"
 
-#: templates/blocks/header.html:57
+#: templates/blocks/header.html:56
 msgid "Log out"
 msgstr "Déconnexion"
 
-#: templates/blocks/header.html:64
+#: templates/blocks/header.html:63
 msgid "Log in"
 msgstr "Connexion"
 
-#: templates/blocks/header.html:70 templates/blocks/header.html:95
+#: templates/blocks/header.html:69 templates/blocks/header.html:94
 msgid "Search"
 msgstr "Rechercher"
 
-#: templates/blocks/header.html:74 templates/blocks/header.html:118
+#: templates/blocks/header.html:73 templates/blocks/header.html:117
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/blocks/header.html:104
+#: templates/blocks/header.html:103
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/blocks/header.html:123
+#: templates/blocks/header.html:122
 msgid "Main menu"
 msgstr "Menu principal"
 
