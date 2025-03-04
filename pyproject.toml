@@ -52,6 +52,7 @@ ipython = "^8.18.1"
 django-compressor = "^4.4"
 django-debug-toolbar = "^4.4.2"
 ruff = "^0.4.10"
+tblib = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
