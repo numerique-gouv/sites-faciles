@@ -167,7 +167,7 @@ class HorizontalCardBlockTestCase(WagtailPageTestCase):
                     <a class="fr-btn fr-btn--secondary"
                     href="https://numerique.gouv.fr"
                     target="_blank"
-                    rel="noopener external">Label</a>
+                    rel="noopener external">Label <span class="fr-sr-only">Ouvre une nouvelle fenêtre</span></a>
                 </li>
             </ul>""",
             response.content.decode(),
