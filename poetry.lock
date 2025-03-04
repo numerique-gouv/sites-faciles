@@ -2301,6 +2301,18 @@ genshimagic = ["Genshi"]
 kidmagic = ["kid"]
 
 [[package]]
+name = "tblib"
+version = "3.0.0"
+description = "Traceback serialization library."
+optional = false
+python-versions = ">=3.8"
+groups = ["dev"]
+files = [
+    {file = "tblib-3.0.0-py3-none-any.whl", hash = "sha256:80a6c77e59b55e83911e1e607c649836a69c103963c5f28a46cbeef44acf8129"},
+    {file = "tblib-3.0.0.tar.gz", hash = "sha256:93622790a0a29e04f0346458face1e144dc4d32f493714c6c3dff82a4adb77e6"},
+]
+
+[[package]]
 name = "telepath"
 version = "0.3.1"
 description = "A library for exchanging data between Python and JavaScript"
@@ -2646,4 +2658,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.10"
-content-hash = "199f6f16edfc4caec89fff26bd5af1122256a95379b2e2638e96421807080160"
+content-hash = "c138dc8b1875788bc5f0df5e4bdda7cfcd15bc9780c58d8d146ca02917f5d4b9"

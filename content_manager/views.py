@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, TemplateView
 from unidecode import unidecode
+from wagtail.models import Site
 
 from content_manager.models import ContentPage, Tag
 
@@ -81,4 +82,27 @@ class TagView(ListView):
 
         context["search_description"] = _("List of pages tagged with {tag}").format(tag=tag.name)
 
+        return context
+
+
+class SiteMapView(TemplateView):
+    """
+    Readable sitemap for accessibility
+    (different than the SEO-oriented sitemap.xml)
+    """
+
+    template_name = "content_manager/sitemap_page.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        site = Site.find_for_request(self.request)
+        context["home_page"] = site.root_page
+
+        title = _("Sitemap")
+        context["title"] = title
+
+        context["breadcrumb"] = {
+            "links": [],
+            "current": title,
+        }
         return context
