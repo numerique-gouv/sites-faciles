@@ -41,6 +41,9 @@
 
 {% block footer_links %}
   {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html" %}
+  <li class="fr-footer__bottom-item">
+    <a class="fr-footer__bottom-link" href="{% url 'readable_sitemap' %}">{% translate "Sitemap" %}</a>
+  </li>
   {% if settings.content_manager.CustomScriptsSettings.use_tarteaucitron %}
     <li class="fr-footer__bottom-item">
       <button id="tarteaucitronManager"
