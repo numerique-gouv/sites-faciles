@@ -11,10 +11,7 @@ from config.api import api_router
 from proconnect import urls as oidc_urls
 
 urlpatterns = [
-    path(
-        "sitemap.xml",
-        sitemap,
-    ),
+    path("sitemap.xml", sitemap, name="xml_sitemap"),
     path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
