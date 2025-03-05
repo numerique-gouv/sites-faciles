@@ -58,7 +58,8 @@ class ContentPageTestCase(WagtailPageTestCase):
         )
 
     def test_private_content_page_is_not_rendered_when_logged_out(self):
-        response = self.client.get(self.public_content_page.url, follow=False)
+        response = self.client.get(self.private_content_page.url)
+
         self.assertEqual(response.status_code, 302)
 
     def test_private_content_page_is_not_in_the_site_map_when_logged_out(self):
@@ -66,6 +67,16 @@ class ContentPageTestCase(WagtailPageTestCase):
         response = self.client.get(url)
 
         self.assertNotContains(
+            response,
+            """<a href="/private-content-page/">Page de contenu privée</a>""",
+        )
+
+    def test_private_content_page_is_in_the_site_map_when_logged_in(self):
+        self.client.login(username="test", password="pass")
+        url = reverse("readable_sitemap")
+        response = self.client.get(url)
+
+        self.assertContains(
             response,
             """<a href="/private-content-page/">Page de contenu privée</a>""",
         )
