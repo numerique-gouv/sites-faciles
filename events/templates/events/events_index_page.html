@@ -43,7 +43,6 @@
 
 {% block content %}
   {% include "content_manager/blocks/heading.html" %}
-  {% include "content_manager/blocks/messages.html" %}
 
   <div class="fr-container fr-pt-4w">
     {% include "content_manager/blocks/breadcrumbs.html" %}
@@ -54,12 +53,13 @@
       </h1>
     {% endif %}
 
-    {% if current_category.description %}
-      {{ current_category.description|richtext }}
-    {% else %}
-      {{ page.body }}
-    {% endif %}
+    {% include "content_manager/blocks/messages.html" %}
 
+    {% if current_category.description %}
+      <div class="fr-mb-4w">{{ current_category.description|richtext }}</div>
+    {% else %}
+      <div class="fr-mb-4w">{{ page.body }}</div>
+    {% endif %}
     <div class="fr-grid-row fr-grid-row--gutters fr-mb-3w">
       <div class="fr-col fr-col-md-4 fr-col-12">
         <nav class="fr-sidemenu fr-sidemenu--sticky-full-height fr-mb-0-5v">
