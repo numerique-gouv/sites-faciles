@@ -8,8 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-03-05 10:43+0100\n"
 "PO-Revision-Date: 2025-03-05 10:48+0100\n"
+=======
+"POT-Creation-Date: 2025-03-03 17:36+0100\n"
+"PO-Revision-Date: 2025-03-03 17:38+0100\n"
+>>>>>>> b43fb69fee026d58c7afcfd4d679df3c81b6db7e
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
