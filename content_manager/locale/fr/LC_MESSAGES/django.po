@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-11 17:45+0100\n"
-"PO-Revision-Date: 2025-02-11 18:22+0100\n"
+"POT-Creation-Date: 2025-03-05 10:43+0100\n"
+"PO-Revision-Date: 2025-03-05 10:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -595,7 +595,7 @@ msgstr "Informations de contact"
 #: content_manager/models.py:136 content_manager/models.py:150
 #: content_manager/models.py:156
 #: content_manager/templates/content_manager/tags_list_page.html:49
-#: content_manager/views.py:46 content_manager/views.py:77
+#: content_manager/views.py:47 content_manager/views.py:78
 msgid "Tags"
 msgstr "Étiquettes"
 
@@ -1311,6 +1311,7 @@ msgstr "Aucun article trouvé."
 msgid "See all posts"
 msgstr "Voir tous les articles"
 
+#: content_manager/templates/content_manager/blocks/button.html:6
 #: content_manager/templates/content_manager/blocks/card_horizontal.html:11
 #: content_manager/templates/content_manager/blocks/card_vertical.html:11
 #: content_manager/templates/content_manager/blocks/contact_card_vertical.html:14
@@ -1359,6 +1360,10 @@ msgstr "Visibilité de la page restreinte par mot de passe"
 msgid "Page with restricted visibility"
 msgstr "Visibilité de la page restreinte"
 
+#: content_manager/templates/content_manager/blocks/sitemap_entry.html:2
+msgid "Restricted access"
+msgstr "Accès restreint"
+
 #: content_manager/templates/content_manager/blocks/stepper.html:8
 #, python-format
 msgid "Step %(current_step)s of %(total_steps)s"
@@ -1402,6 +1407,11 @@ msgstr "Afficher"
 msgid "Continue"
 msgstr "Continuer"
 
+#: content_manager/templates/content_manager/sitemap_page.html:18
+#: content_manager/views.py:101
+msgid "Sitemap"
+msgstr "Plan du site"
+
 #: content_manager/templates/content_manager/widgets/dsfr-icon-picker-widget.html:9
 msgid "Select icon"
 msgstr "Sélectionner une icône"
@@ -1410,16 +1420,20 @@ msgstr "Sélectionner une icône"
 msgid "search/"
 msgstr "recherche/"
 
-#: content_manager/views.py:52
+#: content_manager/urls.py:9
+msgid "sitemap/"
+msgstr "plan-du-site/"
+
+#: content_manager/views.py:53
 msgid "List of all the tags."
 msgstr "Liste de toutes les étiquettes."
 
-#: content_manager/views.py:73
+#: content_manager/views.py:74
 #, python-brace-format
 msgid "Pages tagged with {tag}"
 msgstr "Pages avec l’étiquette {tag}"
 
-#: content_manager/views.py:82
+#: content_manager/views.py:83
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
