@@ -2,9 +2,9 @@
 
 {% for block in stream %}
   {% if block.block_type == "callout" %}
-    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
+    <div class="fr-container fr-mb-4w cmsfr-block-callout">{% include_block block %}</div>
   {% elif block.block_type == "image" %}
-    <div class="fr-container fr-my-3w">
+    <div class="fr-container fr-my-3w cmsfr-block-image">
       <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12">{% include_block block %}</div>
       </div>
@@ -16,22 +16,22 @@
   {% elif block.block_type == "fullwidthbackgroundwithsidemenu" %}
     {% include_block block %}
   {% elif block.block_type == "paragraph" %}
-    <div class="fr-container">{{ block.value|richtext }}</div>
+    <div class="fr-container cmsfr-block-paragraph">{{ block.value|richtext }}</div>
   {% elif block.block_type == "alert" %}
-    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
+    <div class="fr-container fr-mb-4w cmsfr-block-alert">{% include_block block %}</div>
   {% elif block.block_type == "card" %}
-    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
+    <div class="fr-container fr-mb-4w cmsfr-block-card">{% include_block block %}</div>
   {% elif block.block_type == "tile" %}
-    <div class="fr-container fr-mb-4w">{% include_block block %}</div>
+    <div class="fr-container fr-mb-4w cmsfr-block-tile">{% include_block block %}</div>
   {% elif block.block_type == "separator" %}
-    <div class="fr-container">
+    <div class="fr-container cmsfr-block-hr">
       <hr class="fr-mt-{{ block.value.top_margin }}w fr-mb-{{ block.value.bottom_margin }}w fr-py-1v">
     </div>
   {% elif block.block_type == "markdown" %}
-    <div class="fr-container">{{ block.value|markdown }}</div>
+    <div class="fr-container cmsfr-block-markdown">{{ block.value|markdown }}</div>
   {% elif block.block_type == "html" %}
-    <div class="fr-container">{{ block.value|safe }}</div>
+    <div class="fr-container cmsfr-block-raw-html">{{ block.value|safe }}</div>
   {% else %}
-    <div class="fr-container">{% include_block block %}</div>
+    <div class="fr-container cmsfr-block-{{ block.block_type }}">{% include_block block %}</div>
   {% endif %}
 {% endfor %}

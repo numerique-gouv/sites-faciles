@@ -13,8 +13,6 @@
 {% endif %}
 
 {% block content %}
-  {% include "content_manager/blocks/messages.html" %}
-
   <div class="fr-container fr-my-6w">
     {% include "content_manager/blocks/breadcrumbs.html" %}
     {% if not page.header_with_title %}
@@ -23,6 +21,9 @@
         {% if extra_title %}: {{ extra_title }}{% endif %}
       </h1>
     {% endif %}
+
+    {% include "content_manager/blocks/messages.html" %}
+
     <ul>
       {% for category in categories|dictsort:"cat_name" %}
         <li>

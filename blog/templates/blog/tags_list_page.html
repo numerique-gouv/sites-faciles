@@ -13,11 +13,11 @@
 {% endif %}
 
 {% block content %}
-  {% include "content_manager/blocks/messages.html" %}
-
   <div class="fr-container fr-my-6w">
     {% dsfr_breadcrumb breadcrumb %}
     <h1>{% translate "Tags" %}</h1>
+
+    {% include "content_manager/blocks/messages.html" %}
 
     <div class="fr-mb-2w">
       {% for first_letter in sorted_tags.keys|dictsort:0 %}

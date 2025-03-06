@@ -59,7 +59,6 @@ class ContentPageTestCase(WagtailPageTestCase):
 
     def test_private_content_page_is_not_rendered_when_logged_out(self):
         response = self.client.get(self.private_content_page.url)
-
         self.assertEqual(response.status_code, 302)
 
     def test_private_content_page_is_not_in_the_site_map_when_logged_out(self):

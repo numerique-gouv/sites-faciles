@@ -11,11 +11,10 @@
 {% endblock description %}
 
 {% block content %}
-  {% include "content_manager/blocks/messages.html" %}
-
   <div class="fr-container fr-mt-6w">
     {% dsfr_breadcrumb breadcrumb %}
     <h1>{% translate "Sitemap" %}</h1>
+    {% include "content_manager/blocks/messages.html" %}
   </div>
 
   <div class="fr-container fr-mt-6w">
