@@ -577,7 +577,7 @@ class CenteredImageStructValue(StructValue):
         if image_ratio:
             return f"fr-responsive-img {image_ratio}"
         else:
-            return ""
+            return "fr-responsive-img"
 
 
 class CenteredImageBlock(blocks.StructBlock):
