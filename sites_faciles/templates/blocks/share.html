@@ -1,6 +1,6 @@
 {% load i18n %}
 {% translate "Opens a new window" as new_window %}
-{% with SiteConfig=settings.content_manager.CmsDsfrConfig %}
+{% with SiteConfig=include settings.sites_faciles_content_manager.CmsDsfrConfig %}
   <div class="fr-container fr-mb-4w">
     <div class="fr-share" id="share-{{ block.id }}">
       <p class="fr-share__title">{% translate "Share this page" %}</p>

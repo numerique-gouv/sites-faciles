@@ -44,7 +44,7 @@
       {% elif value.link.document %}
         <div class="fr-card__end">
           <p class="fr-card__detail{% if value.bottom_detail_icon %} {{ value.bottom_detail_icon }}{% endif %}">
-            {% include "content_manager/blocks/download_info.html" with document=value.link.document %}
+            {% include "sites_faciles_content_manager/blocks/download_info.html" with document=value.link.document %}
           </p>
         </div>
       {% endif %}

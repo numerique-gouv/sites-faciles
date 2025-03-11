@@ -3,8 +3,7 @@
 {% load i18n static dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags %}
 
 {% block title %}
-  <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
-{% endblock title %}
+  <title>{{ page.seo_title|default:page.title }} — {{ settings.sites_faciles_content_manager.CmsDsfrConfig.site_title }}</title>
 
 {% if page.search_description %}
   {% block description %}
@@ -43,18 +42,18 @@
 {% endblock social_media %}
 
 {% block content %}
-  {% include "content_manager/blocks/heading.html" %}
-  {% include "content_manager/blocks/messages.html" %}
+  {% include "sites_faciles_content_manager/blocks/heading.html" %}
+  {% include "sites_faciles_content_manager/blocks/messages.html" %}
 
   {% with categories=page.blog_categories.all %}
     <div class="fr-container fr-mt-6w">
       <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12">
-          {% include "content_manager/blocks/breadcrumbs.html" %}
+          {% include "sites_faciles_content_manager/blocks/breadcrumbs.html" %}
           {% if not page.header_with_title %}
             <h1>
               {{ page.title }}
-              {% include "content_manager/blocks/page_visibility.html" %}
+              {% include "sites_faciles_content_manager/blocks/page_visibility.html" %}
             </h1>
           {% endif %}
         </div>
@@ -71,7 +70,7 @@
       </p>
     </div>
 
-    {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
+    {% include "sites_faciles_content_manager/blocks/blocks_stream.html" with stream=page.body %}
 
     {% with authors=page.authors.all %}
       {% if authors %}
@@ -89,7 +88,7 @@
 
     {% if categories %}
       {% for category in categories %}
-        {% include "content_manager/blocks/blocks_stream.html" with stream=category.colophon %}
+        {% include "sites_faciles_content_manager/blocks/blocks_stream.html" with stream=category.colophon %}
       {% endfor %}
     {% endif %}
   {% endwith %}
@@ -102,7 +101,7 @@
     {% endfor %}
   </div>
 
-  {% if settings.content_manager.CmsDsfrConfig.show_share_links and settings.content_manager.CmsDsfrConfig.share_links_blog_posts %}
+  {% if settings.sites_faciles_content_manager.CmsDsfrConfig.show_share_links and settings.sites_faciles_content_manager.CmsDsfrConfig.share_links_blog_posts %}
     {% include "blocks/share.html" %}
   {% endif %}
 {% endblock content %}

@@ -108,7 +108,7 @@ class LinksVerticalListBlock(blocks.StreamBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/links_vertical_list.html"
+        template = "sites_faciles_content_manager/blocks/links_vertical_list.html"
 
 
 class ButtonBlock(LinkBlock):
@@ -131,7 +131,7 @@ class ButtonsHorizontalListBlock(blocks.StreamBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/buttons_horizontal_list.html"
+        template = "sites_faciles_content_manager/blocks/buttons_horizontal_list.html"
 
 
 class ButtonsVerticalListBlock(blocks.StreamBlock):
@@ -139,7 +139,7 @@ class ButtonsVerticalListBlock(blocks.StreamBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/buttons_vertical_list.html"
+        template = "sites_faciles_content_manager/blocks/buttons_vertical_list.html"
 
 
 class SingleLinkBlock(LinkBlock):
@@ -160,7 +160,7 @@ class SingleLinkBlock(LinkBlock):
     class Meta:
         value_class = LinkStructValue
         icon = "link"
-        template = "content_manager/blocks/link.html"
+        template = "sites_faciles_content_manager/blocks/link.html"
 
 
 ## Badges and Tags
@@ -185,7 +185,7 @@ class BadgesListBlock(blocks.StreamBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/badges_list.html"
+        template = "sites_faciles_content_manager/blocks/badges_list.html"
 
 
 class TagBlock(blocks.StructBlock):
@@ -201,7 +201,7 @@ class TagBlock(blocks.StructBlock):
     link = LinkWithoutLabelBlock(required=False)
 
     class Meta:
-        template = "content_manager/blocks/tag.html"
+        template = "sites_faciles_content_manager/blocks/tag.html"
 
 
 class TagListBlock(blocks.StreamBlock):
@@ -209,7 +209,7 @@ class TagListBlock(blocks.StreamBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/tags_list.html"
+        template = "sites_faciles_content_manager/blocks/tags_list.html"
 
 
 ## Cards and tiles
@@ -341,7 +341,7 @@ class CardBlock(blocks.StructBlock):
 
     class Meta:
         icon = "tablet-alt"
-        template = "content_manager/blocks/card.html"
+        template = "sites_faciles_content_manager/blocks/card.html"
         value_class = CardstructValue
 
 
@@ -363,14 +363,14 @@ class HorizontalCardBlock(CardBlock):
 
     class Meta:
         icon = "tablet-alt"
-        template = "content_manager/blocks/card_horizontal.html"
+        template = "sites_faciles_content_manager/blocks/card_horizontal.html"
         value_class = CardstructValue
 
 
 class VerticalCardBlock(CardBlock):
     class Meta:
         icon = "tablet-alt"
-        template = "content_manager/blocks/card_vertical.html"
+        template = "sites_faciles_content_manager/blocks/card_vertical.html"
         value_class = CardstructValue
 
 
@@ -413,7 +413,7 @@ class TileBlock(blocks.StructBlock):
 
     class Meta:
         icon = "tablet-alt"
-        template = "content_manager/blocks/tile.html"
+        template = "sites_faciles_content_manager/blocks/tile.html"
         value_class = CardstructValue
 
 
@@ -428,7 +428,7 @@ class AccordionsBlock(blocks.StreamBlock):
     accordion = AccordionBlock(label=_("Accordion"), min_num=1, max_num=15)
 
     class Meta:
-        template = "content_manager/blocks/accordions.html"
+        template = "sites_faciles_content_manager/blocks/accordions.html"
 
 
 class AlertBlock(blocks.StructBlock):
@@ -444,7 +444,7 @@ class AlertBlock(blocks.StructBlock):
 
     class Meta:
         icon = "info-circle"
-        template = "content_manager/blocks/alert.html"
+        template = "sites_faciles_content_manager/blocks/alert.html"
 
 
 class CalloutBlock(blocks.StructBlock):
@@ -467,7 +467,7 @@ class CalloutBlock(blocks.StructBlock):
 
     class Meta:
         icon = "info-circle"
-        template = "content_manager/blocks/callout.html"
+        template = "sites_faciles_content_manager/blocks/callout.html"
 
 
 class HighlightBlock(blocks.StructBlock):
@@ -485,7 +485,7 @@ class HighlightBlock(blocks.StructBlock):
 
     class Meta:
         icon = "info-circle"
-        template = "content_manager/blocks/highlight.html"
+        template = "sites_faciles_content_manager/blocks/highlight.html"
 
 
 class IframeBlock(blocks.StructBlock):
@@ -506,7 +506,7 @@ class IframeBlock(blocks.StructBlock):
 
     class Meta:
         icon = "globe"
-        template = "content_manager/blocks/iframe.html"
+        template = "sites_faciles_content_manager/blocks/iframe.html"
 
 
 class ImageAndTextBlock(blocks.StructBlock):
@@ -561,7 +561,7 @@ class ImageAndTextBlock(blocks.StructBlock):
 
     class Meta:
         icon = "image"
-        template = "content_manager/blocks/image_and_text.html"
+        template = "sites_faciles_content_manager/blocks/image_and_text.html"
 
 
 class CenteredImageBlock(blocks.StructBlock):
@@ -595,7 +595,7 @@ class CenteredImageBlock(blocks.StructBlock):
 
     class Meta:
         icon = "image"
-        template = "content_manager/blocks/image.html"
+        template = "sites_faciles_content_manager/blocks/image.html"
 
 
 class QuoteBlock(blocks.StructBlock):
@@ -611,7 +611,7 @@ class QuoteBlock(blocks.StructBlock):
 
     class Meta:
         icon = "openquote"
-        template = "content_manager/blocks/quote.html"
+        template = "sites_faciles_content_manager/blocks/quote.html"
 
 
 class SeparatorBlock(blocks.StructBlock):
@@ -635,7 +635,7 @@ class StepperBlock(blocks.StructBlock):
     steps = StepsListBlock(label=_("Steps"))
 
     class Meta:
-        template = "content_manager/blocks/stepper.html"
+        template = "sites_faciles_content_manager/blocks/stepper.html"
 
 
 class TextAndCTA(blocks.StructBlock):
@@ -674,7 +674,7 @@ class TextAndCTA(blocks.StructBlock):
 
     class Meta:
         icon = "link"
-        template = "content_manager/blocks/text_and_cta.html"
+        template = "sites_faciles_content_manager/blocks/text_and_cta.html"
 
 
 class TranscriptionBlock(blocks.StructBlock):
@@ -683,7 +683,7 @@ class TranscriptionBlock(blocks.StructBlock):
 
     class Meta:
         icon = "media"
-        template = "content_manager/blocks/transcription.html"
+        template = "sites_faciles_content_manager/blocks/transcription.html"
 
 
 class VideoBlock(blocks.StructBlock):
@@ -714,7 +714,7 @@ class VideoBlock(blocks.StructBlock):
 
     class Meta:
         icon = "media"
-        template = "content_manager/blocks/video.html"
+        template = "sites_faciles_content_manager/blocks/video.html"
 
 
 class VerticalContactCardStructValue(blocks.StructValue):
@@ -986,7 +986,7 @@ class ItemGridBlock(blocks.StructBlock):
 
     class Meta:
         icon = "grip"
-        template = "content_manager/blocks/item_grid.html"
+        template = "sites_faciles_content_manager/blocks/item_grid.html"
 
 
 class TabBlock(blocks.StructBlock):
@@ -998,7 +998,7 @@ class TabsBlock(blocks.StreamBlock):
     tabs = TabBlock(label=_("Tab"), min_num=1, max_num=15)
 
     class Meta:
-        template = "content_manager/blocks/tabs.html"
+        template = "sites_faciles_content_manager/blocks/tabs.html"
 
 
 class AdjustableColumnBlock(blocks.StructBlock):
@@ -1058,7 +1058,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 
     class Meta:
         icon = "dots-horizontal"
-        template = "content_manager/blocks/multicolumns.html"
+        template = "sites_faciles_content_manager/blocks/multicolumns.html"
 
 
 class FullWidthBlock(CommonStreamBlock):
@@ -1082,7 +1082,7 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
 
     class Meta:
         icon = "minus"
-        template = "content_manager/blocks/full_width_background.html"
+        template = "sites_faciles_content_manager/blocks/full_width_background.html"
 
 
 class PageTreeBlock(blocks.StructBlock):
@@ -1090,7 +1090,7 @@ class PageTreeBlock(blocks.StructBlock):
 
     class Meta:
         icon = "minus"
-        template = "content_manager/blocks/pagetree.html"
+        template = "sites_faciles_content_manager/blocks/pagetree.html"
 
 
 class SideMenuBlock(blocks.StreamBlock):
@@ -1117,7 +1117,7 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
 
     class Meta:
         icon = "minus"
-        template = "content_manager/blocks/full_width_background_with_sidemenu.html"
+        template = "sites_faciles_content_manager/blocks/full_width_background_with_sidemenu.html"
 
 
 STREAMFIELD_COMMON_BLOCKS = [

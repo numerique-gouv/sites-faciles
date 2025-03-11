@@ -5,5 +5,5 @@
      {% if bg_img %}no-repeat center url({{ bg_img.url }}){% endif %}
      {% if value.bg_color_class %} var(--background-alt-{{ value.bg_color_class }}) {% elif value.bg_color %}{{ value.bg_color }}{% endif %}
      {% if value.bg_color_class or bg_img or value.bg_color %};"{% endif %}>
-  <div class="fr-container">{% include "content_manager/blocks/blocks_stream.html" with stream=value.content %}</div>
+  <div class="fr-container">{% include "sites_faciles_content_manager/blocks/blocks_stream.html" with stream=value.content %}</div>
 </div>

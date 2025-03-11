@@ -18,13 +18,13 @@
               {% if value.sidemenu_title %}
                 <div class="fr-sidemenu__title" id="fr-sidemenu-title">{{ value.sidemenu_title }}</div>
               {% endif %}
-              {% include "content_manager/blocks/blocks_stream.html" with stream=value.sidemenu_content %}
+              {% include "sites_faciles_content_manager/blocks/blocks_stream.html" with stream=value.sidemenu_content %}
             </div>
           </div>
         </nav>
       </div>
       <div class="fr-col fr-col-md-8 fr-col-12">
-        {% include "content_manager/blocks/blocks_stream.html" with stream=value.main_content %}
+        {% include "sites_faciles_content_manager/blocks/blocks_stream.html" with stream=value.main_content %}
       </div>
     </div>
   </div>

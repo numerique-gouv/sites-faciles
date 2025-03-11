@@ -9,7 +9,7 @@ from sites_faciles.blog.models import ContentPage, Tag
 
 class SearchResultsView(ListView):
     model = ContentPage
-    template_name = "content_manager/search_results.html"
+    template_name = "sites_faciles_content_manager/search_results.html"
 
     def get_queryset(self):
         query = self.request.GET.get("q", None)
@@ -27,7 +27,7 @@ class SearchResultsView(ListView):
 
 
 class TagsListView(TemplateView):
-    template_name = "content_manager/tags_list_page.html"
+    template_name = "sites_faciles_content_manager/tags_list_page.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -55,7 +55,7 @@ class TagsListView(TemplateView):
 
 
 class TagView(ListView):
-    template_name = "content_manager/tag_page.html"
+    template_name = "sites_faciles_content_manager/tag_page.html"
     model = ContentPage
     paginate_by = 10
 

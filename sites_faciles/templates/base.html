@@ -37,8 +37,8 @@
       {% endblock cookie_banner %}
 
       {% block tracking %}
-        {% if settings.content_manager.CustomScriptsSettings.head_scripts %}
-          {{ settings.content_manager.CustomScriptsSettings.head_scripts|safe }}
+        {% if settings.sites_faciles_content_manager.CustomScriptsSettings.head_scripts %}
+          {{ settings.sites_faciles_content_manager.CustomScriptsSettings.head_scripts|safe }}
         {% endif %}
       {% endblock tracking %}
 
@@ -77,8 +77,8 @@
       {% endblock extra_js %}
 
       {% block body_tracking_scripts %}
-        {% if settings.content_manager.CustomScriptsSettings.body_scripts %}
-          {{ settings.content_manager.CustomScriptsSettings.body_scripts|safe }}
+        {% if settings.sites_faciles_content_manager.CustomScriptsSettings.body_scripts %}
+          {{ settings.sites_faciles_content_manager.CustomScriptsSettings.body_scripts|safe }}
         {% endif %}
       {% endblock body_tracking_scripts %}
     </body>

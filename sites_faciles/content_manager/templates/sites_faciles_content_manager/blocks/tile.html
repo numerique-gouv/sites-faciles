@@ -22,7 +22,7 @@
         <p class="fr-tile__detail">{{ value.detail_text }}</p>
       {% elif value.link.document %}
         <p class="fr-tile__detail">
-          {% include "content_manager/blocks/download_info.html" with document=value.link.document %}
+          {% include "sites_faciles_content_manager/blocks/download_info.html" with document=value.link.document %}
         </p>
       {% endif %}
       {% if value.top_detail_badges_tags %}
