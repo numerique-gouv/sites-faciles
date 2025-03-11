@@ -1,7 +1,7 @@
 {% load i18n static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
 
 {% get_settings %}
-{% with SiteConfig=settings.content_manager.CmsDsfrConfig %}
+{% with SiteConfig=settings.sites_faciles_content_manager.CmsDsfrConfig %}
   <!DOCTYPE html>
   <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}"
         {% if SiteConfig.theme_modale_button %}data-fr-scheme="system"{% else %}data-fr-scheme="light"{% endif %}

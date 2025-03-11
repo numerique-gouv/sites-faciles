@@ -243,13 +243,14 @@ else:
     MEDIA_ROOT = os.path.join(BASE_DIR, os.getenv("MEDIA_ROOT", ""))
 
 # Django Sass
-SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "static/css")
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    os.path.join(BASE_DIR, 'sites_faciles/static'),
+]
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_OUTPUT_STYLE = "compressed"
 
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 # Default primary key field type
