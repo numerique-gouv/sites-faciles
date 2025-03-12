@@ -296,7 +296,11 @@ class Migration(migrations.Migration):
                         [[("title", 28), ("accordion", 30)]],
                         {"group": "DSFR components", "label": "Accordions"},
                     ),
-                    32: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    32: (
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        (),
+                        {"label": "Icon", "required": False},
+                    ),
                     33: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -1676,7 +1680,11 @@ class Migration(migrations.Migration):
                         [[("title", 28), ("accordion", 30)]],
                         {"group": "DSFR components", "label": "Accordions"},
                     ),
-                    32: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    32: (
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        (),
+                        {"label": "Icon", "required": False},
+                    ),
                     33: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -3146,7 +3154,11 @@ class Migration(migrations.Migration):
                             "label": "Heading level",
                         },
                     ),
-                    46: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    46: (
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        (),
+                        {"label": "Icon", "required": False},
+                    ),
                     47: (
                         "wagtail.blocks.RichTextBlock",
                         (),

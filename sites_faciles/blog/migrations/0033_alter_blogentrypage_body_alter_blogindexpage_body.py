@@ -283,7 +283,11 @@ class Migration(migrations.Migration):
                         [[("title", 23), ("description", 24), ("level", 25), ("heading_tag", 26)]],
                         {"label": "Alert message"},
                     ),
-                    28: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    28: (
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        (),
+                        {"label": "Icon", "required": False},
+                    ),
                     29: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -1604,7 +1608,11 @@ class Migration(migrations.Migration):
                         [[("title", 23), ("description", 24), ("level", 25), ("heading_tag", 26)]],
                         {"label": "Alert message"},
                     ),
-                    28: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    28: (
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        (),
+                        {"label": "Icon", "required": False},
+                    ),
                     29: (
                         "wagtail.blocks.RichTextBlock",
                         (),

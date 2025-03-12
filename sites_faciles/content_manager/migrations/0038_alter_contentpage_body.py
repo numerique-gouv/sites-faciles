@@ -2890,7 +2890,8 @@ class Migration(migrations.Migration):
                                                         (
                                                             "blog",
                                                             wagtail.blocks.PageChooserBlock(
-                                                                label="Blog", page_type=["sites_faciles_blog.BlogIndexPage"]
+                                                                label="Blog",
+                                                                page_type=["sites_faciles_blog.BlogIndexPage"],
                                                             ),
                                                         ),
                                                         (
@@ -2922,7 +2923,9 @@ class Migration(migrations.Migration):
                                                         (
                                                             "author_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "sites_faciles_blog.Person", label="Filter by author", required=False
+                                                                "sites_faciles_blog.Person",
+                                                                label="Filter by author",
+                                                                required=False,
                                                             ),
                                                         ),
                                                         (
@@ -3003,7 +3006,9 @@ class Migration(migrations.Migration):
                                                         (
                                                             "author_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "sites_faciles_blog.Person", label="Filter by author", required=False
+                                                                "sites_faciles_blog.Person",
+                                                                label="Filter by author",
+                                                                required=False,
                                                             ),
                                                         ),
                                                         (
@@ -7239,7 +7244,8 @@ class Migration(migrations.Migration):
                                                         (
                                                             "blog",
                                                             wagtail.blocks.PageChooserBlock(
-                                                                label="Blog", page_type=["sites_faciles_blog.BlogIndexPage"]
+                                                                label="Blog",
+                                                                page_type=["sites_faciles_blog.BlogIndexPage"],
                                                             ),
                                                         ),
                                                         (
@@ -7271,7 +7277,9 @@ class Migration(migrations.Migration):
                                                         (
                                                             "author_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "sites_faciles_blog.Person", label="Filter by author", required=False
+                                                                "sites_faciles_blog.Person",
+                                                                label="Filter by author",
+                                                                required=False,
                                                             ),
                                                         ),
                                                         (
@@ -7352,7 +7360,9 @@ class Migration(migrations.Migration):
                                                         (
                                                             "author_filter",
                                                             wagtail.snippets.blocks.SnippetChooserBlock(
-                                                                "sites_faciles_blog.Person", label="Filter by author", required=False
+                                                                "sites_faciles_blog.Person",
+                                                                label="Filter by author",
+                                                                required=False,
                                                             ),
                                                         ),
                                                         (
@@ -8288,7 +8298,9 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "blog",
-                                    wagtail.blocks.PageChooserBlock(label="Blog", page_type=["sites_faciles_blog.BlogIndexPage"]),
+                                    wagtail.blocks.PageChooserBlock(
+                                        label="Blog", page_type=["sites_faciles_blog.BlogIndexPage"]
+                                    ),
                                 ),
                                 (
                                     "entries_count",

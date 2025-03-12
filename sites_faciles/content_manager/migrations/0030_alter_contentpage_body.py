@@ -11,6 +11,7 @@ import sites_faciles.content_manager.blocks
 
 from sites_faciles import content_manager
 
+
 class Migration(migrations.Migration):
     dependencies = [
         ("sites_faciles_content_manager", "0029_alter_contentpage_body"),

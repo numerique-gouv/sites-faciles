@@ -1,11 +1,11 @@
 import zoneinfo
 from datetime import datetime
 
+from blog.models import BlogEntryPage, BlogIndexPage, Person
 from django.contrib.auth.models import User
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
 
-from blog.models import BlogEntryPage, BlogIndexPage, Person
 from sites_faciles.blog.models import ContentPage
 
 

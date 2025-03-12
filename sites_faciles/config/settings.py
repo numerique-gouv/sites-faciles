@@ -244,7 +244,7 @@ else:
 
 # Django Sass
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    os.path.join(BASE_DIR, 'sites_faciles/static'),
+    os.path.join(BASE_DIR, "sites_faciles/static"),
 ]
 SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_OUTPUT_STYLE = "compressed"

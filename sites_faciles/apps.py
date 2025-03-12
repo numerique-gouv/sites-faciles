@@ -7,4 +7,3 @@ class SitesFacilesAppConfig(AppConfig):
     label = "sites_faciles"
     verbose_name = _("Sites Facile")
     default_auto_field = "django.db.models.AutoField"
-

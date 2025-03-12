@@ -11,6 +11,7 @@ import sites_faciles.content_manager.blocks
 
 from sites_faciles import content_manager
 
+
 class Migration(migrations.Migration):
     dependencies = [
         ("sites_faciles_blog", "0012_alter_blogentrypage_body_alter_blogindexpage_body_and_more"),
