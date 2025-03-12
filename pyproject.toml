@@ -121,3 +121,15 @@ ignore = ["E203", "E266"]
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
+
+[tool.flit.module]
+name = "sites_faciles"
+
+[tool.flit.sdist]
+exclude = [
+    ".*",
+    "*.js",
+    "*.json",
+    "*.ini",
+    "*.yml"
+]
