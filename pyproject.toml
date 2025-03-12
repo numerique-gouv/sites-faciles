@@ -1,6 +1,7 @@
 [project]
 name = "sites_faciles"
 requires-python = "<4.0,>=3.10"
+dynamic = ["version"]
 version = "1.13.0"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
