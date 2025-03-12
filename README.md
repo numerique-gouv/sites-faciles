@@ -1,125 +1,104 @@
-# Gestionnaire de contenu DSFR et Accessible
+# Sites Faciles - Expérimentation sous forme de package
 
-**Créez et gérez votre site internet simplement**
+Sites Faciles est un gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l'État, accessible et responsive.
+Développé sous forme de site Wagtail, il n'est à l'heure actuelle pas possible de l'utiliser comme dépendance d'un projet Wagtail existant.
 
-Gestionnaire de contenu (CMS) pour créer un site internet dont le domaine se terminant par .gouv.fr . Pas besoin de compétence technique pour mettre à jours le contenu.
+Le projet courant vise cet objectif.
 
-**Un CMS basé sur la solution open source Wagtail**
+C'est un soft-fork, au sens où aucune fonctionnalité ne sera ajoutée via Sites Faciles dans ce fork.
+Cependant une synchronisation directe des deux dépôts n'est pas possible car l'empaquetage de Sites Faciles nécessite de déplacer des fichiers, ce qui fausse la synchronisation.
 
-Créez ou modifiez des pages, ajoutez un menu de navigation, des boutons, images, vidéos, contributeurs etc
+Un script de synchronisation a donc été écrit qui vise à :
+- déplacer l'arborescence dans un sous-dossier
+- namespacer tout ce qui doit l'être dans le code source de Sites Faciles
 
-**Système de Design de l'État**
+---
 
-Construisez vos pages à l'aide de composants prêts à l'emploi issus du Système de Design de l'État (DSFR)
+Pour l'utilisation de Sites Faciles, voir le [README](./sites_faciles/README.md) original.
 
-**Accessible et responsive**
+---
 
-Le contenu des pages générées par le CMS est partiellement conforme selon la norme RGAA 4.1 et responsive
+Le versionning et les tags suit de manière iso ceux de Sites Faciles.
 
-## Prérequis
-Sites Faciles vise à utiliser les dernières versions disponibles de [Django (5.0+)](https://www.djangoproject.com/download/) et [Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html).
+## 🙋‍♂️ Comment tester 
 
-Les tests automatisés couvrent les versions suivantes :
-- Python 3.10 à 3.13 (cf. [versions de Python supportées par Django](https://docs.djangoproject.com/en/5.1/faq/install/))
-- Postgreql 13 à 17 (cf. [versions de PostgreSQL supportées par Django](https://code.djangoproject.com/wiki/SupportedDatabaseVersions))
+**Pour le tester dans un projet wagtail existant** (⚠ c'est hautement expérimental, à ne tester que sur un projet local) :
+- `poetry add sites-faciles-experiment` ou `pip install sites-faciles-experiment`
+- ajouter quelques **settings** nécessaires au bon fonctionnement du projet, à savoir 
+```py
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                # ...
+                "wagtailmenus.context_processors.wagtailmenus",
+                "sites_faciles.content_manager.context_processors.skiplinks",
+                "sites_faciles.content_manager.context_processors.mega_menus",
+            ],
+        },
+    },
+]
 
-## Installer les pre-commit hooks
+INSTALLED_APPS.extend(
+    [
+        "sites_faciles",
+        "sites_faciles.blog",
+        "sites_faciles.content_manager",
+        "sites_faciles.events",
+        "sass_processor",
+        "wagtail.contrib.settings",
+        "wagtail_modeladmin",
+        "wagtailmenus",
+        "wagtailmarkdown",
+    ]
+)
 
+STATICFILES_FINDERS.extend([
+    "sass_processor.finders.CssFinder",
+])
+```  
+- Éventuellement **overrider le template de base de Sites Faciles** pour utiliser directement les modèles de page proposés
+```html
+{# sites_faciles/base.html #}
+
+{% extends "votre_wagtail_existant/base.html" %}
+
+{# Fournir un block content dans lequel les modèles de pages de sites faciles peuvent render le contenu #}
+{% block content %}{% endblock %}
 ```
-pre-commit install
-```
+- Sinon utiliser le **champ streamfield sur un modèle existant**
+```py 
+# models.py 
+from sites_faciles.content_manager.blocks import STREAMFIELD_COMMON_BLOCKS
 
-On peut faire un premier test en faisant tourner :
+# ... 
 
-```
-pre-commit run --all-files
-```
-
-## Installation
-
-Le projet peut se lancer en local ou avec Docker.
-
-### Dans tous les cas, copier les variables d’environnement
-
-- Copier le fichier
-```
-cp .env.example .env
-```
-
-- Générer la `SECRET_KEY`
-```
-python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-```
-
-- Mettre les valeurs pertinentes dans le fichier `.env`
-
-### En local
-#### Installer poetry s’il ne l’est pas
-
-- Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
-- mettre la variable d’environnement `USE_POETRY` à `1` dans le fichier `.env`
-
-#### Installer le projet
-
-- La commande suivante installe les dépendances, fait les migrations et collecte les fichiers
-```
-make init
-```
-
-#### Créer un utilisateur
-
-- La commande suivante crée un utilisateur administrateur avec tous les droits:
-
-```
-poetry run python manage.py createsuperuser
-```
-
-#### Lancer le serveur
-
-```
-make runserver
-```
-
-### via Docker
-#### Lancer les containers
-
-```sh
-docker compose up
+class CMSPage(Page):
+    body = StreamField(
+        STREAMFIELD_COMMON_BLOCKS,
+        blank=True,
+        use_json_field=True,
+    )
 ```
 
-### Effectuer les tests
-Les tests unitaires peuvent être lancés avec `make test-unit`.
+- Voir la PR en cours côté [quefairemesdechets / longue vie aux objets](https://github.com/incubateur-ademe/quefairedemesobjets/pull/1375/files) pour l'ajout de wagtail + sites faciles à un projet Django
 
-Vous pouvez également générer un rapport sur la couverture de tests :
-```sh
-coverage run manage.py test --settings config.settings_test
-```
+## 🔍 Quelques infos / observations en vrac 
 
-## Indexation des contenus
-Les contenus des pages sont indexés pour la recherche par un script `python manage.py update_index` (cf. [documentation de Wagtail](https://docs.wagtail.org/en/stable/topics/search/indexing.html))
+- On a fait une solution _quick&dirty_ pour évaluer la faisabilité, on récupère **tout** : les modèles, les templates etc
+- Idéalement il serait intéressant de pouvoir importer que le champ streamfield avec le rendering qui va bien, mais comme de nombreux blocs dépendent de `blog` et `event`, on se retrouve à devoir ajouter ces apps. Donc à voir pour rendre ça plus modulaire 
+- Il y a un certains nombres de dépendances nécessaires à Sites Faciles qui sont normalement gérées par le wagtail existant qui accueille `sites-faciles-experiment` : `gunicorn`, `dj-database-url`...
+- La dépendance à sass semble superflue, pourrait-on imaginer s'en passer ?
 
-### Scalingo
-Le script est lancé automatiquement après les déploiements sur Scalingo.
+## ✅ Reste à faire 
 
-Il est recommandé de procéder à une nouvelle indexation une fois par semaine, en renommant le fichier `cron.json.example` en `cron.json` (cf. [documentation de Scalingo](https://doc.scalingo.com/platform/app/task-scheduling/scalingo-scheduler))
-
-### Autres déploiements
-Il est recommandé de faire de même pour les déploiements sur d’autres plateformes, en ajoutant une ligne à la crontab de l’utilisateur avec lequel tourne le site :
-
-```
-0 3 * * SUN python manage.py update_index
-```
-
-## Droit d’utilisation du DSFR
-
-Ce projet utilise le DSFR et est donc tenu par les conditions d’utilisations suivantes :
-
-#### ⚠️ Utilisation interdite en dehors des sites Internet de l’État
-
->Il est formellement interdit à tout autre acteur d’utiliser le Système de Design de l’État (les administrations territoriales ou tout autre acteur privé) pour des sites web ou des applications. Le Système de Design de l’État représente l’identité numérique de l’État. En cas d’usage à des fins trompeuses ou frauduleuses, l’État se réserve le droit d’entreprendre les actions nécessaires pour y mettre un terme.
-
-Voir les [conditions générales d'utilisation](https://github.com/GouvernementFR/dsfr/blob/main/doc/legal/cgu.md).
-
-#### ⚠️ Prohibited Use Outside Government Websites
-
->This Design System is only meant to be used by official French public services' websites and apps. Its main purpose is to make it easy to identify governmental websites for citizens. See terms.
+- [ ] Voir comment rendre une éventuelle refacto rétro compatible avec les sites déjà déployés
+- [ ] Rendre le streamfield de `content_manager` plus modulaire pour le rendre utilisable sans les dépendances aux apps blog et event
+- [ ] Définir le scope
+  - [ ] SSO / proconnect ? 
+  - [ ] Streamfield
+  - [ ] Modèles de page
+  - [ ] Config wagtail

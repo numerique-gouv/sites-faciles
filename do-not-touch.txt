@@ -1,0 +1,14 @@
+new-files.txt
+LICENSE
+dist
+.pre-commit-config.yaml
+pyproject.toml
+README.md
+sync.sh
+do-not-touch.txt
+.gitignore
+.github
+poetry.lock
+search-and-replace.csv
+.git
+sites_faciles
