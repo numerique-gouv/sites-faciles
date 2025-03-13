@@ -5,29 +5,32 @@ DO_NOT_MOVE="do-not-touch.txt"
 SEARCH_REPLACE="search-and-replace.csv"
 SUBFOLDER="sites_faciles"
 
-# Step 2: Reset the repository to origin/main while keeping new-files.txt
+echo "🔄 Reset the repo to latest commit on the main branch"
 git fetch origin
 git reset --hard origin/main
 git clean -fd
-git restore --source=fork/main $DO_NOT_MOVE
+
+echo "♻️ Get back list of files to keep from the fork"
 git restore --source=fork/main $NEW_FILES
-
-# Step 3: Move all files (except those in files-to-keep.txt) into sites_faciles
-mkdir -p "$SUBFOLDER"
-grep -vxFf $DO_NOT_MOVE <(ls -A) | while read file; do
-  echo "Moving: $file"
-  mv "$file" "$SUBFOLDER/$file"
-done
-
-# Step 4: Read new-files.txt and restore files from fork/main
 while IFS= read -r file; do
+    echo "$file"
     git restore --source=fork/main $file
 done < "$NEW_FILES"
 
-# Step 5: Read search-and-replace.csv and apply replacements in sites_faciles
+ls -la sites_faciles/content_manager
+
+echo "🆕 Prepare sites_faciles tree"
+mkdir -p "$SUBFOLDER"
+grep -vxFf $DO_NOT_MOVE <(ls -A) | while read file; do
+  echo "🗄️ Moving: $file"
+  mv $file "$SUBFOLDER/"
+done
+
+
+echo "📝 Rewrite files to namespace everything"
 while IFS=, read -r search replace; do
+    echo "$search > $replace"
     grep -rl "$search" "$SUBFOLDER" | xargs sed -i "s|$search|$replace|g"
 done < "$SEARCH_REPLACE"
 
-echo "Script execution completed!"
-
+echo "🎬 FIN. The repo were synced. Manually check though as it is not battle-tested yet..."
