@@ -1,7 +1,7 @@
 [project]
 name = "sites-faciles-experiment"
 requires-python = "<4.0,>=3.10"
-version = "0.0.7"
+version = "0.0.8"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
     {name = "Sébastien Reuiller", email = "sebastien.reuiller@beta.gouv.fr"},
@@ -126,4 +126,4 @@ combine-as-imports = true
 name = "sites_faciles"
 
 [tool.flit.sdist]
-exclude = ["**/tests", "tests.py"]
+exclude = ["**/tests", "**/tests.py"]
