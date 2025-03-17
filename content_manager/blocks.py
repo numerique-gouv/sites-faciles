@@ -568,9 +568,9 @@ class ImageAndTextBlock(blocks.StructBlock):
 
 
 class CenteredImageStructValue(StructValue):
-    def ratio_classes(self):
+    def extra_classes(self):
         """
-        Define the extra classes for the image, only setting the responsive class if a ratio is defined.
+        Define the extra classes for the image
         """
         image_ratio = self.get("image_ratio")
 
@@ -988,7 +988,7 @@ class CommonStreamBlock(blocks.StreamBlock):
         icon = "dots-horizontal"
 
 
-class ColumnBlock(CommonStreamBlock):
+class BaseColumnBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
     contact_card = VerticalContactCardBlock(label=_("Contact card"), group=_("Extra components"))
 
@@ -999,11 +999,15 @@ class ItemGridBlock(blocks.StructBlock):
         choices=GRID_3_4_6_CHOICES,
         default="4",
     )
-    items = ColumnBlock(label=_("Items"))
+    items = BaseColumnBlock(label=_("Items"))
 
     class Meta:
         icon = "grip"
         template = "content_manager/blocks/item_grid.html"
+
+
+class ColumnBlock(BaseColumnBlock):
+    item_grid = ItemGridBlock(label=_("Item grid"), group=_("Page structure"))
 
 
 class TabBlock(blocks.StructBlock):
@@ -1039,6 +1043,21 @@ class AdjustableColumnBlock(blocks.StructBlock):
         icon = "order-down"
 
 
+class BlockMarginStructValue(blocks.StructValue):
+    def vertical_margin(self):
+        margin = []
+
+        top_margin = self.get("top_margin", None)
+        if top_margin:
+            margin.append(f"fr-mt-{top_margin}w")
+
+        bottom_margin = self.get("bottom_margin", None)
+        if bottom_margin:
+            margin.append(f"fr-mb-{bottom_margin}w")
+
+        return " ".join(margin)
+
+
 class MultiColumnsBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
     column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
@@ -1071,11 +1090,26 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
         default="h2",
         help_text=_("Adapt to the page layout. Defaults to heading 2."),
     )
+    top_margin = blocks.IntegerBlock(
+        label=_("Top margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label=_("Bottom margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
     columns = MultiColumnsBlock(label=_("Columns"))
 
     class Meta:
         icon = "dots-horizontal"
         template = "content_manager/blocks/multicolumns.html"
+        value_class = BlockMarginStructValue
 
 
 class FullWidthBlock(CommonStreamBlock):
@@ -1095,11 +1129,27 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
         required=False,
         help_text=_("Uses the French Design System colors"),
     )
+    top_margin = blocks.IntegerBlock(
+        label=_("Top margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label=_("Bottom margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+
     content = FullWidthBlock(label=_("Content"))
 
     class Meta:
         icon = "minus"
         template = "content_manager/blocks/full_width_background.html"
+        value_class = BlockMarginStructValue
 
 
 class PageTreeBlock(blocks.StructBlock):
@@ -1128,6 +1178,21 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
         required=False,
         help_text=_("Uses the French Design System colors"),
     )
+    top_margin = blocks.IntegerBlock(
+        label=_("Top margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label=_("Bottom margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+
     main_content = FullWidthBlock(label=_("Main content"))
     sidemenu_title = blocks.CharBlock(label=_("Side menu title"), required=False)
     sidemenu_content = SideMenuBlock(label=_("Side menu content"))
@@ -1135,11 +1200,12 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
     class Meta:
         icon = "minus"
         template = "content_manager/blocks/full_width_background_with_sidemenu.html"
+        value_class = BlockMarginStructValue
 
 
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
-    ("image", CenteredImageBlock()),
+    ("image", CenteredImageBlock(label=_("Centered image"))),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
     ("text_cta", TextAndCTA(label=_("Text and call to action"))),
