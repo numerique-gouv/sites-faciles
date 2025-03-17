@@ -13,6 +13,8 @@ from content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
     GRID_3_4_6_CHOICES,
+    GRID_HORIZONTAL_ALIGN_CHOICES,
+    GRID_VERTICAL_ALIGN_CHOICES,
     HEADING_CHOICES,
     HEADING_CHOICES_2_5,
     HORIZONTAL_CARD_IMAGE_RATIOS,
@@ -993,17 +995,39 @@ class BaseColumnBlock(CommonStreamBlock):
     contact_card = VerticalContactCardBlock(label=_("Contact card"), group=_("Extra components"))
 
 
+class GridPositionStructValue(blocks.StructValue):
+    def grid_position(self):
+        position = []
+
+        horizontal_align = self.get("horizontal_align", None)
+        if horizontal_align:
+            position.append(f"fr-grid-row--{horizontal_align}")
+
+        vertical_align = self.get("vertical_align", None)
+        if vertical_align:
+            position.append(f"fr-grid-row--{vertical_align}")
+
+        return " ".join(position)
+
+
 class ItemGridBlock(blocks.StructBlock):
     column_width = blocks.ChoiceBlock(
         label=_("Column width"),
         choices=GRID_3_4_6_CHOICES,
         default="4",
     )
+    horizontal_align = blocks.ChoiceBlock(
+        label=_("Horizontal align"), choices=GRID_HORIZONTAL_ALIGN_CHOICES, default="left", required=False
+    )
+    vertical_align = blocks.ChoiceBlock(
+        label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, default="middle", required=False
+    )
     items = BaseColumnBlock(label=_("Items"))
 
     class Meta:
         icon = "grip"
         template = "content_manager/blocks/item_grid.html"
+        value_class = GridPositionStructValue
 
 
 class ColumnBlock(BaseColumnBlock):

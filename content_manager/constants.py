@@ -30,6 +30,18 @@ GRID_3_4_6_CHOICES = [
     ("6", "6/12"),
 ]
 
+GRID_HORIZONTAL_ALIGN_CHOICES = [
+    ("left", _("Left")),
+    ("center", _("Center")),
+    ("right", _("Right")),
+]
+
+GRID_VERTICAL_ALIGN_CHOICES = [
+    ("top", _("Top")),
+    ("middle", _("Middle")),
+    ("bottom", _("Bottom")),
+]
+
 HEADING_CHOICES = [
     ("h2", _("Heading 2")),
     ("h3", _("Heading 3")),
