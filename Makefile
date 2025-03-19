@@ -81,6 +81,12 @@ update:
 	$(EXEC_CMD) poetry install --no-root --without dev
 	make deploy
 
+.PHONY: upgrade
+upgrade:
+	$(EXEC_CMD) poetry update
+	$(EXEC_CMD) pre-commit autoupdate
+	$(EXEC_CMD) npm update
+
 .PHONY: demo
 demo:
 	make init
