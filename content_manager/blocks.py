@@ -12,7 +12,10 @@ from wagtailmarkdown.blocks import MarkdownBlock
 from content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
+    BUTTONS_ALIGN_CHOICES,
     GRID_3_4_6_CHOICES,
+    GRID_HORIZONTAL_ALIGN_CHOICES,
+    GRID_VERTICAL_ALIGN_CHOICES,
     HEADING_CHOICES,
     HEADING_CHOICES_2_5,
     HORIZONTAL_CARD_IMAGE_RATIOS,
@@ -111,7 +114,8 @@ class LinksVerticalListBlock(blocks.StreamBlock):
         template = "content_manager/blocks/links_vertical_list.html"
 
 
-class ButtonBlock(LinkBlock):
+class ButtonBlock(LinkWithoutLabelBlock):
+    text = blocks.CharBlock(label=_("Button label"), required=False)
     button_type = blocks.ChoiceBlock(label=_("Button type"), choices=BUTTON_TYPE_CHOICES, required=False)
     icon_class = IconPickerBlock(label=_("Icon"), required=False)
     icon_side = blocks.ChoiceBlock(
@@ -140,6 +144,21 @@ class ButtonsVerticalListBlock(blocks.StreamBlock):
     class Meta:
         icon = "list-ul"
         template = "content_manager/blocks/buttons_vertical_list.html"
+
+
+class ButtonsListBlock(blocks.StructBlock):
+    buttons = ButtonsHorizontalListBlock(
+        label=_("Buttons"),
+        help_text=_(
+            """Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""
+        ),
+    )
+    position = blocks.ChoiceBlock(label=_("Position"), choices=BUTTONS_ALIGN_CHOICES, default="", required=False)
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/buttons_list.html"
 
 
 class SingleLinkBlock(LinkBlock):
@@ -512,10 +531,12 @@ class IframeBlock(blocks.StructBlock):
 class ImageAndTextBlock(blocks.StructBlock):
     image = ImageBlock(label=_("Image"))
     image_side = blocks.ChoiceBlock(
-        label=_("Side where the image is displayed"),
+        label=_("Image position"),
         choices=[
-            ("left", _("Left")),
-            ("right", _("Right")),
+            ("left", _("Left (displayed above text in mobile view)")),
+            ("left_below", _("Left (displayed below text in mobile view)")),
+            ("right", _("Right (displayed below text in mobile view)")),
+            ("right_above", _("Right (displayed above text in mobile view)")),
         ],
         default="right",
     )
@@ -523,6 +544,7 @@ class ImageAndTextBlock(blocks.StructBlock):
         label=_("Image width"),
         choices=[
             ("3", "3/12"),
+            ("4", "4/12"),
             ("5", "5/12"),
             ("6", "6/12"),
         ],
@@ -564,6 +586,19 @@ class ImageAndTextBlock(blocks.StructBlock):
         template = "content_manager/blocks/image_and_text.html"
 
 
+class CenteredImageStructValue(StructValue):
+    def extra_classes(self):
+        """
+        Define the extra classes for the image
+        """
+        image_ratio = self.get("image_ratio")
+
+        if image_ratio:
+            return f"fr-responsive-img {image_ratio}"
+        else:
+            return "fr-responsive-img"
+
+
 class CenteredImageBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
     heading_tag = blocks.ChoiceBlock(
@@ -596,6 +631,7 @@ class CenteredImageBlock(blocks.StructBlock):
     class Meta:
         icon = "image"
         template = "content_manager/blocks/image.html"
+        value_class = CenteredImageStructValue
 
 
 class QuoteBlock(blocks.StructBlock):
@@ -937,7 +973,7 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 ## Page structure blocks
 class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
-    image = CenteredImageBlock(label=_("Image"))
+    image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
     alert = AlertBlock(label=_("Alert message"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
@@ -945,6 +981,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     transcription = TranscriptionBlock(label=_("Transcription"))
     badges_list = BadgesListBlock(label=_("Badge list"))
     tags_list = TagListBlock(label=_("Tag list"))
+    buttons_list = ButtonsListBlock(label=_("Button list"))
     accordions = AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))
     callout = CalloutBlock(label=_("Callout"), group=_("DSFR components"))
     highlight = HighlightBlock(label=_("Highlight"), group=_("DSFR components"))
@@ -976,17 +1013,39 @@ class ColumnBlock(CommonStreamBlock):
     contact_card = VerticalContactCardBlock(label=_("Contact card"), group=_("Extra components"))
 
 
+class GridPositionStructValue(blocks.StructValue):
+    def grid_position(self):
+        position = []
+
+        horizontal_align = self.get("horizontal_align", None)
+        if horizontal_align:
+            position.append(f"fr-grid-row--{horizontal_align}")
+
+        vertical_align = self.get("vertical_align", None)
+        if vertical_align:
+            position.append(f"fr-grid-row--{vertical_align}")
+
+        return " ".join(position)
+
+
 class ItemGridBlock(blocks.StructBlock):
     column_width = blocks.ChoiceBlock(
         label=_("Column width"),
         choices=GRID_3_4_6_CHOICES,
         default="4",
     )
+    horizontal_align = blocks.ChoiceBlock(
+        label=_("Horizontal align"), choices=GRID_HORIZONTAL_ALIGN_CHOICES, default="left", required=False
+    )
+    vertical_align = blocks.ChoiceBlock(
+        label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, default="middle", required=False
+    )
     items = ColumnBlock(label=_("Items"))
 
     class Meta:
         icon = "grip"
         template = "content_manager/blocks/item_grid.html"
+        value_class = GridPositionStructValue
 
 
 class TabBlock(blocks.StructBlock):
@@ -1022,6 +1081,21 @@ class AdjustableColumnBlock(blocks.StructBlock):
         icon = "order-down"
 
 
+class BlockMarginStructValue(blocks.StructValue):
+    def vertical_margin(self):
+        margin = []
+
+        top_margin = self.get("top_margin", None)
+        if top_margin:
+            margin.append(f"fr-mt-{top_margin}w")
+
+        bottom_margin = self.get("bottom_margin", None)
+        if bottom_margin:
+            margin.append(f"fr-mb-{bottom_margin}w")
+
+        return " ".join(margin)
+
+
 class MultiColumnsBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
     column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
@@ -1054,11 +1128,26 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
         default="h2",
         help_text=_("Adapt to the page layout. Defaults to heading 2."),
     )
+    top_margin = blocks.IntegerBlock(
+        label=_("Top margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label=_("Bottom margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
     columns = MultiColumnsBlock(label=_("Columns"))
 
     class Meta:
         icon = "dots-horizontal"
         template = "content_manager/blocks/multicolumns.html"
+        value_class = BlockMarginStructValue
 
 
 class FullWidthBlock(CommonStreamBlock):
@@ -1078,11 +1167,27 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
         required=False,
         help_text=_("Uses the French Design System colors"),
     )
+    top_margin = blocks.IntegerBlock(
+        label=_("Top margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label=_("Bottom margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+
     content = FullWidthBlock(label=_("Content"))
 
     class Meta:
         icon = "minus"
         template = "content_manager/blocks/full_width_background.html"
+        value_class = BlockMarginStructValue
 
 
 class PageTreeBlock(blocks.StructBlock):
@@ -1111,6 +1216,21 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
         required=False,
         help_text=_("Uses the French Design System colors"),
     )
+    top_margin = blocks.IntegerBlock(
+        label=_("Top margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label=_("Bottom margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+
     main_content = FullWidthBlock(label=_("Main content"))
     sidemenu_title = blocks.CharBlock(label=_("Side menu title"), required=False)
     sidemenu_content = SideMenuBlock(label=_("Side menu content"))
@@ -1118,11 +1238,12 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
     class Meta:
         icon = "minus"
         template = "content_manager/blocks/full_width_background_with_sidemenu.html"
+        value_class = BlockMarginStructValue
 
 
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
-    ("image", CenteredImageBlock()),
+    ("image", CenteredImageBlock(label=_("Centered image"))),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("alert", AlertBlock(label=_("Alert message"))),
     ("text_cta", TextAndCTA(label=_("Text and call to action"))),
@@ -1130,6 +1251,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("transcription", TranscriptionBlock(label=_("Transcription"))),
     ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
+    ("buttons_list", ButtonsListBlock(label=_("Button list"))),
     ("link", SingleLinkBlock(label=_("Single link"))),
     ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),
