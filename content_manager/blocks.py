@@ -12,6 +12,7 @@ from wagtailmarkdown.blocks import MarkdownBlock
 from content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
+    BUTTONS_ALIGN_CHOICES,
     GRID_3_4_6_CHOICES,
     GRID_HORIZONTAL_ALIGN_CHOICES,
     GRID_VERTICAL_ALIGN_CHOICES,
@@ -113,7 +114,8 @@ class LinksVerticalListBlock(blocks.StreamBlock):
         template = "content_manager/blocks/links_vertical_list.html"
 
 
-class ButtonBlock(LinkBlock):
+class ButtonBlock(LinkWithoutLabelBlock):
+    text = blocks.CharBlock(label=_("Button label"), required=False)
     button_type = blocks.ChoiceBlock(label=_("Button type"), choices=BUTTON_TYPE_CHOICES, required=False)
     icon_class = IconPickerBlock(label=_("Icon"), required=False)
     icon_side = blocks.ChoiceBlock(
@@ -142,6 +144,21 @@ class ButtonsVerticalListBlock(blocks.StreamBlock):
     class Meta:
         icon = "list-ul"
         template = "content_manager/blocks/buttons_vertical_list.html"
+
+
+class ButtonsListBlock(blocks.StructBlock):
+    buttons = ButtonsHorizontalListBlock(
+        label=_("Buttons"),
+        help_text=_(
+            """Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""
+        ),
+    )
+    position = blocks.ChoiceBlock(label=_("Position"), choices=BUTTONS_ALIGN_CHOICES, default="", required=False)
+
+    class Meta:
+        icon = "list-ul"
+        template = "content_manager/blocks/buttons_list.html"
 
 
 class SingleLinkBlock(LinkBlock):
@@ -964,6 +981,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     transcription = TranscriptionBlock(label=_("Transcription"))
     badges_list = BadgesListBlock(label=_("Badge list"))
     tags_list = TagListBlock(label=_("Tag list"))
+    buttons_list = ButtonsListBlock(label=_("Button list"))
     accordions = AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))
     callout = CalloutBlock(label=_("Callout"), group=_("DSFR components"))
     highlight = HighlightBlock(label=_("Highlight"), group=_("DSFR components"))
@@ -990,7 +1008,7 @@ class CommonStreamBlock(blocks.StreamBlock):
         icon = "dots-horizontal"
 
 
-class BaseColumnBlock(CommonStreamBlock):
+class ColumnBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
     contact_card = VerticalContactCardBlock(label=_("Contact card"), group=_("Extra components"))
 
@@ -1022,16 +1040,12 @@ class ItemGridBlock(blocks.StructBlock):
     vertical_align = blocks.ChoiceBlock(
         label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, default="middle", required=False
     )
-    items = BaseColumnBlock(label=_("Items"))
+    items = ColumnBlock(label=_("Items"))
 
     class Meta:
         icon = "grip"
         template = "content_manager/blocks/item_grid.html"
         value_class = GridPositionStructValue
-
-
-class ColumnBlock(BaseColumnBlock):
-    item_grid = ItemGridBlock(label=_("Item grid"), group=_("Page structure"))
 
 
 class TabBlock(blocks.StructBlock):
@@ -1237,6 +1251,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("transcription", TranscriptionBlock(label=_("Transcription"))),
     ("badges_list", BadgesListBlock(label=_("Badge list"))),
     ("tags_list", TagListBlock(label=_("Tag list"))),
+    ("buttons_list", ButtonsListBlock(label=_("Button list"))),
     ("link", SingleLinkBlock(label=_("Single link"))),
     ("accordions", AccordionsBlock(label=_("Accordions"), group=_("DSFR components"))),
     ("callout", CalloutBlock(label=_("Callout"), group=_("DSFR components"))),

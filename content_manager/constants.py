@@ -24,6 +24,13 @@ BUTTON_ICON_SIDE = (
     ("fr-btn--icon-right", _("Right")),
 )
 
+BUTTONS_ALIGN_CHOICES = (
+    ("", _("Left")),
+    ("fr-btns-group--center", _("Center")),
+    ("fr-btns-group--right", _("Right")),
+    ("fr-btns-group--right fr-btns-group--inline-reverse", _("Right (reverse order on desktop)")),
+)
+
 GRID_3_4_6_CHOICES = [
     ("3", "3/12"),
     ("4", "4/12"),
