@@ -1,12 +1,13 @@
 from django import forms
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _, pgettext_lazy
+from django.utils.translation import gettext, gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
 from wagtail.blocks import BooleanBlock, StructValue
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
+from wagtail.images.models import Image
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
@@ -484,6 +485,15 @@ class AlertBlock(blocks.StructBlock):
     class Meta:
         icon = "info-circle"
         template = "content_manager/blocks/alert.html"
+        description = _("An alert message with the choice of the type.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        return {
+            "title": _("Alert block"),
+            "description": _("An alert message with the choice of the type."),
+            "level": "info",
+        }
 
 
 class CalloutBlock(blocks.StructBlock):
@@ -605,6 +615,21 @@ class ImageAndTextBlock(blocks.StructBlock):
         icon = "image"
         template = "content_manager/blocks/image_and_text.html"
 
+        description = _(
+            """A responsive block with an image and a paragraph that can appear side by side on desktop,
+                        or one above the other on mobile."""
+        )
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        image = Image.objects.get(title="Illustration CMS 2")
+
+        return {
+            "text": gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
+            "image": image,
+            "image_ratio": "3",
+        }
+
 
 class CenteredImageStructValue(StructValue):
     def extra_classes(self):
@@ -643,7 +668,7 @@ class CenteredImageBlock(blocks.StructBlock):
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
         required=False,
-        default="h3",
+        default="fr-ratio-4x3",
     )
     caption = blocks.CharBlock(label=_("Caption"), required=False)
     url = blocks.URLBlock(label=_("Link"), required=False)
@@ -652,6 +677,18 @@ class CenteredImageBlock(blocks.StructBlock):
         icon = "image"
         template = "content_manager/blocks/image.html"
         value_class = CenteredImageStructValue
+        description = _("A responsive image with optional title and caption.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        image = Image.objects.get(title="Illustration CMS 2")
+
+        return {
+            "title": _("Centered image"),
+            "image": image,
+            "caption": _("The image can have a caption."),
+            "extra_classes": "fr-responsive-img fr-ratio-4x3",
+        }
 
 
 class QuoteBlock(blocks.StructBlock):
@@ -731,6 +768,33 @@ class TextAndCTA(blocks.StructBlock):
     class Meta:
         icon = "link"
         template = "content_manager/blocks/text_and_cta.html"
+        description = _("A responsive block with a call to action.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        return {
+            "text": gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
+            "cta_buttons": [
+                {
+                    "buttons": [
+                        {
+                            "button": {
+                                "external_url": "https://sites.beta.gouv.fr",
+                                "text": _("A primary button"),
+                                "button_type": "fr-btn",
+                            },
+                        },
+                        {
+                            "button": {
+                                "external_url": "https://sites.beta.gouv.fr",
+                                "text": _("A secondary button"),
+                                "button_type": "fr-btn fr-btn--secondary",
+                            },
+                        },
+                    ]
+                }
+            ],
+        }
 
 
 class TranscriptionBlock(blocks.StructBlock):
@@ -992,7 +1056,12 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 
 ## Page structure blocks
 class CommonStreamBlock(blocks.StreamBlock):
-    text = blocks.RichTextBlock(label=_("Rich text"))
+    text = blocks.RichTextBlock(
+        label=_("Text"),
+        preview_value=gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
+        preview_template="content_manager/previews/common_block_preview.html",
+        description=_("A rich text paragraph."),
+    )
     image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
     table = AdvancedTypedTableBlock(label=_("Table"))
@@ -1267,7 +1336,15 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
 
 
 STREAMFIELD_COMMON_BLOCKS = [
-    ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
+    (
+        "paragraph",
+        blocks.RichTextBlock(
+            label=_("Text"),
+            preview_value=gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
+            preview_template="content_manager/previews/common_block_preview.html",
+            description=_("A rich text paragraph."),
+        ),
+    ),
     ("image", CenteredImageBlock(label=_("Centered image"))),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("table", AdvancedTypedTableBlock(label=_("Table"))),
