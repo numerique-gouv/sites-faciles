@@ -769,32 +769,10 @@ class TextAndCTA(blocks.StructBlock):
         icon = "link"
         template = "content_manager/blocks/text_and_cta.html"
         description = _("A responsive block with a call to action.")
-        preview_template = "content_manager/previews/common_block_preview.html"
+        preview_template = "content_manager/previews/text_and_cta.html"
 
     def get_preview_value(self):
-        return {
-            "text": gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
-            "cta_buttons": [
-                {
-                    "buttons": [
-                        {
-                            "button": {
-                                "external_url": "https://sites.beta.gouv.fr",
-                                "text": _("A primary button"),
-                                "button_type": "fr-btn",
-                            },
-                        },
-                        {
-                            "button": {
-                                "external_url": "https://sites.beta.gouv.fr",
-                                "text": _("A secondary button"),
-                                "button_type": "fr-btn fr-btn--secondary",
-                            },
-                        },
-                    ]
-                }
-            ],
-        }
+        return {}
 
 
 class TranscriptionBlock(blocks.StructBlock):
