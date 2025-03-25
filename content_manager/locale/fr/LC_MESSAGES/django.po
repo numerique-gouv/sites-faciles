@@ -530,6 +530,21 @@ msgstr "Légende"
 
 #: content_manager/blocks.py:659 content_manager/blocks.py:1009
 #: content_manager/blocks.py:1285
+#: content_manager/blocks.py:636
+msgid "A responsive image with optional title and caption."
+msgstr "Une image responsive avec une légende et un titre optionnels."
+
+#: content_manager/blocks.py:643 content_manager/blocks.py:989
+#: content_manager/blocks.py:1267
+msgid "Centered image"
+msgstr "Image centrée"
+
+#: content_manager/blocks.py:645
+msgid "The image can have a caption."
+msgstr "L’image peut avoir une légende"
+
+#: content_manager/blocks.py:652 content_manager/blocks.py:1001
+#: content_manager/blocks.py:1280
 msgid "Quote"
 msgstr "Citation"
 
