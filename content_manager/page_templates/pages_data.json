@@ -12,7 +12,7 @@
     66,
     78,
     96,
-    84,
+    163,
     6,
     81,
     6,
@@ -29,8 +29,8 @@
       "id": 32,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/32/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/template-landing-page/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/32/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/template-landing-page/",
         "slug": "template-landing-page",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:38:17.932779+02:00",
@@ -238,7 +238,11 @@
         {
           "type": "imageandtext",
           "value": {
-            "image": 84,
+            "image": {
+              "image": 84,
+              "alt_text": "Illustration CMS 2",
+              "decorative": false
+            },
             "image_side": "right",
             "image_ratio": "5",
             "text": "<h2 data-block-key=\"8jec0\"><b>\u00c0 qui s'adresse votre service ?</b></h2><h3 data-block-key=\"4jjcu\"><b>Vous pouvez expliquer ici le p\u00e9rim\u00e8tre d'usage du service :</b></h3><ul><li data-block-key=\"aap7e\">Exemple type d'utilisateur avec son cas d'usage</li><li data-block-key=\"19n35\">Exemple type d'utilisateur avec son cas d'usage</li><li data-block-key=\"eoo5q\">Exemple type d'utilisateur avec son cas d'usage</li></ul>",
@@ -300,7 +304,7 @@
                                   "color": "green-tilleul-verveine",
                                   "icon_class": "",
                                   "link": {
-                                    "page": 3,
+                                    "page": null,
                                     "document": null,
                                     "external_url": ""
                                   }
@@ -348,7 +352,7 @@
                                   "color": "green-tilleul-verveine",
                                   "icon_class": "",
                                   "link": {
-                                    "page": 3,
+                                    "page": null,
                                     "document": null,
                                     "external_url": ""
                                   }
@@ -660,7 +664,7 @@
         "id": 112,
         "meta": {
           "type": "wagtailimages.Image",
-          "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/112/"
+          "detail_url": "https://sites.beta.gouv.fr/api/v2/images/112/"
         },
         "title": "Design sans titre (3)"
       },
@@ -691,14 +695,15 @@
         }
       ],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "36": {
       "id": 36,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/36/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/exemples-de-tuiles/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/36/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/exemples-de-tuiles/",
         "slug": "exemples-de-tuiles",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:26:02.224329+02:00",
@@ -1029,14 +1034,15 @@
       "header_cta_text": "",
       "header_cta_buttons": [],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "37": {
       "id": 37,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/37/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/en-t%C3%AAtes-et-bandeaux-dappel-%C3%A0-action/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/37/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/en-t%C3%AAtes-et-bandeaux-dappel-%C3%A0-action/",
         "slug": "en-t\u00eates-et-bandeaux-dappel-\u00e0-action",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:34:36.937313+02:00",
@@ -1198,7 +1204,7 @@
                 "value": {
                   "title": "",
                   "heading_tag": "",
-                  "image": 84,
+                  "image": 163,
                   "alt": "",
                   "width": "fr-content-media--sm",
                   "image_ratio": "fr-ratio-3x2",
@@ -1214,7 +1220,7 @@
         "id": 96,
         "meta": {
           "type": "wagtailimages.Image",
-          "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/96/"
+          "detail_url": "https://sites.beta.gouv.fr/api/v2/images/96/"
         },
         "title": "Header"
       },
@@ -1245,14 +1251,15 @@
         }
       ],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "38": {
       "id": 38,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/38/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/page-de-contenu-avec-menu-lat%C3%A9ral/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/38/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/page-de-contenu-avec-menu-lat%C3%A9ral/",
         "slug": "page-de-contenu-avec-menu-lat\u00e9ral",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:32:49.092767+02:00",
@@ -1352,14 +1359,15 @@
       "header_cta_text": "",
       "header_cta_buttons": [],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "39": {
       "id": 39,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/39/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/blocs-simples-de-textes-et-dimages/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/39/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/blocs-simples-de-textes-et-dimages/",
         "slug": "blocs-simples-de-textes-et-dimages",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:31:35.383776+02:00",
@@ -1371,7 +1379,11 @@
         {
           "type": "imageandtext",
           "value": {
-            "image": 81,
+            "image": {
+              "image": 81,
+              "alt_text": "Illustration CMS",
+              "decorative": false
+            },
             "image_side": "right",
             "image_ratio": "5",
             "text": "<h2 data-block-key=\"0ruyo\">Bloc \"Image et texte\"</h2><p data-block-key=\"etjrq\"><i>Vous pouvez choisir la disposition de l'image (gauche ou droite) et ses dimensions. Vous pouvez \u00e9galement mettre ce texte en forme (</i><b><i>gras</i></b><i>, italique, listes \u00e0 puce, listes num\u00e9rot\u00e9es, liens hypertexte...).</i></p><hr/><p data-block-key=\"9op7q\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
@@ -1440,14 +1452,15 @@
       "header_cta_text": "",
       "header_cta_buttons": [],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "40": {
       "id": 40,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/40/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/options-de-mise-en-valeur-de-textes/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/40/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/options-de-mise-en-valeur-de-textes/",
         "slug": "options-de-mise-en-valeur-de-textes",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:29:51.465461+02:00",
@@ -1585,14 +1598,15 @@
       "header_cta_text": "",
       "header_cta_buttons": [],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "41": {
       "id": 41,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/41/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/grilles-d%C3%A9l%C3%A9ments/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/41/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/grilles-d%C3%A9l%C3%A9ments/",
         "slug": "grilles-d\u00e9l\u00e9ments",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:27:10.483371+02:00",
@@ -1882,14 +1896,15 @@
       "header_cta_text": "",
       "header_cta_buttons": [],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "42": {
       "id": 42,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/42/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/accord%C3%A9ons/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/42/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/accord%C3%A9ons/",
         "slug": "accord\u00e9ons",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:23:07.932797+02:00",
@@ -1948,14 +1963,15 @@
       "header_cta_text": "",
       "header_cta_buttons": [],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "43": {
       "id": 43,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/43/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/exemples-de-cartes/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/43/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/exemples-de-cartes/",
         "slug": "exemples-de-cartes",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:25:06.220370+02:00",
@@ -2302,7 +2318,7 @@
                 "value": {
                   "title": "Carte horizontale simple",
                   "heading_tag": "h3",
-                  "description": "<p data-block-key=\"ye5df\">Version des mod\u00e8les de page : 1.10.0RC3</p>",
+                  "description": "<p data-block-key=\"ye5df\">Version des mod\u00e8les de page : 1.10.0RC</p>",
                   "image": null,
                   "image_ratio": "",
                   "image_badge": [],
@@ -2422,21 +2438,22 @@
       "header_cta_text": "",
       "header_cta_buttons": [],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     },
     "44": {
       "id": 44,
       "meta": {
         "type": "content_manager.ContentPage",
-        "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/44/",
-        "html_url": "http://sites-faciles.beta.numerique.gouv.fr/exemples/etapiers/",
+        "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/44/",
+        "html_url": "http://sites.beta.gouv.fr/exemples/etapiers/",
         "slug": "etapiers",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:20:49.058230+02:00",
         "alias_of": null,
         "locale": "fr"
       },
-      "title": "Etapiers",
+      "title": "\u00c9tapiers",
       "body": [
         {
           "type": "paragraph",
@@ -2489,7 +2506,8 @@
       "header_cta_text": "",
       "header_cta_buttons": [],
       "header_cta_label": null,
-      "header_cta_link": null
+      "header_cta_link": null,
+      "public_child_pages": []
     }
   }
 }

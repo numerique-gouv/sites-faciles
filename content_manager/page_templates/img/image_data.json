@@ -2,7 +2,7 @@
   "96": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/96/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/96/",
       "tags": []
     },
     "title": "Header",
@@ -12,7 +12,7 @@
   "1": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/1/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/1/",
       "tags": []
     },
     "title": "CMS",
@@ -22,7 +22,7 @@
   "66": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/66/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/66/",
       "tags": [
         "DSFR",
         "Leisure",
@@ -36,7 +36,7 @@
   "6": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/6/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/6/",
       "tags": []
     },
     "title": "Home.original",
@@ -46,7 +46,7 @@
   "74": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/74/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/74/",
       "tags": [
         "DSFR",
         "Pictogrammes",
@@ -60,7 +60,7 @@
   "77": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/77/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/77/",
       "tags": [
         "DSFR",
         "Pictogrammes",
@@ -74,7 +74,7 @@
   "78": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/78/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/78/",
       "tags": [
         "DSFR",
         "Pictogrammes",
@@ -88,7 +88,7 @@
   "112": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/112/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/112/",
       "tags": []
     },
     "title": "Design sans titre (3)",
@@ -98,7 +98,7 @@
   "81": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/81/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/81/",
       "tags": []
     },
     "title": "Illustration CMS",
@@ -108,7 +108,7 @@
   "82": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/82/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/82/",
       "tags": []
     },
     "title": "picto accessibility",
@@ -118,7 +118,7 @@
   "84": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/84/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/84/",
       "tags": []
     },
     "title": "Illustration CMS 2",
@@ -128,7 +128,7 @@
   "116": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/116/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/116/",
       "tags": []
     },
     "title": "undraw_female_avatar_efig",
@@ -138,7 +138,7 @@
   "117": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/117/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/117/",
       "tags": []
     },
     "title": "undraw_male_avatar_g98d",
@@ -148,7 +148,7 @@
   "28": {
     "meta": {
       "type": "wagtailimages.Image",
-      "detail_url": "https://sites-faciles.beta.numerique.gouv.fr/api/v2/images/28/",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/28/",
       "tags": [
         "Digital",
         "DSFR",
@@ -158,5 +158,15 @@
     "title": "Pictogrammes DSFR \u2014 Digital \u2014 Avatar",
     "filename": "Pictogrammes DSFR \u2014 Digital \u2014 Avatar",
     "is_pictogram": true
+  },
+  "163": {
+    "meta": {
+      "type": "wagtailimages.Image",
+      "detail_url": "https://sites.beta.gouv.fr/api/v2/images/163/",
+      "tags": []
+    },
+    "title": "construction _ woman, shape, shapes, sort",
+    "filename": "construction___woman_shape_shapes_sort.svg",
+    "is_pictogram": false
   }
 }
