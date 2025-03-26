@@ -1,7 +1,7 @@
 [project]
 name = "sites-faciles"
 requires-python = "<4.0,>=3.10"
-version = "1.14.0"
+version = "1.15.0"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
     {name = "Sébastien Reuiller", email = "sebastien.reuiller@beta.gouv.fr"},
@@ -42,16 +42,16 @@ requires-poetry = ">=2.0"
 package-mode = false
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.3.0"
-flake8 = "^6.1.0"
-isort = "^5.12.0"
-pre-commit = "^3.5.0"
-djlint = "^1.34.0"
+black = "^25.1.0"
+flake8 = "^7.1.2"
+isort = "^6.0.1"
+pre-commit = "^4.2.0"
+djlint = "^1.36.4"
 django-extensions = "^3.2.3"
 ipython = "^8.18.1"
-django-compressor = "^4.4"
-django-debug-toolbar = "^4.4.2"
-ruff = "^0.4.10"
+django-compressor = "^4.5.1"
+django-debug-toolbar = "^5.1.0"
+ruff = "^0.11.2"
 tblib = "^3.0.0"
 
 [build-system]
