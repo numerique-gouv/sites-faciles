@@ -226,6 +226,24 @@ class BadgesListBlock(blocks.StreamBlock):
     class Meta:
         icon = "list-ul"
         template = "content_manager/blocks/badges_list.html"
+        description = _("A list of badge items")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        value = [
+            {
+                "badge": BadgeBlock().bind(
+                    value=BadgeBlock().to_python({"text": "New in version 1.15.0", "color": "new"})
+                )
+            },
+            {
+                "badge": BadgeBlock().bind(
+                    value=BadgeBlock().to_python({"text": "Experimental", "color": "pink-macaron"})
+                )
+            },
+        ]
+        print(value)
+        return value
 
 
 class TagBlock(blocks.StructBlock):
@@ -782,6 +800,18 @@ class TranscriptionBlock(blocks.StructBlock):
     class Meta:
         icon = "media"
         template = "content_manager/blocks/transcription.html"
+        description = _("A transcription of a video or audio file.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        return {
+            "title": _("Transcription block"),
+            "content": _(
+                """<p>This is an example of a transcription for a video.</p>
+                <p>This example is only two paragraphs long, but it can be as long as it is necessary.</p>
+                """
+            ),
+        }
 
 
 class VideoBlock(blocks.StructBlock):
@@ -813,6 +843,16 @@ class VideoBlock(blocks.StructBlock):
     class Meta:
         icon = "media"
         template = "content_manager/blocks/video.html"
+        description = _("A responsive video with optional title and caption, along with a transcription.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        return {
+            "title": _("Video block"),
+            "url": "https://www.youtube-nocookie.com/embed/gLzXOViPX-0",
+            "caption": _("The video can have a caption."),
+            "extra_classes": "fr-ratio-4x3",
+        }
 
 
 class VerticalContactCardStructValue(blocks.StructValue):
