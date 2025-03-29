@@ -381,3 +381,6 @@ if PROCONNECT_ACTIVATED:
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
     CSRF_TRUSTED_ORIGINS.append("https://" + host)
+
+# Necessary for block previews to work
+X_FRAME_OPTIONS = "SAMEORIGIN"
