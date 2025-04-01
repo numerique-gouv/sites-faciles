@@ -1,6 +1,5 @@
 from django import forms
 from django.db import models
-from django.template.response import TemplateResponse
 from django.utils.translation import gettext_lazy as _
 from dsfr.forms import DsfrDjangoTemplates
 from dsfr.utils import dsfr_input_class_attr
@@ -33,7 +32,7 @@ class FormField(AbstractFormField):
 
     field_type = models.CharField(verbose_name=_("Field type"), max_length=16, choices=CHOICES)
 
-    class Meta:
+    class Meta(AbstractFormField.Meta):
         verbose_name = _("Form field")
         verbose_name_plural = _("Form fields")
 
@@ -102,19 +101,5 @@ class FormPage(AbstractEmailForm):
     class Meta:
         verbose_name = _("Form page")
         verbose_name_plural = _("Form pages")
-
-    def serve(self, request, *args, **kwargs):
-        if request.method == "POST":
-            form = self.get_form(request.POST, request.FILES, page=self, user=request.user)
-
-            if form.is_valid():
-                form_submission = self.process_form_submission(form)
-                return self.render_landing_page(request, form_submission, *args, **kwargs)
-        else:
-            form = self.get_form(page=self, user=request.user)
-
-        context = self.get_context(request)
-        context["form"] = form
-        return TemplateResponse(request, self.get_template(request), context)
 
     form_builder = SitesFacilesFormBuilder
