@@ -6,6 +6,11 @@ poetry_run := if env("USE_POETRY", "0") == "1" { "poetry run" } else { "" }
 default:
     just -l
 
+coverage app="":
+    {{poetry_run}} coverage run --source='.' manage.py test {{app}}
+    {{poetry_run}} coverage html
+    firefox htmlcov/index.html
+
 alias mm:= makemigrations
 makemigrations app="":
     {{poetry_run}} python manage.py makemigrations {{app}}
