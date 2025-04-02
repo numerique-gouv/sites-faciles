@@ -14,6 +14,62 @@ from events.models import EventEntryPage, EventsIndexPage
 User = get_user_model()
 
 
+class TypedTableBlockTestCase(WagtailPageTestCase):
+    def setUp(self) -> None:
+        home = Page.objects.get(slug="home")
+
+        body = [
+            {
+                "type": "table",
+                "value": {
+                    "columns": [
+                        {"type": "text", "heading": "Name"},
+                        {"type": "numeric", "heading": "Value"},
+                        {"type": "rich_text", "heading": "Comment"},
+                    ],
+                    "rows": [
+                        {
+                            "values": [
+                                "Line 1",
+                                5.0,
+                                '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
+                            ]
+                        },
+                        {
+                            "values": [
+                                "Line 1",
+                                42.0,
+                                '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
+                            ]
+                        },
+                    ],
+                    "caption": "Example table",
+                },
+            }
+        ]
+
+        self.content_page = home.add_child(
+            instance=ContentPage(title="Sample table page", slug="content-page", body=body)
+        )
+        self.content_page.save()
+
+    def test_page_with_table_is_renderable(self):
+        self.assertPageIsRenderable(self.content_page)
+
+    def test_page_with_table_has_content(self):
+        url = self.content_page.url
+        response = self.client.get(url)
+
+        self.assertInHTML(
+            """<tr>
+                <th scope="col">Name</th>
+                <th scope="col">Value</th>
+                <th scope="col">Comment</th>
+        </tr>""",
+            response.content.decode(),
+        )
+
+
 class HorizontalCardBlockTestCase(WagtailPageTestCase):
     # Logic *should* be the same for a vertical card, but inside of a multiple columns block.
     def setUp(self):
