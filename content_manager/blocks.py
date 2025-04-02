@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
 from wagtail.blocks import BooleanBlock, StructValue
+from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
@@ -30,6 +31,15 @@ from content_manager.constants import (
 from content_manager.widgets import DsfrIconPickerWidget
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
+
+
+LIMITED_RICHTEXTFIELD_FEATURES_WITH_IMAGES = LIMITED_RICHTEXTFIELD_FEATURES.append("image")
+
+TYPED_TABLE_BLOCK_FIELDS = [
+    ("text", blocks.CharBlock()),
+    ("numeric", blocks.FloatBlock()),
+    ("rich_text", blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_IMAGES)),
+]
 
 
 ## Meta blocks
@@ -975,6 +985,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
     image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
+    table = TypedTableBlock(TYPED_TABLE_BLOCK_FIELDS, label=_("Table"))
     alert = AlertBlock(label=_("Alert message"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     video = VideoBlock(label=_("Video"))
@@ -1243,6 +1254,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     ("image", CenteredImageBlock(label=_("Centered image"))),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
+    ("table", TypedTableBlock(TYPED_TABLE_BLOCK_FIELDS, label=_("Table"))),
     ("alert", AlertBlock(label=_("Alert message"))),
     ("text_cta", TextAndCTA(label=_("Text and call to action"))),
     ("video", VideoBlock(label=_("Video"))),
