@@ -1,0 +1,16 @@
+{% extends "wagtailcore/shared/block_preview.html" %}
+{% load static dsfr_tags %}
+
+{% block css %}
+  {{ block.super }}
+  {% dsfr_css %}
+  <link href="{% static 'dsfr/dist/utility/utility.min.css' %}"
+        rel="stylesheet"
+        type="text/css" />
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block js %}
+  {{ block.super }}
+  {% dsfr_js %}
+{% endblock js %}
