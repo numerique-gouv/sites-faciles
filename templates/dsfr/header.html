@@ -1,0 +1,85 @@
+<header role="banner" class="fr-header">
+    <div class="fr-header__body">
+        <div class="fr-container">
+            <div class="fr-header__body-row">
+                <div class="fr-header__brand fr-enlarge-link">
+                    <div class="fr-header__brand-top">
+                        <div class="fr-header__logo">
+                            {% block brand %}
+                                <a href="/" title="Accueil — {{ SITE_CONFIG.site_title }}">
+                                    <p class="fr-logo">{{ SITE_CONFIG.header_brand_html|default_if_none:"république<br />française" | safe }}</p>
+                                </a>
+                            {% endblock brand %}
+                        </div>
+                        <div class="fr-header__operator">
+                            {% block brand_operator %}
+                            {% endblock brand_operator %}
+                        </div>
+                        {% block burger_menu %}
+                            <div class="fr-header__navbar">
+                                <button class="fr-btn--menu fr-btn" data-fr-opened="false" aria-controls="fr-menu-mobile" aria-haspopup="menu" title="Menu" id="fr-btn-menu-mobile">
+                                    Menu
+                                </button>
+                            </div>
+                        {% endblock burger_menu %}
+                    </div>
+                    <div class="fr-header__service">
+                        {% block service_title %}
+                            <a href="/" title="Accueil — {{ SITE_CONFIG.site_title }}">
+                                <p class="fr-header__service-title">{{ SITE_CONFIG.site_title }}</p>
+                            </a>
+                        {% endblock service_title %}
+                        <p class="fr-header__service-tagline">{% block service_tagline %}{{ SITE_CONFIG.site_tagline }}{% endblock service_tagline %}</p>
+                    </div>
+                </div>
+                <div class="fr-header__tools">
+                    <div class="fr-header__tools-links">
+                        <ul class="fr-btns-group">
+                            {% block header_tools %}
+                                <li>
+                                    <a class="fr-btn fr-icon-add-circle-line" href="[url - à modifier]">
+                                        Créer un espace
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="fr-btn fr-icon-lock-line" href="[url - à modifier]">
+                                        Se connecter
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="fr-btn fr-icon-account-line" href="[url - à modifier]">
+                                        S’enregistrer
+                                    </a>
+                                </li>
+                            {% endblock header_tools %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block main_menu %}
+        <div class="fr-header__menu fr-modal" id="fr-menu-mobile" aria-labelledby="fr-btn-menu-mobile">
+            <div class="fr-container">
+                <button class="fr-btn--close fr-btn" aria-controls="fr-menu-mobile">Fermer</button>
+                <div class="fr-header__menu-links"></div>
+                <nav role="navigation" class="fr-nav" id="fr-navigation" aria-label="Menu principal">
+                    <ul class="fr-nav__list">
+                        <li class="fr-nav__item">
+                            <a class="fr-nav__link" href="#" target="_self">accès direct</a>
+                        </li>
+                        <li class="fr-nav__item">
+                            <a class="fr-nav__link" href="#" target="_self">accès direct</a>
+                        </li>
+                        <li class="fr-nav__item">
+                            <a class="fr-nav__link" href="#" target="_self">accès direct</a>
+                        </li>
+                        <li class="fr-nav__item">
+                            <a class="fr-nav__link" href="#" target="_self">accès direct</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    {% endblock main_menu %}
+</header>
