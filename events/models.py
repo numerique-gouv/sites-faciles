@@ -62,7 +62,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         entries = (
             EventEntryPage.objects.descendant_of(self)
             .live()
-            .filter(event_date_start__date__gte=today)
+            .filter(event_date_end__date__gte=today)
             .order_by("event_date_start")
             .select_related("owner")
             .prefetch_related("tags", "event_categories", "date__year")

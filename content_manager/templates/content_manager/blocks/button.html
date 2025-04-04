@@ -1,8 +1,9 @@
+{% load i18n %}
 {% if button.external_url %}
   <a class="{{ button.button_type }}{% if button.icon_side %} {{ button.icon_side }} {{ button.icon_class }}{% endif %}"
      href="{{ button.url }}"
      target="_blank"
-     rel="noopener external">{{ button.text }}</a>
+     rel="noopener external">{{ button.text }} <span class="fr-sr-only">{% translate "Opens a new window" %}</span></a>
 {% else %}
   <a class="{{ button.button_type }}{% if button.icon_side %} {{ button.icon_side }} {{ button.icon_class }}{% endif %}"
      href="{{ button.url }}">{{ button.text }}</a>

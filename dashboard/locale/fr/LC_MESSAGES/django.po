@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 11:45+0200\n"
-"PO-Revision-Date: 2024-09-12 11:46+0200\n"
+"POT-Creation-Date: 2025-03-05 10:43+0100\n"
+"PO-Revision-Date: 2025-03-05 10:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -72,21 +72,33 @@ msgstr "Réinitialisez votre mot de passe"
 msgid "Connection"
 msgstr "Connexion"
 
-#: dashboard/templates/wagtailadmin/login.html:17
+#: dashboard/templates/wagtailadmin/login.html:15
+msgid "Login with"
+msgstr "S’identifier avec"
+
+#: dashboard/templates/wagtailadmin/login.html:18
+msgid "What is ProConnect?"
+msgstr "Qu’est-ce que ProConnect  ?"
+
+#: dashboard/templates/wagtailadmin/login.html:19
+msgid "Opens a new window"
+msgstr "Ouvre une nouvelle fenêtre"
+
+#: dashboard/templates/wagtailadmin/login.html:33
 msgid "Log in with your account"
 msgstr "Se connecter avec son compte"
 
-#: dashboard/templates/wagtailadmin/login.html:20
+#: dashboard/templates/wagtailadmin/login.html:36
 msgid "Unless otherwise stated, all fields are mandatory."
 msgstr "Sauf mention contraire, tous les champs sont obligatoires."
 
-#: dashboard/templates/wagtailadmin/login.html:26
+#: dashboard/templates/wagtailadmin/login.html:42
 msgid "Error: Your username and password do not match, please try again."
 msgstr ""
 "Erreur : Votre identifiant et mot de passe ne correspondent pas, merci de "
 "réessayer."
 
-#: dashboard/templates/wagtailadmin/login.html:33
+#: dashboard/templates/wagtailadmin/login.html:49
 msgid ""
 "Error: Your account does not have access to this page. To continue, please "
 "log in with an authorized account."
@@ -94,31 +106,31 @@ msgstr ""
 "Erreur : Votre compte n’a pas accès à cette page. Pour continuer, merci de "
 "vous connecter avec un compte autorisé."
 
-#: dashboard/templates/wagtailadmin/login.html:46
+#: dashboard/templates/wagtailadmin/login.html:62
 msgid "Username:"
 msgstr "Identifiant :"
 
-#: dashboard/templates/wagtailadmin/login.html:52
+#: dashboard/templates/wagtailadmin/login.html:68
 msgid "Password:"
 msgstr "Mot de passe :"
 
-#: dashboard/templates/wagtailadmin/login.html:55
+#: dashboard/templates/wagtailadmin/login.html:71
 msgid "Show password"
 msgstr "Afficher le mot de passe"
 
-#: dashboard/templates/wagtailadmin/login.html:60
+#: dashboard/templates/wagtailadmin/login.html:76
 msgid "Show"
 msgstr "Afficher"
 
-#: dashboard/templates/wagtailadmin/login.html:66
+#: dashboard/templates/wagtailadmin/login.html:82
 msgid "Forgotten password?"
 msgstr "Mot de passe oublié ?"
 
-#: dashboard/templates/wagtailadmin/login.html:74
+#: dashboard/templates/wagtailadmin/login.html:90
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
-#: dashboard/templates/wagtailadmin/login.html:81
+#: dashboard/templates/wagtailadmin/login.html:97
 msgid "Connect"
 msgstr "Se connecter"
 

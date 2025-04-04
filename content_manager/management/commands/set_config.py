@@ -3,9 +3,10 @@ from os.path import isfile
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from wagtail.models import Group, Site
+from wagtail.models import Group
 
 from content_manager.models import CmsDsfrConfig
+from content_manager.utils import get_default_site
 
 
 class Command(BaseCommand):
@@ -22,7 +23,7 @@ class Command(BaseCommand):
                 without the port or http/https protocol."""
             )
 
-        site = Site.objects.filter(is_default_site=True).first()
+        site = get_default_site()
         site.hostname = settings.HOST_URL
         site.site_name = settings.WAGTAIL_SITE_NAME
         site.save()
