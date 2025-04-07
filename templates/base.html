@@ -66,7 +66,9 @@
 
       {% block follow_newsletter_social_media %}
         {% if SiteConfig.show_newsletter_and_social_block %}
-          {% include "blocks/follow.html" %}
+          <aside role="complementary" id="cmsfr-block-follow">
+            {% include "blocks/follow.html" %}
+          </aside>
         {% endif %}
       {% endblock follow_newsletter_social_media %}
 
