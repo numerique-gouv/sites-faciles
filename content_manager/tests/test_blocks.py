@@ -24,13 +24,15 @@ class TypedTableBlockTestCase(WagtailPageTestCase):
                 "value": {
                     "columns": [
                         {"type": "text", "heading": "Name"},
-                        {"type": "numeric", "heading": "Value"},
+                        {"type": "numeric_int", "heading": "Value (int)"},
+                        {"type": "numeric_float", "heading": "Value (float)"},
                         {"type": "rich_text", "heading": "Comment"},
                     ],
                     "rows": [
                         {
                             "values": [
                                 "Line 1",
+                                12,
                                 5.0,
                                 '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
                             ]
@@ -38,6 +40,7 @@ class TypedTableBlockTestCase(WagtailPageTestCase):
                         {
                             "values": [
                                 "Line 1",
+                                33,
                                 42.0,
                                 '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
                             ]
@@ -57,16 +60,60 @@ class TypedTableBlockTestCase(WagtailPageTestCase):
         self.assertPageIsRenderable(self.content_page)
 
     def test_page_with_table_has_content(self):
-        url = self.content_page.url
-        response = self.client.get(url)
+        response = self.client.get(self.content_page.url)
 
         self.assertInHTML(
             """<tr>
                 <th scope="col">Name</th>
-                <th scope="col">Value</th>
+                <th scope="col">Value (int)</th>
+                <th scope="col">Value (float)</th>
                 <th scope="col">Comment</th>
         </tr>""",
             response.content.decode(),
+        )
+
+    def test_thead_row_is_not_shown_if_col_headings_are_empty(self):
+        body = [
+            {
+                "type": "table",
+                "value": {
+                    "columns": [
+                        {"type": "text", "heading": ""},
+                        {"type": "numeric_int", "heading": ""},
+                        {"type": "numeric_float", "heading": ""},
+                        {"type": "rich_text", "heading": ""},
+                    ],
+                    "rows": [
+                        {
+                            "values": [
+                                "Line 1",
+                                12,
+                                5.0,
+                                '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
+                            ]
+                        },
+                        {
+                            "values": [
+                                "Line 1",
+                                33,
+                                42.0,
+                                '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
+                            ]
+                        },
+                    ],
+                    "caption": "Example table",
+                },
+            }
+        ]
+
+        self.content_page.body = body
+        self.content_page.save()
+
+        response = self.client.get(self.content_page.url)
+
+        self.assertNotContains(
+            response,
+            "thead",
         )
 
 
