@@ -33,13 +33,25 @@ from content_manager.widgets import DsfrIconPickerWidget
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
 
-LIMITED_RICHTEXTFIELD_FEATURES_WITH_IMAGES = LIMITED_RICHTEXTFIELD_FEATURES.append("image")
+# Table-related blocks
+class PictogramBlock(ImageBlock):
+    # A subclass of ImageBlock with the height fixed to 80px.
+    class Meta:
+        icon = "image"
+        template = "content_manager/widgets/pictogram.html"
 
-TYPED_TABLE_BLOCK_FIELDS = [
-    ("text", blocks.CharBlock()),
-    ("numeric", blocks.FloatBlock()),
-    ("rich_text", blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_IMAGES)),
-]
+
+class AdvancedTypedTableBlock(TypedTableBlock):
+    row_heading = blocks.CharBlock(required=False, label=_("Row heading"))
+    text = blocks.CharBlock(required=False, label=_("Text"))
+    numeric_int = blocks.IntegerBlock(required=False, label=_("Integer"))
+    numeric_float = blocks.FloatBlock(required=False, label=_("Float"))
+    rich_text = blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES, required=False, label=_("Rich text"))
+    pictogram = PictogramBlock(required=False, label=_("Pictogram"))
+
+    class Meta:
+        icon = "table"
+        template = "content_manager/blocks/typed_table_block.html"
 
 
 ## Meta blocks
@@ -206,7 +218,7 @@ class BadgeBlock(blocks.StructBlock):
     hide_icon = blocks.BooleanBlock(label=_("Hide badge icon"), required=False)
 
     class Meta:
-        template = ("content_manager/blocks/badge.html",)
+        template = "content_manager/blocks/badge.html"
 
 
 class BadgesListBlock(blocks.StreamBlock):
@@ -985,7 +997,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
     image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
-    table = TypedTableBlock(TYPED_TABLE_BLOCK_FIELDS, label=_("Table"))
+    table = AdvancedTypedTableBlock(label=_("Table"))
     alert = AlertBlock(label=_("Alert message"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     video = VideoBlock(label=_("Video"))
@@ -1254,7 +1266,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     ("image", CenteredImageBlock(label=_("Centered image"))),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
-    ("table", TypedTableBlock(TYPED_TABLE_BLOCK_FIELDS, label=_("Table"))),
+    ("table", AdvancedTypedTableBlock(label=_("Table"))),
     ("alert", AlertBlock(label=_("Alert message"))),
     ("text_cta", TextAndCTA(label=_("Text and call to action"))),
     ("video", VideoBlock(label=_("Video"))),
