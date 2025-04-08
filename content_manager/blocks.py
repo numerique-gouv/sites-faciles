@@ -1037,9 +1037,7 @@ class ItemGridBlock(blocks.StructBlock):
     horizontal_align = blocks.ChoiceBlock(
         label=_("Horizontal align"), choices=GRID_HORIZONTAL_ALIGN_CHOICES, default="left", required=False
     )
-    vertical_align = blocks.ChoiceBlock(
-        label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, default="middle", required=False
-    )
+    vertical_align = blocks.ChoiceBlock(label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, required=False)
     items = ColumnBlock(label=_("Items"))
 
     class Meta:
