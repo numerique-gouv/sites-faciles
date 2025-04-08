@@ -1,0 +1,32 @@
+{% load wagtailcore_tags wagtail_dsfr_tags %}
+<div class="fr-table fr-table">
+  <div class="fr-table__wrapper">
+    <div class="fr-table__container">
+      <div class="fr-table__content">
+        <table>
+          {% if value.caption %}<caption>{{ value.caption }}</caption>{% endif %}
+          {% if value.columns|table_has_heading_row %}
+            <thead>
+              <tr>
+                {% for col in value.columns %}<th scope="col">{{ col.heading }}</th>{% endfor %}
+              </tr>
+            </thead>
+          {% endif %}
+          <tbody>
+            {% for row in value.rows %}
+              <tr>
+                {% for block in row %}
+                  {% if forloop.first and value.columns.0.block.name == "row_heading" %}
+                    <th scope="row">{% include_block block %}</th>
+                  {% else %}
+                    <td>{% include_block block %}</td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
