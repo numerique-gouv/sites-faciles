@@ -49,6 +49,6 @@ class FormsTestCase(WagtailPageTestCase):
         )
 
         self.assertInHTML(
-            """<li class="fr-error-text">Ce champ est obligatoire.</li>""",
+            """<li class="fr-error-text">Champ requis.</li>""",
             response.content.decode(),
         )
