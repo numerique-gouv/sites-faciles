@@ -1,18 +1,18 @@
 [project]
 name = "sites-faciles"
 requires-python = "<4.0,>=3.10"
-version = "1.15.0"
+version = "1.15.1"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
-    {name = "Sébastien Reuiller", email = "sebastien.reuiller@beta.gouv.fr"},
-    {name = "Sylvain Boissel", email = "sylvain.boissel@beta.gouv.fr"}
+    { name = "Sébastien Reuiller", email = "sebastien.reuiller@beta.gouv.fr" },
+    { name = "Sylvain Boissel", email = "sylvain.boissel@beta.gouv.fr" },
 ]
 maintainers = [
-    {name = "Sylvain Boissel", email = "sylvain.boissel@beta.gouv.fr"}
+    { name = "Sylvain Boissel", email = "sylvain.boissel@beta.gouv.fr" },
 ]
 readme = "README.md"
 dependencies = [
-    "django<6.0.0,>=5.1.4",
+    "django (>=5.1.8,<5.2.0)",
     "wagtail<7.0,>=6.1",
     "django-dsfr (>=2.1.0,<3.0.0)",
     "psycopg2-binary<3.0.0,>=2.9.9",
@@ -60,7 +60,7 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-line_length = 119
+line-length = 119
 
 extend-exclude = '''
 /(
@@ -75,7 +75,7 @@ omit = [
     "config/wsgi.py",
     "*/__init__.py",
     "*/migrations/*.py",
-    "*/tests/*.py"
+    "*/tests/*.py",
 ]
 
 [tool.djlint]
@@ -122,7 +122,7 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
-    "migrations"
+    "migrations",
 ]
 
 line-length = 119
