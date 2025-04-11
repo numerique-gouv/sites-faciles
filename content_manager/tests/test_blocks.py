@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.test import override_settings
 from wagtail.models import Page
 from wagtail.rich_text import RichText
@@ -10,6 +10,8 @@ from content_manager.utils import import_image
 from events.models import EventEntryPage, EventsIndexPage
 
 # Tests for blocks that have a value_class
+
+User = get_user_model()
 
 
 class HorizontalCardBlockTestCase(WagtailPageTestCase):
@@ -165,7 +167,7 @@ class HorizontalCardBlockTestCase(WagtailPageTestCase):
                     <a class="fr-btn fr-btn--secondary"
                     href="https://numerique.gouv.fr"
                     target="_blank"
-                    rel="noopener external">Label</a>
+                    rel="noopener external">Label <span class="fr-sr-only">Ouvre une nouvelle fenêtre</span></a>
                 </li>
             </ul>""",
             response.content.decode(),

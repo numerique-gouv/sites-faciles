@@ -17,9 +17,11 @@ Construisez vos pages à l'aide de composants prêts à l'emploi issus du Systè
 Le contenu des pages générées par le CMS est partiellement conforme selon la norme RGAA 4.1 et responsive
 
 ## Prérequis
+Sites Faciles vise à utiliser les dernières versions disponibles de [Django (5.0+)](https://www.djangoproject.com/download/) et [Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html).
 
-- Python 3.10
-- Postgreql 14.x.
+Les tests automatisés couvrent les versions suivantes :
+- Python 3.10 à 3.13 (cf. [versions de Python supportées par Django](https://docs.djangoproject.com/en/5.1/faq/install/))
+- Postgreql 13 à 17 (cf. [versions de PostgreSQL supportées par Django](https://code.djangoproject.com/wiki/SupportedDatabaseVersions))
 
 ## Installer les pre-commit hooks
 
@@ -54,7 +56,8 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 ### En local
 #### Installer poetry s’il ne l’est pas
 
-Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
+- Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
+- mettre la variable d’environnement `USE_POETRY` à `1` dans le fichier `.env`
 
 #### Installer le projet
 

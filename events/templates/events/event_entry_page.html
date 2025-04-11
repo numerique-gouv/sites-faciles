@@ -44,7 +44,6 @@
 
 {% block content %}
   {% include "content_manager/blocks/heading.html" %}
-  {% include "content_manager/blocks/messages.html" %}
 
   {% with categories=page.event_categories.all %}
 
@@ -77,6 +76,8 @@
         {% endif %}
       </p>
     </div>
+
+    {% include "content_manager/blocks/messages.html" %}
 
     {% include "content_manager/blocks/blocks_stream.html" with stream=page.body %}
 

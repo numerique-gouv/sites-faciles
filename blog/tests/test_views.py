@@ -1,12 +1,14 @@
 import zoneinfo
 from datetime import datetime
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
 
 from blog.models import BlogEntryPage, BlogIndexPage, Person
 from content_manager.models import ContentPage
+
+User = get_user_model()
 
 
 class BlogTestCase(WagtailPageTestCase):
@@ -107,6 +109,4 @@ class BlogTestCase(WagtailPageTestCase):
         self.assertPageIsRenderable(new_blog_post)
 
         response = self.client.get(deep_blog_index_page.url + "rss/")
-        print(deep_blog_index_page.url + "rss/")
-        print(response)
         self.assertEqual(response.status_code, 200)

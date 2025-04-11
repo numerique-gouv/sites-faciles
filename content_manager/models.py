@@ -330,6 +330,8 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
 
     beta_tag = models.BooleanField(_("Show the BETA tag next to the title"), default=False)
 
+    header_login_button = models.BooleanField(_("Show a login button in the header"), default=False)
+
     footer_description = RichTextField(
         _("Description"),
         default="",
@@ -428,6 +430,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
                 FieldPanel("mourning"),
                 FieldPanel("beta_tag"),
                 FieldPanel("theme_modale_button"),
+                FieldPanel("header_login_button"),
             ],
             heading=_("Advanced settings"),
         ),

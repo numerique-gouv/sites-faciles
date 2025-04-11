@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-04 14:57+0200\n"
-"PO-Revision-Date: 2024-09-04 17:00+0200\n"
+"POT-Creation-Date: 2025-03-05 10:43+0100\n"
+"PO-Revision-Date: 2025-03-05 10:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -41,20 +41,24 @@ msgstr "Suivez-nous<br />sur les réseaux sociaux"
 msgid "Back to home page"
 msgstr "Retourner à l’accueil"
 
-#: templates/blocks/footer.html:50
+#: templates/blocks/footer.html:45
+msgid "Sitemap"
+msgstr "Plan du site"
+
+#: templates/blocks/footer.html:53
 msgid "Cookie settings"
 msgstr "Gestion des cookies"
 
-#: templates/blocks/footer.html:59
+#: templates/blocks/footer.html:62
 msgid "Display settings"
 msgstr "Paramètres d’affichage"
 
-#: templates/blocks/footer.html:65 templates/blocks/notice.html:4
+#: templates/blocks/footer.html:68 templates/blocks/notice.html:4
 #: templates/blocks/share.html:2
 msgid "Opens a new window"
 msgstr "Ouvre une nouvelle fenêtre"
 
-#: templates/blocks/footer.html:67
+#: templates/blocks/footer.html:70
 msgid "This website is made with"
 msgstr "Ce site est fait avec"
 
@@ -62,19 +66,31 @@ msgstr "Ce site est fait avec"
 msgid "Home page"
 msgstr "Accueil"
 
-#: templates/blocks/header.html:53 templates/blocks/header.html:78
+#: templates/blocks/header.html:56
+msgid "Hello"
+msgstr "Bonjour"
+
+#: templates/blocks/header.html:56
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: templates/blocks/header.html:63
+msgid "Log in"
+msgstr "Connexion"
+
+#: templates/blocks/header.html:69 templates/blocks/header.html:94
 msgid "Search"
 msgstr "Rechercher"
 
-#: templates/blocks/header.html:57 templates/blocks/header.html:101
+#: templates/blocks/header.html:73 templates/blocks/header.html:117
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/blocks/header.html:87
+#: templates/blocks/header.html:103
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/blocks/header.html:106
+#: templates/blocks/header.html:122
 msgid "Main menu"
 msgstr "Menu principal"
 
@@ -113,3 +129,18 @@ msgstr "Adresse de la page copiée dans le presse-papiers."
 #: templates/blocks/share.html:67
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papiers"
+
+#~ msgid "Invalid response format or token verification failed"
+#~ msgstr "Format de réponse invalide ou vérification du jeton échouée"
+
+#~ msgid "User account is disabled"
+#~ msgstr "Compte utilisateur désactivé"
+
+#~ msgid "sub"
+#~ msgstr "sub"
+
+#~ msgid "Required. 255 characters or fewer. Letters, numbers, and @/./+/-/_/: characters only."
+#~ msgstr "Obligatoire. 255 caractères ou moins, parmi lettres, nombres et @/./+/-/_/: uniquement."
+
+#~ msgid "Enter a valid sub. This value may contain only letters, numbers, and @/./+/-/_/: characters."
+#~ msgstr "Entrez un sub valide. Cette valeur ne peut contenir que des lettres, nombres et @/./+/-/_/: uniquement."

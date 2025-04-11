@@ -1,12 +1,13 @@
 import sys
 
 from django.core.management.color import color_style
-from wagtail.models import Collection, PageViewRestriction, Site
+from wagtail.models import Collection, Page, PageViewRestriction
 from wagtailmenus.models.menuitems import MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from content_manager.constants import HEADER_FIELDS
 from content_manager.models import CatalogIndexPage, ContentPage
+from content_manager.utils import get_default_site
 
 style = color_style()
 
@@ -30,7 +31,7 @@ def get_or_create_catalog_index_page(
     slug: str,
     title: str,
     body: list,
-    parent_page: ContentPage | None = None,
+    parent_page: Page | ContentPage | None = None,
     restriction_type: str | None = None,
     page_fields: dict | None = None,
 ) -> CatalogIndexPage:
@@ -38,12 +39,18 @@ def get_or_create_catalog_index_page(
     Get a CatalogIndexPage if it exists, or creates it instead.
     """
 
-    site = Site.objects.filter(is_default_site=True).first()
+    site = get_default_site()
     root_page = site.root_page
     locale = root_page.locale
 
-    # If parent_page is not passed as parameter, use the Home page of the default site.
-    if not parent_page:
+    if parent_page:
+        if not isinstance(parent_page, (Page, ContentPage)):
+            # Default "Page" type is allowed to allow the default root page"
+            raise TypeError("The parent page should be a content page.")
+    else:
+        # If parent_page is not passed as parameter, use the Home page of the default site.
+        if not isinstance(root_page, (Page, ContentPage)):
+            raise TypeError("The parent page should be a content page.")
         parent_page = root_page
 
     # Don't replace or duplicate an already existing page
@@ -80,7 +87,7 @@ def get_or_create_content_page(
     slug: str,
     title: str,
     body: list,
-    parent_page: ContentPage | CatalogIndexPage | None = None,
+    parent_page: Page | ContentPage | CatalogIndexPage | None = None,
     restriction_type: str | None = None,
     page_fields: dict | None = None,
 ) -> ContentPage:
@@ -88,12 +95,18 @@ def get_or_create_content_page(
     Get a ContentPage if it exists, or creates it instead.
     """
 
-    site = Site.objects.filter(is_default_site=True).first()
+    site = get_default_site()
     root_page = site.root_page
     locale = root_page.locale
 
-    # If parent_page is not passed as parameter, use the Home page of the default site.
-    if not parent_page:
+    if parent_page:
+        if not isinstance(parent_page, (Page, ContentPage, CatalogIndexPage)):
+            # Default "Page" type is allowed to allow the default root page"
+            raise TypeError("The parent page should be a content page or a catalog index page.")
+    else:
+        # If parent_page is not passed as parameter, use the Home page of the default site.
+        if not isinstance(root_page, (Page, ContentPage, CatalogIndexPage)):
+            raise TypeError("The parent page should be a content page or a catalog index page.")
         parent_page = root_page
 
     # Don't replace or duplicate an already existing page
@@ -133,7 +146,7 @@ def get_or_create_footer_menu() -> FlatMenu:
     In any case, return it.
     """
 
-    default_site = Site.objects.filter(is_default_site=True).first()
+    default_site = get_default_site()
     footer_menu = FlatMenu.objects.filter(handle="footer", site=default_site).first()
 
     if not footer_menu:
@@ -149,7 +162,7 @@ def get_or_create_main_menu() -> MainMenu:
     In any case, return it.
     """
 
-    default_site = Site.objects.filter(is_default_site=True).first()
+    default_site = get_default_site()
     main_menu = MainMenu.objects.filter(site=default_site).first()
 
     if not main_menu:
