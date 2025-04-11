@@ -1,4 +1,4 @@
-from airtable import airtable
+from pyairtable import Api
 from django.conf import settings
 from rest_framework import serializers
 from wagtail_airtable.serializers import AirtableSerializer
@@ -27,11 +27,15 @@ class ThemeSerializer(serializers.RelatedField):
             theme_obj = Theme.objects.get(airtable_id=theme_at_id)
         except Theme.DoesNotExist:
             # Theme does not already exist so get infos from airtable
-            at = airtable.Airtable(
+            api = Api(api_key=settings.AIRTABLE_API_KEY)
+            at = api.table(
                 settings.AIRTABLE_IMPORT_SETTINGS["formations.FormationPage"]["AIRTABLE_BASE_KEY"],
                 settings.AIRTABLE_IMPORT_SETTINGS["formations.FormationPage"]["AIRTABLE_TABLE_NAME_THEME"],
             )
-            at_theme = at.get(theme_at_id)
+            for record in at.all():
+                if record["id"] == theme_at_id:
+                    at_theme = record
+                    break
             theme_obj = Theme.objects.create(airtable_id=theme_at_id, name=at_theme["fields"]["Familles thématiques"])
         return theme_obj
 
@@ -46,11 +50,15 @@ class OrganizerSerializer(serializers.RelatedField):
             organizer_obj = Organizer.objects.get(airtable_id=organizer_at_id)
         except Organizer.DoesNotExist:
             # Organizer does not already exist so get infos from airtable
-            at = airtable.Airtable(
+            api = Api(api_key=settings.AIRTABLE_API_KEY)
+            at = api.table(
                 settings.AIRTABLE_IMPORT_SETTINGS["formations.FormationPage"]["AIRTABLE_BASE_KEY"],
                 settings.AIRTABLE_IMPORT_SETTINGS["formations.FormationPage"]["AIRTABLE_TABLE_NAME_ORGA"],
             )
-            at_organizer = at.get(organizer_at_id)
+            for record in at.all():
+                if record["id"] == organizer_at_id:
+                    at_organizer = record
+                    break
             organizer_obj = Organizer.objects.create(airtable_id=organizer_at_id, name=at_organizer["fields"]["Nom"])
         return organizer_obj
 
