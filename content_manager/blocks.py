@@ -42,16 +42,14 @@ class PictogramBlock(ImageBlock):
 
 
 class AdvancedTypedTableBlock(TypedTableBlock):
-    row_heading = blocks.CharBlock(required=False, label=_("Row heading"))
-    text = blocks.CharBlock(required=False, label=_("Text"))
-    numeric_int = blocks.IntegerBlock(required=False, label=_("Integer"))
-    numeric_float = blocks.FloatBlock(required=False, label=_("Float"))
-    rich_text = blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES, required=False, label=_("Rich text"))
+    row_heading = blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES, label=_("Row heading"))
+    text = blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES, required=False, label=_("Text"))
     pictogram = PictogramBlock(required=False, label=_("Pictogram"))
 
     class Meta:
         icon = "table"
         template = "content_manager/blocks/typed_table_block.html"
+        help_text = _('The "row heading" column type only works on the first column of the table.')
 
 
 ## Meta blocks

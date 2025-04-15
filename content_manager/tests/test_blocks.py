@@ -24,9 +24,9 @@ class TypedTableBlockTestCase(WagtailPageTestCase):
                 "value": {
                     "columns": [
                         {"type": "text", "heading": "Name"},
-                        {"type": "numeric_int", "heading": "Value (int)"},
-                        {"type": "numeric_float", "heading": "Value (float)"},
-                        {"type": "rich_text", "heading": "Comment"},
+                        {"type": "text", "heading": "Value (int)"},
+                        {"type": "text", "heading": "Value (float)"},
+                        {"type": "text", "heading": "Comment"},
                     ],
                     "rows": [
                         {
