@@ -6,9 +6,12 @@ Disallow: /en/search/
 Disallow: /recherche/
 
 # Params
-Disallow: /*?page=*
-Disallow: /*?tag=*
+Disallow: /*?author=*
 Disallow: /*?category=*
+Disallow: /*?source=*
+Disallow: /*?tag=*
+Disallow: /*?year=*
+Disallow: /*?page=*
 Disallow: /*?date_from=*
 Disallow: /*?date_to=*
 
