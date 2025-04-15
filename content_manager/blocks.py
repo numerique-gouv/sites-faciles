@@ -42,7 +42,7 @@ class PictogramBlock(ImageBlock):
 
 
 class AdvancedTypedTableBlock(TypedTableBlock):
-    row_heading = blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES, label=_("Row heading"))
+    row_heading = blocks.CharBlock(required=False, label=_("Row heading"))
     text = blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES, required=False, label=_("Text"))
     pictogram = PictogramBlock(required=False, label=_("Pictogram"))
 
