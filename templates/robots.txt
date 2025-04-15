@@ -1,0 +1,16 @@
+User-agent: *
+
+# Technical pages
+Disallow: /api/
+Disallow: /en/search/
+Disallow: /recherche/
+
+# Params
+Disallow: /*?page=*
+Disallow: /*?tag=*
+Disallow: /*?category=*
+Disallow: /*?date_from=*
+Disallow: /*?date_to=*
+
+# Sitemap
+Sitemap: {{ request.scheme }}://{{ request.get_host }}/sitemap.xml
