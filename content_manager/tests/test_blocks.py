@@ -24,25 +24,19 @@ class TypedTableBlockTestCase(WagtailPageTestCase):
                 "value": {
                     "columns": [
                         {"type": "text", "heading": "Name"},
-                        {"type": "text", "heading": "Value (int)"},
-                        {"type": "text", "heading": "Value (float)"},
                         {"type": "text", "heading": "Comment"},
                     ],
                     "rows": [
                         {
                             "values": [
-                                "Line 1",
-                                12,
-                                5.0,
-                                '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
+                                '<p data-block-key="ab12c">Line 1</p>',
+                                '<p data-block-key="def34g">Example text with <b>formating</b>.</p>',
                             ]
                         },
                         {
                             "values": [
-                                "Line 1",
-                                33,
-                                42.0,
-                                '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
+                                '<p data-block-key="hij56k">Line 2</p>',
+                                '<p data-block-key="lmn78o">Example other text with <b>formating</b>.</p>',
                             ]
                         },
                     ],
@@ -65,8 +59,6 @@ class TypedTableBlockTestCase(WagtailPageTestCase):
         self.assertInHTML(
             """<tr>
                 <th scope="col">Name</th>
-                <th scope="col">Value (int)</th>
-                <th scope="col">Value (float)</th>
                 <th scope="col">Comment</th>
         </tr>""",
             response.content.decode(),
@@ -79,25 +71,19 @@ class TypedTableBlockTestCase(WagtailPageTestCase):
                 "value": {
                     "columns": [
                         {"type": "text", "heading": ""},
-                        {"type": "numeric_int", "heading": ""},
-                        {"type": "numeric_float", "heading": ""},
-                        {"type": "rich_text", "heading": ""},
+                        {"type": "text", "heading": ""},
                     ],
                     "rows": [
                         {
                             "values": [
-                                "Line 1",
-                                12,
-                                5.0,
-                                '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
+                                '<p data-block-key="ab12c">Line 1</p>',
+                                '<p data-block-key="def34g">Example text with <b>formating</b>.</p>',
                             ]
                         },
                         {
                             "values": [
-                                "Line 1",
-                                33,
-                                42.0,
-                                '<p data-block-key="no59r">Example text with <b>formating</b>.</p>',
+                                '<p data-block-key="hij56k">Line 2</p>',
+                                '<p data-block-key="lmn78o">Example other text with <b>formating</b>.</p>',
                             ]
                         },
                     ],
