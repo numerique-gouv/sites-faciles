@@ -87,3 +87,12 @@ def toggle_url_filter(context, *_, **kwargs):
         return f"?{url_string}"
     else:
         return ""
+
+
+@register.filter
+def table_has_heading_row(value):
+    non_empty_heading = False
+    for col in value:
+        if col["heading"]:
+            non_empty_heading = True
+    return non_empty_heading

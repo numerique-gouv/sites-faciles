@@ -48,9 +48,8 @@ class FormsTestCase(WagtailPageTestCase):
             response.content.decode(),
         )
 
-        self.assertInHTML(
-            # """<li class="fr-error-text">Champ requis.</li>""",
-            """<li class="fr-error-text">Ce champ est obligatoire.</li>""",
+        self.assertRegex(
             response.content.decode(),
+            r"<li class=\"fr-error-text\">(\\n)?\s*(Champ requis|Ce champ est obligatoire)\.(\\n)?\s*<\/li>",
         )
         # Updates sometimes mess with the order of the translations and so the displayed translation. Both are fine.
