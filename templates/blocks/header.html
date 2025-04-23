@@ -2,11 +2,7 @@
 {% load i18n static wagtailcore_tags wagtailimages_tags menu_tags wagtail_dsfr_tags %}
 
 {% block brand %}
-  {% translate "Home page" as home_page %}
-  <a href="/"
-     title="{{ home_page }} — {{ settings.content_manager.CmsDsfrConfig.header_brand }}">
-    <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
-  </a>
+  <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
 {% endblock brand %}
 
 {% block service_title %}
