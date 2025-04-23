@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% load widget_tweaks i18n static dsfr_tags wagtail_dsfr_tags %}
+
+{% block title %}
+  <title>{% translate "Connection" %} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+{% endblock title %}
+
 {% block content %}
   <div class="fr-container fr-container--fluid fr-my-md-14v">
     <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
@@ -109,6 +114,7 @@
     </div>
   </div>
 {% endblock content %}
+
 {% block extra_css %}
   <link rel="stylesheet"
         href="{% static 'dsfr/dist/utility/utility.min.css' %}">
