@@ -29,7 +29,7 @@ if settings.PROCONNECT_ACTIVATED:
         path("oidc/", include(oidc_urls)),
     ]
 
-if settings.DEBUG:
+if settings.DEBUG or settings.TESTING:
     urlpatterns += i18n_patterns(
         path("404/", page_not_found, kwargs={"exception": Exception("Page not Found")}),
         path("500/", server_error),
