@@ -115,10 +115,7 @@ class ConfigTestCase(WagtailPageTestCase):
         response = self.client.get(url)
 
         self.assertInHTML(
-            """<a href="/"
-                title="Accueil — République française">
-                <p class="fr-logo">République<br />française</p>
-            </a>""",
+            """<p class="fr-logo">République<br />française</p>""",
             response.content.decode(),
         )
 
