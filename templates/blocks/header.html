@@ -45,7 +45,9 @@
 {% endblock operator_logo %}
 
 {% block header_tools %}
-  {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
+  {% if request %}
+    {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
+  {% endif %}
   {% if user.is_authenticated %}
     <li>
       {# The logout operation has to be performed via a POST with a csrf token for security reasons, so using a form. #}
@@ -110,19 +112,22 @@
 {% endblock burger_menu %}
 
 {% block main_menu %}
-  <div class="fr-header__menu fr-modal"
-       id="fr-menu-mobile"
-       aria-labelledby="fr-btn-menu-mobile">
-    <div class="fr-container">
-      {% translate "Close" as close_label %}
-      <button type="button"
-              class="fr-btn--close fr-btn"
-              aria-controls="fr-menu-mobile">{{ close_label }}</button>
-      <div class="fr-header__menu-links"></div>
-      {% translate "Main menu" as main_menu_label %}
-      <nav class="fr-nav" id="fr-navigation" aria-label="{{ main_menu_label }}">
-        {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
-      </nav>
+  {% if request %}
+    <div class="fr-header__menu fr-modal"
+         id="fr-menu-mobile"
+         aria-labelledby="fr-btn-menu-mobile">
+      <div class="fr-container">
+        {% translate "Close" as close_label %}
+        <button type="button"
+                class="fr-btn--close fr-btn"
+                aria-controls="fr-menu-mobile">{{ close_label }}</button>
+        <div class="fr-header__menu-links"></div>
+        {% translate "Main menu" as main_menu_label %}
+
+        <nav class="fr-nav" id="fr-navigation" aria-label="{{ main_menu_label }}">
+          {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
+        </nav>
+      </div>
     </div>
-  </div>
+  {% endif %}
 {% endblock main_menu %}

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.urls import include, path
+from django.views.defaults import page_not_found, server_error
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
@@ -27,6 +28,13 @@ if settings.PROCONNECT_ACTIVATED:
     urlpatterns += [
         path("oidc/", include(oidc_urls)),
     ]
+
+if settings.DEBUG:
+    urlpatterns += i18n_patterns(
+        path("404/", page_not_found, kwargs={"exception": Exception("Page not Found")}),
+        path("500/", server_error),
+        prefix_default_language=False,
+    )
 
 urlpatterns += i18n_patterns(
     path("", include("content_manager.urls")),

@@ -40,7 +40,9 @@
 {% endblock footer_description %}
 
 {% block footer_links %}
-  {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html" %}
+  {% if request %}
+    {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html" %}
+  {% endif %}
   <li class="fr-footer__bottom-item">
     <a class="fr-footer__bottom-link" href="{% url 'readable_sitemap' %}">{% translate "Sitemap" %}</a>
   </li>
