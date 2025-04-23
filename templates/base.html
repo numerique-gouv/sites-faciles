@@ -1,4 +1,4 @@
-{% load i18n static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
+{% load i18n static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags wagtail_dsfr_tags %}
 
 {% get_settings %}
 {% with SiteConfig=settings.content_manager.CmsDsfrConfig %}
@@ -18,6 +18,10 @@
 
       {% block description %}
       {% endblock description %}
+
+      {% block canonical_url %}
+        <link rel="canonical" href="{% canonical_url %}" />
+      {% endblock canonical_url %}
 
       {% dsfr_favicon %}
 
