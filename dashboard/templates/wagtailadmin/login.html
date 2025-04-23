@@ -65,13 +65,13 @@
                       <input type="hidden" name="next" value="{{ next|default:home_url }}" />
                       <div class="fr-input-group">
                         <label class="fr-label" for="id_username">{% translate "Username:" %}</label>
-                        {{ form.username |add_class:"fr-input" }}
+                        {{ form.username |attr:"autocomplete:username" |add_class:"fr-input" }}
                       </div>
                     </div>
                     <div class="fr-fieldset__element">
                       <div class="fr-password">
                         <label class="fr-label" for="id_password">{% translate "Password:" %}</label>
-                        {{ form.password |add_class:"fr-password__input fr-input" }}
+                        {{ form.password |attr:"autocomplete:current-password" |add_class:"fr-password__input fr-input" }}
                         <div class="fr-password__checkbox fr-checkbox-group fr-checkbox-group--sm">
                           {% translate "Show password" as show_password %}
                           <input aria-label="{{ show_password }}"
