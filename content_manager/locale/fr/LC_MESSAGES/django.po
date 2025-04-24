@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-15 17:24+0200\n"
-"PO-Revision-Date: 2025-04-15 17:25+0200\n"
+"POT-Creation-Date: 2025-04-24 11:23+0200\n"
+"PO-Revision-Date: 2025-04-24 11:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1404,7 +1404,7 @@ msgstr "Méga menu"
 msgid "No article found."
 msgstr "Aucun article trouvé."
 
-#: content_manager/templates/content_manager/blocks/blog_recent_entries.html:114
+#: content_manager/templates/content_manager/blocks/blog_recent_entries.html:113
 msgid "See all posts"
 msgstr "Voir tous les articles"
 
@@ -1503,6 +1503,35 @@ msgstr "Afficher"
 #: content_manager/templates/content_manager/password_required.html:63
 msgid "Continue"
 msgstr "Continuer"
+
+#: content_manager/templates/content_manager/search_results.html:8
+#: content_manager/templates/content_manager/search_results.html:27
+msgid "result"
+msgstr "résultat"
+
+#: content_manager/templates/content_manager/search_results.html:10
+#: content_manager/templates/content_manager/search_results.html:29
+msgid "No results"
+msgstr "Aucun résultat"
+
+#: content_manager/templates/content_manager/search_results.html:12
+#: content_manager/templates/content_manager/search_results.html:31
+#, python-format
+msgid "for query \"%(query)s\""
+msgstr "pour la recherche « %(query)s »"
+
+#: content_manager/templates/content_manager/search_results.html:48
+msgid "We did not find any content matching your search."
+msgstr "Nous n’avons trouvé aucun contenu correspondant à votre recherche."
+
+#: content_manager/templates/content_manager/search_results.html:49
+msgid "To continue your visit, you can consult our home page."
+msgstr ""
+"Pour continuer votre visite, vous pouvez consulter notre page d’accueil."
+
+#: content_manager/templates/content_manager/search_results.html:51
+msgid "Home page"
+msgstr "Accueil"
 
 #: content_manager/templates/content_manager/sitemap_page.html:16
 #: content_manager/views.py:101

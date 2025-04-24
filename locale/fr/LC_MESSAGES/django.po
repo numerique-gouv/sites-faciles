@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 12:37+0200\n"
-"PO-Revision-Date: 2025-04-23 12:38+0200\n"
+"POT-Creation-Date: 2025-04-24 11:23+0200\n"
+"PO-Revision-Date: 2025-04-24 11:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -49,8 +49,7 @@ msgstr ""
 "Dans ce cas, pour continuer votre visite, vous pouvez consulter notre page "
 "d’accueil."
 
-#: templates/404.html:24 templates/500.html:20 templates/blocks/header.html:5
-#: templates/blocks/header.html:13
+#: templates/404.html:24 templates/500.html:20 templates/blocks/header.html:9
 msgid "Home page"
 msgstr "Accueil"
 
@@ -121,31 +120,31 @@ msgstr "Ouvre une nouvelle fenêtre"
 msgid "This website is made with"
 msgstr "Ce site est fait avec"
 
-#: templates/blocks/header.html:58
+#: templates/blocks/header.html:54
 msgid "Hello"
 msgstr "Bonjour"
 
-#: templates/blocks/header.html:58
+#: templates/blocks/header.html:54
 msgid "Log out"
 msgstr "Déconnexion"
 
-#: templates/blocks/header.html:65
+#: templates/blocks/header.html:61
 msgid "Log in"
 msgstr "Connexion"
 
-#: templates/blocks/header.html:71 templates/blocks/header.html:96
+#: templates/blocks/header.html:67 templates/blocks/header.html:92
 msgid "Search"
 msgstr "Rechercher"
 
-#: templates/blocks/header.html:75 templates/blocks/header.html:120
+#: templates/blocks/header.html:71 templates/blocks/header.html:116
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/blocks/header.html:105
+#: templates/blocks/header.html:101
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/blocks/header.html:125
+#: templates/blocks/header.html:121
 msgid "Main menu"
 msgstr "Menu principal"
 
@@ -157,31 +156,31 @@ msgstr "Masquer le message"
 msgid "Consultation link"
 msgstr "Lien de consultation"
 
-#: templates/blocks/share.html:6
+#: templates/blocks/share.html:5
 msgid "Share this page"
 msgstr "Partager cette page"
 
-#: templates/blocks/share.html:10
+#: templates/blocks/share.html:9
 msgid "Share on Facebook"
 msgstr "Partager sur Facebook"
 
-#: templates/blocks/share.html:22
+#: templates/blocks/share.html:21
 msgid "Share on X (previously Twitter)"
 msgstr "Partager sur X (anciennement Twitter)"
 
-#: templates/blocks/share.html:36
+#: templates/blocks/share.html:35
 msgid "Share on LinkedIn"
 msgstr "Partager sur LinkedIn"
 
-#: templates/blocks/share.html:50
+#: templates/blocks/share.html:49
 msgid "Share via email"
 msgstr "Partager par email"
 
-#: templates/blocks/share.html:63
+#: templates/blocks/share.html:62
 msgid "Page URL copied to clipboard."
 msgstr "Adresse de la page copiée dans le presse-papiers."
 
-#: templates/blocks/share.html:67
+#: templates/blocks/share.html:66
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papiers"
 
