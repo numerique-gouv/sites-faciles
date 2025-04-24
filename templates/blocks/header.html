@@ -28,7 +28,7 @@
 {% endblock service_tagline %}
 
 {% block operator_logo %}
-  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file and settings.content_manager.CmsDsfrConfig.operator_logo_alt %}
+  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file %}
     {% image settings.content_manager.CmsDsfrConfig.operator_logo_file original as logo_img %}
 
     <div class="fr-header__operator">
