@@ -55,7 +55,6 @@
 
     {% wagtailuserbar %}
     {% include "blocks/header.html" %}
-    {% dsfr_theme_modale %}
 
     {% if settings.content_manager.CmsDsfrConfig.notice_title or settings.content_manager.CmsDsfrConfig.notice_description %}
       {% include "blocks/notice.html" %}
@@ -75,6 +74,10 @@
     {% endblock follow_newsletter_social_media %}
 
     {% include "blocks/footer.html" %}
+
+    {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}
+      {% dsfr_theme_modale %}
+    {% endif %}
 
     {% dsfr_js nonce=request.csp_nonce %}
     {% block extra_js %}
