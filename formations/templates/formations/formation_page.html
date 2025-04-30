@@ -9,72 +9,107 @@
     {% endblock description %}
 {% endif %}
 {% block content %}
-    <div class="fr-container fr-mt-8v">
+    <div class="fr-container fr-mt-1w">
         <div class="fr-grid-row">
             <div class="fr-col-12">
                 {% include "content_manager/breadcrumb.html" %}
-                <h1>{{ page.name }}</h1>
-                <p class="fr-text--lead">
-                    <span class="fr-icon-slideshow-fill" aria-hidden="true"></span>
-                    {{ page.get_kind_display }} / {{ page.get_attendance_display }}
-                </p>
-                {% if page.themes %}
-                    <p class="fr-text--lead">
-                        <span class="fr-icon-archive-fill" aria-hidden="true"></span>
-                        {{ page.themes.all|join:", " }}
-                    </p>
-                {% endif %}
-                {% if page.target_audience %}
-                    <p class="fr-text--lead">
-                        <span class="fr-icon-user-fill" aria-hidden="true"></span>
-                        Public visé : {{ page.target_audience.all|join:", " }}
-                    </p>
-                {% endif %}
-                {% if page.organizers %}
-                    <p class="fr-text--lead">
-                        <span class="fr-icon-hotel-fill" aria-hidden="true"></span>
-                        {{ page.organizers.all|join:", " }}
-                    </p>
-                {% endif %}
-                <p class="fr-text--lead">
-                    <span class="fr-icon-calendar-2-fill" aria-hidden="true"></span>
-                    Durée : {{ page.duration }}
-                </p>
             </div>
         </div>
-        <section class="fr-py-8v">
-            <div class="fr-callout fr-icon-book-2-fill">
-                <h2 class="fr-callout__title">Description</h3>
-                <p class="fr-callout__text">
-                    {{ page.short_description|richtext|linebreaksbr }}
-                </p>
-            </div>
-        </section>
-        <section class="fr-py-8v">
-            <h2>Objectifs</h2>
-            <div class="fr-grid-row">
-                <div class="fr-col-12 fr-col-md-3">
+    </div>
+    <div class="fr-container" style="background-color: white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; padding-left: 0;padding-right: 0;">
+        <div class="fr-grid-row fr-grid-row--gutters fr-mb-5w">
+            <div class="fr-col-12 fr-col-md-8" style="padding-top: 0px;padding-right: 0px;border-right: 1px solid var(--border-default-grey);">
+                <div>
                     {% if page.image_url %}
-                        <img class="fr-responsive-img" src="{{ page.image_url }}" alt="">
+                        <img src="{{ page.image_url }}" alt="" class="fr-responsive-img">
                     {% else %}
                         <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
                     {% endif %}
                 </div>
-                <div class="fr-ml-2w fr-col-12 fr-col-md-7">
-                    <p class="fr-text--lead">
-                        {{ page.knowledge_at_the_end|richtext|linebreaksbr }}
+                <div class="fr-container fr-pt-5w fr-pl-5w fr-pb-3w">
+                    <p class="fr-badge fr-badge--green-menthe">{{ page.get_kind_display }}</p>
+                    <h1 class="fr-mt-3w fr-mb-3w">{{ page.name }}</h1>
+                    <p>
+                        {% if page.themes %}
+                            <span class="fr-icon-award-line" aria-hidden="true"></span>
+                            &nbsp;&nbsp;Expertises abordées lors de cette formation :
+                            <br>
+                            <br>
+                            {% for theme in page.themes.all %}
+                                <span class="fr-tag">{{ theme }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </p>
+                    <p>
+                        {% if page.target_audience %}
+                            <span class="fr-icon-group-line" aria-hidden="true"></span>
+                            &nbsp;&nbsp;Public visé :
+                            <br>
+                            <br>
+                            <b>{{ page.target_audience.all|join:", " }}</b>
+                        {% endif %}
                     </p>
                 </div>
+                <hr>
+                <section class="fr-container fr-p-5w">
+                    <div class="fr-callout"">
+                        <h2 class="fr-callout__title">Les objectifs de la formation</h2>
+                        <p class="fr-callout__text">
+                            {{ page.knowledge_at_the_end|richtext|linebreaksbr }}
+                        </p>
+                    </div>
+
+                    <h2>La formation en quelque mots</h2>
+                    <p>
+                        {{ page.short_description|richtext|linebreaksbr }}
+                    </p>
+                </section>
             </div>
-        </section>
-        {% if page.registration_link %}
-            <div class="fr-mt-8v">
-                <h2>C'est par ici</h2>
-                <p class="fr-text--lead">
-                    <span class="fr-icon-ball-pen-fill" aria-hidden="true"></span>
-                    &nbsp;<a href="{{ page.registration_link }}" target="_blank">{{ page.registration_link }}</a>
-                </p>
+            <div class="fr-col-12 fr-col-md-4" style="position: sticky; top: 0; align-self: start;">
+                <div style="position: relative;">
+                  <div style="position: sticky; top: 10px; max-height: 100vh; overflow: auto;">
+                    <div class="fr-container fr-p-5w" style="text-align: center;">
+                        <h2>C'est par ici</h2>
+                        <div style="border: 1px solid var(--border-default-grey);">
+                            <p style=" margin: 1.5em 0px;">
+                                <b>
+                                    <span class="fr-text--xs" style="color: #7E7E7E;">
+                                        DURÉE
+                                    </span>
+                                    <br>
+                                    <span class="fr-text--ms">
+                                        {{ page.duration }}
+                                    </span>
+                                </b>
+                            </p>
+                            <hr>
+                            <p>
+                                <b>
+                                    <span class="fr-text--xs" style="color: #7E7E7E;">
+                                        LIEU
+                                    </span>
+                                    <br>
+                                    <span class="fr-text--ms">
+                                        {{ page.get_attendance_display }}
+                                    </span>
+                                </b>
+                            </p>
+                        </div>
+                        <ul class="fr-btns-group fr-mt-5w">
+                            <li>
+                                <button class="fr-btn"><a href="{{ page.registration_link }}" target="_blank">
+                                    C'est par ici</a>
+                                </button>
+                            </li>
+                        </ul>
+                        <p class="fr-text--xs">L'inscription se fait sur un site externe.</p>
+                    </div>
+                  </div>
+                </div>
             </div>
-        {% endif %}
+        </div>
     </div>
+
+
+
 {% endblock content %}
