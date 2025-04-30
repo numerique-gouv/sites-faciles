@@ -74,11 +74,11 @@
                 title="{{ close_label }}">{{ close_label }}</button>
         <form action="{% url 'cms_search' %}" method="get">
           <div class="fr-search-bar" id="search-bar" role="search">
-            <label class="fr-label" for="search-bar-input">{{ search_label }}</label>
+            <label class="fr-label" for="query">{{ search_label }}</label>
             <input class="fr-input"
                    placeholder="{{ search_label }}"
                    type="search"
-                   id="search-bar-input"
+                   id="query"
                    name="q">
             <button class="fr-btn" title="{{ search_label }}">{{ search_label }}</button>
           </div>
