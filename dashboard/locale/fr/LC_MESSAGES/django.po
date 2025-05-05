@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 12:18+0200\n"
-"PO-Revision-Date: 2025-04-09 17:25+0200\n"
+"POT-Creation-Date: 2025-05-05 18:31+0200\n"
+"PO-Revision-Date: 2025-05-05 18:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -131,7 +131,7 @@ msgstr "Mot de passe oublié ?"
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
-#: dashboard/templates/wagtailadmin/login.html:102
+#: dashboard/templates/wagtailadmin/login.html:101
 msgid "Connect"
 msgstr "Se connecter"
 

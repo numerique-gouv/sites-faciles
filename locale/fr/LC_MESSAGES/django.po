@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-24 11:23+0200\n"
+"POT-Creation-Date: 2025-05-05 18:31+0200\n"
 "PO-Revision-Date: 2025-04-24 11:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -49,9 +49,9 @@ msgstr ""
 "Dans ce cas, pour continuer votre visite, vous pouvez consulter notre page "
 "d’accueil."
 
-#: templates/404.html:24 templates/500.html:20 templates/blocks/header.html:9
-msgid "Home page"
-msgstr "Accueil"
+#: templates/404.html:23 templates/500.html:19 templates/blocks/footer.html:5
+msgid "Back to home page"
+msgstr "Retourner à l’accueil"
 
 #: templates/500.html:5
 msgid "Error 500 — Unexpected error"
@@ -95,10 +95,6 @@ msgstr "S’abonner"
 msgid "Follow us <br /> on social media"
 msgstr "Suivez-nous<br />sur les réseaux sociaux"
 
-#: templates/blocks/footer.html:5
-msgid "Back to home page"
-msgstr "Retourner à l’accueil"
-
 #: templates/blocks/footer.html:47
 msgid "Sitemap"
 msgstr "Plan du site"
@@ -119,6 +115,10 @@ msgstr "Ouvre une nouvelle fenêtre"
 #: templates/blocks/footer.html:72
 msgid "This website is made with"
 msgstr "Ce site est fait avec"
+
+#: templates/blocks/header.html:9
+msgid "Home page"
+msgstr "Accueil"
 
 #: templates/blocks/header.html:54
 msgid "Hello"
