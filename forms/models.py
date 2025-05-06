@@ -77,12 +77,6 @@ class FormPage(AbstractEmailForm):
         FieldPanel(
             "intro",
             heading=_("Introduction"),
-            help_text=_(
-                """If all fields are mandatory, this intro must contain the text "All fields are mandatory."
-            If some fields are optional,
-            this intro must contain the text "Fields marked with an asterisk (*) are mandatory."
-            """
-            ),
         ),
         InlinePanel("form_fields", label=_("Form field"), heading=_("Form fields")),
         FieldPanel("thank_you_text", heading=_("Thank you text")),
@@ -112,3 +106,9 @@ class FormPage(AbstractEmailForm):
         verbose_name_plural = _("Form pages")
 
     form_builder = SitesFacilesFormBuilder
+
+    def all_fields_required(self):
+        """
+        Returns True if all fields in the form are mandatory.
+        """
+        return all(field.get("required", False) for field in self.form_fields.values())
