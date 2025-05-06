@@ -35,7 +35,11 @@ def canonical_url(context):
     - Multiple sites can exist on the same instance
     - Some pages are not instances of Wagtail Pages (eg. search results, 404, etc.)
     """
-    request = context["request"]
+    request = context.get("request", None)
+    if not request:
+        # For the error 500 page
+        return ""
+
     scheme = settings.HOST_PROTO
     site = Site.find_for_request(request)
 

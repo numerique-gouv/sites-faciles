@@ -2,23 +2,23 @@
 {% translate "Hide message" as hide_message %}
 {% translate "Consultation link" as consultation_link %}
 {% translate "Opens a new window" as new_window_label %}
-<div class="fr-notice fr-notice--{{ SiteConfig.notice_type|default:'info' }}">
+<div class="fr-notice fr-notice--{{ settings.content_manager.CmsDsfrConfig.notice_type|default:'info' }}">
   <div class="fr-container">
     <div class="fr-notice__body">
-      {{ SiteConfig.notice_title | richtext | richtext_p_add_class:"fr-notice__title" | richtext_p_add_class:SiteConfig.notice_icon_class }}
-      {% if SiteConfig.notice_description %}
-        {{ SiteConfig.notice_description | richtext | richtext_p_add_class:"fr-notice__desc" }}
+      {{ settings.content_manager.CmsDsfrConfig.notice_title | richtext | richtext_p_add_class:"fr-notice__title" | richtext_p_add_class:settings.content_manager.CmsDsfrConfig.notice_icon_class }}
+      {% if settings.content_manager.CmsDsfrConfig.notice_description %}
+        {{ settings.content_manager.CmsDsfrConfig.notice_description | richtext | richtext_p_add_class:"fr-notice__desc" }}
       {% endif %}
-      {% if SiteConfig.notice_link %}
+      {% if settings.content_manager.CmsDsfrConfig.notice_link %}
         <p class="cmsfr-display__inline">
           <a target="_blank"
              rel="noopener external"
              title="{{ consultation_link }} - {{ new_window_label }}"
-             href="{{ SiteConfig.notice_link }}"
+             href="{{ settings.content_manager.CmsDsfrConfig.notice_link }}"
              class="fr-notice__link">{{ consultation_link }}</a>
         </p>
       {% endif %}
-      {% if SiteConfig.notice_is_collapsible %}
+      {% if settings.content_manager.CmsDsfrConfig.notice_is_collapsible %}
         <button class="fr-btn--close fr-btn"
                 title="{{ hide_message }}"
                 onclick="const notice = this.parentNode.parentNode.parentNode; notice.parentNode.removeChild(notice)">

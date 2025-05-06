@@ -16,10 +16,29 @@
 
   <div class="fr-container fr-pb-6w">
     {{ page.intro|richtext }}
+
     <form action="{% pageurl page %}" method="post">
+      <div class="fr-fieldset__element">
+        {% if page.all_fields_required %}
+          <p class="fr-text--sm">{% translate "All fields are mandatory." %}</p>
+        {% else %}
+          <p class="fr-text--sm">{% translate "Fields marked with an asterisk (*) are mandatory." %}</p>
+        {% endif %}
+      </div>
+
       {% csrf_token %}
-      {{ form }}
-      <input class="fr-btn" type="submit" value="{{ submit_form }}" />
+      {% if form.non_field_errors %}
+        <section class="fr-my-4v fr-input-group fr-input-group--error">
+          {{ form.non_field_errors }}
+        </section>
+      {% endif %}
+      {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+      {% for field in form.visible_fields %}
+        <div class="fr-fieldset__element">{% dsfr_form_field field %}</div>
+      {% endfor %}
+      <div class="fr-fieldset__element">
+        <input class="fr-btn" type="submit" value="{{ submit_form }}" />
+      </div>
     </form>
   </div>
 {% endblock content %}

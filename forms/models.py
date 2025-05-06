@@ -74,7 +74,10 @@ class FormPage(AbstractEmailForm):
 
     content_panels = AbstractEmailForm.content_panels + [
         FormSubmissionsPanel(),
-        FieldPanel("intro", heading=_("Introduction")),
+        FieldPanel(
+            "intro",
+            heading=_("Introduction"),
+        ),
         InlinePanel("form_fields", label=_("Form field"), heading=_("Form fields")),
         FieldPanel("thank_you_text", heading=_("Thank you text")),
         MultiFieldPanel(
@@ -103,3 +106,9 @@ class FormPage(AbstractEmailForm):
         verbose_name_plural = _("Form pages")
 
     form_builder = SitesFacilesFormBuilder
+
+    def all_fields_required(self):
+        """
+        Returns True if all fields in the form are mandatory.
+        """
+        return all(field.get("required", False) for field in self.form_fields.values())
