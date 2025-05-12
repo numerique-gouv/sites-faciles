@@ -38,6 +38,9 @@ jobs:
       - name: 📄 Copy empty .env.test to .env
         run: |
           cp .env.test .env
+      - name: 💾 Collect static files
+        run: |
+          make collectstatic
       - name: ✨ Black & ruff
         run: |
           make quality
