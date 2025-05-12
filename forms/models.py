@@ -11,6 +11,8 @@ from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from wagtail.fields import RichTextField
 
+from forms.widgets import CustomEmailInputWidget
+
 
 class FormField(AbstractFormField):
     CHOICES = (
@@ -63,6 +65,10 @@ class SitesFacilesFormBuilder(FormBuilder):
     def create_datetime_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "datetime-local"})
         return forms.DateField(**options)
+
+    def create_email_field(self, field, options):
+        options["widget"] = CustomEmailInputWidget
+        return super().create_checkbox_field(field, options)
 
     def get_form_class(self):
         return type("WagtailForm", (SitesFacilesCustomForm,), self.formfields)
