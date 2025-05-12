@@ -103,7 +103,7 @@ shell:
 
 .PHONY: test
 test:
-	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --buffer --parallel
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --buffer --parallel --settings config.settings_test
 
 .PHONY: test-unit
 test-unit:
