@@ -251,14 +251,12 @@ class HorizontalCardBlockTestCase(WagtailPageTestCase):
         self.assertInHTML("""<a href="https://www.info.gouv.fr">Sample card</a>""", response.content.decode())
 
         self.assertInHTML(
-            """<ul class="fr-btns-group fr-btns-group--inline-lg">
-                <li>
-                    <a class="fr-btn fr-btn--secondary"
-                    href="https://numerique.gouv.fr"
-                    target="_blank"
-                    rel="noopener external">Label <span class="fr-sr-only">Ouvre une nouvelle fenêtre</span></a>
-                </li>
-            </ul>""",
+            """<div class="fr-btns-group fr-btns-group--inline-lg">
+                  <a class="fr-btn fr-btn--secondary"
+                  href="https://numerique.gouv.fr"
+                  target="_blank"
+                  rel="noopener external">Label <span class="fr-sr-only">Ouvre une nouvelle fenêtre</span></a>
+            </div>""",
             response.content.decode(),
         )
 

@@ -3,7 +3,7 @@
 
 {% block footer_brand %}
   {% translate "Back to home page" as back_to_home_label %}
-  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file and settings.content_manager.CmsDsfrConfig.operator_logo_alt %}
+  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file %}
     {% image settings.content_manager.CmsDsfrConfig.operator_logo_file original as logo_img %}
     <div class="fr-footer__brand fr-enlarge-link">
       <p class="fr-logo"
@@ -40,7 +40,9 @@
 {% endblock footer_description %}
 
 {% block footer_links %}
-  {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html" %}
+  {% if request %}
+    {% flat_menu handle="footer" template="menus/custom_flat_menu_footer.html" %}
+  {% endif %}
   <li class="fr-footer__bottom-item">
     <a class="fr-footer__bottom-link" href="{% url 'readable_sitemap' %}">{% translate "Sitemap" %}</a>
   </li>
