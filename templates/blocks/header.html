@@ -2,11 +2,7 @@
 {% load i18n static wagtailcore_tags wagtailimages_tags menu_tags wagtail_dsfr_tags %}
 
 {% block brand %}
-  {% translate "Home page" as home_page %}
-  <a href="/"
-     title="{{ home_page }} — {{ settings.content_manager.CmsDsfrConfig.header_brand }}">
-    <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
-  </a>
+  <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
 {% endblock brand %}
 
 {% block service_title %}
@@ -32,20 +28,22 @@
 {% endblock service_tagline %}
 
 {% block operator_logo %}
-  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file and settings.content_manager.CmsDsfrConfig.operator_logo_alt %}
+  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file %}
     {% image settings.content_manager.CmsDsfrConfig.operator_logo_file original as logo_img %}
 
     <div class="fr-header__operator">
       <img class="fr-responsive-img"
            src="{{ logo_img.url }}"
            alt="{{ settings.content_manager.CmsDsfrConfig.operator_logo_alt }}"
-           {% if settings.content_manager.CmsDsfrConfig.operator_logo_width >= 1 %}style="max-width:{{ settings.content_manager.CmsDsfrConfig.operator_logo_width }}rem;"{% endif %} />
+           {% if settings.content_manager.CmsDsfrConfig.operator_logo_width >= 1 %}style="max-width:{{ settings.content_manager.CmsDsfrConfig.operator_logo_width|floatformat:"1u" }}rem;"{% endif %} />
     </div>
   {% endif %}
 {% endblock operator_logo %}
 
 {% block header_tools %}
-  {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
+  {% if request %}
+    {% flat_menu handle="header_tools" template="menus/custom_flat_menu.html" %}
+  {% endif %}
   {% if user.is_authenticated %}
     <li>
       {# The logout operation has to be performed via a POST with a csrf token for security reasons, so using a form. #}
@@ -76,11 +74,11 @@
                 title="{{ close_label }}">{{ close_label }}</button>
         <form action="{% url 'cms_search' %}" method="get">
           <div class="fr-search-bar" id="search-bar" role="search">
-            <label class="fr-label" for="search-bar-input">{{ search_label }}</label>
+            <label class="fr-label" for="query">{{ search_label }}</label>
             <input class="fr-input"
                    placeholder="{{ search_label }}"
                    type="search"
-                   id="search-bar-input"
+                   id="query"
                    name="q">
             <button class="fr-btn" title="{{ search_label }}">{{ search_label }}</button>
           </div>
@@ -110,19 +108,22 @@
 {% endblock burger_menu %}
 
 {% block main_menu %}
-  <div class="fr-header__menu fr-modal"
-       id="fr-menu-mobile"
-       aria-labelledby="fr-btn-menu-mobile">
-    <div class="fr-container">
-      {% translate "Close" as close_label %}
-      <button type="button"
-              class="fr-btn--close fr-btn"
-              aria-controls="fr-menu-mobile">{{ close_label }}</button>
-      <div class="fr-header__menu-links"></div>
-      {% translate "Main menu" as main_menu_label %}
-      <nav class="fr-nav" id="fr-navigation" aria-label="{{ main_menu_label }}">
-        {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
-      </nav>
+  {% if request %}
+    <div class="fr-header__menu fr-modal"
+         id="fr-menu-mobile"
+         aria-labelledby="fr-btn-menu-mobile">
+      <div class="fr-container">
+        {% translate "Close" as close_label %}
+        <button type="button"
+                class="fr-btn--close fr-btn"
+                aria-controls="fr-menu-mobile">{{ close_label }}</button>
+        <div class="fr-header__menu-links"></div>
+        {% translate "Main menu" as main_menu_label %}
+
+        <nav class="fr-nav" id="fr-navigation" aria-label="{{ main_menu_label }}">
+          {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
+        </nav>
+      </div>
     </div>
-  </div>
+  {% endif %}
 {% endblock main_menu %}

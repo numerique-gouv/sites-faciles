@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
+from django.test import TestCase
 from django.urls import reverse
 from wagtail.models import Page
 from wagtail.rich_text import RichText
@@ -114,10 +115,7 @@ class ConfigTestCase(WagtailPageTestCase):
         response = self.client.get(url)
 
         self.assertInHTML(
-            """<a href="/"
-                title="Accueil — République française">
-                <p class="fr-logo">République<br />française</p>
-            </a>""",
+            """<p class="fr-logo">République<br />française</p>""",
             response.content.decode(),
         )
 
@@ -366,5 +364,24 @@ class CatalogIndexPageTestCase(WagtailPageTestCase):
 
         self.assertInHTML(
             '<a href="/catalog-index/catalog-entry/">Entrée de catalogue</a>',
+            response.content.decode(),
+        )
+
+
+class ErrorPagesTestCase(TestCase):
+    def test_404_error_page(self):
+        response = self.client.get("/404/")
+        self.assertEqual(response.status_code, 404)
+        self.assertInHTML(
+            "<title>Erreur 404 — Page non trouvée — Titre du site</title>",
+            response.content.decode(),
+        )
+
+    def test_500_error_page(self):
+        response = self.client.get("/500/")
+        self.assertEqual(response.status_code, 500)
+        # Site settings are not available in a error 500 page so the site title is not there
+        self.assertInHTML(
+            "<title>Erreur 500 — Erreur inattendue</title>",
             response.content.decode(),
         )
