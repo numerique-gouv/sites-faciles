@@ -8,7 +8,6 @@ class CustomEmailInputWidget(forms.EmailInput):
     """
 
     def __init__(self, attrs={}):
-
         attrs = {
             "autocapitalize": "off",
             "autocomplete": "email",

@@ -68,7 +68,7 @@ class SitesFacilesFormBuilder(FormBuilder):
 
     def create_email_field(self, field, options):
         options["widget"] = CustomEmailInputWidget
-        return super().create_checkbox_field(field, options)
+        return super().create_email_field(field, options)
 
     def get_form_class(self):
         return type("WagtailForm", (SitesFacilesCustomForm,), self.formfields)
