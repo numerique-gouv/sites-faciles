@@ -97,6 +97,7 @@ if not TESTING and DEBUG and "localhost" in HOST_URL:
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -209,7 +210,7 @@ LOCALE_PATHS = ["locale"]
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 STORAGES = {}
 STORAGES["staticfiles"] = {
-    "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
 }
 
 STATICFILES_FINDERS = [

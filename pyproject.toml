@@ -35,6 +35,7 @@ dependencies = [
     "faker<25.0.0,>=24.3.0",
     "rust-just (>=1.39.0,<2.0.0)",
     "mozilla-django-oidc (>=4.0.1,<5.0.0)",
+    "whitenoise (>=6.9.0,<7.0.0)",
 ]
 
 [tool.poetry]
