@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-05 18:31+0200\n"
-"PO-Revision-Date: 2025-05-05 18:31+0200\n"
+"POT-Creation-Date: 2025-05-13 12:28+0200\n"
+"PO-Revision-Date: 2025-05-13 12:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -135,14 +135,14 @@ msgstr "Se souvenir de moi"
 msgid "Connect"
 msgstr "Se connecter"
 
-#: dashboard/wagtail_hooks.py:18
+#: dashboard/wagtail_hooks.py:26
 msgid "Visit site"
 msgstr "Voir le site"
 
-#: dashboard/wagtail_hooks.py:34
+#: dashboard/wagtail_hooks.py:42
 msgid "See page entry in API"
 msgstr "Voir la page dans l’API"
 
-#: dashboard/wagtail_hooks.py:59
+#: dashboard/wagtail_hooks.py:67
 msgid "(Opens a new window)"
 msgstr "(Ouvre une nouvelle fenêtre)"

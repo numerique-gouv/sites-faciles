@@ -9,7 +9,12 @@ from wagtail.rich_text import LinkHandler
 
 @hooks.register("insert_global_admin_css")
 def global_admin_css():
-    return format_html('<link rel="stylesheet" href="{}">', static("css/admin.css"))
+    return format_html('\n<link rel="stylesheet" href="{}">', static("css/admin.css"))
+
+
+@hooks.register("insert_editor_js")
+def editor_js():
+    return format_html('\n<script src="{}"></script>', static("js/admin_editor.js"))
 
 
 @hooks.register("register_admin_menu_item")
