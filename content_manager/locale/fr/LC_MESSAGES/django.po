@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-05 18:31+0200\n"
-"PO-Revision-Date: 2025-05-05 18:31+0200\n"
+"POT-Creation-Date: 2025-05-13 12:43+0200\n"
+"PO-Revision-Date: 2025-05-13 12:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -86,30 +86,32 @@ msgid "Source URL"
 msgstr "URL source"
 
 #: content_manager/abstract.py:92
-msgid "For imported pages, to allow updates."
-msgstr "Utilisé pour les pages importées, pour permettre les mises à jour."
+msgid "For imported pages, to allow updates. Max length: 2000 characters."
+msgstr ""
+"Utilisé pour les pages importées, pour permettre les mises à jour. Longueur "
+"maximum : 2000 caractères."
 
-#: content_manager/abstract.py:98
+#: content_manager/abstract.py:99
 msgid "Body"
 msgstr "Corps"
 
-#: content_manager/abstract.py:102
+#: content_manager/abstract.py:103
 msgid "Common page configuration"
 msgstr "Configuration commune"
 
-#: content_manager/abstract.py:113 content_manager/blocks.py:712
+#: content_manager/abstract.py:114 content_manager/blocks.py:712
 msgid "Call-to-action buttons"
 msgstr "Boutons de l’appel à action"
 
-#: content_manager/abstract.py:118
+#: content_manager/abstract.py:119
 msgid "Header options"
 msgstr "Options d’en-tête"
 
-#: content_manager/abstract.py:167
+#: content_manager/abstract.py:168
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:168
+#: content_manager/abstract.py:169
 msgid "Base pages"
 msgstr "Pages de base"
 
@@ -253,7 +255,7 @@ msgstr "Badge"
 #: content_manager/blocks.py:679 content_manager/blocks.py:688
 #: content_manager/blocks.py:737 content_manager/blocks.py:934
 #: content_manager/blocks.py:964 content_manager/blocks.py:1071
-#: content_manager/blocks.py:1142 content_manager/models.py:520
+#: content_manager/blocks.py:1142 content_manager/models.py:523
 msgid "Title"
 msgstr "Titre"
 
@@ -622,7 +624,7 @@ msgstr ""
 "Optionnel, toutes les valeurs peuvent être spécifiées ou surchargées ci-"
 "dessous"
 
-#: content_manager/blocks.py:846 content_manager/models.py:552
+#: content_manager/blocks.py:846 content_manager/models.py:557
 msgid "Name"
 msgstr "Nom"
 
@@ -1200,51 +1202,55 @@ msgstr ""
 msgid "Notice link"
 msgstr "Lien du bandeau"
 
-#: content_manager/models.py:318
-msgid "Standardized consultation link at the end of the notice."
-msgstr "Lien de consultation standardisé à la fin du bandeau."
+#: content_manager/models.py:316
+msgid ""
+"Standardized consultation link at the end of the notice. Max length: 2000 "
+"characters."
+msgstr ""
+"Lien de consultation standardisé à la fin du bandeau. Longueur maximum : "
+"2000 caractères."
 
-#: content_manager/models.py:322
+#: content_manager/models.py:323
 msgid "Notice icon class"
 msgstr "Classe d’icône du bandeau"
 
-#: content_manager/models.py:326
+#: content_manager/models.py:327
 msgid "For weather alerts only"
 msgstr "Pour les bandeaux de vigilance météo uniquement"
 
-#: content_manager/models.py:329
+#: content_manager/models.py:330
 msgid "Collapsible?"
 msgstr "Refermable ?"
 
-#: content_manager/models.py:331
+#: content_manager/models.py:332
 msgid "Show the BETA tag next to the title"
 msgstr "Afficher la mention BETA à côté du titre"
 
-#: content_manager/models.py:333
+#: content_manager/models.py:334
 msgid "Show a login button in the header"
 msgstr "Afficher un bouton de connexion dans l’en-tête"
 
-#: content_manager/models.py:336 content_manager/models.py:556
+#: content_manager/models.py:337 content_manager/models.py:561
 msgid "Description"
 msgstr "Description"
 
-#: content_manager/models.py:349 content_manager/models.py:425
+#: content_manager/models.py:350 content_manager/models.py:428
 msgid "Operator logo"
 msgstr "Logo opérateur"
 
-#: content_manager/models.py:353
+#: content_manager/models.py:354
 msgid "Logo alt text"
 msgstr "Alternative textuelle du logo"
 
-#: content_manager/models.py:356
+#: content_manager/models.py:357
 msgid "Must contain the text present in the image."
 msgstr "Doit impérativement contenir le texte présent dans l’image."
 
-#: content_manager/models.py:359
+#: content_manager/models.py:360
 msgid "Width (em)"
 msgstr "Largeur (em)"
 
-#: content_manager/models.py:365
+#: content_manager/models.py:366
 msgid ""
 "To be adjusted according to the width of the logo.            Example for a "
 "vertical logo: 3.5, Example for a horizontal logo: 8."
@@ -1252,64 +1258,69 @@ msgstr ""
 "À ajuster en fonction de la largeur du logo.  Exemple pour un logo vertical: "
 "3.5, Exemple pour un logo horizontal: 8."
 
-#: content_manager/models.py:370
+#: content_manager/models.py:371
 msgid "Display search bar in the header"
 msgstr "Afficher la barre de recherche dans l’en-tête"
 
-#: content_manager/models.py:371
+#: content_manager/models.py:372
 msgid "Display theme modale button"
 msgstr "Afficher le bouton de choix du thème"
 
-#: content_manager/models.py:372
+#: content_manager/models.py:373
 msgid "Mourning"
 msgstr "Mise en berne"
 
-#: content_manager/models.py:374
+#: content_manager/models.py:375
 msgid "Newsletter description"
 msgstr "Description de la lettre d’information"
 
-#: content_manager/models.py:377
+#: content_manager/models.py:378
 msgid "Newsletter registration URL"
 msgstr "URL d‘inscription à la lettre d’information"
 
-#: content_manager/models.py:382
+#: content_manager/models.py:379 content_manager/models.py:527
+#: content_manager/models.py:563
+msgid "Max length: 2000 characters."
+msgstr "Longueur maximum : 2000 caractères."
+
+#: content_manager/models.py:385
 msgid "Activate share links on content_pages"
 msgstr "Activer les liens de partage sur les pages de contenu"
 
-#: content_manager/models.py:383
+#: content_manager/models.py:386
 msgid "Activate share links on blog posts"
 msgstr "Activer les liens de partage sur les articles de blog"
 
-#: content_manager/models.py:384
+#: content_manager/models.py:387
 msgid "Activate share links on event pages"
 msgstr "Activer les liens de partage sur les pages d’événement"
 
-#: content_manager/models.py:387
+#: content_manager/models.py:390
 msgid "Display a Share on Facebook link at the bottom of pages"
 msgstr "Afficher un lien de partage sur Facebook en bas des pages"
 
-#: content_manager/models.py:390
+#: content_manager/models.py:393
 msgid "Display a Share on X (previously Twitter) link at the bottom of pages"
 msgstr ""
 "Afficher un lien de partage sur X (anciennement Twitter) en bas des pages"
 
-#: content_manager/models.py:393
+#: content_manager/models.py:396
 msgid "Display a Share on LinkedIn link at the bottom of pages"
 msgstr "Afficher un lien de partage sur LinkedIn en bas des pages"
 
-#: content_manager/models.py:395
+#: content_manager/models.py:398
 msgid "Display a Share via email link at the bottom of pages"
 msgstr "Afficher un lien de partage par courrier électronique en bas des pages"
 
-#: content_manager/models.py:397
+#: content_manager/models.py:400
 msgid "Display a Copy to clipboard link at the bottom of pages"
 msgstr "Afficher un lien de copie dans le presse-papiers en bas des pages"
 
-#: content_manager/models.py:413
+#: content_manager/models.py:416
 msgid "Important notice"
 msgstr "Bandeau d’information importante"
 
-#: content_manager/models.py:415
+#: content_manager/models.py:418
 msgid ""
 "The important notice banner should only be used for essential and temporary "
 "information.                 (Excessive or continuous use risks “drowning” "
@@ -1319,83 +1330,83 @@ msgstr ""
 "information primordiale et temporaire.  (Une utilisation excessive ou "
 "continue risque de “noyer” le message)"
 
-#: content_manager/models.py:435
+#: content_manager/models.py:438
 msgid "Advanced settings"
 msgstr "Paramètres avancés"
 
-#: content_manager/models.py:445
+#: content_manager/models.py:448
 msgid "Header"
 msgstr "En-tête"
 
-#: content_manager/models.py:452
+#: content_manager/models.py:455
 msgid "Footer"
 msgstr "Pied de page"
 
-#: content_manager/models.py:462
+#: content_manager/models.py:465
 msgid "Newsletter"
 msgstr "Lettre d’information"
 
-#: content_manager/models.py:464 content_manager/models.py:537
+#: content_manager/models.py:467 content_manager/models.py:542
 msgid "Social media items"
 msgstr "Liens de réseaux sociaux"
 
-#: content_manager/models.py:471
+#: content_manager/models.py:474
 msgid "Activate share links by type of page"
 msgstr "Activer les liens de partage par type de page"
 
-#: content_manager/models.py:481
+#: content_manager/models.py:484
 msgid "Types of share links"
 msgstr "Types de liens de partage"
 
-#: content_manager/models.py:486
+#: content_manager/models.py:489
 msgid "Generic"
 msgstr "Génériques"
 
-#: content_manager/models.py:487
+#: content_manager/models.py:490
 msgid "Brand block"
 msgstr "Bloc-marque"
 
-#: content_manager/models.py:488
+#: content_manager/models.py:491
 msgid "Newsletter, social media and share links"
 msgstr "Lettre d’information, réseaux sociaux et liens de partage"
 
-#: content_manager/models.py:523
+#: content_manager/models.py:526
 msgid "URL"
 msgstr "URL"
 
-#: content_manager/models.py:527
+#: content_manager/models.py:532
 msgid "Icon class"
 msgstr "Classe d’icône"
 
-#: content_manager/models.py:536
+#: content_manager/models.py:541
 msgid "Social media item"
 msgstr "Lien de réseau social"
 
-#: content_manager/models.py:543
+#: content_manager/models.py:548
 msgid "Category"
 msgstr "Catégorie"
 
-#: content_manager/models.py:546
+#: content_manager/models.py:551
 msgid "Mega menu category"
 msgstr "Catégorie de méga menu"
 
-#: content_manager/models.py:547
+#: content_manager/models.py:552
 msgid "Mega menu categories"
 msgstr "Catégories de méga menu"
 
-#: content_manager/models.py:557
+#: content_manager/models.py:563
 msgid "Main link"
 msgstr "Lien principal"
 
-#: content_manager/models.py:567
+#: content_manager/models.py:574
 msgid "Categories"
 msgstr "Catégories"
 
-#: content_manager/models.py:568
+#: content_manager/models.py:575
 msgid "Maximum 4 categories, each with maximum 8 links."
 msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 
-#: content_manager/models.py:579
+#: content_manager/models.py:586
 msgid "Mega menu"
 msgstr "Méga menu"
 
