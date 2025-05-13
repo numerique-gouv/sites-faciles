@@ -90,6 +90,7 @@ class SitesFacilesBasePage(Page):
     source_url = models.URLField(
         _("Source URL"),
         help_text=_("For imported pages, to allow updates."),
+        max_length=2000,
         null=True,
         blank=True,
     )

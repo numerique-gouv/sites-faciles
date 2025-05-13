@@ -313,6 +313,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
 
     notice_link = models.URLField(
         _("Notice link"),
+        max_length=2000,
         default="",
         blank=True,
         help_text=_("Standardized consultation link at the end of the notice."),
@@ -375,6 +376,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
 
     newsletter_url = models.URLField(
         _("Newsletter registration URL"),
+        max_length=2000,
         default="",
         blank=True,
     )
@@ -521,6 +523,7 @@ class SocialMediaItem(Orderable):
 
     url = models.URLField(
         _("URL"),
+        max_length=2000,
         default="",
         blank=True,
     )
@@ -554,7 +557,7 @@ class MegaMenu(ClusterableModel):
         "wagtailmenus.MainMenuItem", on_delete=models.CASCADE, related_name="megamenu_parent_menu_items"
     )
     description = models.TextField(_("Description"), blank=True)
-    main_link = models.URLField(_("Main link"), blank=True, null=True)
+    main_link = models.URLField(_("Main link"), max_length=2000, blank=True, null=True)
 
     panels = [
         FieldPanel("name"),
