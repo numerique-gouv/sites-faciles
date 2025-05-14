@@ -1,7 +1,7 @@
 [project]
 name = "sites-faciles"
 requires-python = "<4.0,>=3.10"
-version = "1.16.0"
+version = "1.17.0"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
     { name = "Sébastien Reuiller", email = "sebastien.reuiller@beta.gouv.fr" },
@@ -35,7 +35,6 @@ dependencies = [
     "faker<25.0.0,>=24.3.0",
     "rust-just (>=1.39.0,<2.0.0)",
     "mozilla-django-oidc (>=4.0.1,<5.0.0)",
-    "whitenoise (>=6.9.0,<7.0.0)",
 ]
 
 [tool.poetry]
