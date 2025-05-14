@@ -38,7 +38,9 @@ COPY --chown=app:app . .
 
 RUN poetry run python manage.py collectstatic --no-input --ignore=*.sass
 
+RUN chown 1000:1000 -R /app
 USER app
+VOLUME [ "/app/medias" ]
 
 ENTRYPOINT ["./entrypoint.sh"]
 

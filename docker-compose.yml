@@ -22,6 +22,7 @@ services:
     volumes:
       - .:/app
       - "/app/staticfiles"
+      - "/app/medias"
     depends_on:
       - db
 
