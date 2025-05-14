@@ -43,6 +43,3 @@ USER app
 VOLUME [ "/app/medias" ]
 
 ENTRYPOINT ["./entrypoint.sh"]
-
-# https://stackoverflow.com/a/40454758/21676629
-CMD ["sh", "-c", "poetry run python manage.py runserver 0.0.0.0:$CONTAINER_PORT"]
