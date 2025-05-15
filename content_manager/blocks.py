@@ -1165,9 +1165,6 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
         default=5,
         required=False,
     )
-    horizontal_align = blocks.ChoiceBlock(
-        label=_("Horizontal align"), choices=GRID_HORIZONTAL_ALIGN_CHOICES, default="left", required=False
-    )
     vertical_align = blocks.ChoiceBlock(label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, required=False)
 
     columns = MultiColumnsBlock(label=_("Columns"))
