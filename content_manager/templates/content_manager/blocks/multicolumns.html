@@ -13,7 +13,7 @@
         </div>
       </div>
     {% endif %}
-    <div class="fr-grid-row fr-grid-row--gutters fr-py-3w">
+    <div class="fr-grid-row fr-grid-row--gutters {{ value.grid_position }} fr-py-3w">
       {% for subblock in value.columns %}
         {% if subblock.block_type == "column" %}
           <div class="fr-col-12{% if subblock.value.width %} fr-col-lg-{{ subblock.value.width }}{% endif %}">

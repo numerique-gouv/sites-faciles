@@ -1115,6 +1115,10 @@ class BlockMarginStructValue(blocks.StructValue):
         return " ".join(margin)
 
 
+class MultiColumnsStructValue(BlockMarginStructValue, GridPositionStructValue):
+    pass
+
+
 class MultiColumnsBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
     column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
@@ -1161,12 +1165,14 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
         default=5,
         required=False,
     )
+    vertical_align = blocks.ChoiceBlock(label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, required=False)
+
     columns = MultiColumnsBlock(label=_("Columns"))
 
     class Meta:
         icon = "dots-horizontal"
         template = "content_manager/blocks/multicolumns.html"
-        value_class = BlockMarginStructValue
+        value_class = MultiColumnsStructValue
 
 
 class FullWidthBlock(CommonStreamBlock):
