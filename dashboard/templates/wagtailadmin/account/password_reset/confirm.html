@@ -10,6 +10,12 @@
               <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
                 <h1>{% translate "Set your new password" %}</h1>
 
+                <div class="fr-callout fr-icon-lock-unlock-line">
+                  <p class="fr-callout__text">
+                    {% translate "ANSSI recommands the use of a password manager to create and store the password." %}
+                  </p>
+                </div>
+
                 {% include "wagtailadmin/shared/non_field_errors.html" %}
 
                 <form method="post" novalidate>
