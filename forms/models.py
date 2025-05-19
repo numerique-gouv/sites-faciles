@@ -11,6 +11,8 @@ from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from wagtail.fields import RichTextField
 
+from forms.widgets import CustomEmailInputWidget
+
 
 class FormField(AbstractFormField):
     CHOICES = (
@@ -64,6 +66,10 @@ class SitesFacilesFormBuilder(FormBuilder):
         options["widget"] = forms.DateInput(attrs={"type": "datetime-local"})
         return forms.DateField(**options)
 
+    def create_email_field(self, field, options):
+        options["widget"] = CustomEmailInputWidget
+        return super().create_email_field(field, options)
+
     def get_form_class(self):
         return type("WagtailForm", (SitesFacilesCustomForm,), self.formfields)
 
@@ -103,3 +109,9 @@ class FormPage(AbstractEmailForm):
         verbose_name_plural = _("Form pages")
 
     form_builder = SitesFacilesFormBuilder
+
+    def all_fields_required(self):
+        """
+        Returns True if all fields in the form are mandatory.
+        """
+        return all(field.get("required", False) for field in self.form_fields.values())

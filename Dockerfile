@@ -1,5 +1,5 @@
-FROM python:3.13
-
+FROM python:3.11
+ARG CONTAINER_PORT=8000
 EXPOSE ${CONTAINER_PORT}
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -32,15 +32,20 @@ ENV PATH="${PATH}:${POETRY_VENV}/bin"
 WORKDIR $APP_DIR
 
 COPY pyproject.toml poetry.lock ./
-RUN poetry install --no-root
+
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-ansi
+#RUN poetry install --no-root
 
 COPY --chown=app:app . .
 
-RUN poetry run python manage.py collectstatic --no-input --ignore=*.sass
+RUN python manage.py collectstatic --no-input --ignore=*.sass
 
+RUN chown 1000:1000 -R /app
 USER app
+VOLUME [ "/app/medias" ]
 
 ENTRYPOINT ["./entrypoint.sh"]
 
 # https://stackoverflow.com/a/40454758/21676629
-CMD ["sh", "-c", "poetry run python manage.py runserver 0.0.0.0:$CONTAINER_PORT"]
+CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:$CONTAINER_PORT"]

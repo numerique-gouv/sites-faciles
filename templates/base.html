@@ -1,8 +1,8 @@
-{% load i18n static dsfr_tags wagtailuserbar wagtailsettings_tags sass_tags %}
+{% load i18n static dsfr_tags wagtailuserbar wagtail_dsfr_tags wagtailsettings_tags sass_tags %}
 
 {% get_settings use_default_site=True %}
-<!DOCTYPE html>
-<html lang="fr"
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}"
+      {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}data-fr-scheme="system"{% else %}data-fr-scheme="light"{% endif %}
       {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
   <head>
     <meta charset="utf-8" />
@@ -13,6 +13,14 @@
         {% if title %}{{ title }} —{% endif %}
       {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
     {% endblock title %}
+
+    {% block description %}
+    {% endblock description %}
+
+    {% block canonical_url %}
+      <link rel="canonical" href="{% canonical_url %}" />
+    {% endblock canonical_url %}
+
     {% dsfr_favicon %}
 
     {% dsfr_css %}
@@ -24,8 +32,11 @@
           type="text/css" />
 
     {% block extra_css %}
-      <link href="{% sass_src 'css/style.sass' %}" rel="stylesheet" type="text/css"/>
     {% endblock extra_css %}
+
+    {% block cookie_banner %}
+      {% include "blocks/cookie_banner.html" %}
+    {% endblock cookie_banner %}
 
     {% block tracking %}
       {% if settings.content_manager.CustomScriptsSettings.head_scripts %}
@@ -33,11 +44,6 @@
       {% endif %}
     {% endblock tracking %}
 
-    {% block cookie_banner %}
-      {% include "blocks/cookie_banner.html" %}
-    {% endblock cookie_banner %}
-
-  
     {% block social_media %}
     {% endblock social_media %}
   </head>
@@ -49,9 +55,8 @@
 
     {% wagtailuserbar %}
     {% include "blocks/header.html" %}
-    {% dsfr_theme_modale %}
 
-    {% if SiteConfig.notice_title or SiteConfig.notice_description %}
+    {% if settings.content_manager.CmsDsfrConfig.notice_title or settings.content_manager.CmsDsfrConfig.notice_description %}
       {% include "blocks/notice.html" %}
     {% endif %}
 
@@ -61,12 +66,18 @@
     </main>
 
     {% block follow_newsletter_social_media %}
-      {% if SiteConfig.show_newsletter_and_social_block %}
-        {% include "blocks/follow.html" %}
+      {% if settings.content_manager.CmsDsfrConfig.show_newsletter_and_social_block %}
+        <aside id="cmsfr-block-follow">
+          {% include "blocks/follow.html" %}
+        </aside>
       {% endif %}
     {% endblock follow_newsletter_social_media %}
 
     {% include "blocks/footer.html" %}
+
+    {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}
+      {% dsfr_theme_modale %}
+    {% endif %}
 
     {% dsfr_js nonce=request.csp_nonce %}
     {% block extra_js %}
