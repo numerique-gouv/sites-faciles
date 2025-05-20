@@ -21,7 +21,7 @@ Sites Faciles vise à utiliser les dernières versions disponibles de [Django (5
 
 Les tests automatisés couvrent les versions suivantes :
 - Python 3.10 à 3.13 (cf. [versions de Python supportées par Django](https://docs.djangoproject.com/en/5.1/faq/install/))
-- Postgreql 13 à 17 (cf. [versions de PostgreSQL supportées par Django](https://code.djangoproject.com/wiki/SupportedDatabaseVersions))
+- PostgreSQL 14 à 17 (cf. [versions de PostgreSQL supportées par Django](https://code.djangoproject.com/wiki/SupportedDatabaseVersions))
 
 ## Installer les pre-commit hooks
 
