@@ -11,19 +11,26 @@
 {% block content %}
     <div class="fr-container fr-mt-1w">
         <div class="fr-grid-row">
-            <div class="fr-col-12">
-                {% include "content_manager/breadcrumb.html" %}
-            </div>
+            <div class="fr-col-12">{% include "content_manager/breadcrumb.html" %}</div>
         </div>
     </div>
-    <div class="fr-container" style="background-color: white;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; padding-left: 0;padding-right: 0;">
+    <div class="fr-container"
+         style="background-color: white;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                padding-left: 0;
+                padding-right: 0">
         <div class="fr-grid-row fr-grid-row--gutters fr-mb-5w">
-            <div class="fr-col-12 fr-col-md-8" style="padding-top: 0px;padding-right: 0px;border-right: 1px solid var(--border-default-grey);">
+            <div class="fr-col-12 fr-col-md-8"
+                 style="padding-top: 0px;
+                        padding-right: 0px;
+                        border-right: 1px solid var(--border-default-grey)">
                 <div>
                     {% if page.image_url %}
                         <img src="{{ page.image_url }}" alt="" class="fr-responsive-img">
                     {% else %}
-                        <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
+                        <img class="fr-responsive-img"
+                             src="{% static 'images/default-formation.png' %}"
+                             alt="">
                     {% endif %}
                 </div>
                 <div class="fr-container fr-pt-5w fr-pl-5w fr-pb-3w">
@@ -35,81 +42,66 @@
                             &nbsp;&nbsp;Expertises abordées lors de cette formation :
                             <br>
                             <br>
-                            {% for theme in page.themes.all %}
-                                <span class="fr-tag">{{ theme }}</span>
-                            {% endfor %}
+                            {% for theme in page.themes.all %}<span class="fr-tag">{{ theme }}</span>{% endfor %}
                         {% endif %}
                     </p>
                     <p>
                         {% if page.target_audience %}
                             <span class="fr-icon-group-line" aria-hidden="true"></span>
-                            &nbsp;&nbsp;Public visé :
-                            <br>
-                            <br>
-                            <b>{{ page.target_audience.all|join:", " }}</b>
+                            &nbsp;&nbsp;Public visé : <b>{{ page.target_audience.all|join:", " }}</b>
                         {% endif %}
                     </p>
                 </div>
                 <hr>
                 <section class="fr-container fr-p-5w">
-                    <div class="fr-callout"">
+                    <h2>La formation en quelques mots</h2>
+                    <p>{{ page.short_description|richtext|linebreaksbr }}</p>
+                    <div class="fr-callout">
                         <h2 class="fr-callout__title">Les objectifs de la formation</h2>
-                        <p class="fr-callout__text">
-                            {{ page.knowledge_at_the_end|richtext|linebreaksbr }}
-                        </p>
+                        <p class="fr-callout__text">{{ page.knowledge_at_the_end|richtext|linebreaksbr }}</p>
                     </div>
-
-                    <h2>La formation en quelque mots</h2>
-                    <p>
-                        {{ page.short_description|richtext|linebreaksbr }}
-                    </p>
                 </section>
             </div>
-            <div class="fr-col-12 fr-col-md-4" style="position: sticky; top: 0; align-self: start;">
+            <div class="fr-col-12 fr-col-md-4"
+                 style="position: sticky;
+                        top: 0;
+                        align-self: start">
                 <div style="position: relative;">
-                  <div style="position: sticky; top: 10px; max-height: 100vh; overflow: auto;">
-                    <div class="fr-container fr-p-5w" style="text-align: center;">
-                        <h2>C'est par ici</h2>
-                        <div style="border: 1px solid var(--border-default-grey);">
-                            <p style=" margin: 1.5em 0px;">
-                                <b>
-                                    <span class="fr-text--xs" style="color: #7E7E7E;">
-                                        DURÉE
-                                    </span>
-                                    <br>
-                                    <span class="fr-text--ms">
-                                        {{ page.duration }}
-                                    </span>
-                                </b>
-                            </p>
-                            <hr>
-                            <p>
-                                <b>
-                                    <span class="fr-text--xs" style="color: #7E7E7E;">
-                                        LIEU
-                                    </span>
-                                    <br>
-                                    <span class="fr-text--ms">
-                                        {{ page.get_attendance_display }}
-                                    </span>
-                                </b>
-                            </p>
+                    <div style="position: sticky;
+                                top: 10px;
+                                max-height: 100vh;
+                                overflow: auto">
+                        <div class="fr-container fr-p-5w" style="text-align: center;">
+                            <h2>C'est par ici</h2>
+                            <div style="border: 1px solid var(--border-default-grey);">
+                                <p style=" margin: 1.5em 0px;">
+                                    <b>
+                                        <span class="fr-text--xs" style="color: #7E7E7E;">DURÉE</span>
+                                        <br>
+                                        <span class="fr-text--ms">{{ page.duration }}</span>
+                                    </b>
+                                </p>
+                                <hr>
+                                <p>
+                                    <b>
+                                        <span class="fr-text--xs" style="color: #7E7E7E;">LIEU</span>
+                                        <br>
+                                        <span class="fr-text--ms">{{ page.get_attendance_display }}</span>
+                                    </b>
+                                </p>
+                            </div>
+                            <ul class="fr-btns-group fr-mt-5w">
+                                <li>
+                                    <button class="fr-btn">
+                                        <a href="{{ page.registration_link }}" target="_blank">C'est par ici</a>
+                                    </button>
+                                </li>
+                            </ul>
+                            <p class="fr-text--xs">L'inscription se fait sur un site externe.</p>
                         </div>
-                        <ul class="fr-btns-group fr-mt-5w">
-                            <li>
-                                <button class="fr-btn"><a href="{{ page.registration_link }}" target="_blank">
-                                    C'est par ici</a>
-                                </button>
-                            </li>
-                        </ul>
-                        <p class="fr-text--xs">L'inscription se fait sur un site externe.</p>
                     </div>
-                  </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 {% endblock content %}
