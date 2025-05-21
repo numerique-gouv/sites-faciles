@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-21 12:09+0200\n"
-"PO-Revision-Date: 2025-05-13 12:45+0200\n"
+"PO-Revision-Date: 2025-05-21 14:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: content_manager/abstract.py:27
 msgid "Show title in header image?"
@@ -1236,7 +1236,7 @@ msgstr "Description"
 
 #: content_manager/models.py:350 content_manager/models.py:428
 msgid "Site logo"
-msgstr "Titre du site"
+msgstr "Logo du site"
 
 #: content_manager/models.py:354
 msgid "Logo alt text"
