@@ -347,7 +347,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name=_("Operator logo"),
+        verbose_name=_("Site logo"),
     )
 
     operator_logo_alt = models.CharField(
@@ -425,7 +425,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
                 FieldPanel("operator_logo_alt"),
                 FieldPanel("operator_logo_width"),
             ],
-            heading=_("Operator logo"),
+            heading=_("Site logo"),
         ),
         MultiFieldPanel(
             [
