@@ -353,7 +353,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
     operator_logo_display = models.CharField(
         _("Logo display"),
         choices=[("header-footer", _("Header and Footer")), ("header-only", _("Header only"))],
-        default="",
+        default="header-footer",
         blank=True,
         max_length=20,
     )
