@@ -124,7 +124,7 @@ poetry run  python manage.py compilemessages
 ```
 
 Il est recommandé d’utiliser [https://poedit.net/](Poedit) pour les traductions, afin de profiter de sa mémoire de traduction
-basée sur celles déjà existantes. Il produit directemnt le fichier `.mo` à la sauvegarde, il n’est donc pas nécessaire de le
+basée sur celles déjà existantes. Il produit directement le fichier `.mo` à la sauvegarde, il n’est donc pas nécessaire de le
 compiler manuellement.
 
 ## Linter de code / Code Style
