@@ -430,6 +430,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         MultiFieldPanel(
             [
                 FieldPanel("operator_logo_file"),
+                FieldPanel("operator_logo_display"),
                 FieldPanel("operator_logo_alt"),
                 FieldPanel("operator_logo_width"),
             ],
