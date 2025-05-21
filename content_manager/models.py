@@ -350,6 +350,14 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         verbose_name=_("Operator logo"),
     )
 
+    operator_logo_display = models.CharField(
+        _("Logo display"),
+        choices=[("header-footer", _("Header and Footer")), ("header-only", _("Header only"))],
+        default="",
+        blank=True,
+        max_length=20,
+    )
+
     operator_logo_alt = models.CharField(
         _("Logo alt text"),
         max_length=200,
