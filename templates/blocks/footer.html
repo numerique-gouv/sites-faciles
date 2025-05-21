@@ -3,7 +3,7 @@
 
 {% block footer_brand %}
   {% translate "Back to home page" as back_to_home_label %}
-  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file %}
+  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file and settings.content_manager.CmsDsfrConfig.operator_logo_display == "header-footer" %}
     {% image settings.content_manager.CmsDsfrConfig.operator_logo_file original as logo_img %}
     <div class="fr-footer__brand fr-enlarge-link">
       <p class="fr-logo"
