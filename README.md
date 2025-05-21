@@ -1,20 +1,10 @@
-# Gestionnaire de contenu DSFR et Accessible
+# Sites Faciles
 
-**Créez et gérez votre site internet simplement**
+**Sites Faciles** vise à permettre la création simplifiée de **sites dont le domaine se termine par .gouv.fr**.
 
-Gestionnaire de contenu (CMS) pour créer un site internet dont le domaine se terminant par .gouv.fr . Pas besoin de compétence technique pour mettre à jours le contenu.
+Basé sur **[Wagtail](https://wagtail.org/)**, il permet de **concevoir rapidement des sites internet conformes aux normes numériques en vigueur**.
 
-**Un CMS basé sur la solution open source Wagtail**
-
-Créez ou modifiez des pages, ajoutez un menu de navigation, des boutons, images, vidéos, contributeurs etc
-
-**Système de Design de l'État**
-
-Construisez vos pages à l'aide de composants prêts à l'emploi issus du Système de Design de l'État (DSFR)
-
-**Accessible et responsive**
-
-Le contenu des pages générées par le CMS est partiellement conforme selon la norme RGAA 4.1 et responsive
+En particulier, il permet de **construire des pages à l’aide de composants** prêts à l’emploi issus du **[Système de design de l’État (DSFR)](https://www.systeme-de-design.gouv.fr/)**.
 
 ## Prérequis
 Sites Faciles vise à utiliser les dernières versions disponibles de [Django (5.0+)](https://www.djangoproject.com/download/) et [Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html).
@@ -23,77 +13,10 @@ Les tests automatisés couvrent les versions suivantes :
 - Python 3.10 à 3.13 (cf. [versions de Python supportées par Django](https://docs.djangoproject.com/en/5.1/faq/install/))
 - Postgreql 13 à 17 (cf. [versions de PostgreSQL supportées par Django](https://code.djangoproject.com/wiki/SupportedDatabaseVersions))
 
-## Installer les pre-commit hooks
-
-```
-pre-commit install
-```
-
-On peut faire un premier test en faisant tourner :
-
-```
-pre-commit run --all-files
-```
-
-## Installation
-
-Le projet peut se lancer en local ou avec Docker.
-
-### Dans tous les cas, copier les variables d’environnement
-
-- Copier le fichier
-```
-cp .env.example .env
-```
-
-- Générer la `SECRET_KEY`
-```
-python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-```
-
-- Mettre les valeurs pertinentes dans le fichier `.env`
-
-### En local
-#### Installer poetry s’il ne l’est pas
-
-- Cf. la [documentation de poetry](https://python-poetry.org/docs/#installation)
-- mettre la variable d’environnement `USE_POETRY` à `1` dans le fichier `.env`
-
-#### Installer le projet
-
-- La commande suivante installe les dépendances, fait les migrations et collecte les fichiers
-```
-make init
-```
-
-#### Créer un utilisateur
-
-- La commande suivante crée un utilisateur administrateur avec tous les droits:
-
-```
-poetry run python manage.py createsuperuser
-```
-
-#### Lancer le serveur
-
-```
-make runserver
-```
-
-### via Docker
-#### Lancer les containers
-
-```sh
-docker compose up
-```
-
-### Effectuer les tests
-Les tests unitaires peuvent être lancés avec `make test-unit`.
-
-Vous pouvez également générer un rapport sur la couverture de tests :
-```sh
-coverage run manage.py test --settings config.settings_test
-```
+## Installation et contribution
+* Pour déployer le projet en production sur un serveur, voir la [documentation d’installation](https://sites.beta.gouv.fr/documentation/installation/)
+* Pour installer le projet en local pour le développement, voir la [documentation d’embarquement](./ONBOARDING.md)
+* Avant de soumettre une contribution, consulter la  [documentation de contribution](./CONTRIBUTING.md)
 
 ## Indexation des contenus
 Les contenus des pages sont indexés pour la recherche par un script `python manage.py update_index` (cf. [documentation de Wagtail](https://docs.wagtail.org/en/stable/topics/search/indexing.html))
@@ -106,7 +29,7 @@ Il est recommandé de procéder à une nouvelle indexation une fois par semaine,
 ### Autres déploiements
 Il est recommandé de faire de même pour les déploiements sur d’autres plateformes, en ajoutant une ligne à la crontab de l’utilisateur avec lequel tourne le site :
 
-```
+```crontab
 0 3 * * SUN python manage.py update_index
 ```
 
