@@ -347,7 +347,15 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name=_("Operator logo"),
+        verbose_name=_("Site logo"),
+    )
+
+    operator_logo_display = models.CharField(
+        _("Logo display"),
+        choices=[("header-footer", _("Header and Footer")), ("header-only", _("Header only"))],
+        default="header-footer",
+        blank=True,
+        max_length=20,
     )
 
     operator_logo_alt = models.CharField(
@@ -422,10 +430,11 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         MultiFieldPanel(
             [
                 FieldPanel("operator_logo_file"),
+                FieldPanel("operator_logo_display"),
                 FieldPanel("operator_logo_alt"),
                 FieldPanel("operator_logo_width"),
             ],
-            heading=_("Operator logo"),
+            heading=_("Site logo"),
         ),
         MultiFieldPanel(
             [

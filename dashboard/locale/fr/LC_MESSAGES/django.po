@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-19 16:02+0200\n"
+"POT-Creation-Date: 2025-05-21 12:09+0200\n"
 "PO-Revision-Date: 2025-05-19 16:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,7 +31,7 @@ msgstr "Connexion"
 msgid "Set your new password"
 msgstr "Définissez votre nouveau mot de passe"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:16
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:15
 msgid ""
 "ANSSI recommands the use of a password manager to create and store the "
 "password."
@@ -39,16 +39,16 @@ msgstr ""
 "L’ANSSI recommande l’usage d’un gestionnaire de mots de passe pour générer "
 "et stocker le mot de passe."
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:28
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:27
 #: dashboard/templates/wagtailadmin/account/password_reset/form.html:18
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:36
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:35
 msgid "Invalid password reset link"
 msgstr "Lien de réinitialisation de mot de passe invalide"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:38
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:37
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used."
@@ -56,7 +56,7 @@ msgstr ""
 "Le lien de réinitialisation de mot de passe était invalide, probablement "
 "parce qu’il a déjà été utilisé."
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:42
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:41
 msgid "Request a new password reset"
 msgstr "Demander une nouvelle réinitialisation de mot de passe"
 
