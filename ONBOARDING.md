@@ -20,12 +20,16 @@ cp .env.example .env
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-- Mettre les valeurs pertinentes dans le fichier `.env`
+- Mettre les valeurs pertinentes dans le fichier `.env`, notamment :
+  - `DEBUG=True`
+  - `HOST_PROTO=http`
+
 
 ### En local
-#### Utiliser Poetry
+#### Variables d’environnement
 
 - mettre la variable d’environnement `USE_POETRY` à `1` dans le fichier `.env`
+- il est possible de configurer l’envoi des emails vers la console Django (cf. [CONTRIBUTING.md](./CONTRIBUTING.md))
 
 #### Installer le projet
 
