@@ -32,7 +32,7 @@ class ContentPage(SitesFacilesBasePage):
     class Meta:
         verbose_name = _("Content page")
 
-    settings_panels = SitesFacilesBasePage.settings_panels + [
+    content_panels = SitesFacilesBasePage.content_panels + [
         FieldPanel("tags"),
     ]
 
