@@ -1,6 +1,7 @@
 from django import forms
 
-from formations.models import Theme
+from formations.models import Organizer, TargetAudience, Theme
+from formations.enums import Attendance, Kind
 
 
 class FormationsFilterForm(forms.Form):
@@ -10,6 +11,54 @@ class FormationsFilterForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(
             attrs={
                 "class": "form-checkbox fr-input vh",
+                "onchange": "this.form.submit()",
+            }
+        ),
+        required=False,
+    )
+
+    target_audience = forms.ModelChoiceField(
+        label="Public visé",
+        queryset=TargetAudience.objects.filter(formationpage__isnull=False).distinct(),
+        widget=forms.Select(
+            attrs={
+                "class": "fr-select",
+                "onchange": "this.form.submit()",
+            }
+        ),
+        required=False,
+    )
+
+    organizer = forms.ModelChoiceField(
+        label="Structure organisatrice",
+        queryset=Organizer.objects.filter(formationpage__isnull=False).distinct(),
+        widget=forms.Select(
+            attrs={
+                "class": "fr-select",
+                "onchange": "this.form.submit()",
+            }
+        ),
+        required=False,
+    )
+
+    kind = forms.ChoiceField(
+        label="Type de formation",
+        choices=[("", "Tous")] + list(Kind.choices),
+        widget=forms.Select(
+            attrs={
+                "class": "fr-select",
+                "onchange": "this.form.submit()",
+            }
+        ),
+        required=False,
+    )
+
+    attendance = forms.ChoiceField(
+        label="En ligne/Présentiel/Hybride",
+        choices=[("", "Tous")] + list(Attendance.choices),
+        widget=forms.Select(
+            attrs={
+                "class": "fr-select",
                 "onchange": "this.form.submit()",
             }
         ),

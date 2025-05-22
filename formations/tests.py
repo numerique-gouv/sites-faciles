@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from formations.factories import FormationPageFactory, ThemeFactory
+from formations.enums import Attendance, Kind
+from formations.factories import FormationPageFactory, OrganizerFactory, ThemeFactory, TargetAudienceFactory
 
 
 class FormationsTest(TestCase):
@@ -50,3 +51,102 @@ class FormationsTest(TestCase):
         self.assertContains(response, formation_with_theme_1and3.name)
         self.assertContains(response, formation_with_theme_2.name)
         self.assertNotContains(response, formation_without_theme.name)
+
+    def test_view_formations_list_target_audience_filter(self):
+        target_audience1 = TargetAudienceFactory()
+        target_audience2 = TargetAudienceFactory()
+        target_audience3 = TargetAudienceFactory()
+
+        # unused target audience
+        TargetAudienceFactory()
+
+        formation_with_target_audience_1and3 = FormationPageFactory(
+            target_audience=[target_audience1, target_audience3]
+        )
+        formation_with_target_audience_2 = FormationPageFactory(target_audience=[target_audience2])
+        formation_without_target_audience = FormationPageFactory()
+
+        url = reverse("formations_list")
+
+        # no target audience filter
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_target_audience_1and3.name)
+        self.assertContains(response, formation_with_target_audience_2.name)
+        self.assertContains(response, formation_without_target_audience.name)
+
+        # with target audience filter
+        response = self.client.get(url, {"target_audience": target_audience1.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_target_audience_1and3.name)
+        self.assertNotContains(response, formation_with_target_audience_2.name)
+        self.assertNotContains(response, formation_without_target_audience.name)
+
+    def test_view_formations_list_organizer_filter(self):
+        organizer1 = OrganizerFactory()
+        organizer2 = OrganizerFactory()
+        organizer3 = OrganizerFactory()
+        # unused organizer
+        OrganizerFactory()
+
+        formation_with_organizer_1and3 = FormationPageFactory(organizers=[organizer1, organizer3])
+        formation_with_organizer_2 = FormationPageFactory(organizers=[organizer2])
+        formation_without_organizer = FormationPageFactory()
+
+        url = reverse("formations_list")
+
+        # no organizer filter
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_organizer_1and3.name)
+        self.assertContains(response, formation_with_organizer_2.name)
+        self.assertContains(response, formation_without_organizer.name)
+
+        # with organizer filter
+        response = self.client.get(url, {"organizer": organizer1.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_organizer_1and3.name)
+        self.assertNotContains(response, formation_with_organizer_2.name)
+        self.assertNotContains(response, formation_without_organizer.name)
+
+    def test_view_formations_list_kind_filter(self):
+        formation_with_kind_formation = FormationPageFactory(kind=Kind.FORMATION)
+        formation_with_kind_parcours = FormationPageFactory(kind=Kind.PARCOURS)
+        formation_without_kind = FormationPageFactory(kind=Kind.CYCLE)
+
+        url = reverse("formations_list")
+
+        # no kind filter
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_kind_formation.name)
+        self.assertContains(response, formation_with_kind_parcours.name)
+        self.assertContains(response, formation_without_kind.name)
+
+        # with kind filter
+        response = self.client.get(url, {"kind": Kind.FORMATION})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_kind_formation.name)
+        self.assertNotContains(response, formation_with_kind_parcours.name)
+        self.assertNotContains(response, formation_without_kind.name)
+
+    def test_view_formations_list_attendance_filter(self):
+        formation_with_attendance_online = FormationPageFactory(attendance=Attendance.ENLIGNE)
+        formation_with_attendance_presential = FormationPageFactory(attendance=Attendance.PRESENTIEL)
+        formation_without_attendance = FormationPageFactory(attendance=Attendance.HYBRIDE)
+
+        url = reverse("formations_list")
+
+        # no attendance filter
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_attendance_online.name)
+        self.assertContains(response, formation_with_attendance_presential.name)
+        self.assertContains(response, formation_without_attendance.name)
+
+        # with attendance filter
+        response = self.client.get(url, {"attendance": Attendance.ENLIGNE})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_attendance_online.name)
+        self.assertNotContains(response, formation_with_attendance_presential.name)
+        self.assertNotContains(response, formation_without_attendance.name)

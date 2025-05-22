@@ -12,18 +12,61 @@
         </div>
     </div>
     <div class="fr-container fr-mb-6w">
-        <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-12 ">
-                <div class="filter-tags fr-tags-group">
-                    <form action="{% url 'formations_list' %}" method="GET">
-                        {{ form.themes.errors }}
+        <form action="{% url 'formations_list' %}" method="get">
+            {% csrf_token %}
+            {{ form.themes.errors }}
+            <div class="fr-grid-row fr-grid-row--gutters">
+                <div class="fr-col-6 fr-col-lg-3">
+                    <div class="fr-select-group">
+                        {{ form.target_audience.errors }}
+                        <label class="fr-label" for="{{ form.target_audience.id_for_label }}">{{ form.target_audience.label }}</label>
+                        {{ form.target_audience }}
+                    </div>
+                </div>
+                <div class="fr-col-6 fr-col-lg-3">
+                    <div class="fr-select-group">
+                        {{ form.attendance.errors }}
+                        <label class="fr-label" for="{{ form.attendance.id_for_label }}">{{ form.attendance.label }}</label>
+                        {{ form.attendance }}
+                    </div>
+                </div>
+                <div class="fr-col-6 fr-col-lg-3">
+                    <div class="fr-select-group">
+                        {{ form.organizer.errors }}
+                        <label class="fr-label" for="{{ form.organizer.id_for_label }}">{{ form.organizer.label }}</label>
+                        {{ form.organizer }}
+                    </div>
+                </div>
+                <div class="fr-col-6 fr-col-lg-3">
+                    <div class="fr-select-group">
+                        {{ form.kind.errors }}
+                        <label class="fr-label" for="{{ form.kind.id_for_label }}">{{ form.kind.label }}</label>
+                        {{ form.kind }}
+                    </div>
+                </div>
+                <div class="fr-col-12">
+                    <div class="filter-tags fr-tags-group">
                         {% for theme in form.themes %}
                             {{ theme.tag }}
-                            <label class="fr-tag" for="{{ theme.id_for_label }}" aria-pressed="{% if theme.choice_label in selected_themes %}true{% else %}false{% endif %}">{{ theme.choice_label }}</label>
+                            <label class="fr-tag"
+                                   for="{{ theme.id_for_label }}"
+                                   aria-pressed="{% if theme.choice_label in selected_themes %}true{% else %}false{% endif %}">
+                                {{ theme.choice_label }}
+                            </label>
                         {% endfor %}
-                    </form>
+                    </div>
+                </div>
+                <div class="fr-col-12">
+                    <p>
+                        <button class="fr-btn fr-mr-2w" type="submit">Rechercher</button>
+                        <a href="{% url 'formations_list' %}"
+                           class="fr-btn fr-btn--secondary fr-mr-2w">Réinitialiser</a>
+                        {{ formationpage_list.count }}&nbsp;formation{{ formationpage_list.count|pluralize }} trouvée{{ formationpage_list.count|pluralize }}
+                    </p>
                 </div>
             </div>
+        </form>
+        <div class="fr-grid-row fr-grid-row--gutters">
             {% for formation in formationpage_list %}
                 <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
                     <div class="fr-card fr-enlarge-link">
@@ -61,11 +104,17 @@
                                 {% if formation.image_url %}
                                     <img class="fr-responsive-img" src="{{ formation.image_url }}" alt="">
                                 {% else %}
-                                    <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
+                                    <img class="fr-responsive-img"
+                                         src="{% static 'images/default-formation.png' %}"
+                                         alt="">
                                 {% endif %}
                             </div>
                         </div>
                     </div>
+                </div>
+            {% empty %}
+                <div class="fr-col-12">
+                    <p>Aucune formation trouvée pour ces critères.</p>
                 </div>
             {% endfor %}
         </div>

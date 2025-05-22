@@ -24,10 +24,27 @@ class FormationsListView(ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset().live()
+        qs = super().get_queryset().live()
         form = FormationsFilterForm(self.request.GET or None)
         if form.is_valid():
             themes = form.cleaned_data.get("themes")
             if themes:
-                queryset = queryset.filter(themes__in=themes)
-        return queryset
+                qs = qs.filter(themes__in=themes)
+
+            target_audience = form.cleaned_data.get("target_audience")
+            if target_audience:
+                qs = qs.filter(target_audience__in=[target_audience])
+
+            organizer = form.cleaned_data.get("organizer")
+            if organizer:
+                qs = qs.filter(organizers__in=[organizer])
+
+            kind = form.cleaned_data.get("kind")
+            if kind:
+                qs = qs.filter(kind=kind)
+
+            attendance = form.cleaned_data.get("attendance")
+            if attendance:
+                qs = qs.filter(attendance=attendance)
+
+        return qs
