@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
 from wagtail.blocks import BooleanBlock, StructValue
+from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
@@ -30,6 +31,25 @@ from content_manager.constants import (
 from content_manager.widgets import DsfrIconPickerWidget
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
+
+
+# Table-related blocks
+class PictogramBlock(ImageBlock):
+    # A subclass of ImageBlock with the height fixed to 80px.
+    class Meta:
+        icon = "image"
+        template = "content_manager/widgets/pictogram.html"
+
+
+class AdvancedTypedTableBlock(TypedTableBlock):
+    row_heading = blocks.CharBlock(required=False, label=_("Row heading"))
+    text = blocks.RichTextBlock(features=LIMITED_RICHTEXTFIELD_FEATURES, required=False, label=_("Text"))
+    pictogram = PictogramBlock(required=False, label=_("Pictogram"))
+
+    class Meta:
+        icon = "table"
+        template = "content_manager/blocks/typed_table_block.html"
+        help_text = _('The "row heading" column type only works on the first column of the table.')
 
 
 ## Meta blocks
@@ -196,7 +216,7 @@ class BadgeBlock(blocks.StructBlock):
     hide_icon = blocks.BooleanBlock(label=_("Hide badge icon"), required=False)
 
     class Meta:
-        template = ("content_manager/blocks/badge.html",)
+        template = "content_manager/blocks/badge.html"
 
 
 class BadgesListBlock(blocks.StreamBlock):
@@ -975,6 +995,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(label=_("Rich text"))
     image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
+    table = AdvancedTypedTableBlock(label=_("Table"))
     alert = AlertBlock(label=_("Alert message"))
     text_cta = TextAndCTA(label=_("Text and call to action"))
     video = VideoBlock(label=_("Video"))
@@ -1037,9 +1058,7 @@ class ItemGridBlock(blocks.StructBlock):
     horizontal_align = blocks.ChoiceBlock(
         label=_("Horizontal align"), choices=GRID_HORIZONTAL_ALIGN_CHOICES, default="left", required=False
     )
-    vertical_align = blocks.ChoiceBlock(
-        label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, default="middle", required=False
-    )
+    vertical_align = blocks.ChoiceBlock(label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, required=False)
     items = ColumnBlock(label=_("Items"))
 
     class Meta:
@@ -1096,6 +1115,10 @@ class BlockMarginStructValue(blocks.StructValue):
         return " ".join(margin)
 
 
+class MultiColumnsStructValue(BlockMarginStructValue, GridPositionStructValue):
+    pass
+
+
 class MultiColumnsBlock(CommonStreamBlock):
     card = VerticalCardBlock(label=_("Vertical card"), group=_("DSFR components"))
     column = AdjustableColumnBlock(label=_("Adjustable column"), group=_("Page structure"))
@@ -1142,12 +1165,14 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
         default=5,
         required=False,
     )
+    vertical_align = blocks.ChoiceBlock(label=_("Vertical align"), choices=GRID_VERTICAL_ALIGN_CHOICES, required=False)
+
     columns = MultiColumnsBlock(label=_("Columns"))
 
     class Meta:
         icon = "dots-horizontal"
         template = "content_manager/blocks/multicolumns.html"
-        value_class = BlockMarginStructValue
+        value_class = MultiColumnsStructValue
 
 
 class FullWidthBlock(CommonStreamBlock):
@@ -1245,6 +1270,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     ("image", CenteredImageBlock(label=_("Centered image"))),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
+    ("table", AdvancedTypedTableBlock(label=_("Table"))),
     ("alert", AlertBlock(label=_("Alert message"))),
     ("text_cta", TextAndCTA(label=_("Text and call to action"))),
     ("video", VideoBlock(label=_("Video"))),

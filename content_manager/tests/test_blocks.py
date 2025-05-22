@@ -14,6 +14,95 @@ from events.models import EventEntryPage, EventsIndexPage
 User = get_user_model()
 
 
+class TypedTableBlockTestCase(WagtailPageTestCase):
+    def setUp(self) -> None:
+        home = Page.objects.get(slug="home")
+
+        body = [
+            {
+                "type": "table",
+                "value": {
+                    "columns": [
+                        {"type": "text", "heading": "Name"},
+                        {"type": "text", "heading": "Comment"},
+                    ],
+                    "rows": [
+                        {
+                            "values": [
+                                '<p data-block-key="ab12c">Line 1</p>',
+                                '<p data-block-key="def34g">Example text with <b>formating</b>.</p>',
+                            ]
+                        },
+                        {
+                            "values": [
+                                '<p data-block-key="hij56k">Line 2</p>',
+                                '<p data-block-key="lmn78o">Example other text with <b>formating</b>.</p>',
+                            ]
+                        },
+                    ],
+                    "caption": "Example table",
+                },
+            }
+        ]
+
+        self.content_page = home.add_child(
+            instance=ContentPage(title="Sample table page", slug="content-page", body=body)
+        )
+        self.content_page.save()
+
+    def test_page_with_table_is_renderable(self):
+        self.assertPageIsRenderable(self.content_page)
+
+    def test_page_with_table_has_content(self):
+        response = self.client.get(self.content_page.url)
+
+        self.assertInHTML(
+            """<tr>
+                <th scope="col">Name</th>
+                <th scope="col">Comment</th>
+        </tr>""",
+            response.content.decode(),
+        )
+
+    def test_thead_row_is_not_shown_if_col_headings_are_empty(self):
+        body = [
+            {
+                "type": "table",
+                "value": {
+                    "columns": [
+                        {"type": "text", "heading": ""},
+                        {"type": "text", "heading": ""},
+                    ],
+                    "rows": [
+                        {
+                            "values": [
+                                '<p data-block-key="ab12c">Line 1</p>',
+                                '<p data-block-key="def34g">Example text with <b>formating</b>.</p>',
+                            ]
+                        },
+                        {
+                            "values": [
+                                '<p data-block-key="hij56k">Line 2</p>',
+                                '<p data-block-key="lmn78o">Example other text with <b>formating</b>.</p>',
+                            ]
+                        },
+                    ],
+                    "caption": "Example table",
+                },
+            }
+        ]
+
+        self.content_page.body = body
+        self.content_page.save()
+
+        response = self.client.get(self.content_page.url)
+
+        self.assertNotContains(
+            response,
+            "thead",
+        )
+
+
 class HorizontalCardBlockTestCase(WagtailPageTestCase):
     # Logic *should* be the same for a vertical card, but inside of a multiple columns block.
     def setUp(self):
@@ -162,14 +251,12 @@ class HorizontalCardBlockTestCase(WagtailPageTestCase):
         self.assertInHTML("""<a href="https://www.info.gouv.fr">Sample card</a>""", response.content.decode())
 
         self.assertInHTML(
-            """<ul class="fr-btns-group fr-btns-group--inline-lg">
-                <li>
-                    <a class="fr-btn fr-btn--secondary"
-                    href="https://numerique.gouv.fr"
-                    target="_blank"
-                    rel="noopener external">Label <span class="fr-sr-only">Ouvre une nouvelle fenêtre</span></a>
-                </li>
-            </ul>""",
+            """<div class="fr-btns-group fr-btns-group--inline-lg">
+                  <a class="fr-btn fr-btn--secondary"
+                  href="https://numerique.gouv.fr"
+                  target="_blank"
+                  rel="noopener external">Label <span class="fr-sr-only">Ouvre une nouvelle fenêtre</span></a>
+            </div>""",
             response.content.decode(),
         )
 
