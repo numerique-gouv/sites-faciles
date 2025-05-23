@@ -96,11 +96,6 @@ class SitesFacilesBasePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel("body", heading=_("Body")),
-    ]
-
-    promote_panels = [
-        MultiFieldPanel(Page.promote_panels, _("Common page configuration")),
         MultiFieldPanel(
             [
                 FieldPanel("header_with_title"),
@@ -118,6 +113,11 @@ class SitesFacilesBasePage(Page):
             ],
             heading=_("Header options"),
         ),
+        FieldPanel("body", heading=_("Body")),
+    ]
+
+    promote_panels = [
+        MultiFieldPanel(Page.promote_panels, _("Common page configuration")),
     ]
 
     search_fields = Page.search_fields + [
