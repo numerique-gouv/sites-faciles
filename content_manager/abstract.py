@@ -69,23 +69,6 @@ class SitesFacilesBasePage(Page):
         null=True,
         blank=True,
     )
-    header_cta_label = models.CharField(
-        _("Call to action label"),
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
-        ),
-        null=True,
-        blank=True,
-    )
-
-    header_cta_link = models.URLField(
-        _("Call to action link"),
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
-        ),
-        null=True,
-        blank=True,
-    )
 
     source_url = models.URLField(
         _("Source URL"),
@@ -108,8 +91,6 @@ class SitesFacilesBasePage(Page):
                     "header_cta_buttons",
                     heading=_("Call-to-action buttons"),
                 ),
-                FieldPanel("header_cta_label"),
-                FieldPanel("header_cta_link"),
             ],
             heading=_("Header options"),
         ),
