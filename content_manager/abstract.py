@@ -117,8 +117,6 @@ class SitesFacilesBasePage(Page):
         APIField("header_darken"),
         APIField("header_cta_text"),
         APIField("header_cta_buttons"),
-        APIField("header_cta_label"),
-        APIField("header_cta_link"),
         APIField("public_child_pages"),
     ]
 
