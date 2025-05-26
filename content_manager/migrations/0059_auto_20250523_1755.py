@@ -5,7 +5,7 @@ from content_manager.models import ContentPage, CatalogIndexPage
 from itertools import chain
 
 
-def migrate_obsolete_fields():
+def migrate_obsolete_fields(apps, schema_editor):
     pages = chain(ContentPage.objects.all(), CatalogIndexPage.objects.all())
 
     for live_page in pages:
