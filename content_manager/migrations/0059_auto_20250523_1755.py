@@ -5,13 +5,17 @@ from content_manager.models import ContentPage, CatalogIndexPage
 from itertools import chain
 
 
-def migrate_obsolete_fields(apps, schema_editor):
+def migrate_obsolete_fields():
     pages = chain(ContentPage.objects.all(), CatalogIndexPage.objects.all())
 
-    for page in pages:
-        if not page.header_cta_label and not page.header_cta_link:
+    for live_page in pages:
+        if not live_page.header_cta_label and not live_page.header_cta_link:
             continue
 
+        if live_page.header_cta_buttons:
+            continue
+
+        page = live_page.get_latest_revision_as_object()
         original_last_published = page.last_published_at
 
         button_block = (
@@ -29,7 +33,9 @@ def migrate_obsolete_fields(apps, schema_editor):
 
         # Save a revision and publish it
         revision = page.save_revision()
-        revision.publish()
+
+        if live_page.live:
+            revision.publish()
 
         # Reset the last publication date to avoid indexing errors based on this field.
         page.last_published_at = original_last_published
