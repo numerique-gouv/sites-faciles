@@ -33,7 +33,8 @@ def migrate_obsolete_fields(apps, schema_editor):
 
         # Reset the last publication date to avoid indexing errors based on this field.
         page.last_published_at = original_last_published
-        page.save(update_fields=["last_published_at"])
+        page.latest_revision_created_at = original_last_published
+        page.save(update_fields=["last_published_at", "latest_revision_created_at"])
 
 
 class Migration(migrations.Migration):
