@@ -23,6 +23,7 @@ class SitesFacilesBasePage(Page):
         STREAMFIELD_COMMON_BLOCKS,
         blank=True,
         use_json_field=True,
+        collapsed=True,
     )
     header_with_title = models.BooleanField(_("Show title in header image?"), default=False)  # type: ignore
 

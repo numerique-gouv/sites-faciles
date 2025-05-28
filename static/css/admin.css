@@ -25,3 +25,13 @@
 .public-DraftStyleDefault-unorderedListItem {
     list-style-type: disc !important;
 }
+
+/** Overriding streamfield panel block style to show block title instead of content for greater clarity **/
+[aria-expanded='false'] + .w-panel__heading .c-sf-block__title {
+  display: none !important;
+}
+
+
+[aria-expanded='false'] + .w-panel__heading .c-sf-block__type {
+  display: inline !important;
+}
