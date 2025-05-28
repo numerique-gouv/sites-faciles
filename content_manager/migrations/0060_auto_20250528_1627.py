@@ -46,7 +46,7 @@ def migrate_obsolete_fields(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("content_manager", "0060_auto_20250528_1627"),
+        ("content_manager", "0059_alter_cmsdsfrconfig_operator_logo_width"),
     ]
 
     operations = [migrations.RunPython(migrate_obsolete_fields)]
