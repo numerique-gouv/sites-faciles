@@ -6,6 +6,9 @@ from itertools import chain
 
 
 def migrate_obsolete_fields(apps, schema_editor):
+    EventsIndexPage = apps.get_model("events", "EventsIndexPage")
+    EventEntryPage = apps.get_model("events", "EventEntryPage")
+
     pages = chain(EventsIndexPage.objects.all(), EventEntryPage.objects.all())
 
     for live_page in pages:
