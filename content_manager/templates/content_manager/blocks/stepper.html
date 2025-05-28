@@ -13,14 +13,18 @@
          data-fr-current-step="{{ value.current }}"
          data-fr-steps="{{ value.total }}"></div>
     <div class="fr-grid-row fr-grid-row--gutters">
-      {% for step in value.steps %}
-        <div class="fr-col-12 fr-col-sm">
-          <p>
-            <span class="fr-text--bold">{{ step.value.title }}</span>
-          </p>
-          <p>{{ step.value.detail|linebreaksbr }}</p>
-        </div>
-      {% endfor %}
+      <dl class="cmsfr-stepper__details">
+        {% for step in value.steps %}
+          <div class="fr-col-12 fr-col-sm">
+            <dt>
+              <span class="fr-text--bold">{{ step.value.title }}</span>
+            </dt>
+            <dd>
+              {{ step.value.detail|linebreaksbr }}
+            </dd>
+          </div>
+        {% endfor %}
+      </dl>
     </div>
   </div>
 </div>
