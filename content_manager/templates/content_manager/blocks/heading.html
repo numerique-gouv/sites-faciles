@@ -21,9 +21,6 @@
               {% for block in page.header_cta_buttons %}
                 {% include_block block %}
               {% endfor %}
-            {% elif page.header_cta_url and page.header_cta_label %}
-              <a class="fr-btn {% if page.header_darken %}fr-btn--secondary fr-background-alt--blue-france fr-btn--lg{% else %}fr-btn--primary{% endif %} fr-btn--lg"
-                 href="{{ page.header_cta_link }}">{{ page.header_cta_label }}</a>
             {% endif %}
           </div>
         </div>

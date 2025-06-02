@@ -69,23 +69,6 @@ class SitesFacilesBasePage(Page):
         null=True,
         blank=True,
     )
-    header_cta_label = models.CharField(
-        _("Call to action label"),
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
-        ),
-        null=True,
-        blank=True,
-    )
-
-    header_cta_link = models.URLField(
-        _("Call to action link"),
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
-        ),
-        null=True,
-        blank=True,
-    )
 
     source_url = models.URLField(
         _("Source URL"),
@@ -96,11 +79,6 @@ class SitesFacilesBasePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel("body", heading=_("Body")),
-    ]
-
-    promote_panels = [
-        MultiFieldPanel(Page.promote_panels, _("Common page configuration")),
         MultiFieldPanel(
             [
                 FieldPanel("header_with_title"),
@@ -113,11 +91,14 @@ class SitesFacilesBasePage(Page):
                     "header_cta_buttons",
                     heading=_("Call-to-action buttons"),
                 ),
-                FieldPanel("header_cta_label"),
-                FieldPanel("header_cta_link"),
             ],
             heading=_("Header options"),
         ),
+        FieldPanel("body", heading=_("Body")),
+    ]
+
+    promote_panels = [
+        MultiFieldPanel(Page.promote_panels, _("Common page configuration")),
     ]
 
     search_fields = Page.search_fields + [
@@ -136,8 +117,6 @@ class SitesFacilesBasePage(Page):
         APIField("header_darken"),
         APIField("header_cta_text"),
         APIField("header_cta_buttons"),
-        APIField("header_cta_label"),
-        APIField("header_cta_link"),
         APIField("public_child_pages"),
     ]
 
