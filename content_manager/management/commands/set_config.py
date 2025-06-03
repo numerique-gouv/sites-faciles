@@ -2,8 +2,8 @@ import json
 from os.path import isfile
 
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand
-from wagtail.models import Group
 
 from content_manager.models import CmsDsfrConfig
 from content_manager.utils import get_default_site
