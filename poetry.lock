@@ -751,21 +751,6 @@ django-widget-tweaks = ">=1.4.12,<2.0.0"
 requests = ">=2.26.0,<3.0.0"
 
 [[package]]
-name = "django-extensions"
-version = "3.2.3"
-description = "Extensions for Django"
-optional = false
-python-versions = ">=3.6"
-groups = ["dev"]
-files = [
-    {file = "django-extensions-3.2.3.tar.gz", hash = "sha256:44d27919d04e23b3f40231c4ab7af4e61ce832ef46d610cc650d53e68328410a"},
-    {file = "django_extensions-3.2.3-py3-none-any.whl", hash = "sha256:9600b7562f79a92cbf1fde6403c04fee314608fefbb595502e34383ae8203401"},
-]
-
-[package.dependencies]
-Django = ">=3.2"
-
-[[package]]
 name = "django-filter"
 version = "25.1"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
@@ -2760,4 +2745,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.10"
-content-hash = "aad7d33ca8cf56075b40c27fea9350cb0020cbf34ba70970d7f4859bad1c2bf6"
+content-hash = "47bd671cb8959a337f0a6aa79beb8d1544488b9de3d81a1952a6f61a7e739ecb"
