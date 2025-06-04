@@ -11,15 +11,12 @@ def migrate_obsolete_fields(apps, schema_editor):
 
     pages = chain(EventsIndexPage.objects.all(), EventEntryPage.objects.all())
 
-    for live_page in pages:
-        if not live_page.header_cta_label and not live_page.header_cta_link:
+    for page in pages:
+        if not page.header_cta_label and not page.header_cta_link:
             continue
 
-        if live_page.header_cta_buttons:
+        if page.header_cta_buttons:
             continue
-
-        page = live_page.get_latest_revision_as_object()
-        original_last_published = page.last_published_at
 
         button_block = (
             "button",
@@ -33,17 +30,7 @@ def migrate_obsolete_fields(apps, schema_editor):
         )
 
         page.header_cta_buttons = [("buttons", [button_block])]
-
-        # Save a revision and publish it
-        revision = page.save_revision()
-
-        if live_page.live:
-            revision.publish()
-
-        # Reset the last publication date to avoid indexing errors based on this field.
-        page.last_published_at = original_last_published
-        page.latest_revision_created_at = original_last_published
-        page.save(update_fields=["last_published_at", "latest_revision_created_at"])
+        page.save()
 
 
 class Migration(migrations.Migration):
