@@ -31,7 +31,7 @@ class Command(BaseCommand):
         if not slugs:
             # Only run the script on a new site or for specific slugs
             if Page.objects.last().id > 2:
-                self.stdout.write("The site appears to already have pages, so this script won't run without params.")
+                self.stdout.write(self.style.NOTICE("The site appears to already have pages, so this script won't run without params."))
                 self.stdout.write("Please run this script on a new site, or with the 'slug' parameter.")
                 return
 
