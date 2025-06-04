@@ -202,7 +202,7 @@ WAGTAIL_I18N_ENABLED = True
 
 WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
     ("en", "English"),
-    ("fr", "French"),
+    ("fr", "Français"),
 ]
 
 LOCALE_PATHS = ["locale"]
