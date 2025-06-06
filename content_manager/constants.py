@@ -8,8 +8,6 @@ HEADER_FIELDS = [
     "header_darken",
     "header_cta_text",
     "header_cta_buttons",
-    "header_cta_label",
-    "header_cta_link",
 ]
 
 BUTTON_TYPE_CHOICES = (

@@ -17,8 +17,7 @@ ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite", "contact"]
 
 class Command(BaseCommand):
     help = """
-    Creates a series of starter pages, in order to avoid new sites having only a
-    blank "Welcome to Wagtail" page.
+    Creates a series of starter pages, in order to avoid new sites having only a blank "Welcome to Wagtail" page.
     """
 
     def add_arguments(self, parser):
@@ -27,14 +26,26 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
-        pictograms_exist = Image.objects.filter(title__contains="Pictogrammes DSFR").count()
-        if not pictograms_exist:
-            call_command("import_dsfr_pictograms")
-
         slugs = kwargs.get("slug")
 
         if not slugs:
+            # Only run the script on a new site or for specific slugs
+            if Page.objects.last().id > 2:
+                self.stdout.write(
+                    self.style.NOTICE(
+                        "The site appears to already have pages, so this script won't run without params."
+                    )
+                )
+                self.stdout.write(
+                    self.style.NOTICE("Please run this script on a new site, or with the 'slug' parameter.")
+                )
+                return
+
             slugs = ALL_ALLOWED_SLUGS
+
+        pictograms_exist = Image.objects.filter(title__contains="Pictogrammes DSFR").count()
+        if not pictograms_exist:
+            call_command("import_dsfr_pictograms")
 
         for slug in slugs:
             if slug == "home":

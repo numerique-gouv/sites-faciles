@@ -1,6 +1,5 @@
 from django import forms
 from django.db import models
-from django.template.response import TemplateResponse
 from django.utils.translation import gettext_lazy as _
 from dsfr.forms import DsfrDjangoTemplates
 from dsfr.utils import dsfr_input_class_attr
@@ -11,6 +10,8 @@ from wagtail.contrib.forms.forms import BaseForm, FormBuilder
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from wagtail.fields import RichTextField
+
+from forms.widgets import CustomEmailInputWidget
 
 
 class FormField(AbstractFormField):
@@ -33,7 +34,7 @@ class FormField(AbstractFormField):
 
     field_type = models.CharField(verbose_name=_("Field type"), max_length=16, choices=CHOICES)
 
-    class Meta:
+    class Meta(AbstractFormField.Meta):
         verbose_name = _("Form field")
         verbose_name_plural = _("Form fields")
 
@@ -64,6 +65,10 @@ class SitesFacilesFormBuilder(FormBuilder):
     def create_datetime_field(self, field, options):
         options["widget"] = forms.DateInput(attrs={"type": "datetime-local"})
         return forms.DateField(**options)
+
+    def create_email_field(self, field, options):
+        options["widget"] = CustomEmailInputWidget
+        return super().create_email_field(field, options)
 
     def get_form_class(self):
         return type("WagtailForm", (SitesFacilesCustomForm,), self.formfields)
@@ -103,18 +108,10 @@ class FormPage(AbstractEmailForm):
         verbose_name = _("Form page")
         verbose_name_plural = _("Form pages")
 
-    def serve(self, request, *args, **kwargs):
-        if request.method == "POST":
-            form = self.get_form(request.POST, request.FILES, page=self, user=request.user)
-
-            if form.is_valid():
-                form_submission = self.process_form_submission(form)
-                return self.render_landing_page(request, form_submission, *args, **kwargs)
-        else:
-            form = self.get_form(page=self, user=request.user)
-
-        context = self.get_context(request)
-        context["form"] = form
-        return TemplateResponse(request, self.get_template(request), context)
-
     form_builder = SitesFacilesFormBuilder
+
+    def all_fields_required(self):
+        """
+        Returns True if all fields in the form are mandatory.
+        """
+        return all(field.get("required", False) for field in self.form_fields.values())

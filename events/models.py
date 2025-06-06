@@ -62,7 +62,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         entries = (
             EventEntryPage.objects.descendant_of(self)
             .live()
-            .filter(event_date_start__date__gte=today)
+            .filter(event_date_end__date__gte=today)
             .order_by("event_date_start")
             .select_related("owner")
             .prefetch_related("tags", "event_categories", "date__year")
@@ -285,7 +285,13 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     event_date_end = models.DateTimeField(verbose_name=_("Event end date"), default=timezone.now)
 
     location = models.CharField(max_length=200, verbose_name=_("Location"), blank=True, null=True)
-    registration_url = models.URLField(verbose_name=_("Registration URL"), blank=True, null=True)
+    registration_url = models.URLField(
+        verbose_name=_("Registration URL"),
+        help_text=_("Max length: 2000 characters."),
+        max_length=2000,
+        blank=True,
+        null=True,
+    )
 
     authors = ParentalManyToManyField(
         "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")

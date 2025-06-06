@@ -20,6 +20,8 @@
          class="fr-tabs__panel{% if forloop.first %} fr-tabs__panel--selected{% endif %}"
          role="tabpanel"
          aria-labelledby="tabpanel-{{ block.id }}-{{ forloop.counter }}"
-         tabindex="0">{{ tab_block.value.content }}</div>
+         tabindex="0">
+      {% include "content_manager/blocks/blocks_stream.html" with stream=tab_block.value.content %}
+    </div>
   {% endfor %}
 </div>

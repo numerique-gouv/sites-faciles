@@ -32,7 +32,7 @@ class ContentPage(SitesFacilesBasePage):
     class Meta:
         verbose_name = _("Content page")
 
-    settings_panels = SitesFacilesBasePage.settings_panels + [
+    content_panels = SitesFacilesBasePage.content_panels + [
         FieldPanel("tags"),
     ]
 
@@ -313,9 +313,10 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
 
     notice_link = models.URLField(
         _("Notice link"),
+        help_text=_("Standardized consultation link at the end of the notice. Max length: 2000 characters."),
+        max_length=2000,
         default="",
         blank=True,
-        help_text=_("Standardized consultation link at the end of the notice."),
     )
 
     notice_icon_class = models.CharField(
@@ -346,7 +347,15 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name=_("Operator logo"),
+        verbose_name=_("Site logo"),
+    )
+
+    operator_logo_display = models.CharField(
+        _("Logo display"),
+        choices=[("header-footer", _("Header and Footer")), ("header-only", _("Header only"))],
+        default="header-footer",
+        blank=True,
+        max_length=20,
     )
 
     operator_logo_alt = models.CharField(
@@ -360,7 +369,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         max_digits=3,
         decimal_places=1,
         null=True,
-        default="0.0",
+        default="5.0",
         help_text=_(
             "To be adjusted according to the width of the logo.\
             Example for a vertical logo: 3.5, Example for a horizontal logo: 8."
@@ -375,6 +384,8 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
 
     newsletter_url = models.URLField(
         _("Newsletter registration URL"),
+        help_text=_("Max length: 2000 characters."),
+        max_length=2000,
         default="",
         blank=True,
     )
@@ -419,10 +430,11 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         MultiFieldPanel(
             [
                 FieldPanel("operator_logo_file"),
+                FieldPanel("operator_logo_display"),
                 FieldPanel("operator_logo_alt"),
                 FieldPanel("operator_logo_width"),
             ],
-            heading=_("Operator logo"),
+            heading=_("Site logo"),
         ),
         MultiFieldPanel(
             [
@@ -521,6 +533,8 @@ class SocialMediaItem(Orderable):
 
     url = models.URLField(
         _("URL"),
+        help_text=_("Max length: 2000 characters."),
+        max_length=2000,
         default="",
         blank=True,
     )
@@ -554,7 +568,9 @@ class MegaMenu(ClusterableModel):
         "wagtailmenus.MainMenuItem", on_delete=models.CASCADE, related_name="megamenu_parent_menu_items"
     )
     description = models.TextField(_("Description"), blank=True)
-    main_link = models.URLField(_("Main link"), blank=True, null=True)
+    main_link = models.URLField(
+        _("Main link"), help_text=_("Max length: 2000 characters."), max_length=2000, blank=True, null=True
+    )
 
     panels = [
         FieldPanel("name"),

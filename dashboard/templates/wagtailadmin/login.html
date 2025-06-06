@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% load widget_tweaks i18n static dsfr_tags wagtail_dsfr_tags %}
+
+{% block title %}
+  <title>{% translate "Connection" %} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+{% endblock title %}
+
 {% block content %}
   <div class="fr-container fr-container--fluid fr-my-md-14v">
     <div class="fr-grid-row fr-grid-row-gutters fr-grid-row--center">
@@ -60,13 +65,13 @@
                       <input type="hidden" name="next" value="{{ next|default:home_url }}" />
                       <div class="fr-input-group">
                         <label class="fr-label" for="id_username">{% translate "Username:" %}</label>
-                        {{ form.username |add_class:"fr-input" }}
+                        {{ form.username |attr:"autocomplete:username" |add_class:"fr-input" }}
                       </div>
                     </div>
                     <div class="fr-fieldset__element">
                       <div class="fr-password">
                         <label class="fr-label" for="id_password">{% translate "Password:" %}</label>
-                        {{ form.password |add_class:"fr-password__input fr-input" }}
+                        {{ form.password |attr:"autocomplete:current-password" |add_class:"fr-password__input fr-input" }}
                         <div class="fr-password__checkbox fr-checkbox-group fr-checkbox-group--sm">
                           {% translate "Show password" as show_password %}
                           <input aria-label="{{ show_password }}"
@@ -92,12 +97,10 @@
                       </div>
                     </div>
                     <div class="fr-fieldset__element">
-                      <ul class="fr-btns-group">
-                        <li>
-                          {% translate "Connect" as connect_label %}
-                          <input class="fr-btn" type="submit" value="{{ connect_label }}" />
-                        </li>
-                      </ul>
+                      <div class="fr-btns-group">
+                        {% translate "Connect" as connect_label %}
+                        <input class="fr-btn" type="submit" value="{{ connect_label }}" />
+                      </div>
                     </div>
                   </fieldset>
                 </form>
@@ -109,6 +112,7 @@
     </div>
   </div>
 {% endblock content %}
+
 {% block extra_css %}
   <link rel="stylesheet"
         href="{% static 'dsfr/dist/utility/utility.min.css' %}">

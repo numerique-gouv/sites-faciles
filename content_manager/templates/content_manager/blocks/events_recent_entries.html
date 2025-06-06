@@ -109,9 +109,7 @@
       <p>{% translate "No article found." %}</p>
     {% endfor %}
   </div>
-  <ul class="fr-btns-group fr-btns-group--inline-sm fr-btns-group--center">
-    <li>
-      <a class="fr-btn" href="{% pageurl value.index_page %}">{% translate "See all events" %}</a>
-    </li>
-  </ul>
+  <div class="fr-btns-group fr-btns-group--inline-sm fr-btns-group--center">
+    <a class="fr-btn" href="{% pageurl value.index_page %}">{% translate "See all events" %}</a>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 FROM python:3.13
-
+ARG CONTAINER_PORT=8000
 EXPOSE ${CONTAINER_PORT}
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -38,9 +38,8 @@ COPY --chown=app:app . .
 
 RUN poetry run python manage.py collectstatic --no-input --ignore=*.sass
 
+RUN chown 1000:1000 -R /app
 USER app
+VOLUME [ "/app/medias" ]
 
 ENTRYPOINT ["./entrypoint.sh"]
-
-# https://stackoverflow.com/a/40454758/21676629
-CMD ["sh", "-c", "poetry run python manage.py runserver 0.0.0.0:$CONTAINER_PORT"]

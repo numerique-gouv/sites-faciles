@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-06 11:56+0100\n"
-"PO-Revision-Date: 2024-09-10 18:19+0200\n"
+"POT-Creation-Date: 2025-05-13 12:43+0200\n"
+"PO-Revision-Date: 2025-05-13 12:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -49,8 +49,7 @@ msgstr "Filtrer par source"
 
 #: events/models.py:37
 msgid "The source is the organization of the event author"
-msgstr ""
-"La source est l’organisation à laquelle appartient l’auteur de l’événement"
+msgstr "La source est l’organisation à laquelle appartient l’auteur de l’événement"
 
 #: events/models.py:49
 msgid "Show filters"
@@ -103,31 +102,35 @@ msgstr "Date de fin de l’événement"
 msgid "Location"
 msgstr "Lieu"
 
-#: events/models.py:288
+#: events/models.py:289
 msgid "Registration URL"
 msgstr "Lien d’inscription"
 
-#: events/models.py:291
+#: events/models.py:290
+msgid "Max length: 2000 characters."
+msgstr "Longueur maximum : 2000 caractères."
+
+#: events/models.py:297
 msgid "Author entries can be created in Snippets > Persons"
 msgstr "Les auteurs peuvent être créés via Fragments > Personnes"
 
-#: events/models.py:320
+#: events/models.py:326
 msgid "Event date and place"
 msgstr "Date et lieu de l’événement"
 
-#: events/models.py:332
+#: events/models.py:338
 msgid "Scheduled publishing"
 msgstr "Publication programmée"
 
-#: events/models.py:340
+#: events/models.py:346
 msgid "Tags and Categories"
 msgstr "Étiquettes et Catégories"
 
-#: events/models.py:408
+#: events/models.py:414
 msgid "Event page"
 msgstr "Page d’événement"
 
-#: events/models.py:416
+#: events/models.py:422
 msgid "Category"
 msgstr "Catégorie"
 
@@ -151,7 +154,7 @@ msgstr "Lieu :"
 msgid "Registration link:"
 msgstr "Lien d’inscription :"
 
-#: events/templates/events/event_entry_page.html:139
+#: events/templates/events/event_entry_page.html:138
 #: events/templates/events/events_index_page.html:147
 msgid "Add to your calendar (iCal)"
 msgstr "Ajouter à votre calendrier (iCal)"
