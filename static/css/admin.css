@@ -46,3 +46,12 @@
 [aria-expanded='false'] + .w-panel__heading .c-sf-block__type {
   display: inline !important;
 }
+
+/** CUSTOM CLASSES FOR WAGTAIL ADMIN **/ 
+
+.sf-panel .w-summary {
+    display:flex;
+    align-items: center; 
+    gap: 1em;
+}
+
