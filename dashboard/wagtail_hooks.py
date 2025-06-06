@@ -1,14 +1,12 @@
-from django.contrib.admin.utils import quote
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.html import escape, format_html
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
-from wagtail.admin.ui.components import Component
-from wagtail.models import Site
 from wagtail.rich_text import LinkHandler
+
+from .views import WelcomePanel
 
 
 @hooks.register("insert_global_admin_css")
@@ -57,36 +55,36 @@ def add_page_api_link_item(request, items, page):
     return items.append(UserbarPageAPILinkItem())
 
 
-class MainLinksPanel(Component):
-    order = 50
+# class MainLinksPanel(Component):
+#     order = 50
 
-    def render_html(self, parent_context):
-        site = Site.objects.filter(is_default_site=True).first()
-        home_page = site.root_page
-        home_page_edit = reverse("wagtailadmin_pages:edit", args=(quote(home_page.pk),))
+#     def render_html(self, parent_context):
+#         site = Site.objects.filter(is_default_site=True).first()
+#         home_page = site.root_page
+#         home_page_edit = reverse("wagtailadmin_pages:edit", args=(quote(home_page.pk),))
 
-        pages_list = reverse("wagtailadmin_explore", args=(quote(home_page.pk),))
+#         pages_list = reverse("wagtailadmin_explore", args=(quote(home_page.pk),))
 
-        return mark_safe(
-            f"""<section class="panel">
-                <ul>
-                    <li>
-                        <a href="{home_page_edit}">{_("Edit home page")}</a>
-                    </li>
-                    <li>
-                        <a href="{pages_list}">{_("See pages")}</a>
-                    </li>
-                    <li>
-                        <a href="/cms-admin/users/">{_("Manage users")}</a>
-                    </li>
-                </ul>
-            </section>"""
-        )
+#         return mark_safe(
+#             f"""<section class="panel">
+# <ul>
+#     <li>
+#         <a href="{home_page_edit}">{_("Edit home page")}</a>
+#     </li>
+#     <li>
+#         <a href="{pages_list}">{_("See pages")}</a>
+#     </li>
+#     <li>
+#         <a href="/cms-admin/users/">{_("Manage users")}</a>
+#     </li>
+# </ul>
+#             </section>"""
+#         )
 
 
-@hooks.register("construct_homepage_panels")
-def add_main_links_panel(request, panels):
-    panels.append(MainLinksPanel())
+# @hooks.register("construct_homepage_panels")
+# def add_main_links_panel(request, panels):
+#     panels.append(MainLinksPanel())
 
 
 class NewWindowExternalLinkHandler(LinkHandler):
@@ -105,3 +103,13 @@ class NewWindowExternalLinkHandler(LinkHandler):
 @hooks.register("register_rich_text_features")
 def register_external_link(features):
     features.register_link_type(NewWindowExternalLinkHandler)
+
+
+@hooks.register("construct_homepage_summary_items")
+def remove_all_summary_items(request, items):
+    items.clear()
+
+
+@hooks.register("construct_homepage_panels")
+def add_another_welcome_panel(request, panels):
+    panels.append(WelcomePanel())
