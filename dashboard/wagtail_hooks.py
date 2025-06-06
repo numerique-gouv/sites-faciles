@@ -55,38 +55,6 @@ def add_page_api_link_item(request, items, page):
     return items.append(UserbarPageAPILinkItem())
 
 
-# class MainLinksPanel(Component):
-#     order = 50
-
-#     def render_html(self, parent_context):
-#         site = Site.objects.filter(is_default_site=True).first()
-#         home_page = site.root_page
-#         home_page_edit = reverse("wagtailadmin_pages:edit", args=(quote(home_page.pk),))
-
-#         pages_list = reverse("wagtailadmin_explore", args=(quote(home_page.pk),))
-
-#         return mark_safe(
-#             f"""<section class="panel">
-# <ul>
-#     <li>
-#         <a href="{home_page_edit}">{_("Edit home page")}</a>
-#     </li>
-#     <li>
-#         <a href="{pages_list}">{_("See pages")}</a>
-#     </li>
-#     <li>
-#         <a href="/cms-admin/users/">{_("Manage users")}</a>
-#     </li>
-# </ul>
-#             </section>"""
-#         )
-
-
-# @hooks.register("construct_homepage_panels")
-# def add_main_links_panel(request, panels):
-#     panels.append(MainLinksPanel())
-
-
 class NewWindowExternalLinkHandler(LinkHandler):
     identifier = "external"
 

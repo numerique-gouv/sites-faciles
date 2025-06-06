@@ -6,7 +6,7 @@ from wagtail.models import Site
 
 
 class WelcomePanel(Component):
-    order = 10
+    order = 50
 
     def get_context_data(self, parent_content=None):
         site = Site.objects.filter(is_default_site=True).first()
@@ -25,7 +25,7 @@ class WelcomePanel(Component):
             "main_menus": main_menus,
         }
 
-    template_name = "./wagtailadmin/panels/welcome.html"
+    template_name = "./wagtailadmin/panels/main_links.html"
 
 
 my_welcome_panel = WelcomePanel()
