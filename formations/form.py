@@ -64,3 +64,13 @@ class FormationsFilterForm(forms.Form):
         ),
         required=False,
     )
+
+    search = forms.CharField(
+        label="Rechercher par mot-clé",
+        widget=forms.TextInput(
+            attrs={
+                "class": "fr-input",
+            }
+        ),
+        required=False,
+    )

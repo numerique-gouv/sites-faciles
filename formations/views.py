@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.views.generic.list import ListView
 
 from formations.form import FormationsFilterForm
@@ -46,5 +47,13 @@ class FormationsListView(ListView):
             attendance = form.cleaned_data.get("attendance")
             if attendance:
                 qs = qs.filter(attendance=attendance)
+
+            search = form.cleaned_data.get("search")
+            if search:
+                qs = qs.filter(
+                    Q(name__icontains=search)
+                    | Q(short_description__icontains=search)
+                    | Q(knowledge_at_the_end__icontains=search)
+                )
 
         return qs

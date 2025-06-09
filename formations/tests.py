@@ -150,3 +150,31 @@ class FormationsTest(TestCase):
         self.assertContains(response, formation_with_attendance_online.name)
         self.assertNotContains(response, formation_with_attendance_presential.name)
         self.assertNotContains(response, formation_without_attendance.name)
+
+    def test_view_formations_list_search_filter(self):
+        # create 3 formations with matching name, short description and knowledge at the end
+        formation_with_name_matching = FormationPageFactory(name="Formation matching")
+        formation_with_short_description_matching = FormationPageFactory(short_description="Formation matching")
+        formation_with_knowledge_at_the_end_matching = FormationPageFactory(knowledge_at_the_end="Formation matching")
+        # create other formation with no matching name, short description and knowledge at the end
+        formation_without_matching = FormationPageFactory(
+            name="Other formation", short_description="Other formation", knowledge_at_the_end="Other formation"
+        )
+
+        url = reverse("formations_list")
+
+        # no search filter
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_name_matching.name)
+        self.assertContains(response, formation_with_short_description_matching.name)
+        self.assertContains(response, formation_with_knowledge_at_the_end_matching.name)
+        self.assertContains(response, formation_without_matching.name)
+
+        # with search filter
+        response = self.client.get(url, {"search": "matching"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_name_matching.name)
+        self.assertContains(response, formation_with_short_description_matching.name)
+        self.assertContains(response, formation_with_knowledge_at_the_end_matching.name)
+        self.assertNotContains(response, formation_without_matching.name)

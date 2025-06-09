@@ -45,15 +45,25 @@
                     </div>
                 </div>
                 <div class="fr-col-12">
-                    <div class="filter-tags fr-tags-group">
-                        {% for theme in form.themes %}
-                            {{ theme.tag }}
-                            <label class="fr-tag"
-                                   for="{{ theme.id_for_label }}"
-                                   aria-pressed="{% if theme.choice_label in selected_themes %}true{% else %}false{% endif %}">
-                                {{ theme.choice_label }}
-                            </label>
-                        {% endfor %}
+                    <div class="fr-background-alt--grey fr-p-2w">
+                        <label class="fr-label">Thématique</label>
+                        <div class="filter-tags fr-tags-group fr-mt-1w">
+                            {% for theme in form.themes %}
+                                {{ theme.tag }}
+                                <label class="fr-tag"
+                                       for="{{ theme.id_for_label }}"
+                                       aria-pressed="{% if theme.choice_label in selected_themes %}true{% else %}false{% endif %}">
+                                    {{ theme.choice_label }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="fr-col-12 fr-col-lg-6">
+                    <div class="fr-input-group">
+                        {{ form.search.errors }}
+                        <label class="fr-label" for="{{ form.search.id_for_label }}">{{ form.search.label }}</label>
+                        {{ form.search }}
                     </div>
                 </div>
                 <div class="fr-col-12">
@@ -66,6 +76,8 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="fr-container fr-mb-6w">
         <div class="fr-grid-row fr-grid-row--gutters">
             {% for formation in formationpage_list %}
                 <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
