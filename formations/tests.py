@@ -25,10 +25,10 @@ class FormationsTest(TestCase):
         self.assertNotContains(response, formation_unpublished.name)
 
     def test_view_formations_list_theme_filter(self):
-        theme1 = ThemeFactory()
-        theme2 = ThemeFactory()
-        theme3 = ThemeFactory()
-        unused_theme = ThemeFactory()
+        theme1 = ThemeFactory(name="Theme 1")
+        theme2 = ThemeFactory(name="Theme 2")
+        theme3 = ThemeFactory(name="Theme 3")
+        unused_theme = ThemeFactory(name="Unused theme")
 
         formation_with_theme_1and3 = FormationPageFactory(themes=[theme1, theme3])
         formation_with_theme_2 = FormationPageFactory(themes=[theme2])
