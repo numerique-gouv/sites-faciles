@@ -59,11 +59,11 @@ class FormationsTest(TestCase):
         self.assertNotContains(response, formation_without_theme.name)
 
     def test_view_formations_list_sub_theme_filter(self):
-        sub_theme1 = SubThemeFactory()
-        sub_theme2 = SubThemeFactory()
-        sub_theme3 = SubThemeFactory()
+        sub_theme1 = SubThemeFactory(name="Sub theme 1")
+        sub_theme2 = SubThemeFactory(name="Sub theme 2")
+        sub_theme3 = SubThemeFactory(name="Sub theme 3")
         # unused sub theme
-        SubThemeFactory()
+        SubThemeFactory(name="Unused sub theme")
 
         formation_with_sub_theme_1and3 = FormationPageFactory(sub_themes=[sub_theme1, sub_theme3])
         formation_with_sub_theme_2 = FormationPageFactory(sub_themes=[sub_theme2])
