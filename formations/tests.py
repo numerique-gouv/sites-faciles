@@ -1,3 +1,6 @@
+import csv
+from io import StringIO
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -218,3 +221,91 @@ class FormationsTest(TestCase):
         self.assertContains(response, formation_with_short_description_matching.name)
         self.assertContains(response, formation_with_knowledge_at_the_end_matching.name)
         self.assertNotContains(response, formation_without_matching.name)
+
+    def test_export_csv(self):
+        # Create test data
+        theme = ThemeFactory(name="Test Theme")
+        sub_theme = SubThemeFactory(name="Test Sub Theme")
+        target_audience = TargetAudienceFactory(name="Test Audience")
+        organizer = OrganizerFactory(name="Test Organizer")
+
+        formation = FormationPageFactory(
+            name="Test Formation",
+            kind=Kind.FORMATION,
+            short_description="Test Description",
+            knowledge_at_the_end="Test Objectives",
+            duration="2h",
+            registration_link="https://campus.numerique.gouv.fr/",
+            themes=[theme],
+            sub_themes=[sub_theme],
+            target_audience=[target_audience],
+            organizers=[organizer],
+            attendance=Attendance.ENLIGNE,
+        )
+
+        # Test CSV export
+        response = self.client.get(reverse("formations_list"), {"export": "csv"})
+
+        # Check response
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "text/csv")
+        self.assertEqual(response["Content-Disposition"], 'attachment; filename="formations.csv"')
+
+        # Parse CSV content
+        csv_content = StringIO(response.content.decode("utf-8"))
+        reader = csv.reader(csv_content)
+
+        # Check headers
+        headers = next(reader)
+        expected_headers = [
+            "Intitulé",
+            "Type",
+            "Descriptif court",
+            "Objectifs",
+            "Durée",
+            "Lien d'inscription",
+            "Public cible",
+            "Thématiques",
+            "Sous-thématiques",
+            "Organisateurs",
+            "Modalité",
+        ]
+        self.assertEqual(headers, expected_headers)
+
+        # Check data
+        row = next(reader)
+        self.assertEqual(row[0], formation.name)
+        self.assertEqual(row[1], formation.get_kind_display())
+        self.assertEqual(row[2], formation.short_description)
+        self.assertEqual(row[3], formation.knowledge_at_the_end)
+        self.assertEqual(row[4], formation.duration)
+        self.assertEqual(row[5], formation.registration_link)
+        self.assertEqual(row[6], str(target_audience))
+        self.assertEqual(row[7], str(theme))
+        self.assertEqual(row[8], str(sub_theme))
+        self.assertEqual(row[9], str(organizer))
+        self.assertEqual(row[10], formation.get_attendance_display())
+
+    def test_export_csv_with_filters(self):
+        # Create test data
+        theme1 = ThemeFactory(name="Theme 1")
+        theme2 = ThemeFactory(name="Theme 2")
+
+        formation1 = FormationPageFactory(name="Formation 1", themes=[theme1])
+        # formation2 has theme2 but is not appearing in the export because of the theme filter
+        FormationPageFactory(name="Formation 2", themes=[theme2])
+
+        # Test CSV export with theme filter
+        response = self.client.get(reverse("formations_list"), {"export": "csv", "themes": [theme1.id]})
+
+        # Parse CSV content
+        csv_content = StringIO(response.content.decode("utf-8"))
+        reader = csv.reader(csv_content)
+
+        # Skip headers
+        next(reader)
+
+        # Check that only formation1 is in the export
+        rows = list(reader)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0][0], formation1.name)

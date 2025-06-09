@@ -1,4 +1,7 @@
+import csv
+
 from django.db.models import Q
+from django.http import HttpResponse
 from django.views.generic.list import ListView
 
 from formations.form import FormationsFilterForm
@@ -63,3 +66,48 @@ class FormationsListView(ListView):
                 )
 
         return qs
+
+    def get(self, request, *args, **kwargs):
+        if request.GET.get("export") == "csv":
+            return self.export_csv()
+        return super().get(request, *args, **kwargs)
+
+    def export_csv(self):
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="formations.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(
+            [
+                "Intitulé",
+                "Type",
+                "Descriptif court",
+                "Objectifs",
+                "Durée",
+                "Lien d'inscription",
+                "Public cible",
+                "Thématiques",
+                "Sous-thématiques",
+                "Organisateurs",
+                "Modalité",
+            ]
+        )
+
+        for formation in self.get_queryset():
+            writer.writerow(
+                [
+                    formation.name,
+                    formation.get_kind_display(),
+                    formation.short_description,
+                    formation.knowledge_at_the_end,
+                    formation.duration,
+                    formation.registration_link,
+                    ", ".join(str(audience) for audience in formation.target_audience.all()),
+                    ", ".join(str(theme) for theme in formation.themes.all()),
+                    ", ".join(str(sub_theme) for sub_theme in formation.sub_themes.all()),
+                    ", ".join(str(organizer) for organizer in formation.organizers.all()),
+                    formation.get_attendance_display(),
+                ]
+            )
+
+        return response

@@ -82,6 +82,10 @@
                         <button class="fr-btn fr-mr-2w" type="submit">Rechercher</button>
                         <a href="{% url 'formations_list' %}"
                            class="fr-btn fr-btn--secondary fr-mr-2w">Réinitialiser</a>
+                        <button class="fr-btn fr-btn--tertiary-no-outline fr-mr-2w"
+                                type="submit"
+                                name="export"
+                                value="csv">Exporter en CSV</button>
                         {{ formationpage_list.count }}&nbsp;formation{{ formationpage_list.count|pluralize }} trouvée{{ formationpage_list.count|pluralize }}
                     </p>
                 </div>
