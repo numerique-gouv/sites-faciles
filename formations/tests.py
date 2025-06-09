@@ -16,8 +16,8 @@ from formations.factories import (
 
 class FormationsTest(TestCase):
     def test_view_formations_list_live_page(self):
-        formation_published = FormationPageFactory()
-        formation_unpublished = FormationPageFactory(live=False)
+        formation_published = FormationPageFactory(name="Formation published")
+        formation_unpublished = FormationPageFactory(name="Formation unpublished", live=False)
 
         response = self.client.get(reverse("formations_list"))
         self.assertEqual(response.status_code, 200)
@@ -68,9 +68,11 @@ class FormationsTest(TestCase):
         # unused sub theme
         SubThemeFactory(name="Unused sub theme")
 
-        formation_with_sub_theme_1and3 = FormationPageFactory(sub_themes=[sub_theme1, sub_theme3])
-        formation_with_sub_theme_2 = FormationPageFactory(sub_themes=[sub_theme2])
-        formation_without_sub_theme = FormationPageFactory()
+        formation_with_sub_theme_1and3 = FormationPageFactory(
+            name="Formation with sub theme 1 and 3", sub_themes=[sub_theme1, sub_theme3]
+        )
+        formation_with_sub_theme_2 = FormationPageFactory(name="Formation with sub theme 2", sub_themes=[sub_theme2])
+        formation_without_sub_theme = FormationPageFactory(name="Formation without sub theme")
 
         url = reverse("formations_list")
 
@@ -96,12 +98,12 @@ class FormationsTest(TestCase):
         self.assertNotContains(response, formation_without_sub_theme.name)
 
     def test_view_formations_list_target_audience_filter(self):
-        target_audience1 = TargetAudienceFactory()
-        target_audience2 = TargetAudienceFactory()
-        target_audience3 = TargetAudienceFactory()
+        target_audience1 = TargetAudienceFactory(name="Target audience 1")
+        target_audience2 = TargetAudienceFactory(name="Target audience 2")
+        target_audience3 = TargetAudienceFactory(name="Target audience 3")
 
         # unused target audience
-        TargetAudienceFactory()
+        TargetAudienceFactory(name="Unused target audience")
 
         formation_with_target_audience_1and3 = FormationPageFactory(
             target_audience=[target_audience1, target_audience3]
@@ -126,11 +128,11 @@ class FormationsTest(TestCase):
         self.assertNotContains(response, formation_without_target_audience.name)
 
     def test_view_formations_list_organizer_filter(self):
-        organizer1 = OrganizerFactory()
-        organizer2 = OrganizerFactory()
-        organizer3 = OrganizerFactory()
+        organizer1 = OrganizerFactory(name="Organizer 1")
+        organizer2 = OrganizerFactory(name="Organizer 2")
+        organizer3 = OrganizerFactory(name="Organizer 3")
         # unused organizer
-        OrganizerFactory()
+        OrganizerFactory(name="Unused organizer")
 
         formation_with_organizer_1and3 = FormationPageFactory(organizers=[organizer1, organizer3])
         formation_with_organizer_2 = FormationPageFactory(organizers=[organizer2])
@@ -153,9 +155,9 @@ class FormationsTest(TestCase):
         self.assertNotContains(response, formation_without_organizer.name)
 
     def test_view_formations_list_kind_filter(self):
-        formation_with_kind_formation = FormationPageFactory(kind=Kind.FORMATION)
-        formation_with_kind_parcours = FormationPageFactory(kind=Kind.PARCOURS)
-        formation_without_kind = FormationPageFactory(kind=Kind.CYCLE)
+        formation_with_kind_formation = FormationPageFactory(name="Formation with kind formation", kind=Kind.FORMATION)
+        formation_with_kind_parcours = FormationPageFactory(name="Formation with kind parcours", kind=Kind.PARCOURS)
+        formation_without_kind = FormationPageFactory(name="Formation without kind", kind=Kind.CYCLE)
 
         url = reverse("formations_list")
 
@@ -174,9 +176,15 @@ class FormationsTest(TestCase):
         self.assertNotContains(response, formation_without_kind.name)
 
     def test_view_formations_list_attendance_filter(self):
-        formation_with_attendance_online = FormationPageFactory(attendance=Attendance.ENLIGNE)
-        formation_with_attendance_presential = FormationPageFactory(attendance=Attendance.PRESENTIEL)
-        formation_without_attendance = FormationPageFactory(attendance=Attendance.HYBRIDE)
+        formation_with_attendance_online = FormationPageFactory(
+            name="Formation with attendance online", attendance=Attendance.ENLIGNE
+        )
+        formation_with_attendance_presential = FormationPageFactory(
+            name="Formation with attendance presential", attendance=Attendance.PRESENTIEL
+        )
+        formation_without_attendance = FormationPageFactory(
+            name="Formation without attendance", attendance=Attendance.HYBRIDE
+        )
 
         url = reverse("formations_list")
 
