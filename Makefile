@@ -108,7 +108,7 @@ test:
 
 .PHONY: test-unit
 test-unit:
-	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --settings config.settings_test
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --settings config.settings_test formations
 
 .PHONY: import_domain_whitelist
 import_domain_whitelist:
