@@ -6,7 +6,7 @@ from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 from wagtail.rich_text import LinkHandler
 
-from .views import WelcomePanel
+from .views import ShortcutsPanel, TutorialsPanel
 
 
 @hooks.register("insert_global_admin_css")
@@ -79,5 +79,6 @@ def remove_all_summary_items(request, items):
 
 
 @hooks.register("construct_homepage_panels")
-def add_another_welcome_panel(request, panels):
-    panels.append(WelcomePanel())
+def add_shortcuts_panel(request, panels):
+    panels.append(ShortcutsPanel())
+    panels.append(TutorialsPanel())

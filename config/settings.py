@@ -49,6 +49,7 @@ TESTING = "test" in sys.argv
 # Application definition
 
 INSTALLED_APPS = [
+    # The order is important for overriding templates and using contexts, please change it carefully.
     "storages",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -60,7 +61,6 @@ INSTALLED_APPS = [
     "wagtail.users",
     "wagtail.documents",
     "wagtail.images",
-    "wagtail.admin",
     "wagtail.search",
     "wagtail.snippets",
     "wagtail",
@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     "events",
     "forms",
     "dashboard",
+    "wagtail.admin",
 ]
 
 # Only add these on a dev machine, outside of tests
