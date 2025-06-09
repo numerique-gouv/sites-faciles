@@ -1,6 +1,6 @@
 from django import forms
 
-from formations.models import Organizer, TargetAudience, Theme
+from formations.models import Organizer, SubTheme, TargetAudience, Theme
 from formations.enums import Attendance, Kind
 
 
@@ -8,6 +8,18 @@ class FormationsFilterForm(forms.Form):
     themes = forms.ModelMultipleChoiceField(
         label="Thématiques",
         queryset=Theme.objects.filter(formationpage__isnull=False).distinct(),
+        widget=forms.CheckboxSelectMultiple(
+            attrs={
+                "class": "form-checkbox fr-input vh",
+                "onchange": "this.form.submit()",
+            }
+        ),
+        required=False,
+    )
+
+    sub_themes = forms.ModelMultipleChoiceField(
+        label="Sous-thématiques",
+        queryset=SubTheme.objects.filter(formationpage__isnull=False).distinct(),
         widget=forms.CheckboxSelectMultiple(
             attrs={
                 "class": "form-checkbox fr-input vh",

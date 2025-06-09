@@ -57,6 +57,17 @@
                                 </label>
                             {% endfor %}
                         </div>
+                        <label class="fr-label fr-label--sm">Sous-thématique</label>
+                        <div class="filter-tags fr-tags-group fr-mt-1w">
+                            {% for sub_theme in form.sub_themes %}
+                                {{ sub_theme.tag }}
+                                <label class="fr-tag fr-tag--sm"
+                                       for="{{ sub_theme.id_for_label }}"
+                                       aria-pressed="{% if sub_theme.choice_label in selected_sub_themes %}true{% else %}false{% endif %}">
+                                    {{ sub_theme.choice_label }}
+                                </label>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <div class="fr-col-12 fr-col-lg-6">
@@ -90,6 +101,13 @@
                                             {% for theme in formation.themes.all %}
                                                 <li>
                                                     <p class="fr-tag">{{ theme }}</p>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                        <ul class="fr-tags-group">
+                                            {% for sub_theme in formation.sub_themes.all %}
+                                                <li>
+                                                    <p class="fr-tag fr-tag--sm">{{ sub_theme }}</p>
                                                 </li>
                                             {% endfor %}
                                         </ul>
