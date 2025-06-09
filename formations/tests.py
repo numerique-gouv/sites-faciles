@@ -6,8 +6,8 @@ from formations.factories import (
     FormationPageFactory,
     OrganizerFactory,
     SubThemeFactory,
-    ThemeFactory,
     TargetAudienceFactory,
+    ThemeFactory,
 )
 
 
@@ -62,7 +62,8 @@ class FormationsTest(TestCase):
         sub_theme1 = SubThemeFactory()
         sub_theme2 = SubThemeFactory()
         sub_theme3 = SubThemeFactory()
-        unused_sub_theme = SubThemeFactory()
+        # unused sub theme
+        SubThemeFactory()
 
         formation_with_sub_theme_1and3 = FormationPageFactory(sub_themes=[sub_theme1, sub_theme3])
         formation_with_sub_theme_2 = FormationPageFactory(sub_themes=[sub_theme2])

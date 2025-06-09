@@ -1,7 +1,7 @@
 from django import forms
 
-from formations.models import Organizer, SubTheme, TargetAudience, Theme
 from formations.enums import Attendance, Kind
+from formations.models import Organizer, SubTheme, TargetAudience, Theme
 
 
 class FormationsFilterForm(forms.Form):

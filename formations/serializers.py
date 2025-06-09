@@ -1,5 +1,5 @@
-from pyairtable import Api
 from django.conf import settings
+from pyairtable import Api
 from rest_framework import serializers
 from wagtail_airtable.serializers import AirtableSerializer
 
