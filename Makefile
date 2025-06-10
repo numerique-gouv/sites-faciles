@@ -100,7 +100,7 @@ runserver:
 
 .PHONY: shell
 shell:
-	$(EXEC_CMD) $(POETRY_CMD) python manage.py shell
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py shell_plus
 
 .PHONY: test
 test:
