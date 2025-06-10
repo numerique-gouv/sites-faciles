@@ -39,6 +39,8 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", 
 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
+HOST_PORT = os.getenv("HOST_PORT", "")
+FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "") or None
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -106,7 +108,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Only add this on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
@@ -246,10 +251,10 @@ else:
     STORAGES["default"] = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     }
-    MEDIA_URL = "medias/"
+    MEDIA_URL = os.getenv("MEDIA_URL", "/medias/")
     MEDIA_ROOT = os.path.join(BASE_DIR, os.getenv("MEDIA_ROOT", ""))
 
-STATIC_URL = "static/"
+STATIC_URL = os.getenv("STATIC_URL", "/static/")
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
@@ -267,16 +272,18 @@ WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Sites faciles")
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = f"{HOST_PROTO}://{HOST_URL}"
-
-HOST_PORT = os.getenv("HOST_PORT", "")
-if HOST_PORT != "":
+if HOST_PORT:
     WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
+
+if FORCE_SCRIPT_NAME:
+    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}{FORCE_SCRIPT_NAME}"
 WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 WAGTAILADMIN_PATH = os.getenv("WAGTAILADMIN_PATH", "cms-admin/")
 
-WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL = f"/{WAGTAILADMIN_PATH}login/"
-LOGOUT_URL = f"/{WAGTAILADMIN_PATH}logout/"
+LOGIN_URL = f"{FORCE_SCRIPT_NAME or ''}/{WAGTAILADMIN_PATH}login/"
+LOGOUT_URL = f"{FORCE_SCRIPT_NAME or ''}/{WAGTAILADMIN_PATH}logout/"
+WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 
 WAGTAIL_PASSWORD_REQUIRED_TEMPLATE = "content_manager/password_required.html"
 
@@ -362,8 +369,8 @@ OIDC_REDIRECT_ALLOWED_HOSTS = ALLOWED_HOSTS
 PROCONNECT_USER_CREATION_FILTER = os.getenv("PROCONNECT_USER_CREATION_FILTER", None)
 LASUITE_DOMAINE_API_KEY = os.getenv("LASUITE_DOMAINE_API_KEY", None)
 
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = f"{FORCE_SCRIPT_NAME or ''}/"
+LOGOUT_REDIRECT_URL = f"{FORCE_SCRIPT_NAME or ''}/"
 
 if PROCONNECT_ACTIVATED:
     INSTALLED_APPS += [
@@ -381,4 +388,31 @@ if PROCONNECT_ACTIVATED:
 # CSRF
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
-    CSRF_TRUSTED_ORIGINS.append("https://" + host)
+    if host not in ["127.0.0.1", "localhost", ".localhost"]:
+        # Pour les URLs avec port
+        if ":" in HOST_URL and HOST_URL != "localhost":
+            CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{HOST_URL}")
+        else:
+            CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}")
+            if HOST_PORT:
+                CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}:{HOST_PORT}")
+
+# Si on utilise un sous-répertoire, s'assurer que STATIC_URL est correct
+if FORCE_SCRIPT_NAME and not STATIC_URL.startswith(FORCE_SCRIPT_NAME):
+    STATIC_URL = f"{FORCE_SCRIPT_NAME}/static/"
+
+# Configuration des médias avec le bon préfixe
+if FORCE_SCRIPT_NAME and not MEDIA_URL.startswith(FORCE_SCRIPT_NAME):
+    MEDIA_URL = f"{FORCE_SCRIPT_NAME}/medias/"
+
+# Permettre à Django de servir les fichiers statiques même en production
+# quand on est derrière un reverse proxy Kubernetes
+WHITENOISE_STATIC_PREFIX = STATIC_URL
+
+# Configuration pour servir les fichiers statiques avec le bon préfixe
+if FORCE_SCRIPT_NAME:
+    # En production avec reverse proxy, on doit parfois servir nous-mêmes les statiques
+    import mimetypes
+
+    mimetypes.add_type("application/javascript", ".js", True)
+    mimetypes.add_type("text/css", ".css", True)
