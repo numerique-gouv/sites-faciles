@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: content_manager/abstract.py:28
 msgid "Show title in header image?"
@@ -1146,8 +1146,8 @@ msgid ""
 "Institution brand as defined on <a href=\"https://www.info.gouv.fr/marque-de-"
 "letat/le-bloc-marque\">official page</a>."
 msgstr ""
-"Nom de l’institution tel que défini sur la <a href=\"https://"
-"www.info.gouv.fr/marque-de-letat/le-bloc-marque\">page officielle</a>."
+"Nom de l’institution tel que défini sur la <a href=\"https://www.info.gouv."
+"fr/marque-de-letat/le-bloc-marque\">page officielle</a>."
 
 #: content_manager/models.py:253
 msgid "Institution with line break (header)"
@@ -1195,8 +1195,8 @@ msgid ""
 "design.gouv.fr/composants-et-modeles/composants/bandeau-d-information-"
 "importante/\">documentation</a>."
 msgstr ""
-"L’usage de ce bandeau est strictement encadré, voir la <a href=\"https://"
-"www.systeme-de-design.gouv.fr/composants-et-modeles/composants/bandeau-d-"
+"L’usage de ce bandeau est strictement encadré, voir la <a href=\"https://www."
+"systeme-de-design.gouv.fr/composants-et-modeles/composants/bandeau-d-"
 "information-importante/\">documentation</a>."
 
 #: content_manager/models.py:315
@@ -1502,6 +1502,14 @@ msgstr "Voir sur le site"
 #: content_manager/templates/content_manager/catalog_index_page.html:78
 msgid "Filters"
 msgstr "Filtres"
+
+#: content_manager/templates/content_manager/menus/mega_menu.html:7
+msgid "Close"
+msgstr "Fermer"
+
+#: content_manager/templates/content_manager/menus/mega_menu.html:15
+msgid "See the whole section"
+msgstr "Voir toute la rubrique"
 
 #: content_manager/templates/content_manager/password_required.html:5
 #: content_manager/templates/content_manager/password_required.html:15
