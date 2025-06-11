@@ -1,0 +1,36 @@
+{% load wagtailcore_tags %}
+{% load i18n wagtailadmin_tags %}
+    {% panel id="tutorials" heading=_("Tutorials") classname="w-panel--dashboard" %}
+        <table class="listing listing--dashboard">
+            <col width="33%"/>
+            <col width="33%"/>
+            <col width="33%"/>
+            <thead class="w-sr-only">
+                <tr>
+                    <th>{% trans "Videos" %}</th>
+                    <th>{% trans "Videos" %}</th>
+                    <th>{% trans "Videos" %}</th>
+                    <th aria-hidden="true">{% comment %} added for visual alignment only {% endcomment %}</th>
+                </tr>
+            </thead>
+           <tbody>
+    {% for element in context %}
+        {% if forloop.first or forloop.counter0|divisibleby:3 %}
+            <tr>
+        {% endif %}
+
+        <td>
+            <div class="title"><a href="{{ element.url}}" title={{ element.title }}>
+            <img src="/static/artwork/screenshot_tutorial.png"/>
+            {{ element.title }}</a></div>
+            <span>Tutorial {{ forloop.counter }} of {{ context|length }}</span>
+            
+        </td>
+
+        {% if forloop.counter|divisibleby:3 %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+</tbody>
+        </table>
+    {% endpanel %}

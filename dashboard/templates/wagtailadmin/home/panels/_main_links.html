@@ -1,0 +1,44 @@
+
+{% load wagtailcore_tags %}
+{% load i18n wagtailadmin_tags %}
+    {% panel id="main-links" heading=site classname="w-panel--dashboard" %}
+        <table class="listing listing--dashboard">
+            <col width="50%"/>
+            <col width="50%"/>
+            <thead class="w-sr-only">
+                <tr>
+                    <th>{% trans "Links" %}</th>
+                    <th>{% trans "Links" %}</th>
+                    <th aria-hidden="true">{% comment %} added for visual alignment only {% endcomment %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                   <tr>
+                            <td class="sf-panel title">
+                                <div class="w-summary">
+                                    {% icon name="edit" classname="icon" %}
+                                        <a href="{{ home_page_edit }}" title="{% trans 'Edit home page' %}"> {% trans "Edit home page" %}</a>
+                                </div>
+                                 <div class="w-summary">
+                                    {% icon name="doc-empty-inverse" classname="icon" %}
+                                        <a href="{{ pages_list }}" title="{% trans 'Show all pages' %}"> {% trans "Show all pages" %}</a>
+                                </div>
+                                  <div class="w-summary">
+                                    {% icon name="circle-plus" classname="icon" %}
+                                        <a href="{{ create_page }}" title="{% trans 'Create new page' %}"> {% trans "Create new page" %}</a>
+                                </div>
+                            </td>
+                             <td class="sf-panel title">
+                                <!-- <div class="w-summary">
+                                    {% icon name="bars" classname="icon" %}
+                                        <a href="{{ main_menus }}" title="{% trans 'Manage main menu' %}"> {% trans "Manage main menu" %}</a>
+                                </div> -->
+                               <div class="w-summary">
+                                    {% icon name="cog" classname="icon" %}
+                                        <a href="{{ settings_url }}" title="{% trans 'Configure my site' %}"> {% trans "Configure my site" %}</a>
+                                </div>
+                            </td>
+                            </tr>
+            </tbody>
+        </table>
+    {% endpanel %}

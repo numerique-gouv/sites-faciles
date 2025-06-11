@@ -43,11 +43,7 @@ class TutorialsPanel(Component):
         tutorials = response["items"]
         context = []
         for tuto in tutorials:
-            context.append(
-                {
-                    "title": tuto["title"],
-                }
-            )
+            context.append({"title": tuto["title"], "url": tuto["meta"]["html_url"]})
         return {"context": context}
 
     template_name = "wagtailadmin/home/panels/_tutorials.html"
