@@ -1,0 +1,43 @@
+{% extends "wagtailcore/shared/block_preview.html" %}
+{% load static dsfr_tags i18n %}
+
+{% block css %}
+  {{ block.super }}
+  {% dsfr_css %}
+  <link href="{% static 'dsfr/dist/utility/utility.min.css' %}"
+        rel="stylesheet"
+        type="text/css" />
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block content %}
+  <div class="fr-container cmsfr-block-text_cta">
+    <div class="fr-col-12 fr-col-sm cmsfr-block-text-and-cta">
+      <p data-block-key="tcou0">
+        {% translate "A rich text paragraph, that can contain <strong>formatting</strong>." %}
+      </p>
+      <div>
+        <ul class="fr-btns-group fr-btns-group--inline-lg ">
+          <li>
+            <a class="fr-btn"
+               href="https://sites.beta.gouv.fr"
+               target="_blank"
+               rel="noopener external">{% translate "Primary button" %} <span class="fr-sr-only">{% translate "Opens a new window" %}</span></a>
+          </li>
+
+          <li>
+            <a class="fr-btn fr-btn--secondary"
+               href="https://sites.beta.gouv.fr"
+               target="_blank"
+               rel="noopener external">{% translate "Secondary button" %} <span class="fr-sr-only">{% translate "Opens a new window" %}</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+  {{ block.super }}
+  {% dsfr_js %}
+{% endblock js %}
