@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "sites-faciles.fullname" . }}-migrate
+  labels:
+    app.kubernetes.io/name: {{ include "sites-faciles.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["sh", "-c"]
+          args:
+            - |
+              python manage.py migrate &&
+              python manage.py collectstatic --noinput
+          env:
+            - name: DATABASE_NAME
+              value: {{ .Values.env.DATABASE_NAME | quote }}
+            - name: DATABASE_USER
+              value: {{ .Values.env.DATABASE_USER | quote }}
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "sites-faciles.fullname" . }}-secret
+                  key: DATABASE_PASSWORD
+            - name: DATABASE_HOST
+              value: {{ .Values.env.DATABASE_HOST | quote }}
+            - name: DATABASE_PORT
+              value: {{ .Values.env.DATABASE_PORT | quote }}
