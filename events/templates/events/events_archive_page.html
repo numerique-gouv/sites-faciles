@@ -31,11 +31,14 @@
         content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
   <meta name="twitter:description" content="{{ page.search_description }}" />
 
-  {% if page.header_image %}
+  {% if page.preview_image or page.header_image %}
     <meta name="twitter:card" content="summary_large_image" />
     {% image page.header_image fill-1200x627 as header_image %}
-    <meta property="og:image" content="{{ header_image.full_url }}" />
-    <meta name="twitter:image" content="{{ header_image.full_url }}" />
+    {% image page.preview_image fill-1200x627 as preview_image %}
+    {% with preview_image|default:header_image as og_img %}
+    <meta property="og:image" content="{{ og_img.full_url }}" />
+    <meta name="twitter:image" content="{{ og_img.full_url }}" />
+    {% endwith %}
   {% else %}
     <meta name="twitter:card" content="summary" />
   {% endif %}
