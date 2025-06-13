@@ -79,6 +79,16 @@ class SitesFacilesBasePage(Page):
         blank=True,
     )
 
+    preview_image = models.ForeignKey(
+        get_image_model_string(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("Preview image"),
+        help_text=_("Image displayed as a preview when the page is shared on social media"),
+    )
+
     content_panels = Page.content_panels + [
         MultiFieldPanel(
             [
@@ -98,8 +108,10 @@ class SitesFacilesBasePage(Page):
         FieldPanel("body", heading=_("Body")),
     ]
 
+    configuration_field_panels = list(Page.promote_panels) + [FieldPanel("preview_image")]
+
     promote_panels = [
-        MultiFieldPanel(Page.promote_panels, _("Common page configuration")),
+        MultiFieldPanel(configuration_field_panels, _("Common page configuration")),
     ]
 
     search_fields = Page.search_fields + [
@@ -119,6 +131,8 @@ class SitesFacilesBasePage(Page):
         APIField("header_cta_text"),
         APIField("header_cta_buttons"),
         APIField("public_child_pages"),
+        APIField("preview_image"),
+        APIField("preview_image_render", serializer=ImageRenditionField("fill-1200x627", source="preview_image")),
     ]
 
     @property
