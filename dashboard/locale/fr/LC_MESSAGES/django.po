@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-16 18:31+0200\n"
+"POT-Creation-Date: 2025-06-16 18:39+0200\n"
 "PO-Revision-Date: 2025-06-16 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -124,8 +124,14 @@ msgid "Videos"
 msgstr "Vidéos"
 
 #: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:32
-msgid "Tutorial {{ forloop.counter }} of {{ context|length }}"
-msgstr "Tutoriel {{ forloop.counter }} sur {{ context|length }}"
+#, fuzzy
+#| msgid "Tutorials"
+msgid "Tutorial"
+msgstr "Tutoriels"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:32
+msgid "of"
+msgstr ""
 
 #: dashboard/templates/wagtailadmin/login.html:5
 #: dashboard/templates/wagtailadmin/login.html:15
@@ -205,3 +211,6 @@ msgstr "Voir la page dans l’API"
 #: dashboard/wagtail_hooks.py:66
 msgid "(Opens a new window)"
 msgstr "(Ouvre une nouvelle fenêtre)"
+
+#~ msgid "Tutorial {{ forloop.counter }} of {{ context|length }}"
+#~ msgstr "Tutoriel {{ forloop.counter }} sur {{ context|length }}"

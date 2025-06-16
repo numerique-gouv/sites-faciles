@@ -8,9 +8,9 @@
             <col width="33%"/>
             <thead class="w-sr-only">
                 <tr>
-                    <th>{% trans "Videos" %}</th>
-                    <th>{% trans "Videos" %}</th>
-                    <th>{% trans "Videos" %}</th>
+                    <th>{% translate "Videos" %}</th>
+                    <th>{% translate "Videos" %}</th>
+                    <th>{% translate "Videos" %}</th>
                     <th aria-hidden="true">{% comment %} added for visual alignment only {% endcomment %}</th>
                 </tr>
             </thead>
@@ -28,7 +28,7 @@
             </div>
             {{ element.title }}
             </a>
-            <span>{% trans "Tutorial {{ forloop.counter }} of {{ context|length }}" %}</span>
+            <span>{% translate "Tutorial" %} {{ forloop.counter }}{% translate "of" %} {{ context|length }}" </span>
             </div>
         </td>
 
