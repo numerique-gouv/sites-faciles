@@ -54,3 +54,14 @@
     align-items: center; 
     gap: 1em;
 }
+
+.sf-placeholder-wrapper {
+    width: 350px;
+    height: 200px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;  
+    border-radius: 5px;
+}

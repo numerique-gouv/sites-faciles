@@ -1,4 +1,5 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags static %}
+
 {% load i18n wagtailadmin_tags %}
     {% panel id="tutorials" heading=_("Tutorials") classname="w-panel--dashboard" %}
         <table class="listing listing--dashboard">
@@ -21,7 +22,9 @@
 
         <td>
             <div class="title"><a href="{{ element.url}}" title={{ element.title }}>
-            <img src="/static/artwork/screenshot_tutorial.png"/>
+            <div class="sf-placeholder-wrapper">
+                 <img src="{% static 'artwork/video.svg' %}" alt="Video icon">
+            </div>
             {{ element.title }}</a></div>
             <span>Tutorial {{ forloop.counter }} of {{ context|length }}</span>
             

@@ -6,6 +6,7 @@ from django.contrib.admin.utils import quote
 from django.urls import reverse
 from wagtail.admin.ui.components import Component
 from wagtail.models import Site
+from wagtailmenus.models import MainMenu
 
 
 class ShortcutsPanel(Component):
@@ -18,14 +19,15 @@ class ShortcutsPanel(Component):
         pages_list = reverse("wagtailadmin_explore", args=(quote(home_page.pk),))
         create_page_url = reverse("wagtailadmin_pages:add_subpage", args=(home_page.pk,))
         settings_url = reverse("wagtailsettings:edit", args=["content_manager", "cmsdsfrconfig", site.pk])
-        # main_menus = reverse("wagtailmenus:mainmenu_edit", args=[1])
+        main_menu = MainMenu.objects.filter(site=site).first()
+        main_menu_url = f"/cms-admin/wagtailmenus/mainmenu/edit/{main_menu.pk}/"
         return {
             "site": site,
             "home_page_edit": home_page_edit,
             "pages_list": pages_list,
             "create_page": create_page_url,
             "settings_url": settings_url,
-            # "main_menus": main_menus,
+            "main_menus": main_menu_url,
         }
 
     template_name = "wagtailadmin/home/panels/_main_links.html"
