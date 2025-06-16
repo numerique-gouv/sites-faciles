@@ -122,7 +122,7 @@ class SitesFacilesBasePage(Page):
     api_fields = [
         APIField("body"),
         APIField("header_image"),
-        APIField("header_image_render", serializer=ImageRenditionField("fill-1200x627", source="header_image")),
+        APIField("header_image_render", serializer=ImageRenditionField("fill-1200x630", source="header_image")),
         APIField("header_image_thumbnail", serializer=ImageRenditionField("fill-376x211", source="header_image")),
         APIField("header_with_title"),
         APIField("header_color_class"),
@@ -132,7 +132,7 @@ class SitesFacilesBasePage(Page):
         APIField("header_cta_buttons"),
         APIField("public_child_pages"),
         APIField("preview_image"),
-        APIField("preview_image_render", serializer=ImageRenditionField("fill-1200x627", source="preview_image")),
+        APIField("preview_image_render", serializer=ImageRenditionField("fill-1200x630", source="preview_image")),
     ]
 
     @property
