@@ -31,15 +31,7 @@
   <meta name="twitter:title"
         content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
   <meta name="twitter:description" content="{{ page.search_description }}" />
-
-  {% if page.header_image %}
-    <meta name="twitter:card" content="summary_large_image" />
-    {% image page.header_image fill-1200x627 as header_image %}
-    <meta property="og:image" content="{{ header_image.full_url }}" />
-    <meta name="twitter:image" content="{{ header_image.full_url }}" />
-  {% else %}
-    <meta name="twitter:card" content="summary" />
-  {% endif %}
+  {% include "blocks/socialmedia_preview_image.html" %}
 {% endblock social_media %}
 
 {% block content %}
