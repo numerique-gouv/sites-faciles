@@ -30,9 +30,9 @@ class FormationsTest(TestCase):
         theme3 = ThemeFactory(name="Theme 3")
         unused_theme = ThemeFactory(name="Unused theme")
 
-        formation_with_theme_1and3 = FormationPageFactory(themes=[theme1, theme3])
-        formation_with_theme_2 = FormationPageFactory(themes=[theme2])
-        formation_without_theme = FormationPageFactory()
+        formation_with_theme_1and3 = FormationPageFactory(name="Formation with theme 1 and 3", themes=[theme1, theme3])
+        formation_with_theme_2 = FormationPageFactory(name="Formation with theme 2", themes=[theme2])
+        formation_without_theme = FormationPageFactory(name="Formation without theme")
 
         url = reverse("formations_list")
 
@@ -83,18 +83,11 @@ class FormationsTest(TestCase):
         self.assertContains(response, formation_with_sub_theme_2.name)
         self.assertContains(response, formation_without_sub_theme.name)
 
-        # one sub theme filter
-        response = self.client.get(url, {"sub_themes": [sub_theme1.id]})
+        # sub theme filter
+        response = self.client.get(url, {"sub_themes": sub_theme1.id})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, formation_with_sub_theme_1and3.name)
         self.assertNotContains(response, formation_with_sub_theme_2.name)
-        self.assertNotContains(response, formation_without_sub_theme.name)
-
-        # two sub theme filters
-        response = self.client.get(url, {"sub_themes": [sub_theme1.id, sub_theme2.id]})
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, formation_with_sub_theme_1and3.name)
-        self.assertContains(response, formation_with_sub_theme_2.name)
         self.assertNotContains(response, formation_without_sub_theme.name)
 
     def test_view_formations_list_target_audience_filter(self):

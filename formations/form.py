@@ -17,12 +17,12 @@ class FormationsFilterForm(forms.Form):
         required=False,
     )
 
-    sub_themes = forms.ModelMultipleChoiceField(
+    sub_themes = forms.ModelChoiceField(
         label="Sous-thématiques",
         queryset=SubTheme.objects.filter(formationpage__isnull=False).distinct(),
-        widget=forms.CheckboxSelectMultiple(
+        widget=forms.Select(
             attrs={
-                "class": "form-checkbox fr-input vh",
+                "class": "fr-select",
                 "onchange": "this.form.submit()",
             }
         ),

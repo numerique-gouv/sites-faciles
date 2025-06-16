@@ -16,17 +16,14 @@ class FormationsListView(ListView):
 
         form = FormationsFilterForm(self.request.GET or None)
         selected_themes = []
-        selected_sub_themes = []
         if form.is_valid():
             selected_themes = form.cleaned_data.get("themes", [])
-            selected_sub_themes = form.cleaned_data.get("sub_themes", [])
 
         context["breadcrumb_data"] = {"current": "Catalogue"}
         context["form"] = form
 
         # to put the right "aria-pressed" attributes on label
         context["selected_themes"] = {theme.name for theme in selected_themes}
-        context["selected_sub_themes"] = {sub_theme.name for sub_theme in selected_sub_themes}
         return context
 
     def get_queryset(self):
@@ -37,9 +34,9 @@ class FormationsListView(ListView):
             if themes:
                 qs = qs.filter(themes__in=themes)
 
-            sub_themes = form.cleaned_data.get("sub_themes")
-            if sub_themes:
-                qs = qs.filter(sub_themes__in=sub_themes)
+            sub_theme = form.cleaned_data.get("sub_themes")
+            if sub_theme:
+                qs = qs.filter(sub_themes__in=[sub_theme])
 
             target_audience = form.cleaned_data.get("target_audience")
             if target_audience:
