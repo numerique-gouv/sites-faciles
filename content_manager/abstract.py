@@ -147,6 +147,10 @@ class SitesFacilesBasePage(Page):
             for child in self.get_children().live().public()
         ]
 
+    @property
+    def get_preview_image(self):
+        return self.preview_image or self.header_image
+
     def get_absolute_url(self):
         return self.url
 
