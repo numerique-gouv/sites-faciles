@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-13 17:48+0200\n"
-"PO-Revision-Date: 2025-06-13 17:49+0200\n"
+"POT-Creation-Date: 2025-06-16 16:25+0200\n"
+"PO-Revision-Date: 2025-06-16 16:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -100,11 +100,11 @@ msgstr "Corps"
 msgid "Common page configuration"
 msgstr "Configuration commune"
 
-#: content_manager/abstract.py:162
+#: content_manager/abstract.py:166
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:163
+#: content_manager/abstract.py:167
 msgid "Base pages"
 msgstr "Pages de base"
 
@@ -665,7 +665,7 @@ msgstr "Nombre d’articles"
 #: content_manager/blocks.py:946 content_manager/blocks.py:976
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:11
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:11
-#: content_manager/templates/content_manager/catalog_index_page.html:81
+#: content_manager/templates/content_manager/catalog_index_page.html:71
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
@@ -673,21 +673,21 @@ msgstr "Filtrer par catégorie"
 #: content_manager/models.py:56
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:28
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:28
-#: content_manager/templates/content_manager/catalog_index_page.html:98
+#: content_manager/templates/content_manager/catalog_index_page.html:88
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
 #: content_manager/blocks.py:948 content_manager/blocks.py:978
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:45
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:45
-#: content_manager/templates/content_manager/catalog_index_page.html:115
+#: content_manager/templates/content_manager/catalog_index_page.html:105
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
 #: content_manager/blocks.py:951 content_manager/blocks.py:981
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:60
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:60
-#: content_manager/templates/content_manager/catalog_index_page.html:130
+#: content_manager/templates/content_manager/catalog_index_page.html:120
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
@@ -1498,8 +1498,8 @@ msgstr "Groupe d’onglets"
 msgid "Watch on the site"
 msgstr "Voir sur le site"
 
-#: content_manager/templates/content_manager/catalog_index_page.html:76
-#: content_manager/templates/content_manager/catalog_index_page.html:78
+#: content_manager/templates/content_manager/catalog_index_page.html:66
+#: content_manager/templates/content_manager/catalog_index_page.html:68
 msgid "Filters"
 msgstr "Filtres"
 

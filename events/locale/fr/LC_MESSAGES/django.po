@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-13 17:48+0200\n"
-"PO-Revision-Date: 2025-05-13 12:46+0200\n"
+"POT-Creation-Date: 2025-06-16 16:25+0200\n"
+"PO-Revision-Date: 2025-06-16 16:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -31,26 +31,25 @@ msgstr "Au…"
 msgid "Events per page"
 msgstr "Événements par page"
 
-#: events/models.py:33 events/templates/events/events_index_page.html:84
+#: events/models.py:33 events/templates/events/events_index_page.html:74
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
-#: events/models.py:34 events/templates/events/events_index_page.html:101
+#: events/models.py:34 events/templates/events/events_index_page.html:91
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
-#: events/models.py:35 events/templates/events/events_index_page.html:118
+#: events/models.py:35 events/templates/events/events_index_page.html:108
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
-#: events/models.py:37 events/templates/events/events_index_page.html:133
+#: events/models.py:37 events/templates/events/events_index_page.html:123
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
 #: events/models.py:37
 msgid "The source is the organization of the event author"
-msgstr ""
-"La source est l’organisation à laquelle appartient l’auteur de l’événement"
+msgstr "La source est l’organisation à laquelle appartient l’auteur de l’événement"
 
 #: events/models.py:49
 msgid "Show filters"
@@ -139,54 +138,54 @@ msgstr "Catégorie"
 msgid "No event found."
 msgstr "Aucun événement trouvé."
 
-#: events/templates/events/event_entry_page.html:90
+#: events/templates/events/event_entry_page.html:80
 msgid "Posted by:"
 msgstr "Écrit par :"
 
-#: events/templates/events/event_entry_page.html:115
+#: events/templates/events/event_entry_page.html:105
 msgid "Date:"
 msgstr "Date :"
 
-#: events/templates/events/event_entry_page.html:118
+#: events/templates/events/event_entry_page.html:108
 msgid "Location:"
 msgstr "Lieu :"
 
-#: events/templates/events/event_entry_page.html:122
+#: events/templates/events/event_entry_page.html:112
 msgid "Registration link:"
 msgstr "Lien d’inscription :"
 
-#: events/templates/events/event_entry_page.html:141
-#: events/templates/events/events_index_page.html:150
+#: events/templates/events/event_entry_page.html:131
+#: events/templates/events/events_index_page.html:140
 msgid "Add to your calendar (iCal)"
 msgstr "Ajouter à votre calendrier (iCal)"
 
-#: events/templates/events/events_archive_page.html:74
-#: events/templates/events/events_index_page.html:74
+#: events/templates/events/events_archive_page.html:64
+#: events/templates/events/events_index_page.html:64
 msgid "Filters"
 msgstr "Filtres"
 
-#: events/templates/events/events_archive_page.html:76
-#: events/templates/events/events_index_page.html:76
+#: events/templates/events/events_archive_page.html:66
+#: events/templates/events/events_index_page.html:66
 msgid "Filters and export"
 msgstr "Filtres et export"
 
-#: events/templates/events/events_archive_page.html:79
+#: events/templates/events/events_archive_page.html:69
 msgid "Filter by year"
 msgstr "Filtrer par année"
 
-#: events/templates/events/events_index_page.html:78
+#: events/templates/events/events_index_page.html:68
 msgid "Filter by date"
 msgstr "Filtrer par date"
 
-#: events/templates/events/events_index_page.html:146
+#: events/templates/events/events_index_page.html:136
 msgid "Export"
 msgstr "Export"
 
-#: events/templates/events/events_index_page.html:155
+#: events/templates/events/events_index_page.html:145
 msgid "Archives"
 msgstr "Archives"
 
-#: events/templates/events/events_index_page.html:160
+#: events/templates/events/events_index_page.html:150
 msgid "See archives"
 msgstr "Voir les archives"
 
