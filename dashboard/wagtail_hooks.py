@@ -73,7 +73,7 @@ def register_external_link(features):
     features.register_link_type(NewWindowExternalLinkHandler)
 
 
-@hooks.register("construct_homepage_summary_items")
+@hooks.register("construct_homepage_summary_items", order=1)
 def remove_all_summary_items(request, items):
     items.clear()
 

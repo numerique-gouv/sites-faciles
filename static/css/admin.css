@@ -65,3 +65,17 @@
     border: 1px solid #ccc;  
     border-radius: 5px;
 }
+
+.sf-placeholder-wrapper:hover {
+    box-shadow: 0 4px 12px #0003;
+}
+
+.sf-card {
+    display:flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.sf-card .sf-placeholder-wrapper {
+    margin-bottom: 0.5em
+}

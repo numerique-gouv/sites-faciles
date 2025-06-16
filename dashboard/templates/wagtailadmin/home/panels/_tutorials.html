@@ -20,14 +20,16 @@
             <tr>
         {% endif %}
 
-        <td>
-            <div class="title"><a href="{{ element.url}}" title={{ element.title }}>
+        <td> 
+            <div class="sf-card">
+            <a href="{{ element.url}}" title={{ element.title }}>
             <div class="sf-placeholder-wrapper">
                  <img src="{% static 'artwork/video.svg' %}" alt="Video icon">
             </div>
-            {{ element.title }}</a></div>
+            {{ element.title }}
+            </a>
             <span>Tutorial {{ forloop.counter }} of {{ context|length }}</span>
-            
+            </div>
         </td>
 
         {% if forloop.counter|divisibleby:3 %}
