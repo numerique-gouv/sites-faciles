@@ -6,8 +6,8 @@ from wagtail import blocks
 from wagtail.blocks import BooleanBlock, StructValue
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.images import get_image_model
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
-from wagtail.images.models import Image
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
@@ -233,7 +233,7 @@ class BadgesListBlock(blocks.StreamBlock):
         value = [
             {
                 "badge": BadgeBlock().bind(
-                    value=BadgeBlock().to_python({"text": "New in version 1.15.0", "color": "new"})
+                    value=BadgeBlock().to_python({"text": "New in version 1.19.0", "color": "new"})
                 )
             },
             {
@@ -639,12 +639,15 @@ class ImageAndTextBlock(blocks.StructBlock):
         )
         preview_template = "content_manager/previews/common_block_preview.html"
 
-    def get_preview_value(self):
-        image = Image.objects.get(title="Illustration CMS 2")
+    @cached_property
+    def preview_image(self):
+        # Cache the image object for previews to avoid repeated queries
+        return get_image_model().objects.get(title="Illustration CMS 2")
 
+    def get_preview_value(self):
         return {
             "text": gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
-            "image": image,
+            "image": self.preview_image,
             "image_ratio": "3",
         }
 
@@ -698,12 +701,15 @@ class CenteredImageBlock(blocks.StructBlock):
         description = _("A responsive image with optional title and caption.")
         preview_template = "content_manager/previews/common_block_preview.html"
 
-    def get_preview_value(self):
-        image = Image.objects.get(title="Illustration CMS 2")
+    @cached_property
+    def preview_image(self):
+        # Cache the image object for previews to avoid repeated queries
+        return get_image_model().objects.get(title="Illustration CMS 2")
 
+    def get_preview_value(self):
         return {
             "title": _("Centered image"),
-            "image": image,
+            "image": self.preview_image,
             "caption": _("The image can have a caption."),
             "extra_classes": "fr-responsive-img fr-ratio-4x3",
         }
@@ -1101,9 +1107,18 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(
         label=_("Text"),
-        preview_value=gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
+        preview_value=gettext(
+            """
+                <p>Create a paragraph, heading, list, or other <strong>formatted text</strong>.</p>
+
+                <h2>Accessibility</h2>
+
+                <p>To ensure accessibility for people using screen readers, it is <strong>necessary</strong>
+                to provide a text alternative to the image.</p>
+                <p>This is not necessary if the image is simply illustrative.</p>"""
+        ),
         preview_template="content_manager/previews/common_block_preview.html",
-        description=_("A rich text paragraph."),
+        description=_("Create a paragraph, heading, list, or other formatted text."),
     )
     image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
@@ -1383,9 +1398,18 @@ STREAMFIELD_COMMON_BLOCKS = [
         "paragraph",
         blocks.RichTextBlock(
             label=_("Text"),
-            preview_value=gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
+            preview_value=gettext(
+                """
+                <p>Create a paragraph, heading, list, or other <strong>formatted text</strong>.</p>
+
+                <h2>Accessibility</h2>
+
+                <p>To ensure accessibility for people using screen readers, it is <strong>necessary</strong>
+                to provide a text alternative to the image.</p>
+                <p>This is not necessary if the image is simply illustrative.</p>"""
+            ),
             preview_template="content_manager/previews/common_block_preview.html",
-            description=_("A rich text paragraph."),
+            description=_("Create a paragraph, heading, list, or other formatted text."),
         ),
     ),
     ("image", CenteredImageBlock(label=_("Centered image"))),
