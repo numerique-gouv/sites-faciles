@@ -1,7 +1,7 @@
 from django import forms
 
 from formations.enums import Attendance, Kind
-from formations.models import Organizer, SubTheme, TargetAudience, Theme
+from formations.models import FormationPage, Organizer, SubTheme, TargetAudience, Theme
 
 
 class FormationsFilterForm(forms.Form):
@@ -28,6 +28,20 @@ class FormationsFilterForm(forms.Form):
         ),
         required=False,
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Get the selected themes from the form data
+        selected_themes = self.data.getlist("themes")
+
+        # Filter sub_themes based on selected themes through FormationPage
+        if selected_themes:
+            # Get FormationPages that have the selected themes
+            formation_pages_with_themes = FormationPage.objects.filter(themes__in=selected_themes)
+            # Filter sub_themes to only those that appear in these FormationPages
+            self.fields["sub_themes"].queryset = SubTheme.objects.filter(
+                formationpage__in=formation_pages_with_themes
+            ).distinct()
 
     target_audience = forms.ModelChoiceField(
         label="Public visé",

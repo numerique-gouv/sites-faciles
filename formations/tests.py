@@ -90,6 +90,47 @@ class FormationsTest(TestCase):
         self.assertNotContains(response, formation_with_sub_theme_2.name)
         self.assertNotContains(response, formation_without_sub_theme.name)
 
+    def test_view_formations_list_sub_theme_filter_with_theme_filter(self):
+        theme1 = ThemeFactory(name="Theme 1")
+        theme2 = ThemeFactory(name="Theme 2")
+        sub_theme1 = SubThemeFactory(name="Sub theme 1")
+        sub_theme2 = SubThemeFactory(name="Sub theme 2")
+        sub_theme3 = SubThemeFactory(name="Sub theme 3")
+
+        formation_with_sub_theme_1and3 = FormationPageFactory(
+            name="Formation with sub theme 1 and 3", sub_themes=[sub_theme1, sub_theme3], themes=[theme1, theme2]
+        )
+        formation_with_sub_theme_2 = FormationPageFactory(
+            name="Formation with sub theme 2", sub_themes=[sub_theme2], themes=[theme2]
+        )
+        formation_without_sub_theme = FormationPageFactory(name="Formation without sub theme", themes=[theme1, theme2])
+
+        url = reverse("formations_list")
+
+        # no theme filter
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, sub_theme1.name)
+        self.assertContains(response, sub_theme2.name)
+        self.assertContains(response, sub_theme3.name)
+        self.assertContains(response, formation_with_sub_theme_1and3.name)
+        self.assertContains(response, formation_with_sub_theme_2.name)
+        self.assertContains(response, formation_without_sub_theme.name)
+
+        # check that theme filter reduce sub theme choices
+        response = self.client.get(url, {"themes": [theme1.id]})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, sub_theme1.name)
+        self.assertNotContains(response, sub_theme2.name)
+        self.assertContains(response, sub_theme3.name)
+
+        # with theme and sub theme filter
+        response = self.client.get(url, {"themes": [theme1.id], "sub_themes": sub_theme1.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, formation_with_sub_theme_1and3.name)
+        self.assertNotContains(response, formation_with_sub_theme_2.name)
+        self.assertNotContains(response, formation_without_sub_theme.name)
+
     def test_view_formations_list_target_audience_filter(self):
         target_audience1 = TargetAudienceFactory(name="Target audience 1")
         target_audience2 = TargetAudienceFactory(name="Target audience 2")
@@ -99,10 +140,12 @@ class FormationsTest(TestCase):
         TargetAudienceFactory(name="Unused target audience")
 
         formation_with_target_audience_1and3 = FormationPageFactory(
-            target_audience=[target_audience1, target_audience3]
+            name="Formation with target audience 1 and 3", target_audience=[target_audience1, target_audience3]
         )
-        formation_with_target_audience_2 = FormationPageFactory(target_audience=[target_audience2])
-        formation_without_target_audience = FormationPageFactory()
+        formation_with_target_audience_2 = FormationPageFactory(
+            name="Formation with target audience 2", target_audience=[target_audience2]
+        )
+        formation_without_target_audience = FormationPageFactory(name="Formation without target audience")
 
         url = reverse("formations_list")
 
