@@ -77,7 +77,6 @@
     background: #f9f9f9;
 }
 
-/* Modificateur pour le logo (bordure visible) */
 .sf-card__wrapper--icon {
     border: 1px solid #ccc;
 }
