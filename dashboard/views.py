@@ -45,7 +45,7 @@ class TutorialsPanel(Component):
         tutorials = [
             {
                 "title": tutorial_page["title"],
-                "image": tutorial_page.get("meta", {}).get("preview_image_render", ""),
+                # "image": tutorial_page.get("meta", {}).get("preview_image_render", ""),
                 "url": tutorial_page["meta"]["html_url"],
             }
             for tutorial_page in response["items"]
