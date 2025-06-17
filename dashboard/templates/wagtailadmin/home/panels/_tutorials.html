@@ -15,20 +15,20 @@
                 </tr>
             </thead>
            <tbody>
-    {% for element in context %}
+    {% for tutorial in tutorials %}
         {% if forloop.first or forloop.counter0|divisibleby:3 %}
             <tr>
         {% endif %}
 
         <td> 
             <div class="sf-card">
-            <a href="{{ element.url}}" title={{ element.title }}>
+            <a href="{{ tutorial.url}}" title={{ tutorial.title }}>
             <div class="sf-placeholder-wrapper">
                  <img src="{% static 'artwork/video.svg' %}" alt="Video icon">
             </div>
-            {{ element.title }}
+            {{ tutorial.title }}
             </a>
-            <span>{% translate "Tutorial" %} {{ forloop.counter }} {% translate "of" %} {{ context|length }} </span>
+            <span>{% translate "Tutorial" %} {{ forloop.counter }} {% translate "of" %} {{ tutorials|length }} </span>
             </div>
         </td>
 
