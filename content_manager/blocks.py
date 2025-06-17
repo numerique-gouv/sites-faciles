@@ -27,6 +27,7 @@ from content_manager.constants import (
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
     MEDIA_WIDTH_CHOICES,
+    PREVIEW_LOREM_IPSUM,
     TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
@@ -233,7 +234,7 @@ class BadgesListBlock(blocks.StreamBlock):
         value = [
             {
                 "badge": BadgeBlock().bind(
-                    value=BadgeBlock().to_python({"text": "New in version 1.19.0", "color": "new"})
+                    value=BadgeBlock().to_python({"text": "New in version 1.15.0", "color": "new"})
                 )
             },
             {
@@ -1107,18 +1108,9 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 class CommonStreamBlock(blocks.StreamBlock):
     text = blocks.RichTextBlock(
         label=_("Text"),
-        preview_value=gettext(
-            """
-                <p>Create a paragraph, heading, list, or other <strong>formatted text</strong>.</p>
-
-                <h2>Accessibility</h2>
-
-                <p>To ensure accessibility for people using screen readers, it is <strong>necessary</strong>
-                to provide a text alternative to the image.</p>
-                <p>This is not necessary if the image is simply illustrative.</p>"""
-        ),
+        preview_value=PREVIEW_LOREM_IPSUM,
         preview_template="content_manager/previews/common_block_preview.html",
-        description=_("Create a paragraph, heading, list, or other formatted text."),
+        description=_("A paragraph with formatted text."),
     )
     image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
@@ -1398,18 +1390,9 @@ STREAMFIELD_COMMON_BLOCKS = [
         "paragraph",
         blocks.RichTextBlock(
             label=_("Text"),
-            preview_value=gettext(
-                """
-                <p>Create a paragraph, heading, list, or other <strong>formatted text</strong>.</p>
-
-                <h2>Accessibility</h2>
-
-                <p>To ensure accessibility for people using screen readers, it is <strong>necessary</strong>
-                to provide a text alternative to the image.</p>
-                <p>This is not necessary if the image is simply illustrative.</p>"""
-            ),
+            preview_value=PREVIEW_LOREM_IPSUM,
             preview_template="content_manager/previews/common_block_preview.html",
-            description=_("Create a paragraph, heading, list, or other formatted text."),
+            description=_("A paragraph with formatted text."),
         ),
     ),
     ("image", CenteredImageBlock(label=_("Centered image"))),
