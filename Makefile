@@ -16,32 +16,53 @@ else
 	POETRY_CMD :=
 endif
 
+MAKEFLAGS += --no-print-directory
+NO_FORMAT=\033[0m
+C_ORANGERED1=\033[38;5;202m
+
+.PHONY: deprecation-warning
+deprecation-warning:
+	@echo "${C_ORANGERED1}WARNING: this project now uses just instead of make. \
+	This recipe is obsolete and will be removed in a future major version. \
+	Please use the equivalent recipe through just.${NO_FORMAT}"
+
+.PHONY: deletion-warning
+deletion-warning:
+	@echo "${C_ORANGERED1}WARNING: this recipe is obsolete \
+	and will be removed in a future major version.${NO_FORMAT}"
+
 .PHONY: web-prompt
 web-prompt:
 	$(EXEC_CMD) bash
+	@make deletion-warning
 
 .PHONY: collectstatic
 collectstatic:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py collectstatic --noinput
+	@make deprecation-warning
 
 .PHONY: messages
 messages:
 	$(EXEC_CMD) $(POETRY_CMD) django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
 	$(EXEC_CMD) $(POETRY_CMD) django-admin makemessages -d djangojs -l fr --ignore=config --ignore=medias --ignore=staticfiles
+	@make deprecation-warning
 
 .PHONY: quality
 quality:
 	$(EXEC_CMD) ruff check .
 	$(EXEC_CMD) $(POETRY_CMD) black --check --exclude=venv .
+	@make deprecation-warning
 
 .PHONY: fix
 fix:
 	$(EXEC_CMD) ruff check . --fix
 	$(EXEC_CMD) $(POETRY_CMD) black --exclude=venv .
+	@make deletion-warning
 
 .PHONY: index
 index:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py update_index
+	@make deprecation-warning
 
 .PHONY: first-deploy
 first-deploy:
