@@ -43,7 +43,11 @@ class TutorialsPanel(Component):
         res = requests.get("https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/?child_of=107&fields=*")
         response = json.loads(res.text)
         tutorials = [
-            {"title": tutorial_page["title"], "url": tutorial_page["meta"]["html_url"]}
+            {
+                "title": tutorial_page["title"],
+                "image": tutorial_page.get("meta", {}).get("preview_image_render", ""),
+                "url": tutorial_page["meta"]["html_url"],
+            }
             for tutorial_page in response["items"]
         ]
         return {"tutorials": tutorials}

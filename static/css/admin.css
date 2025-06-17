@@ -48,34 +48,49 @@
 }
 
 /** CUSTOM CLASSES FOR WAGTAIL ADMIN **/ 
-
 .sf-panel .w-summary {
     display:flex;
     align-items: center; 
     gap: 1em;
 }
 
-.sf-placeholder-wrapper {
-    width: 350px;
-    height: 200px;
-    background: #ffffff;
+.sf-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 320px;  
+}
+
+.sf-card__wrapper {
+    height: 180px;
+    background: #fff;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #ccc;  
+    margin-bottom: 0.5em;
+    transition: box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.sf-card__wrapper:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    background: #f9f9f9;
+}
+
+/* Modificateur pour le logo (bordure visible) */
+.sf-card__wrapper--icon {
+    border: 1px solid #ccc;
+}
+
+.sf-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 5px;
+    display: block;
+    transition: transform 0.2s ease;
 }
 
-.sf-placeholder-wrapper:hover {
-    background: #f1f1f1;;
-}
-
-.sf-card {
-    display:flex;
-    flex-direction: column;
-    gap: 0.5em;
-}
-
-.sf-card .sf-placeholder-wrapper {
-    margin-bottom: 0.5em
+.sf-card__wrapper--image:hover .sf-card__image {
+    transform: scale(1.01);
 }
