@@ -13,7 +13,7 @@ default:
 
 # Other recipes
 collectstatic:
-    {{docker_cmd}} {{poetry_run}} python manage.py collectstatic --noinput --ignore=*.sass
+    {{docker_cmd}} {{poetry_run}} python manage.py collectstatic --noinput
 
 coverage app="":
     {{poetry_run}} coverage run --source='.' manage.py test {{app}}
