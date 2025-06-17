@@ -1,11 +1,12 @@
 from django import forms
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _, pgettext_lazy
+from django.utils.translation import gettext, gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
 from wagtail.blocks import BooleanBlock, StructValue
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.images import get_image_model
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
@@ -26,6 +27,7 @@ from content_manager.constants import (
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
     MEDIA_WIDTH_CHOICES,
+    PREVIEW_LOREM_IPSUM,
     TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
@@ -225,6 +227,24 @@ class BadgesListBlock(blocks.StreamBlock):
     class Meta:
         icon = "list-ul"
         template = "content_manager/blocks/badges_list.html"
+        description = _("A list of badge items")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        value = [
+            {
+                "badge": BadgeBlock().bind(
+                    value=BadgeBlock().to_python({"text": "New in version 1.15.0", "color": "new"})
+                )
+            },
+            {
+                "badge": BadgeBlock().bind(
+                    value=BadgeBlock().to_python({"text": "Experimental", "color": "pink-macaron"})
+                )
+            },
+        ]
+        print(value)
+        return value
 
 
 class TagBlock(blocks.StructBlock):
@@ -484,6 +504,15 @@ class AlertBlock(blocks.StructBlock):
     class Meta:
         icon = "info-circle"
         template = "content_manager/blocks/alert.html"
+        description = _("An alert message with the choice of the type.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        return {
+            "title": _("Alert block"),
+            "description": _("An alert message with the choice of the type."),
+            "level": "info",
+        }
 
 
 class CalloutBlock(blocks.StructBlock):
@@ -605,6 +634,24 @@ class ImageAndTextBlock(blocks.StructBlock):
         icon = "image"
         template = "content_manager/blocks/image_and_text.html"
 
+        description = _(
+            """A responsive block with an image and a paragraph that can appear side by side on desktop,
+                        or one above the other on mobile."""
+        )
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    @cached_property
+    def preview_image(self):
+        # Cache the image object for previews to avoid repeated queries
+        return get_image_model().objects.get(title="Illustration CMS 2")
+
+    def get_preview_value(self):
+        return {
+            "text": gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
+            "image": self.preview_image,
+            "image_ratio": "3",
+        }
+
 
 class CenteredImageStructValue(StructValue):
     def extra_classes(self):
@@ -643,7 +690,7 @@ class CenteredImageBlock(blocks.StructBlock):
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
         required=False,
-        default="h3",
+        default="fr-ratio-4x3",
     )
     caption = blocks.CharBlock(label=_("Caption"), required=False)
     url = blocks.URLBlock(label=_("Link"), required=False)
@@ -652,6 +699,21 @@ class CenteredImageBlock(blocks.StructBlock):
         icon = "image"
         template = "content_manager/blocks/image.html"
         value_class = CenteredImageStructValue
+        description = _("A responsive image with optional title and caption.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    @cached_property
+    def preview_image(self):
+        # Cache the image object for previews to avoid repeated queries
+        return get_image_model().objects.get(title="Illustration CMS 2")
+
+    def get_preview_value(self):
+        return {
+            "title": _("Centered image"),
+            "image": self.preview_image,
+            "caption": _("The image can have a caption."),
+            "extra_classes": "fr-responsive-img fr-ratio-4x3",
+        }
 
 
 class QuoteBlock(blocks.StructBlock):
@@ -731,6 +793,36 @@ class TextAndCTA(blocks.StructBlock):
     class Meta:
         icon = "link"
         template = "content_manager/blocks/text_and_cta.html"
+        description = _("A responsive block with a call to action.")
+        #        preview_template = "content_manager/previews/text_and_cta.html"
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        return self.to_python(
+            {
+                "text": gettext("A rich text paragraph, that can contain <strong>formatting</strong>."),
+                "cta_buttons": [
+                    {
+                        "buttons": [
+                            {
+                                "button": {
+                                    "external_url": "https://sites.beta.gouv.fr",
+                                    "text": _("A primary button"),
+                                    "button_type": "fr-btn",
+                                },
+                            },
+                            {
+                                "button": {
+                                    "external_url": "https://sites.beta.gouv.fr",
+                                    "text": _("A secondary button"),
+                                    "button_type": "fr-btn fr-btn--secondary",
+                                },
+                            },
+                        ]
+                    }
+                ],
+            }
+        )
 
 
 class TranscriptionBlock(blocks.StructBlock):
@@ -740,6 +832,18 @@ class TranscriptionBlock(blocks.StructBlock):
     class Meta:
         icon = "media"
         template = "content_manager/blocks/transcription.html"
+        description = _("A transcription of a video or audio file.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        return {
+            "title": _("Transcription block"),
+            "content": _(
+                """<p>This is an example of a transcription for a video.</p>
+                <p>This example is only two paragraphs long, but it can be as long as it is necessary.</p>
+                """
+            ),
+        }
 
 
 class VideoBlock(blocks.StructBlock):
@@ -771,6 +875,16 @@ class VideoBlock(blocks.StructBlock):
     class Meta:
         icon = "media"
         template = "content_manager/blocks/video.html"
+        description = _("A responsive video with optional title and caption, along with a transcription.")
+        preview_template = "content_manager/previews/common_block_preview.html"
+
+    def get_preview_value(self):
+        return {
+            "title": _("Video block"),
+            "url": "https://www.youtube-nocookie.com/embed/gLzXOViPX-0",
+            "caption": _("The video can have a caption."),
+            "extra_classes": "fr-ratio-4x3",
+        }
 
 
 class VerticalContactCardStructValue(blocks.StructValue):
@@ -992,7 +1106,12 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 
 ## Page structure blocks
 class CommonStreamBlock(blocks.StreamBlock):
-    text = blocks.RichTextBlock(label=_("Rich text"))
+    text = blocks.RichTextBlock(
+        label=_("Text"),
+        preview_value=PREVIEW_LOREM_IPSUM,
+        preview_template="content_manager/previews/common_block_preview.html",
+        description=_("A paragraph with formatted text."),
+    )
     image = CenteredImageBlock(label=_("Centered image"))
     imageandtext = ImageAndTextBlock(label=_("Image and text"))
     table = AdvancedTypedTableBlock(label=_("Table"))
@@ -1267,7 +1386,15 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
 
 
 STREAMFIELD_COMMON_BLOCKS = [
-    ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
+    (
+        "paragraph",
+        blocks.RichTextBlock(
+            label=_("Text"),
+            preview_value=PREVIEW_LOREM_IPSUM,
+            preview_template="content_manager/previews/common_block_preview.html",
+            description=_("A paragraph with formatted text."),
+        ),
+    ),
     ("image", CenteredImageBlock(label=_("Centered image"))),
     ("imageandtext", ImageAndTextBlock(label=_("Image and text"))),
     ("table", AdvancedTypedTableBlock(label=_("Table"))),
