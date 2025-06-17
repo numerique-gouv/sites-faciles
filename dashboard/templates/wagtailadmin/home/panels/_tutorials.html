@@ -25,11 +25,11 @@
                 <a href="{{ tutorial.url }}" title="{{ tutorial.title }}">
                     {% if tutorial.image %}
                     <div class="sf-card__wrapper sf-card__wrapper--image">
-                        <img class="sf-card__image" src="{% static 'artwork/tree-736885_1280.jpg' %}" alt="Preview image">
+                        <img class="sf-card__image" src={{ tutorial.image }} alt="Preview image">
                     </div>
                     {% else %}
                     <div class="sf-card__wrapper sf-card__wrapper--icon">
-                        <img src={{ tutorial.image }} alt="Video icon">
+                        <img src="{% static 'artwork/video.svg' %}" alt="Video icon">
                     </div>
                     {% endif %}
                         {{ tutorial.title }}
