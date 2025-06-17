@@ -1,0 +1,7 @@
+auth:
+  username: sitesfaciles
+  password: changeme
+  database: sitesfaciles_db
+primary:
+  persistence:
+    enabled: false # ou true si vous souhaitez garder les données entre les redémarrages
