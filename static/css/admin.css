@@ -47,6 +47,9 @@
   display: inline !important;
 }
 
-.form-side--preview {
+/** Overriding preview size on editing page  **/
+@media (min-width: 50em){
+    .form-side--preview {
     max-width: 600vw;
+}
 }
