@@ -46,3 +46,7 @@
 [aria-expanded='false'] + .w-panel__heading .c-sf-block__type {
   display: inline !important;
 }
+
+.form-side--preview {
+    max-width: 600vw;
+}
