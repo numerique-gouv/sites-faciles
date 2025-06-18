@@ -79,7 +79,7 @@ omit = [
 
 [tool.djlint]
 max_blank_lines = 1
-ignore = "H030,H031,H006,D018"
+ignore = "H030,H031,H006,D018,T003"
 indent = 2
 
 [tool.pyright]
