@@ -201,7 +201,7 @@ class ConfigTestCase(WagtailPageTestCase):
 class MenusTestCase(WagtailPageTestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        call_command("collectstatic", "--ignore=*.sass", interactive=False)
+        call_command("collectstatic", interactive=False)
         call_command("create_starter_pages")
 
     def setUp(self) -> None:

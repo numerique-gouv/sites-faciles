@@ -36,7 +36,7 @@ RUN poetry install --no-root
 
 COPY --chown=app:app . .
 
-RUN poetry run python manage.py collectstatic --no-input --ignore=*.sass
+RUN poetry run python manage.py collectstatic --no-input
 
 RUN chown 1000:1000 -R /app
 USER app
