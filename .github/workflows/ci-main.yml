@@ -40,16 +40,16 @@ jobs:
           cp .env.test .env
       - name: 💾 Collect static files
         run: |
-          make collectstatic
+          just collectstatic
       - name: ✨ Black & ruff
         run: |
-          make quality
+          just quality
       - name: 🤹‍ Run the unit tests
         run: |
-          make test-unit
+          just test-unit
       - name: 🎨 Deploy starter content
         run: |
-          make init
+          just init
           poetry run python manage.py create_demo_pages
         env:
           DJANGO_DEBUG: True

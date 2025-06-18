@@ -24,8 +24,8 @@ createsuperuser:
     {{poetry_run}} python manage.py createsuperuser
 
 demo:
-	just init
-	{{docker_cmd}} {{poetry_run}} python manage.py create_demo_pages
+    just init
+    {{docker_cmd}} {{poetry_run}} python manage.py create_demo_pages
 
 deploy:
     {{docker_cmd}} {{poetry_run}} python manage.py migrate
@@ -44,7 +44,7 @@ first-deploy:
     just index
 
 import_domain_whitelist:
-	{{docker_cmd}} {{poetry_run}} python manage.py import_domain_whitelist
+    {{docker_cmd}} {{poetry_run}} python manage.py import_domain_whitelist
 
 index:
     {{docker_cmd}} {{poetry_run}} python manage.py update_index
@@ -80,7 +80,7 @@ quality:
 
 alias rs := runserver
 runserver host_url=host_url host_port=host_port:
-	{{docker_cmd}} {{poetry_run}} python manage.py runserver {{host_url}}:{{host_port}}
+    {{docker_cmd}} {{poetry_run}} python manage.py runserver {{host_url}}:{{host_port}}
 
 shell:
     {{docker_cmd}} {{poetry_run}} python manage.py shell
@@ -101,4 +101,4 @@ upgrade:
     {{docker_cmd}} npm update
 
 web-prompt:
-	{{docker_cmd}} bash
+    {{docker_cmd}} bash
