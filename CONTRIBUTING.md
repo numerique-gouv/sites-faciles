@@ -10,10 +10,10 @@ cd sites-faciles
 ```
 
 ### Effectuer les tests
-Les tests unitaires peuvent être lancés avec `make test` (ou `just test`).
+Les tests unitaires peuvent être lancés avec `just test`.
 
 Cela lance les tests en parallèle pour gagner du temps, mais en cas d’échec, il est possible de les lancer
-séquentiellement via `make unittest` (ou `just unittest`)
+séquentiellement via `just unittest`
 
 Vous pouvez également générer un rapport sur la couverture de tests :
 
@@ -34,10 +34,9 @@ just coverage events
 Avant chaque mise en production, les intervenant·es sont prié·es de [passer cette liste en revue](./DOD.md).
 
 ## Commandes
-Le projet utilise `make` pour gérer le lancement de commandes, mais une migration est en cours vers `just`
-(a minima pour les commandes prenant des paramètres.)
+Le projet utilise `just` pour gérer le lancement de séries de commandes spéfiques, appelées recettes.
 
-Voir les fichiers [Makefile](./Makefile) et [justfile](./justfile) pour une liste des commandes implémentées.
+Il est possible d’avoir une liste des recettes implémentées en tapant simplement `just`.
 
 Pour les commandes Django spécifiquement, il est possible d’en obtenir la liste avec la commande
 
@@ -54,13 +53,13 @@ déterministes.
 Pour installer le projet sans les dépendances de dev :
 
 ```sh
-make init
+just init
 ```
 
 Pour installer le projet avec les dépendances de dev :
 
 ```sh
-make init-dev
+just init-dev
 ```
 
 
@@ -108,7 +107,7 @@ Le texte dans le code est en anglais et la traduction qui s'affiche sur le site 
 Pour générer la traduction dans le fichier `.po` :
 
 ```sh
-make messages
+just makemessages
 ```
 
 Django utilise une version compilée du fichier `.po`, c'est le fichier `.mo` que l'on obtient avec :
@@ -128,7 +127,7 @@ Nous utilisons `ruff` et `black` pour assurer un formatage cohérent du code sur
 Pour vérifier son code, on peut intégrer le linter adapté à son IDE et ou lancer la commande suivante :
 
 ```sh
-make quality
+just quality
 ```
 
 Pour s’assurer que cette vérification est faite de manière systématique, nous utilisons des *pre-commit hooks*.
