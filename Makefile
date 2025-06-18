@@ -73,17 +73,20 @@ first-deploy:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py create_starter_pages
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_page_templates
 	make index
+	@make deprecation-warning
 
 .PHONY: init
 init:
 	$(EXEC_CMD) poetry install --no-root --without dev
 	make first-deploy
+	@make deprecation-warning
 
 .PHONY: init-dev
 init-dev:
 	$(EXEC_CMD) poetry install --no-root
 	make first-deploy
 	$(EXEC_CMD) $(POETRY_CMD) pre-commit install
+	@make deprecation-warning
 
 .PHONY: deploy
 deploy:
@@ -92,6 +95,7 @@ deploy:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_page_templates
 	make index
+	@make deprecation-warning
 
 .PHONY: update
 update:
