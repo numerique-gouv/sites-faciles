@@ -34,7 +34,7 @@ deletion-warning:
 .PHONY: web-prompt
 web-prompt:
 	$(EXEC_CMD) bash
-	@make deletion-warning
+	@make deprecation-warning
 
 .PHONY: collectstatic
 collectstatic:
@@ -101,35 +101,42 @@ deploy:
 update:
 	$(EXEC_CMD) poetry install --no-root --without dev
 	make deploy
+	@make deprecation-warning
 
 .PHONY: upgrade
 upgrade:
 	$(EXEC_CMD) poetry update
 	$(EXEC_CMD) pre-commit autoupdate
 	$(EXEC_CMD) npm update
+	@make deprecation-warning
 
 .PHONY: demo
 demo:
 	make init
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py create_demo_pages
+	@make deprecation-warning
 
 .PHONY: runserver
 runserver:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py runserver $(HOST_URL):$(HOST_PORT)
-
+	@make deprecation-warning
 
 .PHONY: shell
 shell:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py shell
+	@make deprecation-warning
 
 .PHONY: test
 test:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --buffer --parallel --settings config.settings_test
+	@make deprecation-warning
 
 .PHONY: test-unit
 test-unit:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py test --settings config.settings_test
+	@make deprecation-warning
 
 .PHONY: import_domain_whitelist
 import_domain_whitelist:
 	$(EXEC_CMD) $(POETRY_CMD) python manage.py import_domain_whitelist
+	@make deprecation-warning
