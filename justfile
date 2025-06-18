@@ -58,6 +58,7 @@ init-dev:
     just first-deploy
     {{poetry_run}} pre-commit install
 
+
 alias messages := makemessages
 makemessages:
     {{docker_cmd}} {{poetry_run}} django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
