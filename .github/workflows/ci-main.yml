@@ -49,7 +49,7 @@ jobs:
           just quality
       - name: 🤹‍ Run the unit tests
         run: |
-          just test-unit
+          just unittest
       - name: 🎨 Deploy starter content
         run: |
           just init
