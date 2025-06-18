@@ -44,6 +44,10 @@
                             <br>
                             {% for theme in page.themes.all %}<span class="fr-tag">{{ theme }}</span>{% endfor %}
                         {% endif %}
+                        {% if page.sub_themes %}
+                            <br>
+                            {% for sub_theme in page.sub_themes.all %}<span class="fr-tag fr-tag--sm fr-mt-1w">{{ sub_theme }}</span>{% endfor %}
+                        {% endif %}
                     </p>
                     <p>
                         {% if page.target_audience %}

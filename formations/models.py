@@ -17,6 +17,18 @@ class TargetAudience(models.Model):
         return self.name
 
 
+class SubTheme(models.Model):
+    name = models.CharField("Nom", max_length=255)
+
+    class Meta:
+        verbose_name = "Sous-thématique"
+        verbose_name_plural = "Sous-thématiques"
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
 class RelatedEntity(models.Model):
     name = models.CharField("Nom", max_length=255)
     airtable_id = models.CharField("Identifiant Airtable", max_length=255)
@@ -57,6 +69,7 @@ class FormationPage(AirtableMixin, Page):
     visible = models.TextField("Visible", blank=True)
     target_audience = ParentalManyToManyField(TargetAudience, verbose_name="Public cible", blank=True)
     themes = ParentalManyToManyField(Theme, verbose_name="Familles thématiques", blank=True)
+    sub_themes = ParentalManyToManyField(SubTheme, verbose_name="Sous-thématiques", blank=True)
     organizers = ParentalManyToManyField(Organizer, verbose_name="Entités organisatrices", blank=True)
     attendance = models.CharField(
         "En ligne/Présentiel/Hybride",
@@ -82,6 +95,7 @@ class FormationPage(AirtableMixin, Page):
             "Visible": "visible",
             "Public cible": "target_audience",
             "Famille thématique": "themes",
+            "Sous thématique": "sub_themes",
             "Une formation proposée par": "organizers",
             "En ligne/Présentiel/Hybride": "attendance",
         }
@@ -109,6 +123,7 @@ class FormationPage(AirtableMixin, Page):
             "Visible": self.visible,
             "Public cible": self.target_audience,
             "Famille thématique": self.themes,
+            "Sous thématique": self.sub_themes,
             "Une formation proposée par": self.organizers,
             "En ligne/Présentiel/Hybride": self.attendance,
         }

@@ -13,61 +13,153 @@
     </div>
     <div class="fr-container fr-mb-6w">
         <div class="fr-grid-row fr-grid-row--gutters">
-            <div class="fr-col-12 ">
-                <div class="filter-tags fr-tags-group">
-                    <form action="{% url 'formations_list' %}" method="GET">
-                        {{ form.themes.errors }}
-                        {% for theme in form.themes %}
-                            {{ theme.tag }}
-                            <label class="fr-tag" for="{{ theme.id_for_label }}" aria-pressed="{% if theme.choice_label in selected_themes %}true{% else %}false{% endif %}">{{ theme.choice_label }}</label>
-                        {% endfor %}
-                    </form>
-                </div>
-            </div>
-            {% for formation in formationpage_list %}
-                <div class="fr-col-12 fr-col-sm-6 fr-col-md-4">
-                    <div class="fr-card fr-enlarge-link">
-                        <div class="fr-card__body">
-                            <div class="fr-card__content">
-                                {% if formation.themes %}
-                                    <div class="fr-card__start">
-                                        <ul class="fr-tags-group">
-                                            {% for theme in formation.themes.all %}
-                                                <li>
-                                                    <p class="fr-tag">{{ theme }}</p>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                {% endif %}
-                                <h3 class="fr-card__title">
-                                    <a href="{% pageurl formation %}">{{ formation.name }}</a>
-                                </h3>
-                                {% if formation.organizers %}
-                                    <p class="fr-card__desc">
-                                        <span class="fr-icon-hotel-fill" aria-hidden="true"></span>
-                                        {{ formation.organizers.all|join:", " }}
-                                    </p>
-                                {% endif %}
-                                <p class="fr-card__desc">
-                                    <span class="fr-icon-clipboard-line" aria-hidden="true"></span>
-                                    {{ formation.get_kind_display }} / {{ formation.get_attendance_display }}
-                                </p>
-                                <p class="fr-card__desc"></p>
+            <div class="fr-col-12 fr-col-lg-4">
+                <form action="{% url 'formations_list' %}" method="get">
+                    {% csrf_token %}
+                    <div class="fr-grid-row fr-grid-row--gutters">
+                        <div class="fr-col-12">
+                            <h2 class="fr-h6">Filtres</h2>
+                            {{ form.themes.errors }}
+                        </div>
+                        <div class="fr-col-12">
+                            <div class="fr-select-group">
+                                {{ form.target_audience.errors }}
+                                <label class="fr-label" for="{{ form.target_audience.id_for_label }}">{{ form.target_audience.label }}</label>
+                                {{ form.target_audience }}
                             </div>
                         </div>
-                        <div class="fr-card__header">
-                            <div class="fr-card__img">
-                                {% if formation.image_url %}
-                                    <img class="fr-responsive-img" src="{{ formation.image_url }}" alt="">
-                                {% else %}
-                                    <img class="fr-responsive-img" src="{% static 'images/default-formation.png' %}" alt="">
-                                {% endif %}
+                        <div class="fr-col-12">
+                            <div class="fr-select-group">
+                                {{ form.attendance.errors }}
+                                <label class="fr-label" for="{{ form.attendance.id_for_label }}">{{ form.attendance.label }}</label>
+                                {{ form.attendance }}
                             </div>
+                        </div>
+                        <div class="fr-col-12">
+                            <div class="fr-select-group">
+                                {{ form.organizer.errors }}
+                                <label class="fr-label" for="{{ form.organizer.id_for_label }}">{{ form.organizer.label }}</label>
+                                {{ form.organizer }}
+                            </div>
+                        </div>
+                        <div class="fr-col-12">
+                            <div class="fr-select-group">
+                                {{ form.kind.errors }}
+                                <label class="fr-label" for="{{ form.kind.id_for_label }}">{{ form.kind.label }}</label>
+                                {{ form.kind }}
+                            </div>
+                        </div>
+                        <div class="fr-col-12">
+                            <div class="fr-background-alt--grey fr-p-2w">
+                                <label class="fr-label">Thématique</label>
+                                <div class="filter-tags fr-tags-group fr-mt-1w">
+                                    {% for theme in form.themes %}
+                                        {{ theme.tag }}
+                                        <label class="fr-tag"
+                                               for="{{ theme.id_for_label }}"
+                                               aria-pressed="{% if theme.choice_label in selected_themes %}true{% else %}false{% endif %}">
+                                            {{ theme.choice_label }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                <div class="fr-select-group">
+                                    <label class="fr-label" for="{{ form.sub_themes.id_for_label }}">{{ form.sub_themes.label }}</label>
+                                    {{ form.sub_themes }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fr-col-12">
+                            <div class="fr-input-group">
+                                {{ form.search.errors }}
+                                <label class="fr-label" for="{{ form.search.id_for_label }}">{{ form.search.label }}</label>
+                                {{ form.search }}
+                            </div>
+                        </div>
+                        <div class="fr-col-12">
+                            <ul class="fr-btns-group">
+                                <li>
+                                    <button class="fr-btn" type="submit">Filtrer</button>
+                                </li>
+                                <li>
+                                    <a href="{% url 'formations_list' %}" class="fr-btn fr-btn--secondary">Réinitialiser</a>
+                                </li>
+                                <li>
+                                    <button class="fr-btn fr-btn--tertiary fr-mt-2w"
+                                            type="submit"
+                                            name="export"
+                                            value="csv">Exporter en CSV</button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                </form>
+            </div>
+            <div class="fr-col-12 fr-col-lg-8">
+                <div class="fr-grid-row fr-grid-row--gutters">
+                    <div class="fr-col-12">
+                        <p>
+                            {{ formationpage_list.count }}&nbsp;formation{{ formationpage_list.count|pluralize }} trouvée{{ formationpage_list.count|pluralize }}
+                        </p>
+                    </div>
+                    {% for formation in formationpage_list %}
+                        <div class="fr-col-12 fr-col-md-6">
+                            <div class="fr-card fr-enlarge-link">
+                                <div class="fr-card__body">
+                                    <div class="fr-card__content">
+                                        {% if formation.themes %}
+                                            <div class="fr-card__start">
+                                                <ul class="fr-tags-group">
+                                                    {% for theme in formation.themes.all %}
+                                                        <li>
+                                                            <p class="fr-tag">{{ theme }}</p>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                <ul class="fr-tags-group">
+                                                    {% for sub_theme in formation.sub_themes.all %}
+                                                        <li>
+                                                            <p class="fr-tag fr-tag--sm">{{ sub_theme }}</p>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                        <h3 class="fr-card__title">
+                                            <a href="{% pageurl formation %}">{{ formation.name }}</a>
+                                        </h3>
+                                        {% if formation.organizers %}
+                                            <p class="fr-card__desc">
+                                                <span class="fr-icon-hotel-fill" aria-hidden="true"></span>
+                                                {{ formation.organizers.all|join:", " }}
+                                            </p>
+                                        {% endif %}
+                                        <p class="fr-card__desc">
+                                            <span class="fr-icon-clipboard-line" aria-hidden="true"></span>
+                                            {{ formation.get_kind_display }} / {{ formation.get_attendance_display }}
+                                        </p>
+                                        <p class="fr-card__desc"></p>
+                                    </div>
+                                </div>
+                                <div class="fr-card__header">
+                                    <div class="fr-card__img">
+                                        {% if formation.image_url %}
+                                            <img class="fr-responsive-img" src="{{ formation.image_url }}" alt="">
+                                        {% else %}
+                                            <img class="fr-responsive-img"
+                                                 src="{% static 'images/default-formation.png' %}"
+                                                 alt="">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="fr-col-12">
+                            <p>Aucune formation trouvée pour ces critères.</p>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock content %}

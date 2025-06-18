@@ -1,9 +1,9 @@
-from pyairtable import Api
 from django.conf import settings
+from pyairtable import Api
 from rest_framework import serializers
 from wagtail_airtable.serializers import AirtableSerializer
 
-from formations.models import Organizer, TargetAudience, Theme
+from formations.models import Organizer, SubTheme, TargetAudience, Theme
 
 
 class LowerCharSerializer(serializers.CharField):
@@ -18,6 +18,15 @@ class TargetAudienceSerializer(serializers.RelatedField):
 
     def get_queryset(self):
         return TargetAudience.objects.all()
+
+
+class SubThemeSerializer(serializers.RelatedField):
+    def to_internal_value(self, data):
+        sub_theme, _ = SubTheme.objects.get_or_create(name=data.strip())
+        return sub_theme
+
+    def get_queryset(self):
+        return SubTheme.objects.all()
 
 
 class ThemeSerializer(serializers.RelatedField):
@@ -76,6 +85,7 @@ class FormationPageSerializer(AirtableSerializer):
     registration_link = serializers.URLField(required=False)
     target_audience = TargetAudienceSerializer(required=False, many=True)
     themes = ThemeSerializer(required=False, many=True)
+    sub_themes = SubThemeSerializer(required=False, many=True)
     organizers = OrganizerSerializer(required=False, many=True)
     image_url = serializers.URLField(required=False)
     visible = serializers.CharField(max_length=3, required=True)

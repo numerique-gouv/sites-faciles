@@ -3,7 +3,7 @@ import factory.fuzzy
 
 from content_manager.factories import ContentPageFactory
 from formations.enums import Attendance, Kind
-from formations.models import FormationPage, Organizer, TargetAudience, Theme
+from formations.models import FormationPage, Organizer, SubTheme, TargetAudience, Theme
 
 
 class TargetAudienceFactory(factory.django.DjangoModelFactory):
@@ -19,6 +19,13 @@ class ThemeFactory(factory.django.DjangoModelFactory):
 
     name = factory.Faker("sentence", nb_words=3, locale="fr_FR")
     airtable_id = factory.Faker("random_int", min=0, max=10000)
+
+
+class SubThemeFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = SubTheme
+
+    name = factory.Faker("sentence", nb_words=3, locale="fr_FR")
 
 
 class OrganizerFactory(factory.django.DjangoModelFactory):
