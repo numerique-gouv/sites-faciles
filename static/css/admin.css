@@ -48,8 +48,18 @@
 }
 
 /** Overriding preview size on editing page  **/
-@media (min-width: 50em){
-    .form-side--preview {
-    max-width: 600vw;
+@media (min-width: 50em) {
+  :root {
+    --side-panel-width: 95vw;
+  }
+
+  .form-side--preview {
+    max-width: 99vw;
+  }
 }
+
+@media screen and (min-width: 56.25em) {
+  .form-side {
+    width: var(--side-panel-width, 100%);
+  }
 }
