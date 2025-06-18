@@ -83,8 +83,6 @@ pipx ensurepath
 pipx install poetry
 ```
 
-Note : `sass` est appelé via [libsass](https://sass.github.io/libsass-python/) et il ne devrait donc pas y avoir besoin d’installer `ruby-sass`.
-
 ### Cloner le dépôt
 
 ```sh

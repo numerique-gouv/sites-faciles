@@ -1,4 +1,4 @@
-{% load i18n static dsfr_tags wagtailuserbar wagtail_dsfr_tags sass_tags %}
+{% load i18n static dsfr_tags wagtailuserbar wagtail_dsfr_tags %}
 
 <!DOCTYPE html>
 <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}"
@@ -27,9 +27,7 @@
     <link href="{% static 'dsfr/dist/utility/utility.min.css' %}"
           rel="stylesheet"
           type="text/css" />
-    <link href="{% sass_src 'css/style.sass' %}"
-          rel="stylesheet"
-          type="text/css" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
 
     {% block extra_css %}
     {% endblock extra_css %}

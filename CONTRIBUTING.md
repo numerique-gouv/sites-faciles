@@ -97,12 +97,6 @@ Le projet utilise [Le Système de design de l’État](https://www.systeme-de-de
 
 Il est donc nécessaire d’utiliser autant que possible les classes spécifiques au Système de design de l’État dans le HTML.
 
-Le CSS est écrit dans des fichiers `.sass` et compilé via la commande
-
-```sh
-make sass
-```
-
 ## Traduction : À propos des fichiers `.po` et `.mo`
 
 Ce project utilise le [système de traduction de Django](https://docs.djangoproject.com/en/dev/topics/i18n/translation/).
