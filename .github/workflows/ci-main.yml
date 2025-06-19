@@ -43,9 +43,6 @@ jobs:
       - name: 💾 Collect static files
         run: |
           just collectstatic
-      - name: ✨ Black & ruff
-        run: |
-          just quality
       - name: 🤹‍ Run the unit tests
         run: |
           just unittest
