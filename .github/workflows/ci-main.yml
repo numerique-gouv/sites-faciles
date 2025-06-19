@@ -24,32 +24,34 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: 📔 Install just
+        uses: extractions/setup-just@v2
       - name: 🐍 Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+      - name: 🐍 Set up uv
+        uses: astral-sh/setup-uv@v5
+      - uses: pre-commit/action@v3.0.1
       - name: 🌍 Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install poetry
-          pip install ruff
-          poetry install --no-root  --with dev
+          uv sync --no-group dev
       - name: 📄 Copy empty .env.test to .env
         run: |
           cp .env.test .env
       - name: 💾 Collect static files
         run: |
-          make collectstatic
+          just collectstatic
       - name: ✨ Black & ruff
         run: |
-          make quality
+          just quality
       - name: 🤹‍ Run the unit tests
         run: |
-          make test-unit
+          just unittest
       - name: 🎨 Deploy starter content
         run: |
-          make init
-          poetry run python manage.py create_demo_pages
+          just init
+          uv run python manage.py create_demo_pages
         env:
           DJANGO_DEBUG: True
