@@ -27,8 +27,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: 📔 Install just
         uses: extractions/setup-just@v2
-      - name: 🐍 Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - name: 🐍 Set up Python ${{ matrix.python-version }} with uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: 🐍 Set up uv
