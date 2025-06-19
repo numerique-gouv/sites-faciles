@@ -28,7 +28,7 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 ### En local
 #### Variables d’environnement
 
-- mettre la variable d’environnement `USE_POETRY` à `1` dans le fichier `.env`
+- mettre la variable d’environnement `USE_UV` à `1` dans le fichier `.env`
 - il est possible de configurer l’envoi des emails vers la console Django (cf. [CONTRIBUTING.md](./CONTRIBUTING.md))
 
 #### Installer le projet
@@ -44,7 +44,7 @@ just init-dev
 - La commande suivante crée un utilisateur administrateur avec tous les droits:
 
 ```
-poetry run python manage.py createsuperuser
+just createsuperuser
 ```
 
 #### Lancer le serveur
@@ -70,7 +70,7 @@ Installer :
 * [Python 3](https://www.python.org/) (normalement déjà installé sur un système moderne)
 * [git](https://git-scm.com/)
 * [pipx](https://pipx.pypa.io/stable/)
-* [poetry](https://python-poetry.org/)
+* [uv](https://docs.astral.sh/uv/)
 * [just](https://just.systems/)
 * [npm](https://docs.npmjs.com/)
 * [gettext](https://www.gnu.org/software/gettext/gettext.html)
@@ -80,7 +80,7 @@ Sous Ubuntu, la commande pour cela est :
 ```sh
 sudo apt install -y git python3 pipx just gettext
 pipx ensurepath
-pipx install poetry
+pipx install uv
 ```
 
 ### Cloner le dépôt

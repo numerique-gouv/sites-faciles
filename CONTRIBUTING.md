@@ -34,20 +34,20 @@ just coverage events
 Avant chaque mise en production, les intervenant·es sont prié·es de [passer cette liste en revue](./DOD.md).
 
 ## Commandes
-Le projet utilise `just` pour gérer le lancement de séries de commandes spéfiques, appelées recettes.
+Le projet utilise [just](https://just.systems/) pour gérer le lancement de séries de commandes spéfiques, appelées recettes.
 
 Il est possible d’avoir une liste des recettes implémentées en tapant simplement `just`.
 
 Pour les commandes Django spécifiquement, il est possible d’en obtenir la liste avec la commande
 
 ```sh
-poetry run python manage.py
+uv run python manage.py
 ```
 
 
-## Gestion des dépendances avec Poetry
+## Gestion des dépendances avec uv
 
-Le projet utilise [Poetry](https://python-poetry.org/) pour gérer les dépendances de paquets Python et produire des *builds*
+Le projet utilise [uv](https://docs.astral.sh/uv/) pour gérer les dépendances de paquets Python et produire des *builds*
 déterministes.
 
 Pour installer le projet sans les dépendances de dev :
@@ -63,16 +63,16 @@ just init-dev
 ```
 
 
-Pour installer un nouveau paquet et l'ajouter aux dépendances :
+Pour installer un nouveau paquet et l’ajouter aux dépendances :
 
 ```sh
-poetry add <paquet>
+uv add <paquet>
 ```
 
 Pour un paquet ne servant que pour le développement, par exemple `debug-toolbar` :
 
 ```sh
-poetry add <paquet> --group dev
+uv add --dev <paquet>
 ```
 
 ## Configuration locale, production
@@ -100,7 +100,7 @@ Il est donc nécessaire d’utiliser autant que possible les classes spécifique
 
 Ce project utilise le [système de traduction de Django](https://docs.djangoproject.com/en/dev/topics/i18n/translation/).
 
-Le texte dans le code est en anglais et la traduction qui s'affiche sur le site en Français, se trouve dans le fichier
+Le texte dans le code est en anglais et la traduction qui s’affiche sur le site en Français, se trouve dans le fichier
 `.po` du dossier `locales`.
 
 
@@ -110,10 +110,10 @@ Pour générer la traduction dans le fichier `.po` :
 just makemessages
 ```
 
-Django utilise une version compilée du fichier `.po`, c'est le fichier `.mo` que l'on obtient avec :
+Django utilise une version compilée du fichier `.po`, c’est le fichier `.mo` que l’on obtient avec :
 
 ```sh
-poetry run  python manage.py compilemessages
+uv run  python manage.py compilemessages
 ```
 
 Il est recommandé d’utiliser [https://poedit.net/](Poedit) pour les traductions, afin de profiter de sa mémoire de traduction
