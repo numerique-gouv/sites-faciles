@@ -1,6 +1,4 @@
-{% load wagtailcore_tags static %}
-
-{% load i18n wagtailadmin_tags %}
+{% load wagtailcore_tags static  i18n wagtailadmin_tags %}
     {% panel id="tutorials" heading=_("Tutorials") classname="w-panel--dashboard" %}
         <table class="listing listing--dashboard">
             <col width="33%"/>
@@ -15,15 +13,10 @@
                 </tr>
             </thead>
            <tbody>
-<<<<<<< HEAD
-        {% for tutorial in tutorials %}
-=======
     {% for tutorial in tutorials %}
->>>>>>> main
         {% if forloop.first or forloop.counter0|divisibleby:3 %}
             <tr>
         {% endif %}
-
         <td> 
             <div class="sf-card">
                 <a href="{{ tutorial.url }}" title="{{ tutorial.title }}">
@@ -41,11 +34,10 @@
                 <span>{% translate "Tutorial" %} {{ forloop.counter }} {% translate "of" %} {{ tutorials|length }} </span>
             </div>
         </td>
-
         {% if forloop.counter|divisibleby:3 %}
             </tr>
         {% endif %}
     {% endfor %}
-</tbody>
+        </tbody>
         </table>
     {% endpanel %}
