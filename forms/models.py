@@ -10,6 +10,7 @@ from wagtail.contrib.forms.forms import BaseForm, FormBuilder
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from wagtail.fields import RichTextField
+from wagtail_honeypot.models import HoneypotFormMixin, HoneypotFormSubmissionMixin
 
 from forms.widgets import CustomEmailInputWidget
 
@@ -74,7 +75,7 @@ class SitesFacilesFormBuilder(FormBuilder):
         return type("WagtailForm", (SitesFacilesCustomForm,), self.formfields)
 
 
-class FormPage(AbstractEmailForm):
+class FormPage(HoneypotFormMixin, HoneypotFormSubmissionMixin, AbstractEmailForm):
     intro = RichTextField(blank=True)
     thank_you_text = RichTextField(blank=True)
 
@@ -97,6 +98,15 @@ class FormPage(AbstractEmailForm):
             help_text=_("Optional, will only work if SMTP parameters have been set."),
         ),
     ]
+
+    honeypot_panels = [
+        MultiFieldPanel(
+            [FieldPanel("honeypot")],
+            heading=_("Reduce Form Spam"),
+        )
+    ]
+
+    promote_panels = AbstractEmailForm.promote_panels + honeypot_panels
 
     api_fields = [
         APIField("intro"),

@@ -1,5 +1,9 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags dsfr_tags i18n %}
+{% load wagtailcore_tags dsfr_tags i18n honeypot_tags static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/honeypot.css' %}">
+{% endblock extra_css %}
 
 {% block title %}
   <title>{{ page.seo_title|default:page.title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
@@ -36,9 +40,13 @@
       {% for field in form.visible_fields %}
         <div class="fr-fieldset__element">{% dsfr_form_field field %}</div>
       {% endfor %}
+      {% honeypot_fields page.honeypot %}
       <div class="fr-fieldset__element">
         <input class="fr-btn" type="submit" value="{{ submit_form }}" />
       </div>
     </form>
   </div>
 {% endblock content %}
+{% block extra_js %}
+<script src="{% static 'js/honeypot.js' %}"></script>
+{% endblock extra_js %}
