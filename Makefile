@@ -22,17 +22,12 @@ web-prompt:
 
 .PHONY: collectstatic
 collectstatic:
-	$(EXEC_CMD) $(POETRY_CMD) python manage.py collectstatic --noinput --ignore=*.sass
+	$(EXEC_CMD) $(POETRY_CMD) python manage.py collectstatic --noinput
 
 .PHONY: messages
 messages:
 	$(EXEC_CMD) $(POETRY_CMD) django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
 	$(EXEC_CMD) $(POETRY_CMD) django-admin makemessages -d djangojs -l fr --ignore=config --ignore=medias --ignore=staticfiles
-
-.PHONY: sass
-sass:
-	$(EXEC_CMD) $(POETRY_CMD) python manage.py compilescss
-	make collectstatic
 
 .PHONY: quality
 quality:

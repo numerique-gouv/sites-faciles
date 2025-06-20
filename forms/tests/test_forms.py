@@ -7,7 +7,7 @@ from forms.models import FormPage
 class FormsTestCase(WagtailPageTestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        call_command("collectstatic", "--ignore=*.sass", interactive=False)
+        call_command("collectstatic", interactive=False)
         call_command("create_starter_pages")
 
     def test_form_page_is_renderable(self):
@@ -50,6 +50,6 @@ class FormsTestCase(WagtailPageTestCase):
 
         self.assertRegex(
             response.content.decode(),
-            r"<li class=\"fr-error-text\">(\\n)?\s*(Champ requis|Ce champ est obligatoire)\.(\\n)?\s*<\/li>",
+            r"<li class=\"fr-error-text\">(\\n)?\s*(Ce champ est requis|Ce champ est obligatoire)\.(\\n)?\s*<\/li>",
         )
         # Updates sometimes mess with the order of the translations and so the displayed translation. Both are fine.

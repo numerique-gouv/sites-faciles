@@ -6,6 +6,8 @@ from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 from wagtail.rich_text import LinkHandler
 
+from .views import ShortcutsPanel, TutorialsPanel
+
 
 @hooks.register("insert_global_admin_css")
 def global_admin_css():
@@ -74,3 +76,14 @@ class NewWindowExternalLinkHandler(LinkHandler):
 @hooks.register("register_rich_text_features")
 def register_external_link(features):
     features.register_link_type(NewWindowExternalLinkHandler)
+
+
+@hooks.register("construct_homepage_summary_items", order=1)
+def remove_all_summary_items(request, items):
+    items.clear()
+
+
+@hooks.register("construct_homepage_panels")
+def add_shortcuts_panel(request, panels):
+    panels.append(ShortcutsPanel())
+    panels.append(TutorialsPanel())
