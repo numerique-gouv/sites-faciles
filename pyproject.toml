@@ -33,7 +33,7 @@ dependencies = [
     "faker<25.0.0,>=24.3.0",
     "rust-just (>=1.39.0,<2.0.0)",
     "mozilla-django-oidc (>=4.0.1,<5.0.0)",
-    "wagtail-honeypot @ git+https://github.com/Luzzzi/wagtail-honeypot.git",
+    "wagtail-honeypot @ git+https://github.com/Luzzzi/wagtail-honeypot.git@feature/i18n-required-honeypot",
 ]
 
 [tool.poetry]

@@ -151,6 +151,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
+HONEYPOT_ENABLED_DEFAULT = True
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
