@@ -50,11 +50,11 @@
 /** Overriding preview size on editing page  **/
 @media (min-width: 50em) {
   :root {
-    --side-panel-width: 95vw;
+    --side-panel-width: 80vw;
   }
 
   .form-side--preview {
-    max-width: 99vw;
+    max-width: 90vw;
   }
 }
 

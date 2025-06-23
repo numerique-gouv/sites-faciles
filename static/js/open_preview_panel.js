@@ -15,18 +15,26 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Déclenche l'ouverture du panneau via l’événement personnalisé "open"
     previewPanel.dispatchEvent(new CustomEvent('open'));
   }
-  // Fermer automatiquement la sidebar (userbar) si elle est ouverte
-  if (sidePanelWrapper && sidePanelWrapper.classList.contains('form-side--open')) {
-    try {
-      localStorage.setItem('wagtail:side-panel-open', '');
-    } catch (e) {}
-    // Retarde légèrement pour laisser le JS Wagtail finir d’initialiser
-    setTimeout(() => {
-      sidePanelWrapper.classList.remove('form-side--open');
-      sidePanelWrapper.removeAttribute('aria-labelledby');
-      document.querySelectorAll('[data-side-panel]').forEach(panel => {
-        panel.hidden = true;
-      });
-    }, 100);
-  }
+ 
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const isEditPage = window.location.pathname.includes('/edit/'); // ajuste au besoin
+
+  if (!isEditPage) return;
+
+  const previewPanel = document.querySelector('[data-side-panel="preview"]');
+
+  if (!previewPanel) return;
+
+  // Petite attente pour laisser React finir de monter
+  setTimeout(() => {
+    const sidebarAlreadyCollapsed = document.body.classList.contains('sidebar-collapsed');
+    const toggleButton = document.querySelector('button.sidebar__collapse-toggle');
+
+    if (!sidebarAlreadyCollapsed && toggleButton) {
+      toggleButton.click();
+      console.log('Sidebar repliée automatiquement sur page d’édition avec preview');
+    }
+  }, 300);
 });
