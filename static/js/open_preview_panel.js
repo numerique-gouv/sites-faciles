@@ -1,40 +1,31 @@
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
   const previewPanel = document.querySelector('[data-side-panel="preview"]');
 
   if (previewPanel) {
     try {
-      // Si aucune largeur n’a été enregistrée, on en définit une à 60% de la fenêtre
       if (!localStorage.getItem('wagtail:side-panel-width')) {
-        const width = Math.round(window.innerWidth * 0.6); // 60% de la fenêtre
+        const width = Math.round(window.innerWidth * 0.6); 
         localStorage.setItem('wagtail:side-panel-width', width.toString());
       }
+      if (!localStorage.getItem('wagtail:preview-panel-device')) {
+        localStorage.setItem('wagtail:preview-panel-device', "desktop");
+      }
     } catch (e) {
-      // Silencieux en cas d'erreur (quota, etc.)
     }
 
-    // Déclenche l'ouverture du panneau via l’événement personnalisé "open"
     previewPanel.dispatchEvent(new CustomEvent('open'));
-  }
- 
-});
 
-window.addEventListener('DOMContentLoaded', () => {
-  const isEditPage = window.location.pathname.includes('/edit/'); // ajuste au besoin
+    const isEditOrAddPage = /\/(edit|add)\//.test(window.location.pathname);
 
-  if (!isEditPage) return;
+    if (isEditOrAddPage) {
+      setTimeout(() => {
+        const sidebarAlreadyCollapsed = document.body.classList.contains('sidebar-collapsed');
+        const toggleButton = document.querySelector('button.sidebar__collapse-toggle');
 
-  const previewPanel = document.querySelector('[data-side-panel="preview"]');
-
-  if (!previewPanel) return;
-
-  // Petite attente pour laisser React finir de monter
-  setTimeout(() => {
-    const sidebarAlreadyCollapsed = document.body.classList.contains('sidebar-collapsed');
-    const toggleButton = document.querySelector('button.sidebar__collapse-toggle');
-
-    if (!sidebarAlreadyCollapsed && toggleButton) {
-      toggleButton.click();
-      console.log('Sidebar repliée automatiquement sur page d’édition avec preview');
+        if (!sidebarAlreadyCollapsed && toggleButton) {
+          toggleButton.click();
+        }
+      }, 300);
     }
-  }, 300);
+  }
 });
