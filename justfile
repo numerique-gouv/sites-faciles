@@ -46,7 +46,7 @@ init:
     just deploy
 
 init-dev:
-    uv sync
+    {{docker_cmd}} uv sync
     just deploy
     {{docker_cmd}} {{uv_run}} pre-commit install
 
