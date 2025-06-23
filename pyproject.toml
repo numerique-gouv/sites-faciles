@@ -1,6 +1,6 @@
 [project]
 name = "sites-faciles"
-version = "1.18.1"
+version = "2.0.0"
 description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l’État, accessible et responsive"
 authors = [
     { name = "Sébastien Reuiller", email = "sebastien.reuiller@beta.gouv.fr" },
@@ -30,36 +30,28 @@ dependencies = [
     "unidecode>=1.4.0",
     "django-storages[s3]>=1.14.6",
     "boto3==1.35.99",
-    "beautifulsoup4<5.0.0,>=4.12.3",
-    "django-taggit<6.0.0,>=5.0.1",
-    "wagtail-localize<2.0,>=1.9",
-    "icalendar<6.0.0,>=5.0.13",
-    "faker<25.0.0,>=24.3.0",
-    "rust-just (>=1.39.0,<2.0.0)",
-    "mozilla-django-oidc (>=4.0.1,<5.0.0)",
+    "beautifulsoup4>=4.13.4",
+    "django-taggit>=6.1.0",
+    "wagtail-localize>=1.12.1",
+    "icalendar>=6.3.1",
+    "faker>=37.4.0",
+    "rust-just>=1.40.0",
+    "mozilla-django-oidc>=4.0.1",
     "wagtail-honeypot @ git+https://github.com/Luzzzi/wagtail-honeypot@feature/i18n-required-honeypot",
 ]
 
-[tool.poetry]
-requires-poetry = ">=2.0"
-package-mode = false
-
-[tool.poetry.group.dev.dependencies]
-black = "^25.1.0"
-flake8 = "^7.1.2"
-isort = "^6.0.1"
-pre-commit = "^4.2.0"
-djlint = "^1.36.4"
-ipython = "^8.18.1"
-django-compressor = "^4.5.1"
-django-debug-toolbar = "^5.1.0"
-ruff = "^0.11.2"
-tblib = "^3.0.0"
-coverage = "^7.8.0"
-
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "coverage>=7.9.1",
+    "django-compressor>=4.5.1",
+    "django-debug-toolbar>=5.2.0",
+    "djlint>=1.36.4",
+    "ipython>=9.3.0",
+    "pre-commit>=4.2.0",
+    "ruff>=0.12.0",
+    "tblib>=3.1.0",
+]
 
 [tool.black]
 line-length = 119

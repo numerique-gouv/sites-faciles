@@ -1408,7 +1408,7 @@ wheels = [
 
 [[package]]
 name = "sites-faciles"
-version = "1.18.1"
+version = "1.19.0"
 source = { virtual = "." }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1428,6 +1428,7 @@ dependencies = [
     { name = "rust-just" },
     { name = "unidecode" },
     { name = "wagtail" },
+    { name = "wagtail-honeypot" },
     { name = "wagtail-localize" },
     { name = "wagtail-markdown" },
     { name = "wagtail-modeladmin" },
@@ -1466,6 +1467,7 @@ requires-dist = [
     { name = "rust-just", specifier = ">=1.40.0" },
     { name = "unidecode", specifier = ">=1.4.0" },
     { name = "wagtail", specifier = ">=7.0.1" },
+    { name = "wagtail-honeypot", git = "https://github.com/Luzzzi/wagtail-honeypot?rev=feature%2Fi18n-required-honeypot" },
     { name = "wagtail-localize", specifier = ">=1.12.1" },
     { name = "wagtail-markdown", specifier = ">=0.12.1" },
     { name = "wagtail-modeladmin", specifier = ">=2.2.0" },
@@ -1647,6 +1649,14 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/30/56/f8ed6827d4b60fa57e65c872a654bc17d9aebad64a17532c64dfa29dc6f2/wagtail-7.0.1.tar.gz", hash = "sha256:cfc5c37738f98cae380a15252f5676604f6c61554bef1a3791e34de1e703beec", size = 6671934 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a2/bd/431c4a8cec7d9bbcf2c4f373f5a1a0ba24eba343d83c23f71b89f804cd2f/wagtail-7.0.1-py3-none-any.whl", hash = "sha256:92439c50a919826a4ce8c85bdaf3ed0e436d29598bb2954b4fca5f312b969666", size = 9148787 },
+]
+
+[[package]]
+name = "wagtail-honeypot"
+version = "1.2.0"
+source = { git = "https://github.com/Luzzzi/wagtail-honeypot?rev=feature%2Fi18n-required-honeypot#39908237c320cd8a3568a9ee6bff039bc89f3b66" }
+dependencies = [
+    { name = "wagtail" },
 ]
 
 [[package]]
