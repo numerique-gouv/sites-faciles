@@ -2599,9 +2599,9 @@ development = ["black (==24.4.2)", "django-upgrade", "flake8 (==7.1.0)", "isort 
 
 [package.source]
 type = "git"
-url = "https://github.com/Luzzzi/wagtail-honeypot.git"
+url = "https://github.com/Luzzzi/wagtail-honeypot"
 reference = "feature/i18n-required-honeypot"
-resolved_reference = "47c2eab8030869c463bdfcf1547b33c23647788b"
+resolved_reference = "bacf7842dd39243adb10e6eda8e9256843c17da9"
 
 [[package]]
 name = "wagtail-localize"
@@ -2740,4 +2740,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.10"
-content-hash = "ea8537bdcd0be578ad40a8b1d57a25e1702bdaca2561f1e3cd2ed92f1f542da2"
+content-hash = "c8742332d12ed8df1c031ce4279978245c95c8873c3a8f857e47d693ca166542"
