@@ -47,6 +47,22 @@
   display: inline !important;
 }
 
+/** Overriding preview size on editing page  **/
+@media (min-width: 50em) {
+  :root {
+    --side-panel-width: 80vw;
+  }
+
+  .form-side--preview {
+    max-width: 90vw;
+  }
+}
+
+@media screen and (min-width: 56.25em) {
+  .form-side {
+    width: var(--side-panel-width, 100%);
+  }
+}
 /** CUSTOM CLASSES FOR WAGTAIL ADMIN **/ 
 .sf-panel .w-summary {
     display:flex;

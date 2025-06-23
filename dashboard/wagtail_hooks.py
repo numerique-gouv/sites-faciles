@@ -15,8 +15,15 @@ def global_admin_css():
 
 
 @hooks.register("insert_editor_js")
-def editor_js():
-    return format_html('\n<script src="{}"></script>', static("js/admin_editor.js"))
+def insert_custom_editor_scripts():
+    return format_html(
+        """
+        <script src="{}"></script>
+        <script src="{}"></script>
+        """,
+        static("js/admin_editor.js"),
+        static("js/open_preview_panel.js"),
+    )
 
 
 @hooks.register("register_admin_menu_item")
