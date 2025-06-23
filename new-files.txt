@@ -1,0 +1,4 @@
+README.md
+.github/workflows/publish.yml
+search-and-replace.csv
+do-not-touch.txt

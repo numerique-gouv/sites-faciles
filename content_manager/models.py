@@ -20,10 +20,10 @@ from wagtail.images import get_image_model_string
 from wagtail.models import Orderable
 from wagtail.snippets.models import register_snippet
 
-from content_manager.abstract import SitesFacilesBasePage
-from content_manager.constants import LIMITED_RICHTEXTFIELD_FEATURES
-from content_manager.managers import TagManager
-from content_manager.widgets import DsfrIconPickerWidget
+from sites_faciles.content_manager.abstract import SitesFacilesBasePage
+from sites_faciles.content_manager.constants import LIMITED_RICHTEXTFIELD_FEATURES
+from sites_faciles.content_manager.managers import TagManager
+from sites_faciles.content_manager.widgets import DsfrIconPickerWidget
 
 
 class ContentPage(SitesFacilesBasePage):

@@ -12,7 +12,7 @@ import content_manager.blocks
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0024_alter_socialmediaitem_options"),
+        ("sites_faciles_content_manager", "0024_alter_socialmediaitem_options"),
     ]
 
     operations = [

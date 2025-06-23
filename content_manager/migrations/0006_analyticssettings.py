@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
     dependencies = [
         ("wagtailcore", "0078_referenceindex"),
-        ("content_manager", "0005_alter_contentpage_body"),
+        ("sites_faciles_content_manager", "0005_alter_contentpage_body"),
     ]
 
     operations = [

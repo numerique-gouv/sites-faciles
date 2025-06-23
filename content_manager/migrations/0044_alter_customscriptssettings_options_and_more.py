@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0043_rename_analyticssettings_customscriptssettings"),
+        ("sites_faciles_content_manager", "0043_rename_analyticssettings_customscriptssettings"),
     ]
 
     operations = [

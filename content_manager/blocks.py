@@ -10,7 +10,7 @@ from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import (
+from sites_faciles.content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
     BUTTONS_ALIGN_CHOICES,
@@ -28,7 +28,7 @@ from content_manager.constants import (
     MEDIA_WIDTH_CHOICES,
     TEXT_SIZE_CHOICES,
 )
-from content_manager.widgets import DsfrIconPickerWidget
+from sites_faciles.content_manager.widgets import DsfrIconPickerWidget
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 

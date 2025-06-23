@@ -1,76 +1,104 @@
-# Sites Faciles
+# Sites Faciles - Expérimentation sous forme de package
 
-**Sites Faciles** vise à permettre la création simplifiée de **sites dont le domaine se termine par .gouv.fr**.
+Sites Faciles est un gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l'État, accessible et responsive.
+Développé sous forme de site Wagtail, il n'est à l'heure actuelle pas possible de l'utiliser comme dépendance d'un projet Wagtail existant.
 
-Basé sur **[Wagtail](https://wagtail.org/)**, il permet de **concevoir rapidement des sites internet conformes aux normes numériques en vigueur**.
+Le projet courant vise cet objectif.
 
-En particulier, il permet de **construire des pages à l’aide de composants** prêts à l’emploi issus du **[Système de design de l’État (DSFR)](https://www.systeme-de-design.gouv.fr/)**.
+C'est un soft-fork, au sens où aucune fonctionnalité ne sera ajoutée via Sites Faciles dans ce fork.
+Cependant une synchronisation directe des deux dépôts n'est pas possible car l'empaquetage de Sites Faciles nécessite de déplacer des fichiers, ce qui fausse la synchronisation.
 
-## Prérequis
-Sites Faciles vise à utiliser les dernières versions disponibles de [Django (5.0+)](https://www.djangoproject.com/download/) et [Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html).
+Un script de synchronisation a donc été écrit qui vise à :
+- déplacer l'arborescence dans un sous-dossier
+- namespacer tout ce qui doit l'être dans le code source de Sites Faciles
 
-Les tests automatisés couvrent les versions suivantes :
-- Python 3.10 à 3.13 (cf. [versions de Python supportées par Django](https://docs.djangoproject.com/en/5.1/faq/install/))
-- PostgreSQL 14 à 17 (cf. [versions de PostgreSQL supportées par Django](https://code.djangoproject.com/wiki/SupportedDatabaseVersions))
+---
 
-## Installation et contribution
-* Pour déployer le projet en production sur un serveur, voir la [documentation d’installation](https://sites.beta.gouv.fr/documentation/installation/)
-* Pour installer le projet en local pour le développement, voir la [documentation d’embarquement](./ONBOARDING.md)
-* Avant de soumettre une contribution, consulter la  [documentation de contribution](./CONTRIBUTING.md)
+Pour l'utilisation de Sites Faciles, voir le [README](./sites_faciles/README.md) original.
 
-## Architecture
-### Applications Django
-[![Made with Django](https://img.shields.io/badge/Made%20with-Django-0C4B33.svg)](https://www.djangoproject.com/)
-[![Made with Wagtail](https://img.shields.io/badge/Made%20with-Wagtail-0F7676.svg)](https://wagtail.io/)
+---
 
-Sites Faciles est développé en utilisant le framework [Django](https://www.djangoproject.com/) et le CMS [Wagtail](https://wagtail.org/). Il est centré autour d'une application principale nommée **content_manager**, accompagnée d’applications annexes pour divers types de pages :
+Le versionning et les tags suit de manière iso ceux de Sites Faciles.
 
-- **content_manager** : l’application principale, contient les contenus communs, les pages standard (pages de contenu), les pages d’index de catalogue et la gestion des configurations
-- **blog** : Permet de gérer des articles de blog et des index de blog, et les flux RSS correspondants.
-- **dashboard** : Contient les personnalisations des panneaux d’administration de Wagtail (dans `templates/wagtailadmin` et `wagtail_hooks.py`)
-- **[django-dsfr](https://github.com/numerique-gouv/django-dsfr)** : Permet d’utiliser facilement le [système de design de l’État](https://www.systeme-de-design.gouv.fr/) dans des templates Django.
-- **events** : Similaire à `blog`, mais permet de gérer des événements et des pages de calendrier, ainsi que les exports iCal correspondants.
-- **forms** : implémentation du [module de création de formulaire](https://docs.wagtail.org/en/stable/reference/contrib/forms/index.html) de Wagtail, par exemple pour les pages de contact. Volontairement assez limité (suffisant pour un formulaire de contact mais pas beaucoup plus), pour les cas complexes il vaut mieux privilégier l’intégration de [Démarches simplifiées](https://www.demarches-simplifiees.fr) ou de [Grist](https://grist.numerique.gouv.fr/).
-- **proconnect** : permet la connexion via [ProConnect](https://www.proconnect.gouv.fr/)
+## 🙋‍♂️ Comment tester 
 
+**Pour le tester dans un projet wagtail existant** (⚠ c'est hautement expérimental, à ne tester que sur un projet local) :
+- `poetry add sites-faciles-experiment` ou `pip install sites-faciles-experiment`
+- ajouter quelques **settings** nécessaires au bon fonctionnement du projet, à savoir 
+```py
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                # ...
+                "wagtailmenus.context_processors.wagtailmenus",
+                "sites_faciles.content_manager.context_processors.skiplinks",
+                "sites_faciles.content_manager.context_processors.mega_menus",
+            ],
+        },
+    },
+]
 
-### Structure du dépôt
-En plus des applications déjà citées, le dépôt contient les répertoires suivants :
-- **config** : le projet Django proprement dit
-- **locale** : la traduction des templates de base et du JS global du site (cf. ci-dessous.) La localisation des apps listées plus haut se fait à l’intérieur de celles-ci.
-- **static** : des fichiers statiques communs à l’ensemble du site (CSS global, JS global, quelques images intégrées par défaut) ainsi que la librairie tierce TarteaucitronJS (utilisée pour la gestion des cookies tiers)
-- **templates** : les templates de base du site.
+INSTALLED_APPS.extend(
+    [
+        "sites_faciles",
+        "sites_faciles.blog",
+        "sites_faciles.content_manager",
+        "sites_faciles.events",
+        "sass_processor",
+        "wagtail.contrib.settings",
+        "wagtail_modeladmin",
+        "wagtailmenus",
+        "wagtailmarkdown",
+    ]
+)
 
-## Schéma
-![Schéma montrant les apps listées ci-dessus ainsi que l’interconnection avec la BDD, le S3 et les services tiers (dont ProConnect)](static/doc/sites-faciles-schema.svg)
+STATICFILES_FINDERS.extend([
+    "sass_processor.finders.CssFinder",
+])
+```  
+- Éventuellement **overrider le template de base de Sites Faciles** pour utiliser directement les modèles de page proposés
+```html
+{# sites_faciles/base.html #}
 
-Schéma de l’application dans le cas d’un hébergement sur Scalingo
+{% extends "votre_wagtail_existant/base.html" %}
 
-## Indexation des contenus
-Les contenus des pages sont indexés pour la recherche par un script `python manage.py update_index` (cf. [documentation de Wagtail](https://docs.wagtail.org/en/stable/topics/search/indexing.html))
+{# Fournir un block content dans lequel les modèles de pages de sites faciles peuvent render le contenu #}
+{% block content %}{% endblock %}
+```
+- Sinon utiliser le **champ streamfield sur un modèle existant**
+```py 
+# models.py 
+from sites_faciles.content_manager.blocks import STREAMFIELD_COMMON_BLOCKS
 
-### Scalingo
-Le script est lancé automatiquement après les déploiements sur Scalingo.
+# ... 
 
-Il est recommandé de procéder à une nouvelle indexation une fois par semaine, en renommant le fichier `cron.json.example` en `cron.json` (cf. [documentation de Scalingo](https://doc.scalingo.com/platform/app/task-scheduling/scalingo-scheduler))
-
-### Autres déploiements
-Il est recommandé de faire de même pour les déploiements sur d’autres plateformes, en ajoutant une ligne à la crontab de l’utilisateur avec lequel tourne le site :
-
-```crontab
-0 3 * * SUN python manage.py update_index
+class CMSPage(Page):
+    body = StreamField(
+        STREAMFIELD_COMMON_BLOCKS,
+        blank=True,
+        use_json_field=True,
+    )
 ```
 
-## Droit d’utilisation du DSFR
+- Voir la PR en cours côté [quefairemesdechets / longue vie aux objets](https://github.com/incubateur-ademe/quefairedemesobjets/pull/1375/files) pour l'ajout de wagtail + sites faciles à un projet Django
 
-Ce projet utilise le DSFR et est donc tenu par les conditions d’utilisations suivantes :
+## 🔍 Quelques infos / observations en vrac 
 
-#### ⚠️ Utilisation interdite en dehors des sites Internet de l’État
+- On a fait une solution _quick&dirty_ pour évaluer la faisabilité, on récupère **tout** : les modèles, les templates etc
+- Idéalement il serait intéressant de pouvoir importer que le champ streamfield avec le rendering qui va bien, mais comme de nombreux blocs dépendent de `blog` et `event`, on se retrouve à devoir ajouter ces apps. Donc à voir pour rendre ça plus modulaire 
+- Il y a un certains nombres de dépendances nécessaires à Sites Faciles qui sont normalement gérées par le wagtail existant qui accueille `sites-faciles-experiment` : `gunicorn`, `dj-database-url`...
+- La dépendance à sass semble superflue, pourrait-on imaginer s'en passer ?
 
->Il est formellement interdit à tout autre acteur d’utiliser le Système de Design de l’État (les administrations territoriales ou tout autre acteur privé) pour des sites web ou des applications. Le Système de Design de l’État représente l’identité numérique de l’État. En cas d’usage à des fins trompeuses ou frauduleuses, l’État se réserve le droit d’entreprendre les actions nécessaires pour y mettre un terme.
+## ✅ Reste à faire 
 
-Voir les [conditions générales d'utilisation](https://github.com/GouvernementFR/dsfr/blob/main/doc/legal/cgu.md).
-
-#### ⚠️ Prohibited Use Outside Government Websites
-
->This Design System is only meant to be used by official French public services' websites and apps. Its main purpose is to make it easy to identify governmental websites for citizens. See terms.
+- [ ] Voir comment rendre une éventuelle refacto rétro compatible avec les sites déjà déployés
+- [ ] Rendre le streamfield de `content_manager` plus modulaire pour le rendre utilisable sans les dépendances aux apps blog et event
+- [ ] Définir le scope
+  - [ ] SSO / proconnect ? 
+  - [ ] Streamfield
+  - [ ] Modèles de page
+  - [ ] Config wagtail

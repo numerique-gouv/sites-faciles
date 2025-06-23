@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0044_alter_customscriptssettings_options_and_more"),
+        ("sites_faciles_content_manager", "0044_alter_customscriptssettings_options_and_more"),
     ]
 
     operations = [
@@ -348,7 +348,7 @@ class Migration(migrations.Migration):
                         [[("title", 23), ("description", 24), ("level", 25), ("heading_tag", 26)]],
                         {"label": "Alert message"},
                     ),
-                    28: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    28: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     29: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -679,7 +679,7 @@ class Migration(migrations.Migration):
                     ),
                     68: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     69: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -700,7 +700,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     74: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -976,7 +976,7 @@ class Migration(migrations.Migration):
                             [
                                 ("title", 1),
                                 ("heading_tag", 109),
-                                ("blog", 110),
+                                ("sites_faciles_blog", 110),
                                 ("entries_count", 111),
                                 ("category_filter", 112),
                                 ("tag_filter", 113),
@@ -1381,7 +1381,7 @@ class Migration(migrations.Migration):
                             "admin_text": "A simple, alphabetical list of the subpages of the current page.",
                             "group": "Website structure",
                             "label": "Subpages list",
-                            "template": "content_manager/blocks/subpages_list.html",
+                            "template": "sites_faciles.content_manager.blocks/subpages_list.html",
                         },
                     ),
                     158: (

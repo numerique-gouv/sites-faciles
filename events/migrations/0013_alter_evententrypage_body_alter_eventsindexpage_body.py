@@ -7,7 +7,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("events", "0012_alter_evententrypage_body_alter_eventsindexpage_body"),
+        ("sites_faciles_events", "0012_alter_evententrypage_body_alter_eventsindexpage_body"),
     ]
 
     operations = [
@@ -301,7 +301,7 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    31: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    31: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     32: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -694,7 +694,7 @@ class Migration(migrations.Migration):
                     ),
                     85: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     86: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -715,7 +715,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     91: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -902,7 +902,7 @@ class Migration(migrations.Migration):
                             [
                                 ("title", 1),
                                 ("heading_tag", 111),
-                                ("blog", 112),
+                                ("sites_faciles_blog", 112),
                                 ("entries_count", 113),
                                 ("category_filter", 114),
                                 ("tag_filter", 115),
@@ -1428,7 +1428,7 @@ class Migration(migrations.Migration):
                             "admin_text": "A simple, alphabetical list of the subpages of the current page.",
                             "group": "Website structure",
                             "label": "Subpages list",
-                            "template": "content_manager/blocks/subpages_list.html",
+                            "template": "sites_faciles.content_manager.blocks/subpages_list.html",
                         },
                     ),
                 },
@@ -1724,7 +1724,7 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    31: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    31: ("sites_faciles.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     32: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -2117,7 +2117,7 @@ class Migration(migrations.Migration):
                     ),
                     85: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     86: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -2138,7 +2138,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     91: (
-                        "content_manager.blocks.IconPickerBlock",
+                        "sites_faciles.content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -2325,7 +2325,7 @@ class Migration(migrations.Migration):
                             [
                                 ("title", 1),
                                 ("heading_tag", 111),
-                                ("blog", 112),
+                                ("sites_faciles_blog", 112),
                                 ("entries_count", 113),
                                 ("category_filter", 114),
                                 ("tag_filter", 115),
@@ -2851,7 +2851,7 @@ class Migration(migrations.Migration):
                             "admin_text": "A simple, alphabetical list of the subpages of the current page.",
                             "group": "Website structure",
                             "label": "Subpages list",
-                            "template": "content_manager/blocks/subpages_list.html",
+                            "template": "sites_faciles.content_manager.blocks/subpages_list.html",
                         },
                     ),
                 },

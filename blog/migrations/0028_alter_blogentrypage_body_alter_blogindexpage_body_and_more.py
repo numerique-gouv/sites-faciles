@@ -13,7 +13,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("blog", "0027_rename_organization_item_person_organization"),
+        ("sites_faciles_blog", "0027_rename_organization_item_person_organization"),
     ]
 
     operations = [
@@ -8012,7 +8012,7 @@ class Migration(migrations.Migration):
                             admin_text="A simple, alphabetical list of the subpages of the current page.",
                             group="Website structure",
                             label="Subpages list",
-                            template="content_manager/blocks/subpages_list.html",
+                            template="sites_faciles.content_manager.blocks/subpages_list.html",
                         ),
                     ),
                     (
@@ -16087,7 +16087,7 @@ class Migration(migrations.Migration):
                             admin_text="A simple, alphabetical list of the subpages of the current page.",
                             group="Website structure",
                             label="Subpages list",
-                            template="content_manager/blocks/subpages_list.html",
+                            template="sites_faciles.content_manager.blocks/subpages_list.html",
                         ),
                     ),
                     (

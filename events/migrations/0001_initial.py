@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("blog", "0028_alter_blogentrypage_body_alter_blogindexpage_body_and_more"),
+        ("sites_faciles_blog", "0028_alter_blogentrypage_body_alter_blogindexpage_body_and_more"),
         ("taggit", "0006_rename_taggeditem_content_type_object_id_taggit_tagg_content_8fc721_idx"),
         ("wagtailcore", "0093_uploadedfile"),
         ("wagtailimages", "0026_delete_uploadedimage"),
@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="+",
-                        to="blog.category",
+                        to="sites_faciles_blog.category",
                         verbose_name="Category",
                     ),
                 ),
@@ -8542,7 +8542,7 @@ class Migration(migrations.Migration):
                                     admin_text="A simple, alphabetical list of the subpages of the current page.",
                                     group="Website structure",
                                     label="Subpages list",
-                                    template="content_manager/blocks/subpages_list.html",
+                                    template="sites_faciles.content_manager.blocks/subpages_list.html",
                                 ),
                             ),
                             (
@@ -8788,15 +8788,15 @@ class Migration(migrations.Migration):
                 (
                     "authors",
                     modelcluster.fields.ParentalManyToManyField(
-                        blank=True, help_text="Author entries can be created in Snippets > Persons", to="blog.person"
+                        blank=True, help_text="Author entries can be created in Snippets > Persons", to="sites_faciles_blog.person"
                     ),
                 ),
                 (
                     "event_categories",
                     modelcluster.fields.ParentalManyToManyField(
                         blank=True,
-                        through="events.CategoryEventEntryPage",
-                        to="blog.category",
+                        through="sites_faciles_events.CategoryEventEntryPage",
+                        to="sites_faciles_blog.category",
                         verbose_name="Categories",
                     ),
                 ),
@@ -8823,7 +8823,7 @@ class Migration(migrations.Migration):
             field=modelcluster.fields.ParentalKey(
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="event_entry_categories",
-                to="events.evententrypage",
+                to="sites_faciles_events.evententrypage",
             ),
         ),
         migrations.CreateModel(
@@ -17326,7 +17326,7 @@ class Migration(migrations.Migration):
                                     admin_text="A simple, alphabetical list of the subpages of the current page.",
                                     group="Website structure",
                                     label="Subpages list",
-                                    template="content_manager/blocks/subpages_list.html",
+                                    template="sites_faciles.content_manager.blocks/subpages_list.html",
                                 ),
                             ),
                             (
@@ -17597,7 +17597,7 @@ class Migration(migrations.Migration):
                     modelcluster.fields.ParentalKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="event_entry_tags",
-                        to="events.evententrypage",
+                        to="sites_faciles_events.evententrypage",
                     ),
                 ),
                 (
@@ -17619,7 +17619,7 @@ class Migration(migrations.Migration):
             field=modelcluster.contrib.taggit.ClusterTaggableManager(
                 blank=True,
                 help_text="A comma-separated list of tags.",
-                through="events.TagEventEntryPage",
+                through="sites_faciles_events.TagEventEntryPage",
                 to="taggit.Tag",
                 verbose_name="Tags",
             ),
