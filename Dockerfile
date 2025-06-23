@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm
+FROM python:3.13-slim-bookworm
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 ARG CONTAINER_PORT=8000
@@ -6,7 +6,6 @@ EXPOSE ${CONTAINER_PORT}
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV GECKODRIVER_URL=https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux32.tar.gz
 ENV APP_DIR="/app"
 
 # Needed for docker build to succeed
@@ -20,6 +19,8 @@ RUN set -ex \
 WORKDIR $APP_DIR
 
 COPY pyproject.toml uv.lock ./
+# Use the global env as the uv env so that we don't need to prefix commands with `uv run`
+ENV UV_PROJECT_ENVIRONMENT="/usr/local/"
 RUN uv sync --locked
 
 COPY --chown=app:app . .
