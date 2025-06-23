@@ -29,29 +29,49 @@ echo "📝 Rewrite files to namespace everything"
 while IFS=, read -r search replace raw_path; do
     echo "🔁 $search > $replace in $raw_path"
 
-    # Get files tracked by git in raw_path, filtered by search string
-    matched_files=$(git ls-files "$raw_path" | xargs grep -l "$search" || true)
+    # Use find to expand wildcard directory paths (e.g. **/migrations)
+    matched_dirs=$(find . -type d -path "./$raw_path" 2>/dev/null)
 
-    if [[ -z "$matched_files" ]]; then
-        echo "⚠️ Warning: No tracked files in '$raw_path' containing '$search'"
+    if [[ -z "$matched_dirs" ]]; then
+        echo "⚠️ No matching directories for '$raw_path'"
         continue
     fi
 
-    while IFS= read -r file; do
-        echo "✏️ Rewriting: $file"
-        "${SED_INPLACE[@]}" "s|$search|$replace|g" "$file"
-    done <<< "$matched_files"
-done < "$SEARCH_REPLACE"
+    for dir in $matched_dirs; do
+        echo "📂 Searching in tracked files under: $dir"
 
+        # Get all tracked files inside this directory
+        tracked_files=$(git ls-files "$dir")
+
+        if [[ -z "$tracked_files" ]]; then
+            echo "⚠️ No tracked files in directory '$dir'"
+            continue
+        fi
+
+        # Find files containing the search string
+        files_to_edit=$(echo "$tracked_files" | xargs grep -l "$search" || true)
+
+        if [[ -z "$files_to_edit" ]]; then
+            echo "⚠️ No tracked files in '$dir' containing '$search'"
+            continue
+        fi
+
+        # Apply replacements with cross-platform sed
+        while IFS= read -r file; do
+            echo "✏️ Rewriting: $file"
+            "${SED_INPLACE[@]}" "s|$search|$replace|g" "$file"
+        done <<< "$files_to_edit"
+    done
+done < "$SEARCH_REPLACE"
 
 ls -la sites_faciles/content_manager
 
-# echo "🆕 Prepare sites_faciles tree"
-# mkdir -p "$SUBFOLDER"
-# grep -vxFf $DO_NOT_MOVE <(ls -A) | while read file; do
-#   echo "🗄️ Moving: $file"
-#   mv $file "$SUBFOLDER/"
-# done
+echo "🆕 Prepare sites_faciles tree"
+mkdir -p "$SUBFOLDER"
+grep -vxFf $DO_NOT_MOVE <(ls -A) | while read file; do
+  echo "🗄️ Moving: $file"
+  mv $file "$SUBFOLDER/"
+done
 
 
 echo "🎬 FIN. The repo were synced. Manually check though as it is not battle-tested yet..."
