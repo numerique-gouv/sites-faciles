@@ -17,6 +17,14 @@ git fetch origin
 git reset --hard origin/main
 git clean -fd
 
+echo "♻️ Get back list of files to keep from the fork"
+git restore --source=fork/main $NEW_FILES
+while IFS= read -r file; do
+    echo "$file"
+    git restore --source=fork/main $file
+done < "$NEW_FILES"
+
+
 echo "📝 Rewrite files to namespace everything"
 while IFS=, read -r search replace raw_path; do
     echo "🔁 $search > $replace in $raw_path"
@@ -34,13 +42,6 @@ while IFS=, read -r search replace raw_path; do
         "${SED_INPLACE[@]}" "s|$search|$replace|g" "$file"
     done <<< "$matched_files"
 done < "$SEARCH_REPLACE"
-
-echo "♻️ Get back list of files to keep from the fork"
-git restore --source=fork/main $NEW_FILES
-while IFS= read -r file; do
-    echo "$file"
-    git restore --source=fork/main $file
-done < "$NEW_FILES"
 
 
 ls -la sites_faciles/content_manager

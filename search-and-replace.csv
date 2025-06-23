@@ -1,17 +1,17 @@
-to="blog.",to="sites_faciles_blog.",**/migrations
-through="blog.",through="sites_faciles_blog.",**/migrations
+to="blog.,to="sites_faciles_blog.,**/migrations
+through="blog.,through="sites_faciles_blog.,**/migrations
 ("blog",("sites_faciles_blog",**/migrations
 "page_type": ["blog,"page_type": ["sites_faciles_blog,**/migrations
 from blog.,from sites_faciles.blog.,*
 
-to="events.",to="sites_faciles_events.",**/migrations
-through="events.",through="sites_faciles_events.",**/migrations
+to="events.,to="sites_faciles_events.,**/migrations
+through="events.,through="sites_faciles_events.,**/migrations
 ("events",("sites_faciles_events",**/migrations
 "page_type": ["events,"page_type": ["sites_faciles_events,**/migrations
 from events.,from sites_faciles.events.,*
 
-to="content_manager.",to="sites_faciles_content_manager.",**/migrations
-through="content_manager.",through="sites_faciles_content_manager.",**/migrations
+to="content_manager.,to="sites_faciles_content_manager.,**/migrations
+through="content_manager.,through="sites_faciles_content_manager.,**/migrations
 ("content_manager",("sites_faciles_content_manager",**/migrations
 "page_type": ["content_manager,"page_type": ["sites_faciles_content_manager,**/migrations
 from content_manager.,from sites_faciles.content_manager.,*
