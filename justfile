@@ -27,18 +27,10 @@ demo:
     just init
     {{docker_cmd}} {{uv_run}} python manage.py create_demo_pages
 
+alias first-deploy := deploy
 deploy:
-    {{docker_cmd}} {{uv_run}} python manage.py migrate
+    just migrate
     just collectstatic
-    {{docker_cmd}} {{uv_run}} python manage.py import_dsfr_pictograms
-    {{docker_cmd}} {{uv_run}} python manage.py import_page_templates
-    just index
-
-first-deploy:
-    {{docker_cmd}} {{uv_run}} python manage.py migrate
-    just collectstatic
-    {{docker_cmd}} {{uv_run}} python manage.py set_config
-    {{docker_cmd}} {{uv_run}} python manage.py import_dsfr_pictograms
     {{docker_cmd}} {{uv_run}} python manage.py create_starter_pages
     {{docker_cmd}} {{uv_run}} python manage.py import_page_templates
     just index
@@ -51,12 +43,12 @@ index:
 
 init:
     {{docker_cmd}} uv sync --no-group dev
-    just first-deploy
+    just deploy
 
 init-dev:
     uv sync
-    just first-deploy
-    {{uv_run}} pre-commit install
+    just deploy
+    {{docker_cmd}} {{uv_run}} pre-commit install
 
 alias messages := makemessages
 makemessages:
@@ -65,18 +57,18 @@ makemessages:
 
 alias mm:= makemigrations
 makemigrations app="":
-    {{uv_run}} python manage.py makemigrations {{app}}
+    {{docker_cmd}} {{uv_run}} python manage.py makemigrations {{app}}
 
 alias mi := migrate
 migrate app="" version="":
-    {{uv_run}} python manage.py migrate {{app}} {{version}}
+    {{docker_cmd}} {{uv_run}} python manage.py migrate {{app}} {{version}}
 
 mmi:
     just makemigrations
     just migrate
 
 quality:
-    {{docker_cmd}} pre-commit run --all-files
+    {{docker_cmd}} {{uv_run}} pre-commit run --all-files
 
 alias rs := runserver
 runserver host_url=host_url host_port=host_port:
@@ -97,7 +89,7 @@ update:
 
 upgrade:
     {{docker_cmd}} uv lock --upgrade
-    {{docker_cmd}} pre-commit autoupdate
+    {{docker_cmd}} {{uv_run}} pre-commit autoupdate
     {{docker_cmd}} npm update
 
 web-prompt:

@@ -32,14 +32,17 @@ class Command(BaseCommand):
             # Only run the script on a new site or for specific slugs
             if Page.objects.last().id > 2:
                 self.stdout.write(
-                    self.style.NOTICE(
+                    self.style.WARNING(
                         "The site appears to already have pages, so this script won't run without params."
                     )
                 )
                 self.stdout.write(
-                    self.style.NOTICE("Please run this script on a new site, or with the 'slug' parameter.")
+                    self.style.WARNING("Please run this script on a new site, or with the 'slug' parameter.")
                 )
                 return
+            else:
+                # on a new site, first set the config
+                call_command("set_config")
 
             slugs = ALL_ALLOWED_SLUGS
 

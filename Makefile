@@ -68,23 +68,21 @@ index:
 first-deploy:
 	$(EXEC_CMD) $(UV_CMD) python manage.py migrate
 	make collectstatic
-	$(EXEC_CMD) $(UV_CMD) python manage.py set_config
-	$(EXEC_CMD) $(UV_CMD) python manage.py import_dsfr_pictograms
 	$(EXEC_CMD) $(UV_CMD) python manage.py create_starter_pages
 	$(EXEC_CMD) $(UV_CMD) python manage.py import_page_templates
 	make index
-	@make deprecation-warning
+	@make deletion-warning
 
 .PHONY: init
 init:
 	$(EXEC_CMD) uv sync --no-group dev
-	make first-deploy
+	make deploy
 	@make deprecation-warning
 
 .PHONY: init-dev
 init-dev:
 	$(EXEC_CMD) uv sync
-	make first-deploy
+	make deploy
 	$(EXEC_CMD) $(UV_CMD) pre-commit install
 	@make deprecation-warning
 
@@ -92,7 +90,7 @@ init-dev:
 deploy:
 	$(EXEC_CMD) $(UV_CMD) python manage.py migrate
 	make collectstatic
-	$(EXEC_CMD) $(UV_CMD) python manage.py import_dsfr_pictograms
+	$(EXEC_CMD) $(UV_CMD) python manage.py create_starter_pages
 	$(EXEC_CMD) $(UV_CMD) python manage.py import_page_templates
 	make index
 	@make deprecation-warning
