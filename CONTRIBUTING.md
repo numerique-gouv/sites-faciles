@@ -100,7 +100,7 @@ Il est donc nécessaire d’utiliser autant que possible les classes spécifique
 
 Ce project utilise le [système de traduction de Django](https://docs.djangoproject.com/en/dev/topics/i18n/translation/).
 
-Le texte dans le code est en anglais et la traduction qui s’affiche sur le site en Français, se trouve dans le fichier
+Le texte dans le code est en anglais et la traduction qui s’affiche sur le site en français, se trouve dans le fichier
 `.po` du dossier `locales`.
 
 
