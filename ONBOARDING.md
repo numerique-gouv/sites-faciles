@@ -36,7 +36,7 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 - La commande suivante installe les dépendances, fait les migrations et collecte les fichiers
 
 ```sh
-make init-dev
+just init-dev
 ```
 
 #### Créer un utilisateur
@@ -50,7 +50,7 @@ poetry run python manage.py createsuperuser
 #### Lancer le serveur
 
 ```sh
-make runserver
+just runserver
 ```
 
 ### via Docker

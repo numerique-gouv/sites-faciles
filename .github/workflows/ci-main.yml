@@ -24,11 +24,14 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: 📔 Install just
+        uses: extractions/setup-just@v2
       - name: 🐍 Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+      - uses: pre-commit/action@v3.0.1
       - name: 🌍 Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -40,16 +43,16 @@ jobs:
           cp .env.test .env
       - name: 💾 Collect static files
         run: |
-          make collectstatic
+          just collectstatic
       - name: ✨ Black & ruff
         run: |
-          make quality
+          just quality
       - name: 🤹‍ Run the unit tests
         run: |
-          make test-unit
+          just unittest
       - name: 🎨 Deploy starter content
         run: |
-          make init
+          just init
           poetry run python manage.py create_demo_pages
         env:
           DJANGO_DEBUG: True
