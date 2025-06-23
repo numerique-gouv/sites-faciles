@@ -19,7 +19,7 @@ RUN set -ex \
 WORKDIR $APP_DIR
 
 COPY pyproject.toml uv.lock ./
-# Use the global env as the uv env so that we don't need to prefix commands with `uv run`
+# Deploy in the global env of the container instead of a uv-specific venv
 ENV UV_PROJECT_ENVIRONMENT="/usr/local/"
 RUN uv sync --locked
 
