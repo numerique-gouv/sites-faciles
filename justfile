@@ -21,7 +21,7 @@ coverage app="":
     firefox htmlcov/index.html
 
 createsuperuser:
-    {{uv_run}} python manage.py createsuperuser
+    {{docker_cmd}} {{uv_run}} python manage.py createsuperuser
 
 demo:
     just init
