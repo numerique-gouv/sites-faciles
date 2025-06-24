@@ -20,6 +20,9 @@ dependencies = [
     "django>=5.2.3",
     "wagtail>=7.0.1",
     "psycopg2-binary>=2.9.10",
+    "django-sass-processor<2.0,>=1.3",
+    "libsass<1.0.0,>=0.22.0",
+    "whitenoise<7.0,>=6.6",
     "python-dotenv>=1.1.0",
     "dj-database-url>=3.0.0",
     "gunicorn>=23.0.0",
@@ -40,6 +43,7 @@ dependencies = [
     "wagtail-honeypot @ git+https://github.com/Luzzzi/wagtail-honeypot@feature/i18n-required-honeypot",
 ]
 
+
 [dependency-groups]
 dev = [
     "black>=25.1.0",
@@ -52,6 +56,7 @@ dev = [
     "ruff>=0.12.0",
     "tblib>=3.1.0",
 ]
+
 
 [tool.black]
 line-length = 119
