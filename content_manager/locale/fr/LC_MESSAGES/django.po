@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 14:44+0200\n"
-"PO-Revision-Date: 2025-05-21 14:46+0200\n"
+"POT-Creation-Date: 2025-06-16 16:25+0200\n"
+"PO-Revision-Date: 2025-06-16 16:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,39 +16,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.4.2\n"
 
-#: content_manager/abstract.py:27
+#: content_manager/abstract.py:28
 msgid "Show title in header image?"
 msgstr "Afficher le titre sur l’image d’en-tête ?"
 
-#: content_manager/abstract.py:35
+#: content_manager/abstract.py:36
 msgid "Header image"
 msgstr "Image d’en-tête"
 
-#: content_manager/abstract.py:39 content_manager/blocks.py:1133
+#: content_manager/abstract.py:40 content_manager/blocks.py:1133
 #: content_manager/blocks.py:1191 content_manager/blocks.py:1240
 msgid "Background color"
 msgstr "Couleur de fond"
 
-#: content_manager/abstract.py:43 content_manager/blocks.py:1135
+#: content_manager/abstract.py:44 content_manager/blocks.py:1135
 #: content_manager/blocks.py:1193 content_manager/blocks.py:1242
 msgid "Uses the French Design System colors"
 msgstr "Utilise les couleurs du système de design de l'État"
 
-#: content_manager/abstract.py:46
+#: content_manager/abstract.py:47
 msgid "Full width"
 msgstr "Pleine largeur"
 
-#: content_manager/abstract.py:47
+#: content_manager/abstract.py:48
 msgid "Darken background image"
 msgstr "Assombrir l’image de fond"
 
-#: content_manager/abstract.py:50
+#: content_manager/abstract.py:51
 msgid "Call to action text"
 msgstr "Texte de l’appel à action"
 
-#: content_manager/abstract.py:61 content_manager/blocks.py:364
+#: content_manager/abstract.py:62 content_manager/blocks.py:364
 #: content_manager/blocks.py:705
 msgid ""
 "Please use only one primary button.\n"
@@ -59,59 +59,52 @@ msgstr ""
 "Si vous utilisez des icônes, mettez-en sur tous les boutons et alignez-les "
 "du même côté."
 
-#: content_manager/abstract.py:64 content_manager/blocks.py:171
+#: content_manager/abstract.py:65 content_manager/blocks.py:171
 #: content_manager/blocks.py:367 content_manager/blocks.py:708
 msgid "Buttons"
 msgstr "Boutons"
 
-#: content_manager/abstract.py:73
-msgid "Call to action label"
-msgstr "Libellé de l’appel à action"
-
-#: content_manager/abstract.py:75 content_manager/abstract.py:84
-#: content_manager/blocks.py:719 content_manager/blocks.py:726
-msgid ""
-"This field is obsolete and will be removed in the near future. Please "
-"replace with the CTA buttons above."
-msgstr ""
-"Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
-"avec les boutons de l’appel à action ci-dessus."
-
-#: content_manager/abstract.py:82
-msgid "Call to action link"
-msgstr "Lien de l’appel à action"
-
-#: content_manager/abstract.py:91
+#: content_manager/abstract.py:75
 msgid "Source URL"
 msgstr "URL source"
 
-#: content_manager/abstract.py:92
+#: content_manager/abstract.py:76
 msgid "For imported pages, to allow updates. Max length: 2000 characters."
 msgstr ""
 "Utilisé pour les pages importées, pour permettre les mises à jour. Longueur "
 "maximum : 2000 caractères."
 
-#: content_manager/abstract.py:99
-msgid "Body"
-msgstr "Corps"
+#: content_manager/abstract.py:88
+msgid "Preview image"
+msgstr "Image de prévisualisation"
 
-#: content_manager/abstract.py:103
-msgid "Common page configuration"
-msgstr "Configuration commune"
+#: content_manager/abstract.py:89
+msgid "Image displayed as a preview when the page is shared on social media"
+msgstr ""
+"Image affichée comme aperçu lorsque la page est partagée sur les médias "
+"sociaux"
 
-#: content_manager/abstract.py:114 content_manager/blocks.py:712
+#: content_manager/abstract.py:103 content_manager/blocks.py:712
 msgid "Call-to-action buttons"
 msgstr "Boutons de l’appel à action"
 
-#: content_manager/abstract.py:119
+#: content_manager/abstract.py:106
 msgid "Header options"
 msgstr "Options d’en-tête"
 
-#: content_manager/abstract.py:168
+#: content_manager/abstract.py:108
+msgid "Body"
+msgstr "Corps"
+
+#: content_manager/abstract.py:114
+msgid "Common page configuration"
+msgstr "Configuration commune"
+
+#: content_manager/abstract.py:166
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:169
+#: content_manager/abstract.py:167
 msgid "Base pages"
 msgstr "Pages de base"
 
@@ -582,6 +575,14 @@ msgstr "Étapes"
 msgid "Call to action label  (obsolete)"
 msgstr "Libellé de l’appel à action (obsolète)"
 
+#: content_manager/blocks.py:719 content_manager/blocks.py:726
+msgid ""
+"This field is obsolete and will be removed in the near future. Please "
+"replace with the CTA buttons above."
+msgstr ""
+"Ce champ est obsolète et sera prochainement supprimé. Merci de le remplacer "
+"avec les boutons de l’appel à action ci-dessus."
+
 #: content_manager/blocks.py:738
 msgid "Transcription content"
 msgstr "Contenu de la transcription"
@@ -664,7 +665,7 @@ msgstr "Nombre d’articles"
 #: content_manager/blocks.py:946 content_manager/blocks.py:976
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:11
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:11
-#: content_manager/templates/content_manager/catalog_index_page.html:78
+#: content_manager/templates/content_manager/catalog_index_page.html:71
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
@@ -672,21 +673,21 @@ msgstr "Filtrer par catégorie"
 #: content_manager/models.py:56
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:28
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:28
-#: content_manager/templates/content_manager/catalog_index_page.html:95
+#: content_manager/templates/content_manager/catalog_index_page.html:88
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
 #: content_manager/blocks.py:948 content_manager/blocks.py:978
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:45
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:45
-#: content_manager/templates/content_manager/catalog_index_page.html:112
+#: content_manager/templates/content_manager/catalog_index_page.html:105
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
 #: content_manager/blocks.py:951 content_manager/blocks.py:981
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:60
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:60
-#: content_manager/templates/content_manager/catalog_index_page.html:127
+#: content_manager/templates/content_manager/catalog_index_page.html:120
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
@@ -950,116 +951,116 @@ msgid "A simple, alphabetical list of the subpages of the current page."
 msgstr ""
 "Une liste alphabétique toute simple des sous-pages de la page actuelle."
 
-#: content_manager/constants.py:16
+#: content_manager/constants.py:14
 msgid "Primary"
 msgstr "Primaire"
 
-#: content_manager/constants.py:17
+#: content_manager/constants.py:15
 msgid "Secundary"
 msgstr "Secondaire"
 
-#: content_manager/constants.py:18
+#: content_manager/constants.py:16
 msgid "Tertiary"
 msgstr "Tertiaire"
 
-#: content_manager/constants.py:19
+#: content_manager/constants.py:17
 msgid "Tertiary without border"
 msgstr "Tertiaire sans bordure"
 
-#: content_manager/constants.py:23 content_manager/constants.py:28
-#: content_manager/constants.py:41
+#: content_manager/constants.py:21 content_manager/constants.py:26
+#: content_manager/constants.py:39
 msgid "Left"
 msgstr "Gauche"
 
-#: content_manager/constants.py:24 content_manager/constants.py:30
-#: content_manager/constants.py:43
+#: content_manager/constants.py:22 content_manager/constants.py:28
+#: content_manager/constants.py:41
 msgid "Right"
 msgstr "Droite"
 
-#: content_manager/constants.py:29 content_manager/constants.py:42
+#: content_manager/constants.py:27 content_manager/constants.py:40
 msgid "Center"
 msgstr "Centre"
 
-#: content_manager/constants.py:31
+#: content_manager/constants.py:29
 msgid "Right (reverse order on desktop)"
 msgstr "Droite (ordre inversé en mode bureau)"
 
-#: content_manager/constants.py:47
+#: content_manager/constants.py:45
 msgid "Top"
 msgstr "Haut"
 
-#: content_manager/constants.py:48
+#: content_manager/constants.py:46
 msgid "Middle"
 msgstr "Milieu"
 
-#: content_manager/constants.py:49
+#: content_manager/constants.py:47
 msgid "Bottom"
 msgstr "Bas"
 
-#: content_manager/constants.py:53 content_manager/constants.py:62
+#: content_manager/constants.py:51 content_manager/constants.py:60
 msgid "Heading 2"
 msgstr "En-tête 2"
 
-#: content_manager/constants.py:54 content_manager/constants.py:63
+#: content_manager/constants.py:52 content_manager/constants.py:61
 msgid "Heading 3"
 msgstr "En-tête 3"
 
-#: content_manager/constants.py:55 content_manager/constants.py:64
+#: content_manager/constants.py:53 content_manager/constants.py:62
 msgid "Heading 4"
 msgstr "En-tête 4"
 
-#: content_manager/constants.py:56 content_manager/constants.py:65
+#: content_manager/constants.py:54 content_manager/constants.py:63
 msgid "Heading 5"
 msgstr "En-tête 5"
 
-#: content_manager/constants.py:57
+#: content_manager/constants.py:55
 msgid "Heading 6"
 msgstr "En-tête 6"
 
-#: content_manager/constants.py:58
+#: content_manager/constants.py:56
 msgid "Paragraph"
 msgstr "Paragraphe"
 
-#: content_manager/constants.py:74
+#: content_manager/constants.py:72
 msgid "Error"
 msgstr "Erreur"
 
-#: content_manager/constants.py:75
+#: content_manager/constants.py:73
 msgid "Success"
 msgstr "Succès"
 
-#: content_manager/constants.py:76
+#: content_manager/constants.py:74
 msgid "Information"
 msgstr "Information"
 
-#: content_manager/constants.py:77
+#: content_manager/constants.py:75
 msgid "Warning"
 msgstr "Avertissement"
 
-#: content_manager/constants.py:99 content_manager/constants.py:111
-#: content_manager/constants.py:117
+#: content_manager/constants.py:97 content_manager/constants.py:109
+#: content_manager/constants.py:115
 msgid "Small"
 msgstr "Petit"
 
-#: content_manager/constants.py:100 content_manager/constants.py:112
-#: content_manager/constants.py:118
+#: content_manager/constants.py:98 content_manager/constants.py:110
+#: content_manager/constants.py:116
 msgid "Medium"
 msgstr "Medium"
 
-#: content_manager/constants.py:101 content_manager/constants.py:113
-#: content_manager/constants.py:119
+#: content_manager/constants.py:99 content_manager/constants.py:111
+#: content_manager/constants.py:117
 msgid "Large"
 msgstr "Large"
 
-#: content_manager/constants.py:105
+#: content_manager/constants.py:103
 msgid "No icon"
 msgstr "Pas d’icône"
 
-#: content_manager/constants.py:106
+#: content_manager/constants.py:104
 msgid "Icon on the right side"
 msgstr "Icône du côté droit"
 
-#: content_manager/constants.py:107
+#: content_manager/constants.py:105
 msgid "Icon on the left side"
 msgstr "Icône du côté gauche"
 
@@ -1145,8 +1146,8 @@ msgid ""
 "Institution brand as defined on <a href=\"https://www.info.gouv.fr/marque-de-"
 "letat/le-bloc-marque\">official page</a>."
 msgstr ""
-"Nom de l’institution tel que défini sur la <a href=\"https://"
-"www.info.gouv.fr/marque-de-letat/le-bloc-marque\">page officielle</a>."
+"Nom de l’institution tel que défini sur la <a href=\"https://www.info.gouv."
+"fr/marque-de-letat/le-bloc-marque\">page officielle</a>."
 
 #: content_manager/models.py:253
 msgid "Institution with line break (header)"
@@ -1194,8 +1195,8 @@ msgid ""
 "design.gouv.fr/composants-et-modeles/composants/bandeau-d-information-"
 "importante/\">documentation</a>."
 msgstr ""
-"L’usage de ce bandeau est strictement encadré, voir la <a href=\"https://"
-"www.systeme-de-design.gouv.fr/composants-et-modeles/composants/bandeau-d-"
+"L’usage de ce bandeau est strictement encadré, voir la <a href=\"https://www."
+"systeme-de-design.gouv.fr/composants-et-modeles/composants/bandeau-d-"
 "information-importante/\">documentation</a>."
 
 #: content_manager/models.py:315
@@ -1497,10 +1498,18 @@ msgstr "Groupe d’onglets"
 msgid "Watch on the site"
 msgstr "Voir sur le site"
 
-#: content_manager/templates/content_manager/catalog_index_page.html:73
-#: content_manager/templates/content_manager/catalog_index_page.html:75
+#: content_manager/templates/content_manager/catalog_index_page.html:66
+#: content_manager/templates/content_manager/catalog_index_page.html:68
 msgid "Filters"
 msgstr "Filtres"
+
+#: content_manager/templates/content_manager/menus/mega_menu.html:7
+msgid "Close"
+msgstr "Fermer"
+
+#: content_manager/templates/content_manager/menus/mega_menu.html:15
+msgid "See the whole section"
+msgstr "Voir toute la rubrique"
 
 #: content_manager/templates/content_manager/password_required.html:5
 #: content_manager/templates/content_manager/password_required.html:15
@@ -1586,6 +1595,12 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid "Call to action label"
+#~ msgstr "Libellé de l’appel à action"
+
+#~ msgid "Call to action link"
+#~ msgstr "Lien de l’appel à action"
 
 #~ msgid "Operator logo"
 #~ msgstr "Logo opérateur"

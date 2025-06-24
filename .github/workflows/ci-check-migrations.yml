@@ -17,7 +17,7 @@ jobs:
       PYTHONPATH: .
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: ["3.13"]
     services:
       postgres:
         image: postgres:14-alpine
@@ -28,20 +28,17 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v3
-      - name: 🐍 Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: 🐍 Set up Python ${{ matrix.python-version }} with uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: 🌍 Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install poetry
-          pip install ruff
-          poetry install --no-root
+          uv sync --no-group dev
       - name: 📄 Copy empty .env.test to .env
         run: |
           cp .env.test .env
       - name: 🚧 Check pending migrations
         run: |
-          poetry run django-admin makemigrations --check --dry-run --noinput
+          uv run django-admin makemigrations --check --dry-run --noinput

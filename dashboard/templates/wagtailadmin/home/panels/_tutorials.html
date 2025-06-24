@@ -1,0 +1,40 @@
+{% load wagtailcore_tags static i18n wagtailadmin_tags %}
+
+{% panel id="tutorials" heading=_("Tutorials") classname="w-panel--dashboard" %}
+<table class="listing listing--dashboard">
+  <col width="33%" />
+  <col width="33%" />
+  <col width="33%" />
+  <thead class="w-sr-only">
+    <tr>
+      <th>{% translate "Videos" %}</th>
+      <th>{% translate "Videos" %}</th>
+      <th>{% translate "Videos" %}</th>
+      <th aria-hidden="true">{% comment %} added for visual alignment only {% endcomment %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tutorial in tutorials %}
+      {% if forloop.first or forloop.counter0|divisibleby:3 %}<tr>{% endif %}
+        <td>
+          <div class="sf-card">
+            <a href="{{ tutorial.url }}" title="{{ tutorial.title }}">
+              {% if tutorial.image %}
+                <div class="sf-card__wrapper sf-card__wrapper--image">
+                  <img class="sf-card__image" src={{ tutorial.image }} alt="Preview image">
+                </div>
+              {% else %}
+                <div class="sf-card__wrapper sf-card__wrapper--icon">
+                  <img src="{% static 'artwork/video.svg' %}" alt="Video icon">
+                </div>
+              {% endif %}
+              {{ tutorial.title }}
+            </a>
+            <span>{% translate "Tutorial" %} {{ forloop.counter }} {% translate "of" %} {{ tutorials|length }}</span>
+          </div>
+        </td>
+        {% if forloop.counter|divisibleby:3 %}</tr>{% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endpanel %}

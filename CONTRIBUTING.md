@@ -10,10 +10,10 @@ cd sites-faciles
 ```
 
 ### Effectuer les tests
-Les tests unitaires peuvent être lancés avec `make test` (ou `just test`).
+Les tests unitaires peuvent être lancés avec `just test`.
 
 Cela lance les tests en parallèle pour gagner du temps, mais en cas d’échec, il est possible de les lancer
-séquentiellement via `make unittest` (ou `just unittest`)
+séquentiellement via `just unittest`
 
 Vous pouvez également générer un rapport sur la couverture de tests :
 
@@ -34,46 +34,45 @@ just coverage events
 Avant chaque mise en production, les intervenant·es sont prié·es de [passer cette liste en revue](./DOD.md).
 
 ## Commandes
-Le projet utilise `make` pour gérer le lancement de commandes, mais une migration est en cours vers `just`
-(a minima pour les commandes prenant des paramètres.)
+Le projet utilise [just](https://just.systems/) pour gérer le lancement de séries de commandes spéfiques, appelées recettes.
 
-Voir les fichiers [Makefile](./Makefile) et [justfile](./justfile) pour une liste des commandes implémentées.
+Il est possible d’avoir une liste des recettes implémentées en tapant simplement `just`.
 
 Pour les commandes Django spécifiquement, il est possible d’en obtenir la liste avec la commande
 
 ```sh
-poetry run python manage.py
+uv run python manage.py
 ```
 
 
-## Gestion des dépendances avec Poetry
+## Gestion des dépendances avec uv
 
-Le projet utilise [Poetry](https://python-poetry.org/) pour gérer les dépendances de paquets Python et produire des *builds*
+Le projet utilise [uv](https://docs.astral.sh/uv/) pour gérer les dépendances de paquets Python et produire des *builds*
 déterministes.
 
 Pour installer le projet sans les dépendances de dev :
 
 ```sh
-make init
+just init
 ```
 
 Pour installer le projet avec les dépendances de dev :
 
 ```sh
-make init-dev
+just init-dev
 ```
 
 
-Pour installer un nouveau paquet et l'ajouter aux dépendances :
+Pour installer un nouveau paquet et l’ajouter aux dépendances :
 
 ```sh
-poetry add <paquet>
+uv add <paquet>
 ```
 
 Pour un paquet ne servant que pour le développement, par exemple `debug-toolbar` :
 
 ```sh
-poetry add <paquet> --group dev
+uv add --dev <paquet>
 ```
 
 ## Configuration locale, production
@@ -97,30 +96,24 @@ Le projet utilise [Le Système de design de l’État](https://www.systeme-de-de
 
 Il est donc nécessaire d’utiliser autant que possible les classes spécifiques au Système de design de l’État dans le HTML.
 
-Le CSS est écrit dans des fichiers `.sass` et compilé via la commande
-
-```sh
-make sass
-```
-
 ## Traduction : À propos des fichiers `.po` et `.mo`
 
 Ce project utilise le [système de traduction de Django](https://docs.djangoproject.com/en/dev/topics/i18n/translation/).
 
-Le texte dans le code est en anglais et la traduction qui s'affiche sur le site en Français, se trouve dans le fichier
+Le texte dans le code est en anglais et la traduction qui s’affiche sur le site en français, se trouve dans le fichier
 `.po` du dossier `locales`.
 
 
 Pour générer la traduction dans le fichier `.po` :
 
 ```sh
-make messages
+just makemessages
 ```
 
-Django utilise une version compilée du fichier `.po`, c'est le fichier `.mo` que l'on obtient avec :
+Django utilise une version compilée du fichier `.po`, c’est le fichier `.mo` que l’on obtient avec :
 
 ```sh
-poetry run  python manage.py compilemessages
+uv run  python manage.py compilemessages
 ```
 
 Il est recommandé d’utiliser [https://poedit.net/](Poedit) pour les traductions, afin de profiter de sa mémoire de traduction
@@ -134,7 +127,7 @@ Nous utilisons `ruff` et `black` pour assurer un formatage cohérent du code sur
 Pour vérifier son code, on peut intégrer le linter adapté à son IDE et ou lancer la commande suivante :
 
 ```sh
-make quality
+just quality
 ```
 
 Pour s’assurer que cette vérification est faite de manière systématique, nous utilisons des *pre-commit hooks*.

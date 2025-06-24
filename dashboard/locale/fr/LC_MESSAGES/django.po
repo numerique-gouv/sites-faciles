@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 12:09+0200\n"
-"PO-Revision-Date: 2025-05-19 16:04+0200\n"
+"POT-Creation-Date: 2025-06-20 16:57+0200\n"
+"PO-Revision-Date: 2025-06-16 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: dashboard/templates/wagtailadmin/account/password_reset/complete.html:5
 msgid "Password change successful"
@@ -75,6 +75,63 @@ msgstr ""
 #: dashboard/templates/wagtailadmin/account/password_reset/form.html:10
 msgid "Reset your password"
 msgstr "Réinitialisez votre mot de passe"
+
+#: dashboard/templates/wagtailadmin/home.html:5
+msgid "Sites faciles"
+msgstr ""
+
+#: dashboard/templates/wagtailadmin/home/account_summary.html:15
+msgid "Account"
+msgstr "Mon compte"
+
+#: dashboard/templates/wagtailadmin/home/account_summary.html:22
+msgid "Contact us"
+msgstr "Nous contacter"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:10
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:11
+msgid "Links"
+msgstr "Liens"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:21
+msgid "Edit home page"
+msgstr "Modifier la page d'accueil"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:25
+msgid "Show all pages"
+msgstr "Voir toutes les pages"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:29
+msgid "Create new page"
+msgstr "Créer une nouvelle page"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:35
+msgid "Manage main menu"
+msgstr "Gérer le menu principal de navigation"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:39
+msgid "Configure my site"
+msgstr "Configurer mon site"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:4
+msgid "Tutorials"
+msgstr "Tutoriels"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:11
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:12
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:13
+msgid "Videos"
+msgstr "Vidéos"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:38
+#, fuzzy
+#| msgid "Tutorials"
+msgid "Tutorial"
+msgstr "Tutoriels"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:38
+msgid "of"
+msgstr ""
 
 #: dashboard/templates/wagtailadmin/login.html:5
 #: dashboard/templates/wagtailadmin/login.html:15
@@ -143,14 +200,17 @@ msgstr "Se souvenir de moi"
 msgid "Connect"
 msgstr "Se connecter"
 
-#: dashboard/wagtail_hooks.py:23
+#: dashboard/wagtail_hooks.py:25
 msgid "Visit site"
 msgstr "Voir le site"
 
-#: dashboard/wagtail_hooks.py:39
+#: dashboard/wagtail_hooks.py:41
 msgid "See page entry in API"
 msgstr "Voir la page dans l’API"
 
-#: dashboard/wagtail_hooks.py:64
+#: dashboard/wagtail_hooks.py:66
 msgid "(Opens a new window)"
 msgstr "(Ouvre une nouvelle fenêtre)"
+
+#~ msgid "Tutorial {{ forloop.counter }} of {{ context|length }}"
+#~ msgstr "Tutoriel {{ forloop.counter }} sur {{ context|length }}"

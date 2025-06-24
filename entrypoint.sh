@@ -1,13 +1,15 @@
 #!/bin/sh -l
 set -ex
 
-export PATH="${PATH}:${POETRY_VENV}/bin"
-poetry run python manage.py migrate
+export USE_UV=0
+export USE_DOCKER=0 # Commands run from inside docker shouldn't be prefixed
+
+just deploy
 
 if [ "$DEBUG" = "True" ]; then
-    poetry run python manage.py runserver 0.0.0.0:$CONTAINER_PORT
+    python manage.py runserver 0.0.0.0:$CONTAINER_PORT
 else
-    poetry run gunicorn config.wsgi:application --bind 0.0.0.0:$CONTAINER_PORT
+    gunicorn config.wsgi:application --bind 0.0.0.0:$CONTAINER_PORT
 fi
 
 exec "$@"
