@@ -70,6 +70,11 @@
     gap: 1em;
 }
 
+.sf-panel {
+    vertical-align: baseline !important;
+}
+
+/** Tutorials panel (_tutorials.html) **/
 .sf-card {
     display: flex;
     flex-direction: column;
@@ -108,4 +113,11 @@
 
 .sf-card__wrapper--image:hover .sf-card__image {
     transform: scale(1.01);
+}
+
+.listing .sf-tutorials-display tr:not(:first-child) {
+    border-top: none; }
+
+.sf-tutorials-display tr td {
+    vertical-align: baseline;
 }
