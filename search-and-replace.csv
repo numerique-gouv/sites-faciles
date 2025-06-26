@@ -1,19 +1,22 @@
-to="blog.,to="sites_faciles_blog.,**/migrations
-through="blog.,through="sites_faciles_blog.,**/migrations
-("blog",("sites_faciles_blog",**/migrations
-"page_type": ["blog,"page_type": ["sites_faciles_blog,**/migrations
-from blog.,from sites_faciles.blog.,*
+to="blog\.,to="sites_faciles_blog.,**/migrations
+through="blog\.,through="sites_faciles_blog.,**/migrations
+\("blog",\("sites_faciles_blog",**/migrations
+"page_type": \["blog,"page_type": \["sites_faciles_blog,**/migrations
+from blog\.,from sites_faciles.blog.,*
+template="blog\/,to="sites_faciles/blog/,**/templates
 
-to="events.,to="sites_faciles_events.,**/migrations
-through="events.,through="sites_faciles_events.,**/migrations
-("events",("sites_faciles_events",**/migrations
-"page_type": ["events,"page_type": ["sites_faciles_events,**/migrations
-from events.,from sites_faciles.events.,*
+to="events\.,to="sites_faciles_events.,**/migrations
+through="events\.,through="sites_faciles_events.,**/migrations
+\("events",\("sites_faciles_events",**/migrations
+"page_type": \["events,"page_type": \["sites_faciles_events,**/migrations
+from events\.,from sites_faciles.events.,*
+template="events\/,to="sites_faciles/events/,**/templates
 
-to="content_manager.,to="sites_faciles_content_manager.,**/migrations
-through="content_manager.,through="sites_faciles_content_manager.,**/migrations
-("content_manager",("sites_faciles_content_manager",**/migrations
-"page_type": ["content_manager,"page_type": ["sites_faciles_content_manager,**/migrations
-from content_manager.,from sites_faciles.content_manager.,*
+to="content_manager\.,to="sites_faciles_content_manager.,**/migrations
+through="content_manager\.,through="sites_faciles_content_manager.,**/migrations
+\("content_manager",\("sites_faciles_content_manager",**/migrations
+"page_type": \["content_manager,"page_type": \["sites_faciles_content_manager,**/migrations
+from content_manager\.,from sites_faciles.content_manager.,*
+template="content_manager\/,to="sites_faciles/content_manager/,**/templates
 
-"content_manager.blocks,"sites_faciles.content_manager.blocks,**/migrations
+"content_manager\.blocks,"sites_faciles_content_manager.blocks,**/migrations

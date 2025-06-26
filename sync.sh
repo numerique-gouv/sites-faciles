@@ -69,8 +69,6 @@ while IFS=, read -r search replace raw_path; do
     done
 done < "$SEARCH_REPLACE"
 
-ls -la sites_faciles/content_manager
-
 echo "🆕 Prepare sites_faciles tree"
 mkdir -p "$SUBFOLDER"
 grep -vxFf $DO_NOT_MOVE <(ls -A) | while read file; do
