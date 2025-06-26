@@ -30,7 +30,12 @@ while IFS=, read -r search replace raw_path; do
     echo "🔁 $search > $replace in $raw_path"
 
     # Use find to expand wildcard directory paths (e.g. **/migrations)
-    matched_dirs=$(find . -type d -path "./$raw_path" 2>/dev/null)
+    matched_dirs=$(find . -type d -path "./$raw_path" 2>/dev/null | while read -r dir; do
+        if git ls-files --error-unmatch "$dir/" >/dev/null 2>&1 || \
+           git ls-files --cached --others --exclude-standard | grep -q "^${dir#./}/"; then
+            echo "$dir"
+        fi
+    done)
 
     if [[ -z "$matched_dirs" ]]; then
         echo "⚠️ No matching directories for '$raw_path'"
