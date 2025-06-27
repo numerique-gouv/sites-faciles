@@ -64,6 +64,7 @@
   }
 }
 /** CUSTOM CLASSES FOR WAGTAIL ADMIN **/ 
+/** Main links panel (_main_links.html) **/
 .sf-panel .w-summary {
     display:flex;
     align-items: center; 

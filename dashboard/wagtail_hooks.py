@@ -36,6 +36,11 @@ def register_site_menu_item():
     )
 
 
+@hooks.register("register_icons")
+def register_icons(icons):
+    return icons + ["wagtailadmin/icons/edit-outline.html"]
+
+
 class UserbarPageAPILinkItem:
     """
     When on a Wagtail page, add a link to the Page API for admin users in the wagtail toolbar
