@@ -9,7 +9,7 @@ from wagtail.images.api.fields import ImageRenditionField
 from wagtail.models import Page
 from wagtail.search import index
 
-from content_manager.blocks import STREAMFIELD_COMMON_BLOCKS, ButtonsHorizontalListBlock
+from content_manager.blocks import HERO_STREAMFIELD_BLOCKS, STREAMFIELD_COMMON_BLOCKS, ButtonsHorizontalListBlock
 from content_manager.utils import get_streamfield_raw_text
 
 
@@ -18,6 +18,8 @@ class SitesFacilesBasePage(Page):
     This class defines a base page model that will be used
     by all pages in Sites Faciles
     """
+
+    hero = StreamField(HERO_STREAMFIELD_BLOCKS, blank=True, use_json_field=True)
 
     body = StreamField(
         STREAMFIELD_COMMON_BLOCKS,
@@ -90,6 +92,7 @@ class SitesFacilesBasePage(Page):
     )
 
     content_panels = Page.content_panels + [
+        FieldPanel("hero", heading=_("Hero")),
         MultiFieldPanel(
             [
                 FieldPanel("header_with_title"),
@@ -120,6 +123,7 @@ class SitesFacilesBasePage(Page):
 
     # Export fields over the API
     api_fields = [
+        APIField("hero"),
         APIField("body"),
         APIField("header_image"),
         APIField("header_image_render", serializer=ImageRenditionField("fill-1200x630", source="header_image")),
