@@ -66,9 +66,11 @@ done < "$SEARCH_REPLACE"
 cd ..
 rm -rf sites_faciles
 mv sites_faciles_temp sites_faciles
-rm -rf sites_faciles/.git
-rm -rf sites_faciles/.github
-rm -rf sites_faciles/pyproject.toml
-git restore apps.py __init__.py
+rm -rf sites_faciles/.git \
+    sites_faciles/.github \
+    sites_faciles/pyproject.toml
+
+git restore --source=main "**/apps.py"
+git restore --source=main "**/"__init__.py"
 
 echo "🎬 FIN. The repo were synced. Manually check though as it is not battle-tested yet..."
