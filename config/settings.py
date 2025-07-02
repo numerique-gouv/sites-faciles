@@ -29,6 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -40,8 +41,9 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
 HOST_PORT = os.getenv("HOST_PORT", "")
-FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "") or None
-
+FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME")
+if not FORCE_SCRIPT_NAME or FORCE_SCRIPT_NAME == "None":
+    FORCE_SCRIPT_NAME = ""
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -51,8 +53,8 @@ TESTING = "test" in sys.argv
 # Application definition
 
 INSTALLED_APPS = [
-    # The order is important for overriding templates and using contexts, please change it carefully.
     "storages",
+    "dashboard",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.routable_page",
@@ -63,6 +65,7 @@ INSTALLED_APPS = [
     "wagtail.users",
     "wagtail.documents",
     "wagtail.images",
+    "wagtail.admin",
     "wagtail.search",
     "wagtail.snippets",
     "wagtail",
@@ -81,18 +84,17 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "widget_tweaks",
     "dsfr",
+    "sass_processor",
     "content_manager",
     "blog",
     "events",
     "forms",
-    "wagtail_honeypot",
-    "dashboard",
-    "wagtail.admin",
 ]
 
 # Only add these on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
+        "django_extensions",
         "wagtail.contrib.styleguide",
         "debug_toolbar",
     ]
@@ -111,7 +113,6 @@ MIDDLEWARE = [
 ]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 # Only add this on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     MIDDLEWARE += [
@@ -156,7 +157,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
-HONEYPOT_ENABLED_DEFAULT = True
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -224,6 +224,7 @@ STORAGES["staticfiles"] = {
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "sass_processor.finders.CssFinder",
 ]
 
 # S3 uploads & MEDIA CONFIGURATION
@@ -259,7 +260,6 @@ SASS_PROCESSOR_AUTO_INCLUDE = False
 SASS_OUTPUT_STYLE = "compressed"
 
 STATIC_URL = os.getenv("STATIC_URL", "/static/")
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
@@ -340,7 +340,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "")
 
 if DEFAULT_FROM_EMAIL:
-    EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend")
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = os.getenv("EMAIL_HOST", None)
     EMAIL_PORT = os.getenv("EMAIL_PORT", None)
     EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", None)
@@ -402,6 +402,7 @@ for host in ALLOWED_HOSTS:
             if HOST_PORT:
                 CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}:{HOST_PORT}")
 
+
 # Si on utilise un sous-répertoire, s'assurer que STATIC_URL est correct
 if FORCE_SCRIPT_NAME and not STATIC_URL.startswith(FORCE_SCRIPT_NAME):
     STATIC_URL = f"{FORCE_SCRIPT_NAME}/static/"
@@ -413,6 +414,7 @@ if FORCE_SCRIPT_NAME and not MEDIA_URL.startswith(FORCE_SCRIPT_NAME):
 # Permettre à Django de servir les fichiers statiques même en production
 # quand on est derrière un reverse proxy Kubernetes
 WHITENOISE_STATIC_PREFIX = STATIC_URL
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Configuration pour servir les fichiers statiques avec le bon préfixe
 if FORCE_SCRIPT_NAME:
@@ -421,4 +423,3 @@ if FORCE_SCRIPT_NAME:
 
     mimetypes.add_type("application/javascript", ".js", True)
     mimetypes.add_type("text/css", ".css", True)
-
