@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import EmailValidator
 from pyairtable import Api
 from rest_framework import serializers
 from wagtail_airtable.serializers import AirtableSerializer
@@ -9,6 +10,36 @@ from formations.models import Organizer, SubTheme, TargetAudience, Theme
 class LowerCharSerializer(serializers.CharField):
     def to_internal_value(self, value):
         return str(value).replace(" ", "").lower()
+
+
+class URLOrMailtoSerializer(serializers.CharField):
+    """
+    Custom serializer that accepts both URLs (http/https) and mailto links
+    """
+
+    def to_internal_value(self, value):
+        if not value:
+            return value
+
+        value = str(value).strip()
+
+        # Check if it's a mailto link
+        if value.startswith("mailto:"):
+            # Extract email from mailto link and validate it
+            email = value[7:]  # Remove 'mailto:' prefix
+            try:
+                EmailValidator()(email)
+                return value
+            except Exception:
+                raise serializers.ValidationError("Invalid email format in mailto link")
+
+        # Check if it's a valid URL (http/https)
+        try:
+            # Use URLField validation for http/https URLs
+            url_field = serializers.URLField()
+            return url_field.to_internal_value(value)
+        except serializers.ValidationError:
+            raise serializers.ValidationError("Must be a valid URL (http/https) or mailto link")
 
 
 class TargetAudienceSerializer(serializers.RelatedField):
@@ -82,7 +113,7 @@ class FormationPageSerializer(AirtableSerializer):
     short_description = serializers.CharField(required=False)
     knowledge_at_the_end = serializers.CharField(required=False)
     duration = serializers.CharField(max_length=255, required=False)
-    registration_link = serializers.URLField(required=False)
+    registration_link = URLOrMailtoSerializer(required=False)
     target_audience = TargetAudienceSerializer(required=False, many=True)
     themes = ThemeSerializer(required=False, many=True)
     sub_themes = SubThemeSerializer(required=False, many=True)
