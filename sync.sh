@@ -13,7 +13,7 @@ else
 fi
 
 echo "🔄 Reset the repo to latest commit on the main branch"
-git fetch origin
+git fetch --all
 git reset --hard origin/main
 git clean -fd
 
