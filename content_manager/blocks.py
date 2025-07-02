@@ -26,6 +26,8 @@ from content_manager.constants import (
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
     MEDIA_WIDTH_CHOICES,
+    TEXT_ALIGN_HORIZONTAL_CHOICES,
+    TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED,
     TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
@@ -1326,4 +1328,71 @@ STREAMFIELD_COMMON_BLOCKS = [
         "events_recent_entries",
         EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
     ),
+]
+
+## Hero blocks
+
+
+class MarginBlock(blocks.StructBlock):
+    top_margin = blocks.IntegerBlock(
+        label=_("Top margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label=_("Bottom margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+
+    class Meta:
+        value_class = BlockMarginStructValue
+
+
+class LayoutBlock(MarginBlock):
+    background_color = BackgroundColorChoiceBlock(
+        label=_("Background color"),
+        required=False,
+        help_text=_("Uses the French Design System colors"),
+    )
+
+
+class TextContentBlock(blocks.StructBlock):
+    hero_title = blocks.CharBlock(
+        label=_("Title header"),
+        help_text=_("The title that will appear in the header of your page"),
+        default=_("The title of your header"),
+    )
+    hero_subtitle = blocks.RichTextBlock(
+        features=LIMITED_RICHTEXTFIELD_FEATURES,
+        required=False,
+        label=_("Text"),
+        help_text=_("To give a brief description of what you do"),
+        default=_("Add a short description of your organisation here to help visitors easily understand what you do."),
+    )
+
+
+class TextContentLeftRight(TextContentBlock):
+    position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES)
+
+
+class TextContentAllAlignments(TextContentBlock):
+    position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED)
+
+
+class HeroImageAndTextBlock(blocks.StructBlock):
+    text_content = TextContentLeftRight(label=_("Text content"))
+    buttons = blocks.ListBlock(ButtonBlock())
+    layout = LayoutBlock(label=_("Layout"))
+
+    class Meta:
+        icon = "minus"
+
+
+HERO_STREAMFIELD_BLOCKS = [
+    ("header_1", HeroImageAndTextBlock(label=_("En-tête 1"))),
 ]
