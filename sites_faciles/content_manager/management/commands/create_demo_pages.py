@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from faker import Faker
+from forms.models import FormField, FormPage
 from taggit.models import slugify
 from wagtail.rich_text import RichText
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
@@ -7,9 +8,11 @@ from wagtailmenus.models.menus import FlatMenu, MainMenu
 
 from sites_faciles.blog.models import BlogIndexPage
 from sites_faciles.content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
-from sites_faciles.content_manager.services.accessors import get_or_create_catalog_index_page, get_or_create_content_page
+from sites_faciles.content_manager.services.accessors import (
+    get_or_create_catalog_index_page,
+    get_or_create_content_page,
+)
 from sites_faciles.content_manager.utils import get_default_site
-from forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form"]
 

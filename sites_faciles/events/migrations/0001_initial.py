@@ -8788,7 +8788,9 @@ class Migration(migrations.Migration):
                 (
                     "authors",
                     modelcluster.fields.ParentalManyToManyField(
-                        blank=True, help_text="Author entries can be created in Snippets > Persons", to="sites_faciles_blog.person"
+                        blank=True,
+                        help_text="Author entries can be created in Snippets > Persons",
+                        to="sites_faciles_blog.person",
                     ),
                 ),
                 (

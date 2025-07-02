@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from dsfr.forms import DsfrDjangoTemplates
 from dsfr.utils import dsfr_input_class_attr
+from forms.widgets import CustomEmailInputWidget
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
 from wagtail.api import APIField
@@ -11,8 +12,6 @@ from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from wagtail.fields import RichTextField
 from wagtail_honeypot.models import HoneypotFormMixin, HoneypotFormSubmissionMixin
-
-from forms.widgets import CustomEmailInputWidget
 
 
 class FormField(AbstractFormField):
