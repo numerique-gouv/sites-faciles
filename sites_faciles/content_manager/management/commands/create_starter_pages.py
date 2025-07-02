@@ -10,7 +10,7 @@ from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from sites_faciles.content_manager.models import ContentPage
 from sites_faciles.content_manager.services.accessors import get_or_create_footer_menu, get_or_create_main_menu
 from sites_faciles.content_manager.utils import get_default_site
-from forms.models import FormField, FormPage
+from sites_faciles.forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite", "contact"]
 

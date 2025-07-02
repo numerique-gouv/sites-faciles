@@ -5,12 +5,12 @@ from django.urls import include, path
 from django.views.defaults import page_not_found, server_error
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.i18n import JavaScriptCatalog
+from proconnect import urls as oidc_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
 
-from config.api import api_router
-from proconnect import urls as oidc_urls
+from sites_faciles.config.api import api_router
 
 urlpatterns = [
     path("sitemap.xml", sitemap, name="xml_sitemap"),
