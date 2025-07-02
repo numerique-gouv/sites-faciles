@@ -2,7 +2,6 @@
 
 from django.urls import path
 from mozilla_django_oidc.urls import urlpatterns as mozilla_oidc_urls
-
 from proconnect.views import OIDCLogoutCallbackView, OIDCLogoutView
 
 urlpatterns = [

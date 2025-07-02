@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-
 from proconnect.models import UserOIDC, WhitelistedEmailDomain
 
 User = get_user_model()

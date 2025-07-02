@@ -13,7 +13,6 @@ from django.utils.translation import gettext_lazy as _
 from mozilla_django_oidc.auth import (
     OIDCAuthenticationBackend as MozillaOIDCAuthenticationBackend,
 )
-
 from proconnect.exceptions import DuplicateEmailError
 from proconnect.models import UserOIDC
 from proconnect.utils import get_user_by_sub_or_email
