@@ -71,6 +71,6 @@ rm -rf sites_faciles/.git \
     sites_faciles/pyproject.toml
 
 git restore --source=main "**/apps.py"
-git restore --source=main "**/"__init__.py"
+git restore --source=main "**/__init__.py"
 
 echo "🎬 FIN. The repo were synced. Manually check though as it is not battle-tested yet..."

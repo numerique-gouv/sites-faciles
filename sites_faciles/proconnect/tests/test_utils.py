@@ -1,8 +1,12 @@
 from django.contrib.auth import get_user_model
 from wagtail.test.utils import WagtailPageTestCase
 
-from proconnect.models import UserOIDC, WhitelistedEmailDomain
-from proconnect.utils import email_domain_basic_whitelist, email_domain_db_whitelist, get_user_by_sub_or_email
+from sites_faciles.proconnect.models import UserOIDC, WhitelistedEmailDomain
+from sites_faciles.proconnect.utils import (
+    email_domain_basic_whitelist,
+    email_domain_db_whitelist,
+    get_user_by_sub_or_email,
+)
 
 User = get_user_model()
 
