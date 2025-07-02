@@ -79,11 +79,15 @@ class ExportPage:
         self.locate_image_ids(self.source_body)
         self.image_ids = list(set(self.image_ids))
 
-    def locate_image_ids(self, json_object):
+    def locate_image_ids(self, json_object):  # NOSONAR
         if isinstance(json_object, dict) and json_object:
             for key, value in json_object.items():
                 if key in ["image", "bg_image"] and value:
-                    self.image_ids.append(value)
+                    # Manage the case of images with alt
+                    if isinstance(value, dict):
+                        self.image_ids.append(value["image"])
+                    else:
+                        self.image_ids.append(value)
                 else:
                     self.locate_image_ids(value)
 

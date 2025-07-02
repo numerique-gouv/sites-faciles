@@ -1,8 +1,8 @@
 #!/bin/bash
 
 NEW_FILES="new-files.txt"
-DO_NOT_MOVE="do-not-touch.txt"
-SEARCH_REPLACE="search-and-replace.csv"
+DO_NOT_MOVE="../do-not-touch.txt"
+SEARCH_REPLACE="../search-and-replace.csv"
 SUBFOLDER="sites_faciles"
 
 # Detect OS for sed compatibility
@@ -13,16 +13,11 @@ else
 fi
 
 echo "🔄 Reset the repo to latest commit on the main branch"
-git fetch --all
-git reset --hard origin/main
-git clean -fd
 
-echo "♻️ Get back list of files to keep from the fork"
-git restore --source=fork/main $NEW_FILES
-while IFS= read -r file; do
-    echo "$file"
-    git restore --source=fork/main $file
-done < "$NEW_FILES"
+git clone git@github.com:numerique-gouv/sites-faciles.git sites_faciles_temp
+
+echo "🙈 Move into subdirectory"
+cd sites_faciles_temp
 
 
 echo "📝 Rewrite files to namespace everything"
@@ -69,12 +64,11 @@ while IFS=, read -r search replace raw_path; do
     done
 done < "$SEARCH_REPLACE"
 
-echo "🆕 Prepare sites_faciles tree"
-mkdir -p "$SUBFOLDER"
-grep -vxFf $DO_NOT_MOVE <(ls -A) | while read file; do
-  echo "🗄️ Moving: $file"
-  mv $file "$SUBFOLDER/"
-done
-
+cd ..
+rm -rf sites_faciles
+mv sites_faciles_temp sites_faciles
+rm -rf sites_faciles/.git
+rm -rf sites_faciles/.github
+rm -rf sites_faciles/pyproject.toml
 
 echo "🎬 FIN. The repo were synced. Manually check though as it is not battle-tested yet..."

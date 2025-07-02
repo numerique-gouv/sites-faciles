@@ -13,7 +13,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_content_manager", "0016_auto_20240305_1611"),
+        ("content_manager", "0016_auto_20240305_1611"),
         ("taggit", "0006_rename_taggeditem_content_type_object_id_taggit_tagg_content_8fc721_idx"),
     ]
 

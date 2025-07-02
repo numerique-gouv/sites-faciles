@@ -9,7 +9,7 @@ import wagtail.images.blocks
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_content_manager", "0001_initial"),
+        ("content_manager", "0001_initial"),
     ]
 
     operations = [

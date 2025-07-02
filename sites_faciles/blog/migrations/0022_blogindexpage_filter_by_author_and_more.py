@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_blog", "0021_blogentrypage_header_cta_buttons_and_more"),
+        ("blog", "0021_blogentrypage_header_cta_buttons_and_more"),
     ]
 
     operations = [

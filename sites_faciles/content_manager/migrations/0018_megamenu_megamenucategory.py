@@ -7,7 +7,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_content_manager", "0017_tag_contentpage_header_cta_text_and_more"),
+        ("content_manager", "0017_tag_contentpage_header_cta_text_and_more"),
         ("wagtailmenus", "0023_remove_use_specific"),
     ]
 

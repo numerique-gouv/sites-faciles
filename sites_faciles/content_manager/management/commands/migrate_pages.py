@@ -2,8 +2,8 @@ from pathlib import Path
 
 from django.core.management.base import BaseCommand
 
-from sites_faciles.blog.services.import_export import ExportPage, ImportExportImages, ImportPages
-from sites_faciles.blog.utils import get_default_site
+from sites_faciles.content_manager.services.import_export import ExportPage, ImportExportImages, ImportPages
+from sites_faciles.content_manager.utils import get_default_site
 
 SOURCE_URL = "https://sites-faciles.beta.numerique.gouv.fr/"
 

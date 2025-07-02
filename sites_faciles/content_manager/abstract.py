@@ -23,6 +23,7 @@ class SitesFacilesBasePage(Page):
         STREAMFIELD_COMMON_BLOCKS,
         blank=True,
         use_json_field=True,
+        collapsed=True,
     )
     header_with_title = models.BooleanField(_("Show title in header image?"), default=False)  # type: ignore
 
@@ -69,37 +70,26 @@ class SitesFacilesBasePage(Page):
         null=True,
         blank=True,
     )
-    header_cta_label = models.CharField(
-        _("Call to action label"),
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
-        ),
-        null=True,
-        blank=True,
-    )
-
-    header_cta_link = models.URLField(
-        _("Call to action link"),
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
-        ),
-        null=True,
-        blank=True,
-    )
 
     source_url = models.URLField(
         _("Source URL"),
-        help_text=_("For imported pages, to allow updates."),
+        help_text=_("For imported pages, to allow updates. Max length: 2000 characters."),
+        max_length=2000,
         null=True,
         blank=True,
     )
 
-    content_panels = Page.content_panels + [
-        FieldPanel("body", heading=_("Body")),
-    ]
+    preview_image = models.ForeignKey(
+        get_image_model_string(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("Preview image"),
+        help_text=_("Image displayed as a preview when the page is shared on social media"),
+    )
 
-    promote_panels = [
-        MultiFieldPanel(Page.promote_panels, _("Common page configuration")),
+    content_panels = Page.content_panels + [
         MultiFieldPanel(
             [
                 FieldPanel("header_with_title"),
@@ -112,11 +102,16 @@ class SitesFacilesBasePage(Page):
                     "header_cta_buttons",
                     heading=_("Call-to-action buttons"),
                 ),
-                FieldPanel("header_cta_label"),
-                FieldPanel("header_cta_link"),
             ],
             heading=_("Header options"),
         ),
+        FieldPanel("body", heading=_("Body")),
+    ]
+
+    configuration_field_panels = list(Page.promote_panels) + [FieldPanel("preview_image")]
+
+    promote_panels = [
+        MultiFieldPanel(configuration_field_panels, _("Common page configuration")),
     ]
 
     search_fields = Page.search_fields + [
@@ -127,7 +122,7 @@ class SitesFacilesBasePage(Page):
     api_fields = [
         APIField("body"),
         APIField("header_image"),
-        APIField("header_image_render", serializer=ImageRenditionField("fill-1200x627", source="header_image")),
+        APIField("header_image_render", serializer=ImageRenditionField("fill-1200x630", source="header_image")),
         APIField("header_image_thumbnail", serializer=ImageRenditionField("fill-376x211", source="header_image")),
         APIField("header_with_title"),
         APIField("header_color_class"),
@@ -135,9 +130,9 @@ class SitesFacilesBasePage(Page):
         APIField("header_darken"),
         APIField("header_cta_text"),
         APIField("header_cta_buttons"),
-        APIField("header_cta_label"),
-        APIField("header_cta_link"),
         APIField("public_child_pages"),
+        APIField("preview_image"),
+        APIField("preview_image_render", serializer=ImageRenditionField("fill-1200x630", source="preview_image")),
     ]
 
     @property
@@ -151,6 +146,10 @@ class SitesFacilesBasePage(Page):
             }
             for child in self.get_children().live().public()
         ]
+
+    @property
+    def get_preview_image(self):
+        return self.preview_image or self.header_image
 
     def get_absolute_url(self):
         return self.url

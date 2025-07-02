@@ -25,12 +25,11 @@ from wagtail.models.i18n import TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
+from sites_faciles.blog.blocks import COLOPHON_BLOCKS
+from sites_faciles.blog.managers import CategoryManager
 from sites_faciles.content_manager.abstract import SitesFacilesBasePage
 from sites_faciles.content_manager.constants import LIMITED_RICHTEXTFIELD_FEATURES
 from sites_faciles.content_manager.models import Tag
-
-from .blocks import COLOPHON_BLOCKS
-from .managers import CategoryManager
 
 User = get_user_model()
 
@@ -230,7 +229,7 @@ class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         ),
     ]
 
-    subpage_types = ["sites_faciles_blog.BlogEntryPage"]
+    subpage_types = ["blog.BlogEntryPage"]
 
     class Meta:
         verbose_name = _("Blog index")
@@ -521,10 +520,10 @@ class BlogEntryPage(SitesFacilesBasePage):
     )
     date = models.DateTimeField(verbose_name=_("Post date"), default=timezone.now)
     authors = ParentalManyToManyField(
-        "sites_faciles_blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
+        "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
 
-    parent_page_types = ["sites_faciles_blog.BlogIndexPage"]
+    parent_page_types = ["blog.BlogIndexPage"]
     subpage_types = []
 
     settings_panels = SitesFacilesBasePage.settings_panels + [

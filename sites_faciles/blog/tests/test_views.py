@@ -1,12 +1,14 @@
 import zoneinfo
 from datetime import datetime
 
-from blog.models import BlogEntryPage, BlogIndexPage, Person
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
 
-from sites_faciles.blog.models import ContentPage
+from sites_faciles.blog.models import BlogEntryPage, BlogIndexPage, Person
+from sites_faciles.content_manager.models import ContentPage
+
+User = get_user_model()
 
 
 class BlogTestCase(WagtailPageTestCase):
