@@ -1,0 +1,25 @@
+{# Display Django message info from previous form #}
+{% if messages %}
+  <div class="fr-container fr-mt-6w cmsfr-block-messages">
+    <div class="fr-grid-row fr-grid-row--gutters">
+      <div class="fr-col-12">
+        {% for message in messages %}
+          {% if message.tags == "success" %}
+            <div class="fr-alert fr-alert--success fr-alert--sm fr-mb-5w"
+                 role="status">
+              <p>{{ message }}</p>
+            </div>
+          {% elif message.tags == "info" %}
+            <div class="fr-alert fr-alert--info fr-alert--sm fr-mb-5w" role="status">
+              <p>{{ message }}</p>
+            </div>
+          {% elif message.tags == "error" %}
+            <div class="fr-alert fr-alert--error fr-alert--sm fr-mb-5w" role="alert">
+              <p>{{ message }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}

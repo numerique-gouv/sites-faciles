@@ -5,7 +5,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_blog", "0026_alter_organization_options"),
+        ("blog", "0026_alter_organization_options"),
     ]
 
     operations = [

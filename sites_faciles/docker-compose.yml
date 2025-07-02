@@ -21,9 +21,12 @@ services:
       - "${HOST_PORT}:${HOST_PORT}"
     volumes:
       - .:/app
-      - "/app/staticfiles"
+      - medias:/app/medias
+      - staticfiles:/app/staticfiles
     depends_on:
       - db
 
 volumes:
   postgres_data:
+  medias:
+  staticfiles:

@@ -1,40 +1,84 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.management import call_command
+from django.test import TestCase
+from django.urls import reverse
 from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from sites_faciles.blog.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
-from sites_faciles.blog.utils import get_default_site
+from sites_faciles.content_manager.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
+from sites_faciles.content_manager.services.accessors import get_or_create_content_page
+from sites_faciles.content_manager.utils import get_default_site
+
+User = get_user_model()
 
 
 class ContentPageTestCase(WagtailPageTestCase):
     def setUp(self):
-        home = Page.objects.get(slug="home")
+        home_page = Page.objects.get(slug="home")
         self.admin = User.objects.create_superuser("test", "test@test.test", "pass")
         self.admin.save()
-        self.content_page = home.add_child(
+        self.public_content_page = home_page.add_child(
             instance=ContentPage(
-                title="Page de contenu",
-                slug="content-page",
+                title="Page de contenu publique",
+                slug="public-content-page",
                 owner=self.admin,
             )
         )
-        self.content_page.save()
+        self.public_content_page.save()
+        self.private_content_page = get_or_create_content_page(
+            "private-content-page",
+            title="Page de contenu privée",
+            body=[("subpageslist", None)],
+            parent_page=home_page,
+            restriction_type="login",
+        )
+        self.private_content_page.save()
 
     def test_content_page_is_renderable(self):
-        self.assertPageIsRenderable(self.content_page)
+        self.assertPageIsRenderable(self.public_content_page)
 
     def test_content_page_has_minimal_content(self):
-        url = self.content_page.url
-        response = self.client.get(url)
+        response = self.client.get(self.public_content_page.url)
         self.assertEqual(response.status_code, 200)
 
         self.assertContains(
             response,
-            "<title>Page de contenu — Titre du site</title>",
+            "<title>Page de contenu publique — Titre du site</title>",
+        )
+
+    def test_public_content_page_is_in_the_site_map(self):
+        url = reverse("readable_sitemap")
+        response = self.client.get(url)
+
+        self.assertContains(
+            response,
+            """<a href="/public-content-page/">Page de contenu publique</a>""",
+        )
+
+    def test_private_content_page_is_not_rendered_when_logged_out(self):
+        response = self.client.get(self.private_content_page.url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_private_content_page_is_not_in_the_site_map_when_logged_out(self):
+        url = reverse("readable_sitemap")
+        response = self.client.get(url)
+
+        self.assertNotContains(
+            response,
+            """<a href="/private-content-page/">Page de contenu privée</a>""",
+        )
+
+    def test_private_content_page_is_in_the_site_map_when_logged_in(self):
+        self.client.login(username="test", password="pass")
+        url = reverse("readable_sitemap")
+        response = self.client.get(url)
+
+        self.assertContains(
+            response,
+            """<a href="/private-content-page/">Page de contenu privée</a>""",
         )
 
 
@@ -71,10 +115,7 @@ class ConfigTestCase(WagtailPageTestCase):
         response = self.client.get(url)
 
         self.assertInHTML(
-            """<a href="/"
-                title="Accueil — République française">
-                <p class="fr-logo">République<br />française</p>
-            </a>""",
+            """<p class="fr-logo">République<br />française</p>""",
             response.content.decode(),
         )
 
@@ -160,7 +201,7 @@ class ConfigTestCase(WagtailPageTestCase):
 class MenusTestCase(WagtailPageTestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        call_command("collectstatic", "--ignore=*.sass", interactive=False)
+        call_command("collectstatic", interactive=False)
         call_command("create_starter_pages")
 
     def setUp(self) -> None:
@@ -323,5 +364,24 @@ class CatalogIndexPageTestCase(WagtailPageTestCase):
 
         self.assertInHTML(
             '<a href="/catalog-index/catalog-entry/">Entrée de catalogue</a>',
+            response.content.decode(),
+        )
+
+
+class ErrorPagesTestCase(TestCase):
+    def test_404_error_page(self):
+        response = self.client.get("/404/")
+        self.assertEqual(response.status_code, 404)
+        self.assertInHTML(
+            "<title>Erreur 404 — Page non trouvée — Titre du site</title>",
+            response.content.decode(),
+        )
+
+    def test_500_error_page(self):
+        response = self.client.get("/500/")
+        self.assertEqual(response.status_code, 500)
+        # Site settings are not available in a error 500 page so the site title is not there
+        self.assertInHTML(
+            "<title>Erreur 500 — Erreur inattendue</title>",
             response.content.decode(),
         )

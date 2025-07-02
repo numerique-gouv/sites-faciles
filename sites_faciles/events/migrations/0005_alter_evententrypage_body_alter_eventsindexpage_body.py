@@ -6,7 +6,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_events", "0004_alter_evententrypage_body_alter_eventsindexpage_body"),
+        ("events", "0004_alter_evententrypage_body_alter_eventsindexpage_body"),
     ]
 
     operations = [
@@ -281,11 +281,7 @@ class Migration(migrations.Migration):
                         [[("title", 23), ("description", 24), ("level", 25), ("heading_tag", 26)]],
                         {"label": "Alert message"},
                     ),
-                    28: (
-                        "sites_faciles.content_manager.blocks.IconPickerBlock",
-                        (),
-                        {"label": "Icon", "required": False},
-                    ),
+                    28: ("sites_faciles_content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     29: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -616,7 +612,7 @@ class Migration(migrations.Migration):
                     ),
                     68: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     69: (
-                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        "sites_faciles_content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -637,7 +633,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     74: (
-                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        "sites_faciles_content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -979,22 +975,22 @@ class Migration(migrations.Migration):
                     ),
                     127: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("sites_faciles_blog.Category",),
+                        ("blog.Category",),
                         {"label": "Filter by category", "required": False},
                     ),
                     128: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("sites_faciles_content_manager.Tag",),
+                        ("content_manager.Tag",),
                         {"label": "Filter by tag", "required": False},
                     ),
                     129: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("sites_faciles_blog.Person",),
+                        ("blog.Person",),
                         {"label": "Filter by author", "required": False},
                     ),
                     130: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("sites_faciles_blog.Organization",),
+                        ("blog.Organization",),
                         {
                             "help_text": "The source is the organization of the post author",
                             "label": "Filter by source",
@@ -1536,11 +1532,7 @@ class Migration(migrations.Migration):
                         [[("title", 23), ("description", 24), ("level", 25), ("heading_tag", 26)]],
                         {"label": "Alert message"},
                     ),
-                    28: (
-                        "sites_faciles.content_manager.blocks.IconPickerBlock",
-                        (),
-                        {"label": "Icon", "required": False},
-                    ),
+                    28: ("sites_faciles_content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     29: (
                         "wagtail.blocks.RichTextBlock",
                         (),
@@ -1871,7 +1863,7 @@ class Migration(migrations.Migration):
                     ),
                     68: ("wagtail.blocks.CharBlock", (), {"label": "Top detail: text", "required": False}),
                     69: (
-                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        "sites_faciles_content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Top detail: icon", "required": False},
                     ),
@@ -1892,7 +1884,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     74: (
-                        "sites_faciles.content_manager.blocks.IconPickerBlock",
+                        "sites_faciles_content_manager.blocks.IconPickerBlock",
                         (),
                         {"label": "Bottom detail: icon", "required": False},
                     ),
@@ -2234,22 +2226,22 @@ class Migration(migrations.Migration):
                     ),
                     127: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("sites_faciles_blog.Category",),
+                        ("blog.Category",),
                         {"label": "Filter by category", "required": False},
                     ),
                     128: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("sites_faciles_content_manager.Tag",),
+                        ("content_manager.Tag",),
                         {"label": "Filter by tag", "required": False},
                     ),
                     129: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("sites_faciles_blog.Person",),
+                        ("blog.Person",),
                         {"label": "Filter by author", "required": False},
                     ),
                     130: (
                         "wagtail.snippets.blocks.SnippetChooserBlock",
-                        ("sites_faciles_blog.Organization",),
+                        ("blog.Organization",),
                         {
                             "help_text": "The source is the organization of the post author",
                             "label": "Filter by source",

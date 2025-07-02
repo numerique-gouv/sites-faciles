@@ -1098,11 +1098,7 @@ class Migration(migrations.Migration):
             model_name="blogentrypage",
             name="blog_categories",
             field=modelcluster.fields.ParentalManyToManyField(
-                blank=True,
-                null=True,
-                through="sites_faciles_blog.CategoryEntryPage",
-                to="sites_faciles_blog.category",
-                verbose_name="Categories",
+                blank=True, null=True, through="sites_faciles_blog.CategoryEntryPage", to="sites_faciles_blog.category", verbose_name="Categories"
             ),
         ),
         migrations.CreateModel(
@@ -1112,9 +1108,7 @@ class Migration(migrations.Migration):
                 (
                     "content_object",
                     modelcluster.fields.ParentalKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="entry_tags",
-                        to="sites_faciles_blog.blogentrypage",
+                        on_delete=django.db.models.deletion.CASCADE, related_name="entry_tags", to="sites_faciles_blog.blogentrypage"
                     ),
                 ),
                 (

@@ -7,13 +7,12 @@ import wagtail.images.blocks
 import wagtailmarkdown.blocks
 from django.db import migrations
 
-from sites_faciles import content_manager
-import sites_faciles.content_manager.blocks
+import content_manager.blocks
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_content_manager", "0026_alter_contentpage_body"),
+        ("content_manager", "0026_alter_contentpage_body"),
     ]
 
     operations = [

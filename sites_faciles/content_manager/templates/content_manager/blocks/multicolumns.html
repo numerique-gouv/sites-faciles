@@ -1,0 +1,35 @@
+{% load dsfr_tags wagtailcore_tags wagtailimages_tags %}
+{% image value.bg_image original as bg_img %}
+<div class="fr-py-5w {{ value.vertical_margin }} cmsfr-block-multicolumns"
+     {% if value.bg_color_class or bg_img or value.bg_color %}style="background:{% endif %}
+     {% if bg_img %}no-repeat center url({{ bg_img.url }}){% endif %}
+     {% if value.bg_color_class %} var(--background-alt-{{ value.bg_color_class }}) {% elif value.bg_color %}{{ value.bg_color }}{% endif %}
+     {% if value.bg_color_class or bg_img or value.bg_color %};"{% endif %}>
+  <div class="fr-container">
+    {% if value.title %}
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 fr-mt-3w">
+          <{{ value.heading_tag|default:"h2" }}>{{ value.title }}</{{ value.heading_tag|default:"h2" }}>
+        </div>
+      </div>
+    {% endif %}
+    <div class="fr-grid-row fr-grid-row--gutters {{ value.grid_position }} fr-py-3w">
+      {% for subblock in value.columns %}
+        {% if subblock.block_type == "column" %}
+          <div class="fr-col-12{% if subblock.value.width %} fr-col-lg-{{ subblock.value.width }}{% endif %}">
+            {% include_block subblock.value.content %}
+          </div>
+        {% elif subblock.block_type == "text" %}
+          <div class="fr-col-12 fr-col-sm">{{ subblock.value|richtext }}</div>
+        {% elif subblock.block_type == "video" %}
+          <div class="fr-col-12 fr-col-sm">
+            <h2>{{ subblock.value.title }}</h2>
+            {% include_block subblock %}
+          </div>
+        {% else %}
+          <div class="fr-col-12 fr-col-sm">{% include_block subblock %}</div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

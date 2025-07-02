@@ -1,13 +1,13 @@
 from django.core.management import call_command
 from wagtail.test.utils import WagtailPageTestCase
 
-from sites_faciles.forms.models import FormPage
+from forms.models import FormPage
 
 
 class FormsTestCase(WagtailPageTestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        call_command("collectstatic", "--ignore=*.sass", interactive=False)
+        call_command("collectstatic", interactive=False)
         call_command("create_starter_pages")
 
     def test_form_page_is_renderable(self):
@@ -48,7 +48,8 @@ class FormsTestCase(WagtailPageTestCase):
             response.content.decode(),
         )
 
-        self.assertInHTML(
-            """<li class="fr-error-text">Ce champ est obligatoire.</li>""",
+        self.assertRegex(
             response.content.decode(),
+            r"<li class=\"fr-error-text\">(\\n)?\s*(Ce champ est requis|Ce champ est obligatoire)\.(\\n)?\s*<\/li>",
         )
+        # Updates sometimes mess with the order of the translations and so the displayed translation. Both are fine.

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-10 14:32+0100\n"
-"PO-Revision-Date: 2024-12-10 14:33+0100\n"
+"POT-Creation-Date: 2025-06-16 16:25+0200\n"
+"PO-Revision-Date: 2025-06-16 16:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -91,19 +91,19 @@ msgstr "Articles par page"
 msgid "Post limit in the RSS/Atom feeds"
 msgstr "Nombre d’articles dans les flux RSS/Atom"
 
-#: blog/models.py:211 blog/templates/blog/blog_index_page.html:85
+#: blog/models.py:211 blog/templates/blog/blog_index_page.html:78
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
-#: blog/models.py:212 blog/templates/blog/blog_index_page.html:102
+#: blog/models.py:212 blog/templates/blog/blog_index_page.html:95
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
-#: blog/models.py:213 blog/templates/blog/blog_index_page.html:119
+#: blog/models.py:213 blog/templates/blog/blog_index_page.html:112
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
-#: blog/models.py:215 blog/templates/blog/blog_index_page.html:134
+#: blog/models.py:215 blog/templates/blog/blog_index_page.html:127
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
@@ -120,7 +120,7 @@ msgid "Blog index"
 msgstr "Index de blog"
 
 #: blog/models.py:262 blog/models.py:484 blog/models.py:498
-#: blog/templates/blog/tags_list_page.html:20
+#: blog/templates/blog/tags_list_page.html:18
 msgid "Tags"
 msgstr "Étiquettes"
 
@@ -183,12 +183,12 @@ msgstr "Flux RSS pour la catégorie"
 msgid "RSS feed"
 msgstr "Flux RSS"
 
-#: blog/templates/blog/blog_entry_page.html:79
+#: blog/templates/blog/blog_entry_page.html:72
 msgid "Posted by:"
 msgstr "Écrit par :"
 
-#: blog/templates/blog/blog_index_page.html:80
-#: blog/templates/blog/blog_index_page.html:82
+#: blog/templates/blog/blog_index_page.html:73
+#: blog/templates/blog/blog_index_page.html:75
 msgid "Filters"
 msgstr "Filtres"
 

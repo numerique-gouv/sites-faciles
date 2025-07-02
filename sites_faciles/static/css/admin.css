@@ -25,3 +25,87 @@
 .public-DraftStyleDefault-unorderedListItem {
     list-style-type: disc !important;
 }
+
+/** Overriding streamfield panel block style to show block title instead of its content for greater clarity **/
+.w-panel__heading {
+    display: flex !important;
+    gap:5px;
+}
+
+.w-panel__heading .c-sf-block__type {
+    order:1;
+}
+
+.w-panel__heading .c-sf-block__title {
+    order:2;
+} 
+[aria-expanded='false'] + .w-panel__heading .c-sf-block__type::after {
+  content: ' : ';
+}
+
+[aria-expanded='false'] + .w-panel__heading .c-sf-block__type {
+  display: inline !important;
+}
+
+/** Overriding preview size on editing page  **/
+@media (min-width: 50em) {
+  :root {
+    --side-panel-width: 80vw;
+  }
+
+  .form-side--preview {
+    max-width: 90vw;
+  }
+}
+
+@media screen and (min-width: 56.25em) {
+  .form-side {
+    width: var(--side-panel-width, 100%);
+  }
+}
+/** CUSTOM CLASSES FOR WAGTAIL ADMIN **/ 
+.sf-panel .w-summary {
+    display:flex;
+    align-items: center; 
+    gap: 1em;
+}
+
+.sf-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 320px;  
+}
+
+.sf-card__wrapper {
+    height: 180px;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5em;
+    transition: box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.sf-card__wrapper:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    background: #f9f9f9;
+}
+
+.sf-card__wrapper--icon {
+    border: 1px solid #ccc;
+}
+
+.sf-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.sf-card__wrapper--image:hover .sf-card__image {
+    transform: scale(1.01);
+}

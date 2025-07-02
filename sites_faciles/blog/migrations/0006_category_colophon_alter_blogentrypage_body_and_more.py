@@ -12,7 +12,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_blog", "0005_delete_tag_blogentrypage_header_cta_text_and_more"),
+        ("blog", "0005_delete_tag_blogentrypage_header_cta_text_and_more"),
         ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
     ]
 
@@ -1307,9 +1307,7 @@ class Migration(migrations.Migration):
             model_name="blogentrypage",
             name="authors",
             field=modelcluster.fields.ParentalManyToManyField(
-                blank=True,
-                help_text="Author entries can be created in Snippets > Persons",
-                to="sites_faciles_blog.person",
+                blank=True, help_text="Author entries can be created in Snippets > Persons", to="sites_faciles_blog.person"
             ),
         ),
     ]

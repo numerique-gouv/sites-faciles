@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_events", "0002_eventsindexpage_filter_by_author_and_more"),
+        ("events", "0002_eventsindexpage_filter_by_author_and_more"),
     ]
 
     operations = [

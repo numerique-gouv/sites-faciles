@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 11:45+0200\n"
-"PO-Revision-Date: 2024-09-12 11:46+0200\n"
+"POT-Creation-Date: 2025-06-20 16:57+0200\n"
+"PO-Revision-Date: 2025-06-16 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: dashboard/templates/wagtailadmin/account/password_reset/complete.html:5
 msgid "Password change successful"
@@ -31,16 +31,24 @@ msgstr "Connexion"
 msgid "Set your new password"
 msgstr "Définissez votre nouveau mot de passe"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:21
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:15
+msgid ""
+"ANSSI recommands the use of a password manager to create and store the "
+"password."
+msgstr ""
+"L’ANSSI recommande l’usage d’un gestionnaire de mots de passe pour générer "
+"et stocker le mot de passe."
+
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:27
 #: dashboard/templates/wagtailadmin/account/password_reset/form.html:18
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:29
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:35
 msgid "Invalid password reset link"
 msgstr "Lien de réinitialisation de mot de passe invalide"
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:31
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:37
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used."
@@ -48,7 +56,7 @@ msgstr ""
 "Le lien de réinitialisation de mot de passe était invalide, probablement "
 "parce qu’il a déjà été utilisé."
 
-#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:35
+#: dashboard/templates/wagtailadmin/account/password_reset/confirm.html:41
 msgid "Request a new password reset"
 msgstr "Demander une nouvelle réinitialisation de mot de passe"
 
@@ -68,25 +76,95 @@ msgstr ""
 msgid "Reset your password"
 msgstr "Réinitialisez votre mot de passe"
 
-#: dashboard/templates/wagtailadmin/login.html:10
+#: dashboard/templates/wagtailadmin/home.html:5
+msgid "Sites faciles"
+msgstr ""
+
+#: dashboard/templates/wagtailadmin/home/account_summary.html:15
+msgid "Account"
+msgstr "Mon compte"
+
+#: dashboard/templates/wagtailadmin/home/account_summary.html:22
+msgid "Contact us"
+msgstr "Nous contacter"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:10
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:11
+msgid "Links"
+msgstr "Liens"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:21
+msgid "Edit home page"
+msgstr "Modifier la page d'accueil"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:25
+msgid "Show all pages"
+msgstr "Voir toutes les pages"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:29
+msgid "Create new page"
+msgstr "Créer une nouvelle page"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:35
+msgid "Manage main menu"
+msgstr "Gérer le menu principal de navigation"
+
+#: dashboard/templates/wagtailadmin/home/panels/_main_links.html:39
+msgid "Configure my site"
+msgstr "Configurer mon site"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:4
+msgid "Tutorials"
+msgstr "Tutoriels"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:11
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:12
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:13
+msgid "Videos"
+msgstr "Vidéos"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:38
+#, fuzzy
+#| msgid "Tutorials"
+msgid "Tutorial"
+msgstr "Tutoriels"
+
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:38
+msgid "of"
+msgstr ""
+
+#: dashboard/templates/wagtailadmin/login.html:5
+#: dashboard/templates/wagtailadmin/login.html:15
 msgid "Connection"
 msgstr "Connexion"
 
-#: dashboard/templates/wagtailadmin/login.html:17
+#: dashboard/templates/wagtailadmin/login.html:20
+msgid "Login with"
+msgstr "S’identifier avec"
+
+#: dashboard/templates/wagtailadmin/login.html:23
+msgid "What is ProConnect?"
+msgstr "Qu’est-ce que ProConnect  ?"
+
+#: dashboard/templates/wagtailadmin/login.html:24
+msgid "Opens a new window"
+msgstr "Ouvre une nouvelle fenêtre"
+
+#: dashboard/templates/wagtailadmin/login.html:38
 msgid "Log in with your account"
 msgstr "Se connecter avec son compte"
 
-#: dashboard/templates/wagtailadmin/login.html:20
+#: dashboard/templates/wagtailadmin/login.html:41
 msgid "Unless otherwise stated, all fields are mandatory."
 msgstr "Sauf mention contraire, tous les champs sont obligatoires."
 
-#: dashboard/templates/wagtailadmin/login.html:26
+#: dashboard/templates/wagtailadmin/login.html:47
 msgid "Error: Your username and password do not match, please try again."
 msgstr ""
 "Erreur : Votre identifiant et mot de passe ne correspondent pas, merci de "
 "réessayer."
 
-#: dashboard/templates/wagtailadmin/login.html:33
+#: dashboard/templates/wagtailadmin/login.html:54
 msgid ""
 "Error: Your account does not have access to this page. To continue, please "
 "log in with an authorized account."
@@ -94,38 +172,45 @@ msgstr ""
 "Erreur : Votre compte n’a pas accès à cette page. Pour continuer, merci de "
 "vous connecter avec un compte autorisé."
 
-#: dashboard/templates/wagtailadmin/login.html:46
+#: dashboard/templates/wagtailadmin/login.html:67
 msgid "Username:"
 msgstr "Identifiant :"
 
-#: dashboard/templates/wagtailadmin/login.html:52
+#: dashboard/templates/wagtailadmin/login.html:73
 msgid "Password:"
 msgstr "Mot de passe :"
 
-#: dashboard/templates/wagtailadmin/login.html:55
+#: dashboard/templates/wagtailadmin/login.html:76
 msgid "Show password"
 msgstr "Afficher le mot de passe"
 
-#: dashboard/templates/wagtailadmin/login.html:60
+#: dashboard/templates/wagtailadmin/login.html:81
 msgid "Show"
 msgstr "Afficher"
 
-#: dashboard/templates/wagtailadmin/login.html:66
+#: dashboard/templates/wagtailadmin/login.html:87
 msgid "Forgotten password?"
 msgstr "Mot de passe oublié ?"
 
-#: dashboard/templates/wagtailadmin/login.html:74
+#: dashboard/templates/wagtailadmin/login.html:95
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
-#: dashboard/templates/wagtailadmin/login.html:81
+#: dashboard/templates/wagtailadmin/login.html:101
 msgid "Connect"
 msgstr "Se connecter"
 
-#: dashboard/wagtail_hooks.py:17
+#: dashboard/wagtail_hooks.py:25
 msgid "Visit site"
 msgstr "Voir le site"
 
-#: dashboard/wagtail_hooks.py:33
+#: dashboard/wagtail_hooks.py:41
 msgid "See page entry in API"
 msgstr "Voir la page dans l’API"
+
+#: dashboard/wagtail_hooks.py:66
+msgid "(Opens a new window)"
+msgstr "(Ouvre une nouvelle fenêtre)"
+
+#~ msgid "Tutorial {{ forloop.counter }} of {{ context|length }}"
+#~ msgstr "Tutoriel {{ forloop.counter }} sur {{ context|length }}"

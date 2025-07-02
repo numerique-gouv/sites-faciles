@@ -7,18 +7,17 @@ from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 
-from sites_faciles.blog.models import ContentPage
-from sites_faciles.blog.services.accessors import get_or_create_footer_menu, get_or_create_main_menu
-from sites_faciles.blog.utils import get_default_site
-from sites_faciles.forms.models import FormField, FormPage
+from sites_faciles.content_manager.models import ContentPage
+from sites_faciles.content_manager.services.accessors import get_or_create_footer_menu, get_or_create_main_menu
+from sites_faciles.content_manager.utils import get_default_site
+from forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["home", "mentions-legales", "accessibilite", "contact"]
 
 
 class Command(BaseCommand):
     help = """
-    Creates a series of starter pages, in order to avoid new sites having only a
-    blank "Welcome to Wagtail" page.
+    Creates a series of starter pages, in order to avoid new sites having only a blank "Welcome to Wagtail" page.
     """
 
     def add_arguments(self, parser):
@@ -27,14 +26,29 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
-        pictograms_exist = Image.objects.filter(title__contains="Pictogrammes DSFR").count()
-        if not pictograms_exist:
-            call_command("import_dsfr_pictograms")
-
         slugs = kwargs.get("slug")
 
         if not slugs:
+            # Only run the script on a new site or for specific slugs
+            if Page.objects.last().id > 2:
+                self.stdout.write(
+                    self.style.WARNING(
+                        "The site appears to already have pages, so this script won't run without params."
+                    )
+                )
+                self.stdout.write(
+                    self.style.WARNING("Please run this script on a new site, or with the 'slug' parameter.")
+                )
+                return
+            else:
+                # on a new site, first set the config
+                call_command("set_config")
+
             slugs = ALL_ALLOWED_SLUGS
+
+        pictograms_exist = Image.objects.filter(title__contains="Pictogrammes DSFR").count()
+        if not pictograms_exist:
+            call_command("import_dsfr_pictograms")
 
         for slug in slugs:
             if slug == "home":

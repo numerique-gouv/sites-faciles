@@ -8,7 +8,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("sites_faciles_content_manager", "0022_alter_cmsdsfrconfig_options_cmsdsfrconfig_beta_tag_and_more"),
+        ("content_manager", "0022_alter_cmsdsfrconfig_options_cmsdsfrconfig_beta_tag_and_more"),
     ]
 
     operations = [
