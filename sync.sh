@@ -1,6 +1,5 @@
 #!/bin/bash
 
-NEW_FILES="new-files.txt"
 SEARCH_REPLACE="../search-and-replace.csv"
 SUBFOLDER="sites_faciles"
 
@@ -72,5 +71,8 @@ rm -rf sites_faciles/.git \
 
 git restore --source=main "**/apps.py"
 git restore --source=main "**/__init__.py"
+git restore --source=origin/main "justfile"
+git restore --source=origin/main ".pre-commit-config.yaml"
+poetry run pre-commit install
 
 echo "🎬 FIN. The repo were synced. Manually check though as it is not battle-tested yet..."
