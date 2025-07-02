@@ -116,3 +116,20 @@ TEXT_SIZE_CHOICES = [
     ("", _("Medium")),
     ("fr-text--lg", _("Large")),
 ]
+
+TEXT_ALIGN_HORIZONTAL_CHOICES = [
+    ("left", _("Left")),
+    ("right", _("Right")),
+]
+
+TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED = [
+    ("left", _("Left")),
+    ("center", _("Center")),
+    ("right", _("Right")),
+]
+
+TEXT_ALIGN_VERTICAL_CHOICES = [
+    ("top", _("Top")),
+    ("middle", _("Middle")),
+    ("bottom", _("Bottom")),
+]
