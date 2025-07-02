@@ -19,4 +19,12 @@ through="content_manager\.,through="sites_faciles_content_manager.,**/migrations
 from content_manager\.,from sites_faciles.content_manager.,*
 template="content_manager\/,to="sites_faciles/content_manager/,**/templates
 
+to="proconnect\.,to="sites_faciles_proconnect.,**/migrations
+through="proconnect\.,through="sites_faciles_proconnect.,**/migrations
+\("proconnect",\("sites_faciles_proconnect",**/migrations
+"page_type": \["proconnect,"page_type": \["sites_faciles_proconnect,**/migrations
+from proconnect\.,from sites_faciles.proconnect.,*
+template="proconnect\/,to="sites_faciles/proconnect/,**/templates
+
 "content_manager\.blocks,"sites_faciles_content_manager.blocks,**/migrations
+"blog\.blocks,"sites_faciles_blog.blocks,**/migrations

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 NEW_FILES="new-files.txt"
-DO_NOT_MOVE="../do-not-touch.txt"
 SEARCH_REPLACE="../search-and-replace.csv"
 SUBFOLDER="sites_faciles"
 
@@ -70,5 +69,6 @@ mv sites_faciles_temp sites_faciles
 rm -rf sites_faciles/.git
 rm -rf sites_faciles/.github
 rm -rf sites_faciles/pyproject.toml
+git restore apps.py __init__.py
 
 echo "🎬 FIN. The repo were synced. Manually check though as it is not battle-tested yet..."
