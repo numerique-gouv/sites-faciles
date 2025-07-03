@@ -57,7 +57,7 @@ def canonical_url(context):
         if site.port != 80:
             hostname = f"{hostname}:{site.port}"
     else:
-        hostname = request.get_host
+        hostname = request.get_host()
 
     return f"{scheme}://{hostname}{request.path}"
 
