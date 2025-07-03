@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load static dsfr_tags wagtailcore_tags wagtailimages_tags i18n %}
+{% load static dsfr_tags wagtailcore_tags wagtailimages_tags wagtail_dsfr_tags i18n %}
 
 {% block title %}
   <title>{{ title }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
@@ -21,7 +21,7 @@
     <div class="fr-grid-row fr-grid-row--gutters fr-mb-3w">
       <ul>
         <li>
-          <a href="{% pageurl home_page %}">{{ home_page.title }}</a>
+          <a href="{% root_url %}">{{ home_page.title }}</a>
           <ul>
             {% include "content_manager/blocks/sitemap_entry.html" with pagelist=home_page %}
           </ul>

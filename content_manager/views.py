@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -46,9 +47,12 @@ class TagsListView(TemplateView):
 
         title = _("Tags")
         context["title"] = title
+        script_name = settings.FORCE_SCRIPT_NAME or ""
+        root_dir = f"{script_name.rstrip('/')}/" if script_name else "/"
         context["breadcrumb"] = {
             "links": [],
             "current": title,
+            "root_dir": root_dir,
         }
         context["search_description"] = _("List of all the tags.")
 
@@ -98,11 +102,14 @@ class SiteMapView(TemplateView):
         site = Site.find_for_request(self.request)
         context["home_page"] = site.root_page
 
+        script_name = settings.FORCE_SCRIPT_NAME or ""
+        root_dir = f"{script_name.rstrip('/')}/" if script_name else "/"
         title = _("Sitemap")
         context["title"] = title
 
         context["breadcrumb"] = {
             "links": [],
             "current": title,
+            "root_dir": root_dir,
         }
         return context
