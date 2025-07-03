@@ -40,12 +40,21 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
 HOST_PORT = os.getenv("HOST_PORT", "")
-FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME")
-if not FORCE_SCRIPT_NAME or FORCE_SCRIPT_NAME == "None":
-    FORCE_SCRIPT_NAME = ""
+# Prefix of the application when served under a sub-path.
+# ``FORCE_SCRIPT_NAME`` is the Django setting handling this behaviour:
+# https://docs.djangoproject.com/en/5.2/ref/settings/#force-script-name
+# We expose a clearer ``SITE_BASE_PATH`` environment variable and assign its
+# value to ``FORCE_SCRIPT_NAME``.
+SITE_BASE_PATH = os.getenv("SITE_BASE_PATH", "")
+if SITE_BASE_PATH in ("", "None"):
+    SITE_BASE_PATH = ""
 else:
-    # Remove trailing slash to keep paths consistent
-    FORCE_SCRIPT_NAME = FORCE_SCRIPT_NAME.rstrip("/")
+    SITE_BASE_PATH = SITE_BASE_PATH.rstrip("/")
+
+FORCE_SCRIPT_NAME = SITE_BASE_PATH
+
+# Allow enabling WhiteNoise via an environment variable (disabled by default)
+USE_WHITENOISE = os.getenv("USE_WHITENOISE", "0") != "0"
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -57,7 +66,6 @@ TESTING = "test" in sys.argv
 
 INSTALLED_APPS = [
     # The order is important for overriding templates and using contexts, please change it carefully.
-    "whitenoise.runserver_nostatic",
     "storages",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -96,6 +104,9 @@ INSTALLED_APPS = [
     "wagtail.admin",
 ]
 
+if USE_WHITENOISE:
+    INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
+
 # Only add these on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
@@ -114,17 +125,20 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",    
 ]
 
-if DEBUG:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-    # Allow WhiteNoise to load files directly from app directories without
-    # running ``collectstatic`` each time and reload them on changes.
-    WHITENOISE_USE_FINDERS = True
-    WHITENOISE_AUTOREFRESH = True
-else:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+if USE_WHITENOISE:
+    MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
+
+if USE_WHITENOISE:
+    if DEBUG:
+        STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+        # Allow WhiteNoise to load files directly from app directories without
+        # running ``collectstatic`` each time and reload them on changes.
+        WHITENOISE_USE_FINDERS = True
+        WHITENOISE_AUTOREFRESH = True
+    else:
+        STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Only add this on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     MIDDLEWARE += [

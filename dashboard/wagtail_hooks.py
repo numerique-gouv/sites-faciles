@@ -1,8 +1,8 @@
+from django.conf import settings
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.html import escape, format_html
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 from wagtail import hooks
 from wagtail.admin.menu import MenuItem
 from wagtail.rich_text import LinkHandler
@@ -29,7 +29,7 @@ def insert_custom_editor_scripts():
 
 @hooks.register("register_admin_menu_item")
 def register_site_menu_item():
-    index_url = f"{settings.FORCE_SCRIPT_NAME or ''}/"    
+    index_url = f"{settings.FORCE_SCRIPT_NAME or ''}/"
     return MenuItem(
         _("Visit site"),
         index_url,
