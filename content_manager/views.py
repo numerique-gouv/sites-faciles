@@ -47,7 +47,7 @@ class TagsListView(TemplateView):
 
         title = _("Tags")
         context["title"] = title
-        script_name = settings.FORCE_SCRIPT_NAME or ""
+        script_name = settings.SITE_BASE_PATH or ""
         root_dir = f"{script_name.rstrip('/')}/" if script_name else "/"
         context["breadcrumb"] = {
             "links": [],
