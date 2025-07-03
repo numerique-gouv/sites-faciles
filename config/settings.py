@@ -303,16 +303,16 @@ WAGTAILADMIN_BASE_URL = f"{HOST_PROTO}://{HOST_URL}"
 if HOST_PORT:
     WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
 
-if FORCE_SCRIPT_NAME:
-    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}{FORCE_SCRIPT_NAME}"
+if SITE_BASE_PATH:
+    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}{SITE_BASE_PATH}"
 
 WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 WAGTAILADMIN_PATH = os.getenv("WAGTAILADMIN_PATH", "cms-admin/")
 
-if FORCE_SCRIPT_NAME:
-    LOGIN_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}login/"
-    LOGOUT_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}logout/"
+if SITE_BASE_PATH:
+    LOGIN_URL = f"{SITE_BASE_PATH}/{WAGTAILADMIN_PATH}login/"
+    LOGOUT_URL = f"{SITE_BASE_PATH}/{WAGTAILADMIN_PATH}logout/"
 else:
     LOGIN_URL = f"/{WAGTAILADMIN_PATH}login/"
     LOGOUT_URL = f"/{WAGTAILADMIN_PATH}logout/"
@@ -402,8 +402,8 @@ OIDC_REDIRECT_ALLOWED_HOSTS = ALLOWED_HOSTS
 PROCONNECT_USER_CREATION_FILTER = os.getenv("PROCONNECT_USER_CREATION_FILTER", None)
 LASUITE_DOMAINE_API_KEY = os.getenv("LASUITE_DOMAINE_API_KEY", None)
 
-LOGIN_REDIRECT_URL = f"{FORCE_SCRIPT_NAME or ''}/"
-LOGOUT_REDIRECT_URL = f"{FORCE_SCRIPT_NAME or ''}/"
+LOGIN_REDIRECT_URL = f"{SITE_BASE_PATH or ''}/"
+LOGOUT_REDIRECT_URL = f"{SITE_BASE_PATH or ''}/"
 
 if PROCONNECT_ACTIVATED:
     INSTALLED_APPS += [
@@ -431,19 +431,19 @@ for host in ALLOWED_HOSTS:
                 CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}:{HOST_PORT}")
 
 # Si on utilise un sous-répertoire, s'assurer que STATIC_URL est correct
-if FORCE_SCRIPT_NAME and not STATIC_URL.startswith(FORCE_SCRIPT_NAME):
-    STATIC_URL = f"{FORCE_SCRIPT_NAME}/static/"
+if SITE_BASE_PATH and not STATIC_URL.startswith(SITE_BASE_PATH):
+    STATIC_URL = f"{SITE_BASE_PATH}/static/"
 
 # Configuration des médias avec le bon préfixe
-if FORCE_SCRIPT_NAME and not MEDIA_URL.startswith(FORCE_SCRIPT_NAME):
-    MEDIA_URL = f"{FORCE_SCRIPT_NAME}/medias/"
+if SITE_BASE_PATH and not MEDIA_URL.startswith(SITE_BASE_PATH):
+    MEDIA_URL = f"{SITE_BASE_PATH}/medias/"
 
 # Permettre à Django de servir les fichiers statiques même en production
 # quand on est derrière un reverse proxy Kubernetes
 WHITENOISE_STATIC_PREFIX = STATIC_URL
 
 # Configuration pour servir les fichiers statiques avec le bon préfixe
-if FORCE_SCRIPT_NAME:
+if SITE_BASE_PATH:
     # En production avec reverse proxy, on doit parfois servir nous-mêmes les statiques
     import mimetypes
 

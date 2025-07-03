@@ -521,6 +521,18 @@ wheels = [
 ]
 
 [[package]]
+name = "django-extensions"
+version = "4.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6d/b3/ed0f54ed706ec0b54fd251cc0364a249c6cd6c6ec97f04dc34be5e929eac/django_extensions-4.1.tar.gz", hash = "sha256:7b70a4d28e9b840f44694e3f7feb54f55d495f8b3fa6c5c0e5e12bcb2aa3cdeb", size = 283078 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/64/96/d967ca440d6a8e3861120f51985d8e5aec79b9a8bdda16041206adfe7adc/django_extensions-4.1-py3-none-any.whl", hash = "sha256:0699a7af28f2523bf8db309a80278519362cd4b6e1fd0a8cd4bf063e1e023336", size = 232980 },
+]
+
+[[package]]
 name = "django-filter"
 version = "25.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1491,6 +1503,7 @@ dependencies = [
     { name = "dj-static" },
     { name = "django" },
     { name = "django-dsfr" },
+    { name = "django-extensions" },
     { name = "django-storages", extra = ["s3"] },
     { name = "django-taggit" },
     { name = "faker" },
@@ -1507,6 +1520,7 @@ dependencies = [
     { name = "wagtail-markdown" },
     { name = "wagtail-modeladmin" },
     { name = "wagtailmenus" },
+    { name = "whitenoise" },
 ]
 
 [package.dev-dependencies]
@@ -1530,6 +1544,7 @@ requires-dist = [
     { name = "dj-static", specifier = ">=0.0.6" },
     { name = "django", specifier = ">=5.2.3" },
     { name = "django-dsfr", specifier = ">=2.4.0" },
+    { name = "django-extensions", specifier = ">=3.2.0" },
     { name = "django-storages", extras = ["s3"], specifier = ">=1.14.6" },
     { name = "django-taggit", specifier = ">=6.1.0" },
     { name = "faker", specifier = ">=37.4.0" },
@@ -1546,6 +1561,7 @@ requires-dist = [
     { name = "wagtail-markdown", specifier = ">=0.12.1" },
     { name = "wagtail-modeladmin", specifier = ">=2.2.0" },
     { name = "wagtailmenus", specifier = ">=4.0.3" },
+    { name = "whitenoise", specifier = ">=6.6,<7.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -1803,6 +1819,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/0b/02/ae6ceac1baeda530866a85075641cec12989bd8d31af6d5ab4a3e8c92f47/webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923", size = 9721 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78", size = 11774 },
+]
+
+[[package]]
+name = "whitenoise"
+version = "6.9.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b9/cf/c15c2f21aee6b22a9f6fc9be3f7e477e2442ec22848273db7f4eb73d6162/whitenoise-6.9.0.tar.gz", hash = "sha256:8c4a7c9d384694990c26f3047e118c691557481d624f069b7f7752a2f735d609", size = 25920 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/64/b2/2ce9263149fbde9701d352bda24ea1362c154e196d2fda2201f18fc585d7/whitenoise-6.9.0-py3-none-any.whl", hash = "sha256:c8a489049b7ee9889617bb4c274a153f3d979e8f51d2efd0f5b403caf41c57df", size = 20161 },
 ]
 
 [[package]]
