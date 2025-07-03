@@ -40,7 +40,12 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
 HOST_PORT = os.getenv("HOST_PORT", "")
-FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "") or None
+FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME")
+if not FORCE_SCRIPT_NAME or FORCE_SCRIPT_NAME == "None":
+    FORCE_SCRIPT_NAME = ""
+else:
+    # Remove trailing slash to keep paths consistent
+    FORCE_SCRIPT_NAME = FORCE_SCRIPT_NAME.rstrip("/")
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -52,6 +57,7 @@ TESTING = "test" in sys.argv
 
 INSTALLED_APPS = [
     # The order is important for overriding templates and using contexts, please change it carefully.
+    "whitenoise.runserver_nostatic",
     "storages",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -93,6 +99,7 @@ INSTALLED_APPS = [
 # Only add these on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
+        "django_extensions",
         "wagtail.contrib.styleguide",
         "debug_toolbar",
     ]
@@ -107,11 +114,17 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",    
 ]
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
+if DEBUG:
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+    # Allow WhiteNoise to load files directly from app directories without
+    # running ``collectstatic`` each time and reload them on changes.
+    WHITENOISE_USE_FINDERS = True
+    WHITENOISE_AUTOREFRESH = True
+else:
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Only add this on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     MIDDLEWARE += [
@@ -253,13 +266,7 @@ else:
     MEDIA_URL = os.getenv("MEDIA_URL", "/medias/")
     MEDIA_ROOT = os.path.join(BASE_DIR, os.getenv("MEDIA_ROOT", ""))
 
-# Django Sass
-SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "static/css")
-SASS_PROCESSOR_AUTO_INCLUDE = False
-SASS_OUTPUT_STYLE = "compressed"
-
 STATIC_URL = os.getenv("STATIC_URL", "/static/")
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
@@ -277,17 +284,23 @@ WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Sites faciles")
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = f"{HOST_PROTO}://{HOST_URL}"
+
 if HOST_PORT:
     WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
 
 if FORCE_SCRIPT_NAME:
     WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}{FORCE_SCRIPT_NAME}"
+
 WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 WAGTAILADMIN_PATH = os.getenv("WAGTAILADMIN_PATH", "cms-admin/")
 
-LOGIN_URL = f"{FORCE_SCRIPT_NAME or ''}/{WAGTAILADMIN_PATH}login/"
-LOGOUT_URL = f"{FORCE_SCRIPT_NAME or ''}/{WAGTAILADMIN_PATH}logout/"
+if FORCE_SCRIPT_NAME:
+    LOGIN_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}login/"
+    LOGOUT_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}logout/"
+else:
+    LOGIN_URL = f"/{WAGTAILADMIN_PATH}login/"
+    LOGOUT_URL = f"/{WAGTAILADMIN_PATH}logout/"
 WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 
 WAGTAIL_PASSWORD_REQUIRED_TEMPLATE = "content_manager/password_required.html"
@@ -421,4 +434,3 @@ if FORCE_SCRIPT_NAME:
 
     mimetypes.add_type("application/javascript", ".js", True)
     mimetypes.add_type("text/css", ".css", True)
-

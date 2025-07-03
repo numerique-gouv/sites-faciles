@@ -29,7 +29,7 @@ def insert_custom_editor_scripts():
 
 @hooks.register("register_admin_menu_item")
 def register_site_menu_item():
-    index_url = f"{settings.FORCE_SCRIPT_NAME or ''}/"
+    index_url = f"{settings.FORCE_SCRIPT_NAME or ''}/"    
     return MenuItem(
         _("Visit site"),
         index_url,

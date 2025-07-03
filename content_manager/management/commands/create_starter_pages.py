@@ -124,7 +124,8 @@ class Command(BaseCommand):
         <p>Vous pouvez maintenant vous connecter dans l’administration et personnaliser le site.</p>
         """
 
-        admin_url = f"{settings.WAGTAILADMIN_BASE_URL}{reverse('wagtailadmin_home')}"
+        # Use the reversed admin path directly to avoid duplicating FORCE_SCRIPT_NAME
+        admin_url = reverse("wagtailadmin_home")
 
         image_and_text_block = {
             "image": image,
