@@ -102,11 +102,14 @@ class SiteMapView(TemplateView):
         site = Site.find_for_request(self.request)
         context["home_page"] = site.root_page
 
+        script_name = settings.FORCE_SCRIPT_NAME or ""
+        root_dir = f"{script_name.rstrip('/')}/" if script_name else "/"
         title = _("Sitemap")
         context["title"] = title
 
         context["breadcrumb"] = {
             "links": [],
             "current": title,
+            "root_dir": root_dir,
         }
         return context

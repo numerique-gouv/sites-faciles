@@ -40,12 +40,21 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
 HOST_PORT = os.getenv("HOST_PORT", "")
-FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME")
-if not FORCE_SCRIPT_NAME or FORCE_SCRIPT_NAME == "None":
-    FORCE_SCRIPT_NAME = ""
+# Prefix of the application when served under a sub-path.
+# ``FORCE_SCRIPT_NAME`` is the Django setting handling this behaviour:
+# https://docs.djangoproject.com/en/5.2/ref/settings/#force-script-name
+# We expose a clearer ``SITE_BASE_PATH`` environment variable and assign its
+# value to ``FORCE_SCRIPT_NAME``.
+SITE_BASE_PATH = os.getenv("SITE_BASE_PATH", "")
+if SITE_BASE_PATH in ("", "None"):
+    SITE_BASE_PATH = ""
 else:
-    # Remove trailing slash to keep paths consistent
-    FORCE_SCRIPT_NAME = FORCE_SCRIPT_NAME.rstrip("/")
+    SITE_BASE_PATH = SITE_BASE_PATH.rstrip("/")
+
+FORCE_SCRIPT_NAME = SITE_BASE_PATH
+
+# Allow enabling WhiteNoise via an environment variable (disabled by default)
+USE_WHITENOISE = os.getenv("USE_WHITENOISE", "0") != "0"
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -57,7 +66,6 @@ TESTING = "test" in sys.argv
 
 INSTALLED_APPS = [
     # The order is important for overriding templates and using contexts, please change it carefully.
-    "whitenoise.runserver_nostatic",
     "storages",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -96,6 +104,9 @@ INSTALLED_APPS = [
     "wagtail.admin",
 ]
 
+if USE_WHITENOISE:
+    INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
+
 # Only add these on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
@@ -114,17 +125,20 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",    
 ]
 
-if DEBUG:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-    # Allow WhiteNoise to load files directly from app directories without
-    # running ``collectstatic`` each time and reload them on changes.
-    WHITENOISE_USE_FINDERS = True
-    WHITENOISE_AUTOREFRESH = True
-else:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+if USE_WHITENOISE:
+    MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
+
+if USE_WHITENOISE:
+    if DEBUG:
+        STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+        # Allow WhiteNoise to load files directly from app directories without
+        # running ``collectstatic`` each time and reload them on changes.
+        WHITENOISE_USE_FINDERS = True
+        WHITENOISE_AUTOREFRESH = True
+    else:
+        STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Only add this on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     MIDDLEWARE += [
@@ -288,16 +302,16 @@ WAGTAILADMIN_BASE_URL = f"{HOST_PROTO}://{HOST_URL}"
 if HOST_PORT:
     WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
 
-if FORCE_SCRIPT_NAME:
-    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}{FORCE_SCRIPT_NAME}"
+if SITE_BASE_PATH:
+    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}{SITE_BASE_PATH}"
 
 WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 WAGTAILADMIN_PATH = os.getenv("WAGTAILADMIN_PATH", "cms-admin/")
 
-if FORCE_SCRIPT_NAME:
-    LOGIN_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}login/"
-    LOGOUT_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}logout/"
+if SITE_BASE_PATH:
+    LOGIN_URL = f"{SITE_BASE_PATH}/{WAGTAILADMIN_PATH}login/"
+    LOGOUT_URL = f"{SITE_BASE_PATH}/{WAGTAILADMIN_PATH}logout/"
 else:
     LOGIN_URL = f"/{WAGTAILADMIN_PATH}login/"
     LOGOUT_URL = f"/{WAGTAILADMIN_PATH}logout/"
@@ -387,8 +401,8 @@ OIDC_REDIRECT_ALLOWED_HOSTS = ALLOWED_HOSTS
 PROCONNECT_USER_CREATION_FILTER = os.getenv("PROCONNECT_USER_CREATION_FILTER", None)
 LASUITE_DOMAINE_API_KEY = os.getenv("LASUITE_DOMAINE_API_KEY", None)
 
-LOGIN_REDIRECT_URL = f"{FORCE_SCRIPT_NAME or ''}/"
-LOGOUT_REDIRECT_URL = f"{FORCE_SCRIPT_NAME or ''}/"
+LOGIN_REDIRECT_URL = f"{SITE_BASE_PATH or ''}/"
+LOGOUT_REDIRECT_URL = f"{SITE_BASE_PATH or ''}/"
 
 if PROCONNECT_ACTIVATED:
     INSTALLED_APPS += [
@@ -416,19 +430,19 @@ for host in ALLOWED_HOSTS:
                 CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}:{HOST_PORT}")
 
 # Si on utilise un sous-répertoire, s'assurer que STATIC_URL est correct
-if FORCE_SCRIPT_NAME and not STATIC_URL.startswith(FORCE_SCRIPT_NAME):
-    STATIC_URL = f"{FORCE_SCRIPT_NAME}/static/"
+if SITE_BASE_PATH and not STATIC_URL.startswith(SITE_BASE_PATH):
+    STATIC_URL = f"{SITE_BASE_PATH}/static/"
 
 # Configuration des médias avec le bon préfixe
-if FORCE_SCRIPT_NAME and not MEDIA_URL.startswith(FORCE_SCRIPT_NAME):
-    MEDIA_URL = f"{FORCE_SCRIPT_NAME}/medias/"
+if SITE_BASE_PATH and not MEDIA_URL.startswith(SITE_BASE_PATH):
+    MEDIA_URL = f"{SITE_BASE_PATH}/medias/"
 
 # Permettre à Django de servir les fichiers statiques même en production
 # quand on est derrière un reverse proxy Kubernetes
 WHITENOISE_STATIC_PREFIX = STATIC_URL
 
 # Configuration pour servir les fichiers statiques avec le bon préfixe
-if FORCE_SCRIPT_NAME:
+if SITE_BASE_PATH:
     # En production avec reverse proxy, on doit parfois servir nous-mêmes les statiques
     import mimetypes
 
