@@ -25,7 +25,6 @@ def mega_menu(context: Context, parent_menu_id: int) -> dict:
 def settings_value(name):
     return getattr(settings, name, "")
 
-
 @register.simple_tag
 def root_url() -> str:
     """Return the site's base path, taking ``FORCE_SCRIPT_NAME`` into account."""
@@ -33,6 +32,8 @@ def root_url() -> str:
     if script:
         return f"{script}/"
     return "/"
+
+
 
 
 @register.simple_tag(takes_context=True)

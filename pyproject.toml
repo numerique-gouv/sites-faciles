@@ -20,6 +20,7 @@ dependencies = [
     "django>=5.2.3",
     "wagtail>=7.0.1",
     "psycopg2-binary>=2.9.10",
+    "whitenoise<7.0,>=6.6",
     "python-dotenv>=1.1.0",
     "dj-database-url>=3.0.0",
     "gunicorn>=23.0.0",
@@ -39,6 +40,7 @@ dependencies = [
     "rust-just>=1.40.0",
     "mozilla-django-oidc>=4.0.1",
     "wagtail-honeypot @ git+https://github.com/Luzzzi/wagtail-honeypot@feature/i18n-required-honeypot",
+    "django-extensions>=3.2.0",
 ]
 
 [dependency-groups]
