@@ -42,14 +42,21 @@ class TutorialsPanel(Component):
     def get_context_data(self, parent_content=None):
         res = requests.get("https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/?child_of=107&fields=*")
         response = json.loads(res.text)
-        tutorials = [
-            {
-                "title": tutorial_page["title"],
-                # "image": tutorial_page.get("meta", {}).get("preview_image_render", ""),
-                "url": tutorial_page["meta"]["html_url"],
-            }
-            for tutorial_page in response["items"]
-        ]
+        tutorial_pages = [{"id": page["id"]} for page in response["items"]]
+        tutorials = []
+        for page_id in tutorial_pages:
+            page = json.loads(
+                requests.get(
+                    f'https://sites.beta.gouv.fr/api/v2/pages/{page_id["id"]}/?fields=title,preview_image_render,-body'
+                ).text
+            )
+            tutorials.append(
+                {
+                    "title": page["title"],
+                    "image": page["preview_image_render"]["full_url"],
+                    "url": page["meta"]["html_url"],
+                }
+            )
         return {"tutorials": tutorials}
 
     template_name = "wagtailadmin/home/panels/_tutorials.html"
