@@ -1,13 +1,16 @@
 from django import forms
+from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
 from wagtail.blocks import BooleanBlock, StructValue
+from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
+from wagtail.telepath import register
 from wagtailmarkdown.blocks import MarkdownBlock
 
 from content_manager.constants import (
@@ -99,6 +102,18 @@ class LinkStructValue(blocks.StructValue):
 
 
 class LinkWithoutLabelBlock(blocks.StructBlock):
+    LINK_TYPE_CHOICES = [
+        ("page", _("Page")),
+        ("external_url", _("External URL")),
+        ("document", _("Document")),
+    ]
+
+    link_type = blocks.ChoiceBlock(
+        choices=LINK_TYPE_CHOICES,
+        required=True,
+        label=_("Link type"),
+        help_text=_("Select the type of link."),
+    )
     page = blocks.PageChooserBlock(
         label=_("Page"),
         required=False,
@@ -118,6 +133,40 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
     class Meta:
         value_class = LinkStructValue
         icon = "link"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.link_types = [choice[0] for choice in self.LINK_TYPE_CHOICES]
+
+    def clean(self, value):
+        errors = {}
+        selected_link_type = value.get("link_type")
+        if not selected_link_type:
+            for link_type in self.link_types:
+                if value.get(link_type):
+                    selected_link_type = link_type
+                    value["link_type"] = link_type
+                    break
+        match selected_link_type:
+            case "page":
+                internal_page = value.get("page")
+                if not internal_page:
+                    errors["page"] = ErrorList([_("Please select a page to link to")])
+            case "external_url":
+                external_url = value.get("external_url")
+                if not external_url:
+                    errors["external_url"] = ErrorList([_("Please enter a URL")])
+            case "document":
+                document = value.get("document")
+                if not document:
+                    errors["document"] = ErrorList([_("Please select a document to link to")])
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        for link_type in self.link_types:
+            if link_type != selected_link_type:
+                value[link_type] = None
+        return super().clean(value)
 
 
 class LinkBlock(LinkWithoutLabelBlock):
@@ -1330,6 +1379,30 @@ STREAMFIELD_COMMON_BLOCKS = [
     ),
 ]
 
+
+class LinkBlockAdapter(StructBlockAdapter):
+    js_constructor = "blocks.links.LinkBlock"
+
+    def js_args(self, block):
+        # keys added to args[2] found in this.meta in StructBlockDefinition
+        args = super().js_args(block)
+        # link types configured in LinkBlock class instance
+        args[2]["link_types"] = block.link_types
+        return args
+
+    @cached_property
+    def media(self):
+        from django import forms
+
+        structblock_media = super().media
+        return forms.Media(
+            js=structblock_media._js + ["js/link-block.js"],
+        )
+
+
+register(LinkBlockAdapter(), LinkWithoutLabelBlock)
+
+
 ## Hero blocks
 
 
@@ -1387,6 +1460,7 @@ class TextContentAllAlignments(TextContentBlock):
 class HeroImageAndTextBlock(blocks.StructBlock):
     text_content = TextContentLeftRight(label=_("Text content"))
     buttons = blocks.ListBlock(ButtonBlock())
+    image = ImageChooserBlock(label=_("Image"))
     layout = LayoutBlock(label=_("Layout"))
 
     class Meta:
