@@ -74,6 +74,12 @@ alias rs := runserver
 runserver host_url=host_url host_port=host_port:
     {{docker_cmd}} {{uv_run}} python manage.py runserver {{host_url}}:{{host_port}}
 
+scalingo-postdeploy:
+    python manage.py migrate
+    python manage.py create_starter_pages
+    python manage.py import_page_templates
+    python manage.py update_index
+
 shell:
     {{docker_cmd}} {{uv_run}} python manage.py shell
 
