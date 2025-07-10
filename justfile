@@ -96,6 +96,13 @@ upgrade:
     {{docker_cmd}} {{uv_run}} pre-commit autoupdate
     {{docker_cmd}} npm update
 
+#### Docker stuff
+
+# Composes the production-ready docker image
+docker-compose-prod command="up":
+    docker compose -f docker-compose-production.yml {{command}}
+
+# Access bash inside the Docker container
 web-prompt:
     {{docker_cmd}} bash
 
