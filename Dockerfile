@@ -8,8 +8,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV APP_DIR="/app"
 
-# Needed for docker build to succeed
-ENV DATABASE_URL=postgres://user:password@localhost:5432/db
+ARG DATABASE_URL=postgres://user:password@localhost:5432/db
+ENV DATABASE_URL=${DATABASE_URL}
 
 # Add new user to run the whole thing as non-root.
 RUN set -ex \
