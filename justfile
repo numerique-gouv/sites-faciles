@@ -1,24 +1,22 @@
 set dotenv-load
 set shell := ["bash", "-uc"]
 
-# Variables initialized from env
+#### Variables initialized from env
+
 uv_run := if env("USE_UV", "0") == "1" { "uv run" } else { "" }
 docker_cmd := if env("USE_DOCKER", "0") == "1" { "docker compose exec -ti web" } else { "" }
 host_url := env("HOST_URL", "localhost")
 host_port := env("HOST_PORT", "8000")
 
-# Default recipe
+#### Default recipe
+
 default:
     @just --list
 
-# Other recipes
+#### Other recipes
+
 collectstatic:
     {{docker_cmd}} {{uv_run}} python manage.py collectstatic --noinput
-
-coverage app="":
-    {{uv_run}} coverage run --source='.' manage.py test {{app}}
-    {{uv_run}} coverage html
-    firefox htmlcov/index.html
 
 createsuperuser:
     {{docker_cmd}} {{uv_run}} python manage.py createsuperuser
@@ -83,16 +81,13 @@ scalingo-postdeploy:
 shell:
     {{docker_cmd}} {{uv_run}} python manage.py shell
 
-test app="":
-    {{docker_cmd}} {{uv_run}} python manage.py test {{app}} --buffer --parallel --settings config.settings_test
 
-unittest app="":
-    {{docker_cmd}} {{uv_run}} python manage.py test {{app}} --settings config.settings_test
-
+# Update the app to the latest version
 update:
     {{docker_cmd}} uv sync --no-group dev
     just deploy
 
+# Upgrade the dependencies
 upgrade:
     {{docker_cmd}} uv lock --upgrade
     {{docker_cmd}} {{uv_run}} pre-commit autoupdate
@@ -100,3 +95,35 @@ upgrade:
 
 web-prompt:
     {{docker_cmd}} bash
+
+#### Tests
+
+# Check unit test coverage
+coverage app="":
+    {{uv_run}} coverage run --source='.' manage.py test {{app}}
+    {{uv_run}} coverage html
+    firefox htmlcov/index.html
+
+# Runs unit tests in parallel
+test app="":
+    {{docker_cmd}} {{uv_run}} python manage.py test {{app}} --buffer --parallel --settings config.settings_test
+
+# Runs unit tests one by one
+unittest app="":
+    {{docker_cmd}} {{uv_run}} python manage.py test {{app}} --settings config.settings_test
+
+
+
+#### K8s stuff
+
+# build the kubernetes cluster using kind
+build-k8s-cluster:
+	./bin/start-kind.sh
+
+# start the kubernetes cluster using kind
+tilt-start:
+	tilt up -f ./bin/Tiltfile
+
+# start the kubernetes cluster using kind
+tilt-stop:
+	tilt down -f ./bin/Tiltfile
