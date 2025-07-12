@@ -1465,6 +1465,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
 
     class Meta:
         icon = "minus"
+        template = "content_manager/heros/hero_image_text.html"
 
 
 HERO_STREAMFIELD_BLOCKS = [
