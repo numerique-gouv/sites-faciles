@@ -64,7 +64,7 @@ class FormationPage(AirtableMixin, Page):
     short_description = models.TextField("Descriptif court", blank=True)
     knowledge_at_the_end = models.TextField("À la fin, vous saurez", blank=True)
     duration = models.CharField("Durée (min)", max_length=255, null=True, blank=True)
-    registration_link = models.URLField("Lien d'inscription", max_length=255, blank=True)
+    registration_link = models.CharField("Lien d'inscription", max_length=255, blank=True)
     image_url = models.URLField("URL Image", null=True, blank=True)
     visible = models.TextField("Visible", blank=True)
     target_audience = ParentalManyToManyField(TargetAudience, verbose_name="Public cible", blank=True)
