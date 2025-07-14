@@ -26,7 +26,10 @@ class URLOrMailtoSerializer(serializers.CharField):
         # Check if it's a mailto link
         if value.startswith("mailto:"):
             # Extract email from mailto link and validate it
-            email = value[7:]  # Remove 'mailto:' prefix
+            # Remove 'mailto:' prefix and get email part before any query parameters
+            email_part = value[7:]  # Remove 'mailto:' prefix
+            # Split on '?' to get email without query parameters
+            email = email_part.split("?")[0]
             try:
                 EmailValidator()(email)
                 return value
