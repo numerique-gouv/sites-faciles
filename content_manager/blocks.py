@@ -1450,7 +1450,7 @@ class TextContentBlock(blocks.StructBlock):
 
 
 class TextContentLeftRight(TextContentBlock):
-    position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES)
+    position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES, default="left")
 
 
 class TextContentAllAlignments(TextContentBlock):
