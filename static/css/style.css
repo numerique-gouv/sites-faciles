@@ -81,7 +81,12 @@
 }
 
 @media all and (max-width: 575px) {
-    .cmsfr-order__2 {
+    .cmsfr-order-mobile__2 {
         order: 2
     }
+}
+
+.cmsfr-order__2 {
+    order: 2;
+    padding-left:4em;
 }
