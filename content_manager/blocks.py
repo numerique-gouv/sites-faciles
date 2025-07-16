@@ -32,6 +32,7 @@ from content_manager.constants import (
     TEXT_ALIGN_HORIZONTAL_CHOICES,
     TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED,
     TEXT_SIZE_CHOICES,
+    TEXT_ALIGN_VERTICAL_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
 
@@ -1450,7 +1451,7 @@ class TextContentBlock(blocks.StructBlock):
 
 
 class TextContentLeftRight(TextContentBlock):
-    position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES, default="left")
+    position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES, position_default="")
 
 
 class TextContentAllAlignments(TextContentBlock):
@@ -1458,16 +1459,113 @@ class TextContentAllAlignments(TextContentBlock):
 
 
 class HeroImageAndTextBlock(blocks.StructBlock):
-    text_content = TextContentLeftRight(label=_("Text content"))
-    buttons = blocks.ListBlock(ButtonBlock())
-    image = ImageChooserBlock(label=_("Image"))
-    layout = LayoutBlock(label=_("Layout"))
+    def __init__(self, position_default="left", **kwargs):
+        local_blocks = (
+            (
+                "text_content",
+                blocks.StructBlock(
+                    [
+                        (
+                            "hero_title",
+                            blocks.CharBlock(
+                                label=_("Title header"),
+                                help_text=_("The title that will appear in the header of your page"),
+                                default=_("The title of your header"),
+                            ),
+                        ),
+                        (
+                            "hero_subtitle",
+                            blocks.RichTextBlock(
+                                features=LIMITED_RICHTEXTFIELD_FEATURES,
+                                required=False,
+                                label=_("Text"),
+                                help_text=_("To give a brief description of what you do"),
+                                default=_(
+                                    "Add a short description of your organisation here to help visitors easily" \
+                                    "understand what you do."
+                                ),
+                            ),
+                        ),
+                        (
+                            "position",
+                            blocks.ChoiceBlock(
+                                choices=TEXT_ALIGN_HORIZONTAL_CHOICES,
+                                default=position_default,
+                                label=_("Position"),
+                            ),
+                        ),
+                    ],
+                    label=_("Text content"),
+                ),
+            ),
+            ("buttons", blocks.ListBlock(ButtonBlock())),
+            ("image", ImageChooserBlock(label=_("Image"))),
+            ("layout", LayoutBlock(label=_("Layout"))),
+        )
+        super().__init__(local_blocks, **kwargs)
 
     class Meta:
         icon = "minus"
         template = "content_manager/heros/hero_image_text.html"
 
 
+class HeroWideImageAndTextBlock(blocks.StructBlock):
+    def __init__(self, position_default="left", **kwargs):
+        local_blocks = (
+            (
+                "text_content",
+                blocks.StructBlock(
+                    [
+                        (
+                            "hero_title",
+                            blocks.CharBlock(
+                                label=_("Title header"),
+                                help_text=_("The title that will appear in the header of your page"),
+                                default=_("The title of your header"),
+                            ),
+                        ),
+                        (
+                            "hero_subtitle",
+                            blocks.RichTextBlock(
+                                features=LIMITED_RICHTEXTFIELD_FEATURES,
+                                required=False,
+                                label=_("Text"),
+                                help_text=_("To give a brief description of what you do"),
+                                default=_(
+                                    "Add a short description of your organisation here to help visitors easily " \
+                                    "understand what you do."
+                                ),
+                            ),
+                        ),
+                        (
+                            "position",
+                            blocks.ChoiceBlock(
+                                choices=TEXT_ALIGN_VERTICAL_CHOICES,
+                                default=position_default,
+                                label=_("Position"),
+                            ),
+                        ),
+                        ("layout", blocks.StructBlock(
+                            [("margin", MarginBlock()), 
+                             ""]
+                        )
+                         LayoutBlock(label=_("Layout"))),
+                    ],
+                    label=_("Text content"),
+                ),
+            ),
+            ("buttons", blocks.ListBlock(ButtonBlock())),
+            ("image", ImageChooserBlock(label=_("Image"))),
+        )
+        super().__init__(local_blocks, **kwargs)
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/heros/hero_wide_image_text.html"
+
+
 HERO_STREAMFIELD_BLOCKS = [
-    ("header_1", HeroImageAndTextBlock(label=_("En-tête 1"))),
+    ("header_1", HeroImageAndTextBlock(position_default="left", label=_("En-tête 1"))),
+    ("header_2", HeroImageAndTextBlock(position_default="right", label=_("En-tête 2"))),
+    ("header_3", HeroWideImageAndTextBlock(position_default="top", label=_("En-tête 3"))),
 ]

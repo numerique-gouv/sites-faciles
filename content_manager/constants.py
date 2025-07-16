@@ -130,6 +130,12 @@ TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED = [
 
 TEXT_ALIGN_VERTICAL_CHOICES = [
     ("top", _("Top")),
+    ("bottom", _("Bottom")),
+]
+
+
+TEXT_ALIGN_VERTICAL_CHOICES_EXTENDED = [
+    ("top", _("Top")),
     ("middle", _("Middle")),
     ("bottom", _("Bottom")),
 ]
