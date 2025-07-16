@@ -1458,6 +1458,30 @@ class TextContentAllAlignments(TextContentBlock):
     position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED)
 
 
+class HeroImageBlock(blocks.StructBlock):
+    image = ImageChooserBlock(label=_("Image"))
+    image_ratio = blocks.ChoiceBlock(
+        label=_("Image ratio"),
+        choices=IMAGE_RATIOS,
+        required=False,
+        default="h3",
+    )
+    image_width = blocks.ChoiceBlock(
+        label=_("Image width"),
+        choices=[
+            ("3", "3/12"),
+            ("4", "4/12"),
+            ("5", "5/12"),
+            ("6", "6/12"),
+        ],
+        required=False,
+        default="h3",
+    )
+    image_positioning = blocks.ChoicesBlock(
+        label=_("Image positioning"),
+    )
+
+
 class HeroImageAndTextBlock(blocks.StructBlock):
     def __init__(self, position_default="left", **kwargs):
         local_blocks = (
@@ -1481,8 +1505,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
                                 label=_("Text"),
                                 help_text=_("To give a brief description of what you do"),
                                 default=_(
-                                    "Add a short description of your organisation here to help visitors easily" \
-                                    "understand what you do."
+                                    "Add a short description of your organisation here to help visitors easily understand what you do."
                                 ),
                             ),
                         ),
@@ -1532,8 +1555,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                                 label=_("Text"),
                                 help_text=_("To give a brief description of what you do"),
                                 default=_(
-                                    "Add a short description of your organisation here to help visitors easily " \
-                                    "understand what you do."
+                                    "Add a short description of your organisation here to help visitors easily understand what you do."
                                 ),
                             ),
                         ),
@@ -1545,11 +1567,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                                 label=_("Position"),
                             ),
                         ),
-                        ("layout", blocks.StructBlock(
-                            [("margin", MarginBlock()), 
-                             ""]
-                        )
-                         LayoutBlock(label=_("Layout"))),
+                        ("layout", LayoutBlock(label=_("Layout"))),
                     ],
                     label=_("Text content"),
                 ),
@@ -1567,5 +1585,5 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
 HERO_STREAMFIELD_BLOCKS = [
     ("header_1", HeroImageAndTextBlock(position_default="left", label=_("En-tête 1"))),
     ("header_2", HeroImageAndTextBlock(position_default="right", label=_("En-tête 2"))),
-    ("header_3", HeroWideImageAndTextBlock(position_default="top", label=_("En-tête 3"))),
+    ("header_3", HeroWideImageAndTextBlock(position_default="top", label=_("En-tête "))),
 ]
