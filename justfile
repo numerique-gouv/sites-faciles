@@ -46,7 +46,7 @@ init:
 init-dev:
     {{docker_cmd}} uv sync
     just deploy
-    {{docker_cmd}} {{uv_run}} pre-commit install
+    uvx pre-commit install
 
 alias messages := makemessages
 makemessages:
