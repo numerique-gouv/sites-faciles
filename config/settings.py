@@ -211,9 +211,13 @@ LOCALE_PATHS = ["locale"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
+
+STORAGES_STATICFILES_BACKEND = os.getenv(
+    "STORAGES_STATICFILES_BACKEND", "django.contrib.staticfiles.storage.StaticFilesStorage"
+)
 STORAGES = {}
 STORAGES["staticfiles"] = {
-    "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    "BACKEND": STORAGES_STATICFILES_BACKEND,
 }
 
 STATICFILES_FINDERS = [
@@ -231,8 +235,8 @@ if os.getenv("S3_HOST"):
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
             "bucket_name": os.getenv("S3_BUCKET_NAME", "set-bucket-name"),
-            "access_key": os.getenv("S3_KEY_ID", "123"),
-            "secret_key": os.getenv("S3_KEY_SECRET", "secret"),
+            "access_key": os.getenv("S3_KEY_ID", ""),
+            "secret_key": os.getenv("S3_KEY_SECRET", ""),
             "endpoint_url": endpoint_url,
             "region_name": os.getenv("S3_BUCKET_REGION", "fr"),
             "file_overwrite": False,
@@ -252,6 +256,8 @@ STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+WAGTAILDOCS_SERVE_METHOD = os.getenv("WAGTAILDOCS_SERVE_METHOD", "redirect")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

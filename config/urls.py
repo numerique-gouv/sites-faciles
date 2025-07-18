@@ -1,13 +1,14 @@
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views.defaults import page_not_found, server_error
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.i18n import JavaScriptCatalog
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
+from wagtail.images.views.serve import ServeView
 
 from config.api import api_router
 from proconnect import urls as oidc_urls
@@ -15,6 +16,7 @@ from proconnect import urls as oidc_urls
 urlpatterns = [
     path("sitemap.xml", sitemap, name="xml_sitemap"),
     path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
+    re_path(r"^images/([^/]*)/(\d*)/([^/]*)/[^/]*$", ServeView.as_view(action="redirect"), name="wagtailimages_serve"),
     path("documents/", include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
     path("favicon.ico", RedirectView.as_view(url="/static/dsfr/dist/favicon/favicon.ico", permanent=True)),

@@ -1,18 +1,54 @@
 services:
   db:
-    image: postgres:16.9-alpine
+    image: postgres:16
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
       PGPORT: ${DATABASE_PORT}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 1s
+      timeout: 2s
+      retries: 300
     ports:
       - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  minio:
+    image: minio/minio
+    environment:
+      - MINIO_ROOT_USER=${S3_KEY_ID}
+      - MINIO_ROOT_PASSWORD=${S3_KEY_SECRET}
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 1s
+      timeout: 20s
+      retries: 300
+    entrypoint: ""
+    command: minio server --console-address :9001 /data
+    volumes:
+      - medias:/data
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+        restart: true
+    entrypoint: >
+      sh -c "
+      /usr/bin/mc alias set sites-faciles http://minio:9000 ${S3_KEY_ID} ${S3_KEY_SECRET} && \
+      /usr/bin/mc mb sites-faciles/sites-faciles-media-storage && \
+      /usr/bin/mc version enable sites-faciles/sites-faciles-media-storage && \
+      exit 0;"
+
   web:
-    image: ghcr.io/numerique-gouv/sites-faciles:production
+    image: ghcr.io/numerique-gouv/sites-faciles:kubernetes-2
     env_file:
       - .env
     environment:
@@ -20,7 +56,14 @@ services:
     ports:
       - "${HOST_PORT}:${HOST_PORT}"
     depends_on:
-      - db
+      db:
+          condition: service_healthy
+          restart: true
+      createbuckets:
+        condition: service_started
+    volumes:
+      - medias:/app/medias
 
 volumes:
   postgres_data:
+  medias:
