@@ -30,6 +30,7 @@
     align-items: center;
 }
 
+
 .cmsfr-background-dark h1,
 .cmsfr-background-dark p,
 .cmsfr-background-dark button,
@@ -94,5 +95,4 @@
 
 .cmsfr-order__2 {
     order: 2;
-    padding-left:4em;
 }
