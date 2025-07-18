@@ -1469,7 +1469,6 @@ class HeroImageStructValue(StructValue):
         image_ratio = self.get("image_ratio")
         image_mask = self.get("image_mask")
         image_positioning = self.get("image_positioning")
-        print("🤡", image_ratio)
         extra_class = ""
         if image_ratio:
             extra_class += f"fr-responsive-img {image_ratio} "
