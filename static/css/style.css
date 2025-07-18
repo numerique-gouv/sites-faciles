@@ -25,6 +25,12 @@ p:empty {
     text-align: center;
 }
 
+.cmsfr-hero-large ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .cmsfr-background-dark h1,
 .cmsfr-background-dark p,
 .cmsfr-background-dark button,

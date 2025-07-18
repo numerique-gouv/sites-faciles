@@ -1469,15 +1469,16 @@ class HeroImageStructValue(StructValue):
         image_ratio = self.get("image_ratio")
         image_mask = self.get("image_mask")
         image_positioning = self.get("image_positioning")
-
+        print("🤡", image_ratio)
         extra_class = ""
         if image_ratio:
-            extra_class + f"fr-responsive-img {image_ratio}"
+            extra_class += f"fr-responsive-img {image_ratio} "
         else:
-            extra_class + "fr-responsive-img"
+            extra_class += "fr-responsive-img"
 
         if image_positioning:
-            extra_class + f"{image_positioning}"
+            extra_class += f"cmsfr-image-focus-{image_positioning} "
+        return extra_class
 
 
 class HeroImageBlock(blocks.StructBlock):
