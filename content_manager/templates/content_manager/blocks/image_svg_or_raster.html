@@ -18,7 +18,9 @@
     </svg>
   </div>
 {% else %}
-  <img alt="{% if alt %}{{ alt }}{% endif %}" class="fr-responsive-img" height="80.0" src="{{
-    {% image_url value.image original "wagtailimages_serve" %}
-    }}" width="80.0" data-fr-js-ratio="true" />
-  {% endif %}
+  <img alt="{% if alt %}{{ alt }}{% endif %}"
+       class="fr-responsive-img"
+       height="80.0"
+       src="{% image_url value.image original "wagtailimages_serve" %}"
+       width="80.0" />
+{% endif %}
