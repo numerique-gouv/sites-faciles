@@ -31,8 +31,8 @@ from content_manager.constants import (
     MEDIA_WIDTH_CHOICES,
     TEXT_ALIGN_HORIZONTAL_CHOICES,
     TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED,
-    TEXT_SIZE_CHOICES,
     TEXT_ALIGN_VERTICAL_CHOICES,
+    TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
 
@@ -1431,7 +1431,10 @@ class LayoutBlock(MarginBlock):
     background_color = BackgroundColorChoiceBlock(
         label=_("Background color"),
         required=False,
-        help_text=_("Uses the French Design System colors"),
+        help_text=_(
+            "Uses the French Design System colors.<br>"
+            "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
+        ),
     )
 
 
@@ -1458,28 +1461,74 @@ class TextContentAllAlignments(TextContentBlock):
     position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED)
 
 
+class HeroImageStructValue(StructValue):
+    def extra_classes(self):
+        """
+        Define the extra classes for the image
+        """
+        image_ratio = self.get("image_ratio")
+        image_mask = self.get("image_mask")
+        image_positioning = self.get("image_positioning")
+
+        extra_class = ""
+        if image_ratio:
+            extra_class + f"fr-responsive-img {image_ratio}"
+        else:
+            extra_class + "fr-responsive-img"
+
+        if image_positioning:
+            extra_class + f"{image_positioning}"
+
+
 class HeroImageBlock(blocks.StructBlock):
     image = ImageChooserBlock(label=_("Image"))
+    image_positioning = blocks.ChoiceBlock(
+        choices=GRID_HORIZONTAL_ALIGN_CHOICES,
+        label=_("Image positioning"),
+        required=False,
+        default="center",
+        help_text=_("Choose the part of the image to highlight"),
+    )
+
+    class Meta:
+        value_class = HeroImageStructValue
+
+
+class HeroImageBlockWithRatioWidth(HeroImageBlock):
+    image_width = blocks.ChoiceBlock(
+        label=_("Image width"),
+        choices=MEDIA_WIDTH_CHOICES,
+        required=False,
+        default="",
+        help_text=_("Select image width"),
+    )
     image_ratio = blocks.ChoiceBlock(
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
         required=False,
         default="h3",
+        help_text=_(
+            "Select the right ratio for your image. The size will be adjusted on mobile phones, so make sure you don't include any text in the image."
+        ),
     )
-    image_width = blocks.ChoiceBlock(
-        label=_("Image width"),
+
+    class Meta:
+        value_class = HeroImageStructValue
+
+
+class HeroImageBlockWithMask(HeroImageBlock):
+    image_mask = blocks.ChoiceBlock(
+        label=_("Image mask"),
         choices=[
-            ("3", "3/12"),
-            ("4", "4/12"),
-            ("5", "5/12"),
-            ("6", "6/12"),
+            ("darken", _("Darken")),
+            ("lighten", _("Lighten")),
         ],
         required=False,
-        default="h3",
+        default="",
     )
-    image_positioning = blocks.ChoicesBlock(
-        label=_("Image positioning"),
-    )
+
+    class Meta:
+        value_class = HeroImageStructValue
 
 
 class HeroImageAndTextBlock(blocks.StructBlock):
@@ -1522,7 +1571,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
                 ),
             ),
             ("buttons", blocks.ListBlock(ButtonBlock())),
-            ("image", ImageChooserBlock(label=_("Image"))),
+            ("image", ImageChooserBlock(label=_("Hero image"))),
             ("layout", LayoutBlock(label=_("Layout"))),
         )
         super().__init__(local_blocks, **kwargs)
@@ -1573,7 +1622,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                 ),
             ),
             ("buttons", blocks.ListBlock(ButtonBlock())),
-            ("image", ImageChooserBlock(label=_("Image"))),
+            ("image", HeroImageBlockWithRatioWidth(label=_("Hero image"))),
         )
         super().__init__(local_blocks, **kwargs)
 
@@ -1585,5 +1634,6 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
 HERO_STREAMFIELD_BLOCKS = [
     ("header_1", HeroImageAndTextBlock(position_default="left", label=_("En-tête 1"))),
     ("header_2", HeroImageAndTextBlock(position_default="right", label=_("En-tête 2"))),
-    ("header_3", HeroWideImageAndTextBlock(position_default="top", label=_("En-tête "))),
+    ("header_3", HeroWideImageAndTextBlock(position_default="top", label=_("En-tête 3"))),
+    ("header_4", HeroWideImageAndTextBlock(position_default="bottom", label=_("En-tête 4"))),
 ]
