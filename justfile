@@ -99,7 +99,7 @@ upgrade:
 #### Docker stuff
 
 # Composes the production-ready docker image
-docker-compose-prod command="up":
+docker-compose-prod command="":
     docker compose -f docker-compose-production.yml {{command}}
 
 # Access bash inside the Docker container

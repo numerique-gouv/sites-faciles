@@ -14,9 +14,13 @@ from config.api import api_router
 from proconnect import urls as oidc_urls
 
 urlpatterns = [
+    re_path(
+        rf"^{settings.MEDIA_URL}images/([^/]*)/(\d*)/([^/]*)/[^/]*$",
+        ServeView.as_view(action="redirect"),
+        name="wagtailimages_serve",
+    ),
     path("sitemap.xml", sitemap, name="xml_sitemap"),
     path(settings.WAGTAILADMIN_PATH, include(wagtailadmin_urls)),
-    re_path(r"^images/([^/]*)/(\d*)/([^/]*)/[^/]*$", ServeView.as_view(action="redirect"), name="wagtailimages_serve"),
     path("documents/", include(wagtaildocs_urls)),
     path("api/v2/", api_router.urls),
     path("favicon.ico", RedirectView.as_view(url="/static/dsfr/dist/favicon/favicon.ico", permanent=True)),

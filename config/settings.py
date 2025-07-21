@@ -234,7 +234,7 @@ if os.getenv("S3_HOST"):
     STORAGES["default"] = {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
-            "bucket_name": os.getenv("S3_BUCKET_NAME", "set-bucket-name"),
+            "bucket_name": os.getenv("S3_BUCKET_NAME", ""),
             "access_key": os.getenv("S3_KEY_ID", ""),
             "secret_key": os.getenv("S3_KEY_SECRET", ""),
             "endpoint_url": endpoint_url,
@@ -245,6 +245,8 @@ if os.getenv("S3_HOST"):
     }
 
     MEDIA_URL = f"{endpoint_url}/"
+
+    MEDIA_BASE_URL = os.getenv("MEDIA_BASE_URL", None)
 else:
     STORAGES["default"] = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
