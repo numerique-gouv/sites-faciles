@@ -18,7 +18,7 @@ services:
     environment:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@db:${DATABASE_PORT}/${DATABASE_NAME}
     ports:
-      - "${HOST_PORT}:${HOST_PORT}"
+      - "${HOST_PORT}:${CONTAINER_PORT}"
     volumes:
       - .:/app
       - medias:/app/medias
