@@ -13,12 +13,16 @@
       <th aria-hidden="true">{% comment %} added for visual alignment only {% endcomment %}</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="sf-tutorials-display">
     {% for tutorial in tutorials %}
       {% if forloop.first or forloop.counter0|divisibleby:3 %}<tr>{% endif %}
         <td>
           <div class="sf-card">
-            <a href="{{ tutorial.url }}" title="{{ tutorial.title }}">
+            <a href="{{ tutorial.url }}"
+               title="{{ tutorial.title }}"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="w-body-text">
               {% if tutorial.image %}
                 <div class="sf-card__wrapper sf-card__wrapper--image">
                   <img class="sf-card__image" src={{ tutorial.image }} alt="Preview image">
