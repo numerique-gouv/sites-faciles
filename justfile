@@ -115,9 +115,9 @@ coverage app="":
 
 # Gives a rough estimate of the number of internal and external routes
 routes-count:
-    @{{uv_run}} python manage.py shell -c "from django.urls import get_resolver ; \
+    @{{uv_run}} python manage.py shell -v 0 -c "from django.urls import get_resolver ; \
     routes = set(v[1] for k,v in get_resolver().reverse_dict.items()) ; \
     print('Total: ' + str(len(routes))) ; \
     print('Internal: ' + str(len(list(filter(lambda k: '-admin' in k, routes))) - 3)) ; \
     print('External: ' + str(len(list(filter(lambda k: '-admin' not in k, routes))) + 3)) ;"
-    # (manually adjusting for login/logout and password reset routes)
+    @# (manually adjusting for login/logout and password reset routes)
