@@ -103,7 +103,7 @@ web-prompt:
 
 # Count lines of code per app
 cloc:
-    for d in "blog" "content_manager" "dashboard" "events" "forms" "proconnect" "templates" ; do \
+    @for d in "blog" "content_manager" "dashboard" "events" "forms" "proconnect" "templates" ; do \
     (cd "$d" && echo "$d" && cloc --vcs git); \
     done
 
