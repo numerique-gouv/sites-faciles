@@ -18,11 +18,6 @@ default:
 collectstatic:
     {{docker_cmd}} {{uv_run}} python manage.py collectstatic --noinput
 
-coverage app="":
-    {{uv_run}} coverage run --source='.' manage.py test {{app}}
-    {{uv_run}} coverage html
-    firefox htmlcov/index.html
-
 createsuperuser:
     {{docker_cmd}} {{uv_run}} python manage.py createsuperuser
 
@@ -111,6 +106,12 @@ cloc:
     for d in "blog" "content_manager" "dashboard" "events" "forms" "proconnect" "templates" ; do \
     (cd "$d" && echo "$d" && cloc --vcs git); \
     done
+
+# Evaluate test coverage then generate and open a HTML report
+coverage app="":
+    {{uv_run}} coverage run --source='.' manage.py test {{app}}
+    {{uv_run}} coverage html
+    firefox htmlcov/index.html
 
 # Gives a rough estimate of the number of internal and external routes
 routes-count:
