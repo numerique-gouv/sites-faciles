@@ -96,7 +96,7 @@ upgrade:
     {{docker_cmd}} {{uv_run}} pre-commit autoupdate
     {{docker_cmd}} npm update
 
-#### Docker stuff
+#### Docker-related recipes
 
 # Composes the production-ready docker image
 docker-compose-prod command="":
