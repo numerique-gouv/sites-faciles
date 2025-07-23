@@ -1,8 +1,6 @@
 services:
   db:
     image: postgres:16
-    env_file:
-      - devops/env.d/development
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -20,8 +18,6 @@ services:
 
   minio:
     image: minio/minio
-    env_file:
-      - devops/env.d/development
     environment:
       - MINIO_ROOT_USER=${S3_KEY_ID}
       - MINIO_ROOT_PASSWORD=${S3_KEY_SECRET}
@@ -40,8 +36,6 @@ services:
 
   createbuckets:
     image: minio/mc
-    env_file:
-      - devops/env.d/development
     depends_on:
       minio:
         condition: service_healthy
@@ -54,9 +48,9 @@ services:
       exit 0;"
 
   web:
-    build: .
+    image: ghcr.io/numerique-gouv/sites-faciles:kubernetes-2
     env_file:
-      - devops/env.d/development
+      - .env
     environment:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@db:${DATABASE_PORT}/${DATABASE_NAME}
     ports:
@@ -67,16 +61,9 @@ services:
           restart: true
       createbuckets:
         condition: service_started
-
-  nginx:
-    image: nginx:1.25
-    ports:
-      - "8083:8083"
     volumes:
-      - ./devops/docker/files/etc/nginx/conf.d:/etc/nginx/conf.d:ro
-    depends_on:
-      web:
-        condition: service_started
+      - medias:/app/medias
+
 volumes:
   postgres_data:
   medias:

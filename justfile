@@ -46,7 +46,7 @@ init:
 init-dev:
     {{docker_cmd}} uv sync
     just deploy
-    {{docker_cmd}} {{uv_run}} pre-commit install
+    uvx pre-commit install
 
 alias messages := makemessages
 makemessages:
@@ -96,6 +96,13 @@ upgrade:
     {{docker_cmd}} {{uv_run}} pre-commit autoupdate
     {{docker_cmd}} npm update
 
+#### Docker-related recipes
+
+# Composes the production-ready docker image
+docker-compose-prod command="":
+    docker compose -f docker-compose-production.yml {{command}}
+
+# Access bash inside the Docker container
 web-prompt:
     {{docker_cmd}} bash
 

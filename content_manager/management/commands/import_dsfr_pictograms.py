@@ -19,36 +19,39 @@ class Command(BaseCommand):
         picto_folders = os.listdir(picto_root)
         picto_folders.sort()
 
-        for folder in picto_folders:
-            folder_path = os.path.join(picto_root, folder)
-            files = os.listdir(folder_path)
-            files.sort()
+        try:
+            for folder in picto_folders:
+                folder_path = os.path.join(picto_root, folder)
+                files = os.listdir(folder_path)
+                files.sort()
 
-            folder_title = folder.capitalize()
+                folder_title = folder.capitalize()
 
-            for filename in files:
-                base_file_title = filename.split(".")[0].replace("-", " ").title()
-                full_image_title = f"Pictogrammes DSFR — {folder_title} — {base_file_title}"
+                for filename in files:
+                    base_file_title = filename.split(".")[0].replace("-", " ").title()
+                    full_image_title = f"Pictogrammes DSFR — {folder_title} — {base_file_title}"
 
-                image_exists = Image.objects.filter(title=full_image_title).first()
-                if image_exists:
-                    file_hash = image_exists.get_file_hash()
-                    self.stdout.write(
-                        f"A file named {full_image_title} already exists, skipping (file_hash: {file_hash})"
-                    )
-                else:
-                    image = import_image(
-                        full_path=os.path.join(folder_path, filename),
-                        title=full_image_title,
-                    )
+                    image_exists = Image.objects.filter(title=full_image_title).first()
+                    if image_exists:
+                        file_hash = image_exists.get_file_hash()
+                        self.stdout.write(
+                            f"A file named {full_image_title} already exists, skipping (file_hash: {file_hash})"
+                        )
+                    else:
+                        image = import_image(
+                            full_path=os.path.join(folder_path, filename),
+                            title=full_image_title,
+                        )
 
-                    collection = get_or_create_collection("Pictogrammes DSFR")
+                        collection = get_or_create_collection("Pictogrammes DSFR")
 
-                    image.collection = collection
-                    image.save()
-                    image.get_file_hash()
+                        image.collection = collection
+                        image.save()
+                        image.get_file_hash()
 
-                    image.tags.add("DSFR")
-                    image.tags.add("Pictogrammes")
-                    image.tags.add(folder_title)
-                    self.stdout.write(f"File {full_image_title} imported")
+                        image.tags.add("DSFR")
+                        image.tags.add("Pictogrammes")
+                        image.tags.add(folder_title)
+                        self.stdout.write(f"File {full_image_title} imported")
+        except PermissionError as err:
+            self.stdout.write(self.style.WARNING(f"There was an error while importing pictograms: {err}"))
