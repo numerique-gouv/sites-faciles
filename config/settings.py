@@ -245,8 +245,6 @@ if os.getenv("S3_HOST"):
     }
 
     MEDIA_URL = f"{endpoint_url}/"
-
-    MEDIA_BASE_URL = os.getenv("MEDIA_BASE_URL", None)
 else:
     STORAGES["default"] = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",

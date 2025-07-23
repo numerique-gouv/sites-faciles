@@ -6,21 +6,15 @@
 {% if scheme_dependent_svgs and artwork.file.name|slice:"-4:" == ".svg" %}
   <div class="fr-responsive-img">
     <svg aria-hidden="true" class="fr-artwork" viewBox="0 0 80 80">
-      <use class="fr-artwork-decorative" href="
-      {% image_url value.image original "wagtailimages_serve" %}
-      #artwork-decorative"></use>
-      <use class="fr-artwork-minor" href="
-      {% image_url value.image original "wagtailimages_serve" %}
-      #artwork-minor"></use>
-      <use class="fr-artwork-major" href="
-      {% image_url value.image original "wagtailimages_serve" %}
-      #artwork-major"></use>
+      <use class="fr-artwork-decorative" href="{{ artwork.full_url }}#artwork-decorative"></use>
+      <use class="fr-artwork-minor" href="{{ artwork.full_url }}#artwork-minor"></use>
+      <use class="fr-artwork-major" href="{{ artwork.full_url }}#artwork-major"></use>
     </svg>
   </div>
 {% else %}
-  <img alt="{% if alt %}{{ alt }}{% endif %}"
-       class="fr-responsive-img"
-       height="80.0"
-       src="{% image_url value.image "original" "wagtailimages_serve" %}"
-       width="80.0" />
+  {% if alt %}
+    {% image value.image original class=extra_classes alt=alt %}
+  {% else %}
+    {% image value.image original class=extra_classes alt="" %}
+  {% endif %}
 {% endif %}
