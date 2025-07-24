@@ -352,6 +352,8 @@ WAGTAIL_RICHTEXT_FIELD_FEATURES = [
     "document-link",
     "image",
     "embed",
+    "blue_text",
+    "white_text",
     "text-left",
     "text-center",
     "text-right",
