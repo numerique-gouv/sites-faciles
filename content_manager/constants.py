@@ -83,6 +83,8 @@ LIMITED_RICHTEXTFIELD_FEATURES = [
     "superscript",
     "subscript",
     "strikethrough",
+    "blue_text",
+    "white_text",
 ]
 
 LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS = [
@@ -91,6 +93,8 @@ LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS = [
     "superscript",
     "subscript",
     "strikethrough",
+    "blue_text",
+    "white_text",
 ]
 
 LINK_SIZE_CHOICES = [
