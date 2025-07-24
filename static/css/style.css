@@ -176,7 +176,7 @@ p:empty {
 }
 
 .cmsfr-image-focus-right {
-    object-position: right; 
+    object-position: right;
 }
 
 .cmsfr-image-focus-top {
@@ -185,4 +185,11 @@ p:empty {
 
 .cmsfr-image-focus-bottom {
     object-position: bottom;
+}
+
+.cmsfr-text--blue {
+  color: var(--text-active-blue-france) !important;
+}
+.cmsfr-text--white {
+  color: var(--grey-1000-50) !important;
 }
