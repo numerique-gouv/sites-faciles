@@ -117,24 +117,24 @@ TEXT_SIZE_CHOICES = [
     ("fr-text--lg", _("Large")),
 ]
 
-TEXT_ALIGN_HORIZONTAL_CHOICES = [
+ALIGN_HORIZONTAL_CHOICES = [
     ("left", _("Left")),
     ("right", _("Right")),
 ]
 
-TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED = [
+ALIGN_HORIZONTAL_CHOICES_EXTENDED = [
     ("left", _("Left")),
     ("center", _("Center")),
     ("right", _("Right")),
 ]
 
-TEXT_ALIGN_VERTICAL_CHOICES = [
+ALIGN_VERTICAL_CHOICES = [
     ("top", _("Top")),
     ("bottom", _("Bottom")),
 ]
 
 
-TEXT_ALIGN_VERTICAL_CHOICES_EXTENDED = [
+ALIGN_VERTICAL_CHOICES_EXTENDED = [
     ("top", _("Top")),
     ("middle", _("Middle")),
     ("bottom", _("Bottom")),
