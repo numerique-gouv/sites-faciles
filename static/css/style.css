@@ -14,8 +14,19 @@ p:empty {
 
 .cmsfr-hero {
     background-size: cover;
+    background-repeat: no-repeat
+}
+
+.cmsfr-hero-position__center {
     background-position: center;
-    background-repeat: no-repeat;
+}
+
+.cmsfr-hero-position__top {
+    background-position: top;
+}
+
+.cmsfr-hero-position__bottom {
+    background-position: bottom;
 }
 
 .cmsfr-hero-large {

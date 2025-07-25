@@ -1,7 +1,7 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
-{% image value.image.image fill-1200x650 as bg_img %}
-<div class="cmsfr-hero{% if page.header_darken %} cmsfr-background-dark{% endif %}"
-       style="background-image: {% if page.header_darken %}linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),{% endif %}url({{ bg_img.url }});
+{% image value.image.image fill-1200x650 as bg_img %} 
+<div class="cmsfr-hero{% if value.image.image_mask == 'darken' %} cmsfr-background-dark{% endif %} {% if value.image.image_positioning == 'top' %} cmsfr-hero-position__top {% elif value.image.image_positioning == 'bottom' %} cmsfr-hero-position__bottom {% else %} cmsfr-hero-position__top {% endif %} "
+       style="background-image: {% if value.image.image_mask == 'darken' %}linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), {% elif value.image.image_mask == 'lighten'%}linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)){% endif %}url({{ bg_img.url }});
               min-height: 650px">
     <div class="fr-py-3w cmsfr-hero-column">
         <div class="{{ value.layout.vertical_margin }} cmsfr-hero-column {% if value.text_content.position ==  'top' %} cmsfr-order__2 {% endif %}">
