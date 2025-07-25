@@ -25,10 +25,30 @@ p:empty {
     text-align: center;
 }
 
-.cmsfr-hero-large ul {
+.cmsfr-hero-column {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.cmsfr-hero-column ul {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.cmsfr-text-content__left {
+    text-align: left;
+}
+
+.cmsfr-text-content__right {
+    text-align: right;
+}
+
+.cmsfr-text-content__center {
+    text-align: center;
 }
 
 
@@ -96,4 +116,24 @@ p:empty {
 
 .cmsfr-order__2 {
     order: 2;
+}
+
+.cmsfr-image-focus-left {
+    object-position: left;
+}
+
+.cmsfr-image-focus-center {
+    object-position: center;
+}
+
+.cmsfr-image-focus-right {
+    object-position: right; 
+}
+
+.cmsfr-image-focus-top {
+    object-position: top;
+}
+
+.cmsfr-image-focus-bottom {
+    object-position: bottom;
 }

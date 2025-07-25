@@ -14,6 +14,9 @@ from wagtail.telepath import register
 from wagtailmarkdown.blocks import MarkdownBlock
 
 from content_manager.constants import (
+    ALIGN_HORIZONTAL_CHOICES,
+    ALIGN_HORIZONTAL_CHOICES_EXTENDED,
+    ALIGN_VERTICAL_CHOICES,
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
     BUTTONS_ALIGN_CHOICES,
@@ -29,9 +32,6 @@ from content_manager.constants import (
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
     MEDIA_WIDTH_CHOICES,
-    TEXT_ALIGN_HORIZONTAL_CHOICES,
-    TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED,
-    TEXT_ALIGN_VERTICAL_CHOICES,
     TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
@@ -1454,11 +1454,11 @@ class TextContentBlock(blocks.StructBlock):
 
 
 class TextContentLeftRight(TextContentBlock):
-    position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES, position_default="")
+    position = blocks.ChoiceBlock(choices=ALIGN_HORIZONTAL_CHOICES, position_default="")
 
 
 class TextContentAllAlignments(TextContentBlock):
-    position = blocks.ChoiceBlock(choices=TEXT_ALIGN_HORIZONTAL_CHOICES_EXTENDED)
+    position = blocks.ChoiceBlock(choices=ALIGN_HORIZONTAL_CHOICES_EXTENDED)
 
 
 class HeroImageStructValue(StructValue):
@@ -1483,7 +1483,7 @@ class HeroImageStructValue(StructValue):
 class HeroImageBlock(blocks.StructBlock):
     image = ImageChooserBlock(label=_("Image"))
     image_positioning = blocks.ChoiceBlock(
-        choices=GRID_HORIZONTAL_ALIGN_CHOICES,
+        choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES,
         label=_("Image positioning"),
         required=False,
         default="center",
@@ -1561,7 +1561,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
                         (
                             "position",
                             blocks.ChoiceBlock(
-                                choices=TEXT_ALIGN_HORIZONTAL_CHOICES,
+                                choices=ALIGN_HORIZONTAL_CHOICES,
                                 default=position_default,
                                 label=_("Position"),
                             ),
@@ -1611,14 +1611,53 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                         (
                             "position",
                             blocks.ChoiceBlock(
-                                choices=TEXT_ALIGN_VERTICAL_CHOICES,
+                                choices=ALIGN_VERTICAL_CHOICES,
                                 default=position_default,
-                                label=_("Position"),
+                                label=_("Text content Position"),
                             ),
                         ),
-                        ("layout", LayoutBlock(label=_("Layout"))),
                     ],
                     label=_("Text content"),
+                ),
+            ),
+            (
+                "layout",
+                blocks.StructBlock(
+                    [
+                        (
+                            "top_margin",
+                            blocks.IntegerBlock(
+                                label=_("Spacing above text content"),
+                                min_value=0,
+                                max_value=15,
+                                default=5,
+                                required=False,
+                            ),
+                        ),
+                        (
+                            "bottom_margin",
+                            blocks.IntegerBlock(
+                                label=_("Spacing below text content"),
+                                min_value=0,
+                                max_value=15,
+                                default=5,
+                                required=False,
+                            ),
+                        ),
+                        (
+                            "background_color",
+                            BackgroundColorChoiceBlock(
+                                label=_("Background color"),
+                                required=False,
+                                help_text=_(
+                                    "Uses the French Design System colors.<br>"
+                                    "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
+                                ),
+                            ),
+                        ),
+                    ],
+                    label=_(""),
+                    value_class=BlockMarginStructValue,
                 ),
             ),
             ("buttons", blocks.ListBlock(ButtonBlock())),
@@ -1631,9 +1670,20 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
         template = "content_manager/heros/hero_wide_image_text.html"
 
 
+class HeroBackgroundImageBlock(blocks.StructBlock):
+    text_content = TextContentAllAlignments()
+    buttons = blocks.ListBlock(ButtonBlock())
+    image = HeroImageBlockWithMask(label=_("Hero image"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/heros/hero_background_image_text.html"
+
+
 HERO_STREAMFIELD_BLOCKS = [
     ("header_1", HeroImageAndTextBlock(position_default="left", label=_("En-tête 1"))),
     ("header_2", HeroImageAndTextBlock(position_default="right", label=_("En-tête 2"))),
     ("header_3", HeroWideImageAndTextBlock(position_default="top", label=_("En-tête 3"))),
     ("header_4", HeroWideImageAndTextBlock(position_default="bottom", label=_("En-tête 4"))),
+    ("header_5", HeroBackgroundImageBlock(label=_("En-tête 5"))),
 ]
