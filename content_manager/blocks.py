@@ -1476,7 +1476,7 @@ class HeroImageStructValue(StructValue):
             extra_class += "fr-responsive-img"
 
         if image_positioning:
-            extra_class += f"cmsfr-image-focus-{image_positioning} "
+            extra_class += f"cmsfr-image-focus-{image_positioning}"
         return extra_class
 
 
@@ -1517,6 +1517,18 @@ class HeroImageBlockWithRatioWidth(HeroImageBlock):
 
 
 class HeroImageBlockWithMask(HeroImageBlock):
+    image_positioning = blocks.ChoiceBlock(
+        choices=[
+            ("top", _("Top")),
+            ("bottom", _("Bottom")),
+            ("center", _("Center")),  # ou une autre liste personnalisée
+        ],
+        label=_("Image positioning"),
+        required=False,
+        default="center",
+        help_text=_("Choose the part of the image to highlight"),
+    )
+
     image_mask = blocks.ChoiceBlock(
         label=_("Image mask"),
         choices=[
@@ -1673,7 +1685,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
 class HeroBackgroundImageBlock(blocks.StructBlock):
     text_content = TextContentAllAlignments()
     buttons = blocks.ListBlock(ButtonBlock())
-    image = HeroImageBlockWithMask(label=_("Hero image"))
+    image = HeroImageBlockWithMask(default_position_option=["top", "bottom"], label=_("Hero image"))
 
     class Meta:
         icon = "minus"
