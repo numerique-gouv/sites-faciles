@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -141,10 +143,12 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         date_from = request.GET.get("date_from", "")
         if date_from:
             posts = posts.filter(event_date_end__date__gte=date_from)
+            context["current_date_from"] = datetime.datetime.strptime(date_from, "%Y-%m-%d").date()
 
         date_to = request.GET.get("date_to", "")
         if date_to:
             posts = posts.filter(event_date_start__date__lte=date_to)
+            context["current_date_to"] = datetime.datetime.strptime(date_to, "%Y-%m-%d").date()
 
         form = EventSearchForm(initial={"date_from": date_from, "date_to": date_to})
 

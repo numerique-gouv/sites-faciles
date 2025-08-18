@@ -72,14 +72,15 @@
                       aria-controls="fr-sidemenu-wrapper-{{ page.slug }}"
                       aria-expanded="false">{% translate "Filters" %}</button>
               <div class="fr-collapse" id="fr-sidemenu-wrapper-{{ page.slug }}">
-                <div class="fr-sidemenu__title" id="fr-sidemenu-title">{% translate "Filters" %}</div>
+                <h2 class="fr-sidemenu__title" id="fr-sidemenu-title">{% translate "Filters" %}</h2>
                 {% if categories and page.filter_by_category %}
                   <div class="fr-my-3w">
-                    <h2 class="fr-h6">{% translate "Filter by category" %}</h2>
+                    <h3 class="fr-h6">{% translate "Filter by category" %}</h3>
                     <ul class="fr-tags-group">
                       {% for category in categories %}
                         <li>
-                          <a class="fr-tag"
+                          <a type="button"
+                             class="fr-tag"
                              href="{% pageurl page %}{% toggle_url_filter category=category %}"
                              {% if category.slug == current_category.slug %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>
                             {{ category.name }}
@@ -92,11 +93,12 @@
 
                 {% if tags and page.filter_by_tag %}
                   <div class="fr-my-3w">
-                    <h2 class="fr-h6">{% translate "Filter by tag" %}</h2>
+                    <h3 class="fr-h6">{% translate "Filter by tag" %}</h3>
                     <ul class="fr-tags-group">
                       {% for tag in tags %}
                         <li>
                           <a class="fr-tag"
+                             type="button"
                              href="{% pageurl page %}{% toggle_url_filter tag=tag %}"
                              {% if tag.id == current_tag.id %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>
                             {{ tag }}
@@ -109,11 +111,12 @@
 
                 {% if authors and page.filter_by_author %}
                   <div class="fr-my-3w">
-                    <h2 class="fr-h6">{% translate "Filter by author" %}</h2>
+                    <h3 class="fr-h6">{% translate "Filter by author" %}</h3>
                     <ul class="fr-tags-group">
                       {% for author in authors %}
                         <li>
                           <a class="fr-tag"
+                             type="button"
                              href="{% pageurl page %}{% toggle_url_filter author=author %}"
                              {% if author == current_author %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>{{ author.name }}</a>
                         </li>
@@ -124,11 +127,12 @@
 
                 {% if sources and page.filter_by_source %}
                   <div class="fr-my-3w">
-                    <h2 class="fr-h6">{% translate "Filter by source" %}</h2>
+                    <h3 class="fr-h6">{% translate "Filter by source" %}</h3>
                     <ul class="fr-tags-group">
                       {% for source in sources %}
                         <li>
                           <a class="fr-tag"
+                             type="button"
                              href="{% pageurl page %}{% toggle_url_filter source=source %}"
                              {% if source == current_source %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>{{ source.name }}</a>
                         </li>
@@ -142,6 +146,7 @@
         </div>
 
         <div class="fr-col fr-col-md-8 fr-col-12">
+          <h2>{% translate "Posts" %}</h2>
           <div class="fr-grid-row fr-grid-row--gutters">{% include "blog/blocks/blog_index_posts_list.html" %}</div>
           {% if posts.paginator.num_pages > 1 %}
             <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination posts %}</div>
@@ -150,6 +155,7 @@
         </div>
       </div>
     {% else %}
+      <h2>{% translate "Posts" %}</h2>
       <div class="fr-grid-row fr-grid-row--gutters">{% include "blog/blocks/blog_index_posts_list.html" %}</div>
       {% if posts.paginator.num_pages > 1 %}
         <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination posts %}</div>

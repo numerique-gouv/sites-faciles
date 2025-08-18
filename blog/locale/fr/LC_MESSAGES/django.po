@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-16 16:25+0200\n"
-"PO-Revision-Date: 2025-06-16 16:26+0200\n"
+"POT-Creation-Date: 2025-07-24 16:41+0200\n"
+"PO-Revision-Date: 2025-07-23 17:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: blog/blocks.py:9 blog/models.py:39 blog/models.py:67
 msgid "Name"
@@ -95,21 +95,22 @@ msgstr "Nombre d’articles dans les flux RSS/Atom"
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
-#: blog/models.py:212 blog/templates/blog/blog_index_page.html:95
+#: blog/models.py:212 blog/templates/blog/blog_index_page.html:96
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
-#: blog/models.py:213 blog/templates/blog/blog_index_page.html:112
+#: blog/models.py:213 blog/templates/blog/blog_index_page.html:114
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
-#: blog/models.py:215 blog/templates/blog/blog_index_page.html:127
+#: blog/models.py:215 blog/templates/blog/blog_index_page.html:130
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
 #: blog/models.py:215
 msgid "The source is the organization of the post author"
-msgstr "La source est l’organisation à laquelle appartient l’auteur de l’article"
+msgstr ""
+"La source est l’organisation à laquelle appartient l’auteur de l’article"
 
 #: blog/models.py:228
 msgid "Show filters"
@@ -191,6 +192,11 @@ msgstr "Écrit par :"
 #: blog/templates/blog/blog_index_page.html:75
 msgid "Filters"
 msgstr "Filtres"
+
+#: blog/templates/blog/blog_index_page.html:149
+#: blog/templates/blog/blog_index_page.html:158
+msgid "Posts"
+msgstr "Articles"
 
 #, python-format
 #~ msgid "Posts written by %(first_name)s %(last_name)s"
