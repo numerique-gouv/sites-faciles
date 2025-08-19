@@ -11,9 +11,13 @@
     display: none
 }
 
+.flex {
+    display: flex;
+}
+
 .cmsfr-hero {
     background-size: cover;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
 }
 
 .cmsfr-hero-position__center {
@@ -38,26 +42,38 @@
 .cmsfr-hero-column {
     display: flex;
     flex-direction: column;
-    text-align: center;
     justify-content: center;
     align-items: center;
 }
 
-.cmsfr-hero-column ul {
+.cmsfr-hero-btns {
     display: flex;
+}
+
+.cmsfr-hero-btns--center {
     justify-content: center;
     align-items: center;
 }
 
-.cmsfr-text-content__left {
+.cmsfr-hero-btns--left {
+    justify-content: left;
+    align-items: left;
+}
+
+.cmsfr-hero-btns--right {
+    justify-content: right;
+    align-items: right;
+}
+
+.cmsfr-text-content--left {
     text-align: left;
 }
 
-.cmsfr-text-content__right {
+.cmsfr-text-content--right {
     text-align: right;
 }
 
-.cmsfr-text-content__center {
+.cmsfr-text-content--center {
     text-align: center;
 }
 
