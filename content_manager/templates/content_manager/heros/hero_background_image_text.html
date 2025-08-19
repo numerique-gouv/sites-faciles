@@ -1,7 +1,7 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
 {% image value.image.image fill-1200x650 as bg_img %} 
 <div class="cmsfr-hero fr-container--fluid {% if value.image.image_mask == 'darken' %} cmsfr-background-dark{% endif %} {% if value.image.image_positioning == 'top' %} cmsfr-hero-position__top {% elif value.image.image_positioning == 'bottom' %} cmsfr-hero-position__bottom {% else %} cmsfr-hero-position__top {% endif %} "
-       style="background-image: {% if value.image.image_mask == 'darken' %}linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), {% elif value.image.image_mask == 'lighten'%}linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)){% endif %}url({{ bg_img.url }});
+       style="background-image: {% if value.image.image_mask == 'darken' %}linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), {% elif value.image.image_mask == 'lighten'%}linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)),{% endif %}url({{ bg_img.url }});
               min-height: 650px">
         <div class="fr-grid-row fr-grid-row--gutters  fr-grid-row--middle {% if value.text_content.position ==  'left' %} fr-grid-row--left cmsfr-text-content--left {% elif value.text_content.position ==  'right' %} fr-grid-row--right cmsfr-text-content--right {% else %} fr-grid-row--center cmsfr-text-content--center {% endif %}" style="min-height:650px">
         <div class="fr-col-offset-1 {{ value.layout.vertical_margin }}">
