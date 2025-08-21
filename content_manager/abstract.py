@@ -19,7 +19,7 @@ class SitesFacilesBasePage(Page):
     by all pages in Sites Faciles
     """
 
-    hero = StreamField(HERO_STREAMFIELD_BLOCKS, blank=True, use_json_field=True)
+    hero = StreamField(HERO_STREAMFIELD_BLOCKS, blank=True, use_json_field=True, max_num=1)
 
     body = StreamField(
         STREAMFIELD_COMMON_BLOCKS,
