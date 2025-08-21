@@ -1458,7 +1458,7 @@ class TextContentLeftRight(TextContentBlock):
 
 
 class TextContentAllAlignments(TextContentBlock):
-    position = blocks.ChoiceBlock(choices=ALIGN_HORIZONTAL_CHOICES_EXTENDED)
+    position = blocks.ChoiceBlock(choices=ALIGN_HORIZONTAL_CHOICES_EXTENDED, default="center")
 
 
 class HeroImageStructValue(StructValue):
@@ -1467,7 +1467,6 @@ class HeroImageStructValue(StructValue):
         Define the extra classes for the image
         """
         image_ratio = self.get("image_ratio")
-        image_mask = self.get("image_mask")
         image_positioning = self.get("image_positioning")
         extra_class = ""
         if image_ratio:
@@ -1508,7 +1507,8 @@ class HeroImageBlockWithRatioWidth(HeroImageBlock):
         required=False,
         default="h3",
         help_text=_(
-            "Select the right ratio for your image. The size will be adjusted on mobile phones, so make sure you don't include any text in the image."
+            "Select the right ratio for your image. "
+            "The size will be adjusted on mobile phones, so make sure you don't include any text in the image."
         ),
     )
 
@@ -1521,7 +1521,7 @@ class HeroImageBlockWithMask(HeroImageBlock):
         choices=[
             ("top", _("Top")),
             ("bottom", _("Bottom")),
-            ("center", _("Center")),  # ou une autre liste personnalisée
+            ("center", _("Center")),
         ],
         label=_("Image positioning"),
         required=False,
@@ -1537,6 +1537,7 @@ class HeroImageBlockWithMask(HeroImageBlock):
         ],
         required=False,
         default="",
+        help_text=_("Add a mask to lighten or darken the image"),
     )
 
     class Meta:
@@ -1554,7 +1555,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
                             "hero_title",
                             blocks.CharBlock(
                                 label=_("Title header"),
-                                help_text=_("The title that will appear in the header of your page"),
+                                help_text=_("The title that will appear " "in the header of your page"),
                                 default=_("The title of your header"),
                             ),
                         ),
@@ -1566,7 +1567,8 @@ class HeroImageAndTextBlock(blocks.StructBlock):
                                 label=_("Text"),
                                 help_text=_("To give a brief description of what you do"),
                                 default=_(
-                                    "Add a short description of your organisation here to help visitors easily understand what you do."
+                                    "Add a short description of "
+                                    "your organisation here to help visitors easily understand what you do."
                                 ),
                             ),
                         ),
@@ -1604,7 +1606,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                             "hero_title",
                             blocks.CharBlock(
                                 label=_("Title header"),
-                                help_text=_("The title that will appear in the header of your page"),
+                                help_text=_("The title that will appear " "in the header of your page"),
                                 default=_("The title of your header"),
                             ),
                         ),
@@ -1616,7 +1618,8 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                                 label=_("Text"),
                                 help_text=_("To give a brief description of what you do"),
                                 default=_(
-                                    "Add a short description of your organisation here to help visitors easily understand what you do."
+                                    "Add a short description of your "
+                                    "organisation here to help visitors easily understand what you do."
                                 ),
                             ),
                         ),
@@ -1663,7 +1666,8 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                                 required=False,
                                 help_text=_(
                                     "Uses the French Design System colors.<br>"
-                                    "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
+                                    "If you want to design a classic website, "
+                                    "choose the colour ‘white’ or ‘French blue’."
                                 ),
                             ),
                         ),
@@ -1684,8 +1688,52 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
 
 class HeroBackgroundImageBlock(blocks.StructBlock):
     text_content = TextContentAllAlignments()
-    buttons = blocks.ListBlock(ButtonBlock())
-    image = HeroImageBlockWithMask(default_position_option=["top", "bottom"], label=_("Hero image"))
+    buttons = blocks.ListBlock(
+        ButtonBlock(),
+        default=[
+            {
+                "link_type": "external_url",
+                "text": "test du texte",
+                "external_url": "http://google.com",
+                "button_type": "fr-btn",
+                "icon_side": "--",
+            },
+            {
+                "link_type": "external_url",
+                "text": "test du texte",
+                "external_url": "http://google.com",
+                "button_type": "fr-btn",
+                "icon_side": "--",
+            },
+        ],
+    )
+    image = HeroImageBlockWithMask(label=_("Hero image"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/heros/hero_background_image_text.html"
+
+
+class OldHero(blocks.StructBlock):
+    header_with_title = blocks.BooleanBlock(_("Show title in header image?"), default=False)
+    header_image = ImageChooserBlock()
+    header_color_class = blocks.ChoiceBlock(
+        label=_("Background color"),
+        choices=COLOR_CHOICES,
+        required=False,
+        help_text=_("Uses the French Design System colors"),
+    )
+
+    header_large = blocks.BooleanBlock(_("Full width"), default=False)
+    header_darken = blocks.BooleanBlock(_("Darken background image"), default=False)
+    header_cta_text = blocks.RichTextBlock(
+        _("Call to action text"),
+        null=True,
+        blank=True,
+    )
+    buttons = blocks.ListBlock(
+        ButtonBlock(),
+    )
 
     class Meta:
         icon = "minus"
@@ -1698,4 +1746,5 @@ HERO_STREAMFIELD_BLOCKS = [
     ("header_3", HeroWideImageAndTextBlock(position_default="top", label=_("En-tête 3"))),
     ("header_4", HeroWideImageAndTextBlock(position_default="bottom", label=_("En-tête 4"))),
     ("header_5", HeroBackgroundImageBlock(label=_("En-tête 5"))),
+    ("old_hero", OldHero(label=_("Ancienne en-tête"))),
 ]

@@ -20,15 +20,15 @@
     background-repeat: no-repeat;
 }
 
-.cmsfr-hero-position__center {
+.cmsfr-hero-position--center {
     background-position: center;
 }
 
-.cmsfr-hero-position__top {
+.cmsfr-hero-position--top {
     background-position: top;
 }
 
-.cmsfr-hero-position__bottom {
+.cmsfr-hero-position--bottom {
     background-position: bottom;
 }
 
