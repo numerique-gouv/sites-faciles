@@ -1715,8 +1715,9 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
 
 
 class OldHero(blocks.StructBlock):
-    header_with_title = blocks.BooleanBlock(_("Show title in header image?"), default=False)
-    header_image = ImageChooserBlock()
+    header_with_title = blocks.BooleanBlock(label=_("Show title in header image?"), required=False)
+    header_image = ImageChooserBlock(label=_("Header image"), required=False)
+    header_title = blocks.CharBlock(label=_("title"), required=False)
     header_color_class = blocks.ChoiceBlock(
         label=_("Background color"),
         choices=COLOR_CHOICES,
@@ -1724,20 +1725,18 @@ class OldHero(blocks.StructBlock):
         help_text=_("Uses the French Design System colors"),
     )
 
-    header_large = blocks.BooleanBlock(_("Full width"), default=False)
-    header_darken = blocks.BooleanBlock(_("Darken background image"), default=False)
+    header_large = blocks.BooleanBlock(label=_("Full width"), required=False)
+    header_darken = blocks.BooleanBlock(label=_("Darken background image"), required=False)
     header_cta_text = blocks.RichTextBlock(
-        _("Call to action text"),
+        label=_("Call to action text"),
         null=True,
         blank=True,
     )
-    buttons = blocks.ListBlock(
-        ButtonBlock(),
-    )
+    buttons = blocks.ListBlock(ButtonBlock(), required=False)
 
     class Meta:
         icon = "minus"
-        template = "content_manager/heros/hero_background_image_text.html"
+        template = "content_manager/heros/old_hero.html"
 
 
 HERO_STREAMFIELD_BLOCKS = [
