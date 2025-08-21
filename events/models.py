@@ -1,6 +1,6 @@
 import datetime
 
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.http import HttpRequest, HttpResponse
@@ -153,16 +153,11 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         form = EventSearchForm(initial={"date_from": date_from, "date_to": date_to})
 
         # Pagination
-        page = request.GET.get("page")
+        page_number = request.GET.get("page")
         page_size = self.posts_per_page
 
         paginator = Paginator(posts, page_size)  # Show <page_size> posts per page
-        try:
-            posts = paginator.page(page)
-        except PageNotAnInteger:
-            posts = paginator.page(1)
-        except EmptyPage:
-            posts = paginator.page(paginator.num_pages)
+        posts = paginator.get_page(page_number)
 
         context["posts"] = posts
         context["current_category"] = category
@@ -250,16 +245,11 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
             "current": extra_title,
         }
         # Pagination
-        page = request.GET.get("page")
+        page_number = request.GET.get("page")
         page_size = self.posts_per_page
 
         paginator = Paginator(past_events, page_size)  # Show <page_size> posts per page
-        try:
-            past_events = paginator.page(page)
-        except PageNotAnInteger:
-            past_events = paginator.page(1)
-        except EmptyPage:
-            past_events = paginator.page(paginator.num_pages)
+        past_events = paginator.get_page(page_number)
 
         return self.render(
             request,
@@ -267,7 +257,8 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
                 "extra_title": extra_title,
                 "extra_breadcrumbs": extra_breadcrumbs,
                 "posts": past_events,
-                "years": sorted(self.past_events.values_list("event_date_start__year", flat=True), reverse=True),
+                "years": sorted(set(self.past_events.values_list("event_date_start__year", flat=True)), reverse=True),
+                "paginator": paginator,
                 "current_year": year,
             },
             template="events/events_archive_page.html",

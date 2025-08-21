@@ -4,6 +4,7 @@
 {% block title %}
   <title>
     {{ page.seo_title|default:page.title }}
+    {% if extra_title %}: {{ extra_title }}{% endif %}
     {% if current_category %}
       — {% translate "Category:" %} {{ current_category }}
     {% endif %}
@@ -17,13 +18,13 @@
       - {% translate "Source:" %} {{ current_source }}
     {% endif %}
     {% if current_date_from %}
-      - {% translate "From:" %} {{ current_date_from|naturalday }}
+      - {% translate "Start date:" %} {{ current_date_from|naturalday }}
     {% endif %}
     {% if current_date_to %}
-      - {% translate "To:" %} {{ current_date_to|naturalday }}
+      - {% translate "End date:" %} {{ current_date_to|naturalday }}
     {% endif %}
 
-    {% if paginator.num_pages > 1 %}Page {{ paginator.page }}  / {{ paginator.num_pages }}{% endif %}
+    {% if paginator.num_pages > 1 %}- Page {{ posts.number }}  / {{ paginator.num_pages }}{% endif %}
 
     — {{ settings.content_manager.CmsDsfrConfig.site_title }}
   </title>
@@ -101,7 +102,7 @@
                       <li>
                         <a type="button"
                            class="fr-tag"
-                           href="{% pageurl page %}{% toggle_url_filter category=category %}"
+                           href="{% pageurl page %}{% toggle_url_filter category=category %}#posts-list"
                            {% if category.slug == current_category.slug %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>
                           {{ category.name }}
                         </a>
@@ -119,7 +120,7 @@
                       <li>
                         <a type="button"
                            class="fr-tag"
-                           href="{% pageurl page %}{% toggle_url_filter tag=tag %}"
+                           href="{% pageurl page %}{% toggle_url_filter tag=tag %}#posts-list"
                            {% if tag.id == current_tag.id %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>
                           {{ tag }}
                         </a>
@@ -137,7 +138,7 @@
                       <li>
                         <a type="button"
                            class="fr-tag"
-                           href="{% pageurl page %}{% toggle_url_filter author=author %}"
+                           href="{% pageurl page %}{% toggle_url_filter author=author %}#posts-list"
                            {% if author == current_author %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>{{ author.name }}</a>
                       </li>
                     {% endfor %}
@@ -153,7 +154,7 @@
                       <li>
                         <a type="button"
                            class="fr-tag"
-                           href="{% pageurl page %}{% toggle_url_filter source=source %}"
+                           href="{% pageurl page %}{% toggle_url_filter source=source %}#posts-list"
                            {% if source == current_source %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>{{ source.name }}</a>
                       </li>
                     {% endfor %}
@@ -186,7 +187,7 @@
         </nav>
       </div>
 
-      <div class="fr-col fr-col-md-8 fr-col-12">
+      <div class="fr-col fr-col-md-8 fr-col-12" id="posts-list">
         <h2>{% translate "Events" %}</h2>
         <div class="fr-grid-row fr-grid-row--gutters">{% include "events/blocks/events_index_posts_list.html" %}</div>
         {% if posts.paginator.num_pages > 1 %}
