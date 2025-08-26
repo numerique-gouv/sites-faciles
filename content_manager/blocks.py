@@ -1584,7 +1584,29 @@ class HeroImageAndTextBlock(blocks.StructBlock):
                     label=_("Text content"),
                 ),
             ),
-            ("buttons", blocks.ListBlock(ButtonBlock())),
+            (
+                "buttons",
+                blocks.ListBlock(
+                    ButtonBlock(),
+                    default=[
+                        {
+                            "link_type": "external_url",
+                            "text": "Nous contacter",
+                            "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
+                            "button_type": "fr-btn",
+                            "icon_side": "--",
+                        },
+                        {
+                            "link_type": "external_url",
+                            "text": "Voir la vidéo",
+                            "external_url": "http://google.com",
+                            "button_type": "fr-btn fr-btn--secondary",
+                            "icon_side": "fr-btn--icon-left",
+                            "icon_class": "fr-icon-play-circle-line",
+                        },
+                    ],
+                ),
+            ),
             ("image", ImageChooserBlock(label=_("Hero image"))),
             ("layout", LayoutBlock(label=_("Layout"))),
         )
@@ -1676,7 +1698,29 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                     value_class=BlockMarginStructValue,
                 ),
             ),
-            ("buttons", blocks.ListBlock(ButtonBlock())),
+            (
+                "buttons",
+                blocks.ListBlock(
+                    ButtonBlock(),
+                    default=[
+                        {
+                            "link_type": "external_url",
+                            "text": "Nous contacter",
+                            "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
+                            "button_type": "fr-btn",
+                            "icon_side": "--",
+                        },
+                        {
+                            "link_type": "external_url",
+                            "text": "Voir la vidéo",
+                            "external_url": "http://google.com",
+                            "button_type": "fr-btn fr-btn--secondary",
+                            "icon_side": "fr-btn--icon-left",
+                            "icon_class": "fr-icon-play-circle-line",
+                        },
+                    ],
+                ),
+            ),
             ("image", HeroImageBlockWithRatioWidth(label=_("Hero image"))),
         )
         super().__init__(local_blocks, **kwargs)
@@ -1693,17 +1737,18 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
         default=[
             {
                 "link_type": "external_url",
-                "text": "test du texte",
-                "external_url": "http://google.com",
+                "text": "Nous contacter",
+                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
                 "button_type": "fr-btn",
                 "icon_side": "--",
             },
             {
                 "link_type": "external_url",
-                "text": "test du texte",
+                "text": "Voir la vidéo",
                 "external_url": "http://google.com",
-                "button_type": "fr-btn",
-                "icon_side": "--",
+                "button_type": "fr-btn fr-btn--secondary",
+                "icon_side": "fr-btn--icon-left",
+                "icon_class": "fr-icon-play-circle-line",
             },
         ],
     )
