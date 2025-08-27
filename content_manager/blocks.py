@@ -1505,7 +1505,7 @@ class HeroImageBlockWithRatioWidth(HeroImageBlock):
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
         required=False,
-        default="h3",
+        default="fr-ratio-32x9",
         help_text=_(
             "Select the right ratio for your image. "
             "The size will be adjusted on mobile phones, so make sure you don't include any text in the image."
@@ -1601,8 +1601,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
                             "text": "Voir la vidéo",
                             "external_url": "http://google.com",
                             "button_type": "fr-btn fr-btn--secondary",
-                            "icon_side": "fr-btn--icon-left",
-                            "icon_class": "fr-icon-play-circle-line",
+                            "icon_side": "--t",
                         },
                     ],
                 ),
@@ -1715,13 +1714,21 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                             "text": "Voir la vidéo",
                             "external_url": "http://google.com",
                             "button_type": "fr-btn fr-btn--secondary",
-                            "icon_side": "fr-btn--icon-left",
-                            "icon_class": "fr-icon-play-circle-line",
+                            "icon_side": "--",
                         },
                     ],
                 ),
             ),
-            ("image", HeroImageBlockWithRatioWidth(label=_("Hero image"))),
+            (
+                "image",
+                HeroImageBlockWithRatioWidth(
+                    label=_("Hero image"),
+                    default={
+                        "image_ratio": "fr-ratio-32x9",
+                        "image_width": "",
+                    },
+                ),
+            ),
         )
         super().__init__(local_blocks, **kwargs)
 
@@ -1747,8 +1754,7 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
                 "text": "Voir la vidéo",
                 "external_url": "http://google.com",
                 "button_type": "fr-btn fr-btn--secondary",
-                "icon_side": "fr-btn--icon-left",
-                "icon_class": "fr-icon-play-circle-line",
+                "icon_side": "--",
             },
         ],
     )
@@ -1777,7 +1783,7 @@ class OldHero(blocks.StructBlock):
         null=True,
         blank=True,
     )
-    buttons = blocks.ListBlock(ButtonBlock(), required=False)
+    # buttons = blocks.Ste(ButtonBlock(), required=False)
 
     class Meta:
         icon = "minus"
