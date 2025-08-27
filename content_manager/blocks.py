@@ -1783,10 +1783,14 @@ class OldHero(blocks.StructBlock):
         null=True,
         blank=True,
     )
-    # buttons = blocks.Ste(ButtonBlock(), required=False)
+    buttons = ButtonsHorizontalListBlock(required=False)
 
     class Meta:
         icon = "minus"
+        admin_text = (
+            "Ce bloc récupère les données des anciennes en-têtes mais n'est pas configurable. "
+            "Veuillez choisir un autre modèle d'en-tête."
+        )
         template = "content_manager/heros/old_hero.html"
 
 
