@@ -40,16 +40,13 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
 HOST_PORT = os.getenv("HOST_PORT", "")
+
 # Prefix of the application when served under a sub-path.
 # ``FORCE_SCRIPT_NAME`` is the Django setting handling this behaviour:
 # https://docs.djangoproject.com/en/5.2/ref/settings/#force-script-name
 # We expose a clearer ``SITE_BASE_PATH`` environment variable and assign its
 # value to ``FORCE_SCRIPT_NAME``.
-SITE_BASE_PATH = os.getenv("SITE_BASE_PATH", "")
-if SITE_BASE_PATH in ("", "None"):
-    SITE_BASE_PATH = ""
-else:
-    SITE_BASE_PATH = SITE_BASE_PATH.rstrip("/")
+SITE_BASE_PATH = os.getenv("SITE_BASE_PATH", "").rstrip("/")
 
 FORCE_SCRIPT_NAME = SITE_BASE_PATH
 
@@ -111,7 +108,6 @@ if USE_WHITENOISE:
 # Only add these on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
-        "django_extensions",
         "wagtail.contrib.styleguide",
         "debug_toolbar",
     ]

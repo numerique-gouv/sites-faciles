@@ -521,18 +521,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-extensions"
-version = "4.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/6d/b3/ed0f54ed706ec0b54fd251cc0364a249c6cd6c6ec97f04dc34be5e929eac/django_extensions-4.1.tar.gz", hash = "sha256:7b70a4d28e9b840f44694e3f7feb54f55d495f8b3fa6c5c0e5e12bcb2aa3cdeb", size = 283078 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/64/96/d967ca440d6a8e3861120f51985d8e5aec79b9a8bdda16041206adfe7adc/django_extensions-4.1-py3-none-any.whl", hash = "sha256:0699a7af28f2523bf8db309a80278519362cd4b6e1fd0a8cd4bf063e1e023336", size = 232980 },
-]
-
-[[package]]
 name = "django-filter"
 version = "25.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1503,7 +1491,6 @@ dependencies = [
     { name = "dj-static" },
     { name = "django" },
     { name = "django-dsfr" },
-    { name = "django-extensions" },
     { name = "django-storages", extra = ["s3"] },
     { name = "django-taggit" },
     { name = "faker" },
@@ -1544,7 +1531,6 @@ requires-dist = [
     { name = "dj-static", specifier = ">=0.0.6" },
     { name = "django", specifier = ">=5.2.3" },
     { name = "django-dsfr", specifier = ">=2.4.0" },
-    { name = "django-extensions", specifier = ">=3.2.0" },
     { name = "django-storages", extras = ["s3"], specifier = ">=1.14.6" },
     { name = "django-taggit", specifier = ">=6.1.0" },
     { name = "faker", specifier = ">=37.4.0" },
