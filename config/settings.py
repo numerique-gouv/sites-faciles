@@ -441,6 +441,8 @@ for host in ALLOWED_HOSTS:
             CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}")
 
 trusted_origins = os.getenv("CSRF_TRUSTED_ORIGINS", "").replace(" ", "").split(",")
+trusted_origins = list(filter(None, trusted_origins))
+
 if len(trusted_origins):
     CSRF_TRUSTED_ORIGINS += trusted_origins
 
