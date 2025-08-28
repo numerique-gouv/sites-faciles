@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv("DEBUG") == "True" else False
+DEBUG = True if os.getenv("DEBUG") in [1, "True"] else False
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", "").split(",")
 
@@ -47,15 +47,13 @@ HOST_PORT = os.getenv("HOST_PORT", "")
 FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "").rstrip("/")
 
 # Allow enabling WhiteNoise via an environment variable (disabled by default)
-USE_WHITENOISE = os.getenv("USE_WHITENOISE", "0") != "0"
+USE_WHITENOISE = True if os.getenv("USE_WHITENOISE", False) in [1, "True"] else False
 
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-TESTING = "test" in sys.argv
-
-# Application definition
+# Applications definition
 
 INSTALLED_APPS = [
     # The order is important for overriding templates and using contexts, please change it carefully.
@@ -102,11 +100,14 @@ if USE_WHITENOISE:
     INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
 
 # Only add these on a dev machine, outside of tests
+TESTING = "test" in sys.argv
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
         "wagtail.contrib.styleguide",
         "debug_toolbar",
     ]
+
+# Middleware definition
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -289,6 +290,16 @@ if FORCE_SCRIPT_NAME and not STATIC_URL.startswith(FORCE_SCRIPT_NAME):
     STATIC_URL = f"{FORCE_SCRIPT_NAME}/{STATIC_URL}/"
 
 
+# Allow Django to serve statics even in production if needed
+SF_PROD_SERVE_STATIC = True if os.getenv("SF_PROD_SERVE_STATIC", False) in [1, "True"] else False
+if SF_PROD_SERVE_STATIC:
+    import mimetypes
+
+    mimetypes.add_type("application/javascript", ".js", True)
+    mimetypes.add_type("text/css", ".css", True)
+
+    WHITENOISE_STATIC_PREFIX = STATIC_URL
+
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 # Default primary key field type
@@ -361,7 +372,7 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
 )
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
-SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) == "True" else False
+SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) in [1, "True"] else False
 
 # Allows for complex Streamfields without completely removing checks
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
@@ -384,8 +395,8 @@ if DEFAULT_FROM_EMAIL:
 WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
 
 # (Optional) ProConnect settings
-PROCONNECT_ACTIVATED = True if os.getenv("PROCONNECT_ACTIVATED", False) == "True" else False
-OIDC_CREATE_USER = True if os.getenv("PROCONNECT_CREATE_USER", "True") == "True" else False
+PROCONNECT_ACTIVATED = True if os.getenv("PROCONNECT_ACTIVATED", False) in [1, "True"] else False
+OIDC_CREATE_USER = True if os.getenv("PROCONNECT_CREATE_USER", "True") in [1, "True"] else False
 OIDC_RP_CLIENT_ID = os.getenv("PROCONNECT_CLIENT_ID", "")
 OIDC_RP_CLIENT_SECRET = os.getenv("PROCONNECT_CLIENT_SECRET", "")
 OIDC_RP_SCOPES = os.getenv("PROCONNECT_SCOPES", "openid given_name usual_name email siret uid")
@@ -424,26 +435,15 @@ if PROCONNECT_ACTIVATED:
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
     if host not in ["127.0.0.1", "localhost", ".localhost"]:
-        # Pour les URLs avec port
-        if ":" in HOST_URL and HOST_URL != "localhost":
-            CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{HOST_URL}")
+        if HOST_PORT:
+            CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}:{HOST_PORT}")
         else:
             CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}")
-            if HOST_PORT:
-                CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}:{HOST_PORT}")
+
+trusted_origins = os.getenv("CSRF_TRUSTED_ORIGINS", "").replace(" ", "").split()
+if len(trusted_origins):
+    CSRF_TRUSTED_ORIGINS += trusted_origins
 
 # Disable the integrity checksums by default.
 # They clash with Whitenoise and are normally not useful as we serve the statics from a trusted source
-DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS") == "True" else False
-
-# Permettre à Django de servir les fichiers statiques même en production
-# quand on est derrière un reverse proxy Kubernetes
-WHITENOISE_STATIC_PREFIX = STATIC_URL
-
-# Configuration pour servir les fichiers statiques avec le bon préfixe
-if FORCE_SCRIPT_NAME:
-    # En production avec reverse proxy, on doit parfois servir nous-mêmes les statiques
-    import mimetypes
-
-    mimetypes.add_type("application/javascript", ".js", True)
-    mimetypes.add_type("text/css", ".css", True)
+DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS") in [1, "True"] else False
