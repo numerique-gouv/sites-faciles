@@ -280,7 +280,7 @@ else:
     MEDIA_URL = os.getenv("MEDIA_URL", "medias/")
 
     if FORCE_SCRIPT_NAME and not MEDIA_URL.startswith(FORCE_SCRIPT_NAME):
-        MEDIA_URL = f"{FORCE_SCRIPT_NAME}/{MEDIA_URL}/"
+        MEDIA_URL = f"{FORCE_SCRIPT_NAME}/{MEDIA_URL}"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
@@ -429,7 +429,7 @@ if PROCONNECT_ACTIVATED:
         "proconnect.backends.OIDCAuthenticationBackend",
     ]
 
-    LOGOUT_URL = "/oidc/logout/"
+    LOGOUT_URL = f"{FORCE_SCRIPT_NAME}/oidc/logout/"
 
 # CSRF
 CSRF_TRUSTED_ORIGINS = []
@@ -440,10 +440,10 @@ for host in ALLOWED_HOSTS:
         else:
             CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}")
 
-trusted_origins = os.getenv("CSRF_TRUSTED_ORIGINS", "").replace(" ", "").split()
+trusted_origins = os.getenv("CSRF_TRUSTED_ORIGINS", "").replace(" ", "").split(",")
 if len(trusted_origins):
     CSRF_TRUSTED_ORIGINS += trusted_origins
 
 # Disable the integrity checksums by default.
-# They clash with Whitenoise and are normally not useful as we serve the statics from a trusted source
+# They can clash with Whitenoise and are normally not useful as we serve the statics from a trusted source
 DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS") in [1, "True"] else False

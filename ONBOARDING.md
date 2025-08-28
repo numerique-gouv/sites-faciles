@@ -139,6 +139,8 @@ HOST_PROTO=http
 HOST_URL=sites-faciles.localhost
 HOST_PORT=8000
 FORCE_SCRIPT_NAME="/pages"
+ALLOWED_HOSTS=localhost,0.0.0.0,127.0.0.1,.localhost
+CSRF_TRUSTED_ORIGINS="http://127.0.0.1:18000,http://localhost:18000,http://*.localhost:18000"
 ```
 
 * il faut alors accéder au site via http:/sites-faciles.localhost:18000/pages/

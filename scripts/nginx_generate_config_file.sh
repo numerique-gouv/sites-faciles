@@ -9,8 +9,10 @@ set -a
 [ -f  ${SCRIPT_DIR}/../.env ] && . ${SCRIPT_DIR}/../.env && echo "Local env variables loaded"
 set +a
 
-
-envsubst < ${SCRIPT_DIR}/sample_conf_files/nginx.conf.template > /tmp/sites-faciles.conf && echo "Nginx config file generated."
+# Manually specifying the allowed variables for substitions to avoid inference with dollar signs in the conf
+envsubst '${BASE_PATH} ${FORCE_SCRIPT_NAME} ${HOST_PORT} ${HOST_URL}' \
+< ${SCRIPT_DIR}/sample_conf_files/nginx.conf.template > /tmp/sites-faciles.conf \
+&& echo "Nginx config file generated."
 
 
 echo -e "\nPlease review and complete the generated file with:\n"

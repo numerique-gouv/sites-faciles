@@ -11,6 +11,10 @@ server {
         alias ${BASE_PATH}/staticfiles;
     }
 
+    location /favicon.ico {
+        alias ${BASE_PATH}/staticfiles/dsfr/dist/favicon/favicon.ico;
+    }
+
     location / {
         proxy_pass         http://${HOST_URL}:${HOST_PORT}/;
         proxy_set_header   Host $host;
