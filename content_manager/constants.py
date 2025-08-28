@@ -83,6 +83,7 @@ LIMITED_RICHTEXTFIELD_FEATURES = [
     "superscript",
     "subscript",
     "strikethrough",
+    "text-center",
 ]
 
 LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS = [

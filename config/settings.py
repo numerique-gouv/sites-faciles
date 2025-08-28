@@ -352,6 +352,7 @@ WAGTAIL_RICHTEXT_FIELD_FEATURES = [
     "document-link",
     "image",
     "embed",
+    "text-center",
 ]
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
