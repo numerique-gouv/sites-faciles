@@ -152,6 +152,10 @@ p:empty {
     display: inline;
 }
 
+.cmsfr-text-center {
+  text-align: center !important;
+}
+
 @media all and (max-width: 575px) {
     .cmsfr-order-mobile__2 {
         order: 2;
