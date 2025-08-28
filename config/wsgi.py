@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/wsgi/
 """
 
 import os
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
 from django.conf import settings

@@ -28,11 +28,8 @@ def settings_value(name):
 
 @register.simple_tag
 def root_url() -> str:
-    """Return the site's base path, taking ``SITE_BASE_PATH`` into account."""
-    script = getattr(settings, "SITE_BASE_PATH", "") or ""
-    if script:
-        return f"{script}/"
-    return "/"
+    """Return the site's base path, taking FORCE_SCRIPT_NAME into account."""
+    return f"{settings.FORCE_SCRIPT_NAME}/"
 
 
 @register.simple_tag(takes_context=True)

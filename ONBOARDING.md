@@ -111,3 +111,34 @@ psql -c "CREATE USER sitesfaciles WITH CREATEDB PASSWORD 'votre_mot_de_passe';" 
 psql -c "CREATE DATABASE sitesfaciles OWNER sitesfaciles;" -U postgres
 ```
 
+
+## Fonctionnement depuis un sous-répertoire
+
+Lorsque la variable `FORCE_SCRIPT_NAME` est configurée, le site tourne dans un sous-répertoire, fonctionnalité qui n’est pas gérée par le serveur de développement de base de Django (`runserver`).
+
+Pour tester le fonctionnement en local, il faut donc passer par gunicorn et nginx. À cette fin :
+
+* Installer nginx si ce n'est pas déjà fait : https://nginx.org/en/docs/install.html
+* Après avoir configuré les variables d’environnement (cf. ci-dessus), lancer la commande suivante pour générer et mettre en place la configuration nginx :
+
+```sh
+just nginx-generate-config-file
+```
+
+* Lancer le serveur local via gunicorn avec la commande suivante (à la place de `just runserver` donc) :
+
+```sh
+just run_gunicorn
+```
+
+* Accéder au site via nginx en ajoutant 1 au port utilisé par gunicorn. Par exemple, si le `.env` contient les valeurs suivantes :
+
+```sh
+DEBUG=False
+HOST_PROTO=http
+HOST_URL=sites-faciles.localhost
+HOST_PORT=8000
+FORCE_SCRIPT_NAME="/pages"
+```
+
+* il faut alors accéder au site via http:/sites-faciles.localhost:18000/pages/

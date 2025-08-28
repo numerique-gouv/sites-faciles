@@ -123,7 +123,7 @@ class Command(BaseCommand):
         <p>Vous pouvez maintenant vous connecter dans l’administration et personnaliser le site.</p>
         """
 
-        # Use the reversed admin path directly to avoid duplicating SITE_BASE_PATH
+        # Use the reversed admin path directly to avoid duplicating the script_name
         admin_url = reverse("wagtailadmin_home")
 
         image_and_text_block = {

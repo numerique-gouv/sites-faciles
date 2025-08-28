@@ -6,6 +6,7 @@ uv_run := if env("USE_UV", "0") == "1" { "uv run" } else { "" }
 docker_cmd := if env("USE_DOCKER", "0") == "1" { "docker compose exec -ti web" } else { "" }
 host_url := env("HOST_URL", "localhost")
 host_port := env("HOST_PORT", "8000")
+script_name := env("FORCE_SCRIPT_NAME", "")
 
 #### Default recipe
 
@@ -65,12 +66,19 @@ mmi:
     just makemigrations
     just migrate
 
+nginx-generate-config-file:
+    cd scripts && bash nginx_generate_config_file.sh
+
 quality:
     {{docker_cmd}} {{uv_run}} pre-commit run --all-files
 
 alias rs := runserver
 runserver host_url=host_url host_port=host_port:
     {{docker_cmd}} {{uv_run}} python manage.py runserver {{host_url}}:{{host_port}}
+
+alias rg:= run_gunicorn
+run_gunicorn host_url=host_url host_port=host_port script_name=script_name:
+    {{docker_cmd}} {{uv_run}} gunicorn config.wsgi:application --bind {{host_url}}:{{host_port}} --env SCRIPT_NAME={{script_name}}
 
 scalingo-postdeploy:
     python manage.py migrate
