@@ -2,10 +2,9 @@ from django.contrib.auth import get_user_model
 from django.core.validators import validate_domain_name
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from proconnect.validators import sub_validator
 from wagtail.admin.panels import FieldPanel
 from wagtail.search import index
-
-from proconnect.validators import sub_validator
 
 User = get_user_model()
 

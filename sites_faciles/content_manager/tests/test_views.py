@@ -8,7 +8,13 @@ from wagtail.test.utils import WagtailPageTestCase
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from sites_faciles.content_manager.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
+from sites_faciles.content_manager.models import (
+    CatalogIndexPage,
+    CmsDsfrConfig,
+    ContentPage,
+    MegaMenu,
+    MegaMenuCategory,
+)
 from sites_faciles.content_manager.services.accessors import get_or_create_content_page
 from sites_faciles.content_manager.utils import get_default_site
 

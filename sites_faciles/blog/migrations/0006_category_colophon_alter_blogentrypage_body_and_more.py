@@ -1307,7 +1307,9 @@ class Migration(migrations.Migration):
             model_name="blogentrypage",
             name="authors",
             field=modelcluster.fields.ParentalManyToManyField(
-                blank=True, help_text="Author entries can be created in Snippets > Persons", to="sites_faciles_blog.person"
+                blank=True,
+                help_text="Author entries can be created in Snippets > Persons",
+                to="sites_faciles_blog.person",
             ),
         ),
     ]

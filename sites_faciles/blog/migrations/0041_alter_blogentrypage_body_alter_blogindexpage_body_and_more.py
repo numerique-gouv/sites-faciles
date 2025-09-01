@@ -301,7 +301,11 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    31: ("sites_faciles_content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    31: (
+                        "sites_faciles_content_manager.blocks.IconPickerBlock",
+                        (),
+                        {"label": "Icon", "required": False},
+                    ),
                     32: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -1724,7 +1728,11 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    31: ("sites_faciles_content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    31: (
+                        "sites_faciles_content_manager.blocks.IconPickerBlock",
+                        (),
+                        {"label": "Icon", "required": False},
+                    ),
                     32: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -3228,7 +3236,11 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    42: ("sites_faciles_content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    42: (
+                        "sites_faciles_content_manager.blocks.IconPickerBlock",
+                        (),
+                        {"label": "Icon", "required": False},
+                    ),
                     43: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
