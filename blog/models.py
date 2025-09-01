@@ -25,11 +25,11 @@ from wagtail.models.i18n import TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
-from blog.blocks import COLOPHON_BLOCKS
-from blog.managers import CategoryManager
-from content_manager.abstract import SitesFacilesBasePage
-from content_manager.constants import LIMITED_RICHTEXTFIELD_FEATURES
-from content_manager.models import Tag
+from sites_faciles.blog.blocks import COLOPHON_BLOCKS
+from sites_faciles.blog.managers import CategoryManager
+from sites_faciles.content_manager.abstract import SitesFacilesBasePage
+from sites_faciles.content_manager.constants import LIMITED_RICHTEXTFIELD_FEATURES
+from sites_faciles.content_manager.models import Tag
 
 User = get_user_model()
 
@@ -229,7 +229,7 @@ class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         ),
     ]
 
-    subpage_types = ["blog.BlogEntryPage"]
+    subpage_types = ["sites_faciles_blog.BlogEntryPage"]
 
     class Meta:
         verbose_name = _("Blog index")
@@ -476,7 +476,7 @@ class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
                 "extra_title": extra_title,
                 "extra_breadcrumbs": extra_breadcrumbs,
             },
-            template="blog/categories_list_page.html",
+            template="sites_faciles_blog/categories_list_page.html",
         )
 
     @path("tags/", name="tags_list")
@@ -506,7 +506,7 @@ class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
                 "extra_title": extra_title,
                 "extra_breadcrumbs": extra_breadcrumbs,
             },
-            template="blog/tags_list_page.html",
+            template="sites_faciles_blog/tags_list_page.html",
         )
 
 
@@ -520,10 +520,10 @@ class BlogEntryPage(SitesFacilesBasePage):
     )
     date = models.DateTimeField(verbose_name=_("Post date"), default=timezone.now)
     authors = ParentalManyToManyField(
-        "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
+        "sites_faciles_blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
 
-    parent_page_types = ["blog.BlogIndexPage"]
+    parent_page_types = ["sites_faciles_blog.BlogIndexPage"]
     subpage_types = []
 
     settings_panels = SitesFacilesBasePage.settings_panels + [

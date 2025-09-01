@@ -2,7 +2,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
-from content_manager.blocks import ImageAndTextBlock, MultiColumnsWithTitleBlock, QuoteBlock
+from sites_faciles.content_manager.blocks import ImageAndTextBlock, MultiColumnsWithTitleBlock, QuoteBlock
 
 
 class ContactCardBlock(blocks.StructBlock):
@@ -14,7 +14,7 @@ class ContactCardBlock(blocks.StructBlock):
 
     class Meta:
         icon = "user"
-        template = ("blog/blocks/contact_card.html",)
+        template = ("sites_faciles_blog/blocks/contact_card.html",)
 
 
 COLOPHON_BLOCKS = [

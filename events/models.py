@@ -16,10 +16,10 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.models.i18n import Locale
 from wagtail.search import index
 
-from blog.models import Category, CategorySerializer, Organization, Person, PersonSerializer
-from content_manager.abstract import SitesFacilesBasePage
-from content_manager.models import CmsDsfrConfig, Tag
-from events.forms import EventSearchForm
+from sites_faciles.blog.models import Category, CategorySerializer, Organization, Person, PersonSerializer
+from sites_faciles.content_manager.abstract import SitesFacilesBasePage
+from sites_faciles.content_manager.models import CmsDsfrConfig, Tag
+from sites_faciles.events.forms import EventSearchForm
 
 
 class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
@@ -50,7 +50,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         ),
     ]
 
-    subpage_types = ["events.EventEntryPage"]
+    subpage_types = ["sites_faciles_events.EventEntryPage"]
 
     class Meta:
         verbose_name = _("Event calendar index")
@@ -266,7 +266,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
                 "years": sorted(self.past_events.values_list("event_date_start__year", flat=True), reverse=True),
                 "current_year": year,
             },
-            template="events/events_archive_page.html",
+            template="sites_faciles_events/events_archive_page.html",
         )
 
 
@@ -274,7 +274,7 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     tags = ClusterTaggableManager(through="TagEventEntryPage", blank=True)
 
     event_categories = ParentalManyToManyField(
-        "blog.Category",
+        "sites_faciles_blog.Category",
         through="CategoryEventEntryPage",
         blank=True,
         verbose_name=_("Categories"),
@@ -294,10 +294,10 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     )
 
     authors = ParentalManyToManyField(
-        "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
+        "sites_faciles_blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
 
-    parent_page_types = ["events.EventsIndexPage"]
+    parent_page_types = ["sites_faciles_events.EventsIndexPage"]
     subpage_types = []
 
     search_fields = SitesFacilesBasePage.search_fields + [

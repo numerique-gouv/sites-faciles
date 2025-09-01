@@ -28,7 +28,7 @@
     "32": {
       "id": 32,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/32/",
         "html_url": "http://sites.beta.gouv.fr/exemples/template-landing-page/",
         "slug": "template-landing-page",
@@ -699,7 +699,7 @@
     "36": {
       "id": 36,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/36/",
         "html_url": "http://sites.beta.gouv.fr/exemples/exemples-de-tuiles/",
         "slug": "exemples-de-tuiles",
@@ -1036,7 +1036,7 @@
     "37": {
       "id": 37,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/37/",
         "html_url": "http://sites.beta.gouv.fr/exemples/en-t%C3%AAtes-et-bandeaux-dappel-%C3%A0-action/",
         "slug": "en-t\u00eates-et-bandeaux-dappel-\u00e0-action",
@@ -1251,7 +1251,7 @@
     "38": {
       "id": 38,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/38/",
         "html_url": "http://sites.beta.gouv.fr/exemples/page-de-contenu-avec-menu-lat%C3%A9ral/",
         "slug": "page-de-contenu-avec-menu-lat\u00e9ral",
@@ -1357,7 +1357,7 @@
     "39": {
       "id": 39,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/39/",
         "html_url": "http://sites.beta.gouv.fr/exemples/blocs-simples-de-textes-et-dimages/",
         "slug": "blocs-simples-de-textes-et-dimages",
@@ -1448,7 +1448,7 @@
     "40": {
       "id": 40,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/40/",
         "html_url": "http://sites.beta.gouv.fr/exemples/options-de-mise-en-valeur-de-textes/",
         "slug": "options-de-mise-en-valeur-de-textes",
@@ -1592,7 +1592,7 @@
     "41": {
       "id": 41,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/41/",
         "html_url": "http://sites.beta.gouv.fr/exemples/grilles-d%C3%A9l%C3%A9ments/",
         "slug": "grilles-d\u00e9l\u00e9ments",
@@ -1888,7 +1888,7 @@
     "42": {
       "id": 42,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/42/",
         "html_url": "http://sites.beta.gouv.fr/exemples/accord%C3%A9ons/",
         "slug": "accord\u00e9ons",
@@ -1953,7 +1953,7 @@
     "43": {
       "id": 43,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/43/",
         "html_url": "http://sites.beta.gouv.fr/exemples/exemples-de-cartes/",
         "slug": "exemples-de-cartes",
@@ -2426,7 +2426,7 @@
     "44": {
       "id": 44,
       "meta": {
-        "type": "content_manager.ContentPage",
+        "type": "sites_faciles_content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/44/",
         "html_url": "http://sites.beta.gouv.fr/exemples/etapiers/",
         "slug": "etapiers",

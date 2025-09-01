@@ -5,7 +5,7 @@ from django.views.generic import ListView, TemplateView
 from unidecode import unidecode
 from wagtail.models import Site
 
-from content_manager.models import ContentPage, Tag
+from sites_faciles.content_manager.models import ContentPage, Tag
 
 
 class SearchResultsView(ListView):

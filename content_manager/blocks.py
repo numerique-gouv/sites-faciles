@@ -10,7 +10,7 @@ from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import (
+from sites_faciles.content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
     BUTTONS_ALIGN_CHOICES,
@@ -28,7 +28,7 @@ from content_manager.constants import (
     MEDIA_WIDTH_CHOICES,
     TEXT_SIZE_CHOICES,
 )
-from content_manager.widgets import DsfrIconPickerWidget
+from sites_faciles.content_manager.widgets import DsfrIconPickerWidget
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
@@ -827,7 +827,7 @@ class VerticalContactCardStructValue(blocks.StructValue):
 
 class VerticalContactCardBlock(blocks.StructBlock):
     contact = SnippetChooserBlock(
-        "blog.Person",
+        "sites_faciles_blog.Person",
         label=_("Person"),
         help_text=_("Optional, all values can be manually specified or overriden below"),
         required=False,
@@ -853,7 +853,7 @@ class VerticalContactCardBlock(blocks.StructBlock):
     class Meta:
         icon = "user"
         value_class = VerticalContactCardStructValue
-        template = ("content_manager/blocks/contact_card_vertical.html",)
+        template = ("sites_faciles_content_manager/blocks/contact_card_vertical.html",)
 
 
 ## Other apps-related blocks
@@ -939,13 +939,13 @@ class BlogRecentEntriesBlock(blocks.StructBlock):
         default="h2",
         help_text=_("Adapt to the page layout. Defaults to heading 2."),
     )
-    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
+    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="sites_faciles_blog.BlogIndexPage")
     entries_count = blocks.IntegerBlock(
         label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
     )
-    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
+    category_filter = SnippetChooserBlock("sites_faciles_blog.Category", label=_("Filter by category"), required=False)
     tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
-    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
+    author_filter = SnippetChooserBlock("sites_faciles_blog.Person", label=_("Filter by author"), required=False)
     source_filter = SnippetChooserBlock(
         "blog.Organization",
         label=_("Filter by source"),
@@ -956,7 +956,7 @@ class BlogRecentEntriesBlock(blocks.StructBlock):
 
     class Meta:
         icon = "placeholder"
-        template = ("content_manager/blocks/blog_recent_entries.html",)
+        template = ("sites_faciles_content_manager/blocks/blog_recent_entries.html",)
         value_class = RecentEntriesStructValue
 
 
@@ -969,13 +969,13 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
         default="h2",
         help_text=_("Adapt to the page layout. Defaults to heading 2."),
     )
-    index_page = blocks.PageChooserBlock(label=_("Event calendar"), page_type="events.EventsIndexPage")
+    index_page = blocks.PageChooserBlock(label=_("Event calendar"), page_type="sites_faciles_events.EventsIndexPage")
     entries_count = blocks.IntegerBlock(
         label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
     )
-    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
+    category_filter = SnippetChooserBlock("sites_faciles_blog.Category", label=_("Filter by category"), required=False)
     tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
-    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
+    author_filter = SnippetChooserBlock("sites_faciles_blog.Person", label=_("Filter by author"), required=False)
     source_filter = SnippetChooserBlock(
         "blog.Organization",
         label=_("Filter by source"),
@@ -986,7 +986,7 @@ class EventsRecentEntriesBlock(blocks.StructBlock):
 
     class Meta:
         icon = "placeholder"
-        template = ("content_manager/blocks/events_recent_entries.html",)
+        template = ("sites_faciles_content_manager/blocks/events_recent_entries.html",)
         value_class = RecentEntriesStructValue
 
 
@@ -1314,7 +1314,7 @@ STREAMFIELD_COMMON_BLOCKS = [
         blocks.StaticBlock(
             label=_("Subpages list"),
             admin_text=_("A simple, alphabetical list of the subpages of the current page."),
-            template="content_manager/blocks/subpages_list.html",
+            template="sites_faciles_content_manager/blocks/subpages_list.html",
             group=_("Website structure"),
         ),
     ),

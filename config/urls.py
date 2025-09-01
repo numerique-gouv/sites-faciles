@@ -9,7 +9,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
 
-from config.api import api_router
+from sites_faciles.config.api import api_router
 from proconnect import urls as oidc_urls
 
 urlpatterns = [
