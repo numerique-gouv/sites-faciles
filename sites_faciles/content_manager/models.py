@@ -553,7 +553,11 @@ class SocialMediaItem(Orderable):
 
 # Mega-Menus
 class MegaMenuCategory(Orderable):
-    mega_menu = ParentalKey("content_manager.MegaMenu", related_name="categories", on_delete=models.CASCADE)
+    mega_menu = ParentalKey(
+        "sites_faciles_content_manager.MegaMenu",
+        related_name="categories",
+        on_delete=models.CASCADE,
+    )
     category = models.ForeignKey("wagtailmenus.FlatMenu", on_delete=models.CASCADE, verbose_name=_("Category"))
 
     class Meta:
