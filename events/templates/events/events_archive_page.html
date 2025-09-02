@@ -25,7 +25,7 @@
   <meta property="og:title"
         content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="{{ page.full_url }}" />
+  <meta property="og:url" content="{% canonical_url %}" />
   <meta property="og:description" content="{{ page.search_description }}" />
   <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
 

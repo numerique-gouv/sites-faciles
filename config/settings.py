@@ -287,7 +287,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = os.getenv("STATIC_URL", "static/")
 
 if FORCE_SCRIPT_NAME and not STATIC_URL.startswith(FORCE_SCRIPT_NAME):
-    STATIC_URL = f"{FORCE_SCRIPT_NAME}/{STATIC_URL}/"
+    STATIC_URL = f"{FORCE_SCRIPT_NAME}/{STATIC_URL}"
 
 
 # Allow Django to serve statics even in production if needed
