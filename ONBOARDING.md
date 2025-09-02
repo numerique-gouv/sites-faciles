@@ -116,7 +116,7 @@ psql -c "CREATE DATABASE sitesfaciles OWNER sitesfaciles;" -U postgres
 
 Lorsque la variable `FORCE_SCRIPT_NAME` est configurée, le site tourne dans un sous-répertoire, fonctionnalité qui n’est pas gérée par le serveur de développement de base de Django (`runserver`).
 
-Pour tester le fonctionnement en local, il faut donc passer par gunicorn et nginx. À cette fin :
+Pour tester le fonctionnement en local, il faut donc passer par [gunicorn](https://gunicorn.org/) et [nginx](https://nginx.org/). À cette fin :
 
 * Installer nginx si ce n'est pas déjà fait : https://nginx.org/en/docs/install.html
 * Après avoir configuré les variables d’environnement (cf. ci-dessus), lancer la commande suivante pour générer et mettre en place la configuration nginx :
@@ -143,4 +143,4 @@ ALLOWED_HOSTS=localhost,0.0.0.0,127.0.0.1,.localhost
 CSRF_TRUSTED_ORIGINS="http://127.0.0.1:18000,http://localhost:18000,http://*.localhost:18000"
 ```
 
-* il faut alors accéder au site via http:/sites-faciles.localhost:18000/pages/
+* On peut alors accéder au site via http:/sites-faciles.localhost:18000/pages/
