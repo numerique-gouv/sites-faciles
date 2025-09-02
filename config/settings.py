@@ -47,7 +47,7 @@ HOST_PORT = os.getenv("HOST_PORT", "")
 FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "").rstrip("/")
 
 # Allow enabling WhiteNoise via an environment variable (disabled by default)
-USE_WHITENOISE = True if os.getenv("USE_WHITENOISE", False) in [1, "True"] else False
+SF_USE_WHITENOISE = True if os.getenv("SF_USE_WHITENOISE", False) in [1, "True"] else False
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -96,7 +96,7 @@ INSTALLED_APPS = [
     "wagtail.admin",
 ]
 
-if USE_WHITENOISE:
+if SF_USE_WHITENOISE:
     INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
 
 # Only add these on a dev machine, outside of tests
@@ -121,7 +121,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
-if USE_WHITENOISE:
+if SF_USE_WHITENOISE:
     MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
 
 # Only add this on a dev machine, outside of tests
@@ -233,7 +233,7 @@ STORAGES["staticfiles"] = {
     "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
 }
 
-if USE_WHITENOISE:
+if SF_USE_WHITENOISE:
     if DEBUG:
         STORAGES["staticfiles"] = {
             "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
