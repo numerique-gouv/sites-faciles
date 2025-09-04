@@ -134,9 +134,14 @@ if not TESTING and DEBUG and "localhost" in HOST_URL:
     def show_toolbar(request):
         request.META["wsgi.multithread"] = True
         request.META["wsgi.multiprocess"] = True
-        excluded_urls = ["/pages/preview/", "/pages/preview_loading/", "/edit/preview/"]
+        excluded_urls = [
+            "/pages/preview/",
+            "/pages/preview_loading/",
+            "/edit/",
+            "/edit/preview/",
+        ]
         excluded = any(request.path.endswith(url) for url in excluded_urls)
-        return DEBUG and not excluded
+        return not excluded
 
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": show_toolbar,
@@ -314,13 +319,14 @@ WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Sites faciles")
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = f"{HOST_PROTO}://{HOST_URL}"
+WAGTAILADMIN_BASE_URL = os.getenv("WAGTAILADMIN_BASE_URL", "")
 
-if HOST_PORT:
-    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
+# If not set in env, we build it from mandatory variables
+if not WAGTAILADMIN_BASE_URL:
+    WAGTAILADMIN_BASE_URL = f"{HOST_PROTO}://{HOST_URL}"
 
-if FORCE_SCRIPT_NAME:
-    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}{FORCE_SCRIPT_NAME}"
+    if HOST_PORT:
+        WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
 
 WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
