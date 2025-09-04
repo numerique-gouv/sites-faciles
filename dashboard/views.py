@@ -1,6 +1,3 @@
-# Create your views here.
-import json
-
 import requests
 from django.contrib.admin.utils import quote
 from django.urls import reverse
