@@ -1,3 +1,5 @@
+from functools import partial
+
 from django import forms
 from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
@@ -1605,7 +1607,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
     )
     image = ImageBlock(
         label=_("Hero image"),
-        default={"image": get_default_hero_image("Illustration Homme Ordinateur"), "decorative": True},
+        default={"image": partial(get_default_hero_image("Illustration Homme Ordinateur")), "decorative": True},
     )
     layout = LayoutBlock(label=_("Layout"))
 
@@ -1642,7 +1644,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
             "image_ratio": "fr-ratio-32x9",
             "image_width": "",
             "image": {
-                "image": get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash"),
+                "image": partial(get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash")),
                 "decorative": True,
             },
         },
@@ -1679,7 +1681,7 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
         default={
             "image_positioning": "top",
             "image": {
-                "image": get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash"),
+                "image": partial(get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash")),
                 "decorative": True,
             },
         },
