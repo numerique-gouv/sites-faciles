@@ -1,0 +1,175 @@
+.color-option:hover {
+    background-color: #f5f5f5;
+}
+
+.Draftail-Toolbar .color-dropdown-wrapper .Draftail-ToolbarButton {
+    margin: 0;
+}
+
+.cmsfr-text--blue {
+    color: var(--bf500);
+}
+
+.cmsfr-text--white {
+    color: #ffffff;
+}
+
+.public-DraftStyleDefault-block .cmsfr-text--white {
+    background-color: var(--g800);
+    padding: 0 2px;
+}
+
+/* Styles pour l'éditeur Draftail */
+.DraftEditor-editorContainer .cmsfr-text--blue,
+.public-DraftEditor-content .cmsfr-text--blue,
+[contenteditable] .cmsfr-text--blue {
+    color: var(--bf500) !important;
+}
+
+.DraftEditor-editorContainer .cmsfr-text--white,
+.public-DraftEditor-content .cmsfr-text--white,
+[contenteditable] .cmsfr-text--white {
+    color: #ffffff !important;
+    background-color: var(--g800) !important;
+    padding: 1px 3px !important;
+    border-radius: 2px !important;
+    text-shadow: none !important;
+}
+
+/* Styles Draftail pour les inline styles */
+.public-DraftStyleDefault-ltr .BLUETEXT {
+    color: var(--bf500) !important;
+    display: inline !important;
+    visibility: visible !important;
+}
+
+.public-DraftStyleDefault-ltr .WHITETEXT {
+    color: #ffffff !important;
+    background-color: var(--g800) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    outline: 1px solid #999999 !important;
+    outline-offset: -1px !important;
+    display: inline !important;
+    visibility: visible !important;
+}
+
+
+/* Style plus spécifique pour Draftail */
+.DraftEditor-root .public-DraftStyleDefault-ltr .BLUETEXT {
+    color: var(--bf500) !important;
+    display: inline !important;
+    visibility: visible !important;
+}
+
+.DraftEditor-root .public-DraftStyleDefault-ltr .WHITETEXT {
+    color: #ffffff !important;
+    background-color: var(--g800) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    outline: 1px solid #999999 !important;
+    outline-offset: -1px !important;
+    cursor: text !important;
+    display: inline !important;
+    visibility: visible !important;
+}
+
+/* Améliorer la sélection du texte blanc */
+.DraftEditor-root .public-DraftStyleDefault-ltr .WHITETEXT::selection {
+    background-color: #0078d4 !important;
+    color: #ffffff !important;
+}
+
+.DraftEditor-root .public-DraftStyleDefault-ltr .WHITETEXT::-moz-selection {
+    background-color: #0078d4 !important;
+    color: #ffffff !important;
+}
+
+/* Assurer que le texte blanc reste sélectionnable */
+.DraftEditor-root .public-DraftStyleDefault-ltr .WHITETEXT {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+}
+
+/* Forcer l'affichage même avec style inline display:none */
+span[style*="display: none"].BLUETEXT,
+span[style*="display:none"].BLUETEXT,
+.DraftEditor-root span[style*="display: none"].BLUETEXT,
+.DraftEditor-root span[style*="display:none"].BLUETEXT {
+    display: inline !important;
+    visibility: visible !important;
+    color: var(--bf500) !important;
+}
+
+span[style*="display: none"].WHITETEXT,
+span[style*="display:none"].WHITETEXT,
+.DraftEditor-root span[style*="display: none"].WHITETEXT,
+.DraftEditor-root span[style*="display:none"].WHITETEXT {
+    display: inline !important;
+    visibility: visible !important;
+    color: #ffffff !important;
+    background-color: var(--g800) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    outline: 1px solid #999999 !important;
+    outline-offset: -1px !important;
+}
+
+/* Super spécifique pour surpasser tous les styles inline */
+.DraftEditor-root .public-DraftStyleDefault-ltr span[class~="BLUETEXT"][style] {
+    display: inline !important;
+    visibility: visible !important;
+    color: var(--bf500) !important;
+}
+
+.DraftEditor-root .public-DraftStyleDefault-ltr span[class~="WHITETEXT"][style] {
+    display: inline !important;
+    visibility: visible !important;
+    color: #ffffff !important;
+    background-color: var(--g800) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    outline: 1px solid #999999 !important;
+    outline-offset: -1px !important;
+}
+
+/* Encore plus spécifique pour la couleur - cibler l'élément exact */
+.DraftEditor-root .public-DraftStyleDefault-ltr .public-DraftStyleDefault-block .public-DraftStyleDefault-ltr span.BLUETEXT {
+    color: var(--bf500) !important;
+    display: inline !important;
+}
+
+.DraftEditor-root .public-DraftStyleDefault-ltr .public-DraftStyleDefault-block .public-DraftStyleDefault-ltr span.WHITETEXT {
+    color: #ffffff !important;
+    background-color: var(--g800) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    display: inline !important;
+}
+
+/* Forcer avec tous les contextes possibles */
+.DraftEditor-editorContainer span.BLUETEXT,
+.DraftEditor-editorContainer .BLUETEXT,
+.public-DraftEditor-content span.BLUETEXT,
+.public-DraftEditor-content .BLUETEXT,
+div[data-contents="true"] span.BLUETEXT,
+div[data-contents="true"] .BLUETEXT {
+    color: var(--bf500) !important;
+    display: inline !important;
+}
+
+.DraftEditor-editorContainer span.WHITETEXT,
+.DraftEditor-editorContainer .WHITETEXT,
+.public-DraftEditor-content span.WHITETEXT,
+.public-DraftEditor-content .WHITETEXT,
+div[data-contents="true"] span.WHITETEXT,
+div[data-contents="true"] .WHITETEXT {
+    color: #ffffff !important;
+    background-color: var(--g800) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    display: inline !important;
+}
+
