@@ -4,6 +4,7 @@ from io import BytesIO
 
 from bs4 import BeautifulSoup
 from django.core.files.images import ImageFile
+from django.db.utils import OperationalError
 from wagtail.images.models import Image
 from wagtail.models import Site
 
@@ -76,3 +77,18 @@ def get_streamfield_raw_text(streamfield, max_words: int | None = None) -> str:
         raw_text = " ".join(words[:max_words]) + " […]"
 
     return raw_text
+
+
+def get_hero_image_illustration():
+    """Get default value with 'Illustration Homme Ordinateur'."""
+    try:
+        return Image.objects.get(title="Illustration Homme Ordinateur")
+    except (Image.DoesNotExist, OperationalError):
+        return None
+
+
+def get_hero_image():
+    try:
+        return Image.objects.get(title="Vue Paris Dimitri Iakymuk Unsplash")
+    except (Image.DoesNotExist, OperationalError):
+        return None

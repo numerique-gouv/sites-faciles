@@ -1,5 +1,4 @@
 from django import forms
-from django.db.utils import OperationalError
 from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
@@ -36,6 +35,8 @@ from content_manager.constants import (
     TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
+
+from .utils import get_hero_image, get_hero_image_illustration
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
@@ -1573,25 +1574,6 @@ class HeroImageBlockWithMask(HeroImageBlock):
         value_class = HeroImageStructValue
 
 
-def get_default_hero_image(file_name):
-    from wagtail.images.models import Image
-
-    try:
-        return Image.objects.get(title=file_name)
-    except (Image.DoesNotExist, OperationalError):
-        return None
-
-
-def make_default_hero_dict(file_name):
-    def _default():
-        return {
-            "image": get_default_hero_image(file_name),
-            "decorative": True,
-        }
-
-    return _default
-
-
 class HeroImageAndTextBlock(blocks.StructBlock):
     text_content = TextContentLeftRight()
     buttons = blocks.ListBlock(
@@ -1615,7 +1597,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
     )
     image = ImageBlock(
         label=_("Hero image"),
-        default=make_default_hero_dict("Illustration Homme Ordinateur"),
+        default={"image": get_hero_image_illustration, "decorative": True},
     )
     layout = LayoutBlock(label=_("Layout"))
 
@@ -1651,7 +1633,10 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
         default={
             "image_ratio": "fr-ratio-32x9",
             "image_width": "",
-            "image": make_default_hero_dict("Vue Paris Dimitri Iakymuk Unsplash"),
+            "image": {
+                "image": get_hero_image,
+                "decorative": True,
+            },
         },
     )
 
@@ -1683,7 +1668,13 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
     )
     image = HeroImageBlockWithMask(
         label=_("Hero image"),
-        default={"image_positioning": "top", "image": make_default_hero_dict("Vue Paris Dimitri Iakymuk Unsplash")},
+        default={
+            "image_positioning": "top",
+            "image": {
+                "image": get_hero_image,
+                "decorative": True,
+            },
+        },
     )
 
     class Meta:
