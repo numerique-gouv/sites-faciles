@@ -9,7 +9,6 @@ from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidatio
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
-from wagtail.images.models import Image
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.telepath import register
 from wagtailmarkdown.blocks import MarkdownBlock
@@ -1574,6 +1573,8 @@ class HeroImageBlockWithMask(HeroImageBlock):
 
 
 def get_default_hero_image(file_name):
+    from wagtail.images.models import Image
+
     try:
         image = Image.objects.get(title=file_name)
         return image
