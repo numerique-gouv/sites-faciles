@@ -1577,10 +1577,19 @@ def get_default_hero_image(file_name):
     from wagtail.images.models import Image
 
     try:
-        image = Image.objects.get(title=file_name)
-        return image
+        return Image.objects.get(title=file_name)
     except (Image.DoesNotExist, OperationalError):
         return None
+
+
+def make_default_hero_dict(file_name):
+    def _default():
+        return {
+            "image": get_default_hero_image(file_name),
+            "decorative": True,
+        }
+
+    return _default
 
 
 class HeroImageAndTextBlock(blocks.StructBlock):
@@ -1606,7 +1615,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
     )
     image = ImageBlock(
         label=_("Hero image"),
-        default={"image": get_default_hero_image("Illustration Homme Ordinateur"), "decorative": True},
+        default=make_default_hero_dict("Illustration Homme Ordinateur"),
     )
     layout = LayoutBlock(label=_("Layout"))
 
@@ -1642,10 +1651,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
         default={
             "image_ratio": "fr-ratio-32x9",
             "image_width": "",
-            "image": {
-                "image": get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash"),
-                "decorative": True,
-            },
+            "image": make_default_hero_dict("Vue Paris Dimitri Iakymuk Unsplash"),
         },
     )
 
@@ -1677,13 +1683,7 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
     )
     image = HeroImageBlockWithMask(
         label=_("Hero image"),
-        default={
-            "image_positioning": "top",
-            "image": {
-                "image": get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash"),
-                "decorative": True,
-            },
-        },
+        default={"image_positioning": "top", "image": make_default_hero_dict("Vue Paris Dimitri Iakymuk Unsplash")},
     )
 
     class Meta:
