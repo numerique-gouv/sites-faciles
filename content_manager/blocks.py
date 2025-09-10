@@ -1,6 +1,5 @@
-from functools import partial
-
 from django import forms
+from django.db.utils import OperationalError
 from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
@@ -1580,7 +1579,7 @@ def get_default_hero_image(file_name):
     try:
         image = Image.objects.get(title=file_name)
         return image
-    except Image.DoesNotExist:
+    except (Image.DoesNotExist, OperationalError):
         return None
 
 
@@ -1607,7 +1606,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
     )
     image = ImageBlock(
         label=_("Hero image"),
-        default={"image": partial(get_default_hero_image("Illustration Homme Ordinateur")), "decorative": True},
+        default={"image": get_default_hero_image("Illustration Homme Ordinateur"), "decorative": True},
     )
     layout = LayoutBlock(label=_("Layout"))
 
@@ -1644,7 +1643,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
             "image_ratio": "fr-ratio-32x9",
             "image_width": "",
             "image": {
-                "image": partial(get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash")),
+                "image": get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash"),
                 "decorative": True,
             },
         },
@@ -1681,7 +1680,7 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
         default={
             "image_positioning": "top",
             "image": {
-                "image": partial(get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash")),
+                "image": get_default_hero_image("Vue Paris Dimitri Iakymuk Unsplash"),
                 "decorative": True,
             },
         },
