@@ -90,3 +90,10 @@ p:empty {
         order: 2;
     }
 }
+
+.cmsfr-text--blue {
+  color: var(--text-active-blue-france) !important;
+}
+.cmsfr-text--white {
+  color: var(--grey-1000-50) !important;
+}
