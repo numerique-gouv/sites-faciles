@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.urls import reverse
@@ -124,7 +123,8 @@ class Command(BaseCommand):
         <p>Vous pouvez maintenant vous connecter dans l’administration et personnaliser le site.</p>
         """
 
-        admin_url = f"{settings.WAGTAILADMIN_BASE_URL}{reverse('wagtailadmin_home')}"
+        # Use the reversed admin path directly to avoid duplicating the script_name
+        admin_url = reverse("wagtailadmin_home")
 
         image_and_text_block = {
             "image": image,

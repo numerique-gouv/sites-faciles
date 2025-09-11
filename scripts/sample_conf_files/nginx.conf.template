@@ -1,0 +1,29 @@
+server {
+    listen 1${HOST_PORT};
+    client_max_body_size 200M;
+    server_name ${HOST_URL};
+
+    location ${FORCE_SCRIPT_NAME}/medias {
+        alias ${BASE_PATH}/medias;
+    }
+
+    location ${FORCE_SCRIPT_NAME}/static {
+        alias ${BASE_PATH}/staticfiles;
+    }
+
+    location /favicon.ico {
+        alias ${BASE_PATH}/staticfiles/dsfr/dist/favicon/favicon.ico;
+    }
+
+    location / {
+        proxy_pass         http://${HOST_URL}:${HOST_PORT}/;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+
+        # Important: tells Django which subfolder to use
+        proxy_set_header   X-Script-Name ${FORCE_SCRIPT_NAME};
+    }
+
+    error_page 502 503 504 /templates/500.html;
+}

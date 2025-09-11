@@ -33,20 +33,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv("DEBUG") == "True" else False
+DEBUG = True if os.getenv("DEBUG") in [1, "True"] else False
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", "").split(",")
 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
+HOST_PORT = os.getenv("HOST_PORT", "")
+
+# Prefix of the application when served under a sub-path.
+# ``FORCE_SCRIPT_NAME`` is the Django setting handling this behaviour:
+# https://docs.djangoproject.com/en/5.2/ref/settings/#force-script-name
+FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "").rstrip("/")
+
+# Allow enabling WhiteNoise via an environment variable (disabled by default)
+SF_USE_WHITENOISE = True if os.getenv("SF_USE_WHITENOISE", False) in [1, "True"] else False
 
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-TESTING = "test" in sys.argv
-
-# Application definition
+# Applications definition
 
 INSTALLED_APPS = [
     # The order is important for overriding templates and using contexts, please change it carefully.
@@ -89,12 +96,18 @@ INSTALLED_APPS = [
     "wagtail.admin",
 ]
 
+if SF_USE_WHITENOISE:
+    INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
+
 # Only add these on a dev machine, outside of tests
+TESTING = "test" in sys.argv
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     INSTALLED_APPS += [
         "wagtail.contrib.styleguide",
         "debug_toolbar",
     ]
+
+# Middleware definition
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -108,6 +121,9 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
+if SF_USE_WHITENOISE:
+    MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
+
 # Only add this on a dev machine, outside of tests
 if not TESTING and DEBUG and "localhost" in HOST_URL:
     MIDDLEWARE += [
@@ -118,9 +134,14 @@ if not TESTING and DEBUG and "localhost" in HOST_URL:
     def show_toolbar(request):
         request.META["wsgi.multithread"] = True
         request.META["wsgi.multiprocess"] = True
-        excluded_urls = ["/pages/preview/", "/pages/preview_loading/", "/edit/preview/"]
+        excluded_urls = [
+            "/pages/preview/",
+            "/pages/preview_loading/",
+            "/edit/",
+            "/edit/preview/",
+        ]
         excluded = any(request.path.endswith(url) for url in excluded_urls)
-        return DEBUG and not excluded
+        return not excluded
 
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": show_toolbar,
@@ -217,6 +238,20 @@ STORAGES["staticfiles"] = {
     "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
 }
 
+if SF_USE_WHITENOISE:
+    if DEBUG:
+        STORAGES["staticfiles"] = {
+            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        }
+        # Allow WhiteNoise to load files directly from app directories without
+        # running ``collectstatic`` each time and reload them on changes.
+        WHITENOISE_USE_FINDERS = True
+        WHITENOISE_AUTOREFRESH = True
+    else:
+        STORAGES["staticfiles"] = {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        }
+
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
@@ -246,11 +281,29 @@ else:
     STORAGES["default"] = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     }
-    MEDIA_URL = "medias/"
     MEDIA_ROOT = os.path.join(BASE_DIR, os.getenv("MEDIA_ROOT", ""))
+    MEDIA_URL = os.getenv("MEDIA_URL", "medias/")
 
-STATIC_URL = "static/"
+    if FORCE_SCRIPT_NAME and not MEDIA_URL.startswith(FORCE_SCRIPT_NAME):
+        MEDIA_URL = f"{FORCE_SCRIPT_NAME}/{MEDIA_URL}"
+
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATIC_URL = os.getenv("STATIC_URL", "static/")
+
+if FORCE_SCRIPT_NAME and not STATIC_URL.startswith(FORCE_SCRIPT_NAME):
+    STATIC_URL = f"{FORCE_SCRIPT_NAME}/{STATIC_URL}"
+
+
+# Allow Django to serve statics even in production if needed
+SF_PROD_SERVE_STATIC = True if os.getenv("SF_PROD_SERVE_STATIC", False) in [1, "True"] else False
+if SF_PROD_SERVE_STATIC:
+    import mimetypes
+
+    mimetypes.add_type("application/javascript", ".js", True)
+    mimetypes.add_type("text/css", ".css", True)
+
+    WHITENOISE_STATIC_PREFIX = STATIC_URL
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
@@ -266,17 +319,23 @@ WAGTAIL_SITE_NAME = os.getenv("SITE_NAME", "Sites faciles")
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = f"{HOST_PROTO}://{HOST_URL}"
+WAGTAILADMIN_BASE_URL = os.getenv("WAGTAILADMIN_BASE_URL", "")
 
-HOST_PORT = os.getenv("HOST_PORT", "")
-if HOST_PORT != "":
-    WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
+# If not set in env, we build it from mandatory variables
+if not WAGTAILADMIN_BASE_URL:
+    WAGTAILADMIN_BASE_URL = f"{HOST_PROTO}://{HOST_URL}"
+
+    if HOST_PORT:
+        WAGTAILADMIN_BASE_URL = f"{WAGTAILADMIN_BASE_URL}:{HOST_PORT}"
+
 WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 WAGTAILADMIN_PATH = os.getenv("WAGTAILADMIN_PATH", "cms-admin/")
 
-WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL = f"/{WAGTAILADMIN_PATH}login/"
-LOGOUT_URL = f"/{WAGTAILADMIN_PATH}logout/"
+LOGIN_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}login/"
+LOGOUT_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}logout/"
+
+WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 
 WAGTAIL_PASSWORD_REQUIRED_TEMPLATE = "content_manager/password_required.html"
 
@@ -319,7 +378,7 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
 )
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
-SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) == "True" else False
+SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) in [1, "True"] else False
 
 # Allows for complex Streamfields without completely removing checks
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
@@ -342,8 +401,8 @@ if DEFAULT_FROM_EMAIL:
 WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
 
 # (Optional) ProConnect settings
-PROCONNECT_ACTIVATED = True if os.getenv("PROCONNECT_ACTIVATED", False) == "True" else False
-OIDC_CREATE_USER = True if os.getenv("PROCONNECT_CREATE_USER", "True") == "True" else False
+PROCONNECT_ACTIVATED = True if os.getenv("PROCONNECT_ACTIVATED", False) in [1, "True"] else False
+OIDC_CREATE_USER = True if os.getenv("PROCONNECT_CREATE_USER", "True") in [1, "True"] else False
 OIDC_RP_CLIENT_ID = os.getenv("PROCONNECT_CLIENT_ID", "")
 OIDC_RP_CLIENT_SECRET = os.getenv("PROCONNECT_CLIENT_SECRET", "")
 OIDC_RP_SCOPES = os.getenv("PROCONNECT_SCOPES", "openid given_name usual_name email siret uid")
@@ -362,8 +421,8 @@ OIDC_REDIRECT_ALLOWED_HOSTS = ALLOWED_HOSTS
 PROCONNECT_USER_CREATION_FILTER = os.getenv("PROCONNECT_USER_CREATION_FILTER", None)
 LASUITE_DOMAINE_API_KEY = os.getenv("LASUITE_DOMAINE_API_KEY", None)
 
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = f"{FORCE_SCRIPT_NAME}/"
+LOGOUT_REDIRECT_URL = f"{FORCE_SCRIPT_NAME}/"
 
 if PROCONNECT_ACTIVATED:
     INSTALLED_APPS += [
@@ -376,9 +435,23 @@ if PROCONNECT_ACTIVATED:
         "proconnect.backends.OIDCAuthenticationBackend",
     ]
 
-    LOGOUT_URL = "/oidc/logout/"
+    LOGOUT_URL = f"{FORCE_SCRIPT_NAME}/oidc/logout/"
 
 # CSRF
 CSRF_TRUSTED_ORIGINS = []
 for host in ALLOWED_HOSTS:
-    CSRF_TRUSTED_ORIGINS.append("https://" + host)
+    if host not in ["127.0.0.1", "localhost", ".localhost"]:
+        if HOST_PORT:
+            CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}:{HOST_PORT}")
+        else:
+            CSRF_TRUSTED_ORIGINS.append(f"{HOST_PROTO}://{host}")
+
+trusted_origins = os.getenv("CSRF_TRUSTED_ORIGINS", "").replace(" ", "").split(",")
+trusted_origins = list(filter(None, trusted_origins))
+
+if len(trusted_origins):
+    CSRF_TRUSTED_ORIGINS += trusted_origins
+
+# Disable the integrity checksums by default.
+# They can clash with Whitenoise and are normally not useful as we serve the statics from a trusted source
+DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS") in [1, "True"] else False

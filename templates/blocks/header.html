@@ -7,7 +7,7 @@
 
 {% block service_title %}
   {% translate "Home page" as home_page %}
-  <a href="/"
+  <a href="{% root_url %}"
      title="{{ home_page }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
 
     <p class="fr-header__service-title">
