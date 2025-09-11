@@ -19,7 +19,7 @@
     padding: 0 2px;
 }
 
-/* Styles pour l'éditeur Draftail */
+/* Styles for Draftail editor */
 .DraftEditor-editorContainer .cmsfr-text--blue,
 .public-DraftEditor-content .cmsfr-text--blue,
 [contenteditable] .cmsfr-text--blue {
@@ -36,7 +36,7 @@
     text-shadow: none !important;
 }
 
-/* Styles Draftail pour les inline styles */
+/* Draftail styles for inline styles */
 .public-DraftStyleDefault-ltr .BLUETEXT {
     color: var(--bf500) !important;
     display: inline !important;
@@ -55,7 +55,6 @@
 }
 
 
-/* Style plus spécifique pour Draftail */
 .DraftEditor-root .public-DraftStyleDefault-ltr .BLUETEXT {
     color: var(--bf500) !important;
     display: inline !important;
@@ -74,7 +73,7 @@
     visibility: visible !important;
 }
 
-/* Améliorer la sélection du texte blanc */
+/* Improve white text selection */
 .DraftEditor-root .public-DraftStyleDefault-ltr .WHITETEXT::selection {
     background-color: #0078d4 !important;
     color: #ffffff !important;
@@ -85,15 +84,7 @@
     color: #ffffff !important;
 }
 
-/* Assurer que le texte blanc reste sélectionnable */
-.DraftEditor-root .public-DraftStyleDefault-ltr .WHITETEXT {
-    user-select: text !important;
-    -webkit-user-select: text !important;
-    -moz-user-select: text !important;
-    -ms-user-select: text !important;
-}
-
-/* Forcer l'affichage même avec style inline display:none */
+/* Force display even with inline display:none style */
 span[style*="display: none"].BLUETEXT,
 span[style*="display:none"].BLUETEXT,
 .DraftEditor-root span[style*="display: none"].BLUETEXT,
@@ -117,7 +108,6 @@ span[style*="display:none"].WHITETEXT,
     outline-offset: -1px !important;
 }
 
-/* Super spécifique pour surpasser tous les styles inline */
 .DraftEditor-root .public-DraftStyleDefault-ltr span[class~="BLUETEXT"][style] {
     display: inline !important;
     visibility: visible !important;
@@ -135,7 +125,6 @@ span[style*="display:none"].WHITETEXT,
     outline-offset: -1px !important;
 }
 
-/* Encore plus spécifique pour la couleur - cibler l'élément exact */
 .DraftEditor-root .public-DraftStyleDefault-ltr .public-DraftStyleDefault-block .public-DraftStyleDefault-ltr span.BLUETEXT {
     color: var(--bf500) !important;
     display: inline !important;
@@ -149,7 +138,6 @@ span[style*="display:none"].WHITETEXT,
     display: inline !important;
 }
 
-/* Forcer avec tous les contextes possibles */
 .DraftEditor-editorContainer span.BLUETEXT,
 .DraftEditor-editorContainer .BLUETEXT,
 .public-DraftEditor-content span.BLUETEXT,
