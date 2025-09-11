@@ -1,4 +1,4 @@
-// Script pour ajouter un menu déroulant de couleurs dans Draftail
+// Script to add a color dropdown menu in Draftail
 (function() {
     'use strict';
     
@@ -34,7 +34,7 @@
         font-size: 14px;
     `;
     
-    // Création des éléments DOM
+    // DOM elements creation
     function createWrapper() {
         const wrapper = document.createElement('div');
         wrapper.className = 'color-dropdown-wrapper';
@@ -110,7 +110,7 @@
         return option;
     }
     
-    // Gestion des événements
+    // Event handling
     function setupHoverBehavior(wrapper, menu) {
         let hoverTimeout;
         
@@ -133,7 +133,7 @@
         return hoverTimeout;
     }
     
-    // Recherche et manipulation DraftJS
+    // DraftJS instance search and manipulation
     function findDraftJSInstance(editorWrapper) {
         const reactKeys = Object.keys(editorWrapper).filter(key => key.startsWith('__react'));
         
@@ -197,7 +197,7 @@
         }
     }
     
-    // Utilitaires de style
+    // Style utilities
     function forceColorStyles() {
         const applyForcedStyles = (selector, styles) => {
             document.querySelectorAll(selector).forEach(el => {
@@ -223,7 +223,7 @@
         });
     }
     
-    // Construction du dropdown
+    // Dropdown construction
     function buildDropdown(toolbar) {
         const wrapper = createWrapper();
         const button = createButton();
@@ -259,7 +259,7 @@
         }
     }
     
-    // Fonctions principales
+    // Main functions
     function addDropdownToToolbar(toolbar) {
         if (toolbar.querySelector('.color-dropdown-wrapper')) return false;
         
@@ -306,22 +306,17 @@
         });
     }
     
-    // Initialisation
+    // Initialization
     function init() {
         initDropdowns();
         observeNewToolbars();
         observeStyleChanges();
         
-        // Tentatives différées
         [500, 1500, 3000].forEach(delay => {
             setTimeout(initDropdowns, delay);
         });
         
-        // Force périodique
         setInterval(forceColorStyles, 2000);
-        
-        // Export pour debug
-        window.initColorDropdowns = initDropdowns;
     }
     
     init();
