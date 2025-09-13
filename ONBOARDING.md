@@ -103,8 +103,8 @@ cd sites-faciles
 Avoir un PostgreSQL qui tourne en local (cf. procédure d’installation sur [Ubuntu](https://documentation.ubuntu.com/server/how-to/databases/install-postgresql/index.html) ou sur [Mac](https://postgresapp.com/).)
 
 ```sh
-# créer un utilisateur
-psql -c "CREATE USER sitesfaciles WITH CREATEDB PASSWORD 'votre_mot_de_passe';" -U postgres
+# créer un utilisateur avec les droits nécessaires aux scripts d’administration
+psql -c "CREATE USER sitesfaciles WITH LOGIN PASSWORD 'votre_mot_de_passe'; CREATEDB" -U postgres
 
 
 # créer la base de données (vide pour l’instant)

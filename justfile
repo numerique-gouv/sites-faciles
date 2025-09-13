@@ -16,16 +16,11 @@ default:
     @just --list
 
 #### Main recipes
-
 collectstatic:
     {{docker_cmd}} {{uv_run}} python manage.py collectstatic --noinput
 
 createsuperuser:
     {{docker_cmd}} {{uv_run}} python manage.py createsuperuser
-
-demo:
-    just init
-    {{docker_cmd}} {{uv_run}} python manage.py create_demo_pages
 
 alias first-deploy := deploy
 deploy:
@@ -49,6 +44,7 @@ init-dev:
     {{docker_cmd}} uv sync
     just deploy
     {{docker_cmd}} {{uv_run}} pre-commit install
+
 
 alias messages := makemessages
 makemessages:
@@ -112,18 +108,21 @@ web-prompt:
 #### Audit-related recipes
 
 # Count lines of code per app
+[group('Code audit')]
 cloc:
     @for d in "config" "blog" "content_manager" "dashboard" "events" "forms" "proconnect" "templates" ; do \
     (cd "$d" && echo "$d" && cloc --vcs git); \
     done
 
 # Evaluate test coverage then generate and open a HTML report
+[group('Code audit')]
 coverage app="":
     {{uv_run}} coverage run --source='.' manage.py test {{app}}
     {{uv_run}} coverage html
     firefox htmlcov/index.html
 
 # Gives a rough estimate of the number of internal and external routes
+[group('Code audit')]
 routes-count:
     @{{uv_run}} python manage.py shell -v 0 -c "from django.urls import get_resolver ; \
     routes = set(v[1] for k,v in get_resolver().reverse_dict.items()) ; \
@@ -131,3 +130,29 @@ routes-count:
     print('Internal: ' + str(len(list(filter(lambda k: '-admin' in k, routes))) - 3)) ; \
     print('External: ' + str(len(list(filter(lambda k: '-admin' not in k, routes))) + 3)) ;"
     @# (manually adjusting for login/logout and password reset routes)
+
+# Creates a bunch of example pages
+[group('Dev DB and medias management')]
+demo:
+    just init
+    {{docker_cmd}} {{uv_run}} python manage.py create_demo_pages
+
+# Descend the latest DB backup of the production database
+[group('Dev DB and medias management')]
+descend:
+    cd scripts && bash descend_prod_db.sh
+
+# Get the latest PostgreSQL backup for the production app
+[group('Dev DB and medias management')]
+local-backup:
+    cd scripts && bash local_backup.sh
+
+# Clears the local database
+[group('Dev DB and medias management')]
+local-db-clear:
+    cd scripts && bash local_db_clear.sh
+
+# Restore the last downloaded backup of the production database
+[group('Dev DB and medias management')]
+restore_db_prod:
+    cd scripts && bash restore_db_prod.sh
