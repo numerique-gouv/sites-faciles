@@ -141,12 +141,7 @@ p:empty {
 
 @media all and (max-width: 575px) {
     .cmsfr-order-mobile__2 {
-<<<<<<< HEAD
-        order: 2
-    }
-=======
         order: 2;
->>>>>>> 161b2f1 (resolve conflicts)
 }
 }
 

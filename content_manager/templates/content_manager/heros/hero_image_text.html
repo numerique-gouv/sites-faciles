@@ -1,23 +1,21 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
-<div 
-style="{% if value.layout.background_color %}background-color: var(--background-alt-{{  value.layout.background_color }});
-       {% endif %} min-height: 350px">
-<div class="fr-container fr-py-3w">
+<div style="{% if value.layout.background_color %}background-color: var(--background-alt-{{ value.layout.background_color }});
+            {% endif %} min-height: 350px">
+  <div class="fr-container fr-py-3w">
     <div class="fr-grid-row fr-grid-row--middle {{ value.layout.vertical_margin }}">
-    <div class="fr-col-md-6 {% if value.text_content.position ==  'right' %} cmsfr-order__2 fr-pl-8v {% endif %}">
+      <div class="fr-col-md-6 {% if value.text_content.position == 'right' %}cmsfr-order__2 fr-pl-8v{% endif %}">
         {% include "content_manager/heros/_hero_text_content.html" %}
-    <ul class="fr-btns-group fr-btns-group--inline-lg{% if icons_side == 'fr-btn--icon-left' %} fr-btns-group--icon-left{% elif icons_side == 'fr-btn--icon-right' %} fr-btns-group--icon-right {% endif %} {{ value.position }}">
-    {% for button in value.buttons %}
-      <li>{% include "content_manager/blocks/button.html" with button=button %}</li>
-    {% endfor %}
-  </ul>
+        <ul class="fr-btns-group fr-btns-group--inline-lg{% if icons_side == 'fr-btn--icon-left' %} fr-btns-group--icon-left{% elif icons_side == 'fr-btn--icon-right' %} fr-btns-group--icon-right {% endif %} {{ value.position }}">
+          {% for button in value.buttons %}
+            <li>{% include "content_manager/blocks/button.html" with button=button %}</li>
+          {% endfor %}
+        </ul>
 
-
-    </div>
-    <div class="fr-col-md-6">
+      </div>
+      <div class="fr-col-md-6">
         {% image value.image fill-600x600 as header_image %}
-            <img class="fr-responsive-img" src="{{ header_image.full_url }}" alt="" />
+        <img class="fr-responsive-img" src="{{ header_image.full_url }}" alt="" />
+      </div>
     </div>
-</div>
-</div>
+  </div>
 </div>
