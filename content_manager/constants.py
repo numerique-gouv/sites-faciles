@@ -35,6 +35,12 @@ GRID_3_4_6_CHOICES = [
     ("6", "6/12"),
 ]
 
+GRID_6_8_12_CHOICES = [
+    ("6", _("small")),
+    ("8", _("medium")),
+    ("12", _("large")),
+]
+
 GRID_HORIZONTAL_ALIGN_CHOICES = [
     ("left", _("Left")),
     ("center", _("Center")),
@@ -94,6 +100,19 @@ LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS = [
     "superscript",
     "subscript",
     "strikethrough",
+]
+
+LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS = [
+    "bold",
+    "italic",
+    "link",
+    "document-link",
+    "superscript",
+    "subscript",
+    "strikethrough",
+    "h2",
+    "h3",
+    "h4",
 ]
 
 LINK_SIZE_CHOICES = [
