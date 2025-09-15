@@ -15,6 +15,7 @@ from content_manager.constants import (
     BUTTON_TYPE_CHOICES,
     BUTTONS_ALIGN_CHOICES,
     GRID_3_4_6_CHOICES,
+    GRID_6_8_12_CHOICES,
     GRID_HORIZONTAL_ALIGN_CHOICES,
     GRID_VERTICAL_ALIGN_CHOICES,
     HEADING_CHOICES,
@@ -22,6 +23,7 @@ from content_manager.constants import (
     HORIZONTAL_CARD_IMAGE_RATIOS,
     LEVEL_CHOICES,
     LIMITED_RICHTEXTFIELD_FEATURES,
+    LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
     LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS,
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
@@ -1266,6 +1268,27 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
         value_class = BlockMarginStructValue
 
 
+class LayoutTextBlock(blocks.StructBlock):
+    size = blocks.ChoiceBlock(choices=GRID_6_8_12_CHOICES, label=_("Block size"))
+    text = blocks.RichTextBlock(
+        features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
+        label=_("Rich text"),
+        default="<h3>En savoir plus</h3> </br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+        "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        "Excepteur sint occaecat cupidatat non proident, "
+        "sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    )
+
+    class Meta:
+        template = "content_manager/blocks/sections/layout_text_block.html"
+
+
+class ImageAndTextGrid(blocks.StructBlock):
+    items_alignements = blocks.ChoiceBlock()
+
+
 STREAMFIELD_COMMON_BLOCKS = [
     ("paragraph", blocks.RichTextBlock(label=_("Rich text"))),
     ("image", CenteredImageBlock(label=_("Centered image"))),
@@ -1326,4 +1349,5 @@ STREAMFIELD_COMMON_BLOCKS = [
         "events_recent_entries",
         EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
     ),
+    ("layout_richtext", LayoutTextBlock(label=_("Rich text with layout"), group=_("Predefined sections"))),
 ]
