@@ -5,13 +5,11 @@
 
 # Manage environment variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-export BASE_PATH=$(dirname ${SCRIPT_DIR})
 export EXPORTED_DATABASE_NAME=content_man_533
 
 set -a
 [ -f  ${SCRIPT_DIR}/../.env ] && . ${SCRIPT_DIR}/../.env && echo "Local env variables loaded"
 set +a
-
 
 if [[ -z "$BACKUP_DIR" ]]; then
     echo "Please set BACKUP_DIR to a directory outsite of the django path" 1>&2

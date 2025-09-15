@@ -137,12 +137,22 @@ demo:
     just init
     {{docker_cmd}} {{uv_run}} python manage.py create_demo_pages
 
+# Descend the latest DB backup & media files of the production database
+[group('Dev DB and medias management')]
+descend-prod:
+    cd scripts && bash descend_prod_db.sh && bash descend_prod_medias.sh
+
 # Descend the latest DB backup of the production database
 [group('Dev DB and medias management')]
-descend:
+descend-prod-db:
     cd scripts && bash descend_prod_db.sh
 
-# Get the latest PostgreSQL backup for the production app
+# Descend the latest media files from the production server
+[group('Dev DB and medias management')]
+descend-prod-medias:
+    cd scripts && bash descend_prod_medias.sh
+
+# Get the latest local PostgreSQL backup
 [group('Dev DB and medias management')]
 local-backup:
     cd scripts && bash local_backup.sh
@@ -152,7 +162,32 @@ local-backup:
 local-db-clear:
     cd scripts && bash local_db_clear.sh
 
+# Restore the last local database & medias backup
+[group('Dev DB and medias management')]
+restore_local:
+    cd scripts && bash restore_local_db.sh && bash restore_local_medias.sh
+
+# Restore the last local database backup
+[group('Dev DB and medias management')]
+restore_local_db:
+    cd scripts && bash restore_local_db.sh
+
+# Restore the last local medias backup
+[group('Dev DB and medias management')]
+restore_local_medias:
+    cd scripts && bash restore_local_medias.sh
+
+# Restore the last downloaded backup & media files from production
+[group('Dev DB and medias management')]
+restore_prod:
+    cd scripts && bash restore_prod_db.sh && bash restore_prod_medias.sh
+
 # Restore the last downloaded backup of the production database
 [group('Dev DB and medias management')]
-restore_db_prod:
-    cd scripts && bash restore_db_prod.sh
+restore_prod_db:
+    cd scripts && bash restore_prod_db.sh
+
+# Restore the last downloaded media files
+[group('Dev DB and medias management')]
+restore_prod_medias:
+    cd scripts && bash restore_prod_medias.sh

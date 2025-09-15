@@ -144,3 +144,55 @@ CSRF_TRUSTED_ORIGINS="http://127.0.0.1:18000,http://localhost:18000,http://*.loc
 ```
 
 * On peut alors accéder au site via http:/sites-faciles.localhost:18000/pages/
+
+## Gestion de la base de données et des médias
+Un ensemble de scripts pour gérer la base de données et les fichiers médias, que ce soit ceux de la base locale de dev ou ceux de la production.
+
+Ils sont regroupés dans la catégorie « [Dev DB and medias management] » de la commande `just`.
+
+La gestion des sauvegardes locales nécessite de définir la variable `BACKUP_DIR` dans le fichier `.env`, en spécifiant un répertoire situé hors du projet Django pour ne pas risquer de commiter une sauvegarde par défaut.
+
+La gestion des sauvegardes de production nécessite de définir les variables supplémentaires dans le fichier `.env`.
+
+Il faut aussi installer le paquet `rclone` (via `apt`) pour gérer la récupération des fichiers média depuis un S3.
+
+```sh
+PROD_APP=
+PROD_S3_BUCKET_NAME=
+PROD_S3_LOCATION=
+RCLONE_CONFIG_MYS3_REGION_NAME=
+RCLONE_CONFIG_MYS3_ENDPOINT=
+RCLONE_CONFIG_MYS3_ACCESS_KEY_ID=
+RCLONE_CONFIG_MYS3_SECRET_ACCESS_KEY=
+RCLONE_CONFIG_MYS3_PROVIDER=Other
+RCLONE_CONFIG_MYS3_TYPE="s3"
+```
+
+### Données locales
+Il est possible de faire une sauvegarde de la base de données et des fichiers médias de l’instance via
+
+```sh
+just local-backup
+```
+
+Il est fortement recommandé d’en faire un avant de remplacer ces données par celles de production, sinon elles seront perdues !
+
+### Récupération des données de production
+Pour récupérer la base de données et les fichiers média de production en local, taper la commande suivante :
+
+```sh
+just descend-prod
+```
+
+### Restauration
+Il est possible de restaurer les données locales ou de production via, respectivement,
+
+```sh
+just restore-local
+```
+
+et
+
+```sh
+just restore-prod
+```

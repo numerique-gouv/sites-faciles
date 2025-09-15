@@ -4,7 +4,6 @@
 
 # Manage environment variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-export BASE_PATH=$(dirname ${SCRIPT_DIR})
 
 set -a
 [ -f  ${SCRIPT_DIR}/../.env ] && . ${SCRIPT_DIR}/../.env && echo "Local env variables loaded"

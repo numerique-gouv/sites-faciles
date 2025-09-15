@@ -4,12 +4,10 @@
 
 # Manage environment variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-export BASE_PATH=$(dirname ${SCRIPT_DIR})
 
 set -a
 [ -f  ${SCRIPT_DIR}/../.env ] && . ${SCRIPT_DIR}/../.env && echo "Local env variables loaded"
 set +a
-
 
 if [[ -z "$BACKUP_DIR" ]]; then
     echo "Please set BACKUP_DIR to a directory outsite of the django path" 1>&2
@@ -29,7 +27,7 @@ pg_dump --no-privileges --no-owner -U ${DATABASE_USER} -h ${DATABASE_HOST} -p ${
 
 echo "Medias backup"
 cd ${SCRIPT_DIR}
-tar cvzf ${BACKUP_DIR}/sites-faciles-local-${DATE}.tar.gz ../${MEDIA_ROOT}/
+tar cvzf ${BACKUP_DIR}/sites-faciles-local-medias-${DATE}.tar.gz ../${MEDIA_ROOT}/
 
 echo "New backup files:"
 ls -hal ${BACKUP_DIR}/*${DATE}*
