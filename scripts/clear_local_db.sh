@@ -13,4 +13,3 @@ echo "Clearing database ${DATABASE_NAME}"
 
 dropdb -U postgres ${DATABASE_NAME} --force
 psql -c "CREATE DATABASE ${DATABASE_NAME} OWNER ${DATABASE_USER};" -U postgres
-

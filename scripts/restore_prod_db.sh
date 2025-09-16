@@ -1,7 +1,6 @@
 #!/bin/bash
 
-
-# Restore the last downloaded backup of the production database
+# Restore the latest downloaded backup of the production database
 
 # Manage environment variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"

@@ -136,6 +136,18 @@ routes-count:
     print('External: ' + str(len(list(filter(lambda k: '-admin' not in k, routes))) + 3)) ;"
     @# (manually adjusting for login/logout and password reset routes)
 
+##### Database & media management related scripts
+
+# Get the latest local PostgreSQL backup
+[group('Dev DB and medias management')]
+backup-local:
+    cd scripts && bash backup_local.sh
+
+# Clears the local database
+[group('Dev DB and medias management')]
+clear-local-db:
+    cd scripts && bash clear_local_db.sh
+
 # Creates a bunch of example pages
 [group('Dev DB and medias management')]
 demo:
@@ -157,42 +169,32 @@ descend-prod-db:
 descend-prod-medias:
     cd scripts && bash descend_prod_medias.sh
 
-# Get the latest local PostgreSQL backup
-[group('Dev DB and medias management')]
-local-backup:
-    cd scripts && bash local_backup.sh
-
-# Clears the local database
-[group('Dev DB and medias management')]
-local-db-clear:
-    cd scripts && bash local_db_clear.sh
-
 # Restore the last local database & medias backup
 [group('Dev DB and medias management')]
-restore_local:
+restore-local:
     cd scripts && bash restore_local_db.sh && bash restore_local_medias.sh
 
 # Restore the last local database backup
 [group('Dev DB and medias management')]
-restore_local_db:
+restore-local-db:
     cd scripts && bash restore_local_db.sh
 
 # Restore the last local medias backup
 [group('Dev DB and medias management')]
-restore_local_medias:
+restore-local-medias:
     cd scripts && bash restore_local_medias.sh
 
 # Restore the last downloaded backup & media files from production
 [group('Dev DB and medias management')]
-restore_prod:
+restore-prod:
     cd scripts && bash restore_prod_db.sh && bash restore_prod_medias.sh
 
 # Restore the last downloaded backup of the production database
 [group('Dev DB and medias management')]
-restore_prod_db:
+restore-prod-db:
     cd scripts && bash restore_prod_db.sh
 
 # Restore the last downloaded media files
 [group('Dev DB and medias management')]
-restore_prod_medias:
+restore-prod-medias:
     cd scripts && bash restore_prod_medias.sh

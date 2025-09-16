@@ -1,7 +1,6 @@
 #!/bin/bash
 
-
-# Restore the last backupfrom the local database
+# Restore the latest backup from the local database
 
 # Manage environment variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"

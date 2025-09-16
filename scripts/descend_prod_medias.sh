@@ -9,7 +9,6 @@ set -a
 [ -f  ${SCRIPT_DIR}/../.env ] && . ${SCRIPT_DIR}/../.env && echo "Local env variables loaded"
 set +a
 
-
 if [[ -z "$BACKUP_DIR" ]]; then
     echo "Please set BACKUP_DIR to a directory outsite of the django path" 1>&2
     exit 1
