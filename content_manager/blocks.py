@@ -1356,7 +1356,7 @@ class ImageAndTextGrid(blocks.StructBlock):
     # layout = LayoutBlock()
 
     class Meta:
-        template = "content_manager/blocks/sections/imgage_text_grid.html"
+        template = "content_manager/blocks/sections/image_text_grid.html"
 
 
 STREAMFIELD_COMMON_BLOCKS = [
