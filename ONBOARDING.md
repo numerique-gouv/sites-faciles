@@ -159,7 +159,7 @@ Il faut aussi installer deux dépendances : d’une part, la CLI de Scalingo, en
 D’autre part, le paquet [rclone](https://rclone.org/) (via `apt install rclone`) pour gérer la récupération des fichiers média depuis un S3.
 
 ```sh
-PROD_APP= (le nom de l’app scalingo, par ex sites-faciles)
+PROD_APP= (le nom de l’app Scalingo, par ex sites-faciles)
 PROD_DB_NAME= (le nom de la base de données dans Scalingo, par ex sites_facil_123)
 PROD_S3_BUCKET_NAME=
 PROD_S3_LOCATION=
