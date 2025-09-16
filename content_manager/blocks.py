@@ -1340,8 +1340,23 @@ class LayoutTextBlock(blocks.StructBlock):
         template = "content_manager/blocks/sections/layout_text_block.html"
 
 
+class ImageAndTextItems(blocks.StructBlock):
+    image = ImageBlock(label=_("Image"))
+    title = blocks.CharBlock(label=_("title"), required=True)
+    text = blocks.RichTextBlock(
+        default="Add a short description to help your visitors better understand what you offer.", label=_("Text")
+    )
+
+
 class ImageAndTextGrid(blocks.StructBlock):
     items_alignements = blocks.ChoiceBlock()
+    items_per_row = blocks.ChoiceBlock()
+    items = blocks.ListBlock(ImageAndTextItems())
+    # A intégrer après merge de la PR 373
+    # layout = LayoutBlock()
+
+    class Meta:
+        template = "content_manager/blocks/sections/imgage_text_grid.html"
 
 
 STREAMFIELD_COMMON_BLOCKS = [
@@ -1405,6 +1420,7 @@ STREAMFIELD_COMMON_BLOCKS = [
         EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
     ),
     ("layout_richtext", LayoutTextBlock(label=_("Rich text with layout"), group=_("Predefined sections"))),
+    ("image_text_grid", ImageAndTextGrid(label=_("Grille d'items (Image et texte)"), group=_("Predefined sections"))),
 ]
 
 
