@@ -14,7 +14,6 @@ envsubst '${BASE_PATH} ${FORCE_SCRIPT_NAME} ${HOST_PORT} ${HOST_URL}' \
 < ${SCRIPT_DIR}/sample_conf_files/nginx.conf.template > /tmp/sites-faciles.conf \
 && echo "Nginx config file generated."
 
-
 echo -e "\nPlease review and complete the generated file with:\n"
 echo -e  "    vi /tmp/sites-faciles.conf"
 echo -e  "\nWhen you are done, you can install and test it with:\n"
