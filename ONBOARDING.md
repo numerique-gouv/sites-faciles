@@ -104,7 +104,7 @@ Avoir un PostgreSQL qui tourne en local (cf. procédure d’installation sur [Ub
 
 ```sh
 # créer un utilisateur avec les droits nécessaires aux scripts d’administration
-psql -c "CREATE USER sitesfaciles WITH LOGIN PASSWORD 'votre_mot_de_passe'; CREATEDB" -U postgres
+psql -c "CREATE USER sitesfaciles WITH CREATEDB LOGIN PASSWORD 'votre_mot_de_passe';" -U postgres
 
 
 # créer la base de données (vide pour l’instant)
