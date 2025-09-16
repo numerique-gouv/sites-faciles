@@ -19,6 +19,7 @@ default:
 collectstatic:
     {{docker_cmd}} {{uv_run}} python manage.py collectstatic --noinput
 
+alias csi := createsuperuser
 createsuperuser:
     {{docker_cmd}} {{uv_run}} python manage.py createsuperuser
 
