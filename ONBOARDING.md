@@ -172,7 +172,7 @@ RCLONE_CONFIG_MYS3_TYPE="s3"
 Il est possible de faire une sauvegarde de la base de données et des fichiers médias de l’instance via
 
 ```sh
-just local-backup
+just backup-local
 ```
 
 Il est fortement recommandé d’en faire un avant de remplacer ces données par celles de production, sinon elles seront perdues !
