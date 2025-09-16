@@ -36,8 +36,6 @@ from content_manager.constants import (
 )
 from content_manager.widgets import DsfrIconPickerWidget
 
-from .utils import get_hero_image, get_hero_image_illustration
-
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
 
@@ -1597,7 +1595,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
     )
     image = ImageBlock(
         label=_("Hero image"),
-        default={"image": get_hero_image_illustration, "decorative": True},
+        default={"image": None, "decorative": True},
     )
     layout = LayoutBlock(label=_("Layout"))
 
@@ -1634,7 +1632,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
             "image_ratio": "fr-ratio-32x9",
             "image_width": "",
             "image": {
-                "image": get_hero_image,
+                "image": None,
                 "decorative": True,
             },
         },
@@ -1647,35 +1645,43 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
 
 class HeroBackgroundImageBlock(blocks.StructBlock):
     text_content = TextContentAllAlignments()
-    buttons = blocks.ListBlock(
-        ButtonBlock(),
-        default=[
-            {
-                "link_type": "external_url",
-                "text": "Nous contacter",
-                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
-                "button_type": "fr-btn",
-                "icon_side": "--",
-            },
-            {
-                "link_type": "external_url",
-                "text": "Voir la vidéo",
-                "external_url": "http://google.com",
-                "button_type": "fr-btn fr-btn--secondary",
-                "icon_side": "--",
-            },
-        ],
-    )
+    buttons = blocks.ListBlock(ButtonBlock())
     image = HeroImageBlockWithMask(
         label=_("Hero image"),
-        default={
-            "image_positioning": "top",
-            "image": {
-                "image": get_hero_image,
-                "decorative": True,
-            },
-        },
     )
+
+    def get_default(self):
+        """
+        Generates a dynamic default value *at runtime* only
+        """
+        from wagtail.images import get_image_model
+
+        Image = get_image_model()
+        try:
+            hero_image = Image.objects.get(title="Vue Paris Dimitri Iakymuk Unsplash")
+        except Image.DoesNotExist:
+            hero_image = None
+
+        return {
+            "text_content": self.child_blocks["text_content"].get_default(),
+            "buttons": [
+                {
+                    "link_type": "external_url",
+                    "text": "Nous contacter",
+                    "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
+                    "button_type": "fr-btn",
+                    "icon_side": "--",
+                },
+                {
+                    "link_type": "external_url",
+                    "text": "Voir la vidéo",
+                    "external_url": "http://google.com",
+                    "button_type": "fr-btn fr-btn--secondary",
+                    "icon_side": "--",
+                },
+            ],
+            "image": {"image_positioning": "top", "image": hero_image, "image_mask": "--"},
+        }
 
     class Meta:
         icon = "minus"
