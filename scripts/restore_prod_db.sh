@@ -4,7 +4,7 @@
 
 # Manage environment variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-export EXPORTED_DATABASE_NAME=content_man_533
+export PROD_DB_NAME=content_man_533
 
 set -a
 [ -f  ${SCRIPT_DIR}/../.env ] && . ${SCRIPT_DIR}/../.env && echo "Local env variables loaded"
@@ -17,10 +17,10 @@ fi
 
 cd ${BACKUP_DIR}
 
-TAR_FILE=`ls *_${EXPORTED_DATABASE_NAME}.tar.gz -c | head -1`
+TAR_FILE=`ls *_${PROD_DB_NAME}.tar.gz -c | head -1`
 tar xzf ${TAR_FILE}
 
-BACKUP_FILE=`ls *_${EXPORTED_DATABASE_NAME}.pgsql -c | head -1`
+BACKUP_FILE=`ls *_${PROD_DB_NAME}.pgsql -c | head -1`
 
 echo "Restoring database ${DATABASE_NAME} with backup ${BACKUP_FILE}"
 

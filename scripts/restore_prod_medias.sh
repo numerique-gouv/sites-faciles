@@ -4,7 +4,6 @@
 
 # Manage environment variables
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-export EXPORTED_DATABASE_NAME=content_man_533
 
 set -a
 [ -f  ${SCRIPT_DIR}/../.env ] && . ${SCRIPT_DIR}/../.env && echo "Local env variables loaded"
@@ -18,7 +17,8 @@ fi
 
 MEDIA_BACKUP_DIR="${BACKUP_DIR}/sites-faciles-prod-medias/"
 
-echo "Moving media files from ${MEDIA_BACKUP_DIR} to ${MEDIA_ROOT}"
+echo "Moving media files from ${MEDIA_BACKUP_DIR} to ${MEDIA_ROOT:=medias}"
+
 cd ${SCRIPT_DIR}
 rm ../${MEDIA_ROOT}/* -rf
 

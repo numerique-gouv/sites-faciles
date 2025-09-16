@@ -150,14 +150,17 @@ Un ensemble de scripts pour gérer la base de données et les fichiers médias, 
 
 Ils sont regroupés dans la catégorie « [Dev DB and medias management] » de la commande `just`.
 
-La gestion des sauvegardes locales nécessite de définir la variable `BACKUP_DIR` dans le fichier `.env`, en spécifiant un répertoire situé hors du projet Django pour ne pas risquer de commiter une sauvegarde par défaut.
+La gestion des sauvegardes locales nécessite de définir la variable `BACKUP_DIR` dans le fichier `.env`, en spécifiant un répertoire situé hors du projet Django pour ne pas risquer de commiter une sauvegarde par erreur.
 
 La gestion des sauvegardes de production nécessite de définir les variables supplémentaires dans le fichier `.env`.
 
-Il faut aussi installer le paquet [rclone](https://rclone.org/) (via `apt install rclone`) pour gérer la récupération des fichiers média depuis un S3.
+Il faut aussi installer deux dépendances : d’une part, la CLI de Scalingo, en suivant [la documentation d’installation ](https://doc.scalingo.com/tools/cli/start) et [celle de connexion](https://doc.scalingo.com/tools/cli/introduction), pour pouvoir récupérer la dernière sauvegarde de la base de données.
+
+D’autre part, le paquet [rclone](https://rclone.org/) (via `apt install rclone`) pour gérer la récupération des fichiers média depuis un S3.
 
 ```sh
-PROD_APP=
+PROD_APP= (le nom de l’app scalingo, par ex sites-faciles)
+PROD_DB_NAME= (le nom de la base de données dans Scalingo, par ex sites_facil_123)
 PROD_S3_BUCKET_NAME=
 PROD_S3_LOCATION=
 RCLONE_CONFIG_MYS3_REGION_NAME=
@@ -168,7 +171,7 @@ RCLONE_CONFIG_MYS3_PROVIDER=Other
 RCLONE_CONFIG_MYS3_TYPE="s3"
 ```
 
-(Le préfixe `RCLONE_CONFIG_MYS3_*` permet à `rclone` de récupérer automatiquement ces paramètres depuis les variables d’environnement.)
+* Le préfixe `RCLONE_CONFIG_MYS3_*` permet à `rclone` de récupérer automatiquement ces paramètres depuis les variables d’environnement.
 
 ### Données locales
 Il est possible de faire une sauvegarde de la base de données et des fichiers médias de l’instance via
