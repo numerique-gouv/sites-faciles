@@ -45,7 +45,6 @@ init-dev:
     just deploy
     {{docker_cmd}} {{uv_run}} pre-commit install
 
-
 alias messages := makemessages
 makemessages:
     {{docker_cmd}} {{uv_run}} django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
@@ -66,9 +65,6 @@ mmi:
 nginx-generate-config-file:
     cd scripts && bash nginx_generate_config_file.sh
 
-quality:
-    {{docker_cmd}} {{uv_run}} pre-commit run --all-files
-
 alias rs := runserver
 runserver host_url=host_url host_port=host_port:
     {{docker_cmd}} {{uv_run}} python manage.py runserver {{host_url}}:{{host_port}}
@@ -77,12 +73,6 @@ alias rg:= run_gunicorn
 run_gunicorn host_url=host_url host_port=host_port script_name=script_name:
     @echo "If nginx is properly configured, the site will run on {{host_proto}}://{{host_url}}:1{{host_port}}{{script_name}}/"
     {{docker_cmd}} {{uv_run}} gunicorn config.wsgi:application --bind {{host_url}}:{{host_port}} --env SCRIPT_NAME={{script_name}}
-
-scalingo-postdeploy:
-    python manage.py migrate
-    python manage.py create_starter_pages
-    python manage.py import_page_templates
-    python manage.py update_index
 
 shell:
     {{docker_cmd}} {{uv_run}} python manage.py shell
@@ -105,7 +95,22 @@ upgrade:
 web-prompt:
     {{docker_cmd}} bash
 
+#### Production-related recipes
+
+# Commands run by the Scalingo Procfile
+[group('Production')]
+scalingo-postdeploy:
+    python manage.py migrate
+    python manage.py create_starter_pages
+    python manage.py import_page_templates
+    python manage.py update_index
+
 #### Audit-related recipes
+
+# Run a global pre-commit
+[group('Code audit')]
+quality:
+    {{docker_cmd}} {{uv_run}} pre-commit run --all-files
 
 # Count lines of code per app
 [group('Code audit')]
