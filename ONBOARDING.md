@@ -154,7 +154,7 @@ La gestion des sauvegardes locales nécessite de définir la variable `BACKUP_DI
 
 La gestion des sauvegardes de production nécessite de définir les variables supplémentaires dans le fichier `.env`.
 
-Il faut aussi installer le paquet `rclone` (via `apt`) pour gérer la récupération des fichiers média depuis un S3.
+Il faut aussi installer le paquet [rclone](https://rclone.org/) (via `apt install rclone`) pour gérer la récupération des fichiers média depuis un S3.
 
 ```sh
 PROD_APP=
@@ -167,6 +167,8 @@ RCLONE_CONFIG_MYS3_SECRET_ACCESS_KEY=
 RCLONE_CONFIG_MYS3_PROVIDER=Other
 RCLONE_CONFIG_MYS3_TYPE="s3"
 ```
+
+(Le préfixe `RCLONE_CONFIG_MYS3_*` permet à `rclone` de récupérer automatiquement ces paramètres depuis les variables d’environnement.)
 
 ### Données locales
 Il est possible de faire une sauvegarde de la base de données et des fichiers médias de l’instance via
