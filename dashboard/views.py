@@ -1,3 +1,5 @@
+import json
+
 import requests
 from django.contrib.admin.utils import quote
 from django.urls import reverse
@@ -37,21 +39,29 @@ class TutorialsPanel(Component):
     order = 300
 
     def get_context_data(self, parent_content=None):
+
         try:
             res = requests.get(
-                "https://sites-faciles.beta.numerique.gouv.fr/api/v2/pages/?child_of=107&fields=*",
-                timeout=5,
+                "https://sites.beta.gouv.fr/api/v2/pages/?child_of=107",
+                timeout=30,
             )
             res.raise_for_status()
-            response = res.json()
-            tutorials = [
-                {
-                    "title": tutorial_page["title"],
-                    # "image": tutorial_page.get("meta", {}).get("preview_image_render", ""),
-                    "url": tutorial_page["meta"]["html_url"],
-                }
-                for tutorial_page in response.get("items", [])
-            ]
+            data = res.json()
+            tutorial_pages = [{"id": page["id"]} for page in data["items"]]
+            tutorials = []
+            for page_id in tutorial_pages:
+                page = json.loads(
+                    requests.get(
+                        f'https://sites.beta.gouv.fr/api/v2/pages/{page_id["id"]}/?fields=title,preview_image_render,-body'
+                    ).text
+                )
+                tutorials.append(
+                    {
+                        "title": page["title"],
+                        "image": page["preview_image_render"]["full_url"],
+                        "url": page["meta"]["html_url"],
+                    }
+                )
         except requests.RequestException:
             tutorials = []
 

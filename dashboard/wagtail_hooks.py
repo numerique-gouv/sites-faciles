@@ -90,4 +90,5 @@ def remove_all_summary_items(request, items):
 @hooks.register("construct_homepage_panels")
 def add_shortcuts_panel(request, panels):
     panels.append(ShortcutsPanel())
-    panels.append(TutorialsPanel())
+    if not settings.SF_DISABLE_TUTORIALS:
+        panels.append(TutorialsPanel())

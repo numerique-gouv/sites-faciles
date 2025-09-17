@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv("DEBUG") in [1, "True"] else False
+DEBUG = True if os.getenv("DEBUG") in ["1", "True"] else False
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", "").split(",")
 
@@ -47,7 +47,7 @@ HOST_PORT = os.getenv("HOST_PORT", "")
 FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "").rstrip("/")
 
 # Allow enabling WhiteNoise via an environment variable (disabled by default)
-SF_USE_WHITENOISE = True if os.getenv("SF_USE_WHITENOISE", False) in [1, "True"] else False
+SF_USE_WHITENOISE = True if os.getenv("SF_USE_WHITENOISE", False) in ["1", "True"] else False
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -296,7 +296,7 @@ if FORCE_SCRIPT_NAME and not STATIC_URL.startswith(FORCE_SCRIPT_NAME):
 
 
 # Allow Django to serve statics even in production if needed
-SF_PROD_SERVE_STATIC = True if os.getenv("SF_PROD_SERVE_STATIC", False) in [1, "True"] else False
+SF_PROD_SERVE_STATIC = True if os.getenv("SF_PROD_SERVE_STATIC", False) in ["1", "True"] else False
 if SF_PROD_SERVE_STATIC:
     import mimetypes
 
@@ -378,7 +378,7 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
 )
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
-SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) in [1, "True"] else False
+SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) in ["1", "True"] else False
 
 # Allows for complex Streamfields without completely removing checks
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
@@ -401,8 +401,8 @@ if DEFAULT_FROM_EMAIL:
 WAGTAIL_PASSWORD_RESET_ENABLED = os.getenv("WAGTAIL_PASSWORD_RESET_ENABLED", False)
 
 # (Optional) ProConnect settings
-PROCONNECT_ACTIVATED = True if os.getenv("PROCONNECT_ACTIVATED", False) in [1, "True"] else False
-OIDC_CREATE_USER = True if os.getenv("PROCONNECT_CREATE_USER", "True") in [1, "True"] else False
+PROCONNECT_ACTIVATED = True if os.getenv("PROCONNECT_ACTIVATED", False) in ["1", "True"] else False
+OIDC_CREATE_USER = True if os.getenv("PROCONNECT_CREATE_USER", "True") in ["1", "True"] else False
 OIDC_RP_CLIENT_ID = os.getenv("PROCONNECT_CLIENT_ID", "")
 OIDC_RP_CLIENT_SECRET = os.getenv("PROCONNECT_CLIENT_SECRET", "")
 OIDC_RP_SCOPES = os.getenv("PROCONNECT_SCOPES", "openid given_name usual_name email siret uid")
@@ -454,4 +454,6 @@ if len(trusted_origins):
 
 # Disable the integrity checksums by default.
 # They can clash with Whitenoise and are normally not useful as we serve the statics from a trusted source
-DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS") in [1, "True"] else False
+DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS") in ["1", "True"] else False
+
+SF_DISABLE_TUTORIALS = True if os.getenv("SF_DISABLE_TUTORIALS") in ["1", "True"] else False
