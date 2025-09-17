@@ -2,7 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.10
+    rev: v0.13.0
     hooks:
       - id: ruff
         args: [ --fix, --exit-non-zero-on-fix ]
@@ -10,3 +10,8 @@ repos:
     rev: 25.1.0
     hooks:
     - id: black
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    # uv version.
+    rev: 0.8.17
+    hooks:
+      - id: uv-lock
