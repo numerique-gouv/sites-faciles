@@ -32,6 +32,10 @@ deploy:
     {{docker_cmd}} {{uv_run}} python manage.py import_illustration_images
     just index
 
+# Pass a django command
+django +command:
+    {{docker_cmd}} {{uv_run}} python manage.py {{command}}
+
 import_domain_whitelist:
     {{docker_cmd}} {{uv_run}} python manage.py import_domain_whitelist
 

@@ -4,13 +4,14 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
+from wagtail.admin.telepath import register
 from wagtail.blocks import BooleanBlock, StructValue
 from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.images import get_image_model
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
-from wagtail.telepath import register
 from wagtailmarkdown.blocks import MarkdownBlock
 
 from content_manager.constants import (
@@ -35,6 +36,8 @@ from content_manager.constants import (
     TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
+
+Image = get_image_model()
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
@@ -1506,8 +1509,29 @@ class HeroImageStructValue(StructValue):
         return extra_class
 
 
+class ImageBlockWithDefault(ImageBlock):
+    def __init__(
+        self, *args, default_image_title=None, default_image_decorative=True, default_image_alt_text="", **kwargs
+    ):
+        self._default_image_title = default_image_title
+        self._default_image_alt_text = default_image_alt_text
+        self._default_image_decorative = default_image_decorative
+        super().__init__(*args, **kwargs)
+
+    def get_default(self):
+        if self._default_image_title:
+            image = Image.objects.filter(title=self._default_image_title).first()
+            if image:
+                return {
+                    "image": image,
+                    "alt_text": self._default_image_alt_text,
+                    "decorative": self._default_image_decorative,
+                }
+        return super().get_default()
+
+
 class HeroImageBlock(blocks.StructBlock):
-    image = ImageBlock(label=_("Image"))
+    image = ImageBlockWithDefault(label=_("Image"), default_image_title="Vue Paris Dimitri Iakymuk Unsplash")
     image_positioning = blocks.ChoiceBlock(
         choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES,
         label=_("Image positioning"),
@@ -1515,9 +1539,6 @@ class HeroImageBlock(blocks.StructBlock):
         default="center",
         help_text=_("Choose the part of the image to highlight"),
     )
-
-    class Meta:
-        value_class = HeroImageStructValue
 
 
 class HeroImageBlockWithRatioWidth(HeroImageBlock):
@@ -1593,10 +1614,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
             },
         ],
     )
-    image = ImageBlock(
-        label=_("Hero image"),
-        default={"image": None, "decorative": True},
-    )
+    image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Homme Ordinateur")
     layout = LayoutBlock(label=_("Layout"))
 
     class Meta:
@@ -1628,14 +1646,6 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
     )
     image = HeroImageBlockWithRatioWidth(
         label=_("Hero image"),
-        default={
-            "image_ratio": "fr-ratio-32x9",
-            "image_width": "",
-            "image": {
-                "image": None,
-                "decorative": True,
-            },
-        },
     )
 
     class Meta:
@@ -1645,43 +1655,28 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
 
 class HeroBackgroundImageBlock(blocks.StructBlock):
     text_content = TextContentAllAlignments()
-    buttons = blocks.ListBlock(ButtonBlock())
+    buttons = blocks.ListBlock(
+        ButtonBlock(),
+        default=[
+            {
+                "link_type": "external_url",
+                "text": "Nous contacter",
+                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
+                "button_type": "fr-btn",
+                "icon_side": "--",
+            },
+            {
+                "link_type": "external_url",
+                "text": "Voir la vidéo",
+                "external_url": "http://google.com",
+                "button_type": "fr-btn fr-btn--secondary",
+                "icon_side": "--",
+            },
+        ],
+    )
     image = HeroImageBlockWithMask(
         label=_("Hero image"),
     )
-
-    def get_default(self):
-        """
-        Generates a dynamic default value *at runtime* only
-        """
-        from wagtail.images import get_image_model
-
-        Image = get_image_model()
-        try:
-            hero_image = Image.objects.get(title="Vue Paris Dimitri Iakymuk Unsplash")
-        except Image.DoesNotExist:
-            hero_image = None
-
-        return {
-            "text_content": self.child_blocks["text_content"].get_default(),
-            "buttons": [
-                {
-                    "link_type": "external_url",
-                    "text": "Nous contacter",
-                    "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
-                    "button_type": "fr-btn",
-                    "icon_side": "--",
-                },
-                {
-                    "link_type": "external_url",
-                    "text": "Voir la vidéo",
-                    "external_url": "http://google.com",
-                    "button_type": "fr-btn fr-btn--secondary",
-                    "icon_side": "--",
-                },
-            ],
-            "image": {"image_positioning": "top", "image": hero_image, "image_mask": "--"},
-        }
 
     class Meta:
         icon = "minus"
