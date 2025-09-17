@@ -24,6 +24,9 @@ urlpatterns = [
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+# Only add this on a dev machine, outside of tests
+if not settings.TESTING and settings.DEBUG and "localhost" in settings.HOST_URL:
+    urlpatterns += (path("__debug__/", include("debug_toolbar.urls")),)
 
 if settings.PROCONNECT_ACTIVATED:
     urlpatterns += [
@@ -42,7 +45,3 @@ urlpatterns += i18n_patterns(
     path("", include("content_manager.urls")),
     prefix_default_language=False,
 )
-
-# Only add this on a dev machine, outside of tests
-if not settings.TESTING and settings.DEBUG and "localhost" in settings.HOST_URL:
-    urlpatterns += (path("__debug__/", include("debug_toolbar.urls")),)

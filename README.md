@@ -38,6 +38,7 @@ Sites Faciles est développé en utilisant le framework [Django](https://www.dja
 En plus des applications déjà citées, le dépôt contient les répertoires suivants :
 - **config** : le projet Django proprement dit
 - **locale** : la traduction des templates de base et du JS global du site (cf. ci-dessous.) La localisation des apps listées plus haut se fait à l’intérieur de celles-ci.
+- **scripts** : scripts shell utilisés par certaines commandes et fichiers de configurations associés.
 - **static** : des fichiers statiques communs à l’ensemble du site (CSS global, JS global, quelques images intégrées par défaut) ainsi que la librairie tierce TarteaucitronJS (utilisée pour la gestion des cookies tiers)
 - **templates** : les templates de base du site.
 

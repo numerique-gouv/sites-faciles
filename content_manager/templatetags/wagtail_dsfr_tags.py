@@ -26,6 +26,12 @@ def settings_value(name):
     return getattr(settings, name, "")
 
 
+@register.simple_tag
+def root_url() -> str:
+    """Return the site's base path, taking FORCE_SCRIPT_NAME into account."""
+    return f"{settings.FORCE_SCRIPT_NAME}/"
+
+
 @register.simple_tag(takes_context=True)
 def canonical_url(context):
     """
@@ -48,7 +54,7 @@ def canonical_url(context):
         if site.port != 80:
             hostname = f"{hostname}:{site.port}"
     else:
-        hostname = request.get_host
+        hostname = request.get_host()
 
     return f"{scheme}://{hostname}{request.path}"
 

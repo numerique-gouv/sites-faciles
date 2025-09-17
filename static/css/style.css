@@ -4,51 +4,52 @@
     font-weight: lighter
 }
 
-/*** Prefix the classes defined here with cmsfr- ***/
-
+/*** Fixes to Wagtail/Draftail output ***/
 /* cf. https://github.com/wagtail/wagtail/issues/4431 */
-.cmsfr-block-text p:empty {
-    display: none
+p:empty {
+    display: none;
 }
+
+/*** Prefix the classes defined here with cmsfr- ***/
 
 .cmsfr-hero {
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
 }
 
 .cmsfr-hero-large {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center
+    text-align: center;
 }
 
 .cmsfr-background-dark h1,
 .cmsfr-background-dark p,
 .cmsfr-background-dark button,
 .cmsfr-background-dark ul {
-    color: white
+    color: white;
 }
 
 :root[data-fr-theme=light] .cmsfr-background-dark .fr-btn--secondary {
-    background-color: rgba(255, 255, 255, 0.3)
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .cmsfr-author_card__header {
     flex: 0 0 6rem !important;
-    width: 6rem !important
+    width: 6rem !important;
 }
 
 .cmsfr-author-img {
     border-radius: 50%;
     height: 4.5rem !important;
     margin: 1.5rem;
-    width: 4.5rem
+    width: 4.5rem;
 }
 
 .cmsfr-vertical_contact_card__header {
-    background: var(--background-default-grey)
+    background: var(--background-default-grey);
 }
 
 .cmsfr-vertical_contact_card-img {
@@ -57,31 +58,31 @@
     width: 100%;
     margin: auto;
     max-width: 50%;
-    aspect-ratio: initial !important
+    aspect-ratio: initial !important;
 }
 
 .cmsfr-block-stepper dd {
-    padding-left: 0
+    padding-left: 0;
 }
 
 .cmsfr-stepper__details {
     display: inherit;
     margin-top: 1rem;
-    width: 100%
+    width: 100%;
 }
 
 .cmsfr-footer__bottom-extra {
     border-left: 1px solid var(--border-default-grey);
     padding-left: 1em;
-    margin-left: 1em
+    margin-left: 1em;
 }
 
 .cmsfr-display__inline {
-    display: inline
+    display: inline;
 }
 
 @media all and (max-width: 575px) {
     .cmsfr-order__2 {
-        order: 2
+        order: 2;
     }
 }

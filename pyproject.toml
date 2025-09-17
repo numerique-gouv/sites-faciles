@@ -24,6 +24,7 @@ dependencies = [
     "dj-database-url>=3.0.0",
     "gunicorn>=23.0.0",
     "dj-static>=0.0.6",
+    "whitenoise<7.0,>=6.6",
     "wagtailmenus>=4.0.3",
     "wagtail-modeladmin>=2.2.0",
     "wagtail-markdown>=0.12.1",
@@ -66,6 +67,7 @@ extend-exclude = '''
 omit = [
     "manage.py",
     "config/settings_test.py",
+    "config/asgi.py",
     "config/wsgi.py",
     "*/__init__.py",
     "*/migrations/*.py",

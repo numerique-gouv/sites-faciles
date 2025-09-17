@@ -12,6 +12,19 @@
   {% endblock description %}
 {% endif %}
 
+{% block social_media %}
+  <meta property="og:site_name"
+        content="{{ settings.content_manager.CmsDsfrConfig.site_title }}" />
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  <meta property="og:description" content="{{ search_description }}" />
+  <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
+
+  <meta name="twitter:title" content="{{ title }}" />
+  <meta name="twitter:description" content="{{ search_description }}" />
+{% endblock social_media %}
+
 {% block content %}
   <div class="fr-container fr-my-6w">
     {% dsfr_breadcrumb breadcrumb %}

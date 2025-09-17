@@ -1,6 +1,6 @@
 name: 🔮 CI - Main checks
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -53,5 +53,3 @@ jobs:
         run: |
           just init
           uv run python manage.py create_demo_pages
-        env:
-          DJANGO_DEBUG: True

@@ -1,14 +1,18 @@
+{% load i18n %}
+{% translate "you are here:" as you_are_here %}
 {% if self.get_ancestors|length > 1 %}
-  <nav role="navigation" class="fr-breadcrumb" aria-label="vous êtes ici :">
+  <nav role="navigation"
+       class="fr-breadcrumb"
+       aria-label="{{ you_are_here }}">
     <button class="fr-breadcrumb__button"
             aria-expanded="false"
-            aria-controls="page-breadcrumb">Voir le fil d’Ariane</button>
+            aria-controls="page-breadcrumb">{% translate "See breadcrumb" %}</button>
     <div class="fr-collapse" id="page-breadcrumb">
       <ol class="fr-breadcrumb__list">
         {% for p in self.get_ancestors %}
           {% if p.is_site_root %}
             <li>
-              <a class="fr-breadcrumb__link" href="{{ p.url }}">Accueil</a>
+              <a class="fr-breadcrumb__link" href="{{ p.url }}">{% translate "Home page" %}</a>
             </li>
           {% elif p.is_root == False %}
             <li>
