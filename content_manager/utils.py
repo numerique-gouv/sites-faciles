@@ -82,13 +82,13 @@ def get_streamfield_raw_text(streamfield, max_words: int | None = None) -> str:
 def get_hero_image_illustration():
     """Get default value with 'Illustration Homme Ordinateur'."""
     try:
-        return Image.objects.get(title="Illustration Homme Ordinateur")
+        return Image.objects.filter(title="Illustration Homme Ordinateur").first()
     except (Image.DoesNotExist, OperationalError):
         return None
 
 
 def get_hero_image():
     try:
-        return Image.objects.get(title="Vue Paris Dimitri Iakymuk Unsplash")
+        return Image.objects.filter(title="Vue Paris Dimitri Iakymuk Unsplash").first()
     except (Image.DoesNotExist, OperationalError):
         return None
