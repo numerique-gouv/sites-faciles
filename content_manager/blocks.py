@@ -9,6 +9,7 @@ from wagtail.blocks import BooleanBlock, StructValue
 from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.images import get_image_model
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
@@ -34,8 +35,9 @@ from content_manager.constants import (
     MEDIA_WIDTH_CHOICES,
     TEXT_SIZE_CHOICES,
 )
-from content_manager.utils import get_hero_image_illustration
 from content_manager.widgets import DsfrIconPickerWidget
+
+Image = get_image_model()
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
@@ -1507,21 +1509,29 @@ class HeroImageStructValue(StructValue):
         return extra_class
 
 
-class CustomImageBlock(ImageBlock):
+class ImageBlockWithDefault(ImageBlock):
+    def __init__(
+        self, *args, default_image_title=None, default_image_decorative=True, default_image_alt_text="", **kwargs
+    ):
+        self._default_image_title = default_image_title
+        self._default_image_alt_text = default_image_alt_text
+        self._default_image_decorative = default_image_decorative
+        super().__init__(*args, **kwargs)
+
     def get_default(self):
-        try:
-            image = get_hero_image_illustration()
-            return {
-                "image": image,
-                # "alt_text": "Texte auto-par défaut",
-                "decorative": True,
-            }
-        except Exception:
-            return super().get_default()
+        if self._default_image_title:
+            image = Image.objects.filter(title=self._default_image_title).first()
+            if image:
+                return {
+                    "image": image,
+                    "alt_text": self._default_image_alt_text,
+                    "decorative": self._default_image_decorative,
+                }
+        return super().get_default()
 
 
 class HeroImageBlock(blocks.StructBlock):
-    image = CustomImageBlock(label=_("Image"))
+    image = ImageBlockWithDefault(label=_("Image"), default_image_title="Vue Paris Dimitri Iakymuk Unsplash")
     image_positioning = blocks.ChoiceBlock(
         choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES,
         label=_("Image positioning"),
@@ -1604,9 +1614,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
             },
         ],
     )
-    image = CustomImageBlock(
-        label=_("Hero image"),
-    )
+    image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Homme Ordinateur")
     layout = LayoutBlock(label=_("Layout"))
 
     class Meta:
