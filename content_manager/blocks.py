@@ -35,6 +35,7 @@ from content_manager.constants import (
     MEDIA_WIDTH_CHOICES,
     TEXT_SIZE_CHOICES,
 )
+from content_manager.utils import get_hero_image
 from content_manager.widgets import DsfrIconPickerWidget
 
 Image = get_image_model()
@@ -1530,6 +1531,10 @@ class ImageBlockWithDefault(ImageBlock):
         return super().get_default()
 
 
+def coucou():
+    return {"image": get_hero_image(), "decorative": False}
+
+
 class HeroImageBlock(blocks.StructBlock):
     image = ImageBlockWithDefault(label=_("Image"), default_image_title="Vue Paris Dimitri Iakymuk Unsplash")
     image_positioning = blocks.ChoiceBlock(
@@ -1614,7 +1619,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
             },
         ],
     )
-    image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Homme Ordinateur")
+    image = ImageBlock(label=_("Hero image"), default=coucou)
     layout = LayoutBlock(label=_("Layout"))
 
     class Meta:
