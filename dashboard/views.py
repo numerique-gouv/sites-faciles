@@ -1,3 +1,5 @@
+import json
+
 import requests
 from django.contrib.admin.utils import quote
 from django.urls import reverse
@@ -40,12 +42,12 @@ class TutorialsPanel(Component):
 
         try:
             res = requests.get(
-                "https://sites.beta.gouv.fr/api/v2/pages/?child_of=107&fields=*",
-                timeout=5,
+                "https://sites.beta.gouv.fr/api/v2/pages/?child_of=107",
+                timeout=30,
             )
             res.raise_for_status()
-            response = res.json()
-            tutorial_pages = [{"id": page["id"]} for page in response["items"]]
+            data = res.json()
+            tutorial_pages = [{"id": page["id"]} for page in data["items"]]
             tutorials = []
             for page_id in tutorial_pages:
                 page = json.loads(
