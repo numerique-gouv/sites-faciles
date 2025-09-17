@@ -1608,7 +1608,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
             {
                 "link_type": "external_url",
                 "text": "Voir la vidéo",
-                "external_url": "http://google.com",
+                "external_url": "https://tube.numerique.gouv.fr/",
                 "button_type": "fr-btn fr-btn--secondary",
                 "icon_side": "--t",
             },
@@ -1638,7 +1638,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
             {
                 "link_type": "external_url",
                 "text": "Voir la vidéo",
-                "external_url": "http://google.com",
+                "external_url": "https://tube.numerique.gouv.fr/",
                 "button_type": "fr-btn fr-btn--secondary",
                 "icon_side": "--",
             },
@@ -1668,7 +1668,7 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
             {
                 "link_type": "external_url",
                 "text": "Voir la vidéo",
-                "external_url": "http://google.com",
+                "external_url": "https://tube.numerique.gouv.fr/",
                 "button_type": "fr-btn fr-btn--secondary",
                 "icon_side": "--",
             },
