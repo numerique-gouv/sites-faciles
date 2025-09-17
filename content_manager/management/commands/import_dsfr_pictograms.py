@@ -15,9 +15,13 @@ class Command(BaseCommand):
     """
 
     def handle(self, *args, **kwargs):
+        verbosity = int(kwargs.get("verbosity", 1))
         picto_root = "staticfiles/dsfr/dist/artwork/pictograms/"
         picto_folders = os.listdir(picto_root)
         picto_folders.sort()
+
+        exists_counter = 0
+        imported_counter = 0
 
         for folder in picto_folders:
             folder_path = os.path.join(picto_root, folder)
@@ -33,9 +37,11 @@ class Command(BaseCommand):
                 image_exists = Image.objects.filter(title=full_image_title).first()
                 if image_exists:
                     file_hash = image_exists.get_file_hash()
-                    self.stdout.write(
-                        f"A file named {full_image_title} already exists, skipping (file_hash: {file_hash})"
-                    )
+                    exists_counter += 1
+                    if verbosity > 1:
+                        self.stdout.write(
+                            f"A file named {full_image_title} already exists, skipping (file_hash: {file_hash})"
+                        )
                 else:
                     image = import_image(
                         full_path=os.path.join(folder_path, filename),
@@ -51,4 +57,9 @@ class Command(BaseCommand):
                     image.tags.add("DSFR")
                     image.tags.add("Pictogrammes")
                     image.tags.add(folder_title)
-                    self.stdout.write(f"File {full_image_title} imported")
+
+                    imported_counter += 1
+                    if verbosity > 1:
+                        self.stdout.write(f"File {full_image_title} imported")
+
+        self.stdout.write(f"DSFR pictograms: {imported_counter} images imported, {exists_counter} already existing.")
