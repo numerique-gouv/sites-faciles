@@ -27,7 +27,7 @@ class FormationsListView(ListView):
         return context
 
     def get_queryset(self):
-        qs = super().get_queryset().live()
+        qs = super().get_queryset().live().order_by("-first_published_at")
         form = FormationsFilterForm(self.request.GET or None)
         if form.is_valid():
             themes = form.cleaned_data.get("themes")
