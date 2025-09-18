@@ -9,7 +9,7 @@ from wagtail.images.api.fields import ImageRenditionField
 from wagtail.models import Page
 from wagtail.search import index
 
-from content_manager.blocks import STREAMFIELD_COMMON_BLOCKS, ButtonsHorizontalListBlock
+from content_manager.blocks import HERO_STREAMFIELD_BLOCKS, STREAMFIELD_COMMON_BLOCKS, ButtonsHorizontalListBlock
 from content_manager.utils import get_streamfield_raw_text
 
 
@@ -18,6 +18,8 @@ class SitesFacilesBasePage(Page):
     This class defines a base page model that will be used
     by all pages in Sites Faciles
     """
+
+    hero = StreamField(HERO_STREAMFIELD_BLOCKS, blank=True, use_json_field=True, max_num=1)
 
     body = StreamField(
         STREAMFIELD_COMMON_BLOCKS,
@@ -90,21 +92,7 @@ class SitesFacilesBasePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        MultiFieldPanel(
-            [
-                FieldPanel("header_with_title"),
-                FieldPanel("header_image"),
-                FieldPanel("header_color_class"),
-                FieldPanel("header_large"),
-                FieldPanel("header_darken"),
-                FieldPanel("header_cta_text"),
-                FieldPanel(
-                    "header_cta_buttons",
-                    heading=_("Call-to-action buttons"),
-                ),
-            ],
-            heading=_("Header options"),
-        ),
+        FieldPanel("hero", heading=_("Hero")),
         FieldPanel("body", heading=_("Body")),
     ]
 
@@ -120,6 +108,7 @@ class SitesFacilesBasePage(Page):
 
     # Export fields over the API
     api_fields = [
+        APIField("hero"),
         APIField("body"),
         APIField("header_image"),
         APIField("header_image_render", serializer=ImageRenditionField("fill-1200x630", source="header_image")),

@@ -25,6 +25,9 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
+        call_command("import_dsfr_pictograms")
+        call_command("import_illustration_images")
+
         slugs = kwargs.get("slug")
 
         if not slugs:
@@ -44,10 +47,6 @@ class Command(BaseCommand):
                 call_command("set_config")
 
             slugs = ALL_ALLOWED_SLUGS
-
-        pictograms_exist = Image.objects.filter(title__contains="Pictogrammes DSFR").count()
-        if not pictograms_exist:
-            call_command("import_dsfr_pictograms")
 
         for slug in slugs:
             if slug == "home":

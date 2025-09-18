@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 19:11+0200\n"
-"PO-Revision-Date: 2025-07-24 11:20+0200\n"
+"POT-Creation-Date: 2025-09-11 11:49+0200\n"
+"PO-Revision-Date: 2025-06-16 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -124,6 +124,8 @@ msgid "Videos"
 msgstr "Vidéos"
 
 #: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:34
+#, fuzzy
+#| msgid "Tutorials"
 msgid "Tutorial"
 msgstr "Tutoriel"
 
