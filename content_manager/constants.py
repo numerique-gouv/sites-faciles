@@ -135,3 +135,7 @@ TEXT_SIZE_CHOICES = [
     ("", _("Medium")),
     ("fr-text--lg", _("Large")),
 ]
+
+IMAGE_GRID_SIZE = [("80", _("Small")), ("140", _("Medium")), ("200", _("Large"))]
+
+# BLOCK_PER_ROW = [("2", "2"), ("3", "3"), ("4", "4")]
