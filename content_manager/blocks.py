@@ -1549,7 +1549,7 @@ class HeroImageBlockWithRatioWidth(HeroImageBlock):
         label=_("Image width"),
         choices=MEDIA_WIDTH_CHOICES,
         required=False,
-        default="",
+        default="fr-content-media--lg",
         help_text=_("Select image width"),
     )
     image_ratio = blocks.ChoiceBlock(
