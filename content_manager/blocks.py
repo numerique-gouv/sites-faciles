@@ -1475,7 +1475,8 @@ class TextContentAllAlignments(TextContentBlock):
     position = blocks.ChoiceBlock(
         choices=ALIGN_HORIZONTAL_CHOICES_EXTENDED,
         label=_("Text content position"),
-        default="center",
+        default="",
+        required=False,
         help_text=_("This field allows you to define the placement of text."),
     )
 
@@ -1511,16 +1512,16 @@ class HeroImageStructValue(StructValue):
 
 class ImageBlockWithDefault(ImageBlock):
     def __init__(
-        self, *args, default_image_file=None, default_image_decorative=True, default_image_alt_text="", **kwargs
+        self, *args, default_image_title=None, default_image_decorative=True, default_image_alt_text="", **kwargs
     ):
-        self._default_image_file = default_image_file
+        self._default_image_title = default_image_title
         self._default_image_alt_text = default_image_alt_text
         self._default_image_decorative = default_image_decorative
         super().__init__(*args, **kwargs)
 
     def get_default(self):
-        if self._default_image_file:
-            image = Image.objects.filter(file=f"original_images/{self._default_image_file}").first()
+        if self._default_image_title:
+            image = Image.objects.filter(title=self._default_image_title).first()
             if image:
                 return {
                     "image": image,
@@ -1531,12 +1532,14 @@ class ImageBlockWithDefault(ImageBlock):
 
 
 class HeroImageBlock(blocks.StructBlock):
-    image = ImageBlockWithDefault(label=_("Image"), default_image_file="Banner_Sites_Faciles_Dimitri_Iakymuk_Unsplash")
+    image = ImageBlockWithDefault(
+        label=_("Image"), default_image_title="Banner Sites Faciles Dimitri Iakymuk Unsplash"
+    )
     image_positioning = blocks.ChoiceBlock(
-        choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES,
+        choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES_EXTENDED,
         label=_("Image positioning"),
         required=False,
-        default="center",
+        default="",
         help_text=_("Choose the part of the image to highlight"),
     )
 
@@ -1570,11 +1573,11 @@ class HeroImageBlockWithMask(HeroImageBlock):
         choices=[
             ("top", _("Top")),
             ("bottom", _("Bottom")),
-            ("center", _("Center")),
+            ("", _("Center")),
         ],
         label=_("Image positioning"),
         required=False,
-        default="center",
+        default="",
         help_text=_("Choose the part of the image to highlight"),
     )
 
@@ -1614,7 +1617,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
             },
         ],
     )
-    image = ImageBlockWithDefault(label=_("Hero image"), default_image_file="Illustration_Sites_Faciles_Homme_Nuages")
+    image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Sites Faciles Homme Nuages")
     layout = LayoutBlock(label=_("Layout"))
 
     class Meta:

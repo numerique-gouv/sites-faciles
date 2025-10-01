@@ -124,7 +124,7 @@ ALIGN_HORIZONTAL_CHOICES = [
 
 ALIGN_HORIZONTAL_CHOICES_EXTENDED = [
     ("left", _("Left")),
-    ("center", _("Center")),
+    ("", _("Center")),
     ("right", _("Right")),
 ]
 
