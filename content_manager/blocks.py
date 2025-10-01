@@ -1519,6 +1519,15 @@ class ImageBlockWithDefault(ImageBlock):
         self._default_image_decorative = default_image_decorative
         super().__init__(*args, **kwargs)
 
+        if "decorative" in self.child_blocks:
+            self.child_blocks["decorative"].field.help_text = _(
+                "Check if the image is purely decorative. " "In this case, the alt attribute will be empty."
+            )
+        if "alt_text" in self.child_blocks:
+            self.child_blocks["alt_text"].field.help_text = _(
+                "Used by screen readers if the image is not marked as decorative."
+            )
+
     def get_default(self):
         if self._default_image_title:
             image = Image.objects.filter(title=self._default_image_title).first()
@@ -1597,9 +1606,9 @@ class HeroImageBlockWithMask(HeroImageBlock):
 
 
 class HeroImageAndTextBlock(blocks.StructBlock):
-    text_content = TextContentLeftRight()
+    text_content = TextContentLeftRight(label=_("Text content"))
     buttons = blocks.ListBlock(
-        ButtonBlock(),
+        ButtonBlock(label=_("Button")),
         default=[
             {
                 "link_type": "external_url",
@@ -1616,6 +1625,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
                 "icon_side": "--t",
             },
         ],
+        label=_("Buttons"),
     )
     image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Sites Faciles Homme Nuages")
     layout = LayoutBlock(label=_("Layout"))
@@ -1626,10 +1636,10 @@ class HeroImageAndTextBlock(blocks.StructBlock):
 
 
 class HeroWideImageAndTextBlock(blocks.StructBlock):
-    text_content = TextContentVerticalAlignments()
+    text_content = TextContentVerticalAlignments(label=_("Text content"))
     layout = LayoutBlock(label=_("Layout"))
     buttons = blocks.ListBlock(
-        ButtonBlock(),
+        ButtonBlock(label=_("Button")),
         default=[
             {
                 "link_type": "external_url",
@@ -1646,6 +1656,7 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
                 "icon_side": "--",
             },
         ],
+        label=_("Buttons"),
     )
     image = HeroImageBlockWithRatioWidth(
         label=_("Hero image"),
@@ -1657,9 +1668,9 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
 
 
 class HeroBackgroundImageBlock(blocks.StructBlock):
-    text_content = TextContentAllAlignments()
+    text_content = TextContentAllAlignments(label=_("Text content"))
     buttons = blocks.ListBlock(
-        ButtonBlock(),
+        ButtonBlock(label=_("Button")),
         default=[
             {
                 "link_type": "external_url",
@@ -1676,6 +1687,7 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
                 "icon_side": "--",
             },
         ],
+        label=_("Buttons"),
     )
     image = HeroImageBlockWithMask(
         label=_("Hero image"),
