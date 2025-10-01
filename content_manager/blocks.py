@@ -1511,16 +1511,16 @@ class HeroImageStructValue(StructValue):
 
 class ImageBlockWithDefault(ImageBlock):
     def __init__(
-        self, *args, default_image_title=None, default_image_decorative=True, default_image_alt_text="", **kwargs
+        self, *args, default_image_file=None, default_image_decorative=True, default_image_alt_text="", **kwargs
     ):
-        self._default_image_title = default_image_title
+        self._default_image_file = default_image_file
         self._default_image_alt_text = default_image_alt_text
         self._default_image_decorative = default_image_decorative
         super().__init__(*args, **kwargs)
 
     def get_default(self):
-        if self._default_image_title:
-            image = Image.objects.filter(title=self._default_image_title).first()
+        if self._default_image_file:
+            image = Image.objects.filter(file=f"original_images/{self._default_image_file}").first()
             if image:
                 return {
                     "image": image,
@@ -1531,7 +1531,7 @@ class ImageBlockWithDefault(ImageBlock):
 
 
 class HeroImageBlock(blocks.StructBlock):
-    image = ImageBlockWithDefault(label=_("Image"), default_image_title="Vue Paris Dimitri Iakymuk Unsplash")
+    image = ImageBlockWithDefault(label=_("Image"), default_image_file="Banner_Sites_Faciles_Dimitri_Iakymuk_Unsplash")
     image_positioning = blocks.ChoiceBlock(
         choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES,
         label=_("Image positioning"),
@@ -1614,7 +1614,7 @@ class HeroImageAndTextBlock(blocks.StructBlock):
             },
         ],
     )
-    image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Homme Ordinateur")
+    image = ImageBlockWithDefault(label=_("Hero image"), default_image_file="Illustration_Sites_Faciles_Homme_Nuages")
     layout = LayoutBlock(label=_("Layout"))
 
     class Meta:
