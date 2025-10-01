@@ -1539,7 +1539,7 @@ class HeroImageBlock(blocks.StructBlock):
         choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES_EXTENDED,
         label=_("Image positioning"),
         required=False,
-        default="",
+        default="bottom",
         help_text=_("Choose the part of the image to highlight"),
     )
 
