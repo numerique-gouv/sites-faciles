@@ -145,10 +145,11 @@ p:empty {
 }
 }
 
-.cmsfr-order__2 {
-    order: 2;
+@media all and (min-width: 768px) {
+    .cmsfr-order__2 {
+        order: 2;
+    }
 }
-
 .cmsfr-image-focus-left {
     object-position: left;
 }
