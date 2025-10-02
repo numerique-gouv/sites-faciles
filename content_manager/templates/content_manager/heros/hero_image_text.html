@@ -14,7 +14,9 @@
       </div>
       <div class="fr-col-md-6">
         {% image value.image fill-600x600 as header_image %}
-        <img class="fr-responsive-img" src="{{ header_image.full_url }}" alt="" />
+        <img class="fr-responsive-img"
+             src="{{ header_image.full_url }}"
+             alt="{{ header_image.alt }}" />
       </div>
     </div>
   </div>
