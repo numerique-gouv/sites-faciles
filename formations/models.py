@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.models import Page
 from wagtail_airtable.mixins import AirtableMixin
@@ -71,15 +72,36 @@ class FormationPage(AirtableMixin, Page):
     themes = ParentalManyToManyField(Theme, verbose_name="Familles thématiques", blank=True)
     sub_themes = ParentalManyToManyField(SubTheme, verbose_name="Sous-thématiques", blank=True)
     organizers = ParentalManyToManyField(Organizer, verbose_name="Entités organisatrices", blank=True)
-    attendance = models.CharField(
-        "En ligne/Présentiel/Hybride",
-        max_length=20,
-        choices=Attendance.choices,
+    attendance = ArrayField(
+        models.CharField(
+            max_length=20,
+            choices=Attendance.choices,
+        ),
+        size=None,
         blank=True,
+        verbose_name="En ligne/Présentiel/Hybride",
+        default=list,
     )
 
     # Editor panels configuration
     content_panels = Page.content_panels
+
+    def get_attendance_display(self):
+        """
+        Return a human-readable display of attendance values
+        """
+        if not self.attendance:
+            return ""
+
+        # Get display values for each attendance choice
+        display_values = []
+        for value in self.attendance:
+            for choice_value, choice_display in Attendance.choices:
+                if choice_value == value:
+                    display_values.append(choice_display)
+                    break
+
+        return ", ".join(display_values)
 
     @classmethod
     def map_import_fields(cls):

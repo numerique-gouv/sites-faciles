@@ -47,7 +47,7 @@ class FormationPageFactory(ContentPageFactory):
     duration = factory.Faker("sentence", nb_words=1, locale="fr_FR")
     registration_link = factory.Faker("url")
     image_url = factory.Faker("url")
-    attendance = factory.fuzzy.FuzzyChoice(Attendance.values)
+    attendance = factory.LazyFunction(lambda: [factory.fuzzy.FuzzyChoice(Attendance.values).fuzz()])
 
     @factory.post_generation
     def target_audience(self, create, extracted, **kwargs):

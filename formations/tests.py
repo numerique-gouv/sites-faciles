@@ -213,13 +213,13 @@ class FormationsTest(TestCase):
 
     def test_view_formations_list_attendance_filter(self):
         formation_with_attendance_online = FormationPageFactory(
-            name="Formation with attendance online", attendance=Attendance.ENLIGNE
+            name="Formation with attendance online", attendance=[Attendance.ENLIGNE]
         )
         formation_with_attendance_presential = FormationPageFactory(
-            name="Formation with attendance presential", attendance=Attendance.PRESENTIEL
+            name="Formation with attendance presential", attendance=[Attendance.PRESENTIEL]
         )
         formation_without_attendance = FormationPageFactory(
-            name="Formation without attendance", attendance=Attendance.HYBRIDE
+            name="Formation without attendance", attendance=[Attendance.HYBRIDE]
         )
 
         url = reverse("formations_list")
@@ -284,7 +284,7 @@ class FormationsTest(TestCase):
             sub_themes=[sub_theme],
             target_audience=[target_audience],
             organizers=[organizer],
-            attendance=Attendance.ENLIGNE,
+            attendance=[Attendance.ENLIGNE],
         )
 
         # Test CSV export

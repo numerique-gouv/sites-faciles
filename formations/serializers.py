@@ -123,7 +123,7 @@ class FormationPageSerializer(AirtableSerializer):
     organizers = OrganizerSerializer(required=False, many=True)
     image_url = serializers.URLField(required=False)
     visible = serializers.CharField(max_length=3, required=True)
-    attendance = LowerCharSerializer(max_length=20, required=True)
+    attendance = serializers.ListField(child=LowerCharSerializer(max_length=20), required=True, allow_empty=True)
 
     def get_target_audience_list(self, obj):
         return TargetAudienceSerializer(obj.fresh_data, many=True).data

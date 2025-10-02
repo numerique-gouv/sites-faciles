@@ -53,7 +53,7 @@ class FormationsListView(ListView):
 
             attendance = form.cleaned_data.get("attendance")
             if attendance:
-                qs = qs.filter(attendance=attendance)
+                qs = qs.filter(attendance__contains=[attendance])
 
             search = form.cleaned_data.get("search")
             if search:
