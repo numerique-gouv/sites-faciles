@@ -1521,7 +1521,7 @@ class ImageBlockWithDefault(ImageBlock):
 
         if "decorative" in self.child_blocks:
             self.child_blocks["decorative"].field.help_text = _(
-                "Check if the image is purely decorative. " "In this case, the alt attribute will be empty."
+                "Check if the image is purely decorative. " "In this case, the alt attribute (alt text) will be empty."
             )
         if "alt_text" in self.child_blocks:
             self.child_blocks["alt_text"].field.help_text = _(
