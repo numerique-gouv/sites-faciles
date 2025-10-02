@@ -10,12 +10,26 @@ p:empty {
     display: none;
 }
 
+.flex {
+    display: flex;
+}
 /*** Prefix the classes defined here with cmsfr- ***/
 
 .cmsfr-hero {
     background-size: cover;
-    background-position: center;
     background-repeat: no-repeat;
+}
+
+.cmsfr-hero-position--center {
+    background-position: center;
+}
+
+.cmsfr-hero-position--top {
+    background-position: top;
+}
+
+.cmsfr-hero-position--bottom {
+    background-position: bottom;
 }
 
 .cmsfr-hero-large {
@@ -25,11 +39,55 @@ p:empty {
     text-align: center;
 }
 
+.cmsfr-hero-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cmsfr-hero-btns {
+    display: flex;
+}
+
+.cmsfr-hero-btns--center {
+    justify-content: center;
+    align-items: center;
+}
+
+.cmsfr-hero-btns--left {
+    justify-content: left;
+    align-items: left;
+}
+
+.cmsfr-hero-btns--right {
+    justify-content: right;
+    align-items: right;
+}
+
+.cmsfr-text-content--left {
+    text-align: left;
+}
+
+.cmsfr-text-content--right {
+    text-align: right;
+}
+
+.cmsfr-text-content--center {
+    text-align: center;
+}
+
+
 .cmsfr-background-dark h1,
 .cmsfr-background-dark p,
 .cmsfr-background-dark button,
 .cmsfr-background-dark ul {
     color: white;
+}
+
+/* This style rule prevents user agents from applying a margin-top to the figure tag while complying with dsfr */
+.cmsfr-without-margin {
+    margin-top: -40px;
 }
 
 :root[data-fr-theme=light] .cmsfr-background-dark .fr-btn--secondary {
@@ -82,7 +140,32 @@ p:empty {
 }
 
 @media all and (max-width: 575px) {
+    .cmsfr-order-mobile__2 {
+        order: 2;
+}
+}
+
+@media all and (min-width: 768px) {
     .cmsfr-order__2 {
         order: 2;
     }
+}
+.cmsfr-image-focus-left {
+    object-position: left;
+}
+
+.cmsfr-image-focus-center {
+    object-position: center;
+}
+
+.cmsfr-image-focus-right {
+    object-position: right; 
+}
+
+.cmsfr-image-focus-top {
+    object-position: top;
+}
+
+.cmsfr-image-focus-bottom {
+    object-position: bottom;
 }
