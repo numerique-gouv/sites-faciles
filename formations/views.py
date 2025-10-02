@@ -2,6 +2,7 @@ import csv
 
 from django.db.models import Q
 from django.http import HttpResponse
+from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 
 from formations.form import FormationsFilterForm
@@ -108,3 +109,7 @@ class FormationsListView(ListView):
             )
 
         return response
+
+
+class BoosterAgileChatbotView(TemplateView):
+    template_name = "formations/booster_agile_chatbot.html"
