@@ -6,7 +6,7 @@ class LinkBlock {
   }
 
   initialize() {
-    this.select = this.container.querySelector("select"); // trouver le select
+    this.select = this.container.querySelector("select");
     if (!this.select) {
       console.warn("Select element not found");
       return;

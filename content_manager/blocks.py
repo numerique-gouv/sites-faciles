@@ -1668,6 +1668,27 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
         template = "content_manager/heros/hero_wide_image_text.html"
 
 
+class HeroBackgroundBlockAdapter(StructBlockAdapter):
+    js_constructor = "blocks.links.LinkBlock"
+
+    def js_args(self, block):
+        args = super().js_args(block)
+        args[2]["background_image_or_color"] = block.background_image_or_color
+        return args
+
+    @cached_property
+    def media(self):
+        from django import forms
+
+        structblock_media = super().media
+        return forms.Media(
+            js=structblock_media._js + ["js/hero-background-block.js"],
+        )
+
+
+register(LinkBlockAdapter(), LinkWithoutLabelBlock)
+
+
 class HeroBackgroundImageBlock(blocks.StructBlock):
     text_content = TextContentAllAlignments(label=_("Text content"))
     buttons = blocks.ListBlock(
@@ -1690,8 +1711,17 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
         ],
         label=_("Buttons"),
     )
+    background_color_or_image = blocks.ChoiceBlock(choices=[("color", "Color"), ("image", "Image")])
     image = HeroImageBlockWithMask(
         label=_("Hero image"),
+    )
+    background_color = BackgroundColorChoiceBlock(
+        label=_("Background color"),
+        required=False,
+        help_text=_(
+            "Uses the French Design System colors.<br>"
+            "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
+        ),
     )
 
     class Meta:
