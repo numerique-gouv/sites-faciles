@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 19:11+0200\n"
-"PO-Revision-Date: 2025-07-24 11:20+0200\n"
+"POT-Creation-Date: 2025-10-06 10:59+0200\n"
+"PO-Revision-Date: 2025-10-06 11:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -123,11 +123,11 @@ msgstr "Tutoriels"
 msgid "Videos"
 msgstr "Vidéos"
 
-#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:34
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:38
 msgid "Tutorial"
 msgstr "Tutoriel"
 
-#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:34
+#: dashboard/templates/wagtailadmin/home/panels/_tutorials.html:38
 msgid "of"
 msgstr "de"
 
@@ -137,32 +137,40 @@ msgid "Connection"
 msgstr "Connexion"
 
 #: dashboard/templates/wagtailadmin/login.html:20
+msgid "Login with FranceConnect"
+msgstr "S’identifier avec FranceConnect"
+
+#: dashboard/templates/wagtailadmin/login.html:23
 msgid "Login with"
 msgstr "S’identifier avec"
 
-#: dashboard/templates/wagtailadmin/login.html:23
+#: dashboard/templates/wagtailadmin/login.html:26
 msgid "What is ProConnect?"
 msgstr "Qu’est-ce que ProConnect  ?"
 
-#: dashboard/templates/wagtailadmin/login.html:24
+#: dashboard/templates/wagtailadmin/login.html:27
 msgid "Opens a new window"
 msgstr "Ouvre une nouvelle fenêtre"
 
-#: dashboard/templates/wagtailadmin/login.html:38
+#: dashboard/templates/wagtailadmin/login.html:37
+msgid "or"
+msgstr "ou"
+
+#: dashboard/templates/wagtailadmin/login.html:46
 msgid "Log in with your account"
 msgstr "Se connecter avec son compte"
 
-#: dashboard/templates/wagtailadmin/login.html:41
+#: dashboard/templates/wagtailadmin/login.html:49
 msgid "Unless otherwise stated, all fields are mandatory."
 msgstr "Sauf mention contraire, tous les champs sont obligatoires."
 
-#: dashboard/templates/wagtailadmin/login.html:47
+#: dashboard/templates/wagtailadmin/login.html:55
 msgid "Error: Your username and password do not match, please try again."
 msgstr ""
 "Erreur : Votre identifiant et mot de passe ne correspondent pas, merci de "
 "réessayer."
 
-#: dashboard/templates/wagtailadmin/login.html:54
+#: dashboard/templates/wagtailadmin/login.html:62
 msgid ""
 "Error: Your account does not have access to this page. To continue, please "
 "log in with an authorized account."
@@ -170,31 +178,31 @@ msgstr ""
 "Erreur : Votre compte n’a pas accès à cette page. Pour continuer, merci de "
 "vous connecter avec un compte autorisé."
 
-#: dashboard/templates/wagtailadmin/login.html:67
+#: dashboard/templates/wagtailadmin/login.html:75
 msgid "Username:"
 msgstr "Identifiant :"
 
-#: dashboard/templates/wagtailadmin/login.html:73
+#: dashboard/templates/wagtailadmin/login.html:81
 msgid "Password:"
 msgstr "Mot de passe :"
 
-#: dashboard/templates/wagtailadmin/login.html:76
+#: dashboard/templates/wagtailadmin/login.html:84
 msgid "Show password"
 msgstr "Afficher le mot de passe"
 
-#: dashboard/templates/wagtailadmin/login.html:81
+#: dashboard/templates/wagtailadmin/login.html:89
 msgid "Show"
 msgstr "Afficher"
 
-#: dashboard/templates/wagtailadmin/login.html:87
+#: dashboard/templates/wagtailadmin/login.html:95
 msgid "Forgotten password?"
 msgstr "Mot de passe oublié ?"
 
-#: dashboard/templates/wagtailadmin/login.html:95
+#: dashboard/templates/wagtailadmin/login.html:103
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
-#: dashboard/templates/wagtailadmin/login.html:101
+#: dashboard/templates/wagtailadmin/login.html:109
 msgid "Connect"
 msgstr "Se connecter"
 
