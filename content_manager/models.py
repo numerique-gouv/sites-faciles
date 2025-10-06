@@ -633,6 +633,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
 
 class SocialMediaItem(Orderable):
     site_config = ParentalKey(CmsDsfrConfig, related_name="social_media_items")  # type: ignore
+    site_config = ParentalKey(CmsDsfrConfig, related_name="social_media_items")  # type: ignore
     title = models.CharField(_("Title"), max_length=200, default="", blank=True)
 
     url = models.URLField(
@@ -665,7 +666,6 @@ class MegaMenuCategory(Orderable):
         verbose_name_plural = _("Mega menu categories")
 
 
-@register_snippet
 class MegaMenu(ClusterableModel):
     name = models.CharField(_("Name"), max_length=255)
     parent_menu_item = models.ForeignKey(

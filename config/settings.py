@@ -101,6 +101,7 @@ INSTALLED_APPS = [
     "blog",
     "events",
     "forms",
+    "menus",
     "wagtail_honeypot",
     "dashboard",
     "wagtail.admin",
@@ -389,6 +390,9 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("mega_menu_section_15", "Catégorie de méga-menu 15"),
     ("mega_menu_section_16", "Catégorie de méga-menu 16"),
 )
+WAGTAILMENUS_FLAT_MENUS_EDITABLE_IN_WAGTAILADMIN = False
+WAGTAILMENUS_MAIN_MENUS_EDITABLE_IN_WAGTAILADMIN = False
+
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) in ["1", "True"] else False

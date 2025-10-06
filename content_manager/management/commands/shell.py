@@ -31,4 +31,7 @@ class Command(shell.Command):
             "django.db.models.Subquery",
             # Project-related custom imports
             "content_manager.utils.get_default_site",
+            "menus.models.MainMenu",
+            "menus.models.TopMenu",
+            "menus.models.FooterBottomMenu",
         ]

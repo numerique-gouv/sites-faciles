@@ -68,7 +68,7 @@ class Command(BaseCommand):
                 MainMenuItem.objects.update_or_create(
                     link_page=menu_page, menu=main_menu, defaults={"sort_order": contact_menu_entry.sort_order}
                 )
-                contact_menu_entry.sort_order += 1
+                contact_menu_entry.sort_order += 1  #  type: ignore
                 contact_menu_entry.save()
 
             elif slug == "form":
