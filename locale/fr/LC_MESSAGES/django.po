@@ -8,7 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2026-02-26 18:17+0100\n"
+=======
+"POT-Creation-Date: 2025-12-02 15:50+0100\n"
+>>>>>>> b38c635 (Create a new menus app)
 "PO-Revision-Date: 2025-04-24 11:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -145,6 +149,26 @@ msgstr "Adresse de la page copiée dans le presse-papiers."
 
 msgid "Copy to clipboard"
 msgstr "Copier dans le presse-papiers"
+
+#, fuzzy
+#~| msgid "Main menu"
+#~ msgid "Main link"
+#~ msgstr "Menu principal"
+
+#, fuzzy
+#~| msgid "Main menu"
+#~ msgid "Mega menu"
+#~ msgstr "Menu principal"
+
+#, fuzzy
+#~| msgid "Sitemap"
+#~ msgid "Site"
+#~ msgstr "Plan du site"
+
+#, fuzzy
+#~| msgid "Main menu"
+#~ msgid "Main menus"
+#~ msgstr "Menu principal"
 
 #~ msgid "Invalid response format or token verification failed"
 #~ msgstr "Format de réponse invalide ou vérification du jeton échouée"
