@@ -26,6 +26,10 @@ class Command(BaseCommand):
         site = get_default_site()
         site.hostname = settings.HOST_URL
         site.site_name = settings.WAGTAIL_SITE_NAME
+
+        if settings.HOST_PORT:
+            site.port = settings.HOST_PORT
+
         site.save()
 
         # Translate the names of the default user groups.
