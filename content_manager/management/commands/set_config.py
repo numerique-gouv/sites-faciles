@@ -12,7 +12,7 @@ from content_manager.utils import get_default_site
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         """
-        Sets the site hostname and site_name,
+        Sets the site hostname, site_name and port,
         and imports contents from the config.json file if present.
         """
 
