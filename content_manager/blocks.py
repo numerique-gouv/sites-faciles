@@ -1388,9 +1388,7 @@ class LinkBlockAdapter(StructBlockAdapter):
     js_constructor = "blocks.links.LinkBlock"
 
     def js_args(self, block):
-        # keys added to args[2] found in this.meta in StructBlockDefinition
         args = super().js_args(block)
-        # link types configured in LinkBlock class instance
         args[2]["link_types"] = block.link_types
         return args
 
@@ -1543,7 +1541,7 @@ class ImageBlockWithDefault(ImageBlock):
 
 class HeroImageBlock(blocks.StructBlock):
     image = ImageBlockWithDefault(
-        label=_("Image"), default_image_title="Banner Sites Faciles Dimitri Iakymuk Unsplash"
+        label=_("Image"), default_image_title="Banner Sites Faciles Dimitri Iakymuk Unsplash", required=False
     )
     image_positioning = blocks.ChoiceBlock(
         choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES_EXTENDED,
@@ -1668,27 +1666,6 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
         template = "content_manager/heros/hero_wide_image_text.html"
 
 
-class HeroBackgroundBlockAdapter(StructBlockAdapter):
-    js_constructor = "blocks.links.LinkBlock"
-
-    def js_args(self, block):
-        args = super().js_args(block)
-        args[2]["background_image_or_color"] = block.background_image_or_color
-        return args
-
-    @cached_property
-    def media(self):
-        from django import forms
-
-        structblock_media = super().media
-        return forms.Media(
-            js=structblock_media._js + ["js/hero-background-block.js"],
-        )
-
-
-register(LinkBlockAdapter(), LinkWithoutLabelBlock)
-
-
 class HeroBackgroundImageBlock(blocks.StructBlock):
     text_content = TextContentAllAlignments(label=_("Text content"))
     buttons = blocks.ListBlock(
@@ -1711,7 +1688,13 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
         ],
         label=_("Buttons"),
     )
-    background_color_or_image = blocks.ChoiceBlock(choices=[("color", "Color"), ("image", "Image")])
+    background_color_or_image = blocks.ChoiceBlock(
+        choices=[("color", "Color"), ("image", "Image")],
+        label=_("Background Color or Image"),
+        required=False,
+        default="image",
+        help_text=_("Choose if you prefer a background image or a background color."),
+    )
     image = HeroImageBlockWithMask(
         label=_("Hero image"),
     )
@@ -1727,6 +1710,60 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
     class Meta:
         icon = "minus"
         template = "content_manager/heros/hero_background_image_text.html"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.background_types = ["color", "image"]
+
+    def clean(self, value):
+        if value is None:
+            value = {}
+        errors = {}
+        selected_background_type = value.get("background_color_or_image")
+
+        if not selected_background_type:
+            for background_type in self.background_types:
+                if background_type == "color" and value.get("background_color"):
+                    selected_background_type = "color"
+                    value["background_color_or_image"] = "color"
+                    break
+                elif background_type == "image" and value.get("image"):
+                    selected_background_type = "image"
+                    value["background_color_or_image"] = "image"
+                    break
+
+        if selected_background_type == "color":
+            if not value.get("background_color"):
+                errors["background_color"] = ErrorList([_("Please select a color for the background.")])
+        elif selected_background_type == "image":
+            if not value.get("image"):
+                errors["image"] = ErrorList([_("Please select an image for the background.")])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        if selected_background_type == "color":
+            value["image"] = None
+        elif selected_background_type == "image":
+            value["background_color"] = None
+
+        return super().clean(value)
+
+
+class HeroBackgroundBlockAdapter(StructBlockAdapter):
+    js_constructor = "blocks.HeroBackgroundImageBlock"
+
+    @cached_property
+    def media(self):
+        from django import forms
+
+        structblock_media = super().media
+        return forms.Media(
+            js=structblock_media._js + ["js/hero-background-block.js"],
+        )
+
+
+register(HeroBackgroundBlockAdapter(), HeroBackgroundImageBlock)
 
 
 class OldHero(blocks.StructBlock):
