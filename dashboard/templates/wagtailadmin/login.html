@@ -14,97 +14,106 @@
             <div class="fr-col-12 fr-col-md-9 fr-col-lg-8">
               <h1>{% translate "Connection" %}</h1>
               {% settings_value "PROCONNECT_ACTIVATED" as use_proconnect %}
+              {% settings_value "SF_DISABLE_LOCAL_LOGIN" as disable_local_login %}
               {% if use_proconnect %}
-                <div class="fr-connect-group">
-                  <a class="fr-connect" href="{% url 'oidc_authentication_init' %}">
-                    <span class="fr-connect__login">{% translate "Login with" %}</span> <span class="fr-connect__brand">ProConnect</span>
-                  </a>
-                  <p>
-                    {% translate "What is ProConnect?" as what_is_pro_connect %}
-                    {% translate "Opens a new window" as new_window %}
-                    <a href="https://www.proconnect.gouv.fr/"
-                       target="_blank"
-                       rel="noopener"
-                       title="{{ what_is_pro_connect }} — {{ new_window }}">{{ what_is_pro_connect }}</a>
-                  </p>
+                <div class="fr-mb-6v">
+                  <h2>{% translate "Login with FranceConnect" %}</h2>
+                  <div class="fr-connect-group">
+                    <a class="fr-connect" href="{% url 'oidc_authentication_init' %}">
+                      <span class="fr-connect__login">{% translate "Login with" %}</span> <span class="fr-connect__brand">ProConnect</span>
+                    </a>
+                    <p>
+                      {% translate "What is ProConnect?" as what_is_pro_connect %}
+                      {% translate "Opens a new window" as new_window %}
+                      <a href="https://www.proconnect.gouv.fr/"
+                         target="_blank"
+                         rel="noopener"
+                         title="{{ what_is_pro_connect }} — {{ new_window }}">{{ what_is_pro_connect }}</a>
+                    </p>
+                  </div>
                 </div>
               {% endif %}
-              <div>
-                <form id="login-form" action="{% url 'wagtailadmin_login' %}" method="post">
-                  <fieldset class="fr-fieldset"
-                            id="login-form-fieldset"
-                            aria-labelledby="login-form-fieldset-legend login-form-fieldset-messages">
-                    <legend class="fr-fieldset__legend" id="login-form-fieldset-legend">
-                      <h2>{% translate "Log in with your account" %}</h2>
-                    </legend>
-                    <div class="fr-fieldset__element">
-                      <p class="fr-text--sm">{% translate "Unless otherwise stated, all fields are mandatory." %}</p>
-                      <div class="fr-messages-group"
-                           id="login-form-fieldset-messages"
-                           aria-live="assertive">
-                        {% if form.errors %}
-                          <div class="fr-alert fr-alert--error fr-alert--sm">
-                            <p>{% translate "Error: Your username and password do not match, please try again." %}</p>
-                          </div>
-                        {% endif %}
-                        {% if next %}
-                          {% if user.is_authenticated %}
+              {% if use_proconnect and not disable_local_login %}
+                <p class="fr-hr-or">{% translate "or" %}</p>
+              {% endif %}
+              {% if not disable_local_login %}
+                <div>
+                  <form id="login-form" action="{% url 'wagtailadmin_login' %}" method="post">
+                    <fieldset class="fr-fieldset"
+                              id="login-form-fieldset"
+                              aria-labelledby="login-form-fieldset-legend login-form-fieldset-messages">
+                      <legend class="fr-fieldset__legend" id="login-form-fieldset-legend">
+                        <h2>{% translate "Log in with your account" %}</h2>
+                      </legend>
+                      <div class="fr-fieldset__element">
+                        <p class="fr-text--sm">{% translate "Unless otherwise stated, all fields are mandatory." %}</p>
+                        <div class="fr-messages-group"
+                             id="login-form-fieldset-messages"
+                             aria-live="assertive">
+                          {% if form.errors %}
                             <div class="fr-alert fr-alert--error fr-alert--sm">
-                              <p>
-                                {% translate "Error: Your account does not have access to this page. To continue, please log in with an authorized account." %}
-                              </p>
+                              <p>{% translate "Error: Your username and password do not match, please try again." %}</p>
                             </div>
                           {% endif %}
-                        {% endif %}
-                        {% dsfr_django_messages %}
-                      </div>
-                    </div>
-                    <div class="fr-fieldset__element">
-                      {% csrf_token %}
-                      {% url 'wagtailadmin_home' as home_url %}
-                      <input type="hidden" name="next" value="{{ next|default:home_url }}" />
-                      <div class="fr-input-group">
-                        <label class="fr-label" for="id_username">{% translate "Username:" %}</label>
-                        {{ form.username |attr:"autocomplete:username" |add_class:"fr-input" }}
-                      </div>
-                    </div>
-                    <div class="fr-fieldset__element">
-                      <div class="fr-password">
-                        <label class="fr-label" for="id_password">{% translate "Password:" %}</label>
-                        {{ form.password |attr:"autocomplete:current-password" |add_class:"fr-password__input fr-input" }}
-                        <div class="fr-password__checkbox fr-checkbox-group fr-checkbox-group--sm">
-                          {% translate "Show password" as show_password %}
-                          <input aria-label="{{ show_password }}"
-                                 id="id_password-show"
-                                 type="checkbox"
-                                 aria-describedby="id_password-show-messages">
-                          <label class="fr-password__checkbox fr-label" for="id_password-show">{% translate "Show" %}</label>
-                          <div class="fr-messages-group"
-                               id="id_password-show-messages"
-                               aria-live="assertive"></div>
-                        </div>
-                        {% if show_password_reset %}
-                          <a class="fr-link" href="{% url 'wagtailadmin_password_reset' %}">{% translate "Forgotten password?" %}</a>
-                        {% endif %}
-                      </div>
-                    </div>
-                    <div class="fr-fieldset__element">
-                      <div class="fr-checkbox-group fr-checkbox-group--sm">
-                        <div class="fr-checkbox-group}">
-                          {{ form.remember }}
-                          <label for="{{ form.remember.id_for_label }}" class="fr-label">{% translate "Remember me" %}</label>
+                          {% if next %}
+                            {% if user.is_authenticated %}
+                              <div class="fr-alert fr-alert--error fr-alert--sm">
+                                <p>
+                                  {% translate "Error: Your account does not have access to this page. To continue, please log in with an authorized account." %}
+                                </p>
+                              </div>
+                            {% endif %}
+                          {% endif %}
+                          {% dsfr_django_messages %}
                         </div>
                       </div>
-                    </div>
-                    <div class="fr-fieldset__element">
-                      <div class="fr-btns-group">
-                        {% translate "Connect" as connect_label %}
-                        <input class="fr-btn" type="submit" value="{{ connect_label }}" />
+                      <div class="fr-fieldset__element">
+                        {% csrf_token %}
+                        {% url 'wagtailadmin_home' as home_url %}
+                        <input type="hidden" name="next" value="{{ next|default:home_url }}" />
+                        <div class="fr-input-group">
+                          <label class="fr-label" for="id_username">{% translate "Username:" %}</label>
+                          {{ form.username |attr:"autocomplete:username" |add_class:"fr-input" }}
+                        </div>
                       </div>
-                    </div>
-                  </fieldset>
-                </form>
-              </div>
+                      <div class="fr-fieldset__element">
+                        <div class="fr-password">
+                          <label class="fr-label" for="id_password">{% translate "Password:" %}</label>
+                          {{ form.password |attr:"autocomplete:current-password" |add_class:"fr-password__input fr-input" }}
+                          <div class="fr-password__checkbox fr-checkbox-group fr-checkbox-group--sm">
+                            {% translate "Show password" as show_password %}
+                            <input aria-label="{{ show_password }}"
+                                   id="id_password-show"
+                                   type="checkbox"
+                                   aria-describedby="id_password-show-messages">
+                            <label class="fr-password__checkbox fr-label" for="id_password-show">{% translate "Show" %}</label>
+                            <div class="fr-messages-group"
+                                 id="id_password-show-messages"
+                                 aria-live="assertive"></div>
+                          </div>
+                          {% if show_password_reset %}
+                            <a class="fr-link" href="{% url 'wagtailadmin_password_reset' %}">{% translate "Forgotten password?" %}</a>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="fr-fieldset__element">
+                        <div class="fr-checkbox-group fr-checkbox-group--sm">
+                          <div class="fr-checkbox-group}">
+                            {{ form.remember }}
+                            <label for="{{ form.remember.id_for_label }}" class="fr-label">{% translate "Remember me" %}</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="fr-fieldset__element">
+                        <div class="fr-btns-group">
+                          {% translate "Connect" as connect_label %}
+                          <input class="fr-btn" type="submit" value="{{ connect_label }}" />
+                        </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>
