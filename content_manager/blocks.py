@@ -1731,6 +1731,9 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
                     selected_background_type = "image"
                     value["background_color_or_image"] = "image"
                     break
+                else:
+                    selected_background_type = "image"
+                    value["background_color_or_image"] = "image"
 
         if selected_background_type == "color":
             if not value.get("background_color"):
@@ -1743,7 +1746,7 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
             raise StructBlockValidationError(block_errors=errors)
 
         if selected_background_type == "color":
-            value["image"] = None
+            value["image"] = {}
         elif selected_background_type == "image":
             value["background_color"] = None
 
