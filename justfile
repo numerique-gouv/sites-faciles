@@ -179,6 +179,7 @@ restore-local:
 [group('Dev DB and medias management')]
 restore-local-db:
     cd scripts && bash restore_local_db.sh
+    {{docker_cmd}} {{uv_run}} python manage.py set_config
 
 # Restore the last local medias backup
 [group('Dev DB and medias management')]
@@ -189,11 +190,13 @@ restore-local-medias:
 [group('Dev DB and medias management')]
 restore-prod:
     cd scripts && bash restore_prod_db.sh && bash restore_prod_medias.sh
+    {{docker_cmd}} {{uv_run}} python manage.py set_config
 
 # Restore the last downloaded backup of the production database
 [group('Dev DB and medias management')]
 restore-prod-db:
     cd scripts && bash restore_prod_db.sh
+    {{docker_cmd}} {{uv_run}} python manage.py set_config
 
 # Restore the last downloaded media files
 [group('Dev DB and medias management')]
