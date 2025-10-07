@@ -1,16 +1,23 @@
 from django import forms
+from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import COLOR_CHOICES, COLOR_CHOICES_ILLUSTRATION, COLOR_CHOICES_SYSTEM, IMAGE_RATIOS, VIDEO_RATIOS
 from wagtail import blocks
 from wagtail.blocks import BooleanBlock, StructValue
+from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.images import get_image_model
 from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
+from wagtail.telepath import register
 from wagtailmarkdown.blocks import MarkdownBlock
 
 from content_manager.constants import (
+    ALIGN_HORIZONTAL_CHOICES,
+    ALIGN_HORIZONTAL_CHOICES_EXTENDED,
+    ALIGN_VERTICAL_CHOICES,
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
     BUTTONS_ALIGN_CHOICES,
@@ -29,6 +36,8 @@ from content_manager.constants import (
     TEXT_SIZE_CHOICES,
 )
 from content_manager.widgets import DsfrIconPickerWidget
+
+Image = get_image_model()
 
 # Wagtail Block Documentation : https://docs.wagtail.org/en/stable/reference/streamfield/blocks.html
 
@@ -97,6 +106,18 @@ class LinkStructValue(blocks.StructValue):
 
 
 class LinkWithoutLabelBlock(blocks.StructBlock):
+    LINK_TYPE_CHOICES = [
+        ("page", _("Page")),
+        ("external_url", _("External URL")),
+        ("document", _("Document")),
+    ]
+
+    link_type = blocks.ChoiceBlock(
+        choices=LINK_TYPE_CHOICES,
+        required=False,
+        label=_("Link type"),
+        help_text=_("Select the type of link."),
+    )
     page = blocks.PageChooserBlock(
         label=_("Page"),
         required=False,
@@ -116,6 +137,40 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
     class Meta:
         value_class = LinkStructValue
         icon = "link"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.link_types = [choice[0] for choice in self.LINK_TYPE_CHOICES]
+
+    def clean(self, value):
+        errors = {}
+        selected_link_type = value.get("link_type")
+        if not selected_link_type:
+            for link_type in self.link_types:
+                if value.get(link_type):
+                    selected_link_type = link_type
+                    value["link_type"] = link_type
+                    break
+        match selected_link_type:
+            case "page":
+                internal_page = value.get("page")
+                if not internal_page:
+                    errors["page"] = ErrorList([_("Please select a page to link to")])
+            case "external_url":
+                external_url = value.get("external_url")
+                if not external_url:
+                    errors["external_url"] = ErrorList([_("Please enter a URL")])
+            case "document":
+                document = value.get("document")
+                if not document:
+                    errors["document"] = ErrorList([_("Please select a document to link to")])
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        for link_type in self.link_types:
+            if link_type != selected_link_type:
+                value[link_type] = None
+        return super().clean(value)
 
 
 class LinkBlock(LinkWithoutLabelBlock):
@@ -1326,4 +1381,437 @@ STREAMFIELD_COMMON_BLOCKS = [
         "events_recent_entries",
         EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
     ),
+]
+
+
+class LinkBlockAdapter(StructBlockAdapter):
+    js_constructor = "blocks.links.LinkBlock"
+
+    def js_args(self, block):
+        args = super().js_args(block)
+        args[2]["link_types"] = block.link_types
+        return args
+
+    @cached_property
+    def media(self):
+        from django import forms
+
+        structblock_media = super().media
+        return forms.Media(
+            js=structblock_media._js + ["js/link-block.js"],
+        )
+
+
+register(LinkBlockAdapter(), LinkWithoutLabelBlock)
+
+
+## Hero blocks
+
+
+class MarginBlock(blocks.StructBlock):
+    top_margin = blocks.IntegerBlock(
+        label=_("Top margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+    bottom_margin = blocks.IntegerBlock(
+        label=_("Bottom margin"),
+        min_value=0,
+        max_value=15,
+        default=5,
+        required=False,
+    )
+
+    class Meta:
+        value_class = BlockMarginStructValue
+
+
+class LayoutBlock(MarginBlock):
+    background_color = BackgroundColorChoiceBlock(
+        label=_("Background color"),
+        required=False,
+        help_text=_(
+            "Uses the French Design System colors.<br>"
+            "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
+        ),
+    )
+
+    class Meta:
+        help_text = _("This part allow you to choose the layout of your block (background, margin..) ")
+
+
+class TextContentBlock(blocks.StructBlock):
+    hero_title = blocks.CharBlock(
+        label=_("Title header"),
+        required=False,
+        help_text=_(
+            "The title that will appear in the header of your page. If there is none, the page title will appear."
+        ),
+        default=_("The title of your header"),
+    )
+    hero_subtitle = blocks.RichTextBlock(
+        features=LIMITED_RICHTEXTFIELD_FEATURES,
+        required=False,
+        label=_("Text"),
+        help_text=_("To give a brief description of what you do"),
+        default=_("Add a short description of your organisation here to help visitors easily understand what you do."),
+    )
+
+
+class TextContentLeftRight(TextContentBlock):
+    position = blocks.ChoiceBlock(
+        choices=ALIGN_HORIZONTAL_CHOICES,
+        label=_("Text content position"),
+        default="left",
+        help_text=_("This field allows you to define the placement of text relative to adjacent content."),
+    )
+
+
+class TextContentAllAlignments(TextContentBlock):
+    position = blocks.ChoiceBlock(
+        choices=ALIGN_HORIZONTAL_CHOICES_EXTENDED,
+        label=_("Text content position"),
+        default="",
+        required=False,
+        help_text=_("This field allows you to define the placement of text."),
+    )
+
+
+class TextContentVerticalAlignments(TextContentBlock):
+    position = blocks.ChoiceBlock(
+        choices=ALIGN_VERTICAL_CHOICES,
+        label=_("Text content position"),
+        default="center",
+        help_text=_(
+            "This field allows you to define the placement of text relative to adjacent content in vertical position."
+        ),
+    )
+
+
+class HeroImageStructValue(StructValue):
+    def extra_classes(self):
+        """
+        Define the extra classes for the image
+        """
+        image_ratio = self.get("image_ratio")
+        image_positioning = self.get("image_positioning")
+        extra_class = ""
+        if image_ratio:
+            extra_class += f"fr-responsive-img {image_ratio} "
+        else:
+            extra_class += "fr-responsive-img"
+
+        if image_positioning:
+            extra_class += f"cmsfr-image-focus-{image_positioning}"
+        return extra_class
+
+
+class ImageBlockWithDefault(ImageBlock):
+    def __init__(
+        self, *args, default_image_title=None, default_image_decorative=True, default_image_alt_text="", **kwargs
+    ):
+        self._default_image_title = default_image_title
+        self._default_image_alt_text = default_image_alt_text
+        self._default_image_decorative = default_image_decorative
+        super().__init__(*args, **kwargs)
+
+        if "decorative" in self.child_blocks:
+            self.child_blocks["decorative"].field.help_text = _(
+                "Check if the image is purely decorative. " "In this case, the alt attribute (alt text) will be empty."
+            )
+        if "alt_text" in self.child_blocks:
+            self.child_blocks["alt_text"].field.help_text = _(
+                "Used by screen readers if the image is not marked as decorative."
+                "Describe the content or purpose of the image in a short, clear sentence."
+            )
+
+    def get_default(self):
+        if self._default_image_title:
+            image = Image.objects.filter(title=self._default_image_title).first()
+            if image:
+                return {
+                    "image": image,
+                    "alt_text": self._default_image_alt_text,
+                    "decorative": self._default_image_decorative,
+                }
+        return super().get_default()
+
+
+class HeroImageBlock(blocks.StructBlock):
+    image = ImageBlockWithDefault(
+        label=_("Image"), default_image_title="Banner Sites Faciles Dimitri Iakymuk Unsplash", required=False
+    )
+    image_positioning = blocks.ChoiceBlock(
+        choices=ALIGN_VERTICAL_CHOICES + ALIGN_HORIZONTAL_CHOICES_EXTENDED,
+        label=_("Image positioning"),
+        required=False,
+        default="bottom",
+        help_text=_("Choose the part of the image to highlight"),
+    )
+
+
+class HeroImageBlockWithRatioWidth(HeroImageBlock):
+    image_width = blocks.ChoiceBlock(
+        label=_("Image width"),
+        choices=MEDIA_WIDTH_CHOICES,
+        required=False,
+        default="fr-content-media--lg",
+        help_text=_("Select image width"),
+    )
+    image_ratio = blocks.ChoiceBlock(
+        label=_("Image ratio"),
+        choices=IMAGE_RATIOS,
+        required=False,
+        default="fr-ratio-32x9",
+        help_text=_(
+            "Select the right ratio for your image. "
+            "The size will be adjusted on mobile phones, so make sure you don't include any text in the image."
+        ),
+    )
+
+    class Meta:
+        value_class = HeroImageStructValue
+
+
+class HeroImageBlockWithMask(HeroImageBlock):
+    # Overriding image_positioning to offer fewer options than in HeroImageBlock
+    image_positioning = blocks.ChoiceBlock(
+        choices=[
+            ("top", _("Top")),
+            ("bottom", _("Bottom")),
+            ("", _("Center")),
+        ],
+        label=_("Image positioning"),
+        required=False,
+        default="",
+        help_text=_("Choose the part of the image to highlight"),
+    )
+
+    image_mask = blocks.ChoiceBlock(
+        label=_("Image mask"),
+        choices=[
+            ("darken", _("Darken")),
+            ("lighten", _("Lighten")),
+        ],
+        required=False,
+        default="",
+        help_text=_("Add a mask to lighten or darken the image"),
+    )
+
+    class Meta:
+        value_class = HeroImageStructValue
+
+
+class HeroImageAndTextBlock(blocks.StructBlock):
+    text_content = TextContentLeftRight(label=_("Text content"))
+    buttons = blocks.ListBlock(
+        ButtonBlock(label=_("Button")),
+        default=[
+            {
+                "link_type": "external_url",
+                "text": "Nous contacter",
+                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
+                "button_type": "fr-btn",
+                "icon_side": "--",
+            },
+            {
+                "link_type": "external_url",
+                "text": "Voir la vidéo",
+                "external_url": "https://tube.numerique.gouv.fr/",
+                "button_type": "fr-btn fr-btn--secondary",
+                "icon_side": "--t",
+            },
+        ],
+        label=_("Buttons"),
+    )
+    image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Sites Faciles Homme Nuages")
+    layout = LayoutBlock(label=_("Layout"))
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/heros/hero_image_text.html"
+
+
+class HeroWideImageAndTextBlock(blocks.StructBlock):
+    text_content = TextContentVerticalAlignments(label=_("Text content"))
+    layout = LayoutBlock(label=_("Layout"))
+    buttons = blocks.ListBlock(
+        ButtonBlock(label=_("Button")),
+        default=[
+            {
+                "link_type": "external_url",
+                "text": "Nous contacter",
+                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
+                "button_type": "fr-btn",
+                "icon_side": "--",
+            },
+            {
+                "link_type": "external_url",
+                "text": "Voir la vidéo",
+                "external_url": "https://tube.numerique.gouv.fr/",
+                "button_type": "fr-btn fr-btn--secondary",
+                "icon_side": "--",
+            },
+        ],
+        label=_("Buttons"),
+    )
+    image = HeroImageBlockWithRatioWidth(
+        label=_("Hero image"),
+    )
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/heros/hero_wide_image_text.html"
+
+
+class HeroBackgroundImageBlock(blocks.StructBlock):
+    text_content = TextContentAllAlignments(label=_("Text content"))
+    buttons = blocks.ListBlock(
+        ButtonBlock(label=_("Button")),
+        default=[
+            {
+                "link_type": "external_url",
+                "text": "Nous contacter",
+                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
+                "button_type": "fr-btn",
+                "icon_side": "--",
+            },
+            {
+                "link_type": "external_url",
+                "text": "Voir la vidéo",
+                "external_url": "https://tube.numerique.gouv.fr/",
+                "button_type": "fr-btn fr-btn--secondary",
+                "icon_side": "--",
+            },
+        ],
+        label=_("Buttons"),
+    )
+    background_color_or_image = blocks.ChoiceBlock(
+        choices=[("color", _("Color")), ("image", _("Image"))],
+        label=_("Background Color or Image"),
+        required=False,
+        default="image",
+        help_text=_("Choose if you prefer a background image or a background color."),
+    )
+    image = HeroImageBlockWithMask(
+        label=_("Hero image"),
+    )
+    background_color = BackgroundColorChoiceBlock(
+        label=_("Background color"),
+        required=False,
+        help_text=_(
+            "Uses the French Design System colors.<br>"
+            "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
+        ),
+    )
+
+    class Meta:
+        icon = "minus"
+        template = "content_manager/heros/hero_background_image_text.html"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.background_types = ["color", "image"]
+
+    def clean(self, value):
+        if value is None:
+            value = {}
+        errors = {}
+        selected_background_type = value.get("background_color_or_image")
+
+        if not selected_background_type:
+            for background_type in self.background_types:
+                if background_type == "color" and value.get("background_color"):
+                    selected_background_type = "color"
+                    value["background_color_or_image"] = "color"
+                    break
+                elif background_type == "image" and value.get("image"):
+                    selected_background_type = "image"
+                    value["background_color_or_image"] = "image"
+                    break
+                else:
+                    selected_background_type = "image"
+                    value["background_color_or_image"] = "image"
+
+        if selected_background_type == "color":
+            if not value.get("background_color"):
+                errors["background_color"] = ErrorList([_("Please select a color for the background.")])
+        elif selected_background_type == "image":
+            if not value.get("image"):
+                errors["image"] = ErrorList([_("Please select an image for the background.")])
+
+        if errors:
+            raise StructBlockValidationError(block_errors=errors)
+
+        if selected_background_type == "color":
+            value["image"] = {}
+        elif selected_background_type == "image":
+            value["background_color"] = None
+
+        return super().clean(value)
+
+
+class HeroBackgroundBlockAdapter(StructBlockAdapter):
+    js_constructor = "blocks.HeroBackgroundImageBlock"
+
+    @cached_property
+    def media(self):
+        from django import forms
+
+        structblock_media = super().media
+        return forms.Media(
+            js=structblock_media._js + ["js/hero-background-block.js"],
+        )
+
+
+register(HeroBackgroundBlockAdapter(), HeroBackgroundImageBlock)
+
+
+class OldHero(blocks.StructBlock):
+    header_with_title = blocks.BooleanBlock(label=_("Show title in header image?"), required=False)
+    header_image = ImageBlock(label=_("Header image"), required=False)
+    header_color_class = blocks.ChoiceBlock(
+        label=_("Background color"),
+        choices=COLOR_CHOICES,
+        required=False,
+        help_text=_("Uses the French Design System colors"),
+    )
+
+    header_large = blocks.BooleanBlock(label=_("Full width"), required=False)
+    header_darken = blocks.BooleanBlock(label=_("Darken background image"), required=False)
+    header_cta_text = blocks.RichTextBlock(label=_("Call to action text"), null=True, blank=True, required=False)
+    header_cta_buttons = ButtonsHorizontalListBlock(required=False)
+
+    class Meta:
+        icon = "minus"
+        help_text = (
+            "Ce bloc récupère les données des anciennes en-têtes mais n'est pas configurable. "
+            "Veuillez choisir un autre modèle d'en-tête."
+        )
+        template = "content_manager/heros/old_hero.html"
+
+
+class OldHeroAdapter(StructBlockAdapter):
+    js_constructor = "blocks.OldHero"
+
+    @cached_property
+    def media(self):
+        from django import forms
+
+        structblock_media = super().media
+        return forms.Media(
+            js=structblock_media._js + ["js/old-hero-block.js"],
+        )
+
+
+register(OldHeroAdapter(), OldHero)
+
+
+HERO_STREAMFIELD_BLOCKS = [
+    ("hero_text_image", HeroImageAndTextBlock(label=_("Header with an image and text"))),
+    ("hero_text_wide_image", HeroWideImageAndTextBlock(label=_("Vertical header with a banner and text"))),
+    ("hero_text_background_image", HeroBackgroundImageBlock(label=_("Header with background"))),
+    ("old_hero", OldHero(label=_("Old hero"))),
 ]
