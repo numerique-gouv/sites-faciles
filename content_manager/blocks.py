@@ -1689,7 +1689,7 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
         label=_("Buttons"),
     )
     background_color_or_image = blocks.ChoiceBlock(
-        choices=[("color", "Color"), ("image", "Image")],
+        choices=[("color", _("Color")), ("image", _("Image"))],
         label=_("Background Color or Image"),
         required=False,
         default="image",
