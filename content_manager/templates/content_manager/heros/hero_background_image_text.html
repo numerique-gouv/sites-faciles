@@ -1,5 +1,5 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
-{% image value.image.image fill-1200x650 as bg_img %}
+{% image value.image.image fill-1900x650 as bg_img %}
 
 <div class="cmsfr-hero fr-container-fluid {% if value.image.image_mask == 'darken' %}cmsfr-background-dark{% endif %} {% if value.image.image_positioning == 'top' %} cmsfr-hero-position--top {% elif value.image.image_positioning == 'bottom' %} cmsfr-hero-position--bottom {% else %} cmsfr-hero-position--center {% endif %} "
      style="{% if value.background_color_or_image == 'image' %} background-image: {% if value.image.image_mask == 'darken' %}linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), {% elif value.image.image_mask == 'lighten' %}linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)),{% endif %}url({{ bg_img.url }}) {% elif value.background_color_or_image == 'color' %}background-color: var(--background-alt-{{ value.background_color }}){% endif %};

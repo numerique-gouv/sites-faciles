@@ -7,23 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-"POT-Creation-Date: 2025-09-11 11:49+0200\n"
-"PO-Revision-Date: 2025-10-07 15:23+0200\n"
-=======
-"POT-Creation-Date: 2025-10-01 17:02+0200\n"
-"PO-Revision-Date: 2025-10-01 17:02+0200\n"
->>>>>>> 8258711 (fix translations)
-=======
-"POT-Creation-Date: 2025-10-02 11:59+0200\n"
-"PO-Revision-Date: 2025-10-02 12:00+0200\n"
->>>>>>> 591e680 (add alt and explanations)
-=======
 "POT-Creation-Date: 2025-10-02 12:10+0200\n"
 "PO-Revision-Date: 2025-10-02 12:16+0200\n"
->>>>>>> 7dc1d66 (add translation)
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -33,35 +18,36 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.7\n"
 
-#: content_manager/abstract.py:30 content_manager/blocks.py:1703
+#: content_manager/abstract.py:30 content_manager/blocks.py:1773
 msgid "Show title in header image?"
 msgstr "Afficher le titre sur l’image d’en-tête ?"
 
-#: content_manager/abstract.py:38 content_manager/blocks.py:1704
+#: content_manager/abstract.py:38 content_manager/blocks.py:1774
 msgid "Header image"
 msgstr "Image d’en-tête"
 
 #: content_manager/abstract.py:42 content_manager/blocks.py:1188
 #: content_manager/blocks.py:1246 content_manager/blocks.py:1295
-#: content_manager/blocks.py:1435 content_manager/blocks.py:1706
+#: content_manager/blocks.py:1433 content_manager/blocks.py:1702
+#: content_manager/blocks.py:1776
 msgid "Background color"
 msgstr "Couleur de fond"
 
 #: content_manager/abstract.py:46 content_manager/blocks.py:1190
 #: content_manager/blocks.py:1248 content_manager/blocks.py:1297
-#: content_manager/blocks.py:1709
+#: content_manager/blocks.py:1779
 msgid "Uses the French Design System colors"
 msgstr "Utilise les couleurs du système de design de l'État"
 
-#: content_manager/abstract.py:49 content_manager/blocks.py:1712
+#: content_manager/abstract.py:49 content_manager/blocks.py:1782
 msgid "Full width"
 msgstr "Pleine largeur"
 
-#: content_manager/abstract.py:50 content_manager/blocks.py:1713
+#: content_manager/abstract.py:50 content_manager/blocks.py:1783
 msgid "Darken background image"
 msgstr "Assombrir l’image de fond"
 
-#: content_manager/abstract.py:53 content_manager/blocks.py:1714
+#: content_manager/abstract.py:53 content_manager/blocks.py:1784
 msgid "Call to action text"
 msgstr "Texte de l’appel à action"
 
@@ -78,8 +64,8 @@ msgstr ""
 
 #: content_manager/abstract.py:67 content_manager/blocks.py:226
 #: content_manager/blocks.py:422 content_manager/blocks.py:763
-#: content_manager/blocks.py:1629 content_manager/blocks.py:1660
-#: content_manager/blocks.py:1691
+#: content_manager/blocks.py:1627 content_manager/blocks.py:1658
+#: content_manager/blocks.py:1689
 msgid "Buttons"
 msgstr "Boutons"
 
@@ -127,7 +113,7 @@ msgstr "Pages de base"
 msgid "Row heading"
 msgstr "En-tête de ligne"
 
-#: content_manager/blocks.py:55 content_manager/blocks.py:1459
+#: content_manager/blocks.py:55 content_manager/blocks.py:1457
 msgid "Text"
 msgstr "Texte"
 
@@ -218,8 +204,8 @@ msgid "Icon side"
 msgstr "Côté de l’icône"
 
 #: content_manager/blocks.py:209 content_manager/blocks.py:217
-#: content_manager/blocks.py:555 content_manager/blocks.py:1612
-#: content_manager/blocks.py:1643 content_manager/blocks.py:1674
+#: content_manager/blocks.py:555 content_manager/blocks.py:1610
+#: content_manager/blocks.py:1641 content_manager/blocks.py:1672
 msgid "Button"
 msgstr "Bouton"
 
@@ -328,12 +314,12 @@ msgstr "Contenu"
 
 #: content_manager/blocks.py:365 content_manager/blocks.py:482
 #: content_manager/blocks.py:607 content_manager/blocks.py:686
-#: content_manager/blocks.py:713 content_manager/blocks.py:1546
+#: content_manager/blocks.py:713 content_manager/blocks.py:1544
 msgid "Image"
 msgstr "Image"
 
 #: content_manager/blocks.py:367 content_manager/blocks.py:444
-#: content_manager/blocks.py:698 content_manager/blocks.py:1566
+#: content_manager/blocks.py:698 content_manager/blocks.py:1564
 msgid "Image ratio"
 msgstr "Ratio de l’image"
 
@@ -527,7 +513,7 @@ msgstr "Droite (affichée en dessous du texte en mode mobile)"
 msgid "Right (displayed above text in mobile view)"
 msgstr "Droite (affichée au dessus du texte en mode mobile)"
 
-#: content_manager/blocks.py:619 content_manager/blocks.py:1559
+#: content_manager/blocks.py:619 content_manager/blocks.py:1557
 msgid "Image width"
 msgstr "Largeur de l’image"
 
@@ -579,13 +565,13 @@ msgstr "Titre de l’auteur"
 
 #: content_manager/blocks.py:729 content_manager/blocks.py:1210
 #: content_manager/blocks.py:1251 content_manager/blocks.py:1300
-#: content_manager/blocks.py:1415
+#: content_manager/blocks.py:1413
 msgid "Top margin"
 msgstr "Espacement au dessus"
 
 #: content_manager/blocks.py:730 content_manager/blocks.py:1217
 #: content_manager/blocks.py:1258 content_manager/blocks.py:1307
-#: content_manager/blocks.py:1422
+#: content_manager/blocks.py:1420
 msgid "Bottom margin"
 msgstr "Espacement en dessous"
 
@@ -993,7 +979,7 @@ msgid "A simple, alphabetical list of the subpages of the current page."
 msgstr ""
 "Une liste alphabétique toute simple des sous-pages de la page actuelle."
 
-#: content_manager/blocks.py:1438
+#: content_manager/blocks.py:1436 content_manager/blocks.py:1705
 msgid ""
 "Uses the French Design System colors.<br>If you want to design a classic "
 "website, choose the colour ‘white’ or ‘French blue’."
@@ -1002,7 +988,7 @@ msgstr ""
 "concevoir un site classique, choisissez la couleur \"blanc\" ou \"bleu "
 "France »."
 
-#: content_manager/blocks.py:1444
+#: content_manager/blocks.py:1442
 msgid ""
 "This part allow you to choose the layout of your block (background, "
 "margin..) "
@@ -1010,11 +996,11 @@ msgstr ""
 "Cette partie vous permet de choisir la mise en page de votre bloc (arrière-"
 "plan, marge...) "
 
-#: content_manager/blocks.py:1449
+#: content_manager/blocks.py:1447
 msgid "Title header"
 msgstr "Titre de l’en-tête"
 
-#: content_manager/blocks.py:1452
+#: content_manager/blocks.py:1450
 msgid ""
 "The title that will appear in the header of your page. If there is none, the "
 "page title will appear."
@@ -1022,15 +1008,15 @@ msgstr ""
 "Le titre apparaîtra dans l’en-tête de votre page. S’il n’y en a aucun, c’est "
 "le titre de la page qui apparaitra."
 
-#: content_manager/blocks.py:1454
+#: content_manager/blocks.py:1452
 msgid "The title of your header"
 msgstr "Le titre de votre en-tête"
 
-#: content_manager/blocks.py:1460
+#: content_manager/blocks.py:1458
 msgid "To give a brief description of what you do"
 msgstr "Pour décrire succinctement ce que vous faites"
 
-#: content_manager/blocks.py:1461
+#: content_manager/blocks.py:1459
 msgid ""
 "Add a short description of your organisation here to help visitors easily "
 "understand what you do."
@@ -1038,12 +1024,12 @@ msgstr ""
 "Ajoutez ici une courte description de votre organisation pour aider votre "
 "visiteurs à comprendre ce que vous faites."
 
-#: content_manager/blocks.py:1468 content_manager/blocks.py:1477
-#: content_manager/blocks.py:1487
+#: content_manager/blocks.py:1466 content_manager/blocks.py:1475
+#: content_manager/blocks.py:1485
 msgid "Text content position"
 msgstr "Position du bloc textuel"
 
-#: content_manager/blocks.py:1470
+#: content_manager/blocks.py:1468
 msgid ""
 "This field allows you to define the placement of text relative to adjacent "
 "content."
@@ -1051,11 +1037,11 @@ msgstr ""
 "Ce champ vous permet de définir le placement du bloc textuel par rapport au "
 "contenu adjacent."
 
-#: content_manager/blocks.py:1480
+#: content_manager/blocks.py:1478
 msgid "This field allows you to define the placement of text."
 msgstr "Ce champ vous permet de définir le placement du bloc textuel."
 
-#: content_manager/blocks.py:1490
+#: content_manager/blocks.py:1488
 msgid ""
 "This field allows you to define the placement of text relative to adjacent "
 "content in vertical position."
@@ -1063,7 +1049,7 @@ msgstr ""
 "Ce champ vous permet de définir le placement vertical du bloc textuel par "
 "rapport au contenu adjacent."
 
-#: content_manager/blocks.py:1524
+#: content_manager/blocks.py:1522
 msgid ""
 "Check if the image is purely decorative. In this case, the alt attribute "
 "(alt text) will be empty."
@@ -1071,7 +1057,7 @@ msgstr ""
 "Cochez si l’image est purement décorative. Dans ce cas, l’attribut alt "
 "(texte alernatif) sera vide."
 
-#: content_manager/blocks.py:1528
+#: content_manager/blocks.py:1526
 msgid ""
 "Used by screen readers if the image is not marked as decorative.Describe the "
 "content or purpose of the image in a short, clear sentence."
@@ -1080,19 +1066,19 @@ msgstr ""
 "décorative. Décrivez le contenu ou la fonction de l’image en une phrase "
 "courte et claire."
 
-#: content_manager/blocks.py:1550 content_manager/blocks.py:1588
+#: content_manager/blocks.py:1548 content_manager/blocks.py:1586
 msgid "Image positioning"
 msgstr "Position de l’image"
 
-#: content_manager/blocks.py:1553 content_manager/blocks.py:1591
+#: content_manager/blocks.py:1551 content_manager/blocks.py:1589
 msgid "Choose the part of the image to highlight"
 msgstr "Choisissez la partie de l’image de fond à mettre en avant"
 
-#: content_manager/blocks.py:1563
+#: content_manager/blocks.py:1561
 msgid "Select image width"
 msgstr "Sélectionner la largeur de l’image"
 
-#: content_manager/blocks.py:1571
+#: content_manager/blocks.py:1569
 msgid ""
 "Select the right ratio for your image. The size will be adjusted on mobile "
 "phones, so make sure you don't include any text in the image."
@@ -1100,65 +1086,81 @@ msgstr ""
 "Sélectionnez le ratio adapté à votre image. La taille sera adaptée sur "
 "mobile, veillez à ne pas intégrer de texte dans l’image."
 
-#: content_manager/blocks.py:1584 content_manager/constants.py:45
+#: content_manager/blocks.py:1582 content_manager/constants.py:45
 #: content_manager/constants.py:132 content_manager/constants.py:138
 msgid "Top"
 msgstr "Haut"
 
-#: content_manager/blocks.py:1585 content_manager/constants.py:47
+#: content_manager/blocks.py:1583 content_manager/constants.py:47
 #: content_manager/constants.py:133 content_manager/constants.py:140
 msgid "Bottom"
 msgstr "Bas"
 
-#: content_manager/blocks.py:1586 content_manager/constants.py:27
+#: content_manager/blocks.py:1584 content_manager/constants.py:27
 #: content_manager/constants.py:40 content_manager/constants.py:127
 msgid "Center"
 msgstr "Centre"
 
-#: content_manager/blocks.py:1595
+#: content_manager/blocks.py:1593
 msgid "Image mask"
 msgstr "Masque sur l’image"
 
-#: content_manager/blocks.py:1597
+#: content_manager/blocks.py:1595
 msgid "Darken"
 msgstr "Assombrir"
 
-#: content_manager/blocks.py:1598
+#: content_manager/blocks.py:1596
 msgid "Lighten"
 msgstr "Eclaircir"
 
-#: content_manager/blocks.py:1602
+#: content_manager/blocks.py:1600
 msgid "Add a mask to lighten or darken the image"
 msgstr ""
 "Ajouter un masque sombre ou plus clair pour améliorer la lisibilité du texte."
 
-#: content_manager/blocks.py:1610 content_manager/blocks.py:1640
-#: content_manager/blocks.py:1672
+#: content_manager/blocks.py:1608 content_manager/blocks.py:1638
+#: content_manager/blocks.py:1670
 msgid "Text content"
 msgstr "Contenu textuel"
 
-#: content_manager/blocks.py:1631 content_manager/blocks.py:1663
-#: content_manager/blocks.py:1694
+#: content_manager/blocks.py:1629 content_manager/blocks.py:1661
+#: content_manager/blocks.py:1699
 msgid "Hero image"
 msgstr "Image d’en-tête"
 
-#: content_manager/blocks.py:1632 content_manager/blocks.py:1641
+#: content_manager/blocks.py:1630 content_manager/blocks.py:1639
 msgid "Layout"
 msgstr "Mise en page"
 
+#: content_manager/blocks.py:1693
+msgid "Background Color or Image"
+msgstr "Image ou couleur en arrière-plan"
+
+#: content_manager/blocks.py:1696
+msgid "Choose if you prefer a background image or a background color."
+msgstr "Choisissez si vous préférez une image ou une couleur en arrière-plan"
+
+#: content_manager/blocks.py:1740
+msgid "Please select a color for the background."
+msgstr "Veuillez sélectionner une couleur pour l’arrière-plan"
+
 #: content_manager/blocks.py:1743
+msgid "Please select an image for the background."
+msgstr "Veuillez sélectionner une image pour l’arrière-plan."
+
+#: content_manager/blocks.py:1813
 msgid "Header with an image and text"
 msgstr "En-tête avec image et texte"
 
-#: content_manager/blocks.py:1744
+#: content_manager/blocks.py:1814
 msgid "Vertical header with a banner and text"
 msgstr "En-tête vertical avec un bandeau et du texte"
 
-#: content_manager/blocks.py:1745
+#: content_manager/blocks.py:1815
 msgid "Header with background"
 msgstr "En-tête avec arrière-plan"
 
-#: content_manager/blocks.py:1746
+#: content_manager/blocks.py:1816
 msgid "Old hero"
 msgstr "Ancien en-tête"
 
