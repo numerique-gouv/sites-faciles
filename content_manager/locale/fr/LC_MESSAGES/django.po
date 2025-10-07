@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-02 12:10+0200\n"
-"PO-Revision-Date: 2025-10-02 12:16+0200\n"
+"PO-Revision-Date: 2025-10-07 15:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -1116,7 +1116,7 @@ msgstr "Eclaircir"
 #: content_manager/blocks.py:1600
 msgid "Add a mask to lighten or darken the image"
 msgstr ""
-"Ajouter un masque sombre ou plus clair pour améliorer la lisibilité du texte."
+"Ajouter un masque sombre ou plus clair pour améliorer la lisibilité du texte"
 
 #: content_manager/blocks.py:1608 content_manager/blocks.py:1638
 #: content_manager/blocks.py:1670
@@ -1138,11 +1138,11 @@ msgstr "Image ou couleur en arrière-plan"
 
 #: content_manager/blocks.py:1696
 msgid "Choose if you prefer a background image or a background color."
-msgstr "Choisissez si vous préférez une image ou une couleur en arrière-plan"
+msgstr "Choisissez si vous préférez une image ou une couleur en arrière-plan."
 
 #: content_manager/blocks.py:1740
 msgid "Please select a color for the background."
-msgstr "Veuillez sélectionner une couleur pour l’arrière-plan"
+msgstr "Veuillez sélectionner une couleur pour l’arrière-plan."
 
 #: content_manager/blocks.py:1743
 msgid "Please select an image for the background."
