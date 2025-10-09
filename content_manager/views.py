@@ -4,22 +4,22 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, TemplateView
 from unidecode import unidecode
-from wagtail.models import Site
+from wagtail.models import Page, Site
 
 from content_manager.models import ContentPage, Tag
 
 
 class SearchResultsView(ListView):
-    model = ContentPage
+    model = Page
     template_name = "content_manager/search_results.html"
 
     def get_queryset(self):
         query = self.request.GET.get("q", None)
         if query:
-            object_list = ContentPage.objects.live().search(query)
+            object_list = Page.objects.live().search(query)
 
         else:
-            object_list = ContentPage.objects.none()
+            object_list = Page.objects.none()
         return object_list
 
     def get_context_data(self, **kwargs):
