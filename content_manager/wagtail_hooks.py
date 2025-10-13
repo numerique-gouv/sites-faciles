@@ -33,8 +33,10 @@ def register_text_center_feature(features):
         "contentstate",
         feature_name,
         {
-            "from_database_format": {'div[class="cmsfr-text-center"]': BlockElementHandler(type_)},
-            "to_database_format": {"block_map": {type_: {"element": "div", "props": {"class": "cmsfr-text-center"}}}},
+            "from_database_format": {'div[class="cmsfr-text-content--center"]': BlockElementHandler(type_)},
+            "to_database_format": {
+                "block_map": {type_: {"element": "div", "props": {"class": "cmsfr-text-content--center"}}}
+            },
         },
     )
 
