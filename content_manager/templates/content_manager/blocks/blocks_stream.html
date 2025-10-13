@@ -31,6 +31,8 @@
     <div class="fr-container cmsfr-block-markdown">{{ block.value|markdown }}</div>
   {% elif block.block_type == "html" %}
     <div class="fr-container cmsfr-block-raw-html">{{ block.value|safe }}</div>
+  {% elif block.block_type in "hero_text_image,hero_text_wide_image,hero_text_background_image,old_hero" %}
+    {% include_block block %}
   {% else %}
     <div class="fr-container cmsfr-block-{{ block.block_type }}">{% include_block block %}</div>
   {% endif %}
