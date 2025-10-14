@@ -158,3 +158,6 @@ ALIGN_VERTICAL_CHOICES_EXTENDED = [
     ("middle", _("Middle")),
     ("bottom", _("Bottom")),
 ]
+IMAGE_GRID_SIZE = [("80", _("Small")), ("140", _("Medium")), ("200", _("Large"))]
+
+# BLOCK_PER_ROW = [("2", "2"), ("3", "3"), ("4", "4")]
