@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import validate_slug
 from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _, pgettext_lazy
@@ -90,15 +91,30 @@ class IconPickerBlock(blocks.FieldBlock):
         icon = "radio-full"
 
 
+class AnchorBlock(blocks.StructBlock):
+    anchor_id = blocks.CharBlock(
+        label=_("Anchor ID"),
+        help_text=_("Allowed characters: A-Z, a-z, 0-9, - and _."),
+        validators=[validate_slug],
+    )
+
+    class Meta:
+        icon = "link"
+        template = "content_manager/blocks/anchor.html"
+
+
 class LinkStructValue(blocks.StructValue):
     def url(self):
         link = self.get("external_url", "")
 
         page = self.get("page")
         document = self.get("document")
+        anchor_id = self.get("anchor_id")
 
         if page:
             link = page.url
+            if anchor_id:
+                link += f"#{anchor_id}"
         elif document:
             link = document.url
 
@@ -132,6 +148,12 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
         label=_("External URL"),
         required=False,
         help_text=_("Use either this, the document or the page parameter."),
+    )
+    anchor_id = blocks.CharBlock(
+        label=_("Anchor ID"),
+        help_text=_("Allowed characters: A-Z, a-z, 0-9, - and _."),
+        validators=[validate_slug],
+        required=False,
     )
 
     class Meta:
@@ -1079,6 +1101,7 @@ class CommonStreamBlock(blocks.StreamBlock):
         group=_("Expert syntax"),
     )
     separator = SeparatorBlock(label=_("Separator"), group=_("Page structure"))
+    anchor = AnchorBlock(label=_("Anchor"), group=_("Page structure"))
 
     class Meta:
         icon = "dots-horizontal"
@@ -1354,6 +1377,7 @@ STREAMFIELD_COMMON_BLOCKS = [
             group=_("Expert syntax"),
         ),
     ),
+    ("anchor", AnchorBlock(label=_("Anchor"), group=_("Page structure"))),
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("item_grid", ItemGridBlock(label=_("Item grid"), group=_("Page structure"))),
