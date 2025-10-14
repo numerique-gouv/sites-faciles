@@ -147,7 +147,7 @@ class ImportPages:
             raw_page = self.pages[page_id]
             source_url = raw_page["meta"]["html_url"]
 
-            page_exists = ContentPage.objects.filter(source_url=source_url).first()
+            page_exists = ContentPage.objects.child_of(self.parent_page).filter(source_url=source_url).first()
             if page_exists:
                 self.update_page(page_id, page_exists)
             else:
