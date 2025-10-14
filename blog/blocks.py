@@ -2,7 +2,8 @@ from django.utils.translation import gettext_lazy as _
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
-from content_manager.blocks import ImageAndTextBlock, MultiColumnsWithTitleBlock, QuoteBlock
+from content_manager.blocks.basics import ImageAndTextBlock, QuoteBlock
+from content_manager.blocks.layout import MultiColumnsWithTitleBlock
 
 
 class ContactCardBlock(blocks.StructBlock):
