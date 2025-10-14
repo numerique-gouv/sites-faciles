@@ -2,12 +2,9 @@ from django import forms
 from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-from dsfr.constants import COLOR_CHOICES
 from wagtail import blocks
 from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.images import get_image_model
-from wagtail.images.blocks import ImageBlock
 from wagtail.telepath import register
 
 from content_manager.constants import (
@@ -19,42 +16,30 @@ from content_manager.constants import (
 )
 from content_manager.widgets import DsfrIconPickerWidget
 
-Image = get_image_model()
+
+## Icon Picker
+class IconPickerBlock(blocks.FieldBlock):
+    def __init__(self, required=True, help_text=None, validators=(), **kwargs):
+        self.field_options = {
+            "required": required,
+            "help_text": help_text,
+            "max_length": 70,
+            "min_length": 0,
+            "validators": [],
+        }
+        super().__init__(**kwargs)
+
+    @cached_property
+    def field(self):
+        field_kwargs = {"widget": DsfrIconPickerWidget()}
+        field_kwargs.update(self.field_options)
+        return forms.CharField(**field_kwargs)
+
+    class Meta:
+        icon = "radio-full"
 
 
-## Image
-class ImageBlockWithDefault(ImageBlock):
-    def __init__(
-        self, *args, default_image_title=None, default_image_decorative=True, default_image_alt_text="", **kwargs
-    ):
-        self._default_image_title = default_image_title
-        self._default_image_alt_text = default_image_alt_text
-        self._default_image_decorative = default_image_decorative
-        super().__init__(*args, **kwargs)
-
-        if "decorative" in self.child_blocks:
-            self.child_blocks["decorative"].field.help_text = _(
-                "Check if the image is purely decorative. " "In this case, the alt attribute (alt text) will be empty."
-            )
-        if "alt_text" in self.child_blocks:
-            self.child_blocks["alt_text"].field.help_text = _(
-                "Used by screen readers if the image is not marked as decorative."
-                "Describe the content or purpose of the image in a short, clear sentence."
-            )
-
-    def get_default(self):
-        if self._default_image_title:
-            image = Image.objects.filter(title=self._default_image_title).first()
-            if image:
-                return {
-                    "image": image,
-                    "alt_text": self._default_image_alt_text,
-                    "decorative": self._default_image_decorative,
-                }
-        return super().get_default()
-
-
-## Meta-blocks
+## Buttons & Links
 class LinkStructValue(blocks.StructValue):
     def url(self):
         link = self.get("external_url", "")
@@ -146,34 +131,6 @@ class LinkBlock(LinkWithoutLabelBlock):
         icon = "link"
 
 
-class BackgroundColorChoiceBlock(blocks.ChoiceBlock):
-    choices = COLOR_CHOICES
-
-    class Meta:
-        icon = "view"
-
-
-class IconPickerBlock(blocks.FieldBlock):
-    def __init__(self, required=True, help_text=None, validators=(), **kwargs):
-        self.field_options = {
-            "required": required,
-            "help_text": help_text,
-            "max_length": 70,
-            "min_length": 0,
-            "validators": [],
-        }
-        super().__init__(**kwargs)
-
-    @cached_property
-    def field(self):
-        field_kwargs = {"widget": DsfrIconPickerWidget()}
-        field_kwargs.update(self.field_options)
-        return forms.CharField(**field_kwargs)
-
-    class Meta:
-        icon = "radio-full"
-
-
 class LinksVerticalListBlock(blocks.StreamBlock):
     link = LinkBlock(label=_("Link"))
 
@@ -250,56 +207,6 @@ class SingleLinkBlock(LinkBlock):
         template = "content_manager/blocks/link.html"
 
 
-class BlockMarginStructValue(blocks.StructValue):
-    def vertical_margin(self):
-        margin = []
-
-        top_margin = self.get("top_margin", None)
-        if top_margin:
-            margin.append(f"fr-mt-{top_margin}w")
-
-        bottom_margin = self.get("bottom_margin", None)
-        if bottom_margin:
-            margin.append(f"fr-mb-{bottom_margin}w")
-
-        return " ".join(margin)
-
-
-class MarginBlock(blocks.StructBlock):
-    top_margin = blocks.IntegerBlock(
-        label=_("Top margin"),
-        min_value=0,
-        max_value=15,
-        default=5,
-        required=False,
-    )
-    bottom_margin = blocks.IntegerBlock(
-        label=_("Bottom margin"),
-        min_value=0,
-        max_value=15,
-        default=5,
-        required=False,
-    )
-
-    class Meta:
-        value_class = BlockMarginStructValue
-
-
-class LayoutBlock(MarginBlock):
-    background_color = BackgroundColorChoiceBlock(
-        label=_("Background color"),
-        required=False,
-        help_text=_(
-            "Uses the French Design System colors.<br>"
-            "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
-        ),
-    )
-
-    class Meta:
-        help_text = _("This part allow you to choose the layout of your block (background, margin..) ")
-
-
-## Adapter
 class LinkBlockAdapter(StructBlockAdapter):
     js_constructor = "blocks.links.LinkBlock"
 
