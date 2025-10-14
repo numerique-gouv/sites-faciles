@@ -28,6 +28,7 @@ from content_manager.constants import (
     HEADING_CHOICES,
     HEADING_CHOICES_2_5,
     HORIZONTAL_CARD_IMAGE_RATIOS,
+    IMAGE_GRID_SIZE,
     LEVEL_CHOICES,
     LIMITED_RICHTEXTFIELD_FEATURES,
     LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
@@ -1348,12 +1349,40 @@ class ImageAndTextItems(blocks.StructBlock):
     )
 
 
-class ImageAndTextGrid(blocks.StructBlock):
-    items_alignements = blocks.ChoiceBlock()
-    items_per_row = blocks.ChoiceBlock()
-    items = blocks.ListBlock(ImageAndTextItems())
+class BaseSection(blocks.StructBlock):
     # A intégrer après merge de la PR 373
     # layout = LayoutBlock()
+    section_title = blocks.CharBlock()
+
+
+class ImageAndTextGrid(BaseSection):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        size = value["images_size"]
+        filter_spec = f"fill-{size}x{size}"
+
+        rendered_items = []
+        for item in value["items"]:
+            rendition = item["image"].get_rendition(filter_spec) if item["image"] else None
+            rendered_items.append(
+                {
+                    "title": item["title"],
+                    "text": item["text"],
+                    "rendition": rendition,
+                }
+            )
+        context["rendered_items"] = rendered_items
+        return context
+
+    items_alignements = blocks.ChoiceBlock(GRID_HORIZONTAL_ALIGN_CHOICES, default="left")
+    # The choiceblock determines the number of columns in the grid based on the number of items desired per row.
+    items_per_row = blocks.ChoiceBlock(choices=[("6", "2"), ("4", "3"), ("3", "4")], default="3")
+    images_size = blocks.ChoiceBlock(
+        IMAGE_GRID_SIZE,
+        default="80",
+        help_text=_("The images displayed will always have a square ratio (1:1)."),
+    )
+    items = blocks.ListBlock(ImageAndTextItems())
 
     class Meta:
         template = "content_manager/blocks/sections/image_text_grid.html"
