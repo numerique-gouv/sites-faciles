@@ -30,97 +30,128 @@
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/32/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/template-landing-page/",
-        "slug": "template-landing-page",
+        "html_url": "http://sites.beta.gouv.fr/exemples/template-landing-page-dsfr/",
+        "slug": "template-landing-page-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:38:17.932779+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "Landing page d'un service num\u00e9rique",
+      "hero": [
+        {
+          "type": "old_hero",
+          "value": {
+            "header_with_title": true,
+            "header_image": {
+              "image": 112,
+              "alt_text": "",
+              "decorative": true
+            },
+            "header_color_class": null,
+            "header_large": null,
+            "header_darken": null,
+            "header_cta_text": "<p data-block-key=\"4k2ok\"><b>Voici un exemple de page que vous pouvez utiliser pour promouvoir un service num\u00e9rique.</b></p><p data-block-key=\"4i4tf\">Utilisez cette <a linktype=\"page\" id=\"37\">en-t\u00eate</a> pour ins\u00e9rer une phrase d'accroche. </p><p data-block-key=\"f07co\">Vous pouvez la configurer dans l'onglet \"Promotion\" de l'\u00e9dition de votre page.<br/>Vous pouvez \u00e9galement ajouter un court paragraphe d'explication, et un appel \u00e0 action.</p>",
+            "header_cta_buttons": [
+              {
+                "type": "button",
+                "value": {
+                  "link_type": null,
+                  "page": 34,
+                  "document": null,
+                  "external_url": "",
+                  "text": "Appel \u00e0 action",
+                  "button_type": "fr-btn",
+                  "icon_class": "",
+                  "icon_side": ""
+                },
+                "id": "e3bb30c0-d0bb-433a-b688-2a2200978885"
+              }
+            ]
+          },
+          "id": "9ddaa6db-0640-477a-a328-d57d10fa2a5a"
+        }
+      ],
       "body": [
         {
           "type": "fullwidthbackground",
           "value": {
             "bg_image": null,
             "bg_color_class": "grey",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
                 "value": "<h2 data-block-key=\"d8v03\"><b>Pourquoi utiliser ce service ?</b></h2>"
               },
               {
-                "type": "item_grid",
+                "type": "tile",
                 "value": {
-                  "column_width": "4",
-                  "items": [
-                    {
-                      "type": "tile",
-                      "value": {
-                        "title": "Argument #1",
-                        "heading_tag": "h3",
-                        "description": "<p data-block-key=\"y6r6z\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
-                        "image": 77,
-                        "link": {
-                          "page": null,
-                          "document": null,
-                          "external_url": ""
-                        },
-                        "top_detail_badges_tags": [],
-                        "detail_text": "",
-                        "is_small": false,
-                        "grey_background": false,
-                        "no_background": false,
-                        "no_border": false,
-                        "shadow": false,
-                        "is_horizontal": false
-                      }
-                    },
-                    {
-                      "type": "tile",
-                      "value": {
-                        "title": "Argument #2",
-                        "heading_tag": "h3",
-                        "description": "<p data-block-key=\"y6r6z\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
-                        "image": 77,
-                        "link": {
-                          "page": null,
-                          "document": null,
-                          "external_url": ""
-                        },
-                        "top_detail_badges_tags": [],
-                        "detail_text": "",
-                        "is_small": false,
-                        "grey_background": false,
-                        "no_background": false,
-                        "no_border": false,
-                        "shadow": false,
-                        "is_horizontal": false
-                      }
-                    },
-                    {
-                      "type": "tile",
-                      "value": {
-                        "title": "Argument #3",
-                        "heading_tag": "h3",
-                        "description": "<p data-block-key=\"y6r6z\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
-                        "image": 77,
-                        "link": {
-                          "page": null,
-                          "document": null,
-                          "external_url": ""
-                        },
-                        "top_detail_badges_tags": [],
-                        "detail_text": "",
-                        "is_small": false,
-                        "grey_background": false,
-                        "no_background": false,
-                        "no_border": false,
-                        "shadow": false,
-                        "is_horizontal": false
-                      }
-                    }
-                  ]
+                  "title": "Argument #1",
+                  "heading_tag": "h3",
+                  "description": "<p data-block-key=\"lwlg0\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                  "image": 77,
+                  "link": {
+                    "link_type": null,
+                    "page": null,
+                    "document": null,
+                    "external_url": ""
+                  },
+                  "top_detail_badges_tags": [],
+                  "detail_text": "",
+                  "is_small": false,
+                  "grey_background": false,
+                  "no_background": false,
+                  "no_border": false,
+                  "shadow": false,
+                  "is_horizontal": true
+                }
+              },
+              {
+                "type": "tile",
+                "value": {
+                  "title": "Argument #2",
+                  "heading_tag": "h3",
+                  "description": "<p data-block-key=\"lwlg0\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                  "image": 77,
+                  "link": {
+                    "link_type": null,
+                    "page": null,
+                    "document": null,
+                    "external_url": ""
+                  },
+                  "top_detail_badges_tags": [],
+                  "detail_text": "",
+                  "is_small": false,
+                  "grey_background": false,
+                  "no_background": false,
+                  "no_border": false,
+                  "shadow": false,
+                  "is_horizontal": true
+                }
+              },
+              {
+                "type": "tile",
+                "value": {
+                  "title": "Argument #3",
+                  "heading_tag": "h3",
+                  "description": "<p data-block-key=\"lwlg0\">D\u00e9veloppez une des raisons pour lesquelles votre service simplifie la vie de ses utilisateurs.</p>",
+                  "image": 77,
+                  "link": {
+                    "link_type": null,
+                    "page": null,
+                    "document": null,
+                    "external_url": ""
+                  },
+                  "top_detail_badges_tags": [],
+                  "detail_text": "",
+                  "is_small": false,
+                  "grey_background": false,
+                  "no_background": false,
+                  "no_border": false,
+                  "shadow": false,
+                  "is_horizontal": true
                 }
               }
             ]
@@ -131,6 +162,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "blue-france",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -140,6 +173,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "3",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "tile",
@@ -149,6 +184,7 @@
                         "description": "<p data-block-key=\"pkphn\">Vous pouvez expliquer ici l'une des fonctionnalit\u00e9s phares de votre service.</p>",
                         "image": 74,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -171,6 +207,7 @@
                         "description": "<p data-block-key=\"pkphn\">Vous pouvez expliquer ici l'une des fonctionnalit\u00e9s phares de votre service.</p>",
                         "image": 74,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -193,6 +230,7 @@
                         "description": "<p data-block-key=\"pkphn\">Vous pouvez expliquer ici l'une des fonctionnalit\u00e9s phares de votre service.</p>",
                         "image": 74,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -215,6 +253,7 @@
                         "description": "<p data-block-key=\"pkphn\">Vous pouvez expliquer ici l'une des fonctionnalit\u00e9s phares de votre service.</p>",
                         "image": 74,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -240,13 +279,14 @@
           "value": {
             "image": {
               "image": 84,
-              "alt_text": "Illustration CMS 2",
-              "decorative": false
+              "alt_text": "",
+              "decorative": true
             },
             "image_side": "right",
             "image_ratio": "5",
             "text": "<h2 data-block-key=\"8jec0\"><b>\u00c0 qui s'adresse votre service ?</b></h2><h3 data-block-key=\"4jjcu\"><b>Vous pouvez expliquer ici le p\u00e9rim\u00e8tre d'usage du service :</b></h3><ul><li data-block-key=\"aap7e\">Exemple type d'utilisateur avec son cas d'usage</li><li data-block-key=\"19n35\">Exemple type d'utilisateur avec son cas d'usage</li><li data-block-key=\"eoo5q\">Exemple type d'utilisateur avec son cas d'usage</li></ul>",
             "link": {
+              "link_type": null,
               "page": null,
               "document": null,
               "external_url": "",
@@ -264,6 +304,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "blue-france",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -273,6 +315,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "6",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "card",
@@ -284,6 +328,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -304,6 +349,7 @@
                                   "color": "green-tilleul-verveine",
                                   "icon_class": "",
                                   "link": {
+                                    "link_type": null,
                                     "page": null,
                                     "document": null,
                                     "external_url": ""
@@ -332,6 +378,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -352,6 +399,7 @@
                                   "color": "green-tilleul-verveine",
                                   "icon_class": "",
                                   "link": {
+                                    "link_type": null,
                                     "page": null,
                                     "document": null,
                                     "external_url": ""
@@ -366,6 +414,7 @@
                                   "color": "green-bourgeon",
                                   "icon_class": "",
                                   "link": {
+                                    "link_type": null,
                                     "page": 29,
                                     "document": null,
                                     "external_url": ""
@@ -394,6 +443,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -414,6 +464,7 @@
                                   "color": "green-bourgeon",
                                   "icon_class": "",
                                   "link": {
+                                    "link_type": null,
                                     "page": 29,
                                     "document": null,
                                     "external_url": ""
@@ -428,6 +479,7 @@
                                   "color": "orange-terre-battue",
                                   "icon_class": "",
                                   "link": {
+                                    "link_type": null,
                                     "page": 18,
                                     "document": null,
                                     "external_url": ""
@@ -456,6 +508,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -476,6 +529,7 @@
                                   "color": "orange-terre-battue",
                                   "icon_class": "",
                                   "link": {
+                                    "link_type": null,
                                     "page": 18,
                                     "document": null,
                                     "external_url": ""
@@ -505,6 +559,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "grey",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text_cta",
@@ -519,6 +575,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "6",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "quote",
@@ -588,6 +646,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "grey",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "stepper",
@@ -628,6 +688,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text_cta",
@@ -640,6 +702,7 @@
                         {
                           "type": "button",
                           "value": {
+                            "link_type": null,
                             "page": 29,
                             "document": null,
                             "external_url": "",
@@ -672,7 +735,7 @@
       "header_color_class": null,
       "header_large": false,
       "header_darken": false,
-      "header_cta_text": "<p data-block-key=\"4k2ok\"><b>Voici un exemple de page que vous pouvez utiliser pour promouvoir un service num\u00e9rique.</b></p><p data-block-key=\"4i4tf\">Utilisez cette <a linktype=\"page\" id=\"37\">en-t\u00eate</a> pour ins\u00e9rer une phrase d'accroche.<br/>Vous pouvez \u00e9galement ajouter un court paragraphe d'explication, et un appel \u00e0 action.</p>",
+      "header_cta_text": "<p data-block-key=\"4k2ok\"><b>Voici un exemple de page que vous pouvez utiliser pour promouvoir un service num\u00e9rique.</b></p><p data-block-key=\"4i4tf\">Utilisez cette <a linktype=\"page\" id=\"37\">en-t\u00eate</a> pour ins\u00e9rer une phrase d'accroche. </p><p data-block-key=\"f07co\">Vous pouvez la configurer dans l'onglet \"Promotion\" de l'\u00e9dition de votre page.<br/>Vous pouvez \u00e9galement ajouter un court paragraphe d'explication, et un appel \u00e0 action.</p>",
       "header_cta_buttons": [
         {
           "type": "buttons",
@@ -680,6 +743,7 @@
             {
               "type": "button",
               "value": {
+                "link_type": null,
                 "page": 34,
                 "document": null,
                 "external_url": "",
@@ -694,27 +758,32 @@
           "id": "639058db-5850-43cc-a67a-c26818cd39d6"
         }
       ],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "36": {
       "id": 36,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/36/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/exemples-de-tuiles/",
-        "slug": "exemples-de-tuiles",
+        "html_url": "http://sites.beta.gouv.fr/exemples/exemples-de-tuiles-dsfr/",
+        "slug": "exemples-de-tuiles-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:26:02.224329+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "Tuiles",
+      "hero": [],
       "body": [
         {
           "type": "fullwidthbackground",
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -724,6 +793,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "4",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "tile",
@@ -733,6 +804,7 @@
                         "description": "<p data-block-key=\"2ucus\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
                         "image": null,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -755,6 +827,7 @@
                         "description": "<p data-block-key=\"2ucus\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
                         "image": null,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -777,6 +850,7 @@
                         "description": "<p data-block-key=\"2ucus\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
                         "image": null,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -802,6 +876,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -811,6 +887,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "6",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "tile",
@@ -820,6 +898,7 @@
                         "description": "<p data-block-key=\"2ucus\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
                         "image": 82,
                         "link": {
+                          "link_type": null,
                           "page": 42,
                           "document": null,
                           "external_url": ""
@@ -856,6 +935,7 @@
                         "description": "<p data-block-key=\"2ucus\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
                         "image": 78,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -872,6 +952,7 @@
                                   "color": "green-tilleul-verveine",
                                   "icon_class": "fr-icon-chat-check-line",
                                   "link": {
+                                    "link_type": null,
                                     "page": null,
                                     "document": null,
                                     "external_url": ""
@@ -898,6 +979,7 @@
                         "description": "<p data-block-key=\"2ucus\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
                         "image": 66,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": 1,
                           "external_url": ""
@@ -923,6 +1005,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "blue-france",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -936,6 +1020,7 @@
                   "description": "<p data-block-key=\"9rgqk\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
                   "image": null,
                   "link": {
+                    "link_type": null,
                     "page": null,
                     "document": null,
                     "external_url": ""
@@ -952,6 +1037,7 @@
                             "color": "green-tilleul-verveine",
                             "icon_class": "",
                             "link": {
+                              "link_type": null,
                               "page": null,
                               "document": null,
                               "external_url": ""
@@ -966,6 +1052,7 @@
                             "color": "green-bourgeon",
                             "icon_class": "",
                             "link": {
+                              "link_type": null,
                               "page": 42,
                               "document": null,
                               "external_url": ""
@@ -980,6 +1067,7 @@
                             "color": "green-emeraude",
                             "icon_class": "",
                             "link": {
+                              "link_type": null,
                               "page": 42,
                               "document": null,
                               "external_url": ""
@@ -1006,6 +1094,7 @@
                   "description": "<p data-block-key=\"9rgqk\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
                   "image": 77,
                   "link": {
+                    "link_type": null,
                     "page": 42,
                     "document": null,
                     "external_url": ""
@@ -1031,21 +1120,57 @@
       "header_darken": false,
       "header_cta_text": "",
       "header_cta_buttons": [],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "37": {
       "id": 37,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/37/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/en-t%C3%AAtes-et-bandeaux-dappel-%C3%A0-action/",
-        "slug": "en-t\u00eates-et-bandeaux-dappel-\u00e0-action",
+        "html_url": "http://sites.beta.gouv.fr/exemples/en-t%C3%AAtes-et-bandeaux-dappel-%C3%A0-action-dsfr/",
+        "slug": "en-t\u00eates-et-bandeaux-dappel-\u00e0-action-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:34:36.937313+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "En-t\u00eates et bandeaux d'appel \u00e0 action",
+      "hero": [
+        {
+          "type": "old_hero",
+          "value": {
+            "header_with_title": true,
+            "header_image": {
+              "image": 96,
+              "alt_text": "",
+              "decorative": true
+            },
+            "header_color_class": null,
+            "header_large": null,
+            "header_darken": true,
+            "header_cta_text": "<p data-block-key=\"irw4q\">Vous pouvez cr\u00e9er un en-t\u00eate comme celle-ci, en vous rendant dans l'onglet \"Promotion\" de votre page, puis en choisissant les \"Options d'en-t\u00eate\".</p><p data-block-key=\"9u080\"></p><p data-block-key=\"eujil\">Vous pourrez y ins\u00e9rer une image ou une couleur de fond, ainsi que du texte format\u00e9 et des boutons d'appel \u00e0 action.</p><p data-block-key=\"cpkig\"></p><p data-block-key=\"172l8\">Cet en-t\u00eate appara\u00eetra lorsque des aper\u00e7us de votre page seront g\u00e9n\u00e9r\u00e9s.</p>",
+            "header_cta_buttons": [
+              {
+                "type": "button",
+                "value": {
+                  "link_type": null,
+                  "page": 37,
+                  "document": null,
+                  "external_url": "",
+                  "text": "Bouton d'appel \u00e0 action",
+                  "button_type": "fr-btn",
+                  "icon_class": "",
+                  "icon_side": ""
+                },
+                "id": "0ee1a462-98a6-4261-a117-e56c331fcbb3"
+              }
+            ]
+          },
+          "id": "90401278-53e1-4bfb-a94c-89e9560c0f76"
+        }
+      ],
       "body": [
         {
           "type": "paragraph",
@@ -1056,11 +1181,13 @@
           "value": {
             "bg_image": 6,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text_cta",
                 "value": {
-                  "text": "<h2 data-block-key=\"xmc3p\">Texte avec appel \u00e0 action, sur fond pleine largeur</h2><p data-block-key=\"51v2r\">Le \"fond pleine largeur\" peut \u00eatre une image de votre choix, ou l'une des couleurs du Syst\u00e8me de Design de l'Etat (DSFR).</p><p data-block-key=\"433ba\">Pour cet exemple, nous avons opt\u00e9 pour une image en fond.</p>",
+                  "text": "<h3 data-block-key=\"xmc3p\">Texte avec appel \u00e0 action, sur fond pleine largeur</h3><p data-block-key=\"51v2r\">Le \"fond pleine largeur\" peut \u00eatre une image de votre choix, ou l'une des couleurs du Syst\u00e8me de Design de l'Etat (DSFR).</p><p data-block-key=\"433ba\">Pour cet exemple, nous avons opt\u00e9 pour une image en fond.</p>",
                   "cta_buttons": [
                     {
                       "type": "buttons",
@@ -1068,6 +1195,7 @@
                         {
                           "type": "button",
                           "value": {
+                            "link_type": null,
                             "page": null,
                             "document": null,
                             "external_url": "",
@@ -1092,11 +1220,13 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "grey",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text_cta",
                 "value": {
-                  "text": "<h2 data-block-key=\"beife\">Texte avec appel \u00e0 action, sur fond pleine largeur</h2><p data-block-key=\"9imau\">Pour cet exemple, nous avons opt\u00e9 pour un \"fond pleine largeur\" de couleur grise, et nous y avons ins\u00e9r\u00e9 un \"texte avec appel action\".</p><p data-block-key=\"b573u\"></p><p data-block-key=\"9jepn\">Voici les diff\u00e9rents types de bouton (\"appel \u00e0 action\") disponibles :</p>",
+                  "text": "<h3 data-block-key=\"beife\">Texte avec appel \u00e0 action, sur fond pleine largeur</h3><p data-block-key=\"9imau\">Pour cet exemple, nous avons opt\u00e9 pour un \"fond pleine largeur\" de couleur grise, et nous y avons ins\u00e9r\u00e9 un \"texte avec appel action\".</p><p data-block-key=\"b573u\"></p><p data-block-key=\"9jepn\">Voici les diff\u00e9rents types de bouton (\"appel \u00e0 action\") disponibles :</p>",
                   "cta_buttons": [
                     {
                       "type": "buttons",
@@ -1104,6 +1234,7 @@
                         {
                           "type": "button",
                           "value": {
+                            "link_type": null,
                             "page": null,
                             "document": null,
                             "external_url": "",
@@ -1116,6 +1247,7 @@
                         {
                           "type": "button",
                           "value": {
+                            "link_type": null,
                             "page": null,
                             "document": null,
                             "external_url": "",
@@ -1128,6 +1260,7 @@
                         {
                           "type": "button",
                           "value": {
+                            "link_type": null,
                             "page": null,
                             "document": null,
                             "external_url": "",
@@ -1140,6 +1273,7 @@
                         {
                           "type": "button",
                           "value": {
+                            "link_type": null,
                             "page": null,
                             "document": null,
                             "external_url": "",
@@ -1166,7 +1300,10 @@
             "bg_color_class": "beige-gris-galet",
             "bg_color": "",
             "title": "Multi-colonnes",
-            "heading_tag": "",
+            "heading_tag": "h3",
+            "top_margin": 5,
+            "bottom_margin": 5,
+            "vertical_align": "",
             "columns": [
               {
                 "type": "text_cta",
@@ -1179,6 +1316,7 @@
                         {
                           "type": "button",
                           "value": {
+                            "link_type": null,
                             "page": 34,
                             "document": null,
                             "external_url": "",
@@ -1224,7 +1362,7 @@
       "header_color_class": null,
       "header_large": false,
       "header_darken": true,
-      "header_cta_text": "<p data-block-key=\"irw4q\">Vous pouvez cr\u00e9er une en-t\u00eate comme celle-ci, en vous rendant dans l'onglet \"Promotion\" de votre page, puis en choisissant les \"Options d'en-t\u00eate\".</p><p data-block-key=\"9u080\"></p><p data-block-key=\"eujil\">Vous pourrez y ins\u00e9rer une image ou une couleur de fond, ainsi que du texte format\u00e9 et des boutons d'appel \u00e0 action.</p><p data-block-key=\"cpkig\"></p><p data-block-key=\"172l8\">Cette en-t\u00eate appara\u00eetra lorsque des aper\u00e7us de votre page seront g\u00e9n\u00e9r\u00e9s.</p>",
+      "header_cta_text": "<p data-block-key=\"irw4q\">Vous pouvez cr\u00e9er un en-t\u00eate comme celle-ci, en vous rendant dans l'onglet \"Promotion\" de votre page, puis en choisissant les \"Options d'en-t\u00eate\".</p><p data-block-key=\"9u080\"></p><p data-block-key=\"eujil\">Vous pourrez y ins\u00e9rer une image ou une couleur de fond, ainsi que du texte format\u00e9 et des boutons d'appel \u00e0 action.</p><p data-block-key=\"cpkig\"></p><p data-block-key=\"172l8\">Cet en-t\u00eate appara\u00eetra lorsque des aper\u00e7us de votre page seront g\u00e9n\u00e9r\u00e9s.</p>",
       "header_cta_buttons": [
         {
           "type": "buttons",
@@ -1232,6 +1370,7 @@
             {
               "type": "button",
               "value": {
+                "link_type": null,
                 "page": 37,
                 "document": null,
                 "external_url": "",
@@ -1246,32 +1385,39 @@
           "id": "7a709cda-d544-492b-812b-26e7f5b41fe4"
         }
       ],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "38": {
       "id": 38,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/38/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/page-de-contenu-avec-menu-lat%C3%A9ral/",
-        "slug": "page-de-contenu-avec-menu-lat\u00e9ral",
+        "html_url": "http://sites.beta.gouv.fr/exemples/page-de-contenu-avec-menu-lat%C3%A9ral-dsfr/",
+        "slug": "page-de-contenu-avec-menu-lat\u00e9ral-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:32:49.092767+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "Page de contenu avec menu lat\u00e9ral",
+      "hero": [],
       "body": [
         {
           "type": "fullwidthbackgroundwithsidemenu",
           "value": {
             "bg_image": null,
             "bg_color_class": "blue-france",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "main_content": [
               {
                 "type": "item_grid",
                 "value": {
                   "column_width": "6",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "card",
@@ -1283,6 +1429,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -1311,6 +1458,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -1352,21 +1500,24 @@
       "header_darken": false,
       "header_cta_text": "",
       "header_cta_buttons": [],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "39": {
       "id": 39,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/39/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/blocs-simples-de-textes-et-dimages/",
-        "slug": "blocs-simples-de-textes-et-dimages",
+        "html_url": "http://sites.beta.gouv.fr/exemples/blocs-simples-de-textes-et-dimages-dsfr/",
+        "slug": "blocs-simples-de-textes-et-dimages-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:31:35.383776+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "Blocs simples de textes et d'images",
+      "hero": [],
       "body": [
         {
           "type": "imageandtext",
@@ -1380,6 +1531,7 @@
             "image_ratio": "5",
             "text": "<h2 data-block-key=\"0ruyo\">Bloc \"Image et texte\"</h2><p data-block-key=\"etjrq\"><i>Vous pouvez choisir la disposition de l'image (gauche ou droite) et ses dimensions. Vous pouvez \u00e9galement mettre ce texte en forme (</i><b><i>gras</i></b><i>, italique, listes \u00e0 puce, listes num\u00e9rot\u00e9es, liens hypertexte...).</i></p><hr/><p data-block-key=\"9op7q\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
             "link": {
+              "link_type": null,
               "page": null,
               "document": null,
               "external_url": "",
@@ -1397,6 +1549,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "blue-france",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1427,6 +1581,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1443,21 +1599,24 @@
       "header_darken": false,
       "header_cta_text": "",
       "header_cta_buttons": [],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "40": {
       "id": 40,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/40/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/options-de-mise-en-valeur-de-textes/",
-        "slug": "options-de-mise-en-valeur-de-textes",
+        "html_url": "http://sites.beta.gouv.fr/exemples/options-de-mise-en-valeur-de-textes-dsfr/",
+        "slug": "options-de-mise-en-valeur-de-textes-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:29:51.465461+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "Options de mise en valeur de textes",
+      "hero": [],
       "body": [
         {
           "type": "paragraph",
@@ -1508,6 +1667,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1521,6 +1682,7 @@
                   "icon_class": "fr-icon-flag-line",
                   "text": "<p data-block-key=\"0u10c\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
                   "button": {
+                    "link_type": null,
                     "page": 39,
                     "document": null,
                     "external_url": "",
@@ -1540,6 +1702,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1561,6 +1725,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1587,27 +1753,32 @@
       "header_darken": false,
       "header_cta_text": "",
       "header_cta_buttons": [],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "41": {
       "id": 41,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/41/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/grilles-d%C3%A9l%C3%A9ments/",
-        "slug": "grilles-d\u00e9l\u00e9ments",
+        "html_url": "http://sites.beta.gouv.fr/exemples/grilles-d%C3%A9l%C3%A9ments-dsfr/",
+        "slug": "grilles-d\u00e9l\u00e9ments-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:27:10.483371+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "Grilles d'\u00e9l\u00e9ments",
+      "hero": [],
       "body": [
         {
           "type": "fullwidthbackground",
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1621,6 +1792,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "blue-france",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1630,6 +1803,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "6",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "card",
@@ -1641,6 +1816,7 @@
                         "image_ratio": "fr-ratio-1x1",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": 41,
                           "document": null,
                           "external_url": ""
@@ -1669,6 +1845,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": 41,
                           "document": null,
                           "external_url": ""
@@ -1697,6 +1874,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": 41,
                           "document": null,
                           "external_url": ""
@@ -1725,6 +1903,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": 41,
                           "document": null,
                           "external_url": ""
@@ -1754,6 +1933,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1763,6 +1944,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "4",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "tile",
@@ -1772,6 +1955,7 @@
                         "description": "<p data-block-key=\"8giub\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
                         "image": 77,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -1807,6 +1991,7 @@
                         "description": "<p data-block-key=\"8giub\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
                         "image": 77,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -1842,6 +2027,7 @@
                         "description": "<p data-block-key=\"8giub\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
                         "image": 77,
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -1883,21 +2069,24 @@
       "header_darken": false,
       "header_cta_text": "",
       "header_cta_buttons": [],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "42": {
       "id": 42,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/42/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/accord%C3%A9ons/",
-        "slug": "accord\u00e9ons",
+        "html_url": "http://sites.beta.gouv.fr/exemples/accord%C3%A9ons-dsfr/",
+        "slug": "accord\u00e9ons-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:23:07.932797+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "Accord\u00e9ons",
+      "hero": [],
       "body": [
         {
           "type": "paragraph",
@@ -1948,27 +2137,32 @@
       "header_darken": false,
       "header_cta_text": "",
       "header_cta_buttons": [],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "43": {
       "id": 43,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/43/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/exemples-de-cartes/",
-        "slug": "exemples-de-cartes",
+        "html_url": "http://sites.beta.gouv.fr/exemples/exemples-de-cartes-dsfr/",
+        "slug": "exemples-de-cartes-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:25:06.220370+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "Cartes",
+      "hero": [],
       "body": [
         {
           "type": "fullwidthbackground",
           "value": {
             "bg_image": null,
             "bg_color_class": "",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -1978,6 +2172,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "4",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "card",
@@ -1989,6 +2185,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -2017,6 +2214,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -2045,6 +2243,7 @@
                         "image_ratio": "",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -2074,6 +2273,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "grey",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -2083,6 +2284,8 @@
                 "type": "item_grid",
                 "value": {
                   "column_width": "6",
+                  "horizontal_align": "left",
+                  "vertical_align": "",
                   "items": [
                     {
                       "type": "card",
@@ -2094,6 +2297,7 @@
                         "image_ratio": "fr-ratio-4x3",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": 43,
                           "document": null,
                           "external_url": ""
@@ -2122,6 +2326,7 @@
                         "image_ratio": "fr-ratio-4x3",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": 1,
                           "external_url": ""
@@ -2159,6 +2364,7 @@
                           }
                         ],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -2177,6 +2383,7 @@
                               {
                                 "type": "button",
                                 "value": {
+                                  "link_type": null,
                                   "page": 43,
                                   "document": null,
                                   "external_url": "",
@@ -2205,6 +2412,7 @@
                         "image_ratio": "fr-ratio-4x3",
                         "image_badge": [],
                         "link": {
+                          "link_type": null,
                           "page": null,
                           "document": null,
                           "external_url": ""
@@ -2225,6 +2433,7 @@
                                   "color": "green-tilleul-verveine",
                                   "icon_class": "",
                                   "link": {
+                                    "link_type": null,
                                     "page": 43,
                                     "document": null,
                                     "external_url": ""
@@ -2239,6 +2448,7 @@
                                   "color": "green-bourgeon",
                                   "icon_class": "",
                                   "link": {
+                                    "link_type": null,
                                     "page": 43,
                                     "document": null,
                                     "external_url": ""
@@ -2257,6 +2467,7 @@
                               {
                                 "type": "link",
                                 "value": {
+                                  "link_type": null,
                                   "page": 43,
                                   "document": null,
                                   "external_url": "",
@@ -2266,6 +2477,7 @@
                               {
                                 "type": "link",
                                 "value": {
+                                  "link_type": null,
                                   "page": 43,
                                   "document": null,
                                   "external_url": "",
@@ -2292,6 +2504,8 @@
           "value": {
             "bg_image": null,
             "bg_color_class": "blue-france",
+            "top_margin": 5,
+            "bottom_margin": 5,
             "content": [
               {
                 "type": "text",
@@ -2307,6 +2521,7 @@
                   "image_ratio": "",
                   "image_badge": [],
                   "link": {
+                    "link_type": null,
                     "page": null,
                     "document": null,
                     "external_url": ""
@@ -2335,6 +2550,7 @@
                   "image_ratio": "",
                   "image_badge": [],
                   "link": {
+                    "link_type": null,
                     "page": null,
                     "document": 1,
                     "external_url": ""
@@ -2355,6 +2571,7 @@
                             "color": "green-tilleul-verveine",
                             "icon_class": "",
                             "link": {
+                              "link_type": null,
                               "page": null,
                               "document": null,
                               "external_url": ""
@@ -2392,6 +2609,7 @@
                     }
                   ],
                   "link": {
+                    "link_type": null,
                     "page": null,
                     "document": 1,
                     "external_url": ""
@@ -2421,21 +2639,24 @@
       "header_darken": false,
       "header_cta_text": "",
       "header_cta_buttons": [],
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     },
     "44": {
       "id": 44,
       "meta": {
         "type": "content_manager.ContentPage",
         "detail_url": "https://sites.beta.gouv.fr/api/v2/pages/44/",
-        "html_url": "http://sites.beta.gouv.fr/exemples/etapiers/",
-        "slug": "etapiers",
+        "html_url": "http://sites.beta.gouv.fr/exemples/etapiers-dsfr/",
+        "slug": "etapiers-dsfr",
         "show_in_menus": true,
         "first_published_at": "2024-09-16T17:20:49.058230+02:00",
         "alias_of": null,
         "locale": "fr"
       },
       "title": "\u00c9tapiers",
+      "hero": [],
       "body": [
         {
           "type": "paragraph",
@@ -2487,9 +2708,9 @@
       "header_darken": false,
       "header_cta_text": "",
       "header_cta_buttons": [],
-      "header_cta_label": null,
-      "header_cta_link": null,
-      "public_child_pages": []
+      "public_child_pages": [],
+      "preview_image": null,
+      "preview_image_render": null
     }
   }
 }
