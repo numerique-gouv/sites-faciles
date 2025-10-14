@@ -106,6 +106,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     quote = QuoteBlock(label=_("Quote"), group=_("DSFR components"))
     stepper = StepperBlock(label=_("Stepper"), group=_("DSFR components"))
     link = SingleLinkBlock(label=_("Single link"))
+    iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
     tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
     blog_recent_entries = BlogRecentEntriesBlock(label=_("Blog recent entries"), group=_("Website structure"))
     events_recent_entries = EventsRecentEntriesBlock(
