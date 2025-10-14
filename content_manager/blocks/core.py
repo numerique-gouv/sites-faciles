@@ -27,7 +27,6 @@ from .layout import (
 )
 from .medias import IframeBlock, TranscriptionBlock, VideoBlock
 from .related_entries import BlogRecentEntriesBlock, EventsRecentEntriesBlock
-from .sections import ImageAndTextGrid, LayoutTextBlock
 from .tables import AdvancedTypedTableBlock
 
 ## Streamblocks definitions
@@ -91,8 +90,6 @@ STREAMFIELD_COMMON_BLOCKS = [
         "events_recent_entries",
         EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
     ),
-    ("layout_richtext", LayoutTextBlock(label=_("Rich text with layout"), group=_("Predefined sections"))),
-    ("image_text_grid", ImageAndTextGrid(label=_("Grille d'items (Image et texte)"), group=_("Predefined sections"))),
 ]
 
 
