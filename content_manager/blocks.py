@@ -104,6 +104,20 @@ class LinkStructValue(blocks.StructValue):
 
         return link
 
+    def label(self):
+        text = self.get("text", "")
+
+        if not text:
+            page = self.get("page")
+            document = self.get("document")
+
+            if page:
+                text = page.title
+            elif document:
+                text = document.title
+
+        return text
+
 
 class LinkWithoutLabelBlock(blocks.StructBlock):
     LINK_TYPE_CHOICES = [
