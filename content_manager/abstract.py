@@ -150,6 +150,8 @@ class SitesFacilesBasePage(Page):
                 self.search_description = search_description
         return super().save(*args, **kwargs)
 
+    exclude_fields_in_copy = ["source_url"]
+
     class Meta:
         abstract = True
         verbose_name = _("Base page")
