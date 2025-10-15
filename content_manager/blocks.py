@@ -109,14 +109,15 @@ class LinkStructValue(blocks.StructValue):
 
         page = self.get("page")
         document = self.get("document")
-        anchor_id = self.get("anchor_id")
+        anchor = self.get("anchor")
 
         if page:
             link = page.url
-            if anchor_id:
-                link += f"#{anchor_id}"
         elif document:
             link = document.url
+
+        if anchor:
+            link += f"#{anchor}"
 
         return link
 
@@ -126,6 +127,7 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
         ("page", _("Page")),
         ("external_url", _("External URL")),
         ("document", _("Document")),
+        ("anchor", _("Anchor")),
     ]
 
     link_type = blocks.ChoiceBlock(
@@ -149,9 +151,9 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
         required=False,
         help_text=_("Use either this, the document or the page parameter."),
     )
-    anchor_id = blocks.CharBlock(
+    anchor = blocks.CharBlock(
         label=_("Anchor ID"),
-        help_text=_("Allowed characters: A-Z, a-z, 0-9, - and _."),
+        help_text=_("Link to an anchor on the current page. Allowed characters: A-Z, a-z, 0-9, - and _."),
         validators=[validate_slug],
         required=False,
     )
@@ -186,12 +188,19 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
                 document = value.get("document")
                 if not document:
                     errors["document"] = ErrorList([_("Please select a document to link to")])
+            case "anchor":
+                anchor = value.get("anchor")
+                if not anchor:
+                    errors["anchor"] = ErrorList([_("Please enter an anchor ID")])
         if errors:
             raise StructBlockValidationError(block_errors=errors)
 
-        for link_type in self.link_types:
+        for link_type in ["external_url", "document", "page"]:
             if link_type != selected_link_type:
                 value[link_type] = None
+
+        if selected_link_type in ["external_url", "document"]:
+            value["anchor"] = None
         return super().clean(value)
 
 
