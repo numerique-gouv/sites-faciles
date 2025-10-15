@@ -4,18 +4,26 @@ from wagtail.images import get_image_model
 from wagtail.images.blocks import ImageBlock
 
 from content_manager.constants import (
+    ALIGN_HORIZONTAL_CHOICES,
     GRID_6_8_12_CHOICES,
     GRID_HORIZONTAL_ALIGN_CHOICES,
     IMAGE_GRID_SIZE,
     LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
 )
 
+from .buttons_links import ButtonBlock
 from .layout import LayoutBlock
+from .medias import ImageBlockWithDefault
 
 Image = get_image_model()
 
 
-class LayoutTextBlock(blocks.StructBlock):
+class BaseSection(blocks.StructBlock):
+    layout = LayoutBlock()
+    section_title = blocks.CharBlock()
+
+
+class ResizedTextSection(blocks.StructBlock):
     size = blocks.ChoiceBlock(choices=GRID_6_8_12_CHOICES, label=_("Block size"))
     text = blocks.RichTextBlock(
         features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
@@ -32,6 +40,39 @@ class LayoutTextBlock(blocks.StructBlock):
         template = "content_manager/blocks/sections/layout_text_block.html"
 
 
+class ImageTextCTASection(blocks.StructBlock):
+    position = blocks.ChoiceBlock(
+        choices=ALIGN_HORIZONTAL_CHOICES,
+        label=_("Text content position"),
+        default="left",
+        help_text=_("This field allows you to define the placement of text relative to adjacent content."),
+    )
+    text = blocks.RichTextBlock(
+        label=_("Text block"),
+        features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
+        default="<h3>Titre de la section</h3> </br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, ",
+    )
+    button = ButtonBlock(
+        label=_("Button"),
+        default={
+            "link_type": "external_url",
+            "text": "Appel à l'action",
+            "external_url": "https://tube.numerique.gouv.fr/",
+            "button_type": "fr-btn fr-btn--secondary",
+            "icon_side": "--",
+        },
+    )
+    image = ImageBlockWithDefault(
+        label=_("Hero image"),
+        default_image_title="Illustration Sites Faciles Femme Ordinateur",
+        default_image_decorative=True,
+    )
+    layout = LayoutBlock(label=_("Layout"))
+
+    class Meta:
+        template = "content_manager/blocks/sections/image_text_cta.html"
+
+
 class ImageAndTextItems(blocks.StructBlock):
     image = ImageBlock(label=_("Image"))
     title = blocks.CharBlock(label=_("title"), required=True)
@@ -40,12 +81,7 @@ class ImageAndTextItems(blocks.StructBlock):
     )
 
 
-class BaseSection(blocks.StructBlock):
-    layout = LayoutBlock()
-    section_title = blocks.CharBlock()
-
-
-class ImageAndTextGrid(BaseSection):
+class ImageAndTextGridSection(BaseSection):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         size = value["images_size"]

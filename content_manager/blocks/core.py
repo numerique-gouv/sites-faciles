@@ -15,11 +15,8 @@ from .basics import (
     StepperBlock,
     TextAndCTA,
 )
-<<<<<<< HEAD
 from .buttons_links import AnchorBlock, ButtonsListBlock, SingleLinkBlock
-=======
 from .buttons_links import ButtonsListBlock, SingleLinkBlock
->>>>>>> 1c45bd1 (cleaning blocks)
 from .cards import HorizontalCardBlock, TileBlock
 from .heros import HeroBackgroundImageBlock, HeroImageAndTextBlock, HeroWideImageAndTextBlock, OldHero
 from .layout import (
@@ -31,10 +28,8 @@ from .layout import (
 )
 from .medias import IframeBlock, TranscriptionBlock, VideoBlock
 from .related_entries import BlogRecentEntriesBlock, EventsRecentEntriesBlock
-<<<<<<< HEAD
-=======
 from .sections import ImageAndTextGrid, LayoutTextBlock
->>>>>>> 1c45bd1 (cleaning blocks)
+from .sections import ImageAndTextGridSection, ImageTextCTASection, ResizedTextSection
 from .tables import AdvancedTypedTableBlock
 
 ## Streamblocks definitions
@@ -99,8 +94,12 @@ STREAMFIELD_COMMON_BLOCKS = [
         "events_recent_entries",
         EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
     ),
-    ("layout_richtext", LayoutTextBlock(label=_("Rich text with layout"), group=_("Predefined sections"))),
-    ("image_text_grid", ImageAndTextGrid(label=_("Grille d'items (Image et texte)"), group=_("Predefined sections"))),
+    ("layout_richtext", ResizedTextSection(label=_("Rich text with layout"), group=_("Predefined sections"))),
+    (
+        "image_text_grid",
+        ImageAndTextGridSection(label=_("Grille d'items (Image et texte)"), group=_("Predefined sections")),
+    ),
+    ("image_text_cta_section", ImageTextCTASection(label=_("Image, text and cta"), group=_("Predefined sections"))),
 ]
 
 
