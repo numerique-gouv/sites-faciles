@@ -40,7 +40,7 @@ class Command(BaseCommand):
                     )
                 continue
 
-            image = import_image(full_path=file_path, title=base_file_title)
+            image = import_image(full_file_path=file_path, title=base_file_title)
             image.collection = collection
             image.save()
             image.get_file_hash()
