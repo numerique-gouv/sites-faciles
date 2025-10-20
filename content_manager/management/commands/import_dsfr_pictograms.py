@@ -37,13 +37,14 @@ class Command(BaseCommand):
         for folder in picto_folders:
             folder_path = os.path.join(picto_root, folder)
             files = os.listdir(folder_path)
-
             files = [f for f in files if f.endswith(".svg")]
             files.sort()
 
             folder_title = folder.capitalize()
 
             for filename in files:
+                file_path = os.path.join(folder_path, filename)
+
                 base_file_title = filename.split(".")[0].replace("-", " ").title()
                 full_image_title = f"Pictogrammes DSFR — {folder_title} — {base_file_title}"
 
@@ -61,14 +62,15 @@ class Command(BaseCommand):
 
                     image = overwrite_image(
                         image=image_exists,
-                        full_file_path=os.path.join(folder_path, filename),
+                        full_file_path=file_path,
                         title=full_image_title,
                     )
+                    image.get_file_hash()
                     exists_counter += 1
 
                 else:
                     image = import_image(
-                        full_file_path=os.path.join(folder_path, filename),
+                        full_file_path=file_path,
                         title=full_image_title,
                     )
 
@@ -85,8 +87,7 @@ class Command(BaseCommand):
                         self.stdout.write(f"File {full_image_title} imported")
 
         if force_update:
-            self.stdout.write(f"DSFR pictograms: {exists_counter} images updated.")
+            exists_message = "images forcefully updated"
         else:
-            self.stdout.write(
-                f"DSFR pictograms: {imported_counter} images imported, {exists_counter} already existing."
-            )
+            exists_message = "already existing images skipped"
+        self.stdout.write(f"DSFR pictograms: {imported_counter} images imported, {exists_counter} {exists_message}.")
