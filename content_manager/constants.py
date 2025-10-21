@@ -107,8 +107,6 @@ LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS = [
     "italic",
     "link",
     "document-link",
-    "superscript",
-    "subscript",
     "strikethrough",
     "h2",
     "h3",
