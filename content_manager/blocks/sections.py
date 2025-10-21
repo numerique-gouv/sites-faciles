@@ -1,10 +1,16 @@
+from django import forms
+from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from wagtail import blocks
+from wagtail.blocks import StructValue
+from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.images import get_image_model
 from wagtail.images.blocks import ImageBlock
+from wagtail.telepath import register
 
 from content_manager.constants import (
     ALIGN_HORIZONTAL_CHOICES,
+    ALIGN_HORIZONTAL_CHOICES_EXTENDED,
     GRID_6_8_12_CHOICES,
     GRID_HORIZONTAL_ALIGN_CHOICES,
     IMAGE_GRID_SIZE,
@@ -19,12 +25,35 @@ Image = get_image_model()
 
 
 class BaseSection(blocks.StructBlock):
-    layout = LayoutBlock()
     section_title = blocks.CharBlock()
+    layout = LayoutBlock(label=_("Layout"))
+
+
+class ResizedStructValue(StructValue):
+    def extra_classes(self):
+        """
+        Define the extra classes for the resized text
+        """
+        width = self.get("width")
+        alignment = self.get("alignment") or ""
+
+        base_classes = {
+            "": "cmsfr-text-content--center",
+            "right": "cmsfr-text-content--right",
+        }
+
+        offsets = {
+            "": {"8": "fr-col-offset-2", "6": "fr-col-offset-3"},
+            "right": {"8": "fr-col-offset-4", "6": "fr-col-offset-6"},
+        }
+
+        base_class = base_classes.get(alignment, "")
+        offset_class = offsets.get(alignment, {}).get(width, "")
+
+        return f"{base_class} {offset_class}"
 
 
 class ResizedTextSection(blocks.StructBlock):
-    width = blocks.ChoiceBlock(choices=GRID_6_8_12_CHOICES, label=_("Block width"))
     text = blocks.RichTextBlock(
         features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
         label=_("Rich text"),
@@ -35,22 +64,43 @@ class ResizedTextSection(blocks.StructBlock):
         "Excepteur sint occaecat cupidatat non proident, "
         "sunt in culpa qui officia deserunt mollit anim id est laborum.",
     )
+    width = blocks.ChoiceBlock(choices=GRID_6_8_12_CHOICES, label=_("Block width"), default="8")
+    alignment = blocks.ChoiceBlock(
+        choices=ALIGN_HORIZONTAL_CHOICES_EXTENDED, label=_("Block alignment"), default="", required=False
+    )
 
     class Meta:
         template = "content_manager/blocks/sections/layout_text_block.html"
+        value_class = ResizedStructValue
+        form_classname = "struct-block resized-text-section"
+
+
+class ResizedSectionAdapter(StructBlockAdapter):
+    """
+    Adapter to add the styling to the admin form
+    """
+
+    @cached_property
+    def media(self):
+        return forms.Media(
+            css={"all": ("css/admin-block/resized-block-admin.css",)},
+        )
+
+
+register(ResizedSectionAdapter(), ResizedTextSection)
 
 
 class ImageTextCTASection(blocks.StructBlock):
+    text = blocks.RichTextBlock(
+        label=_("Text block"),
+        features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
+        default="<h3>Titre de la section</h3> </br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, ",
+    )
     position = blocks.ChoiceBlock(
         choices=ALIGN_HORIZONTAL_CHOICES,
         label=_("Text content position"),
         default="left",
         help_text=_("This field allows you to define the placement of text relative to adjacent content."),
-    )
-    text = blocks.RichTextBlock(
-        label=_("Text block"),
-        features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
-        default="<h3>Titre de la section</h3> </br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, ",
     )
     button = ButtonBlock(
         label=_("Button"),
@@ -67,7 +117,7 @@ class ImageTextCTASection(blocks.StructBlock):
         default_image_title="Illustration Sites Faciles Femme Ordinateur",
         default_image_decorative=True,
     )
-    layout = LayoutBlock(label=_("Layout"))
+    layout = LayoutBlock(label=_("Layout"), collapsed=True)
 
     class Meta:
         template = "content_manager/blocks/sections/image_text_cta.html"
@@ -119,3 +169,19 @@ class ImageAndTextGridSection(BaseSection):
 
     class Meta:
         template = "content_manager/blocks/sections/image_text_grid.html"
+        form_classname = "struct-block image-text-grid-block"
+
+
+class ImageAndTextGridAdapter(StructBlockAdapter):
+    """
+    Adapter to add the styling to the admin form
+    """
+
+    @cached_property
+    def media(self):
+        return forms.Media(
+            css={"all": ("css/admin-block/image-text-grid-block-admin.css",)},
+        )
+
+
+register(ImageAndTextGridAdapter(), ImageAndTextGridSection)
