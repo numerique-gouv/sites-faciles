@@ -182,7 +182,12 @@ class LinksVerticalListBlock(blocks.StreamBlock):
 
 class ButtonBlock(LinkWithoutLabelBlock):
     text = blocks.CharBlock(label=_("Button label"), required=False)
-    button_type = blocks.ChoiceBlock(label=_("Button type"), choices=BUTTON_TYPE_CHOICES, required=False)
+    button_type = blocks.ChoiceBlock(
+        help_text=_("Select the button appearance"),
+        label=_("Button type"),
+        choices=BUTTON_TYPE_CHOICES,
+        required=False,
+    )
     icon_class = IconPickerBlock(label=_("Icon"), required=False)
     icon_side = blocks.ChoiceBlock(
         label=_("Icon side"),
