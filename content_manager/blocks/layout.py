@@ -25,7 +25,7 @@ from .basics import (
     TextAndCTA,
     VerticalContactCardBlock,
 )
-from .buttons_links import ButtonsListBlock, SingleLinkBlock
+from .buttons_links import AnchorBlock, ButtonsListBlock, SingleLinkBlock
 from .cards import HorizontalCardBlock, TileBlock, VerticalCardBlock
 from .medias import IframeBlock, TranscriptionBlock, VideoBlock
 from .related_entries import BlogRecentEntriesBlock, EventsRecentEntriesBlock
@@ -119,6 +119,7 @@ class CommonStreamBlock(blocks.StreamBlock):
         help_text=_("Warning: Use HTML block with caution. Malicious code can compromise the security of the site."),
         group=_("Expert syntax"),
     )
+    anchor = AnchorBlock(label=_("Anchor"), group=_("Page structure"))
     separator = SeparatorBlock(label=_("Separator"), group=_("Page structure"))
 
     class Meta:
