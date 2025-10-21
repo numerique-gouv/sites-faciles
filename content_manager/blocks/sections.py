@@ -24,7 +24,7 @@ class BaseSection(blocks.StructBlock):
 
 
 class ResizedTextSection(blocks.StructBlock):
-    size = blocks.ChoiceBlock(choices=GRID_6_8_12_CHOICES, label=_("Block size"))
+    width = blocks.ChoiceBlock(choices=GRID_6_8_12_CHOICES, label=_("Block width"))
     text = blocks.RichTextBlock(
         features=LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
         label=_("Rich text"),
@@ -71,6 +71,13 @@ class ImageTextCTASection(blocks.StructBlock):
 
     class Meta:
         template = "content_manager/blocks/sections/image_text_cta.html"
+
+
+class ImageTextCTAMultipleSection(blocks.StructBlock):
+    items = blocks.ListBlock(ImageTextCTASection)
+
+    class Meta:
+        template = "content_manager/blocks/sections/image_text_cta_multiple.html"
 
 
 class ImageAndTextItems(blocks.StructBlock):
