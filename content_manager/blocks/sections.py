@@ -25,8 +25,8 @@ Image = get_image_model()
 
 
 class BaseSection(blocks.StructBlock):
-    section_title = blocks.CharBlock()
-    layout = LayoutBlock(label=_("Layout"))
+    section_title = blocks.CharBlock(default=_("Section title"))
+    layout = LayoutBlock(label=_("Layout"), collapsed=True)
 
 
 class ResizedStructValue(StructValue):
@@ -164,8 +164,9 @@ class ImageAndTextGridSection(BaseSection):
         IMAGE_GRID_SIZE,
         default="80",
         help_text=_("The images displayed will always have a square ratio (1:1)."),
+        label=_("Image size of items"),
     )
-    items = blocks.ListBlock(ImageAndTextItems())
+    items = blocks.ListBlock(ImageAndTextItems(), collapsed=True)
 
     class Meta:
         template = "content_manager/blocks/sections/image_text_grid.html"
