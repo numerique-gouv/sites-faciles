@@ -186,3 +186,11 @@ class ImageAndTextGridAdapter(StructBlockAdapter):
 
 
 register(ImageAndTextGridAdapter(), ImageAndTextGridSection)
+
+
+class CTASection(BaseSection):
+    text = blocks.RichTextBlock(label=_("Text"))
+    button = ButtonBlock(label=_("Button"))
+
+    class Meta:
+        template = "content_manager/blocks/sections/text-cta.html"
