@@ -30,6 +30,13 @@ from .medias import IframeBlock, TranscriptionBlock, VideoBlock
 from .related_entries import BlogRecentEntriesBlock, EventsRecentEntriesBlock
 from .sections import ImageAndTextGridSection, ImageTextCTASection, ResizedTextSection
 from .sections import ImageAndTextGridSection, ImageTextCTAMultipleSection, ImageTextCTASection, ResizedTextSection
+from .sections import (
+    CTASection,
+    ImageAndTextGridSection,
+    ImageTextCTAMultipleSection,
+    ImageTextCTASection,
+    ResizedTextSection,
+)
 from .tables import AdvancedTypedTableBlock
 
 ## Streamblocks definitions
@@ -102,8 +109,9 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("image_text_cta_section", ImageTextCTASection(label=_("Image, text and cta"), group=_("Predefined sections"))),
     (
         "image_text_cta_multiple",
-        ImageTextCTAMultipleSection(labe=_("Plusieurs sections image, texte et cta"), group=_("Predefined sections")),
+        ImageTextCTAMultipleSection(label=_("Plusieurs sections image, texte et cta"), group=_("Predefined sections")),
     ),
+    ("cta_section", CTASection(label=_("Texte et bouton"), group=_("Predefined sections"))),
 ]
 
 
