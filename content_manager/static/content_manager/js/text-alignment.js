@@ -20,9 +20,6 @@
         const contentBlocks = editorRoot.querySelectorAll(
             '[data-contents="true"] [data-block="true"], .public-DraftStyleDefault-block'
         );
-
-        console.log('[Text Alignment] Updating', contentBlocks.length, 'blocks');
-
         contentBlocks.forEach(function(block) {
             let alignment = null;
             let checkElement = block;
@@ -47,7 +44,6 @@
             }
 
             if (alignment) {
-                console.log('[Text Alignment] Applying', alignment, 'to block');
                 block.style.textAlign = alignment;
                 block.querySelectorAll('*').forEach(function(child) {
                     child.style.textAlign = alignment;
@@ -82,7 +78,6 @@
     });
 
     function startObserving() {
-        console.log('[Text Alignment] Starting to observe editors');
         observer.observe(document.body, {
             childList: true,
             subtree: true,
@@ -90,7 +85,6 @@
             attributeFilter: ['data-block-type', 'class']
         });
         updateAllEditors();
-        console.log('[Text Alignment] Initial update complete');
     }
 
     if (document.readyState === 'loading') {
