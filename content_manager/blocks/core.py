@@ -15,7 +15,7 @@ from .basics import (
     StepperBlock,
     TextAndCTA,
 )
-from .buttons_links import ButtonsListBlock, SingleLinkBlock
+from .buttons_links import AnchorBlock, ButtonsListBlock, SingleLinkBlock
 from .cards import HorizontalCardBlock, TileBlock
 from .heros import HeroBackgroundImageBlock, HeroImageAndTextBlock, HeroWideImageAndTextBlock, OldHero
 from .layout import (
@@ -63,6 +63,7 @@ STREAMFIELD_COMMON_BLOCKS = [
             group=_("Expert syntax"),
         ),
     ),
+    ("anchor", AnchorBlock(label=_("Anchor"), group=_("Page structure"))),
     ("separator", SeparatorBlock(label=_("Separator"), group=_("Page structure"))),
     ("multicolumns", MultiColumnsWithTitleBlock(label=_("Multiple columns"), group=_("Page structure"))),
     ("item_grid", ItemGridBlock(label=_("Item grid"), group=_("Page structure"))),
