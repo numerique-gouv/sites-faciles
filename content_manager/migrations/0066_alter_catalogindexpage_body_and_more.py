@@ -1713,6 +1713,7 @@ class Migration(migrations.Migration):
                         {
                             "default": [
                                 {
+                                    "anchor": "",
                                     "button_type": "fr-btn",
                                     "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
                                     "icon_side": "--",
@@ -1720,13 +1721,15 @@ class Migration(migrations.Migration):
                                     "text": "Nous contacter",
                                 },
                                 {
+                                    "anchor": "",
                                     "button_type": "fr-btn fr-btn--secondary",
                                     "external_url": "https://tube.numerique.gouv.fr/",
-                                    "icon_side": "--t",
+                                    "icon_side": "--",
                                     "link_type": "external_url",
                                     "text": "Voir la vidéo",
                                 },
                             ],
+                            "help_text": "Please use only one primary button.\n            If you use icons, use them on all buttons and align them on the same side.",
                             "label": "Buttons",
                         },
                     ),
@@ -3714,6 +3717,7 @@ class Migration(migrations.Migration):
                         {
                             "default": [
                                 {
+                                    "anchor": "",
                                     "button_type": "fr-btn",
                                     "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
                                     "icon_side": "--",
@@ -3721,13 +3725,15 @@ class Migration(migrations.Migration):
                                     "text": "Nous contacter",
                                 },
                                 {
+                                    "anchor": "",
                                     "button_type": "fr-btn fr-btn--secondary",
                                     "external_url": "https://tube.numerique.gouv.fr/",
-                                    "icon_side": "--t",
+                                    "icon_side": "--",
                                     "link_type": "external_url",
                                     "text": "Voir la vidéo",
                                 },
                             ],
+                            "help_text": "Please use only one primary button.\n            If you use icons, use them on all buttons and align them on the same side.",
                             "label": "Buttons",
                         },
                     ),

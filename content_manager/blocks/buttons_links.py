@@ -108,6 +108,7 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
         label=_("Anchor ID"),
         help_text=_("Link to an anchor block on the page. Allowed characters: A-Z, a-z, 0-9, - and _."),
         validators=[validate_slug],
+        default="",
         required=False,
     )
 
@@ -149,7 +150,7 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
                 value[link_type] = None
 
         if selected_link_type in ["external_url", "document"]:
-            value["anchor"] = None
+            value["anchor"] = ""
 
         return super().clean(value)
 
