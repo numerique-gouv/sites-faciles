@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-23 11:33+0200\n"
-"PO-Revision-Date: 2025-10-23 11:35+0200\n"
+"POT-Creation-Date: 2025-10-23 14:51+0200\n"
+"PO-Revision-Date: 2025-10-23 14:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -503,10 +503,9 @@ msgstr "URL externe"
 msgid "Document"
 msgstr "Document"
 
-#: content_manager/blocks/buttons_links.py:83 content_manager/blocks/core.py:66
-#: content_manager/blocks/layout.py:122
-msgid "Anchor"
-msgstr "Ancre"
+#: content_manager/blocks/buttons_links.py:83
+msgid "Anchor link"
+msgstr "Lien d’ancrage"
 
 #: content_manager/blocks/buttons_links.py:89
 msgid "Link type"
@@ -534,9 +533,11 @@ msgstr "Utilisez soit ce champ, soit le champ Document, soit le champ Page."
 
 #: content_manager/blocks/buttons_links.py:109
 msgid ""
-"Link to an anchor on the page. Allowed characters: A-Z, a-z, 0-9, - and _."
+"Link to an anchor block on the page. Allowed characters: A-Z, a-z, 0-9, - "
+"and _."
 msgstr ""
-"Lien vers une ancre de la page. Caractères autorisés : A-Z, a-z, 0-9, - et _."
+"Lien vers un bloc ancre de la page. Caractères autorisés : A-Z, a-z, 0-9, - "
+"et _."
 
 #: content_manager/blocks/buttons_links.py:135
 msgid "Please select a page to link to"
@@ -801,6 +802,10 @@ msgid ""
 msgstr ""
 "Avertissement : Utilisez le bloc HTML avec précaution. Un code malveillant "
 "peut compromettre la sécurité du site."
+
+#: content_manager/blocks/core.py:66 content_manager/blocks/layout.py:122
+msgid "Anchor"
+msgstr "Ancre"
 
 #: content_manager/blocks/core.py:66 content_manager/blocks/core.py:67
 #: content_manager/blocks/core.py:68 content_manager/blocks/core.py:69
