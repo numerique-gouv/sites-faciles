@@ -106,7 +106,7 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
     )
     anchor = blocks.CharBlock(
         label=_("Anchor ID"),
-        help_text=_("Link to an anchor on the current page. Allowed characters: A-Z, a-z, 0-9, - and _."),
+        help_text=_("Link to an anchor on the page. Allowed characters: A-Z, a-z, 0-9, - and _."),
         validators=[validate_slug],
         required=False,
     )

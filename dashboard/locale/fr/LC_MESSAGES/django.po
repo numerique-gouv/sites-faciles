@@ -206,15 +206,15 @@ msgstr "Se souvenir de moi"
 msgid "Connect"
 msgstr "Se connecter"
 
-#: dashboard/wagtail_hooks.py:34
+#: dashboard/wagtail_hooks.py:39
 msgid "Visit site"
 msgstr "Voir le site"
 
-#: dashboard/wagtail_hooks.py:50
+#: dashboard/wagtail_hooks.py:55
 msgid "See page entry in API"
 msgstr "Voir la page dans l’API"
 
-#: dashboard/wagtail_hooks.py:75
+#: dashboard/wagtail_hooks.py:80
 msgid "(Opens a new window)"
 msgstr "(Ouvre une nouvelle fenêtre)"
 
