@@ -1,0 +1,34 @@
+div.struct-block.image-text-grid-block {
+    display: grid;
+    column-gap: 2rem;
+    grid-template-areas:
+        "one   one"
+        "two three"
+        "four  four"
+        "five   five"
+        "six   six";
+
+    >div[data-contentpath="section_title"] {
+        grid-area: one;
+    }
+
+    >div[data-contentpath="items_alignments"] {
+        grid-area: two;
+    }
+
+    >div[data-contentpath="items_per_row"] {
+        grid-area: three;
+    }
+    >div[data-contentpath="images_size"] {
+        grid-area: four;
+    }
+
+    >div[data-contentpath="items"] {
+        grid-area: five;
+    }
+
+    >div[data-contentpath="layout"] {
+        grid-area: six;
+    }
+
+}
