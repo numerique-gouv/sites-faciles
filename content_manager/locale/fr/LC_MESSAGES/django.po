@@ -18,11 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.8\n"
 
-#: content_manager/abstract.py:31 content_manager/blocks/heros.py:271
+#: content_manager/abstract.py:31 content_manager/blocks/heros.py:239
 msgid "Show title in header image?"
 msgstr "Afficher le titre sur l’image d’en-tête ?"
 
-#: content_manager/abstract.py:39 content_manager/blocks/heros.py:272
+#: content_manager/abstract.py:39 content_manager/blocks/heros.py:240
 msgid "Header image"
 msgstr "Image d’en-tête"
 
@@ -39,15 +39,15 @@ msgstr "Couleur de fond"
 msgid "Uses the French Design System colors"
 msgstr "Utilise les couleurs du système de design de l'État"
 
-#: content_manager/abstract.py:50 content_manager/blocks/heros.py:280
+#: content_manager/abstract.py:50 content_manager/blocks/heros.py:248
 msgid "Full width"
 msgstr "Pleine largeur"
 
-#: content_manager/abstract.py:51 content_manager/blocks/heros.py:281
+#: content_manager/abstract.py:51 content_manager/blocks/heros.py:249
 msgid "Darken background image"
 msgstr "Assombrir l’image de fond"
 
-#: content_manager/abstract.py:54 content_manager/blocks/heros.py:282
+#: content_manager/abstract.py:54 content_manager/blocks/heros.py:250
 msgid "Call to action text"
 msgstr "Texte de l’appel à action"
 
@@ -281,7 +281,7 @@ msgid "Button"
 msgstr "Bouton"
 
 #: content_manager/blocks/basics.py:125 content_manager/blocks/basics.py:138
-#: content_manager/blocks/basics.py:265 content_manager/blocks/heros.py:191
+#: content_manager/blocks/basics.py:265 content_manager/blocks/heros.py:159
 msgid "Color"
 msgstr "Couleur"
 
@@ -292,8 +292,8 @@ msgstr "Taille"
 
 #: content_manager/blocks/basics.py:154 content_manager/blocks/basics.py:233
 #: content_manager/blocks/basics.py:260 content_manager/blocks/cards.py:74
-#: content_manager/blocks/cards.py:191 content_manager/blocks/heros.py:43
-#: content_manager/blocks/heros.py:191
+#: content_manager/blocks/cards.py:191 content_manager/blocks/heros.py:44
+#: content_manager/blocks/heros.py:159
 msgid "Image"
 msgstr "Image"
 
@@ -317,7 +317,7 @@ msgstr "Droite (affichée en dessous du texte en mode mobile)"
 msgid "Right (displayed above text in mobile view)"
 msgstr "Droite (affichée au dessus du texte en mode mobile)"
 
-#: content_manager/blocks/basics.py:166 content_manager/blocks/heros.py:56
+#: content_manager/blocks/basics.py:166 content_manager/blocks/heros.py:57
 msgid "Image width"
 msgstr "Largeur de l’image"
 
@@ -368,7 +368,7 @@ msgid "Witdh"
 msgstr "Largeur"
 
 #: content_manager/blocks/basics.py:245 content_manager/blocks/cards.py:76
-#: content_manager/blocks/cards.py:153 content_manager/blocks/heros.py:63
+#: content_manager/blocks/cards.py:153 content_manager/blocks/heros.py:64
 msgid "Image ratio"
 msgstr "Ratio de l’image"
 
@@ -844,19 +844,19 @@ msgstr "En-tête avec arrière-plan"
 msgid "Old hero"
 msgstr "Ancien en-tête"
 
-#: content_manager/blocks/heros.py:47 content_manager/blocks/heros.py:85
+#: content_manager/blocks/heros.py:48 content_manager/blocks/heros.py:86
 msgid "Image positioning"
 msgstr "Position de l’image"
 
-#: content_manager/blocks/heros.py:50 content_manager/blocks/heros.py:88
+#: content_manager/blocks/heros.py:51 content_manager/blocks/heros.py:89
 msgid "Choose the part of the image to highlight"
 msgstr "Choisissez la partie de l’image de fond à mettre en avant"
 
-#: content_manager/blocks/heros.py:60
+#: content_manager/blocks/heros.py:61
 msgid "Select image width"
 msgstr "Sélectionner la largeur de l’image"
 
-#: content_manager/blocks/heros.py:68
+#: content_manager/blocks/heros.py:69
 msgid ""
 "Select the right ratio for your image. The size will be adjusted on mobile "
 "phones, so make sure you don't include any text in the image."
@@ -864,61 +864,61 @@ msgstr ""
 "Sélectionnez le ratio adapté à votre image. La taille sera adaptée sur "
 "mobile, veillez à ne pas intégrer de texte dans l’image."
 
-#: content_manager/blocks/heros.py:81 content_manager/constants.py:45
+#: content_manager/blocks/heros.py:82 content_manager/constants.py:45
 #: content_manager/constants.py:132 content_manager/constants.py:138
 msgid "Top"
 msgstr "Haut"
 
-#: content_manager/blocks/heros.py:82 content_manager/constants.py:47
+#: content_manager/blocks/heros.py:83 content_manager/constants.py:47
 #: content_manager/constants.py:133 content_manager/constants.py:140
 msgid "Bottom"
 msgstr "Bas"
 
-#: content_manager/blocks/heros.py:83 content_manager/constants.py:27
+#: content_manager/blocks/heros.py:84 content_manager/constants.py:27
 #: content_manager/constants.py:40 content_manager/constants.py:127
 msgid "Center"
 msgstr "Centre"
 
-#: content_manager/blocks/heros.py:92
+#: content_manager/blocks/heros.py:93
 msgid "Image mask"
 msgstr "Masque sur l’image"
 
-#: content_manager/blocks/heros.py:94
+#: content_manager/blocks/heros.py:95
 msgid "Darken"
 msgstr "Assombrir"
 
-#: content_manager/blocks/heros.py:95
+#: content_manager/blocks/heros.py:96
 msgid "Lighten"
 msgstr "Eclaircir"
 
-#: content_manager/blocks/heros.py:99
+#: content_manager/blocks/heros.py:100
 msgid "Add a mask to lighten or darken the image"
 msgstr ""
 "Ajouter un masque sombre ou plus clair pour améliorer la lisibilité du texte"
 
-#: content_manager/blocks/heros.py:107 content_manager/blocks/heros.py:137
-#: content_manager/blocks/heros.py:169
+#: content_manager/blocks/heros.py:108 content_manager/blocks/heros.py:127
+#: content_manager/blocks/heros.py:148
 msgid "Text content"
 msgstr "Contenu textuel"
 
-#: content_manager/blocks/heros.py:128 content_manager/blocks/heros.py:160
-#: content_manager/blocks/heros.py:198
+#: content_manager/blocks/heros.py:118 content_manager/blocks/heros.py:139
+#: content_manager/blocks/heros.py:166
 msgid "Hero image"
 msgstr "Image d’en-tête"
 
-#: content_manager/blocks/heros.py:129 content_manager/blocks/heros.py:138
+#: content_manager/blocks/heros.py:119 content_manager/blocks/heros.py:128
 msgid "Layout"
 msgstr "Mise en page"
 
-#: content_manager/blocks/heros.py:192
+#: content_manager/blocks/heros.py:160
 msgid "Background Color or Image"
 msgstr "Image ou couleur en arrière-plan"
 
-#: content_manager/blocks/heros.py:195
+#: content_manager/blocks/heros.py:163
 msgid "Choose if you prefer a background image or a background color."
 msgstr "Choisissez si vous préférez une image ou une couleur en arrière-plan."
 
-#: content_manager/blocks/heros.py:204 content_manager/blocks/layout.py:82
+#: content_manager/blocks/heros.py:172 content_manager/blocks/layout.py:82
 msgid ""
 "Uses the French Design System colors.<br>If you want to design a classic "
 "website, choose the colour ‘white’ or ‘French blue’."
@@ -927,11 +927,11 @@ msgstr ""
 "concevoir un site classique, choisissez la couleur \"blanc\" ou \"bleu "
 "France »."
 
-#: content_manager/blocks/heros.py:239
+#: content_manager/blocks/heros.py:207
 msgid "Please select a color for the background."
 msgstr "Veuillez sélectionner une couleur pour l’arrière-plan."
 
-#: content_manager/blocks/heros.py:242
+#: content_manager/blocks/heros.py:210
 msgid "Please select an image for the background."
 msgstr "Veuillez sélectionner une image pour l’arrière-plan."
 
