@@ -15,6 +15,11 @@ def global_admin_css():
     return format_html('\n<link rel="stylesheet" href="{}">', static("css/admin.css"))
 
 
+@hooks.register("register_icons")
+def register_icons(icons):
+    return icons + ["admin_icons/anchor.svg"]
+
+
 @hooks.register("insert_editor_js")
 def insert_custom_editor_scripts():
     return format_html(
