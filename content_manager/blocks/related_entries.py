@@ -112,6 +112,13 @@ class BlogEntries(blocks.StructBlock):
     blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
 
 
+class BlogRecentEntriesWithoutTitleBlock(FilterEntries, BlogEntries):
+    class Meta:
+        icon = "placeholder"
+        template = ("content_manager/blocks/blog_recent_entries.html",)
+        value_class = RecentEntriesStructValue
+
+
 class BlogRecentEntriesBlock(FilterEntries, BlogEntries, HeadingTitleBlock):
 
     class Meta:
