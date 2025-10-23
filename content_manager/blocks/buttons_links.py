@@ -44,12 +44,14 @@ class IconPickerBlock(blocks.FieldBlock):
 class AnchorBlock(blocks.StructBlock):
     anchor_id = blocks.CharBlock(
         label=_("Anchor ID"),
-        help_text=_("Allowed characters: A-Z, a-z, 0-9, - and _."),
+        help_text=_(
+            "Allows the creation of a link to this specific part of the page. Allowed characters: A-Z, a-z, 0-9, - and _."  # noqa
+        ),
         validators=[validate_slug],
     )
 
     class Meta:
-        icon = "link"
+        icon = "anchor"
         template = "content_manager/blocks/anchor.html"
 
 
