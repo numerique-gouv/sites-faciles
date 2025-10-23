@@ -81,7 +81,7 @@ class RecentEntriesStructValue(blocks.StructValue):
             return "h6"
 
 
-class BlogRecentEntriesBlock(blocks.StructBlock):
+class HeadingTitleBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_("Title"), required=False)
     heading_tag = blocks.ChoiceBlock(
         label=_("Heading level"),
@@ -90,7 +90,9 @@ class BlogRecentEntriesBlock(blocks.StructBlock):
         default="h2",
         help_text=_("Adapt to the page layout. Defaults to heading 2."),
     )
-    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
+
+
+class FilterEntries(blocks.StructBlock):
     entries_count = blocks.IntegerBlock(
         label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
     )
@@ -104,6 +106,13 @@ class BlogRecentEntriesBlock(blocks.StructBlock):
         required=False,
     )
     show_filters = BooleanBlock(label=_("Show filters"), default=False, required=False)
+
+
+class BlogEntries(blocks.StructBlock):
+    blog = blocks.PageChooserBlock(label=_("Blog"), page_type="blog.BlogIndexPage")
+
+
+class BlogRecentEntriesBlock(FilterEntries, BlogEntries, HeadingTitleBlock):
 
     class Meta:
         icon = "placeholder"
@@ -111,29 +120,11 @@ class BlogRecentEntriesBlock(blocks.StructBlock):
         value_class = RecentEntriesStructValue
 
 
-class EventsRecentEntriesBlock(blocks.StructBlock):
-    title = blocks.CharBlock(label=_("Title"), required=False)
-    heading_tag = blocks.ChoiceBlock(
-        label=_("Heading level"),
-        choices=HEADING_CHOICES_2_5,
-        required=False,
-        default="h2",
-        help_text=_("Adapt to the page layout. Defaults to heading 2."),
-    )
+class EventsEntries(blocks.StructBlock):
     index_page = blocks.PageChooserBlock(label=_("Event calendar"), page_type="events.EventsIndexPage")
-    entries_count = blocks.IntegerBlock(
-        label=_("Number of entries"), required=False, min_value=1, max_value=8, default=3
-    )
-    category_filter = SnippetChooserBlock("blog.Category", label=_("Filter by category"), required=False)
-    tag_filter = SnippetChooserBlock("content_manager.Tag", label=_("Filter by tag"), required=False)
-    author_filter = SnippetChooserBlock("blog.Person", label=_("Filter by author"), required=False)
-    source_filter = SnippetChooserBlock(
-        "blog.Organization",
-        label=_("Filter by source"),
-        help_text=_("The source is the organization of the post author"),
-        required=False,
-    )
-    show_filters = BooleanBlock(label=_("Show filters"), default=False, required=False)
+
+
+class EventsRecentEntriesBlock(FilterEntries, EventsEntries, HeadingTitleBlock):
 
     class Meta:
         icon = "placeholder"

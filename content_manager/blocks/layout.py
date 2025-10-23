@@ -74,7 +74,7 @@ class MarginBlock(blocks.StructBlock):
         value_class = BlockMarginStructValue
 
 
-class LayoutBlock(MarginBlock):
+class BackgroudColorBlock(blocks.StructBlock):
     background_color = BackgroundColorChoiceBlock(
         label=_("Background color"),
         required=False,
@@ -83,6 +83,9 @@ class LayoutBlock(MarginBlock):
             "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
         ),
     )
+
+
+class LayoutBlock(MarginBlock, BackgroudColorBlock):
 
     class Meta:
         help_text = _("This part allow you to choose the layout of your block (background, margin..) ")
