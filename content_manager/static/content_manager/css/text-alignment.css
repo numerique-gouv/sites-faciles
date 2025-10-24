@@ -1,0 +1,26 @@
+/* Text alignment styles for Draftail editor and frontend */
+
+.cmsfr-text-left {
+    text-align: left !important;
+}
+
+.cmsfr-text-center {
+    text-align: center !important;
+}
+
+.cmsfr-text-right {
+    text-align: right !important;
+}
+
+/* Draftail editor block styles */
+.Draftail-block--text-left {
+    text-align: left !important;
+}
+
+.Draftail-block--text-center {
+    text-align: center !important;
+}
+
+.Draftail-block--text-right {
+    text-align: right !important;
+}
