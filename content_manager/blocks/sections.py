@@ -17,7 +17,8 @@ from content_manager.constants import (
     LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
 )
 
-from .buttons_links import ButtonBlock
+from .buttons_links import ButtonBlock, LinkBlock
+from .cards import VerticalCardBlock
 from .layout import LayoutBlock
 from .medias import ImageBlockWithDefault
 
@@ -194,3 +195,17 @@ class CTASection(BaseSection):
 
     class Meta:
         template = "content_manager/blocks/sections/text-cta.html"
+
+
+class SpotlightSection(BaseSection):
+    items_per_row = blocks.ChoiceBlock(choices=[("2", "2"), ("3", "3"), ("4", "4")])
+    link = LinkBlock(
+        label=_("Lien de la section"),
+        help_text="Ce lien apparait en haut à droite de la section s'il est complété",
+        required=False,
+        collapsed=True,
+    )
+    items = blocks.ListBlock(VerticalCardBlock())
+
+    class Meta:
+        template = "content_manager/blocks/sections/spotlight.html"

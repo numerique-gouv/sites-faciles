@@ -2,7 +2,6 @@ from django.utils.translation import gettext_lazy as _
 from dsfr.constants import IMAGE_RATIOS
 from wagtail import blocks
 from wagtail.blocks import StructValue
-from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 from content_manager.blocks.badges_tags import BadgesListBlock, TagListBlock
@@ -85,22 +84,6 @@ class CardBlock(blocks.StructBlock):
         label=_("Link"),
         required=False,
     )
-    url = blocks.URLBlock(
-        label=_("Link (obsolete)"),
-        required=False,
-        group="target",
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
-        ),
-    )
-    document = DocumentChooserBlock(
-        label=_("or Document (obsolete)"),
-        required=False,
-        group="target",
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
-        ),
-    )
     top_detail_text = blocks.CharBlock(label=_("Top detail: text"), required=False)
     top_detail_icon = IconPickerBlock(label=_("Top detail: icon"), required=False)
     top_detail_badges_tags = blocks.StreamBlock(
@@ -120,7 +103,10 @@ class CardBlock(blocks.StructBlock):
     bottom_detail_icon = IconPickerBlock(label=_("Bottom detail: icon"), required=False)
     call_to_action = blocks.StreamBlock(
         [
-            ("links", LinksVerticalListBlock()),
+            (
+                "links",
+                LinksVerticalListBlock(label=_("Links")),
+            ),
             (
                 "buttons",
                 ButtonsHorizontalListBlock(
