@@ -197,15 +197,19 @@ class CTASection(BaseSection):
         template = "content_manager/blocks/sections/text-cta.html"
 
 
+class SpotLightItem(blocks.StreamBlock):
+    card = VerticalCardBlock()
+
+
 class SpotlightSection(BaseSection):
-    items_per_row = blocks.ChoiceBlock(choices=[("2", "2"), ("3", "3"), ("4", "4")])
+    items_per_row = blocks.ChoiceBlock(choices=[("6", "2"), ("4", "3"), ("3", "4")], default="3")
     link = LinkBlock(
         label=_("Lien de la section"),
         help_text="Ce lien apparait en haut à droite de la section s'il est complété",
         required=False,
         collapsed=True,
     )
-    items = blocks.ListBlock(VerticalCardBlock())
+    items = SpotLightItem()
 
     class Meta:
         template = "content_manager/blocks/sections/spotlight.html"
