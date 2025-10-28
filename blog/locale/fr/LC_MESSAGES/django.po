@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 19:11+0200\n"
-"PO-Revision-Date: 2025-08-21 15:41+0200\n"
+"POT-Creation-Date: 2025-10-28 12:22+0100\n"
+"PO-Revision-Date: 2025-10-28 13:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,29 +16,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
-#: blog/blocks.py:9 blog/models.py:39 blog/models.py:67
+#: blog/blocks.py:10 blog/models.py:39 blog/models.py:67
 msgid "Name"
 msgstr "Nom"
 
-#: blog/blocks.py:10 blog/models.py:68
+#: blog/blocks.py:11 blog/models.py:68
 msgid "Role"
 msgstr "Fonction"
 
-#: blog/blocks.py:11 blog/models.py:56
+#: blog/blocks.py:12 blog/models.py:56
 msgid "Organization"
 msgstr "Organisation"
 
-#: blog/blocks.py:12 blog/models.py:70
+#: blog/blocks.py:13 blog/models.py:70
 msgid "Contact info"
 msgstr "Informations de contact"
 
-#: blog/blocks.py:21
+#: blog/blocks.py:22
 msgid "Rich text"
 msgstr "Texte riche"
 
-#: blog/blocks.py:28
+#: blog/blocks.py:29
 msgid "Contact card"
 msgstr "Carte contact"
 
@@ -109,8 +109,7 @@ msgstr "Filtrer par source"
 
 #: blog/models.py:215
 msgid "The source is the organization of the post author"
-msgstr ""
-"La source est l’organisation à laquelle appartient l’auteur de l’article"
+msgstr "La source est l’organisation à laquelle appartient l’auteur de l’article"
 
 #: blog/models.py:228
 msgid "Show filters"

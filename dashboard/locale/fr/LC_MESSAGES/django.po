@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-06 10:59+0200\n"
-"PO-Revision-Date: 2025-10-06 11:00+0200\n"
+"POT-Creation-Date: 2025-10-28 12:22+0100\n"
+"PO-Revision-Date: 2025-10-28 13:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #: dashboard/templates/wagtailadmin/account/password_reset/complete.html:5
 msgid "Password change successful"
@@ -137,8 +137,8 @@ msgid "Connection"
 msgstr "Connexion"
 
 #: dashboard/templates/wagtailadmin/login.html:20
-msgid "Login with FranceConnect"
-msgstr "S’identifier avec FranceConnect"
+msgid "Login with ProConnect"
+msgstr "S’identifier avec ProConnect"
 
 #: dashboard/templates/wagtailadmin/login.html:23
 msgid "Login with"

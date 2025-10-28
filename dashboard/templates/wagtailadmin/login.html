@@ -17,7 +17,7 @@
               {% settings_value "SF_DISABLE_LOCAL_LOGIN" as disable_local_login %}
               {% if use_proconnect %}
                 <div class="fr-mb-6v">
-                  <h2>{% translate "Login with FranceConnect" %}</h2>
+                  <h2>{% translate "Login with ProConnect" %}</h2>
                   <div class="fr-connect-group">
                     <a class="fr-connect" href="{% url 'oidc_authentication_init' %}">
                       <span class="fr-connect__login">{% translate "Login with" %}</span> <span class="fr-connect__brand">ProConnect</span>
