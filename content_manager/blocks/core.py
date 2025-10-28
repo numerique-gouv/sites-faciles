@@ -36,7 +36,6 @@ from .sections import (
     ImageTextCTAMultipleSection,
     ImageTextCTASection,
     ResizedTextSection,
-    SpotlightSection,
 )
 from .tables import AdvancedTypedTableBlock
 
@@ -113,7 +112,6 @@ STREAMFIELD_COMMON_BLOCKS = [
         ImageTextCTAMultipleSection(label=_("Plusieurs sections image, texte et cta"), group=_("Predefined sections")),
     ),
     ("cta_section", CTASection(label=_("Texte et bouton"), group=_("Predefined sections"))),
-    ("spotlight_section", SpotlightSection(label=_("A la une"), group=_("Predefined sections"))),
 ]
 
 
