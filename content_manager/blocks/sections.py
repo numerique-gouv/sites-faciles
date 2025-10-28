@@ -21,7 +21,7 @@ from .buttons_links import ButtonBlock, LinkBlock
 from .cards import VerticalCardBlock
 from .layout import LayoutBlock
 from .medias import ImageBlockWithDefault
-from .related_entries import BlogRecentEntriesWithoutTitleBlock
+from .related_entries import BlogEntries
 
 Image = get_image_model()
 
@@ -200,7 +200,7 @@ class CTASection(BaseSection):
 
 class SpotlightItemsBlock(blocks.StreamBlock):
     card = blocks.ListBlock(VerticalCardBlock())
-    blog = BlogRecentEntriesWithoutTitleBlock()
+    blog = BlogEntries()
 
 
 class SpotlightSection(BaseSection):
