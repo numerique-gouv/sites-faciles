@@ -12,6 +12,7 @@ from content_manager.constants import (
     ALIGN_HORIZONTAL_CHOICES_EXTENDED,
     ALIGN_VERTICAL_CHOICES,
     MEDIA_WIDTH_CHOICES,
+    TEMPLATE_EXAMPLE_BUTTON_LIST,
 )
 
 from .basics import TextContentAllAlignments, TextContentLeftRight, TextContentVerticalAlignments
@@ -107,23 +108,12 @@ class HeroImageAndTextBlock(blocks.StructBlock):
     text_content = TextContentLeftRight(label=_("Text content"))
     buttons = blocks.ListBlock(
         ButtonBlock(label=_("Button")),
-        default=[
-            {
-                "link_type": "external_url",
-                "text": "Nous contacter",
-                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
-                "button_type": "fr-btn",
-                "icon_side": "--",
-            },
-            {
-                "link_type": "external_url",
-                "text": "Voir la vidéo",
-                "external_url": "https://tube.numerique.gouv.fr/",
-                "button_type": "fr-btn fr-btn--secondary",
-                "icon_side": "--t",
-            },
-        ],
+        default=TEMPLATE_EXAMPLE_BUTTON_LIST,
         label=_("Buttons"),
+        help_text=_(
+            """Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""
+        ),
     )
     image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Sites Faciles Homme Nuages")
     layout = LayoutBlock(label=_("Layout"))
@@ -138,23 +128,12 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
     layout = LayoutBlock(label=_("Layout"))
     buttons = blocks.ListBlock(
         ButtonBlock(label=_("Button")),
-        default=[
-            {
-                "link_type": "external_url",
-                "text": "Nous contacter",
-                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
-                "button_type": "fr-btn",
-                "icon_side": "--",
-            },
-            {
-                "link_type": "external_url",
-                "text": "Voir la vidéo",
-                "external_url": "https://tube.numerique.gouv.fr/",
-                "button_type": "fr-btn fr-btn--secondary",
-                "icon_side": "--",
-            },
-        ],
+        default=TEMPLATE_EXAMPLE_BUTTON_LIST,
         label=_("Buttons"),
+        help_text=_(
+            """Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""
+        ),
     )
     image = HeroImageBlockWithRatioWidth(
         label=_("Hero image"),
@@ -169,23 +148,12 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
     text_content = TextContentAllAlignments(label=_("Text content"))
     buttons = blocks.ListBlock(
         ButtonBlock(label=_("Button")),
-        default=[
-            {
-                "link_type": "external_url",
-                "text": "Nous contacter",
-                "external_url": "https://sites.beta.gouv.fr/contactez-nous/",
-                "button_type": "fr-btn",
-                "icon_side": "--",
-            },
-            {
-                "link_type": "external_url",
-                "text": "Voir la vidéo",
-                "external_url": "https://tube.numerique.gouv.fr/",
-                "button_type": "fr-btn fr-btn--secondary",
-                "icon_side": "--",
-            },
-        ],
+        default=TEMPLATE_EXAMPLE_BUTTON_LIST,
         label=_("Buttons"),
+        help_text=_(
+            """Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""
+        ),
     )
     background_color_or_image = blocks.ChoiceBlock(
         choices=[("color", _("Color")), ("image", _("Image"))],
