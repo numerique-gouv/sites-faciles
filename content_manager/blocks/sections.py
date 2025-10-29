@@ -17,6 +17,7 @@ from content_manager.constants import (
     LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
 )
 
+from .basics import AccordionsBlock
 from .buttons_links import ButtonBlock, LinkBlock
 from .cards import VerticalCardBlock
 from .layout import LayoutBlock
@@ -213,3 +214,7 @@ class SpotlightSection(BaseSection):
 
     class Meta:
         template = "content_manager/blocks/sections/spotlight.html"
+
+
+class AccordionSection(BaseSection):
+    accordion = AccordionsBlock()
