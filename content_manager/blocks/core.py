@@ -28,6 +28,7 @@ from .layout import (
 from .medias import IframeBlock, TranscriptionBlock, VideoBlock
 from .related_entries import BlogRecentEntriesBlock, EventsRecentEntriesBlock
 from .sections import (
+    AccordionSection,
     CTASection,
     ImageAndTextGridSection,
     ImageTextCTAMultipleSection,
@@ -110,6 +111,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ),
     ("cta_section", CTASection(label=_("Texte et bouton"), group=_("Predefined sections"))),
     ("spotlight_section", SpotlightSection(label=_("A la une"), group=_("Predefined sections"))),
+    ("accordion_section", AccordionSection(label=_("Accordions"), group=_("Predefined sections"))),
 ]
 
 
