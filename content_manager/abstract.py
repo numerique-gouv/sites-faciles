@@ -141,6 +141,38 @@ class SitesFacilesBasePage(Page):
     def get_preview_image(self):
         return self.preview_image or self.header_image
 
+    @property
+    def show_title(self):
+        if not self.hero:
+            return True
+        for block in self.hero:
+            if block.block_type == "old_hero" and not block.value.get("header_with_title"):
+                return True
+            else:
+                return False
+        return False
+
+    @property
+    def cover(self):
+        hero_blocks = getattr(self, "hero", None)
+        print("coucou je passe par ici", self.title)
+
+        if not hero_blocks:
+            return None
+
+        first_hero = hero_blocks[0].value or {}
+
+        if "image" in first_hero:
+            image_block = first_hero.get("image")
+            if isinstance(image_block, dict) and "image" in image_block:
+                return image_block.get("image")
+            return image_block
+
+        if "header_image" in first_hero:
+            return first_hero.get("header_image")
+
+        return None
+
     def get_absolute_url(self):
         return self.url
 

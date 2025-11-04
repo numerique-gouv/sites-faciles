@@ -48,7 +48,7 @@
 
   <div class="fr-container fr-pt-4w">
     {% include "content_manager/blocks/breadcrumbs.html" %}
-    {% if not page.header_with_title %}
+    {% if page.show_title %}
       <h1>
         {{ page.title }}
         {% if extra_title %}: {{ extra_title }}{% endif %}

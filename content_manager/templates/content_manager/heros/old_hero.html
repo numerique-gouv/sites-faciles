@@ -17,11 +17,9 @@
               </h1>
             {% endif %}
             {% if value.header_cta_text %}{{ value.header_cta_text|richtext }}{% endif %}
-             {% if value.header_cta_buttons %}
-              {% for block in page.header_cta_buttons %}
-                {% include_block block %}
-              {% endfor %}
-            {% endif %}
+          {% if value.header_cta_buttons %}
+              {% include "content_manager/blocks/buttons_horizontal_list.html" with block=value.header_cta_buttons %}
+          {% endif %}
           </div>
         </div>
       </div>

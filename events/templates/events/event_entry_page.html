@@ -135,10 +135,11 @@
 
       <div class="fr-card__header">
         <div class="fr-card__img">
-          {% if page.header_image %}
-            {% image page.header_image width-450 as header_image %}
-            <img class="fr-responsive-img" src="{{ header_image.full_url }}" alt="" />
-
+          {{ post.cover}}
+          {% if post.cover %}
+          {{ post.cover}}
+            {% image image width-450 as header_image %}
+            <img class="fr-responsive-img" src="{{ post.cover.file.url}}" alt="" />
           {% else %}
             <img class="fr-responsive-img"
                  src="{% static 'dsfr/dist/artwork/pictograms/digital/calendar.svg' %}"

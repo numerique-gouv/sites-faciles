@@ -242,13 +242,16 @@ class OldHero(blocks.StructBlock):
         label=_("Background color"),
         choices=COLOR_CHOICES,
         required=False,
-        help_text=_("Uses the French Design System colors"),
+        help_text=_("Uses the French Design System colors. Apply only "),
     )
-
-    header_large = blocks.BooleanBlock(label=_("Full width"), required=False)
+    header_large = blocks.BooleanBlock(
+        label=_("Centered title"),
+        required=False,
+        help_text=_("If checked, the title will be centered on the header image"),
+    )
     header_darken = blocks.BooleanBlock(label=_("Darken background image"), required=False)
     header_cta_text = blocks.RichTextBlock(label=_("Call to action text"), null=True, blank=True, required=False)
-    header_cta_buttons = ButtonsHorizontalListBlock(required=False)
+    header_cta_buttons = ButtonsHorizontalListBlock(required=False, label=_("Buttons"))
 
     class Meta:
         icon = "minus"
@@ -257,18 +260,3 @@ class OldHero(blocks.StructBlock):
             "Veuillez choisir un autre modèle d'en-tête."
         )
         template = "content_manager/heros/old_hero.html"
-
-
-class OldHeroAdapter(StructBlockAdapter):
-    js_constructor = "blocks.OldHero"
-
-    @cached_property
-    def media(self):
-
-        structblock_media = super().media
-        return forms.Media(
-            js=structblock_media._js + ["js/old-hero-block.js"],
-        )
-
-
-register(OldHeroAdapter(), OldHero)
