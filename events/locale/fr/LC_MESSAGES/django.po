@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-06 11:30+0100\n"
+"POT-Creation-Date: 2025-11-06 15:20+0100\n"
 "PO-Revision-Date: 2025-10-28 13:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -135,7 +135,7 @@ msgstr "Page d’événement"
 msgid "Category"
 msgstr "Catégorie"
 
-#: events/templates/events/blocks/events_index_posts_list.html:46
+#: events/templates/events/blocks/events_index_posts_list.html:45
 msgid "No event found."
 msgstr "Aucun événement trouvé."
 

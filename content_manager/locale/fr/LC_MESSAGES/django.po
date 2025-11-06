@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-06 11:35+0100\n"
-"PO-Revision-Date: 2025-11-06 11:38+0100\n"
+"POT-Creation-Date: 2025-11-06 15:20+0100\n"
+"PO-Revision-Date: 2025-11-06 15:21+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -89,31 +89,31 @@ msgstr ""
 "Image affichée comme aperçu lorsque la page est partagée sur les médias "
 "sociaux"
 
-#: content_manager/abstract.py:96
+#: content_manager/abstract.py:98
 msgid "Hero"
 msgstr "En-tête"
 
-#: content_manager/abstract.py:96
+#: content_manager/abstract.py:100
 msgid ""
 "Header section of the page. If empty, no header is displayed and the page "
 "title appears at the top of the content."
 msgstr ""
-"Section d’entête de la page. Si celle-ci est vide, aucun entête n’apparaitra "
-"et le titre de la page sera placé tout en haut."
+"Section d’en-tête de la page. Si celle-ci est vide, aucun en-tête "
+"n’apparaitra et le titre de la page sera placé tout en haut."
 
-#: content_manager/abstract.py:98
+#: content_manager/abstract.py:104
 msgid "Body"
 msgstr "Corps"
 
-#: content_manager/abstract.py:104
+#: content_manager/abstract.py:110
 msgid "Common page configuration"
 msgstr "Configuration commune"
 
-#: content_manager/abstract.py:189
+#: content_manager/abstract.py:196
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:190
+#: content_manager/abstract.py:197
 msgid "Base pages"
 msgstr "Pages de base"
 
@@ -194,7 +194,7 @@ msgid ""
 "The title that will appear in the header of your page. If there is no "
 "header, the page title will appear."
 msgstr ""
-"Le titre apparaîtra dans l’en-tête de votre page. S’il n’y a aucun entête, "
+"Le titre apparaîtra dans l’en-tête de votre page. S’il n’y a aucun en-tête, "
 "c’est le titre de la page qui apparaitra."
 
 #: content_manager/blocks/basics.py:42
@@ -882,7 +882,7 @@ msgstr "En-tête avec arrière-plan"
 
 #: content_manager/blocks/core.py:101
 msgid "Configurable header"
-msgstr "Entête configurable"
+msgstr "En-tête configurable"
 
 #: content_manager/blocks/heros.py:48 content_manager/blocks/heros.py:86
 msgid "Image positioning"
@@ -980,7 +980,7 @@ msgid ""
 "Uses the French Design System colors. Apply only if there is no header image."
 msgstr ""
 "Utilise les couleurs du système de design de l'État. S’affiche uniquement "
-"s’il n’y a pas d’image d’entête sélectionné."
+"s’il n’y a pas d’image d’en-tête sélectionné."
 
 #: content_manager/blocks/heros.py:251
 msgid "Centered title"
@@ -988,7 +988,7 @@ msgstr "Titre centré"
 
 #: content_manager/blocks/heros.py:253
 msgid "If checked, the title will be centered on the header."
-msgstr "Si coché, le titre sera centré sur l’entête."
+msgstr "Si coché, le titre sera centré sur l’en-tête."
 
 #: content_manager/blocks/heros.py:262
 msgid ""
@@ -996,8 +996,8 @@ msgid ""
 "It corresponds to the historical header block used since the beginning of "
 "the project."
 msgstr ""
-"Ce bloc permet de créer un entête entièrement configurable..\n"
-"Il correspond au bloc historique d’entête utilisé depuis le début du projet."
+"Ce bloc permet de créer un en-tête entièrement configurable..\n"
+"Il correspond au bloc historique d’en-tête utilisé depuis le début du projet."
 
 #: content_manager/blocks/layout.py:88
 msgid ""
