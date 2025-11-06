@@ -255,8 +255,8 @@ class OldHero(blocks.StructBlock):
 
     class Meta:
         icon = "minus"
-        help_text = (
-            "Ce bloc récupère les données des anciennes en-têtes mais n'est pas configurable. "
-            "Veuillez choisir un autre modèle d'en-tête."
+        help_text = _(
+            "This block allows you to create a fully configurable header."
+            "It corresponds to the historical header block used since the beginning of the Easy Sites project."
         )
         template = "content_manager/heros/old_hero.html"
