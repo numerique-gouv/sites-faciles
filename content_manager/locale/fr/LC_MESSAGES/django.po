@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-28 14:20+0100\n"
-"PO-Revision-Date: 2025-10-28 15:02+0100\n"
+"POT-Creation-Date: 2025-11-06 11:35+0100\n"
+"PO-Revision-Date: 2025-11-06 11:38+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,36 +18,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.8\n"
 
-#: content_manager/abstract.py:31 content_manager/blocks/heros.py:239
+#: content_manager/abstract.py:31 content_manager/blocks/heros.py:240
 msgid "Show title in header image?"
 msgstr "Afficher le titre sur l’image d’en-tête ?"
 
-#: content_manager/abstract.py:39 content_manager/blocks/heros.py:240
+#: content_manager/abstract.py:39 content_manager/blocks/heros.py:243
 msgid "Header image"
 msgstr "Image d’en-tête"
 
 #: content_manager/abstract.py:43 content_manager/blocks/heros.py:169
-#: content_manager/blocks/heros.py:242 content_manager/blocks/layout.py:79
+#: content_manager/blocks/heros.py:245 content_manager/blocks/layout.py:79
 #: content_manager/blocks/layout.py:215 content_manager/blocks/layout.py:273
 #: content_manager/blocks/layout.py:322
 msgid "Background color"
 msgstr "Couleur de fond"
 
-#: content_manager/abstract.py:47 content_manager/blocks/heros.py:245
-#: content_manager/blocks/layout.py:217 content_manager/blocks/layout.py:275
-#: content_manager/blocks/layout.py:324
+#: content_manager/abstract.py:47 content_manager/blocks/layout.py:217
+#: content_manager/blocks/layout.py:275 content_manager/blocks/layout.py:324
 msgid "Uses the French Design System colors"
 msgstr "Utilise les couleurs du système de design de l'État"
 
-#: content_manager/abstract.py:50 content_manager/blocks/heros.py:248
+#: content_manager/abstract.py:50
 msgid "Full width"
 msgstr "Pleine largeur"
 
-#: content_manager/abstract.py:51 content_manager/blocks/heros.py:249
+#: content_manager/abstract.py:51 content_manager/blocks/heros.py:255
 msgid "Darken background image"
 msgstr "Assombrir l’image de fond"
 
-#: content_manager/abstract.py:54 content_manager/blocks/heros.py:250
+#: content_manager/abstract.py:54 content_manager/blocks/heros.py:256
 msgid "Call to action text"
 msgstr "Texte de l’appel à action"
 
@@ -66,6 +65,7 @@ msgstr ""
 #: content_manager/blocks/buttons_links.py:208
 #: content_manager/blocks/cards.py:131 content_manager/blocks/heros.py:112
 #: content_manager/blocks/heros.py:132 content_manager/blocks/heros.py:152
+#: content_manager/blocks/heros.py:257
 msgid "Buttons"
 msgstr "Boutons"
 
@@ -93,19 +93,27 @@ msgstr ""
 msgid "Hero"
 msgstr "En-tête"
 
-#: content_manager/abstract.py:97
+#: content_manager/abstract.py:96
+msgid ""
+"Header section of the page. If empty, no header is displayed and the page "
+"title appears at the top of the content."
+msgstr ""
+"Section d’entête de la page. Si celle-ci est vide, aucun entête n’apparaitra "
+"et le titre de la page sera placé tout en haut."
+
+#: content_manager/abstract.py:98
 msgid "Body"
 msgstr "Corps"
 
-#: content_manager/abstract.py:103
+#: content_manager/abstract.py:104
 msgid "Common page configuration"
 msgstr "Configuration commune"
 
-#: content_manager/abstract.py:158
+#: content_manager/abstract.py:189
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:159
+#: content_manager/abstract.py:190
 msgid "Base pages"
 msgstr "Pages de base"
 
@@ -183,11 +191,11 @@ msgstr "Titre de l’en-tête"
 
 #: content_manager/blocks/basics.py:40
 msgid ""
-"The title that will appear in the header of your page. If there is none, the "
-"page title will appear."
+"The title that will appear in the header of your page. If there is no "
+"header, the page title will appear."
 msgstr ""
-"Le titre apparaîtra dans l’en-tête de votre page. S’il n’y en a aucun, c’est "
-"le titre de la page qui apparaitra."
+"Le titre apparaîtra dans l’en-tête de votre page. S’il n’y a aucun entête, "
+"c’est le titre de la page qui apparaitra."
 
 #: content_manager/blocks/basics.py:42
 msgid "The title of your header"
@@ -873,8 +881,8 @@ msgid "Header with background"
 msgstr "En-tête avec arrière-plan"
 
 #: content_manager/blocks/core.py:101
-msgid "Old hero"
-msgstr "Ancien en-tête"
+msgid "Configurable header"
+msgstr "Entête configurable"
 
 #: content_manager/blocks/heros.py:48 content_manager/blocks/heros.py:86
 msgid "Image positioning"
@@ -966,6 +974,30 @@ msgstr "Veuillez sélectionner une couleur pour l’arrière-plan."
 #: content_manager/blocks/heros.py:210
 msgid "Please select an image for the background."
 msgstr "Veuillez sélectionner une image pour l’arrière-plan."
+
+#: content_manager/blocks/heros.py:248
+msgid ""
+"Uses the French Design System colors. Apply only if there is no header image."
+msgstr ""
+"Utilise les couleurs du système de design de l'État. S’affiche uniquement "
+"s’il n’y a pas d’image d’entête sélectionné."
+
+#: content_manager/blocks/heros.py:251
+msgid "Centered title"
+msgstr "Titre centré"
+
+#: content_manager/blocks/heros.py:253
+msgid "If checked, the title will be centered on the header."
+msgstr "Si coché, le titre sera centré sur l’entête."
+
+#: content_manager/blocks/heros.py:262
+msgid ""
+"This block allows you to create a fully configurable header.\n"
+"It corresponds to the historical header block used since the beginning of "
+"the project."
+msgstr ""
+"Ce bloc permet de créer un entête entièrement configurable..\n"
+"Il correspond au bloc historique d’entête utilisé depuis le début du projet."
 
 #: content_manager/blocks/layout.py:88
 msgid ""
@@ -1675,12 +1707,12 @@ msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 msgid "Mega menu"
 msgstr "Méga menu"
 
-#: content_manager/templates/content_manager/blocks/blog_recent_entries.html:109
-#: content_manager/templates/content_manager/blocks/events_recent_entries.html:109
+#: content_manager/templates/content_manager/blocks/blog_recent_entries.html:108
+#: content_manager/templates/content_manager/blocks/events_recent_entries.html:108
 msgid "No article found."
 msgstr "Aucun article trouvé."
 
-#: content_manager/templates/content_manager/blocks/blog_recent_entries.html:113
+#: content_manager/templates/content_manager/blocks/blog_recent_entries.html:112
 msgid "See all posts"
 msgstr "Voir tous les articles"
 
@@ -1717,7 +1749,7 @@ msgstr "Format de fichier inconnu"
 msgid "Unknown file size"
 msgstr "Taille de fichier inconnue"
 
-#: content_manager/templates/content_manager/blocks/events_recent_entries.html:113
+#: content_manager/templates/content_manager/blocks/events_recent_entries.html:112
 msgid "See all events"
 msgstr "Voir tous les événements"
 
@@ -1880,6 +1912,9 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid "Old hero"
+#~ msgstr "Ancien en-tête"
 
 #~ msgid "Hero 1"
 #~ msgstr "En-tête 1"

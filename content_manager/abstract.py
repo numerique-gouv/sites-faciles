@@ -93,7 +93,14 @@ class SitesFacilesBasePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel("hero", heading=_("Hero")),
+        FieldPanel(
+            "hero",
+            heading=_("Hero"),
+            help_text=_(
+                "Header section of the page. If empty, no header is displayed "
+                "and the page title appears at the top of the content."
+            ),
+        ),
         FieldPanel("body", heading=_("Body")),
     ]
 
@@ -154,7 +161,6 @@ class SitesFacilesBasePage(Page):
     @property
     def cover(self):
         hero_blocks = getattr(self, "hero", None)
-        print("coucou je passe par ici", self.title)
 
         if not hero_blocks:
             return None
