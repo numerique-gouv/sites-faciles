@@ -44,7 +44,9 @@
       <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12">
           {% include "content_manager/blocks/breadcrumbs.html" %}
+          {% if page.show_title %}
           <h1 class="fr-display--sm">{{ page.title }}</h1>
+          {% endif %}
         </div>
       </div>
       <p>

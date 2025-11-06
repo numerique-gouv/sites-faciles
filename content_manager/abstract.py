@@ -143,14 +143,13 @@ class SitesFacilesBasePage(Page):
 
     @property
     def show_title(self):
-        if not self.hero:
-            return True
         for block in self.hero:
-            if block.block_type == "old_hero" and not block.value.get("header_with_title"):
-                return True
-            else:
+            if block.block_type != "old_hero":
                 return False
-        return False
+
+            if block.value.get("header_with_title") is True:
+                return False
+        return True
 
     @property
     def cover(self):
