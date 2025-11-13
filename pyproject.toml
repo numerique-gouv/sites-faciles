@@ -17,7 +17,7 @@ readme = "README.md"
 requires-python = "<4.0,>=3.11"
 dependencies = [
     "django-dsfr>=2.4.0",
-    "django>=5.2.3",
+    "django>=5.2.8",
     "wagtail>=7.0.1",
     "psycopg2-binary>=2.9.10",
     "python-dotenv>=1.1.0",
