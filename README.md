@@ -10,7 +10,7 @@ En particulier, il permet de **construire des pages à l’aide de composants** 
 Sites Faciles vise à utiliser les dernières versions disponibles de [Django (5.0+)](https://www.djangoproject.com/download/) et [Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html).
 
 Les tests automatisés couvrent les versions suivantes :
-- Python 3.10 à 3.13 (cf. [versions de Python supportées par Django](https://docs.djangoproject.com/en/5.1/faq/install/))
+- Python 3.10 à 3.14 (cf. [versions de Python supportées par Django](https://docs.djangoproject.com/en/5.2/faq/install/))
 - PostgreSQL 14 à 17 (cf. [versions de PostgreSQL supportées par Django](https://code.djangoproject.com/wiki/SupportedDatabaseVersions))
 
 ## Installation et contribution

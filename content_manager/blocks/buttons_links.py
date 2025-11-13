@@ -4,9 +4,9 @@ from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from wagtail import blocks
+from wagtail.admin.telepath import register
 from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.telepath import register
 
 from content_manager.constants import (
     BUTTON_ICON_SIDE,
