@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-20 15:33+0200\n"
+"POT-Creation-Date: 2025-11-06 15:20+0100\n"
 "PO-Revision-Date: 2025-10-28 13:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -49,7 +49,8 @@ msgstr "Filtrer par source"
 
 #: events/models.py:39
 msgid "The source is the organization of the event author"
-msgstr "La source est l’organisation à laquelle appartient l’auteur de l’événement"
+msgstr ""
+"La source est l’organisation à laquelle appartient l’auteur de l’événement"
 
 #: events/models.py:51
 msgid "Show filters"
@@ -134,27 +135,27 @@ msgstr "Page d’événement"
 msgid "Category"
 msgstr "Catégorie"
 
-#: events/templates/events/blocks/events_index_posts_list.html:47
+#: events/templates/events/blocks/events_index_posts_list.html:45
 msgid "No event found."
 msgstr "Aucun événement trouvé."
 
-#: events/templates/events/event_entry_page.html:80
+#: events/templates/events/event_entry_page.html:82
 msgid "Posted by:"
 msgstr "Écrit par :"
 
-#: events/templates/events/event_entry_page.html:105
+#: events/templates/events/event_entry_page.html:107
 msgid "Date:"
 msgstr "Date :"
 
-#: events/templates/events/event_entry_page.html:108
+#: events/templates/events/event_entry_page.html:110
 msgid "Location:"
 msgstr "Lieu :"
 
-#: events/templates/events/event_entry_page.html:112
+#: events/templates/events/event_entry_page.html:114
 msgid "Registration link:"
 msgstr "Lien d’inscription :"
 
-#: events/templates/events/event_entry_page.html:131
+#: events/templates/events/event_entry_page.html:133
 #: events/templates/events/events_index_page.html:170
 msgid "Add to your calendar (iCal)"
 msgstr "Ajouter à votre calendrier (iCal)"

@@ -98,5 +98,5 @@ HERO_STREAMFIELD_BLOCKS = [
     ("hero_text_image", HeroImageAndTextBlock(label=_("Header with an image and text"))),
     ("hero_text_wide_image", HeroWideImageAndTextBlock(label=_("Vertical header with a banner and text"))),
     ("hero_text_background_image", HeroBackgroundImageBlock(label=_("Header with background"))),
-    ("old_hero", OldHero(label=_("Old hero"))),
+    ("old_hero", OldHero(label=_("Configurable header"))),
 ]

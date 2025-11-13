@@ -94,12 +94,11 @@
               {% endif %}
             </div>
           </div>
-          {% if post.header_image %}
+          {% firstof post.header_image post.image as image %}
+          {% if image %}
             <div class="fr-card__header">
               <div class="fr-card__img">
-                <img class="fr-responsive-img"
-                     src="{{ post.header_image.file.url }}"
-                     alt="">
+                <img class="fr-responsive-img" src="{{ image.file.url }}" alt="">
               </div>
             </div>
           {% endif %}

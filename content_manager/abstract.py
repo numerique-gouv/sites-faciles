@@ -93,7 +93,14 @@ class SitesFacilesBasePage(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel("hero", heading=_("Hero")),
+        FieldPanel(
+            "hero",
+            heading=_("Hero"),
+            help_text=_(
+                "Header section of the page. If empty, no header is displayed "
+                "and the page title appears at the top of the content."
+            ),
+        ),
         FieldPanel("body", heading=_("Body")),
     ]
 
@@ -140,6 +147,36 @@ class SitesFacilesBasePage(Page):
     @property
     def get_preview_image(self):
         return self.preview_image or self.header_image
+
+    @property
+    def show_title(self):
+        for block in self.hero:
+            if block.block_type != "old_hero":
+                return False
+
+            if block.value.get("header_with_title") is True:
+                return False
+        return True
+
+    @property
+    def cover(self):
+        hero_blocks = getattr(self, "hero", None)
+
+        if not hero_blocks:
+            return None
+
+        first_hero = hero_blocks[0].value or {}
+
+        if "image" in first_hero:
+            image_block = first_hero.get("image")
+            if isinstance(image_block, dict) and "image" in image_block:
+                return image_block.get("image")
+            return image_block
+
+        if "header_image" in first_hero:
+            return first_hero.get("header_image")
+
+        return None
 
     def get_absolute_url(self):
         return self.url

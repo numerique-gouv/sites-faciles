@@ -236,39 +236,30 @@ register(HeroBackgroundBlockAdapter(), HeroBackgroundImageBlock)
 
 
 class OldHero(blocks.StructBlock):
-    header_with_title = blocks.BooleanBlock(label=_("Show title in header image?"), required=False)
+    header_with_title = blocks.BooleanBlock(
+        label=_("Show title in header image?"),
+        required=False,
+    )
     header_image = ImageBlock(label=_("Header image"), required=False)
     header_color_class = blocks.ChoiceBlock(
         label=_("Background color"),
         choices=COLOR_CHOICES,
         required=False,
-        help_text=_("Uses the French Design System colors"),
+        help_text=_("Uses the French Design System colors. Apply only if there is no header image."),
     )
-
-    header_large = blocks.BooleanBlock(label=_("Full width"), required=False)
+    header_large = blocks.BooleanBlock(
+        label=_("Centered title"),
+        required=False,
+        help_text=_("If checked, the title will be centered on the header."),
+    )
     header_darken = blocks.BooleanBlock(label=_("Darken background image"), required=False)
     header_cta_text = blocks.RichTextBlock(label=_("Call to action text"), null=True, blank=True, required=False)
-    header_cta_buttons = ButtonsHorizontalListBlock(required=False)
+    header_cta_buttons = ButtonsHorizontalListBlock(required=False, label=_("Buttons"))
 
     class Meta:
         icon = "minus"
-        help_text = (
-            "Ce bloc récupère les données des anciennes en-têtes mais n'est pas configurable. "
-            "Veuillez choisir un autre modèle d'en-tête."
+        help_text = _(
+            "This block allows you to create a fully configurable header.\n"
+            "It corresponds to the historical header block used since the beginning of the project."
         )
         template = "content_manager/heros/old_hero.html"
-
-
-class OldHeroAdapter(StructBlockAdapter):
-    js_constructor = "blocks.OldHero"
-
-    @cached_property
-    def media(self):
-
-        structblock_media = super().media
-        return forms.Media(
-            js=structblock_media._js + ["js/old-hero-block.js"],
-        )
-
-
-register(OldHeroAdapter(), OldHero)
