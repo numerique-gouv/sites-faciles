@@ -4,9 +4,9 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from dsfr.constants import COLOR_CHOICES, IMAGE_RATIOS
 from wagtail import blocks
+from wagtail.admin.telepath import register
 from wagtail.blocks import StructValue
 from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
-from wagtail.telepath import register
 
 from content_manager.constants import (
     ALIGN_HORIZONTAL_CHOICES_EXTENDED,
