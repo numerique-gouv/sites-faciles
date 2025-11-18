@@ -44,6 +44,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = getenv_bool("DEBUG", False)
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", "").split(",")
+USE_X_FORWARDED_HOST = getenv_bool("USE_X_FORWARDED_HOST", False)
 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
