@@ -8,4 +8,5 @@ from .heros import *  # NOQA: F403
 from .layout import *  # NOQA: F403
 from .medias import *  # NOQA: F403
 from .related_entries import *  # NOQA: F403
+from .sections import *  # NOQA: F403
 from .tables import *  # NOQA: F403

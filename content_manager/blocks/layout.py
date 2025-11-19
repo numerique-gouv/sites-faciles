@@ -74,7 +74,7 @@ class MarginBlock(blocks.StructBlock):
         value_class = BlockMarginStructValue
 
 
-class LayoutBlock(MarginBlock):
+class BackgroundColorBlock(blocks.StructBlock):
     background_color = BackgroundColorChoiceBlock(
         label=_("Background color"),
         required=False,
@@ -83,6 +83,9 @@ class LayoutBlock(MarginBlock):
             "If you want to design a classic website, choose the colour ‘white’ or ‘French blue’."
         ),
     )
+
+
+class LayoutBlock(MarginBlock, BackgroundColorBlock):
 
     class Meta:
         help_text = _("This part allow you to choose the layout of your block (background, margin..) ")
@@ -106,6 +109,7 @@ class CommonStreamBlock(blocks.StreamBlock):
     quote = QuoteBlock(label=_("Quote"), group=_("DSFR components"))
     stepper = StepperBlock(label=_("Stepper"), group=_("DSFR components"))
     link = SingleLinkBlock(label=_("Single link"))
+    iframe = IframeBlock(label=_("Iframe"), group=_("DSFR components"))
     tile = TileBlock(label=_("Tile"), group=_("DSFR components"))
     blog_recent_entries = BlogRecentEntriesBlock(label=_("Blog recent entries"), group=_("Website structure"))
     events_recent_entries = EventsRecentEntriesBlock(

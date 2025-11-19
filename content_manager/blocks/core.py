@@ -27,6 +27,14 @@ from .layout import (
 )
 from .medias import IframeBlock, TranscriptionBlock, VideoBlock
 from .related_entries import BlogRecentEntriesBlock, EventsRecentEntriesBlock
+from .sections import (
+    AccordionSection,
+    CTASection,
+    ImageAndTextGridSection,
+    ImageTextCTASection,
+    ResizedTextSection,
+    SpotlightSection,
+)
 from .tables import AdvancedTypedTableBlock
 
 ## Streamblocks definitions
@@ -91,6 +99,15 @@ STREAMFIELD_COMMON_BLOCKS = [
         "events_recent_entries",
         EventsRecentEntriesBlock(label=_("Event calendar recent entries"), group=_("Website structure")),
     ),
+    ("layout_richtext", ResizedTextSection(label=_("Rich text with layout"), group=_("Predefined sections"))),
+    (
+        "image_text_grid_section",
+        ImageAndTextGridSection(label=_("Grille d'items (Image et texte)"), group=_("Predefined sections")),
+    ),
+    ("image_text_cta_section", ImageTextCTASection(label=_("Image, text and cta"), group=_("Predefined sections"))),
+    ("cta_section", CTASection(label=_("Text and button"), group=_("Predefined sections"))),
+    ("spotlight_section", SpotlightSection(label=_("In the spotlight"), group=_("Predefined sections"))),
+    ("accordion_section", AccordionSection(label=_("Accordions with layout"), group=_("Predefined sections"))),
 ]
 
 
