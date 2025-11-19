@@ -1,9 +1,7 @@
+{% extends "content_manager/blocks/sections/base_section.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
-<div class="fr-py-5w {{ value.vertical_margin }}"
-     {% if value.layout.background_color %}style="background: var(--background-alt-{{ value.layout.background_color }});{% endif %}
-     ">
-    <h2 class="fr-h3 fr-pb-5v">{{ value.section_title }}</h2>
-    <div class="fr-container-fluid">
+{% block children %}
+    <div class="fr-container fr-pt-4v">
         <div class="fr-grid-row cmsfr-text-content--{{ value.items_alignements }}">
             {% for item in rendered_items %}
                 <div class="fr-col-12 fr-col-md-{{ value.items_per_row }} fr-pb-2v fr-pr-4v">
@@ -16,4 +14,4 @@
             {% endfor %}
         </div>
     </div>
-</div>
+{% endblock children %}

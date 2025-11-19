@@ -37,7 +37,7 @@ class TextContentBlock(blocks.StructBlock):
         label=_("Title header"),
         required=False,
         help_text=_(
-            "The title that will appear in the header of your page. If there is none, the page title will appear."
+            "The title that will appear in the header of your page. If there is no header, the page title will appear."
         ),
         default=_("The title of your header"),
     )

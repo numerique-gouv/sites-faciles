@@ -216,5 +216,10 @@ class SpotlightSection(BaseSection):
         template = "content_manager/blocks/sections/spotlight.html"
 
 
-class AccordionSection(BaseSection):
+# This doesn't heritate from BaseSection to reuse AccordionsBlock component.
+class AccordionSection(blocks.StructBlock):
     accordion = AccordionsBlock()
+    layout = LayoutBlock(label=_("Layout"), collapsed=True)
+
+    class Meta:
+        template = "content_manager/blocks/sections/accordion_section.html"
