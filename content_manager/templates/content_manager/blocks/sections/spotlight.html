@@ -1,14 +1,9 @@
+{% extends "content_manager/blocks/sections/base_section.html" %}
 {% load wagtail_dsfr_tags wagtailcore_tags %}
-<div class="fr-py-3w {{ value.layout.vertical_margin }}"
-     style="{% if value.layout.background_color %}background-color: var(--background-alt-{{ value.layout.background_color }});
-            {% endif %} min-height: 150px">
-    <div class="fr-col-8 fr-col-offset-2 cmsfr-text-content--left">
-        <h2>{{ value.section_title }}</h2>
-
-    </div>
+{% block children %}
     <div class="fr-container">
         <div class="fr-grid-row fr-grid-row--gutters fr-py-3w">
             {% for item in value.items %}<div class="fr-col-md-{{ value.items_per_row }} fr-col-sm">{{ item }}</div>{% endfor %}
         </div>
     </div>
-</div>
+{% endblock children %}
