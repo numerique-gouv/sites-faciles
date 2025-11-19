@@ -125,11 +125,11 @@ class ImageTextCTASection(blocks.StructBlock):
         template = "content_manager/blocks/sections/image_text_cta.html"
 
 
-class ImageTextCTAMultipleSection(blocks.StructBlock):
-    items = blocks.ListBlock(ImageTextCTASection)
+# class ImageTextCTAMultipleSection(blocks.StructBlock):
+#     items = blocks.ListBlock(ImageTextCTASection)
 
-    class Meta:
-        template = "content_manager/blocks/sections/image_text_cta_multiple.html"
+#     class Meta:
+#         template = "content_manager/blocks/sections/image_text_cta_multiple.html"
 
 
 class ImageAndTextItems(blocks.StructBlock):

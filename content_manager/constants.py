@@ -159,7 +159,6 @@ ALIGN_VERTICAL_CHOICES_EXTENDED = [
     ("middle", _("Middle")),
     ("bottom", _("Bottom")),
 ]
-<<<<<<< HEAD
 
 TEMPLATE_EXAMPLE_BUTTON_LIST = [
     {
@@ -179,8 +178,6 @@ TEMPLATE_EXAMPLE_BUTTON_LIST = [
         "anchor": "",
     },
 ]
-=======
 IMAGE_GRID_SIZE = [("80", _("Small")), ("140", _("Medium")), ("200", _("Large"))]
 
 # BLOCK_PER_ROW = [("2", "2"), ("3", "3"), ("4", "4")]
->>>>>>> 1ad97ec (resolve conflict)

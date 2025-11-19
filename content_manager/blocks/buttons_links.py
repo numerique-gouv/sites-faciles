@@ -1,21 +1,12 @@
 from django import forms
-<<<<<<< HEAD
 from django.core.validators import validate_slug
-=======
->>>>>>> 1c45bd1 (cleaning blocks)
 from django.forms.utils import ErrorList
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from wagtail import blocks
-<<<<<<< HEAD
-from wagtail.admin.telepath import register
-from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
-from wagtail.documents.blocks import DocumentChooserBlock
-=======
 from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.telepath import register
->>>>>>> 1c45bd1 (cleaning blocks)
 
 from content_manager.constants import (
     BUTTON_ICON_SIDE,

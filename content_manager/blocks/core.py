@@ -16,7 +16,6 @@ from .basics import (
     TextAndCTA,
 )
 from .buttons_links import AnchorBlock, ButtonsListBlock, SingleLinkBlock
-from .buttons_links import ButtonsListBlock, SingleLinkBlock
 from .cards import HorizontalCardBlock, TileBlock
 from .heros import HeroBackgroundImageBlock, HeroImageAndTextBlock, HeroWideImageAndTextBlock, OldHero
 from .layout import (
@@ -28,13 +27,10 @@ from .layout import (
 )
 from .medias import IframeBlock, TranscriptionBlock, VideoBlock
 from .related_entries import BlogRecentEntriesBlock, EventsRecentEntriesBlock
-from .sections import ImageAndTextGridSection, ImageTextCTASection, ResizedTextSection
-from .sections import ImageAndTextGridSection, ImageTextCTAMultipleSection, ImageTextCTASection, ResizedTextSection
 from .sections import (
     AccordionSection,
     CTASection,
     ImageAndTextGridSection,
-    ImageTextCTAMultipleSection,
     ImageTextCTASection,
     ResizedTextSection,
     SpotlightSection,
@@ -109,13 +105,9 @@ STREAMFIELD_COMMON_BLOCKS = [
         ImageAndTextGridSection(label=_("Grille d'items (Image et texte)"), group=_("Predefined sections")),
     ),
     ("image_text_cta_section", ImageTextCTASection(label=_("Image, text and cta"), group=_("Predefined sections"))),
-    (
-        "image_text_cta_multiple",
-        ImageTextCTAMultipleSection(label=_("Plusieurs sections image, texte et cta"), group=_("Predefined sections")),
-    ),
-    ("cta_section", CTASection(label=_("Texte et bouton"), group=_("Predefined sections"))),
-    ("spotlight_section", SpotlightSection(label=_("A la une"), group=_("Predefined sections"))),
-    ("accordion_section", AccordionSection(label=_("Accordions"), group=_("Predefined sections"))),
+    ("cta_section", CTASection(label=_("Text and button"), group=_("Predefined sections"))),
+    ("spotlight_section", SpotlightSection(label=_("In the spotlight"), group=_("Predefined sections"))),
+    ("accordion_section", AccordionSection(label=_("Accordions with layout"), group=_("Predefined sections"))),
 ]
 
 
