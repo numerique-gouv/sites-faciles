@@ -191,8 +191,20 @@ register(ImageAndTextGridAdapter(), ImageAndTextGridSection)
 
 
 class CTASection(BaseSection):
-    text = blocks.RichTextBlock(label=_("Text"))
-    button = ButtonBlock(label=_("Button"))
+    text = blocks.RichTextBlock(
+        label=_("Text"),
+        default="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun",
+    )
+    button = ButtonBlock(
+        label=_("Button"),
+        default={
+            "link_type": "external_url",
+            "text": "Appel à l'action",
+            "external_url": "https://tube.numerique.gouv.fr/",
+            "button_type": "fr-btn fr-btn--primary",
+            "icon_side": "--",
+        },
+    )
 
     class Meta:
         template = "content_manager/blocks/sections/text-cta.html"
@@ -200,6 +212,56 @@ class CTASection(BaseSection):
 
 class SpotLightItem(blocks.StreamBlock):
     card = VerticalCardBlock()
+
+    def get_default(self):
+        default_top_detail_badges_tags = [
+            (
+                "tags",
+                [
+                    (
+                        "tag",
+                        {
+                            "label": "Mon tag par défaut",
+                            "is_small": False,
+                            "color": "",
+                            "icon_class": {},
+                            "link": {},
+                        },
+                    ),
+                ],
+            ),
+        ]
+        default_card = (
+            "card",
+            {
+                "title": "Titre de l'article",
+                "heading_tag": "h3",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo ",
+                "image": None,
+                "image_ratio": "h3",
+                "image_badge": [],
+                "link": {
+                    "link_type": "external_url",
+                    "external_url": "https://tube.numerique.gouv.fr/",
+                },
+                "top_detail_text": "",
+                "top_detail_icon": {},
+                "top_detail_badges_tags": default_top_detail_badges_tags,
+                "bottom_detail_text": "",
+                "bottom_detail_icon": {},
+                "call_to_action": [],
+                "grey_background": False,
+                "no_background": False,
+                "no_border": False,
+                "shadow": False,
+            },
+        )
+
+        return [
+            default_card,
+            default_card,
+            default_card,
+        ]
 
 
 class SpotlightSection(BaseSection):
@@ -210,7 +272,9 @@ class SpotlightSection(BaseSection):
         required=False,
         collapsed=True,
     )
-    items = SpotLightItem()
+    items = SpotLightItem(
+        label=_("Items"),
+    )
 
     class Meta:
         template = "content_manager/blocks/sections/spotlight.html"
