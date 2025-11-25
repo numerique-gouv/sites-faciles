@@ -31,7 +31,7 @@ def getenv_bool(key: str, default: bool):
         value = os.environ[key]
     except KeyError:
         return default
-    return value.casefold() in {"1", "True"}
+    return value.casefold() in ["1", "true"]
 
 
 # Quick-start development settings - unsuitable for production
