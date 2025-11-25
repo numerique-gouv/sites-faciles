@@ -38,7 +38,6 @@ class HeroBackgroundBlockDefinition extends window.wagtailStreamField.blocks
   }
 }
 
-// enregistrement Telepath
 window.telepath.register(
   "blocks.HeroBackgroundImageBlock",
   HeroBackgroundBlockDefinition

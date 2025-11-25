@@ -13,6 +13,7 @@ from content_manager.constants import (
 )
 
 from .buttons_links import ButtonsHorizontalListBlock, IconPickerBlock, LinksVerticalListBlock, LinkWithoutLabelBlock
+from .medias import ImageBlockWithDefault
 
 
 class CardstructValue(StructValue):
@@ -70,7 +71,7 @@ class CardBlock(blocks.StructBlock):
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
     description = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
-    image = ImageChooserBlock(label=_("Image"), required=False)
+    image = ImageBlockWithDefault(label=_("Image"), required=False)
     image_ratio = blocks.ChoiceBlock(
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
@@ -83,6 +84,10 @@ class CardBlock(blocks.StructBlock):
     link = LinkWithoutLabelBlock(
         label=_("Link"),
         required=False,
+        collapsed=False,
+        help_text=_(
+            "Link for the whole card. If a call-to-action is present, the link will display on the title only."
+        ),
     )
     top_detail_text = blocks.CharBlock(label=_("Top detail: text"), required=False)
     top_detail_icon = IconPickerBlock(label=_("Top detail: icon"), required=False)
@@ -119,7 +124,7 @@ class CardBlock(blocks.StructBlock):
             ),
         ],
         label=_("Bottom call-to-action: links or buttons"),
-        help_text=_("Incompatible with the bottom detail text."),
+        help_text=_("Incompatible with the bottom detail text. Allow you to add link or button."),
         max_num=1,
         required=False,
     )

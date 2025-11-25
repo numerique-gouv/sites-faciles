@@ -221,7 +221,23 @@ class SpotLightItem(blocks.StreamBlock):
                     (
                         "tag",
                         {
-                            "label": "Mon tag par défaut",
+                            "label": "Site vitrine",
+                            "is_small": False,
+                            "color": "",
+                            "icon_class": {},
+                            "link": {
+                                "link_type": "--",
+                                "page": None,
+                                "external_url": "",
+                                "document": None,
+                                "anchor": "",
+                            },
+                        },
+                    ),
+                    (
+                        "tag",
+                        {
+                            "label": "Blog",
                             "is_small": False,
                             "color": "",
                             "icon_class": {},
@@ -242,13 +258,19 @@ class SpotLightItem(blocks.StreamBlock):
             {
                 "title": "Titre de l'article",
                 "heading_tag": "h3",
-                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo ",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+                "sed do eiusmod tempor "
+                "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, "
+                "quis nostrud exercitation ullamco ",
                 "image": None,
                 "image_ratio": "h3",
                 "image_badge": [],
                 "link": {
-                    "link_type": "external_url",
-                    "external_url": "https://tube.numerique.gouv.fr/",
+                    "link_type": "--",
+                    "page": None,
+                    "external_url": "",
+                    "document": None,
+                    "anchor": "",
                 },
                 "top_detail_text": "",
                 "top_detail_icon": {},
@@ -271,7 +293,7 @@ class SpotLightItem(blocks.StreamBlock):
 
 
 class SpotlightSection(BaseSection):
-    items_per_row = blocks.ChoiceBlock(choices=[("6", "2"), ("4", "3"), ("3", "4")], default="3")
+    items_per_row = blocks.ChoiceBlock(choices=[("6", "2"), ("4", "3"), ("3", "4")], default="4")
     link = LinkBlock(
         label=_("Lien de la section"),
         help_text="Ce lien apparait en haut à droite de la section s'il est complété",
