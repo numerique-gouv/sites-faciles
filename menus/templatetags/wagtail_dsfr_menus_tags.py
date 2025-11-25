@@ -37,8 +37,8 @@ def footer_bottom_menu(context: Context) -> dict:
     return {"request": request, "footer_bottom_menu": footer_bottom_menu, "current_page": current_page}
 
 
-@register.inclusion_tag("menus/main_menu.html", takes_context=True)
-def main_menu_new(context: Context) -> dict:
+@register.inclusion_tag("menus/main_menu_sf.html", takes_context=True)
+def main_menu_sf(context: Context) -> dict:
     """
     Returns the main_menu item for the site
     """

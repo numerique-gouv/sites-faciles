@@ -1,5 +1,6 @@
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from wagtail.blocks import CharBlock, StreamBlock, StructBlock
+from wagtail.blocks import CharBlock, StreamBlock, StructBlock, StructValue
 
 from content_manager.blocks import IconPickerBlock, LinkStructValue, LinkWithoutLabelBlock
 
@@ -36,11 +37,26 @@ class MainMenuSubmenuLinkBlock(BaseMenuLinkBlock):
         template = "menus/blocks/main_menu_link.html"
 
 
+class MainMenuSubmenuStructValue(StructValue):
+    def id(self):
+        text = self.get("text", "")
+        raw_id = slugify(text)
+        return f"collapse-menu-{raw_id}"
+
+    def menu_urls(self):
+        links = self.get("links", [])
+
+        urls = []
+        for link in links:
+            urls.append(link.value.url())
+
+        return urls
+
+
 class MainMenuSubmenuBlock(StructBlock):
     text = CharBlock(
-        label=_("Link label"),
+        label=_("Submenu label"),
         required=True,
-        help_text=_("If this field is empty, the title of the linked page or document will be used."),
     )
 
     links = StreamBlock(
@@ -51,6 +67,10 @@ class MainMenuSubmenuBlock(StructBlock):
         max_num=8,
         required=False,
     )
+
+    class Meta:
+        template = "menus/blocks/main_menu_submenu.html"
+        value_class = MainMenuSubmenuStructValue
 
 
 TOP_MENU_BLOCKS = [

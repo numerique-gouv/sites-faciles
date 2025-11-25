@@ -119,10 +119,9 @@
                 aria-controls="fr-menu-mobile">{{ close_label }}</button>
         <div class="fr-header__menu-links"></div>
         {% translate "Main menu" as main_menu_label %}
-
         <nav class="fr-nav" id="fr-navigation" aria-label="{{ main_menu_label }}">
-          {% main_menu_new %}
-          {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
+          {% main_menu_sf %}
+          {% main_menu max_levels=2 template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
         </nav>
       </div>
     </div>
