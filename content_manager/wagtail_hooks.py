@@ -3,10 +3,6 @@ from django.templatetags.static import static
 from django.utils.html import format_html
 from wagtail import hooks
 from wagtail.admin.rich_text.converters.html_to_contentstate import BlockElementHandler, InlineStyleElementHandler
-from wagtail.admin.rich_text.converters.html_to_contentstate import InlineStyleElementHandler
-from wagtail.admin.rich_text.converters.html_to_contentstate import (
-    BlockElementHandler,
-)
 
 
 @hooks.register("register_rich_text_features")
