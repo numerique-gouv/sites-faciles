@@ -26,6 +26,14 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def getenv_bool(key: str, default: bool):
+    try:
+        value = os.environ[key]
+    except KeyError:
+        return default
+    return value.casefold() in ["1", "true"]
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -33,9 +41,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv("DEBUG") in ["1", "True"] else False
+DEBUG = getenv_bool("DEBUG", False)
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,.localhost").replace(" ", "").split(",")
+USE_X_FORWARDED_HOST = getenv_bool("USE_X_FORWARDED_HOST", False)
 
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 HOST_URL = os.getenv("HOST_URL", "localhost")
@@ -47,7 +56,7 @@ HOST_PORT = os.getenv("HOST_PORT", "")
 FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "").rstrip("/")
 
 # Allow enabling WhiteNoise via an environment variable (disabled by default)
-SF_USE_WHITENOISE = True if os.getenv("SF_USE_WHITENOISE", False) in ["1", "True"] else False
+SF_USE_WHITENOISE = getenv_bool("SF_USE_WHITENOISE", False)
 
 INTERNAL_IPS = [
     "127.0.0.1",
