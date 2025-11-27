@@ -96,12 +96,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "widget_tweaks",
     "dsfr",
-    "content_manager",
-    "blog",
-    "events",
-    "forms",
+    "wagtail_dsfr",
+    "wagtail_dsfr.content_manager",
+    "wagtail_dsfr.blog",
+    "wagtail_dsfr.events",
+    "wagtail_dsfr.forms",
     "wagtail_honeypot",
-    "dashboard",
+    "wagtail_dsfr.dashboard",
     "wagtail.admin",
 ]
 
@@ -174,8 +175,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "wagtail.contrib.settings.context_processors.settings",
                 "wagtailmenus.context_processors.wagtailmenus",
-                "content_manager.context_processors.skiplinks",
-                "content_manager.context_processors.mega_menus",
+                "wagtail_dsfr.content_manager.context_processors.skiplinks",
+                "wagtail_dsfr.content_manager.context_processors.mega_menus",
             ],
         },
     },
@@ -346,7 +347,7 @@ LOGOUT_URL = f"{FORCE_SCRIPT_NAME}/{WAGTAILADMIN_PATH}logout/"
 
 WAGTAIL_FRONTEND_LOGIN_URL = LOGIN_URL
 
-WAGTAIL_PASSWORD_REQUIRED_TEMPLATE = "content_manager/password_required.html"
+WAGTAIL_PASSWORD_REQUIRED_TEMPLATE = "wagtail_dsfr.content_manager/password_required.html"
 
 # Disable Gravatar service
 WAGTAIL_GRAVATAR_PROVIDER_URL = None
@@ -440,7 +441,7 @@ LOGOUT_REDIRECT_URL = f"{FORCE_SCRIPT_NAME}/"
 if PROCONNECT_ACTIVATED:
     INSTALLED_APPS += [
         "mozilla_django_oidc",
-        "proconnect",
+        "wagtail_dsfr.proconnect",
     ]
 
     AUTHENTICATION_BACKENDS = [

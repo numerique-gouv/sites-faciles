@@ -40,6 +40,7 @@ dependencies = [
     "mozilla-django-oidc>=4.0.1",
     "wagtail-honeypot @ git+https://github.com/Luzzzi/wagtail-honeypot@feature/i18n-required-honeypot",
     "wand>=0.6.13",
+    "wagtail-dsfr==2.4.0rc1",
 ]
 
 [dependency-groups]
