@@ -1754,7 +1754,7 @@ requires-dist = [
     { name = "rust-just", specifier = ">=1.40.0" },
     { name = "unidecode", specifier = ">=1.4.0" },
     { name = "wagtail", specifier = ">=7.2.0" },
-    { name = "wagtail-dsfr", specifier = "==2.3.0rc8" },
+    { name = "wagtail-dsfr", specifier = "==2.4.0rc1" },
     { name = "wagtail-honeypot", git = "https://github.com/Luzzzi/wagtail-honeypot?rev=feature%2Fi18n-required-honeypot" },
     { name = "wagtail-localize", specifier = ">=1.12.1" },
     { name = "wagtail-markdown", specifier = ">=0.12.1" },
@@ -1944,7 +1944,7 @@ wheels = [
 
 [[package]]
 name = "wagtail-dsfr"
-version = "2.3.0rc8"
+version = "2.4.0rc1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -1968,9 +1968,9 @@ dependencies = [
     { name = "wagtail-modeladmin" },
     { name = "wagtailmenus" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e4/30/7769f0158e7f298d51053070ec9964c6ae28c74992f1ac0977c9e5e761fb/wagtail_dsfr-2.3.0rc8.tar.gz", hash = "sha256:982b9628416570f735e1533afcfab643769ebcbbc53e8141ae5c87aaddadccf2", size = 5168638, upload-time = "2025-11-27T14:46:06.226Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4e/0b/7f7914b5cf32c8349cea9985b1fcafbbaf39e90b9199117bd910f4ba48f2/wagtail_dsfr-2.4.0rc1.tar.gz", hash = "sha256:86f0cf496e75e4418f4cdae0d997f0d7e53e7d2452403b4496f3c64f535bd252", size = 5168710, upload-time = "2025-11-27T15:17:56.14Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/64/28/56d7f4a61fec9d625740e70a3dd4e966f01de4d3e5cc3fd35a63f6ed8b57/wagtail_dsfr-2.3.0rc8-py3-none-any.whl", hash = "sha256:b543b021abcff65d74c642f6f7244a31945d745c2e1f1de7cbc148e56a54d7e1", size = 5527202, upload-time = "2025-11-27T14:46:04.195Z" },
+    { url = "https://files.pythonhosted.org/packages/91/3f/0d930d95705c35d02b549d07293daf7ce4c4b085efe6c23bbd76c05f8161/wagtail_dsfr-2.4.0rc1-py3-none-any.whl", hash = "sha256:3741a6ad8d85ee5be5bb91739378b1221a9fd9b03e10223862bfddb358f035a0", size = 5527441, upload-time = "2025-11-27T15:17:53.827Z" },
 ]
 
 [[package]]
