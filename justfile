@@ -26,7 +26,6 @@ createsuperuser:
 alias first-deploy := deploy
 deploy:
     just migrate
-    just collectstatic
     {{docker_cmd}} {{uv_run}} python manage.py create_starter_pages
     {{docker_cmd}} {{uv_run}} python manage.py import_page_templates
     {{docker_cmd}} {{uv_run}} python manage.py import_illustration_images

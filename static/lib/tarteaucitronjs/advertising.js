@@ -1,2 +1,0 @@
-/* min ready */
-tarteaucitronNoAdBlocker = true;
