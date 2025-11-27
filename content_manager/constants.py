@@ -83,6 +83,8 @@ LIMITED_RICHTEXTFIELD_FEATURES = [
     "superscript",
     "subscript",
     "strikethrough",
+    "blue_text",
+    "white_text",
     "text-left",
     "text-center",
     "text-right",

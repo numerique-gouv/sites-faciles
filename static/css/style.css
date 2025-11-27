@@ -152,6 +152,10 @@ p:empty {
     display: inline;
 }
 
+.cmsfr-text-center {
+  text-align: center !important;
+}
+
 @media all and (max-width: 575px) {
     .cmsfr-order-mobile__2 {
         order: 2;
@@ -172,7 +176,7 @@ p:empty {
 }
 
 .cmsfr-image-focus-right {
-    object-position: right; 
+    object-position: right;
 }
 
 .cmsfr-image-focus-top {
@@ -181,4 +185,11 @@ p:empty {
 
 .cmsfr-image-focus-bottom {
     object-position: bottom;
+}
+
+.cmsfr-text--blue {
+  color: var(--text-active-blue-france) !important;
+}
+.cmsfr-text--white {
+  color: var(--grey-1000-50) !important;
 }

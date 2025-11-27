@@ -1,16 +1,66 @@
-"""
-Text alignment features for Draftail editor.
-
-Implementation using BlockFeature with custom CSS that preserves content styling.
-"""
-
 import wagtail.admin.rich_text.editors.draftail.features as draftail_features
 from django.templatetags.static import static
 from django.utils.html import format_html
 from wagtail import hooks
-from wagtail.admin.rich_text.converters.html_to_contentstate import (
-    BlockElementHandler,
-)
+from wagtail.admin.rich_text.converters.html_to_contentstate import BlockElementHandler, InlineStyleElementHandler
+
+
+@hooks.register("register_rich_text_features")
+def register_text_colors(features):
+    """
+    Register text color features: blue and white (black is default)
+    """
+    # Configuration pour le texte bleu
+    features.register_editor_plugin(
+        "draftail",
+        "blue_text",
+        draftail_features.InlineStyleFeature(
+            {
+                "type": "BLUETEXT",
+                # Pas de label = pas de bouton dans la toolbar
+                "style": {
+                    "color": "#000091",
+                    "fontWeight": "normal",
+                },
+            }
+        ),
+    )
+
+    # Configuration pour le texte blanc
+    features.register_editor_plugin(
+        "draftail",
+        "white_text",
+        draftail_features.InlineStyleFeature(
+            {
+                "type": "WHITETEXT",
+                # Pas de label = pas de bouton dans la toolbar
+                "style": {
+                    "color": "#ffffff",
+                    "backgroundColor": "#1e1e1e",
+                    "padding": "2px 4px",
+                    "borderRadius": "3px",
+                },
+            }
+        ),
+    )
+
+    # Conversion pour la base de données - texte bleu
+    db_conversion_blue = {
+        "from_database_format": {'span[class="cmsfr-text--blue"]': InlineStyleElementHandler("BLUETEXT")},
+        "to_database_format": {"style_map": {"BLUETEXT": 'span class="cmsfr-text--blue"'}},
+    }
+    features.register_converter_rule("contentstate", "blue_text", db_conversion_blue)
+
+    # Conversion pour la base de données - texte blanc
+    db_conversion_white = {
+        "from_database_format": {'span[class="cmsfr-text--white"]': InlineStyleElementHandler("WHITETEXT")},
+        "to_database_format": {"style_map": {"WHITETEXT": 'span class="cmsfr-text--white"'}},
+    }
+    features.register_converter_rule("contentstate", "white_text", db_conversion_white)
+
+    # Ajouter aux features par défaut
+    features.default_features.append("blue_text")
+    features.default_features.append("white_text")
 
 
 @hooks.register("register_rich_text_features")
@@ -129,8 +179,21 @@ def register_text_alignment_features(features):
 
 @hooks.register("insert_editor_js")
 def editor_js():
-    """Inject JavaScript to enhance alignment display in editor."""
+    return format_html(
+        '<script src="{}"></script><script src="{}"></script>',
+        static("content_manager/js/text-alignment.js"),
+        static("content_manager/js/text-colors-dropdown.js"),
+    )
+
+
+@hooks.register("insert_editor_css")
+def editor_css():
+    return format_html('<link rel="stylesheet" href="{}">', static("content_manager/css/text-colors-dropdown.css"))
+
+
+@hooks.register("insert_global_admin_js")
+def global_admin_js():
     return format_html(
         '<script src="{}"></script>',
-        static("content_manager/js/text-alignment.js"),
+        static("content_manager/js/text-colors-dropdown.js"),
     )
