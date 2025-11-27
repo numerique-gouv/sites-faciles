@@ -25,7 +25,7 @@ RUN uv sync --locked
 
 COPY --chown=app:app . .
 
-# RUN uv run python manage.py collectstatic --no-input
+RUN uv run python manage.py collectstatic --no-input
 
 RUN chown 1000:1000 -R /app
 USER app
