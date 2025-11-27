@@ -2,21 +2,21 @@
 {% load i18n static wagtailcore_tags wagtailimages_tags menu_tags wagtail_dsfr_tags %}
 
 {% block brand %}
-  <p class="fr-logo">{{ settings.content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
+  <p class="fr-logo">{{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.header_brand_html|safe }}</p>
 {% endblock brand %}
 
 {% block service_title %}
   {% translate "Home page" as home_page %}
   <a href="{% root_url %}"
-     title="{{ home_page }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
+     title="{{ home_page }} — {{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.site_title }}">
 
     <p class="fr-header__service-title">
-      {% if settings.content_manager.CmsDsfrConfig.site_title|slice:"-2:" == "fr" %}
-        {{ settings.content_manager.CmsDsfrConfig.site_title|slice:":-2" }}<em>fr</em>
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.site_title|slice:"-2:" == "fr" %}
+        {{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.site_title|slice:":-2" }}<em>fr</em>
       {% else %}
-        {{ settings.content_manager.CmsDsfrConfig.site_title }}
+        {{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.site_title }}
       {% endif %}
-      {% if settings.content_manager.CmsDsfrConfig.beta_tag %}
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.beta_tag %}
         <span class="fr-badge fr-badge--sm fr-badge--green-emeraude">BETA</span>
       {% endif %}
     </p>
@@ -24,18 +24,18 @@
 {% endblock service_title %}
 
 {% block service_tagline %}
-  {{ settings.content_manager.CmsDsfrConfig.site_tagline }}
+  {{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.site_tagline }}
 {% endblock service_tagline %}
 
 {% block operator_logo %}
-  {% if settings.content_manager.CmsDsfrConfig.operator_logo_file %}
-    {% image settings.content_manager.CmsDsfrConfig.operator_logo_file original as logo_img %}
+  {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.operator_logo_file %}
+    {% image settings.wagtail_dsfr_content_manager.CmsDsfrConfig.operator_logo_file original as logo_img %}
 
     <div class="fr-header__operator">
       <img class="fr-responsive-img"
            src="{{ logo_img.url }}"
-           alt="{{ settings.content_manager.CmsDsfrConfig.operator_logo_alt }}"
-           {% if settings.content_manager.CmsDsfrConfig.operator_logo_width >= 1 %}style="max-width:{{ settings.content_manager.CmsDsfrConfig.operator_logo_width|floatformat:"1u" }}rem;"{% endif %} />
+           alt="{{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.operator_logo_alt }}"
+           {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.operator_logo_width >= 1 %}style="max-width:{{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.operator_logo_width|floatformat:"1u" }}rem;"{% endif %} />
     </div>
   {% endif %}
 {% endblock operator_logo %}
@@ -55,7 +55,7 @@
         </button>
       </form>
     </li>
-  {% elif settings.content_manager.CmsDsfrConfig.header_login_button %}
+  {% elif settings.wagtail_dsfr_content_manager.CmsDsfrConfig.header_login_button %}
     <li>
       <a class="fr-btn fr-icon-lock-line"
          href="{% settings_value 'LOGIN_URL' %}">{% translate "Log in" %}</a>
@@ -65,7 +65,7 @@
 
 {% block header_search %}
   {% translate "Search" as search_label %}
-  {% if settings.content_manager.CmsDsfrConfig.search_bar %}
+  {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.search_bar %}
     <div class="fr-header__search fr-modal" id="modal-search">
       <div class="fr-container fr-container-lg--fluid">
         {% translate "Close" as close_label %}
@@ -91,7 +91,7 @@
 {% block burger_menu %}
   {% translate "Search" as search_label %}
   <div class="fr-header__navbar">
-    {% if settings.content_manager.CmsDsfrConfig.search_bar %}
+    {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.search_bar %}
       <button class="fr-btn--search fr-btn"
               data-fr-opened="false"
               aria-controls="modal-search"

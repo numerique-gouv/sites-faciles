@@ -7,7 +7,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("blog", "0050_auto_20250917_1459"),
+        ("wagtail_dsfr_blog", "0050_auto_20250917_1459"),
     ]
 
     operations = [
@@ -118,7 +118,7 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    10: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    10: ("wagtail_dsfr.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     11: (
                         "wagtail.blocks.ChoiceBlock",
                         [],
@@ -556,7 +556,7 @@ class Migration(migrations.Migration):
                             "required": False,
                         },
                     ),
-                    10: ("content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
+                    10: ("wagtail_dsfr.content_manager.blocks.IconPickerBlock", (), {"label": "Icon", "required": False}),
                     11: (
                         "wagtail.blocks.ChoiceBlock",
                         [],

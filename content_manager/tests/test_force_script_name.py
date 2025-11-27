@@ -3,7 +3,7 @@ from django.test.utils import override_settings
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
 
-from content_manager.models import ContentPage
+from wagtail_dsfr.content_manager.models import ContentPage
 
 User = get_user_model()
 

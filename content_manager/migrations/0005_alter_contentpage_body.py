@@ -9,7 +9,7 @@ import wagtail.images.blocks
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0004_alter_contentpage_body"),
+        ("wagtail_dsfr_content_manager", "0004_alter_contentpage_body"),
     ]
 
     operations = [

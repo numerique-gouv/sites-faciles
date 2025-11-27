@@ -9,9 +9,9 @@ from wagtail.images.api.fields import ImageRenditionField
 from wagtail.models import Page
 from wagtail.search import index
 
-from content_manager.blocks.buttons_links import ButtonsHorizontalListBlock
-from content_manager.blocks.core import HERO_STREAMFIELD_BLOCKS, STREAMFIELD_COMMON_BLOCKS
-from content_manager.utils import get_streamfield_raw_text
+from wagtail_dsfr.content_manager.blocks.buttons_links import ButtonsHorizontalListBlock
+from wagtail_dsfr.content_manager.blocks.core import HERO_STREAMFIELD_BLOCKS, STREAMFIELD_COMMON_BLOCKS
+from wagtail_dsfr.content_manager.utils import get_streamfield_raw_text
 
 
 class SitesFacilesBasePage(Page):

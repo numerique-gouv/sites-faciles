@@ -1,4 +1,4 @@
-from content_manager.models import MegaMenu
+from wagtail_dsfr.content_manager.models import MegaMenu
 
 
 def skiplinks(request) -> dict:

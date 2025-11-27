@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("events", "0015_alter_evententrypage_body_alter_eventsindexpage_body"),
+        ("wagtail_dsfr_events", "0015_alter_evententrypage_body_alter_eventsindexpage_body"),
     ]
 
     operations = [

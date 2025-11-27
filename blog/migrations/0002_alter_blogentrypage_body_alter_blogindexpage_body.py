@@ -10,7 +10,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("blog", "0001_initial"),
+        ("wagtail_dsfr_blog", "0001_initial"),
     ]
 
     operations = [

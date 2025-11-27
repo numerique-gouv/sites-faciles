@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
     dependencies = [
         ("wagtailcore", "0089_log_entry_data_json_null_to_object"),
-        ("content_manager", "0006_analyticssettings"),
+        ("wagtail_dsfr_content_manager", "0006_analyticssettings"),
     ]
 
     operations = [

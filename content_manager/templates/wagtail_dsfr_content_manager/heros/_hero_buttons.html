@@ -1,0 +1,7 @@
+{% with value.buttons.0.icon_side as icons_side %}
+  <ul class="fr-btns-group fr-btns-group--inline-lg cmsfr-hero-btns--center {% if icons_side == 'fr-btn--icon-left' %} fr-btns-group--icon-left{% elif icons_side == 'fr-btn--icon-right' %} fr-btns-group--icon-right {% endif %}">
+    {% for button in value.buttons %}
+      <li>{% include "wagtail_dsfr_content_manager/blocks/button.html" with button=button %}</li>
+    {% endfor %}
+  </ul>
+{% endwith %}

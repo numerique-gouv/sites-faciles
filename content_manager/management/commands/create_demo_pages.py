@@ -5,11 +5,11 @@ from wagtail.rich_text import RichText
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from blog.models import BlogIndexPage
-from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
-from content_manager.services.accessors import get_or_create_catalog_index_page, get_or_create_content_page
-from content_manager.utils import get_default_site
-from forms.models import FormField, FormPage
+from wagtail_dsfr.blog.models import BlogIndexPage
+from wagtail_dsfr.content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
+from wagtail_dsfr.content_manager.services.accessors import get_or_create_catalog_index_page, get_or_create_content_page
+from wagtail_dsfr.content_manager.utils import get_default_site
+from wagtail_dsfr.forms.models import FormField, FormPage
 
 ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form"]
 

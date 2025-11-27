@@ -2,17 +2,17 @@
 {% load i18n %}
 
 {% block follow_newsletter %}
-  {% if settings.content_manager.CmsDsfrConfig.show_newsletter_block %}
-    <div class="fr-col-12{% if settings.content_manager.CmsDsfrConfig.show_social_block %} fr-col-md-8{% endif %}">
+  {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.show_newsletter_block %}
+    <div class="fr-col-12{% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.show_social_block %} fr-col-md-8{% endif %}">
       <div class="fr-follow__newsletter">
         <div>
           <h2 class="fr-h5">{% translate "Subscribe to our newsletter" context "Section title" %}</h2>
-          <p class="fr-text--sm">{{ settings.content_manager.CmsDsfrConfig.newsletter_description | safe }}</p>
+          <p class="fr-text--sm">{{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.newsletter_description | safe }}</p>
         </div>
         <div class="fr-btns-group fr-btns-group--inline-md">
           {% translate "Subscribe to our newsletter" context "Button title" as subcribe_button_title %}
           <a class="fr-btn"
-             href="{{ settings.content_manager.CmsDsfrConfig.newsletter_url }}"
+             href="{{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.newsletter_url }}"
              target="_blank"
              rel="noopener external"
              title="{{ subcribe_button_title }} - {{ new_window_label }}">{% translate "Subscribe" %}</a>
@@ -23,8 +23,8 @@
 {% endblock follow_newsletter %}
 
 {% block follow_social %}
-  {% if settings.content_manager.CmsDsfrConfig.show_social_block %}
-    <div class="fr-col-12{% if settings.content_manager.CmsDsfrConfig.show_newsletter_block %} fr-col-md-4{% endif %}">
+  {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.show_social_block %}
+    <div class="fr-col-12{% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.show_newsletter_block %} fr-col-md-4{% endif %}">
       <div class="fr-follow__social">
         <h2 class="fr-h5">
           {% blocktranslate trimmed %}
@@ -34,7 +34,7 @@
           {% endblocktranslate %}
         </h2>
         <ul class="fr-btns-group">
-          {% for link in settings.content_manager.CmsDsfrConfig.social_media_items.all %}
+          {% for link in settings.wagtail_dsfr_content_manager.CmsDsfrConfig.social_media_items.all %}
             <li>
               <a class="{{ link.icon_class }} fr-btn"
                  href="{{ link.url }}"

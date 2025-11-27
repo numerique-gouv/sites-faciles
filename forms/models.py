@@ -12,7 +12,7 @@ from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from wagtail.fields import RichTextField
 from wagtail_honeypot.models import HoneypotFormMixin, HoneypotFormSubmissionMixin
 
-from forms.widgets import CustomEmailInputWidget
+from wagtail_dsfr.forms.widgets import CustomEmailInputWidget
 
 
 class FormField(AbstractFormField):

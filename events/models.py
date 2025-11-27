@@ -18,10 +18,10 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.models.i18n import Locale
 from wagtail.search import index
 
-from blog.models import Category, CategorySerializer, Organization, Person, PersonSerializer
-from content_manager.abstract import SitesFacilesBasePage
-from content_manager.models import CmsDsfrConfig, Tag
-from events.forms import EventSearchForm
+from wagtail_dsfr.blog.models import Category, CategorySerializer, Organization, Person, PersonSerializer
+from wagtail_dsfr.content_manager.abstract import SitesFacilesBasePage
+from wagtail_dsfr.content_manager.models import CmsDsfrConfig, Tag
+from wagtail_dsfr.events.forms import EventSearchForm
 
 
 class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
@@ -52,7 +52,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         ),
     ]
 
-    subpage_types = ["events.EventEntryPage"]
+    subpage_types = ["wagtail_dsfr_events.EventEntryPage"]
 
     class Meta:
         verbose_name = _("Event calendar index")
@@ -261,7 +261,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
                 "paginator": paginator,
                 "current_year": year,
             },
-            template="events/events_archive_page.html",
+            template="wagtail_dsfr_events/events_archive_page.html",
         )
 
 
@@ -269,7 +269,7 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     tags = ClusterTaggableManager(through="TagEventEntryPage", blank=True)
 
     event_categories = ParentalManyToManyField(
-        "blog.Category",
+        "wagtail_dsfr_blog.Category",
         through="CategoryEventEntryPage",
         blank=True,
         verbose_name=_("Categories"),
@@ -289,10 +289,10 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
     )
 
     authors = ParentalManyToManyField(
-        "blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
+        "wagtail_dsfr_blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
 
-    parent_page_types = ["events.EventsIndexPage"]
+    parent_page_types = ["wagtail_dsfr_events.EventsIndexPage"]
     subpage_types = []
 
     search_fields = SitesFacilesBasePage.search_fields + [

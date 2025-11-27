@@ -4,7 +4,7 @@
   <div class="fr-share" id="share-{{ block.id }}">
     <p class="fr-share__title">{% translate "Share this page" %}</p>
     <ul class="fr-btns-group">
-      {% if settings.content_manager.CmsDsfrConfig.share_links_facebook %}
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.share_links_facebook %}
         <li>
           {% translate "Share on Facebook" as share_facebook %}
           <a class="fr-btn--facebook fr-btn"
@@ -16,7 +16,7 @@
              href="https://www.facebook.com/sharer.php?u={{ request.build_absolute_uri }}">{{ share_facebook }}</a>
         </li>
       {% endif %}
-      {% if settings.content_manager.CmsDsfrConfig.share_links_twitter %}
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.share_links_twitter %}
         <li>
           {% translate "Share on X (previously Twitter)" as share_twitter %}
           <a class="fr-btn--twitter-x fr-btn"
@@ -30,7 +30,7 @@
           </a>
         </li>
       {% endif %}
-      {% if settings.content_manager.CmsDsfrConfig.share_links_linkedin %}
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.share_links_linkedin %}
         <li>
           {% translate "Share on LinkedIn" as share_linkedin %}
           <a class="fr-btn--linkedin fr-btn"
@@ -44,7 +44,7 @@
           </a>
         </li>
       {% endif %}
-      {% if settings.content_manager.CmsDsfrConfig.share_links_email %}
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.share_links_email %}
         <li>
           {% translate "Share via email" as share_email %}
           <a class="fr-btn--mail fr-btn"
@@ -57,7 +57,7 @@
           </a>
         </li>
       {% endif %}
-      {% if settings.content_manager.CmsDsfrConfig.share_links_clipboard %}
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.share_links_clipboard %}
         <li>
           {% translate "Page URL copied to clipboard." as copied_to_clipboard %}
           <button class="fr-btn--copy fr-btn"

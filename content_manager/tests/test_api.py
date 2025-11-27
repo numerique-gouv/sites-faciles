@@ -4,7 +4,7 @@ from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 
-from content_manager.models import ContentPage
+from wagtail_dsfr.content_manager.models import ContentPage
 
 User = get_user_model()
 

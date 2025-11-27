@@ -4,7 +4,7 @@ from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailmarkdown.blocks import MarkdownBlock
 
-from content_manager.constants import (
+from wagtail_dsfr.content_manager.constants import (
     GRID_3_4_6_CHOICES,
     GRID_HORIZONTAL_ALIGN_CHOICES,
     GRID_VERTICAL_ALIGN_CHOICES,
@@ -160,7 +160,7 @@ class ItemGridBlock(blocks.StructBlock):
 
     class Meta:
         icon = "grip"
-        template = "content_manager/blocks/item_grid.html"
+        template = "wagtail_dsfr_content_manager/blocks/item_grid.html"
         value_class = GridPositionStructValue
 
 
@@ -173,7 +173,7 @@ class TabsBlock(blocks.StreamBlock):
     tabs = TabBlock(label=_("Tab"), min_num=1, max_num=15)
 
     class Meta:
-        template = "content_manager/blocks/tabs.html"
+        template = "wagtail_dsfr_content_manager/blocks/tabs.html"
 
 
 class AdjustableColumnBlock(blocks.StructBlock):
@@ -253,7 +253,7 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
 
     class Meta:
         icon = "dots-horizontal"
-        template = "content_manager/blocks/multicolumns.html"
+        template = "wagtail_dsfr_content_manager/blocks/multicolumns.html"
         value_class = MultiColumnsStructValue
 
 
@@ -293,7 +293,7 @@ class FullWidthBackgroundBlock(blocks.StructBlock):
 
     class Meta:
         icon = "minus"
-        template = "content_manager/blocks/full_width_background.html"
+        template = "wagtail_dsfr_content_manager/blocks/full_width_background.html"
         value_class = BlockMarginStructValue
 
 
@@ -302,7 +302,7 @@ class PageTreeBlock(blocks.StructBlock):
 
     class Meta:
         icon = "minus"
-        template = "content_manager/blocks/pagetree.html"
+        template = "wagtail_dsfr_content_manager/blocks/pagetree.html"
 
 
 class SideMenuBlock(blocks.StreamBlock):
@@ -344,5 +344,5 @@ class FullWidthBackgroundWithSidemenuBlock(blocks.StructBlock):
 
     class Meta:
         icon = "minus"
-        template = "content_manager/blocks/full_width_background_with_sidemenu.html"
+        template = "wagtail_dsfr_content_manager/blocks/full_width_background_with_sidemenu.html"
         value_class = BlockMarginStructValue

@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("blog", "0033_alter_blogentrypage_body_alter_blogindexpage_body"),
+        ("wagtail_dsfr_blog", "0033_alter_blogentrypage_body_alter_blogindexpage_body"),
     ]
 
     operations = [

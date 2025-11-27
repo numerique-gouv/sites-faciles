@@ -30,5 +30,5 @@ class Command(shell.Command):
             "django.db.models.OuterRef",
             "django.db.models.Subquery",
             # Project-related custom imports
-            "content_manager.utils.get_default_site",
+            "wagtail_dsfr.content_manager.utils.get_default_site",
         ]

@@ -8,9 +8,9 @@ from wagtail.test.utils import WagtailPageTestCase
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from content_manager.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
-from content_manager.services.accessors import get_or_create_content_page
-from content_manager.utils import get_default_site
+from wagtail_dsfr.content_manager.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
+from wagtail_dsfr.content_manager.services.accessors import get_or_create_content_page
+from wagtail_dsfr.content_manager.utils import get_default_site
 
 User = get_user_model()
 

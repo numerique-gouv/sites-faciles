@@ -9,7 +9,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("content_manager", "0067_alter_catalogindexpage_body_and_more"),
+        ("wagtail_dsfr_content_manager", "0067_alter_catalogindexpage_body_and_more"),
     ]
 
     operations = [
@@ -146,7 +146,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     11: (
-                        "content_manager.blocks.buttons_links.IconPickerBlock",
+                        "wagtail_dsfr.content_manager.blocks.buttons_links.IconPickerBlock",
                         (),
                         {"label": "Icon", "required": False},
                     ),
@@ -602,7 +602,7 @@ class Migration(migrations.Migration):
                         },
                     ),
                     11: (
-                        "content_manager.blocks.buttons_links.IconPickerBlock",
+                        "wagtail_dsfr.content_manager.blocks.buttons_links.IconPickerBlock",
                         (),
                         {"label": "Icon", "required": False},
                     ),

@@ -3,7 +3,7 @@ from wagtail import blocks
 from wagtail.contrib.typed_table_block.blocks import TypedTableBlock
 from wagtail.images.blocks import ImageBlock
 
-from content_manager.constants import (
+from wagtail_dsfr.content_manager.constants import (
     LIMITED_RICHTEXTFIELD_FEATURES,
 )
 
@@ -12,7 +12,7 @@ class PictogramBlock(ImageBlock):
     # A subclass of ImageBlock with the height fixed to 80px.
     class Meta:
         icon = "image"
-        template = "content_manager/widgets/pictogram.html"
+        template = "wagtail_dsfr_content_manager/widgets/pictogram.html"
 
 
 class AdvancedTypedTableBlock(TypedTableBlock):
@@ -22,5 +22,5 @@ class AdvancedTypedTableBlock(TypedTableBlock):
 
     class Meta:
         icon = "table"
-        template = "content_manager/blocks/typed_table_block.html"
+        template = "wagtail_dsfr_content_manager/blocks/typed_table_block.html"
         help_text = _('The "row heading" column type only works on the first column of the table.')

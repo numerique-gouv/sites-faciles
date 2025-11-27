@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from content_manager.services.import_export import ImportPages
+from wagtail_dsfr.content_manager.services.import_export import ImportPages
 
 
 class Command(BaseCommand):

@@ -5,9 +5,9 @@ from wagtail.models import Collection, Page, PageViewRestriction
 from wagtailmenus.models.menuitems import MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from content_manager.constants import HEADER_FIELDS
-from content_manager.models import CatalogIndexPage, ContentPage
-from content_manager.utils import get_default_site
+from wagtail_dsfr.content_manager.constants import HEADER_FIELDS
+from wagtail_dsfr.content_manager.models import CatalogIndexPage, ContentPage
+from wagtail_dsfr.content_manager.utils import get_default_site
 
 style = color_style()
 

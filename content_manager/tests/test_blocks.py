@@ -4,10 +4,10 @@ from wagtail.models import Page
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 
-from blog.models import BlogEntryPage, BlogIndexPage
-from content_manager.models import ContentPage
-from content_manager.utils import import_image
-from events.models import EventEntryPage, EventsIndexPage
+from wagtail_dsfr.blog.models import BlogEntryPage, BlogIndexPage
+from wagtail_dsfr.content_manager.models import ContentPage
+from wagtail_dsfr.content_manager.utils import import_image
+from wagtail_dsfr.events.models import EventEntryPage, EventsIndexPage
 
 # Tests for blocks that have a value_class
 

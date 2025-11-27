@@ -6,12 +6,12 @@ from django.views.generic import ListView, TemplateView
 from unidecode import unidecode
 from wagtail.models import Page, Site
 
-from content_manager.models import ContentPage, Tag
+from wagtail_dsfr.content_manager.models import ContentPage, Tag
 
 
 class SearchResultsView(ListView):
     model = Page
-    template_name = "content_manager/search_results.html"
+    template_name = "wagtail_dsfr_content_manager/search_results.html"
 
     def get_queryset(self):
         query = self.request.GET.get("q", None)
@@ -29,7 +29,7 @@ class SearchResultsView(ListView):
 
 
 class TagsListView(TemplateView):
-    template_name = "content_manager/tags_list_page.html"
+    template_name = "wagtail_dsfr_content_manager/tags_list_page.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -60,7 +60,7 @@ class TagsListView(TemplateView):
 
 
 class TagView(ListView):
-    template_name = "content_manager/tag_page.html"
+    template_name = "wagtail_dsfr_content_manager/tag_page.html"
     model = ContentPage
     paginate_by = 10
 
@@ -95,7 +95,7 @@ class SiteMapView(TemplateView):
     (different than the SEO-oriented sitemap.xml)
     """
 
-    template_name = "content_manager/sitemap_page.html"
+    template_name = "wagtail_dsfr_content_manager/sitemap_page.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

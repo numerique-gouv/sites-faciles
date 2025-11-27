@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("blog", "0004_alter_blogentrypage_body_alter_blogindexpage_body"),
+        ("wagtail_dsfr_blog", "0004_alter_blogentrypage_body_alter_blogindexpage_body"),
     ]
 
     operations = [
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
             model_name="blogentrypage",
             name="blog_categories",
             field=modelcluster.fields.ParentalManyToManyField(
-                blank=True, through="blog.CategoryEntryPage", to="blog.category", verbose_name="Categories"
+                blank=True, through="wagtail_dsfr_blog.CategoryEntryPage", to="wagtail_dsfr_blog.category", verbose_name="Categories"
             ),
         ),
         migrations.AlterField(

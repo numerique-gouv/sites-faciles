@@ -10,7 +10,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0018_megamenu_megamenucategory"),
+        ("wagtail_dsfr_content_manager", "0018_megamenu_megamenucategory"),
     ]
 
     operations = [

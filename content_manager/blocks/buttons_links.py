@@ -8,14 +8,14 @@ from wagtail.admin.telepath import register
 from wagtail.blocks.struct_block import StructBlockAdapter, StructBlockValidationError
 from wagtail.documents.blocks import DocumentChooserBlock
 
-from content_manager.constants import (
+from wagtail_dsfr.content_manager.constants import (
     BUTTON_ICON_SIDE,
     BUTTON_TYPE_CHOICES,
     BUTTONS_ALIGN_CHOICES,
     LINK_ICON_CHOICES,
     LINK_SIZE_CHOICES,
 )
-from content_manager.widgets import DsfrIconPickerWidget
+from wagtail_dsfr.content_manager.widgets import DsfrIconPickerWidget
 
 
 ## Icon Picker
@@ -52,7 +52,7 @@ class AnchorBlock(blocks.StructBlock):
 
     class Meta:
         icon = "anchor"
-        template = "content_manager/blocks/anchor.html"
+        template = "wagtail_dsfr_content_manager/blocks/anchor.html"
 
 
 ## Buttons & Links
@@ -168,7 +168,7 @@ class LinksVerticalListBlock(blocks.StreamBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/links_vertical_list.html"
+        template = "wagtail_dsfr_content_manager/blocks/links_vertical_list.html"
 
 
 class ButtonBlock(LinkWithoutLabelBlock):
@@ -192,7 +192,7 @@ class ButtonsHorizontalListBlock(blocks.StreamBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/buttons_horizontal_list.html"
+        template = "wagtail_dsfr_content_manager/blocks/buttons_horizontal_list.html"
 
 
 class ButtonsVerticalListBlock(blocks.StreamBlock):
@@ -200,7 +200,7 @@ class ButtonsVerticalListBlock(blocks.StreamBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/buttons_vertical_list.html"
+        template = "wagtail_dsfr_content_manager/blocks/buttons_vertical_list.html"
 
 
 class ButtonsListBlock(blocks.StructBlock):
@@ -215,7 +215,7 @@ class ButtonsListBlock(blocks.StructBlock):
 
     class Meta:
         icon = "list-ul"
-        template = "content_manager/blocks/buttons_list.html"
+        template = "wagtail_dsfr_content_manager/blocks/buttons_list.html"
 
 
 class SingleLinkBlock(LinkBlock):
@@ -236,7 +236,7 @@ class SingleLinkBlock(LinkBlock):
     class Meta:
         value_class = LinkStructValue
         icon = "link"
-        template = "content_manager/blocks/link.html"
+        template = "wagtail_dsfr_content_manager/blocks/link.html"
 
 
 class LinkBlockAdapter(StructBlockAdapter):

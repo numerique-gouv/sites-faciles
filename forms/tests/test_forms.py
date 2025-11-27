@@ -1,7 +1,7 @@
 from django.core.management import call_command
 from wagtail.test.utils import WagtailPageTestCase
 
-from forms.models import FormPage
+from wagtail_dsfr.forms.models import FormPage
 
 
 class FormsTestCase(WagtailPageTestCase):

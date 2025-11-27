@@ -9,7 +9,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0009_alter_contentpage_body"),
+        ("wagtail_dsfr_content_manager", "0009_alter_contentpage_body"),
     ]
 
     operations = [

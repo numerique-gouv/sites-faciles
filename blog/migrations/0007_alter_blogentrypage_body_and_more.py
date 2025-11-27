@@ -7,12 +7,12 @@ import wagtail.images.blocks
 import wagtailmarkdown.blocks
 from django.db import migrations, models
 
-import content_manager.blocks
+import wagtail_dsfr.content_manager.blocks
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("blog", "0006_category_colophon_alter_blogentrypage_body_and_more"),
+        ("wagtail_dsfr_blog", "0006_category_colophon_alter_blogentrypage_body_and_more"),
     ]
 
     operations = [
@@ -592,7 +592,7 @@ class Migration(migrations.Migration):
                                             ),
                                             (
                                                 "icon_class",
-                                                content_manager.blocks.IconPickerBlock(label="Icon", required=False),
+                                                wagtail_dsfr.content_manager.blocks.IconPickerBlock(label="Icon", required=False),
                                             ),
                                             (
                                                 "link",
@@ -1250,7 +1250,7 @@ class Migration(migrations.Migration):
                                             ),
                                             (
                                                 "icon_class",
-                                                content_manager.blocks.IconPickerBlock(label="Icon", required=False),
+                                                wagtail_dsfr.content_manager.blocks.IconPickerBlock(label="Icon", required=False),
                                             ),
                                             (
                                                 "link",

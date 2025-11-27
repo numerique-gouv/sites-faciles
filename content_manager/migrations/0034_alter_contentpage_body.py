@@ -8,12 +8,12 @@ import wagtail.images.blocks
 import wagtailmarkdown.blocks
 from django.db import migrations
 
-import content_manager.blocks
+import wagtail_dsfr.content_manager.blocks
 
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0033_alter_contentpage_body"),
+        ("wagtail_dsfr_content_manager", "0033_alter_contentpage_body"),
     ]
 
     operations = [
@@ -257,7 +257,7 @@ class Migration(migrations.Migration):
                                         label="Heading level",
                                     ),
                                 ),
-                                ("icon_class", content_manager.blocks.IconPickerBlock(label="Icon", required=False)),
+                                ("icon_class", wagtail_dsfr.content_manager.blocks.IconPickerBlock(label="Icon", required=False)),
                                 (
                                     "text",
                                     wagtail.blocks.RichTextBlock(
@@ -634,7 +634,7 @@ class Migration(migrations.Migration):
                                             ),
                                             (
                                                 "icon_class",
-                                                content_manager.blocks.IconPickerBlock(label="Icon", required=False),
+                                                wagtail_dsfr.content_manager.blocks.IconPickerBlock(label="Icon", required=False),
                                             ),
                                             (
                                                 "link",
@@ -910,7 +910,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "top_detail_icon",
-                                    content_manager.blocks.IconPickerBlock(label="Top detail: icon", required=False),
+                                    wagtail_dsfr.content_manager.blocks.IconPickerBlock(label="Top detail: icon", required=False),
                                 ),
                                 (
                                     "top_detail_badges_tags",
@@ -1055,7 +1055,7 @@ class Migration(migrations.Migration):
                                                                     ),
                                                                     (
                                                                         "icon_class",
-                                                                        content_manager.blocks.IconPickerBlock(
+                                                                        wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                             label="Icon", required=False
                                                                         ),
                                                                     ),
@@ -1114,7 +1114,7 @@ class Migration(migrations.Migration):
                                 ),
                                 (
                                     "bottom_detail_icon",
-                                    content_manager.blocks.IconPickerBlock(
+                                    wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                         label="Bottom detail: icon", required=False
                                     ),
                                 ),
@@ -1477,7 +1477,7 @@ class Migration(migrations.Migration):
                                                                     ),
                                                                     (
                                                                         "icon_class",
-                                                                        content_manager.blocks.IconPickerBlock(
+                                                                        wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                             label="Icon", required=False
                                                                         ),
                                                                     ),
@@ -1930,7 +1930,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "icon_class",
-                                                            content_manager.blocks.IconPickerBlock(
+                                                            wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                 label="Icon", required=False
                                                             ),
                                                         ),
@@ -2615,7 +2615,7 @@ class Migration(migrations.Migration):
                                                                                             ),
                                                                                             (
                                                                                                 "icon_class",
-                                                                                                content_manager.blocks.IconPickerBlock(
+                                                                                                wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                                     label="Icon",
                                                                                                     required=False,
                                                                                                 ),
@@ -2968,7 +2968,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "top_detail_icon",
-                                                            content_manager.blocks.IconPickerBlock(
+                                                            wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                 label="Top detail: icon", required=False
                                                             ),
                                                         ),
@@ -3222,7 +3222,7 @@ class Migration(migrations.Migration):
                                                                                             ),
                                                                                             (
                                                                                                 "icon_class",
-                                                                                                content_manager.blocks.IconPickerBlock(
+                                                                                                wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                                     label="Icon",
                                                                                                     required=False,
                                                                                                 ),
@@ -3282,7 +3282,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "bottom_detail_icon",
-                                                            content_manager.blocks.IconPickerBlock(
+                                                            wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                 label="Bottom detail: icon", required=False
                                                             ),
                                                         ),
@@ -3695,7 +3695,7 @@ class Migration(migrations.Migration):
                                                                                 ),
                                                                                 (
                                                                                     "icon_class",
-                                                                                    content_manager.blocks.IconPickerBlock(
+                                                                                    wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                         label="Icon", required=False
                                                                                     ),
                                                                                 ),
@@ -4519,7 +4519,7 @@ class Migration(migrations.Migration):
                                                                                                                     ),
                                                                                                                     (
                                                                                                                         "icon_class",
-                                                                                                                        content_manager.blocks.IconPickerBlock(
+                                                                                                                        wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                                                             label="Icon",
                                                                                                                             required=False,
                                                                                                                         ),
@@ -4896,7 +4896,7 @@ class Migration(migrations.Migration):
                                                                                 ),
                                                                                 (
                                                                                     "top_detail_icon",
-                                                                                    content_manager.blocks.IconPickerBlock(
+                                                                                    wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                         label="Top detail: icon",
                                                                                         required=False,
                                                                                     ),
@@ -5151,7 +5151,7 @@ class Migration(migrations.Migration):
                                                                                                                     ),
                                                                                                                     (
                                                                                                                         "icon_class",
-                                                                                                                        content_manager.blocks.IconPickerBlock(
+                                                                                                                        wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                                                             label="Icon",
                                                                                                                             required=False,
                                                                                                                         ),
@@ -5211,7 +5211,7 @@ class Migration(migrations.Migration):
                                                                                 ),
                                                                                 (
                                                                                     "bottom_detail_icon",
-                                                                                    content_manager.blocks.IconPickerBlock(
+                                                                                    wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                         label="Bottom detail: icon",
                                                                                         required=False,
                                                                                     ),
@@ -5635,7 +5635,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "icon_class",
-                                                            content_manager.blocks.IconPickerBlock(
+                                                            wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                 label="Icon", required=False
                                                             ),
                                                         ),
@@ -6320,7 +6320,7 @@ class Migration(migrations.Migration):
                                                                                             ),
                                                                                             (
                                                                                                 "icon_class",
-                                                                                                content_manager.blocks.IconPickerBlock(
+                                                                                                wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                                     label="Icon",
                                                                                                     required=False,
                                                                                                 ),
@@ -6793,7 +6793,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "top_detail_icon",
-                                                            content_manager.blocks.IconPickerBlock(
+                                                            wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                 label="Top detail: icon", required=False
                                                             ),
                                                         ),
@@ -7047,7 +7047,7 @@ class Migration(migrations.Migration):
                                                                                             ),
                                                                                             (
                                                                                                 "icon_class",
-                                                                                                content_manager.blocks.IconPickerBlock(
+                                                                                                wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                                                     label="Icon",
                                                                                                     required=False,
                                                                                                 ),
@@ -7107,7 +7107,7 @@ class Migration(migrations.Migration):
                                                         ),
                                                         (
                                                             "bottom_detail_icon",
-                                                            content_manager.blocks.IconPickerBlock(
+                                                            wagtail_dsfr.content_manager.blocks.IconPickerBlock(
                                                                 label="Bottom detail: icon", required=False
                                                             ),
                                                         ),
@@ -7283,7 +7283,7 @@ class Migration(migrations.Migration):
                             admin_text="A simple, alphabetical list of the subpages of the current page.",
                             group="Website structure",
                             label="Subpages list",
-                            template="content_manager/blocks/subpages_list.html",
+                            template="wagtail_dsfr_content_manager/blocks/subpages_list.html",
                         ),
                     ),
                     (

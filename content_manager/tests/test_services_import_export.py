@@ -1,7 +1,7 @@
 from django.core.management import call_command
 from wagtail.test.utils import WagtailPageTestCase
 
-from content_manager.models import ContentPage
+from wagtail_dsfr.content_manager.models import ContentPage
 
 
 class ImportPagesTestCase(WagtailPageTestCase):

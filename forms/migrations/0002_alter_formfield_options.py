@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("forms", "0001_initial"),
+        ("wagtail_dsfr_forms", "0001_initial"),
     ]
 
     operations = [

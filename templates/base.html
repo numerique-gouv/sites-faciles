@@ -2,8 +2,8 @@
 
 <!DOCTYPE html>
 <html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}"
-      {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}data-fr-scheme="system"{% else %}data-fr-scheme="light"{% endif %}
-      {% if settings.content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.theme_modale_button %}data-fr-scheme="system"{% else %}data-fr-scheme="light"{% endif %}
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.mourning %}data-fr-mourning{% endif %}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport"
@@ -11,7 +11,7 @@
     {% block title %}
       <title>
         {% if title %}{{ title }} —{% endif %}
-      {{ settings.content_manager.CmsDsfrConfig.site_title }}</title>
+      {{ settings.wagtail_dsfr_content_manager.CmsDsfrConfig.site_title }}</title>
     {% endblock title %}
 
     {% block description %}
@@ -34,8 +34,8 @@
     {% endblock cookie_banner %}
 
     {% block tracking %}
-      {% if settings.content_manager.CustomScriptsSettings.head_scripts %}
-        {{ settings.content_manager.CustomScriptsSettings.head_scripts|safe }}
+      {% if settings.wagtail_dsfr_content_manager.CustomScriptsSettings.head_scripts %}
+        {{ settings.wagtail_dsfr_content_manager.CustomScriptsSettings.head_scripts|safe }}
       {% endif %}
     {% endblock tracking %}
 
@@ -51,7 +51,7 @@
     {% wagtailuserbar %}
     {% include "blocks/header.html" %}
 
-    {% if settings.content_manager.CmsDsfrConfig.notice_title or settings.content_manager.CmsDsfrConfig.notice_description %}
+    {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.notice_title or settings.wagtail_dsfr_content_manager.CmsDsfrConfig.notice_description %}
       {% include "blocks/notice.html" %}
     {% endif %}
 
@@ -61,7 +61,7 @@
     </main>
 
     {% block follow_newsletter_social_media %}
-      {% if settings.content_manager.CmsDsfrConfig.show_newsletter_and_social_block %}
+      {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.show_newsletter_and_social_block %}
         <aside id="cmsfr-block-follow">
           {% include "blocks/follow.html" %}
         </aside>
@@ -70,7 +70,7 @@
 
     {% include "blocks/footer.html" %}
 
-    {% if settings.content_manager.CmsDsfrConfig.theme_modale_button %}
+    {% if settings.wagtail_dsfr_content_manager.CmsDsfrConfig.theme_modale_button %}
       {% dsfr_theme_modale %}
     {% endif %}
 
@@ -79,8 +79,8 @@
     {% endblock extra_js %}
 
     {% block body_tracking_scripts %}
-      {% if settings.content_manager.CustomScriptsSettings.body_scripts %}
-        {{ settings.content_manager.CustomScriptsSettings.body_scripts|safe }}
+      {% if settings.wagtail_dsfr_content_manager.CustomScriptsSettings.body_scripts %}
+        {{ settings.wagtail_dsfr_content_manager.CustomScriptsSettings.body_scripts|safe }}
       {% endif %}
     {% endblock body_tracking_scripts %}
   </body>

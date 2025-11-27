@@ -9,7 +9,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("content_manager", "0007_cmsdsfrconfig"),
+        ("wagtail_dsfr_content_manager", "0007_cmsdsfrconfig"),
     ]
 
     operations = [

@@ -5,7 +5,7 @@ from django.utils import timezone
 from wagtail.models import Page
 from wagtail.test.utils import WagtailPageTestCase
 
-from events.models import EventEntryPage, EventsIndexPage
+from wagtail_dsfr.events.models import EventEntryPage, EventsIndexPage
 
 User = get_user_model()
 
