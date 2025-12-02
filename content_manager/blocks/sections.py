@@ -230,7 +230,7 @@ class CTASection(BaseSection):
             "link_type": "external_url",
             "text": "Appel à l'action",
             "external_url": "https://tube.numerique.gouv.fr/",
-            "button_type": "fr-btn fr-btn--primary",
+            "button_type": "fr-btn",
             "icon_side": "--",
         },
     )
@@ -337,9 +337,17 @@ class SpotlightSection(BaseSection):
         template = "content_manager/blocks/sections/spotlight.html"
 
 
+def get_accordion_default():
+    return [
+        ("title", "Titre de section"),
+        ("accordion", {"title": "Titre de l'accordéon 1", "content": "<p>Contenu de l'accordéon 1</p>"}),
+        ("accordion", {"title": "Titre de l'accordéon 2", "content": "<p>Contenu de l'accordéon 2</p>"}),
+    ]
+
+
 # This doesn't heritate from BaseSection to reuse AccordionsBlock component.
 class AccordionSection(blocks.StructBlock):
-    accordion = AccordionsBlock()
+    accordion = AccordionsBlock(default=get_accordion_default())
     layout = LayoutBlock(label=_("Layout"), collapsed=True)
 
     class Meta:
