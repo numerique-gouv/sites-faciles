@@ -5,7 +5,6 @@ from wagtail import blocks
 from wagtail.blocks import StructValue
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.images import get_image_model
-from wagtail.images.blocks import ImageBlock
 from wagtail.telepath import register
 
 from content_manager.constants import (
@@ -133,11 +132,37 @@ class ImageTextCTASection(blocks.StructBlock):
 
 
 class ImageAndTextItems(blocks.StructBlock):
-    image = ImageBlock(label=_("Image"))
+    image = ImageBlockWithDefault(label=_("Image"))
     title = blocks.CharBlock(label=_("title"), required=True)
     text = blocks.RichTextBlock(
         default="Add a short description to help your visitors better understand what you offer.", label=_("Text")
     )
+
+
+def get_listblock_default_items():
+    image_A = Image.objects.get(title="Pictogrammes DSFR — System — Success")
+    image_B = Image.objects.get(title="Pictogrammes DSFR — Institutions — Money")
+    image_C = Image.objects.get(title="Pictogrammes DSFR — System — Warning")
+
+    description = "Ajoutez une courte description afin d’aider vos visiteurs à mieux comprendre ce que vous proposez."
+    list_block = [
+        {
+            "image": {"image": image_A if image_A else None, "decorative": True, "alt_text": ""},
+            "title": "1er point",
+            "text": description,
+        },
+        {
+            "image": {"image": image_B if image_B else None, "decorative": True, "alt_text": ""},
+            "title": "2ème point",
+            "text": description,
+        },
+        {
+            "image": {"image": image_C if image_C else None, "decorative": True, "alt_text": ""},
+            "title": "3ème point",
+            "text": description,
+        },
+    ]
+    return list_block
 
 
 class ImageAndTextGridSection(BaseSection):
@@ -161,14 +186,18 @@ class ImageAndTextGridSection(BaseSection):
 
     items_alignements = blocks.ChoiceBlock(GRID_HORIZONTAL_ALIGN_CHOICES, default="left")
     # The choiceblock determines the number of columns in the grid based on the number of items desired per row.
-    items_per_row = blocks.ChoiceBlock(choices=[("6", "2"), ("4", "3"), ("3", "4")], default="3")
+    items_per_row = blocks.ChoiceBlock(choices=[("6", "2"), ("4", "3"), ("3", "4")], default="4")
     images_size = blocks.ChoiceBlock(
         IMAGE_GRID_SIZE,
         default="80",
-        help_text=_("The images displayed will always have a square ratio (1:1)."),
+        help_text=_(
+            "Images are always displayed in a square (1:1) ratio. "
+            "The maximum size is 200px; smaller images (e.g., 80px) are supported "
+            "but will not be upscaled."
+        ),
         label=_("Image size of items"),
     )
-    items = blocks.ListBlock(ImageAndTextItems(), collapsed=True)
+    items = blocks.ListBlock(ImageAndTextItems(), collapsed=True, default=get_listblock_default_items())
 
     class Meta:
         template = "content_manager/blocks/sections/image_text_grid.html"
