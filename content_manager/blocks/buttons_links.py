@@ -124,24 +124,26 @@ class LinkWithoutLabelBlock(blocks.StructBlock):
         errors = {}
         selected_link_type = value.get("link_type")
         if not selected_link_type:
+            # This is for backward compatibility: try to infer the link type
             for link_type in self.link_types:
                 if value.get(link_type):
                     selected_link_type = link_type
                     value["link_type"] = link_type
                     break
-        match selected_link_type:
-            case "page":
-                internal_page = value.get("page")
-                if not internal_page:
-                    errors["page"] = ErrorList([_("Please select a page to link to")])
-            case "external_url":
-                external_url = value.get("external_url")
-                if not external_url:
-                    errors["external_url"] = ErrorList([_("Please enter a URL")])
-            case "document":
-                document = value.get("document")
-                if not document:
-                    errors["document"] = ErrorList([_("Please select a document to link to")])
+        elif selected_link_type:
+            match selected_link_type:
+                case "page":
+                    internal_page = value.get("page")
+                    if not internal_page:
+                        errors["page"] = ErrorList([_("Please select a page to link to")])
+                case "external_url":
+                    external_url = value.get("external_url")
+                    if not external_url:
+                        errors["external_url"] = ErrorList([_("Please enter a URL")])
+                case "document":
+                    document = value.get("document")
+                    if not document:
+                        errors["document"] = ErrorList([_("Please select a document to link to")])
         if errors:
             raise StructBlockValidationError(block_errors=errors)
 

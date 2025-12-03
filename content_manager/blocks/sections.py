@@ -124,13 +124,6 @@ class ImageTextCTASection(blocks.StructBlock):
         template = "content_manager/blocks/sections/image_text_cta.html"
 
 
-# class ImageTextCTAMultipleSection(blocks.StructBlock):
-#     items = blocks.ListBlock(ImageTextCTASection)
-
-#     class Meta:
-#         template = "content_manager/blocks/sections/image_text_cta_multiple.html"
-
-
 class ImageAndTextItems(blocks.StructBlock):
     image = ImageBlockWithDefault(label=_("Image"))
     title = blocks.CharBlock(label=_("title"), required=True)
@@ -348,7 +341,10 @@ def get_accordion_default():
 # This doesn't heritate from BaseSection to reuse AccordionsBlock component.
 class AccordionSection(blocks.StructBlock):
     accordion = AccordionsBlock(default=get_accordion_default())
-    layout = LayoutBlock(label=_("Layout"), collapsed=True)
+    layout = LayoutBlock(
+        label=_("Layout"),
+        collapsed=True,
+    )
 
     class Meta:
         template = "content_manager/blocks/sections/accordion_section.html"
