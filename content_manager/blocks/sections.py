@@ -159,6 +159,37 @@ def get_listblock_default_items():
     return list_block
 
 
+class ImageAndTextListBlock(blocks.ListBlock):
+
+    def get_default(self):
+        titles = [
+            "Pictogrammes DSFR — System — Success",
+            "Pictogrammes DSFR — Institutions — Money",
+            "Pictogrammes DSFR — System — Warning",
+        ]
+
+        description = (
+            "Ajoutez une courte description afin d’aider vos visiteurs à mieux comprendre ce que vous proposez."
+        )
+
+        items = []
+        for i, title in enumerate(titles, start=1):
+            image = Image.objects.filter(title=title).first()
+            items.append(
+                {
+                    "image": {
+                        "image": image,
+                        "decorative": True,
+                        "alt_text": "",
+                    },
+                    "title": f"{i}er point" if i == 1 else f"{i}ème point",
+                    "text": description,
+                }
+            )
+
+        return items
+
+
 class ImageAndTextGridSection(BaseSection):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
@@ -193,8 +224,10 @@ class ImageAndTextGridSection(BaseSection):
         ),
         label=_("Image size of items"),
     )
-    items = blocks.ListBlock(
-        ImageAndTextItems(), collapsed=True, default=get_listblock_default_items(), label=_("Items")
+    items = ImageAndTextListBlock(
+        ImageAndTextItems(),
+        collapsed=True,
+        label=_("Items"),
     )
 
     class Meta:
@@ -253,18 +286,25 @@ class CTAGridAdapter(StructBlockAdapter):
 register(CTAGridAdapter(), CTASection)
 
 
-def get_spotlight_item_default():
-    image_placeholder = Image.objects.get(title="Placeholder Sites Faciles")
-    default_card = (
-        "card",
-        {
+class SpotLightItem(blocks.StreamBlock):
+    card = VerticalCardBlock()
+
+    def get_default(self):
+        image_placeholder = Image.objects.filter(title="Placeholder Sites Faciles").first()
+
+        default_card_data = {
             "title": "Titre de l'article",
             "heading_tag": "h3",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-            "sed do eiusmod tempor "
-            "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, "
-            "quis nostrud exercitation ullamco ",
-            "image": {"image": image_placeholder if image_placeholder else None, "decorative": True, "alt_text": ""},
+            "description": (
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+                "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+                "Ut enim ad minim veniam, quis nostrud exercitation ullamco "
+            ),
+            "image": {
+                "image": image_placeholder,
+                "decorative": True,
+                "alt_text": "",
+            },
             "image_ratio": "h3",
             "image_badge": [],
             "link": {
@@ -284,18 +324,14 @@ def get_spotlight_item_default():
             "no_background": False,
             "no_border": False,
             "shadow": False,
-        },
-    )
+        }
 
-    return [
-        default_card,
-        default_card,
-        default_card,
-    ]
-
-
-class SpotLightItem(blocks.StreamBlock):
-    card = VerticalCardBlock()
+        # StreamBlock values must be a list of (block_name, block_value)
+        return [
+            ("card", default_card_data),
+            ("card", default_card_data),
+            ("card", default_card_data),
+        ]
 
 
 class SpotlightSection(BaseSection):
@@ -308,7 +344,7 @@ class SpotlightSection(BaseSection):
         required=False,
         collapsed=True,
     )
-    items = SpotLightItem(label=_("Items"), default=get_spotlight_item_default())
+    items = SpotLightItem(label=_("Items"))
 
     class Meta:
         template = "content_manager/blocks/sections/spotlight.html"
