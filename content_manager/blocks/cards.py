@@ -2,7 +2,7 @@ from django.utils.translation import gettext_lazy as _
 from dsfr.constants import IMAGE_RATIOS
 from wagtail import blocks
 from wagtail.blocks import StructValue
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 
 from content_manager.blocks.badges_tags import BadgesListBlock, TagListBlock
 from content_manager.constants import (
@@ -13,7 +13,6 @@ from content_manager.constants import (
 )
 
 from .buttons_links import ButtonsHorizontalListBlock, IconPickerBlock, LinksVerticalListBlock, LinkWithoutLabelBlock
-from .medias import ImageBlockWithDefault
 
 
 class CardstructValue(StructValue):
@@ -71,7 +70,7 @@ class CardBlock(blocks.StructBlock):
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
     description = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
-    image = ImageBlockWithDefault(label=_("Image"), required=False)
+    image = ImageBlock(label=_("Image"), required=False)
     image_ratio = blocks.ChoiceBlock(
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
