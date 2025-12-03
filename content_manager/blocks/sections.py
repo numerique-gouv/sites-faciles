@@ -290,6 +290,22 @@ class SpotlightSection(BaseSection):
 
     class Meta:
         template = "content_manager/blocks/sections/spotlight.html"
+        form_classname = "struct-block spotlight-grid-block"
+
+
+class SpotlightSectionGridAdapter(StructBlockAdapter):
+    """
+    Adapter to add the styling to the admin form
+    """
+
+    @cached_property
+    def media(self):
+        return forms.Media(
+            css={"all": ("css/admin-block/spotlight-grid-block-admin.css",)},
+        )
+
+
+register(SpotlightSectionGridAdapter(), SpotlightSection)
 
 
 def get_accordion_default():
