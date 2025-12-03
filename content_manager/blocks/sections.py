@@ -14,6 +14,7 @@ from content_manager.constants import (
     GRID_HORIZONTAL_ALIGN_CHOICES,
     IMAGE_GRID_SIZE,
     LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS,
+    TEMPLATE_EXAMPLE_TAG_BADGE_LIST,
 )
 
 from .basics import AccordionsBlock
@@ -232,86 +233,49 @@ class CTASection(BaseSection):
         template = "content_manager/blocks/sections/text-cta.html"
 
 
+def get_spotlight_item_default():
+    image_placeholder = Image.objects.get(title="Placeholder Sites Faciles")
+    default_card = (
+        "card",
+        {
+            "title": "Titre de l'article",
+            "heading_tag": "h3",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+            "sed do eiusmod tempor "
+            "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, "
+            "quis nostrud exercitation ullamco ",
+            "image": {"image": image_placeholder if image_placeholder else None, "decorative": True, "alt_text": ""},
+            "image_ratio": "h3",
+            "image_badge": [],
+            "link": {
+                "link_type": "--",
+                "page": None,
+                "external_url": "",
+                "document": None,
+                "anchor": "",
+            },
+            "top_detail_text": "",
+            "top_detail_icon": {},
+            "top_detail_badges_tags": TEMPLATE_EXAMPLE_TAG_BADGE_LIST,
+            "bottom_detail_text": "",
+            "bottom_detail_icon": {},
+            "call_to_action": [],
+            "grey_background": False,
+            "no_background": False,
+            "no_border": False,
+            "shadow": False,
+        },
+    )
+
+    return [
+        default_card,
+        default_card,
+        default_card,
+    ]
+
+
 class SpotLightItem(blocks.StreamBlock):
     card = VerticalCardBlock()
-
-    def get_default(self):
-        default_top_detail_badges_tags = [
-            (
-                "tags",
-                [
-                    (
-                        "tag",
-                        {
-                            "label": "Site vitrine",
-                            "is_small": False,
-                            "color": "",
-                            "icon_class": {},
-                            "link": {
-                                "link_type": "--",
-                                "page": None,
-                                "external_url": "",
-                                "document": None,
-                                "anchor": "",
-                            },
-                        },
-                    ),
-                    (
-                        "tag",
-                        {
-                            "label": "Blog",
-                            "is_small": False,
-                            "color": "",
-                            "icon_class": {},
-                            "link": {
-                                "link_type": "--",
-                                "page": None,
-                                "external_url": "",
-                                "document": None,
-                                "anchor": "",
-                            },
-                        },
-                    ),
-                ],
-            ),
-        ]
-        default_card = (
-            "card",
-            {
-                "title": "Titre de l'article",
-                "heading_tag": "h3",
-                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-                "sed do eiusmod tempor "
-                "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, "
-                "quis nostrud exercitation ullamco ",
-                "image": None,
-                "image_ratio": "h3",
-                "image_badge": [],
-                "link": {
-                    "link_type": "--",
-                    "page": None,
-                    "external_url": "",
-                    "document": None,
-                    "anchor": "",
-                },
-                "top_detail_text": "",
-                "top_detail_icon": {},
-                "top_detail_badges_tags": default_top_detail_badges_tags,
-                "bottom_detail_text": "",
-                "bottom_detail_icon": {},
-                "call_to_action": [],
-                "grey_background": False,
-                "no_background": False,
-                "no_border": False,
-                "shadow": False,
-            },
-        )
-
-        return [
-            default_card,
-            default_card,
-            default_card,
-        ]
 
 
 class SpotlightSection(BaseSection):
@@ -322,9 +286,7 @@ class SpotlightSection(BaseSection):
         required=False,
         collapsed=True,
     )
-    items = SpotLightItem(
-        label=_("Items"),
-    )
+    items = SpotLightItem(label=_("Items"), default=get_spotlight_item_default())
 
     class Meta:
         template = "content_manager/blocks/sections/spotlight.html"
