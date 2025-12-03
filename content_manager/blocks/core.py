@@ -102,7 +102,7 @@ STREAMFIELD_COMMON_BLOCKS = [
     ("layout_richtext", ResizedTextSection(label=_("Rich text with layout"), group=_("Predefined sections"))),
     (
         "image_text_grid_section",
-        ImageAndTextGridSection(label=_("Grille d'items (Image et texte)"), group=_("Predefined sections")),
+        ImageAndTextGridSection(label=_("Items grid (image and text)"), group=_("Predefined sections")),
     ),
     ("image_text_cta_section", ImageTextCTASection(label=_("Image, text and cta"), group=_("Predefined sections"))),
     ("cta_section", CTASection(label=_("Text and button"), group=_("Predefined sections"))),

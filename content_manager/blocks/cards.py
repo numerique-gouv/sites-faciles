@@ -139,21 +139,6 @@ class CardBlock(blocks.StructBlock):
         value_class = CardstructValue
 
 
-# class CardGridAdapter(StructBlockAdapter):
-#     """
-#     Adapter to add the styling to the admin form
-#     """
-
-#     @cached_property
-#     def media(self):
-#         return forms.Media(
-#             css={"all": ("css/admin-block/card-grid-block-admin.css",)},
-#         )
-
-
-# register(CardGridAdapter(), CardBlock)
-
-
 class HorizontalCardBlock(CardBlock):
     image_ratio = blocks.ChoiceBlock(
         label=_("Image ratio"),

@@ -27,7 +27,7 @@ Image = get_image_model()
 
 
 class BaseSection(blocks.StructBlock):
-    section_title = blocks.CharBlock(default=_("Section title"))
+    section_title = blocks.CharBlock(label=_("Section title"), default="Titre de la section")
     layout = LayoutBlock(label=_("Layout"), collapsed=True)
 
 
@@ -115,7 +115,7 @@ class ImageTextCTASection(blocks.StructBlock):
         },
     )
     image = ImageBlockWithDefault(
-        label=_("Hero image"),
+        label=_("Image"),
         default_image_title="Illustration Sites Faciles Femme Ordinateur",
         default_image_decorative=True,
     )
@@ -127,7 +127,7 @@ class ImageTextCTASection(blocks.StructBlock):
 
 class ImageAndTextItems(blocks.StructBlock):
     image = ImageBlockWithDefault(label=_("Image"))
-    title = blocks.CharBlock(label=_("title"), required=True)
+    title = blocks.CharBlock(label=_("Title"), required=True)
     text = blocks.RichTextBlock(
         default="Add a short description to help your visitors better understand what you offer.", label=_("Text")
     )
@@ -178,9 +178,11 @@ class ImageAndTextGridSection(BaseSection):
         context["rendered_items"] = rendered_items
         return context
 
-    items_alignements = blocks.ChoiceBlock(GRID_HORIZONTAL_ALIGN_CHOICES, default="left")
+    items_alignement = blocks.ChoiceBlock(GRID_HORIZONTAL_ALIGN_CHOICES, default="left", label=_("Items alignement"))
     # The choiceblock determines the number of columns in the grid based on the number of items desired per row.
-    items_per_row = blocks.ChoiceBlock(choices=[("6", "2"), ("4", "3"), ("3", "4")], default="4")
+    items_per_row = blocks.ChoiceBlock(
+        choices=[("6", "2"), ("4", "3"), ("3", "4")], default="4", label=_("Items per row")
+    )
     images_size = blocks.ChoiceBlock(
         IMAGE_GRID_SIZE,
         default="80",
@@ -191,7 +193,9 @@ class ImageAndTextGridSection(BaseSection):
         ),
         label=_("Image size of items"),
     )
-    items = blocks.ListBlock(ImageAndTextItems(), collapsed=True, default=get_listblock_default_items())
+    items = blocks.ListBlock(
+        ImageAndTextItems(), collapsed=True, default=get_listblock_default_items(), label=_("Items")
+    )
 
     class Meta:
         template = "content_manager/blocks/sections/image_text_grid.html"
@@ -231,6 +235,22 @@ class CTASection(BaseSection):
 
     class Meta:
         template = "content_manager/blocks/sections/text-cta.html"
+        form_classname = "struct-block cta-section"
+
+
+class CTAGridAdapter(StructBlockAdapter):
+    """
+    Adapter to add the styling to the admin form
+    """
+
+    @cached_property
+    def media(self):
+        return forms.Media(
+            css={"all": ("css/admin-block/cta-section-grid-block-admin.css",)},
+        )
+
+
+register(CTAGridAdapter(), CTASection)
 
 
 def get_spotlight_item_default():
@@ -279,10 +299,12 @@ class SpotLightItem(blocks.StreamBlock):
 
 
 class SpotlightSection(BaseSection):
-    items_per_row = blocks.ChoiceBlock(choices=[("6", "2"), ("4", "3"), ("3", "4")], default="4")
+    items_per_row = blocks.ChoiceBlock(
+        choices=[("6", "2"), ("4", "3"), ("3", "4")], default="4", label=_("Items per row")
+    )
     link = LinkBlock(
-        label=_("Lien de la section"),
-        help_text="Ce lien apparait en haut à droite de la section s'il est complété",
+        label=_("Section link"),
+        help_text="This link appears at the bottom left of the section if completed",
         required=False,
         collapsed=True,
     )
@@ -318,7 +340,7 @@ def get_accordion_default():
 
 # This doesn't heritate from BaseSection to reuse AccordionsBlock component.
 class AccordionSection(blocks.StructBlock):
-    accordion = AccordionsBlock(default=get_accordion_default())
+    accordion = AccordionsBlock(default=get_accordion_default(), label=_("Accordion"))
     layout = LayoutBlock(
         label=_("Layout"),
         collapsed=True,
