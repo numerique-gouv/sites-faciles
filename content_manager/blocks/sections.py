@@ -2,10 +2,10 @@ from django import forms
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from wagtail import blocks
+from wagtail.admin.telepath import register
 from wagtail.blocks import StructValue
 from wagtail.blocks.struct_block import StructBlockAdapter
 from wagtail.images import get_image_model
-from wagtail.telepath import register
 
 from content_manager.constants import (
     ALIGN_HORIZONTAL_CHOICES,
