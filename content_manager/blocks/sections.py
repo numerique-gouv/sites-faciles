@@ -133,48 +133,18 @@ class ImageAndTextItems(blocks.StructBlock):
     )
 
 
-def get_listblock_default_items():
-    image_A = Image.objects.get(title="Pictogrammes DSFR — System — Success")
-    image_B = Image.objects.get(title="Pictogrammes DSFR — Institutions — Money")
-    image_C = Image.objects.get(title="Pictogrammes DSFR — System — Warning")
-
-    description = "Ajoutez une courte description afin d’aider vos visiteurs à mieux comprendre ce que vous proposez."
-    list_block = [
-        {
-            "image": {"image": image_A if image_A else None, "decorative": True, "alt_text": ""},
-            "title": "1er point",
-            "text": description,
-        },
-        {
-            "image": {"image": image_B if image_B else None, "decorative": True, "alt_text": ""},
-            "title": "2ème point",
-            "text": description,
-        },
-        {
-            "image": {"image": image_C if image_C else None, "decorative": True, "alt_text": ""},
-            "title": "3ème point",
-            "text": description,
-        },
-    ]
-    return list_block
-
-
 class ImageAndTextListBlock(blocks.ListBlock):
 
     def get_default(self):
-        titles = [
+        images_titles = [
             "Pictogrammes DSFR — System — Success",
             "Pictogrammes DSFR — Institutions — Money",
             "Pictogrammes DSFR — System — Warning",
         ]
 
-        description = (
-            "Ajoutez une courte description afin d’aider vos visiteurs à mieux comprendre ce que vous proposez."
-        )
-
         items = []
-        for i, title in enumerate(titles, start=1):
-            image = Image.objects.filter(title=title).first()
+        for index, image_title in enumerate(images_titles, start=1):
+            image = Image.objects.filter(title=image_title).first()
             items.append(
                 {
                     "image": {
@@ -182,8 +152,9 @@ class ImageAndTextListBlock(blocks.ListBlock):
                         "decorative": True,
                         "alt_text": "",
                     },
-                    "title": f"{i}er point" if i == 1 else f"{i}ème point",
-                    "text": description,
+                    "title": f"{index}er point" if index == 1 else f"{index}ème point",
+                    "text": "Ajoutez une courte description afin d’aider vos visiteurs "
+                    "à mieux comprendre ce que vous proposez.",
                 }
             )
 
@@ -325,8 +296,6 @@ class SpotLightItem(blocks.StreamBlock):
             "no_border": False,
             "shadow": False,
         }
-
-        # StreamBlock values must be a list of (block_name, block_value)
         return [
             ("card", default_card_data),
             ("card", default_card_data),
