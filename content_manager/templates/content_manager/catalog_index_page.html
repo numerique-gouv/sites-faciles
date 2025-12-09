@@ -128,7 +128,8 @@
                                      name="tag"
                                      value="{{ tag.slug }}"
                                      {% if tag.slug in selected_tag_slugs %}checked{% endif %}
-                                     onchange="this.form.submit()">
+                                     onchange="this.form.submit()"
+                                     style="position: absolute; opacity: 0; pointer-events: none;">
                               <label class="fr-tag" for="tag-{{ tag.slug }}" aria-pressed="{% if tag.slug in selected_tag_slugs %}true{% else %}false{% endif %}">
                                 {{ tag.name }}
                               </label>
