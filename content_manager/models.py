@@ -1,3 +1,5 @@
+from typing import Union
+
 from django.core.paginator import Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -105,83 +107,132 @@ class CatalogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         return ContentPage.objects.child_of(self).live().specific().prefetch_related("tags")
 
     def get_context(self, request, *args, **kwargs):
-        context = super(CatalogIndexPage, self).get_context(request, *args, **kwargs)
-        entries = self.entries
+        context = super().get_context(request, *args, **kwargs)
 
-        extra_breadcrumbs = None
-        extra_title = ""
-        current_tags = []
-        selected_tag_slugs = request.GET.getlist("tag")
-
-        if self.filter_selection == self.SINGLE_FILTER:
-            if selected_tag_slugs and len(selected_tag_slugs) == 1:
-                tag_slug = selected_tag_slugs[0]
-                tag = get_object_or_404(Tag, slug=tag_slug)
-                entries = entries.filter(tags=tag)
-                current_tags = [tag]
-                extra_breadcrumbs = {
-                    "links": [
-                        {"url": self.get_url(), "title": self.title},
-                        {
-                            "url": f"{self.get_url()}{self.reverse_subpage('tags_list')}",
-                            "title": _("Tags"),
-                        },
-                    ],
-                    "current": tag,
-                }
-                extra_title = _("Pages tagged with %(tag)s") % {"tag": tag}
-
-        elif self.filter_selection == self.MULTIPLE_FILTERS:
-            if selected_tag_slugs:
-                current_tags = list(Tag.objects.filter(slug__in=selected_tag_slugs))
-                if current_tags:
-                    if self.multiple_filter_operator == self.AND_OPERATOR:
-                        for tag in current_tags:
-                            entries = entries.filter(tags=tag)
-                        extra_title = _("Pages tagged with all of: %(tags)s") % {
-                            "tags": ", ".join([str(t) for t in current_tags])
-                        }
-                    elif self.multiple_filter_operator == self.OR_OPERATOR:
-                        q_objects = Q()
-                        for tag in current_tags:
-                            q_objects |= Q(tags=tag)
-                        entries = entries.filter(q_objects)
-                        extra_title = _("Pages tagged with any of: %(tags)s") % {
-                            "tags": ", ".join([str(t) for t in current_tags])
-                        }
-
-                    extra_breadcrumbs = {
-                        "links": [
-                            {"url": self.get_url(), "title": self.title},
-                            {
-                                "url": f"{self.get_url()}{self.reverse_subpage('tags_list')}",
-                                "title": _("Tags"),
-                            },
-                        ],
-                        "current": _("Selected tags"),
-                    }
+        filtered_data = self._get_filtered_entries_and_context(request, self.entries)
+        entries = filtered_data["entries"]
+        extra_breadcrumbs = filtered_data["extra_breadcrumbs"]
 
         # Pagination
+        paginator = Paginator(entries, self.entries_per_page)
         page_number = request.GET.get("page")
-        page_size = self.entries_per_page
+        paginated_entries = paginator.get_page(page_number)
 
-        paginator = Paginator(entries, page_size)  # Show <page_size> entries per page
-        entries = paginator.get_page(page_number)
-
-        context["entries"] = entries
-        context["current_tags"] = current_tags
-        context["selected_tag_slugs"] = selected_tag_slugs
-        context["paginator"] = paginator
-        context["extra_title"] = extra_title
-
-        # Filters
-        context["tags"] = self.get_tags()
-        context["filter_selection_mode"] = self.filter_selection
+        context.update(
+            {
+                "entries": paginated_entries,
+                "paginator": paginator,
+                "tags": self.get_tags(),
+                "filter_selection_mode": self.filter_selection,
+                **filtered_data,
+            }
+        )
 
         if extra_breadcrumbs:
             context["extra_breadcrumbs"] = extra_breadcrumbs
 
         return context
+
+    def _get_filtered_entries_and_context(self, request: HttpRequest, entries: models.QuerySet) -> dict:
+        selected_tag_slugs = request.GET.getlist("tag")
+
+        if not selected_tag_slugs:
+            return {
+                "entries": entries,
+                "extra_breadcrumbs": None,
+                "extra_title": "",
+                "current_tags": [],
+                "selected_tag_slugs": [],
+            }
+
+        if self.filter_selection == self.SINGLE_FILTER:
+            return self._handle_single_filter(selected_tag_slugs, entries)
+        if self.filter_selection == self.MULTIPLE_FILTERS:
+            return self._handle_multiple_filters(selected_tag_slugs, entries)
+
+        return {
+            "entries": entries,
+            "extra_breadcrumbs": None,
+            "extra_title": "",
+            "current_tags": [],
+            "selected_tag_slugs": selected_tag_slugs,
+        }
+
+    def _handle_single_filter(self, selected_tag_slugs: list, entries: models.QuerySet) -> dict:
+        if len(selected_tag_slugs) != 1:
+            return {
+                "entries": entries,
+                "extra_breadcrumbs": None,
+                "extra_title": "",
+                "current_tags": [],
+                "selected_tag_slugs": selected_tag_slugs,
+            }
+
+        tag_slug = selected_tag_slugs[0]
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        filtered_entries = entries.filter(tags=tag)
+        current_tags = [tag]
+        extra_breadcrumbs = self._build_breadcrumbs(tag)
+        extra_title = _("Pages tagged with %(tag)s") % {"tag": tag}
+
+        return {
+            "entries": filtered_entries,
+            "extra_breadcrumbs": extra_breadcrumbs,
+            "extra_title": extra_title,
+            "current_tags": current_tags,
+            "selected_tag_slugs": selected_tag_slugs,
+        }
+
+    def _handle_multiple_filters(self, selected_tag_slugs: list, entries: models.QuerySet) -> dict:
+        current_tags = list(Tag.objects.filter(slug__in=selected_tag_slugs))
+
+        if not current_tags:
+            return {
+                "entries": entries,
+                "extra_breadcrumbs": None,
+                "extra_title": "",
+                "current_tags": [],
+                "selected_tag_slugs": selected_tag_slugs,
+            }
+
+        if self.multiple_filter_operator == self.AND_OPERATOR:
+            filtered_entries, extra_title = self._apply_and_operator(current_tags, entries)
+        else:
+            filtered_entries, extra_title = self._apply_or_operator(current_tags, entries)
+
+        extra_breadcrumbs = self._build_breadcrumbs()
+
+        return {
+            "entries": filtered_entries,
+            "extra_breadcrumbs": extra_breadcrumbs,
+            "extra_title": extra_title,
+            "current_tags": current_tags,
+            "selected_tag_slugs": selected_tag_slugs,
+        }
+
+    def _apply_and_operator(self, current_tags: list, entries: models.QuerySet) -> tuple:
+        for tag in current_tags:
+            entries = entries.filter(tags=tag)
+        extra_title = _("Pages tagged with all of: %(tags)s") % {"tags": ", ".join([str(t) for t in current_tags])}
+        return entries, extra_title
+
+    def _apply_or_operator(self, current_tags: list, entries: models.QuerySet) -> tuple:
+        q_objects = Q()
+        for tag in current_tags:
+            q_objects |= Q(tags=tag)
+        entries = entries.filter(q_objects).distinct()
+        extra_title = _("Pages tagged with any of: %(tags)s") % {"tags": ", ".join([str(t) for t in current_tags])}
+        return entries, extra_title
+
+    def _build_breadcrumbs(self, tag: Union["Tag", None] = None) -> dict:
+        breadcrumbs = {
+            "links": [
+                {"url": self.get_url(), "title": self.title},
+                {"url": f"{self.get_url()}{self.reverse_subpage('tags_list')}", "title": _("Tags")},
+            ],
+            "current": tag if tag else _("Selected tags"),
+        }
+        return breadcrumbs
 
     def get_tags(self) -> models.QuerySet:
         ids = self.entries.values_list("tags", flat=True)
