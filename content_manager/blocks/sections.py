@@ -336,10 +336,15 @@ register(SpotlightSectionGridAdapter(), SpotlightSection)
 
 
 def get_accordion_default():
+    description = (
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+        "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    )
     return [
         ("title", "Titre de section"),
-        ("accordion", {"title": "Titre de l'accordéon 1", "content": "<p>Contenu de l'accordéon 1</p>"}),
-        ("accordion", {"title": "Titre de l'accordéon 2", "content": "<p>Contenu de l'accordéon 2</p>"}),
+        ("accordion", {"title": "Titre de l'accordéon 1", "content": f"<p>{description}</p>"}),
+        ("accordion", {"title": "Titre de l'accordéon 2", "content": f"<p>{description}</p>"}),
     ]
 
 
