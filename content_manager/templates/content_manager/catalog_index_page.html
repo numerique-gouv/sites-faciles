@@ -7,8 +7,8 @@
     {% if current_category %}
       — {% translate "Category:" %} {{ current_category }}
     {% endif %}
-    {% if current_tag %}
-      - {% translate "Tag:" %} {{ current_tag }}
+    {% if current_tags %}
+      — {% translate "Tags:" %} {% for tag in current_tags %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
     {% endif %}
     {% if current_author %}
       - {% translate "Author:" %} {{ current_author }}
@@ -105,18 +105,38 @@
                 {% if tags and page.filter_by_tag %}
                   <div class="fr-my-3w">
                     <h3 class="fr-h6">{% translate "Filter by tag" %}</h3>
-                    <ul class="fr-tags-group">
-                      {% for tag in tags %}
-                        <li>
-                          <a class="fr-tag"
-                             type="button"
-                             href="{% pageurl page %}{% toggle_url_filter tag=tag %}#posts-list"
-                             {% if tag.id == current_tag.id %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>
-                            {{ tag }}
-                          </a>
-                        </li>
-                      {% endfor %}
-                    </ul>
+                    {% if page.filter_selection == page.SINGLE_FILTER %}
+                      <ul class="fr-tags-group">
+                        {% for tag in tags %}
+                          <li>
+                            <a class="fr-tag"
+                               type="button"
+                               href="{% pageurl page %}{% toggle_url_filter tag=tag %}#posts-list"
+                               aria-pressed="{% if tag.slug in selected_tag_slugs %}true{% else %}false{% endif %}">
+                              {{ tag }}
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% elif page.filter_selection == page.MULTIPLE_FILTERS %}
+                      <form method="GET" action="{% pageurl page %}" id="tag-filter-form">
+                        <ul class="fr-tags-group">
+                          {% for tag in tags %}
+                            <li>
+                              <input type="checkbox"
+                                     id="tag-{{ tag.slug }}"
+                                     name="tag"
+                                     value="{{ tag.slug }}"
+                                     {% if tag.slug in selected_tag_slugs %}checked{% endif %}
+                                     onchange="this.form.submit()">
+                              <label class="fr-tag" for="tag-{{ tag.slug }}" aria-pressed="{% if tag.slug in selected_tag_slugs %}true{% else %}false{% endif %}">
+                                {{ tag.name }}
+                              </label>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </form>
+                    {% endif %}
                   </div>
                 {% endif %}
 
