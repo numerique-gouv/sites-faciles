@@ -157,8 +157,7 @@ msgstr "Badge"
 #: content_manager/blocks/layout.py:232 content_manager/blocks/medias.py:48
 #: content_manager/blocks/medias.py:68
 #: content_manager/blocks/related_entries.py:85
-#: content_manager/blocks/related_entries.py:115
-#: content_manager/blocks/sections.py:131 content_manager/models.py:525
+#: content_manager/blocks/related_entries.py:115 content_manager/models.py:594
 msgid "Title"
 msgstr "Titre"
 
@@ -463,7 +462,7 @@ msgstr ""
 "Optionnel, toutes les valeurs peuvent être spécifiées ou surchargées ci-"
 "dessous"
 
-#: content_manager/blocks/basics.py:408 content_manager/models.py:559
+#: content_manager/blocks/basics.py:408 content_manager/models.py:628
 msgid "Name"
 msgstr "Nom"
 
@@ -479,9 +478,9 @@ msgstr "Organisation"
 msgid "Contact info"
 msgstr "Informations de contact"
 
-#: content_manager/blocks/basics.py:413 content_manager/models.py:94
-#: content_manager/models.py:131 content_manager/models.py:145
-#: content_manager/models.py:151
+#: content_manager/blocks/basics.py:413 content_manager/models.py:128
+#: content_manager/models.py:160 content_manager/models.py:198
+#: content_manager/models.py:212 content_manager/models.py:218
 #: content_manager/templates/content_manager/tags_list_page.html:47
 #: content_manager/views.py:48 content_manager/views.py:82
 msgid "Tags"
@@ -1254,7 +1253,7 @@ msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
 #: content_manager/blocks/related_entries.py:98
-#: content_manager/blocks/related_entries.py:128 content_manager/models.py:56
+#: content_manager/blocks/related_entries.py:128 content_manager/models.py:57
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:28
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:28
 #: content_manager/templates/content_manager/catalog_index_page.html:107
@@ -1265,7 +1264,7 @@ msgstr "Filtrer par étiquette"
 #: content_manager/blocks/related_entries.py:129
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:45
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:45
-#: content_manager/templates/content_manager/catalog_index_page.html:125
+#: content_manager/templates/content_manager/catalog_index_page.html:145
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
@@ -1273,7 +1272,7 @@ msgstr "Filtrer par auteur"
 #: content_manager/blocks/related_entries.py:132
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:60
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:60
-#: content_manager/templates/content_manager/catalog_index_page.html:141
+#: content_manager/templates/content_manager/catalog_index_page.html:161
 msgid "Filter by source"
 msgstr "Filtrer par source"
 
@@ -1284,7 +1283,7 @@ msgstr ""
 "La source est l’organisation à laquelle appartient l’auteur de l’article"
 
 #: content_manager/blocks/related_entries.py:106
-#: content_manager/blocks/related_entries.py:136 content_manager/models.py:64
+#: content_manager/blocks/related_entries.py:136
 msgid "Show filters"
 msgstr "Afficher les filtres"
 
@@ -1480,55 +1479,98 @@ msgid "Large (200px)"
 msgstr ""
 
 #: content_manager/models.py:33
+#: content_manager/models.py:34
 msgid "Content page"
 msgstr "Page de contenu"
 
-#: content_manager/models.py:52
+#: content_manager/models.py:53
 msgid "Entries per page"
 msgstr "Entrées par page"
 
-#: content_manager/models.py:71
+#: content_manager/models.py:62
+msgid "Single filter selection"
+msgstr "Autorise la sélection d’un seul filtre à la fois"
+
+#: content_manager/models.py:63
+msgid "Multiple filters selection"
+msgstr "Autorise la sélection de plusieurs filtres"
+
+#: content_manager/models.py:66
+msgid "Filter selection mode"
+msgstr "Type de selection"
+
+#: content_manager/models.py:75
+msgid "Display results matching at least one of the filters (inclusive OR)"
+msgstr "Afficher les résultats correspondant à au moins un des filtres"
+
+#: content_manager/models.py:76
+msgid "Display results matching all filters (cumulative AND)"
+msgstr "Afficher les résultats correspondant à tous les filtres"
+
+#: content_manager/models.py:79
+msgid "Logic for multiple filters"
+msgstr "Logique pour plusieurs filtres"
+
+#: content_manager/models.py:93
+msgid "Filters configuration"
+msgstr "Configuration des filtres"
+
+#: content_manager/models.py:100
 msgid "Catalog index page"
 msgstr "Index de catalogue"
 
-#: content_manager/models.py:99
+#: content_manager/models.py:133
 #, python-format
 msgid "Pages tagged with %(tag)s"
 msgstr "Pages avec l’étiquette %(tag)s"
 
-#: content_manager/models.py:167
+#: content_manager/models.py:143
+#, python-format
+msgid "Pages tagged with all of: %(tags)s"
+msgstr "Pages avec les étiquette : %(tags)s"
+
+#: content_manager/models.py:151
+#, python-format
+msgid "Pages tagged with any of: %(tags)s"
+msgstr "Pages avec l’une des étiquettes : %(tags)s"
+
+#: content_manager/models.py:163
+msgid "Selected tags"
+msgstr "Étiquettes selectionnées"
+
+#: content_manager/models.py:234
 msgid "Tag"
 msgstr "Étiquette"
 
-#: content_manager/models.py:189 content_manager/models.py:222
+#: content_manager/models.py:256 content_manager/models.py:291
 msgid "Custom scripts"
 msgstr "Scripts personnalisés"
 
-#: content_manager/models.py:194
+#: content_manager/models.py:261
 msgid "Scripts in the <head> section"
 msgstr "Scripts dans la section <head>"
 
-#: content_manager/models.py:195
+#: content_manager/models.py:262
 msgid "Allows for scripts to be placed in the <head> tag of the website pages."
 msgstr ""
 "Permet de placer des scripts à l’intérieur du tag <head> des pages du site."
 
-#: content_manager/models.py:201
+#: content_manager/models.py:268
 msgid "Scripts in the <body> section"
 msgstr "Scripts dans la section <body>"
 
-#: content_manager/models.py:202
+#: content_manager/models.py:269
 msgid ""
 "Allows for scripts to be placed at the end of the <body> tag of the website "
 "pages."
 msgstr ""
 "Permet de placer des scripts à l’intérieur du tag <body> des pages du site."
 
-#: content_manager/models.py:206
+#: content_manager/models.py:273
 msgid "Use Tarteaucitron?"
 msgstr "Utiliser Tarteaucitron ?"
 
-#: content_manager/models.py:209
+#: content_manager/models.py:277
 msgid ""
 "See <a href=\"https://sites.beta.gouv.fr/documentation/gestion-des-cookies/"
 "\">Documentation</a>"
@@ -1536,7 +1578,7 @@ msgstr ""
 "Voir <a href=\"https://sites.beta.gouv.fr/documentation/gestion-des-cookies/"
 "\">Documentation</a>"
 
-#: content_manager/models.py:223
+#: content_manager/models.py:292
 msgid ""
 "Allows to add custom CSS and JS to the site, for example for Matomo, "
 "Tarteaucitron…"
@@ -1544,19 +1586,19 @@ msgstr ""
 "Permet d’ajouter du CSS et du JS personnalisé au site, par exemple pour "
 "Matomo, Tarteaucitron…"
 
-#: content_manager/models.py:231
+#: content_manager/models.py:300
 msgid "Site configuration"
 msgstr "Configuration du site"
 
-#: content_manager/models.py:232
+#: content_manager/models.py:301
 msgid "Site configurations"
 msgstr "Configurations du site"
 
-#: content_manager/models.py:235
+#: content_manager/models.py:304
 msgid "Institution (header)"
 msgstr "Institution (en-tête)"
 
-#: content_manager/models.py:240
+#: content_manager/models.py:309
 msgid ""
 "Institution brand as defined on <a href=\"https://www.info.gouv.fr/marque-de-"
 "letat/le-bloc-marque\">official page</a>."
@@ -1626,59 +1668,59 @@ msgstr ""
 "Lien de consultation standardisé à la fin du bandeau. Longueur maximum : "
 "2000 caractères."
 
-#: content_manager/models.py:316
+#: content_manager/models.py:385
 msgid "Notice icon class"
 msgstr "Classe d’icône du bandeau"
 
-#: content_manager/models.py:320
+#: content_manager/models.py:389
 msgid "For weather alerts only"
 msgstr "Pour les bandeaux de vigilance météo uniquement"
 
-#: content_manager/models.py:323
+#: content_manager/models.py:392
 msgid "Collapsible?"
 msgstr "Refermable ?"
 
-#: content_manager/models.py:325
+#: content_manager/models.py:394
 msgid "Show the BETA tag next to the title"
 msgstr "Afficher la mention BETA à côté du titre"
 
-#: content_manager/models.py:327
+#: content_manager/models.py:396
 msgid "Show a login button in the header"
 msgstr "Afficher un bouton de connexion dans l’en-tête"
 
-#: content_manager/models.py:330 content_manager/models.py:563
+#: content_manager/models.py:399 content_manager/models.py:632
 msgid "Description"
 msgstr "Description"
 
-#: content_manager/models.py:343 content_manager/models.py:430
+#: content_manager/models.py:412 content_manager/models.py:499
 msgid "Site logo"
 msgstr "Logo du site"
 
-#: content_manager/models.py:347
+#: content_manager/models.py:416
 msgid "Logo display"
 msgstr "Emplacement du logo"
 
-#: content_manager/models.py:348
+#: content_manager/models.py:417
 msgid "Header and Footer"
 msgstr "En-tête et pied de page"
 
-#: content_manager/models.py:348
+#: content_manager/models.py:417
 msgid "Header only"
 msgstr "En-tête uniquement"
 
-#: content_manager/models.py:355
+#: content_manager/models.py:424
 msgid "Logo alt text"
 msgstr "Alternative textuelle du logo"
 
-#: content_manager/models.py:358
+#: content_manager/models.py:427
 msgid "Must contain the text present in the image."
 msgstr "Doit impérativement contenir le texte présent dans l’image."
 
-#: content_manager/models.py:361
+#: content_manager/models.py:430
 msgid "Width (em)"
 msgstr "Largeur (em)"
 
-#: content_manager/models.py:367
+#: content_manager/models.py:436
 msgid ""
 "To be adjusted according to the width of the logo.            Example for a "
 "vertical logo: 3.5, Example for a horizontal logo: 8."
@@ -1930,8 +1972,10 @@ msgid "Category:"
 msgstr "Catégorie :"
 
 #: content_manager/templates/content_manager/catalog_index_page.html:11
-msgid "Tag:"
-msgstr "Étiquette :"
+#, fuzzy
+#| msgid "Tags"
+msgid "Tags:"
+msgstr "Étiquettes"
 
 #: content_manager/templates/content_manager/catalog_index_page.html:14
 msgid "Author:"
@@ -1946,8 +1990,8 @@ msgstr "Source :"
 msgid "Filters"
 msgstr "Filtres"
 
-#: content_manager/templates/content_manager/catalog_index_page.html:160
-#: content_manager/templates/content_manager/catalog_index_page.html:171
+#: content_manager/templates/content_manager/catalog_index_page.html:180
+#: content_manager/templates/content_manager/catalog_index_page.html:191
 msgid "Pages"
 msgstr "Pages"
 

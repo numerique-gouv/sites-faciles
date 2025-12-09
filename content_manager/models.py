@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import Q
 from django.forms.widgets import Textarea, mark_safe
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
@@ -55,13 +56,41 @@ class CatalogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
     # Filters
     filter_by_tag = models.BooleanField(_("Filter by tag"), default=True)
 
+    SINGLE_FILTER = "single"
+    MULTIPLE_FILTERS = "multiple"
+    FILTER_SELECTION_CHOICES = [
+        (SINGLE_FILTER, _("Single filter selection")),
+        (MULTIPLE_FILTERS, _("Multiple filters selection")),
+    ]
+    filter_selection = models.CharField(
+        _("Filter selection mode"),
+        max_length=50,
+        choices=FILTER_SELECTION_CHOICES,
+        default=SINGLE_FILTER,
+    )
+
+    OR_OPERATOR = "OR"
+    AND_OPERATOR = "AND"
+    MULTIPLE_FILTER_OPERATOR_CHOICES = [
+        (OR_OPERATOR, _("Display results matching at least one of the filters (inclusive OR)")),
+        (AND_OPERATOR, _("Display results matching all filters (cumulative AND)")),
+    ]
+    multiple_filter_operator = models.CharField(
+        _("Logic for multiple filters"),
+        max_length=50,
+        choices=MULTIPLE_FILTER_OPERATOR_CHOICES,
+        default=OR_OPERATOR,
+    )
+
     settings_panels = SitesFacilesBasePage.settings_panels + [
         FieldPanel("entries_per_page"),
         MultiFieldPanel(
             [
                 FieldPanel("filter_by_tag"),
+                FieldPanel("filter_selection"),
+                FieldPanel("multiple_filter_operator"),
             ],
-            heading=_("Show filters"),
+            heading=_("Filters configuration"),
         ),
     ]
 
@@ -81,22 +110,56 @@ class CatalogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
 
         extra_breadcrumbs = None
         extra_title = ""
+        current_tags = []
+        selected_tag_slugs = request.GET.getlist("tag")
 
-        tag = request.GET.get("tag")
-        if tag:
-            tag = get_object_or_404(Tag, slug=tag)
-            entries = entries.filter(tags=tag)
-            extra_breadcrumbs = {
-                "links": [
-                    {"url": self.get_url(), "title": self.title},
-                    {
-                        "url": f"{self.get_url()}{self.reverse_subpage('tags_list')}",
-                        "title": _("Tags"),
-                    },
-                ],
-                "current": tag,
-            }
-            extra_title = _("Pages tagged with %(tag)s") % {"tag": tag}
+        if self.filter_selection == self.SINGLE_FILTER:
+            if selected_tag_slugs and len(selected_tag_slugs) == 1:
+                tag_slug = selected_tag_slugs[0]
+                tag = get_object_or_404(Tag, slug=tag_slug)
+                entries = entries.filter(tags=tag)
+                current_tags = [tag]
+                extra_breadcrumbs = {
+                    "links": [
+                        {"url": self.get_url(), "title": self.title},
+                        {
+                            "url": f"{self.get_url()}{self.reverse_subpage('tags_list')}",
+                            "title": _("Tags"),
+                        },
+                    ],
+                    "current": tag,
+                }
+                extra_title = _("Pages tagged with %(tag)s") % {"tag": tag}
+
+        elif self.filter_selection == self.MULTIPLE_FILTERS:
+            if selected_tag_slugs:
+                current_tags = list(Tag.objects.filter(slug__in=selected_tag_slugs))
+                if current_tags:
+                    if self.multiple_filter_operator == self.AND_OPERATOR:
+                        for tag in current_tags:
+                            entries = entries.filter(tags=tag)
+                        extra_title = _("Pages tagged with all of: %(tags)s") % {
+                            "tags": ", ".join([str(t) for t in current_tags])
+                        }
+                    elif self.multiple_filter_operator == self.OR_OPERATOR:
+                        q_objects = Q()
+                        for tag in current_tags:
+                            q_objects |= Q(tags=tag)
+                        entries = entries.filter(q_objects)
+                        extra_title = _("Pages tagged with any of: %(tags)s") % {
+                            "tags": ", ".join([str(t) for t in current_tags])
+                        }
+
+                    extra_breadcrumbs = {
+                        "links": [
+                            {"url": self.get_url(), "title": self.title},
+                            {
+                                "url": f"{self.get_url()}{self.reverse_subpage('tags_list')}",
+                                "title": _("Tags"),
+                            },
+                        ],
+                        "current": _("Selected tags"),
+                    }
 
         # Pagination
         page_number = request.GET.get("page")
@@ -106,12 +169,14 @@ class CatalogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         entries = paginator.get_page(page_number)
 
         context["entries"] = entries
-        context["current_tag"] = tag
+        context["current_tags"] = current_tags
+        context["selected_tag_slugs"] = selected_tag_slugs
         context["paginator"] = paginator
         context["extra_title"] = extra_title
 
         # Filters
         context["tags"] = self.get_tags()
+        context["filter_selection_mode"] = self.filter_selection
 
         if extra_breadcrumbs:
             context["extra_breadcrumbs"] = extra_breadcrumbs
