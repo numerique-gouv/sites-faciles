@@ -182,3 +182,19 @@ p:empty {
 .cmsfr-image-focus-bottom {
     object-position: bottom;
 }
+
+/* Custom styling for multi-select filter tags */
+/* Override DSFR default behavior: pressed tags should appear active (colored) */
+label.fr-tag[aria-pressed="true"] {
+    --text-active-blue-france: var(--text-inverted-blue-france);
+    --bg-active-blue-france: var(--background-action-high-blue-france);
+    background-color: var(--bg-active-blue-france);
+    color: var(--text-active-blue-france);
+}
+
+label.fr-tag[aria-pressed="false"] {
+    --text-default-grey: var(--text-mention-grey);
+    --bg-default-grey: var(--background-contrast-grey);
+    background-color: var(--bg-default-grey);
+    color: var(--text-default-grey);
+}
