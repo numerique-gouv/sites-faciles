@@ -111,7 +111,7 @@ class Command(BaseCommand):
 
         # Create the page
         body = []
-        title = "Votre nouveau site avec Sites faciles"
+        title = "Votre nouveau site avec Sites Conformes"
 
         image = Image.objects.filter(title="Pictogrammes DSFR — Digital — Coding").first()
 

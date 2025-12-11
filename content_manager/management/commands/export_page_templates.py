@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 
 from content_manager.services.import_export import TEMPLATES_DATA_FILE, ExportPage, ImportExportImages
 
-SOURCE_URL = "https://sites-faciles.beta.numerique.gouv.fr/"
+SOURCE_URL = "https://sites.beta.gouv.fr/"
 
 
 class Command(BaseCommand):

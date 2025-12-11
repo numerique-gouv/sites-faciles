@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from content_manager.services.import_export import ExportPage, ImportExportImages, ImportPages
 from content_manager.utils import get_default_site
 
-SOURCE_URL = "https://sites-faciles.beta.numerique.gouv.fr/"
+SOURCE_URL = "https://sites.beta.gouv.fr/"
 
 
 class Command(BaseCommand):

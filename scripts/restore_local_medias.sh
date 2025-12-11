@@ -15,7 +15,7 @@ if [[ -z "$BACKUP_DIR" ]]; then
     exit 1
 fi
 
-MEDIA_BACKUP_FILE=`ls ${BACKUP_DIR}/sites-faciles-local-medias-*.tar.gz -c | head -1`
+MEDIA_BACKUP_FILE=`ls ${BACKUP_DIR}/sites-conformes-local-medias-*.tar.gz -c | head -1`
 BASE_PATH="${SCRIPT_DIR}/.."
 
 echo "Moving media files from ${MEDIA_BACKUP_FILE} to ${MEDIA_ROOT:=medias}"
