@@ -10,6 +10,7 @@ from wagtail.images import get_image_model
 from content_manager.constants import (
     ALIGN_HORIZONTAL_CHOICES,
     ALIGN_HORIZONTAL_CHOICES_EXTENDED,
+    EXTRA_LIMITED_RICHTEXTFIELD_FEATURES,
     GRID_6_8_12_CHOICES,
     GRID_HORIZONTAL_ALIGN_CHOICES,
     IMAGE_GRID_SIZE,
@@ -45,8 +46,8 @@ class ResizedStructValue(StructValue):
         }
 
         offsets = {
-            "": {"8": "fr-col-offset-2", "6": "fr-col-offset-3"},
-            "right": {"8": "fr-col-offset-4", "6": "fr-col-offset-6"},
+            "": {"8": "fr-col-offset-md-2", "6": "fr-col-offset-md-3"},
+            "right": {"8": "fr-col-offset-md-4", "6": "fr-col-offset-md-6"},
         }
 
         base_class = base_classes.get(alignment, "")
@@ -129,7 +130,9 @@ class ImageAndTextItems(blocks.StructBlock):
     image = ImageBlockWithDefault(label=_("Image"))
     title = blocks.CharBlock(label=_("Title"), required=True)
     text = blocks.RichTextBlock(
-        default="Add a short description to help your visitors better understand what you offer.", label=_("Text")
+        default="Add a short description to help your visitors better understand what you offer.",
+        label=_("Text"),
+        features=EXTRA_LIMITED_RICHTEXTFIELD_FEATURES,
     )
 
 
@@ -190,8 +193,8 @@ class ImageAndTextGridSection(BaseSection):
         default="80",
         help_text=_(
             "Images are always displayed in a square (1:1) ratio. "
-            "The maximum size is 200px; smaller images (e.g., 80px) are supported "
-            "but will not be upscaled."
+            "Three sizes are available: if the original image is smaller than the selected size, "
+            "it will be displayed at its maximum available size."
         ),
         label=_("Image size of items"),
     )
@@ -225,6 +228,7 @@ class CTASection(BaseSection):
     text = blocks.RichTextBlock(
         label=_("Text"),
         default="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun",
+        features=EXTRA_LIMITED_RICHTEXTFIELD_FEATURES,
     )
     button = ButtonBlock(
         label=_("Button"),
@@ -342,7 +346,7 @@ def get_accordion_default():
         "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     )
     return [
-        ("title", "Titre de section"),
+        ("title", "Accordéon"),
         ("accordion", {"title": "Titre de l'accordéon 1", "content": f"<p>{description}</p>"}),
         ("accordion", {"title": "Titre de l'accordéon 2", "content": f"<p>{description}</p>"}),
     ]

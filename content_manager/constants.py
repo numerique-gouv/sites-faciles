@@ -81,6 +81,13 @@ LEVEL_CHOICES = [
     ("warning", _("Warning")),
 ]
 
+EXTRA_LIMITED_RICHTEXTFIELD_FEATURES = [
+    "bold",
+    "italic",
+    "link",
+    "document-link",
+]
+
 LIMITED_RICHTEXTFIELD_FEATURES = [
     "bold",
     "italic",
@@ -218,4 +225,4 @@ TEMPLATE_EXAMPLE_TAG_BADGE_LIST = [
         ],
     ),
 ]
-IMAGE_GRID_SIZE = [("80", _("Small")), ("140", _("Medium")), ("200", _("Large"))]
+IMAGE_GRID_SIZE = [("80", _("Small (80px)")), ("140", _("Medium (140px)")), ("200", _("Large (200px)"))]
