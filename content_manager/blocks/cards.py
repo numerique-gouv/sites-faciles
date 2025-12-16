@@ -3,7 +3,7 @@ from dsfr.constants import IMAGE_RATIOS
 from wagtail import blocks
 from wagtail.blocks import StructValue
 from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.images.blocks import ImageBlock
 
 from content_manager.blocks.badges_tags import BadgesListBlock, TagListBlock
 from content_manager.constants import (
@@ -71,7 +71,7 @@ class CardBlock(blocks.StructBlock):
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
     description = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
-    image = ImageChooserBlock(label=_("Image"), required=False)
+    image = ImageBlock(label=_("Image"), required=False)
     image_ratio = blocks.ChoiceBlock(
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
@@ -188,7 +188,7 @@ class TileBlock(blocks.StructBlock):
     description = blocks.RichTextBlock(
         label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS, required=False
     )
-    image = ImageChooserBlock(label=_("Image"), help_text=_("Prefer SVG files."), required=False)
+    image = ImageBlock(label=_("Image"), help_text=_("Prefer SVG files."), required=False)
     link = LinkWithoutLabelBlock(
         label=_("Link"),
         required=False,
