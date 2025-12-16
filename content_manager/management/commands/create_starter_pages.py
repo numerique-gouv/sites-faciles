@@ -114,6 +114,10 @@ class Command(BaseCommand):
         title = "Votre nouveau site avec Sites faciles"
 
         image = Image.objects.filter(title="Pictogrammes DSFR — Digital — Coding").first()
+        # Mark the image as decorative for validations
+        if image:
+            image.is_decorative = True
+            image.save()
 
         text_raw = """<p>Bienvenue !</p>
 
