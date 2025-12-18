@@ -3,7 +3,7 @@ from dsfr.constants import COLOR_CHOICES_ILLUSTRATION, IMAGE_RATIOS
 from wagtail import blocks
 from wagtail.blocks import StructValue
 from wagtail.images import get_image_model
-from wagtail.images.blocks import ImageBlock, ImageChooserBlock
+from wagtail.images.blocks import ImageBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from content_manager.blocks.badges_tags import TagListBlock
@@ -171,6 +171,7 @@ class ImageAndTextBlock(blocks.StructBlock):
             ("6", "6/12"),
         ],
         default="3",
+        help_text=_("Defines the width of the image relative to the text, based on a 12-column grid."),
     )
     text = blocks.RichTextBlock(label=_("Rich text"))
     link = SingleLinkBlock(
@@ -230,9 +231,13 @@ class CenteredImageBlock(blocks.StructBlock):
         default="h3",
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
-    image = ImageChooserBlock(label=_("Image"))
+    image = ImageBlock(label=_("Image"), help_text=_("Recommended minimum size: 900x600 pixels"))
     alt = blocks.CharBlock(
         label=_("Alternative text (textual description of the image)"),
+        help_text=_(
+            "This field is obsolete and will be removed in the near future. "
+            "Please use the alt field of the image itself."
+        ),
         required=False,
     )
     width = blocks.ChoiceBlock(
@@ -240,12 +245,20 @@ class CenteredImageBlock(blocks.StructBlock):
         choices=MEDIA_WIDTH_CHOICES,
         required=False,
         default="",
+        help_text=_(
+            "Allows you to adjust the width of the image on the page. "
+            "In ‘large’ mode, the image occupies the entire available width."
+        ),
     )
     image_ratio = blocks.ChoiceBlock(
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
         required=False,
         default="h3",
+        help_text=_(
+            "Image ratio is the ratio between width and height of the image. "
+            "By changing it, you can adjust the image display (square, horizontal or vertical)"
+        ),
     )
     caption = blocks.CharBlock(label=_("Caption"), required=False)
     url = blocks.URLBlock(label=_("Link"), required=False)
@@ -257,7 +270,7 @@ class CenteredImageBlock(blocks.StructBlock):
 
 
 class QuoteBlock(blocks.StructBlock):
-    image = ImageChooserBlock(label=_("Image"), required=False)
+    image = ImageBlock(label=_("Image"), required=False)
     quote = blocks.CharBlock(label=_("Quote"))
     author_name = blocks.CharBlock(label=_("Author name"), required=False)
     author_title = blocks.CharBlock(label=_("Author title"), required=False)
@@ -409,7 +422,7 @@ class VerticalContactCardBlock(blocks.StructBlock):
     role = blocks.CharBlock(label=_("Role"), max_length=255, required=False)
     organization = blocks.CharBlock(label=_("Organization"), max_length=255, required=False)
     contact_info = blocks.CharBlock(label=_("Contact info"), max_length=500, required=False)
-    image = ImageChooserBlock(label="Image", required=False)
+    image = ImageBlock(label="Image", required=False)
     tags = TagListBlock(label=_("Tags"), required=False)
 
     class Meta:
