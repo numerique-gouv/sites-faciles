@@ -17,7 +17,7 @@ from content_manager.utils import get_streamfield_raw_text
 class SitesFacilesBasePage(Page):
     """
     This class defines a base page model that will be used
-    by all pages in Sites Faciles
+    by all pages in the site.
     """
 
     hero = StreamField(HERO_STREAMFIELD_BLOCKS, blank=True, use_json_field=True, max_num=1)

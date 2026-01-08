@@ -1,13 +1,13 @@
-# Sites Faciles
+# Sites Conformes
 
-**Sites Faciles** vise à permettre la création simplifiée de **sites dont le domaine se termine par .gouv.fr**.
+**Sites Conformes** (anciennement « Sites Faciles ») vise à permettre la création simplifiée de **sites dont le domaine se termine par .gouv.fr**.
 
 Basé sur **[Wagtail](https://wagtail.org/)**, il permet de **concevoir rapidement des sites internet conformes aux normes numériques en vigueur**.
 
 En particulier, il permet de **construire des pages à l’aide de composants** prêts à l’emploi issus du **[Système de design de l’État (DSFR)](https://www.systeme-de-design.gouv.fr/)**.
 
 ## Prérequis
-Sites Faciles vise à utiliser les dernières versions disponibles de [Django (5.0+)](https://www.djangoproject.com/download/) et [Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html).
+Sites Conformes vise à utiliser les dernières versions disponibles de [Django (5.0+)](https://www.djangoproject.com/download/) et [Wagtail](https://docs.wagtail.org/en/stable/releases/upgrading.html).
 
 Les tests automatisés couvrent les versions suivantes :
 - Python 3.10 à 3.14 (cf. [versions de Python supportées par Django](https://docs.djangoproject.com/en/5.2/faq/install/))
@@ -23,7 +23,7 @@ Les tests automatisés couvrent les versions suivantes :
 [![Made with Django](https://img.shields.io/badge/Made%20with-Django-0C4B33.svg)](https://www.djangoproject.com/)
 [![Made with Wagtail](https://img.shields.io/badge/Made%20with-Wagtail-0F7676.svg)](https://wagtail.io/)
 
-Sites Faciles est développé en utilisant le framework [Django](https://www.djangoproject.com/) et le CMS [Wagtail](https://wagtail.org/). Il est centré autour d'une application principale nommée **content_manager**, accompagnée d’applications annexes pour divers types de pages :
+Sites Conformes est développé en utilisant le framework [Django](https://www.djangoproject.com/) et le CMS [Wagtail](https://wagtail.org/). Il est centré autour d'une application principale nommée **content_manager**, accompagnée d’applications annexes pour divers types de pages :
 
 - **content_manager** : l’application principale, contient les contenus communs, les pages standard (pages de contenu), les pages d’index de catalogue et la gestion des configurations
 - **blog** : Permet de gérer des articles de blog et des index de blog, et les flux RSS correspondants.
@@ -43,7 +43,7 @@ En plus des applications déjà citées, le dépôt contient les répertoires su
 - **templates** : les templates de base du site.
 
 ## Schéma
-![Schéma montrant les apps listées ci-dessus ainsi que l’interconnection avec la BDD, le S3 et les services tiers (dont ProConnect)](static/doc/sites-faciles-schema.svg)
+![Schéma montrant les apps listées ci-dessus ainsi que l’interconnection avec la BDD, le S3 et les services tiers (dont ProConnect)](static/doc/sites-conformes-schema.svg)
 
 Schéma de l’application dans le cas d’un hébergement sur Scalingo
 

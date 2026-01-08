@@ -104,11 +104,11 @@ Avoir un PostgreSQL qui tourne en local (cf. procédure d’installation sur [Ub
 
 ```sh
 # créer un utilisateur avec les droits nécessaires aux scripts d’administration
-psql -c "CREATE USER sitesfaciles WITH CREATEDB LOGIN PASSWORD 'votre_mot_de_passe';" -U postgres
+psql -c "CREATE USER sitesconformes WITH CREATEDB LOGIN PASSWORD 'votre_mot_de_passe';" -U postgres
 
 
 # créer la base de données (vide pour l’instant)
-psql -c "CREATE DATABASE sitesfaciles OWNER sitesfaciles;" -U postgres
+psql -c "CREATE DATABASE sitesconformes OWNER sitesconformes;" -U postgres
 ```
 
 
@@ -136,14 +136,14 @@ just run_gunicorn
 ```sh
 DEBUG=False
 HOST_PROTO=http
-HOST_URL=sites-faciles.localhost
+HOST_URL=sites-conformes.localhost
 HOST_PORT=8000
 FORCE_SCRIPT_NAME="/pages"
 ALLOWED_HOSTS=localhost,0.0.0.0,127.0.0.1,.localhost
 CSRF_TRUSTED_ORIGINS="http://127.0.0.1:18000,http://localhost:18000,http://*.localhost:18000"
 ```
 
-* On peut alors accéder au site via http:/sites-faciles.localhost:18000/pages/
+* On peut alors accéder au site via http:/sites-conformes.localhost:18000/pages/
 
 ## Gestion de la base de données et des médias
 Un ensemble de scripts pour gérer la base de données et les fichiers médias, que ce soit ceux de la base locale de dev ou ceux de la production.
@@ -159,7 +159,7 @@ Il faut aussi installer deux dépendances : d’une part, la CLI de Scalingo, en
 D’autre part, le paquet [rclone](https://rclone.org/) (via `apt install rclone`) pour gérer la récupération des fichiers média depuis un S3.
 
 ```sh
-PROD_APP= (le nom de l’app Scalingo, par ex sites-faciles)
+PROD_APP= (le nom de l’app Scalingo, par ex sites-conformes)
 PROD_DB_NAME= (le nom de la base de données dans Scalingo, par ex sites_facil_123)
 PROD_S3_BUCKET_NAME=
 PROD_S3_LOCATION=

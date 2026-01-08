@@ -14,7 +14,7 @@ if [[ -z "$BACKUP_DIR" ]]; then
     exit 1
 fi
 
-MEDIA_BACKUP_DIR="${BACKUP_DIR}/sites-faciles-prod-medias/"
+MEDIA_BACKUP_DIR="${BACKUP_DIR}/sites-conformes-prod-medias/"
 
 # Create the backup directory if it doesn't exist
 test -d ${MEDIA_BACKUP_DIR} || mkdir -p ${MEDIA_BACKUP_DIR}

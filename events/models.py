@@ -210,7 +210,7 @@ class EventsIndexPage(RoutablePageMixin, SitesFacilesBasePage):
         prodid = [
             "-",
             f"{site_name} – {self.title}",
-            "Sites faciles",
+            "Sites Conformes",
             language_code.upper(),
         ]
 
@@ -391,7 +391,7 @@ class EventEntryPage(RoutablePageMixin, SitesFacilesBasePage):
         prodid = [
             "-",
             title,
-            "Sites faciles",
+            "Sites Conformes",
             language_code.upper(),
         ]
 

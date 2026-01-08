@@ -42,7 +42,7 @@ class ContentPage(SitesFacilesBasePage):
 
 
 class TagContentPage(TaggedItemBase):
-    content_object = ParentalKey("ContentPage", related_name="contentpage_tags")
+    content_object = ParentalKey("ContentPage", related_name="contentpage_tags")  # type: ignore
 
 
 class CatalogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
@@ -206,9 +206,7 @@ class CustomScriptsSettings(BaseSiteSetting):
         _("Use Tarteaucitron?"),
         default=False,
         help_text=mark_safe(
-            _(
-                'See <a href="https://sites-faciles.beta.numerique.gouv.fr/documentation/gestion-des-cookies/">Documentation</a>'
-            )
+            _('See <a href="https://sites.beta.gouv.fr/documentation/gestion-des-cookies/">Documentation</a>')
         ),
     )
 
@@ -284,7 +282,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         blank=True,
         features=LIMITED_RICHTEXTFIELD_FEATURES,
         help_text=_("Can include HTML"),
-    )
+    )  # type: ignore
 
     notice_description = RichTextField(
         _("Notice description"),
@@ -333,7 +331,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         default="",
         blank=True,
         features=LIMITED_RICHTEXTFIELD_FEATURES,
-    )
+    )  # type: ignore
 
     # Operator logo
     operator_logo_file = models.ForeignKey(
@@ -369,7 +367,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
             "To be adjusted according to the width of the logo.\
             Example for a vertical logo: 3.5, Example for a horizontal logo: 8."
         ),
-    )
+    )  # type: ignore
 
     search_bar = models.BooleanField(_("Display search bar in the header"), default=False)  # type: ignore
     theme_modale_button = models.BooleanField(_("Display theme modale button"), default=False)  # type: ignore
@@ -523,7 +521,7 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
 
 
 class SocialMediaItem(Orderable):
-    site_config = ParentalKey(CmsDsfrConfig, related_name="social_media_items")
+    site_config = ParentalKey(CmsDsfrConfig, related_name="social_media_items")  # type: ignore
     title = models.CharField(_("Title"), max_length=200, default="", blank=True)
 
     url = models.URLField(

@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-28 12:22+0100\n"
-"PO-Revision-Date: 2025-10-28 13:46+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2025-12-11 12:46+0100\n"
+"Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -77,8 +77,8 @@ msgid "Reset your password"
 msgstr "Réinitialisez votre mot de passe"
 
 #: dashboard/templates/wagtailadmin/home.html:5
-msgid "Sites faciles"
-msgstr "Sites faciles"
+msgid "Sites Conformes"
+msgstr "Sites Conformes"
 
 #: dashboard/templates/wagtailadmin/home/account_summary.html:15
 msgid "Account"
