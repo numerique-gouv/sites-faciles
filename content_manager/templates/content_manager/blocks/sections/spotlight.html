@@ -1,0 +1,20 @@
+{% extends "content_manager/blocks/sections/base_section.html" %}
+{% load wagtail_dsfr_tags wagtailcore_tags %}
+{% block children %}
+  <div class="fr-container">
+    <div class="fr-grid-row fr-grid-row--gutters fr-py-3w">
+      {% for item in value.items %}<div class="fr-col-md-{{ value.items_per_row }} fr-col-sm">{{ item }}</div>{% endfor %}
+    </div>
+    {% if value.link.url and value.link.text %}
+      {% if value.link == "external" %}
+        <a class="fr-btn--icon-right fr-icon-arrow-right-line"
+           href="{{ value.link.url }}"
+           target="_blank"
+           rel="noopener external">{{ value.link.text }}</a>
+      {% else %}
+        <a class="fr-btn--icon-right fr-icon-arrow-right-line"
+           href="{{ value.link.url }}">{{ value.link.text }}</a>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock children %}

@@ -1,0 +1,6 @@
+{% extends "content_manager/blocks/sections/base_section.html" %}
+{% load wagtailcore_tags %}
+
+{% block children %}
+  {% include_block value.accordion %}
+{% endblock children %}

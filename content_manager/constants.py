@@ -35,6 +35,12 @@ GRID_3_4_6_CHOICES = [
     ("6", "6/12"),
 ]
 
+GRID_6_8_12_CHOICES = [
+    ("6", _("small")),
+    ("8", _("medium")),
+    ("12", _("large")),
+]
+
 GRID_HORIZONTAL_ALIGN_CHOICES = [
     ("left", _("Left")),
     ("center", _("Center")),
@@ -75,6 +81,13 @@ LEVEL_CHOICES = [
     ("warning", _("Warning")),
 ]
 
+EXTRA_LIMITED_RICHTEXTFIELD_FEATURES = [
+    "bold",
+    "italic",
+    "link",
+    "document-link",
+]
+
 LIMITED_RICHTEXTFIELD_FEATURES = [
     "bold",
     "italic",
@@ -94,6 +107,17 @@ LIMITED_RICHTEXTFIELD_FEATURES_WITHOUT_LINKS = [
     "superscript",
     "subscript",
     "strikethrough",
+]
+
+LIMITED_RICHTEXTFIELD_FEATURES_WITH_HEADINGS = [
+    "bold",
+    "italic",
+    "link",
+    "document-link",
+    "strikethrough",
+    "h2",
+    "h3",
+    "h4",
 ]
 
 LINK_SIZE_CHOICES = [
@@ -161,3 +185,44 @@ TEMPLATE_EXAMPLE_BUTTON_LIST = [
         "anchor": "",
     },
 ]
+
+TEMPLATE_EXAMPLE_TAG_BADGE_LIST = [
+    (
+        "tags",
+        [
+            (
+                "tag",
+                {
+                    "label": "Site vitrine",
+                    "is_small": False,
+                    "color": "",
+                    "icon_class": {},
+                    "link": {
+                        "link_type": "--",
+                        "page": None,
+                        "external_url": "",
+                        "document": None,
+                        "anchor": "",
+                    },
+                },
+            ),
+            (
+                "tag",
+                {
+                    "label": "Blog",
+                    "is_small": False,
+                    "color": "",
+                    "icon_class": {},
+                    "link": {
+                        "link_type": "--",
+                        "page": None,
+                        "external_url": "",
+                        "document": None,
+                        "anchor": "",
+                    },
+                },
+            ),
+        ],
+    ),
+]
+IMAGE_GRID_SIZE = [("80", _("Small (80px)")), ("140", _("Medium (140px)")), ("200", _("Large (200px)"))]

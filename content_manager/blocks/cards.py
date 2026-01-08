@@ -2,8 +2,7 @@ from django.utils.translation import gettext_lazy as _
 from dsfr.constants import IMAGE_RATIOS
 from wagtail import blocks
 from wagtail.blocks import StructValue
-from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.images.blocks import ImageBlock, ImageChooserBlock
 
 from content_manager.blocks.badges_tags import BadgesListBlock, TagListBlock
 from content_manager.constants import (
@@ -71,7 +70,7 @@ class CardBlock(blocks.StructBlock):
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
     description = blocks.RichTextBlock(label=_("Content"), features=LIMITED_RICHTEXTFIELD_FEATURES, required=False)
-    image = ImageChooserBlock(label=_("Image"), required=False)
+    image = ImageBlock(label=_("Image"), required=False)
     image_ratio = blocks.ChoiceBlock(
         label=_("Image ratio"),
         choices=IMAGE_RATIOS,
@@ -84,21 +83,9 @@ class CardBlock(blocks.StructBlock):
     link = LinkWithoutLabelBlock(
         label=_("Link"),
         required=False,
-    )
-    url = blocks.URLBlock(
-        label=_("Link (obsolete)"),
-        required=False,
-        group="target",
+        collapsed=False,
         help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
-        ),
-    )
-    document = DocumentChooserBlock(
-        label=_("or Document (obsolete)"),
-        required=False,
-        group="target",
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
+            "Link for the whole card. If a call-to-action is present, the link will display on the title only."
         ),
     )
     top_detail_text = blocks.CharBlock(label=_("Top detail: text"), required=False)
@@ -120,7 +107,10 @@ class CardBlock(blocks.StructBlock):
     bottom_detail_icon = IconPickerBlock(label=_("Bottom detail: icon"), required=False)
     call_to_action = blocks.StreamBlock(
         [
-            ("links", LinksVerticalListBlock()),
+            (
+                "links",
+                LinksVerticalListBlock(label=_("Links")),
+            ),
             (
                 "buttons",
                 ButtonsHorizontalListBlock(
@@ -133,7 +123,7 @@ class CardBlock(blocks.StructBlock):
             ),
         ],
         label=_("Bottom call-to-action: links or buttons"),
-        help_text=_("Incompatible with the bottom detail text."),
+        help_text=_("Incompatible with the bottom detail text. Allow you to add link or button."),
         max_num=1,
         required=False,
     )

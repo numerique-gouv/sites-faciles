@@ -1,0 +1,22 @@
+div.struct-block.resized-text-section {
+    display: grid;
+    column-gap: 2rem;
+    grid-template-areas:
+            "one   two"
+            "three three"
+            "five  five"
+            "six   six";
+    
+    >div[data-contentpath="width"] {
+        grid-area: one;
+    }
+
+    >div[data-contentpath="alignment"] {
+        grid-area: two;
+    }
+
+    >div[data-contentpath="text"] {
+        grid-area: three;
+    }
+
+}
