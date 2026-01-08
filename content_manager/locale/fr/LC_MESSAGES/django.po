@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-11 12:44+0100\n"
-"PO-Revision-Date: 2026-01-08 14:40+0100\n"
+"PO-Revision-Date: 2026-01-08 14:46+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -36,7 +36,7 @@ msgstr "Couleur de fond"
 #: content_manager/abstract.py:47 content_manager/blocks/layout.py:221
 #: content_manager/blocks/layout.py:279 content_manager/blocks/layout.py:328
 msgid "Uses the French Design System colors"
-msgstr "Utilise les couleurs du système de design de l'État"
+msgstr "Utilise les couleurs du système de design de l’État"
 
 #: content_manager/abstract.py:50
 msgid "Full width"
@@ -110,11 +110,9 @@ msgid "Common page configuration"
 msgstr "Configuration commune"
 
 #: content_manager/abstract.py:195
-#: content_manager/abstract.py:195
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:196
 #: content_manager/abstract.py:196
 msgid "Base pages"
 msgstr "Pages de base"
@@ -653,7 +651,7 @@ msgstr "Appel à action en bas de la carte"
 msgid ""
 "Incompatible with the bottom detail text. Allow you to add link or button."
 msgstr ""
-"Incompatible avec le texte détaillé en bas. Permet d'ajouter un lien ou un "
+"Incompatible avec le texte détaillé en bas. Permet d’ajouter un lien ou un "
 "bouton."
 
 #: content_manager/blocks/cards.py:130
@@ -1019,7 +1017,7 @@ msgstr "Veuillez sélectionner une image pour l’arrière-plan."
 msgid ""
 "Uses the French Design System colors. Apply only if there is no header image."
 msgstr ""
-"Utilise les couleurs du système de design de l'État. S’affiche uniquement "
+"Utilise les couleurs du système de design de l’État. S’affiche uniquement "
 "s’il n’y a pas d’image d’en-tête sélectionné."
 
 #: content_manager/blocks/heros.py:251
@@ -1386,15 +1384,15 @@ msgstr "Droite (ordre inversé en mode bureau)"
 
 #: content_manager/constants.py:39
 msgid "small"
-msgstr "Petit"
+msgstr "petit"
 
 #: content_manager/constants.py:40
 msgid "medium"
-msgstr "Moyen"
+msgstr "moyen"
 
 #: content_manager/constants.py:41
 msgid "large"
-msgstr "Grand"
+msgstr "grand"
 
 #: content_manager/constants.py:52 content_manager/constants.py:166
 msgid "Middle"
@@ -1882,7 +1880,6 @@ msgstr "Format de fichier inconnu"
 msgid "Unknown file size"
 msgstr "Taille de fichier inconnue"
 
-#: content_manager/templates/content_manager/blocks/events_recent_entries.html:111
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:111
 msgid "See all events"
 msgstr "Voir tous les événements"
