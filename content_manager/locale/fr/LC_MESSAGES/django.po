@@ -80,6 +80,9 @@ msgstr ""
 msgid "Body"
 msgstr "Corps"
 
+msgid "For search engines"
+msgstr "Pour les moteurs de recherche"
+
 msgid "Common page configuration"
 msgstr "Configuration commune"
 
@@ -1328,6 +1331,11 @@ msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 msgid "Mega menu"
 msgstr "Méga menu"
 
+#: content_manager/services/accessors.py:174
+#: content_manager/templates/content_manager/blocks/breadcrumbs.html:15
+msgid "Home page"
+msgstr "Accueil"
+
 msgid "No article found."
 msgstr "Aucun article trouvé."
 
@@ -1479,6 +1487,9 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid "Common page configuration"
+#~ msgstr "Configuration commune"
 
 #~ msgid "Link label (obsolete)"
 #~ msgstr "Libellé du lien (obsolète)"
