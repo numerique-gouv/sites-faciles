@@ -178,30 +178,6 @@ class ImageAndTextBlock(blocks.StructBlock):
         required=False,
         help_text=_("The link is shown at the bottom of the text block, with an arrow"),
     )
-    link_label = blocks.CharBlock(
-        label=_("Link label (obsolete)"),
-        required=False,
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
-        ),
-        group="obsolete",
-    )
-    page = blocks.PageChooserBlock(
-        label=_("Internal link (obsolete)"),
-        required=False,
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
-        ),
-        group="obsolete",
-    )
-    link_url = blocks.URLBlock(
-        label=_("Link URL (obsolete)"),
-        required=False,
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the Link field above."
-        ),
-        group="obsolete",
-    )
 
     class Meta:
         icon = "image"
@@ -313,20 +289,6 @@ class TextAndCTA(blocks.StructBlock):
         ],
         label=_("Call-to-action buttons"),
         max_num=1,
-        required=False,
-    )
-    cta_label = blocks.CharBlock(
-        label=_("Call to action label  (obsolete)"),
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
-        ),
-        required=False,
-    )
-    cta_url = blocks.CharBlock(
-        label=_("Link (obsolete)"),
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Please replace with the CTA buttons above."
-        ),
         required=False,
     )
 

@@ -220,15 +220,6 @@ class MultiColumnsWithTitleBlock(blocks.StructBlock):
         required=False,
         help_text=_("Uses the French Design System colors"),
     )
-    bg_color = blocks.RegexBlock(
-        label=_("Background color, hexadecimal format (obsolete)"),
-        regex=r"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-        help_text=_(
-            "This field is obsolete and will be removed in the near future. Replace it with the background color."  # noqa
-        ),
-        error_messages={"invalid": _("Incorrect color format, must be #fff or #f5f5f5")},
-        required=False,
-    )
     title = blocks.CharBlock(label=_("Title"), required=False)
     heading_tag = blocks.ChoiceBlock(
         label=_("Heading level"),
