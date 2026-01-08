@@ -1,19 +1,22 @@
-publiccodeYmlVersion: "0.2"
+publiccodeYmlVersion: "0.5.0"
 name: Sites Conformes
 url: https://github.com/numerique-gouv/sites-faciles
 landingURL: https://sites.beta.gouv.fr/
-creationDate: 2023-01-10
-latestRelease:
-  date: ""
-  version: ""
 logo: https://github.com/numerique-gouv.png
 usedBy: []
+developmentStatus: stable
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - en
+    - fr
 fundedBy:
   - name: Direction interministérielle du numérique
-    url: https://lannuaire.service-public.fr/gouvernement/d1a97841-b4bf-46df-a089-1003e4e266b4
-roadmap: ""
+    uri: https://lannuaire.service-public.fr/gouvernement/d1a97841-b4bf-46df-a089-1003e4e266b4
+roadmap: "https://sites.beta.gouv.fr/"
+platforms:
+  - web
 softwareType: "standalone/web"
-packages: []
 description:
   fr:
     shortDescription:
@@ -22,22 +25,12 @@ description:
     documentation: "https://sites.beta.gouv.fr/documentation/"
 legal:
   license: agpl-3.0
+  mainCopyrightOwner: "État français - Direction interministérielle du numérique"
   authorsFile: ""
-authors:
-  distinctAuthorsCount: 0
-  distinctOrganizationsCount: 0
 maintenance:
   type: community
   contacts:
-    - name: ""
-      email: ""
-metadataFiles:
-  readme: README.md
-  license: LICENSE
-  contributing: null
-  changelog: null
-  codeOfConduct: null
-  governance: null
-lastUpdated: 2024-09-03
-awesomeScore: 5
-awesomeShield: https://img.shields.io/badge/awesome-codegouvfr_5/10-blue
+    - name: "Équipe Sites Conformes"
+      email: "contact@sites.beta.gouv.fr"
+# awesomeScore: 5
+# awesomeShield: https://img.shields.io/badge/awesome-codegouvfr_5/10-blue
