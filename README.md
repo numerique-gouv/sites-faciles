@@ -1,6 +1,6 @@
 # Sites Conformes
 
-**Sites Conformes** vise à permettre la création simplifiée de **sites dont le domaine se termine par .gouv.fr**.
+**Sites Conformes** (anciennement « Sites Faciles ») vise à permettre la création simplifiée de **sites dont le domaine se termine par .gouv.fr**.
 
 Basé sur **[Wagtail](https://wagtail.org/)**, il permet de **concevoir rapidement des sites internet conformes aux normes numériques en vigueur**.
 
