@@ -9,9 +9,9 @@ User = get_user_model()
 
 class ProconnectUtilsTestCase(WagtailPageTestCase):
     def setUp(self):
-        self.local_user = User.objects.create_superuser("local_user@test.test", "local_user@test.test", "pass")
+        self.local_user = User.objects.create_superuser("local_user@example.com", "local_user@example.com", "pass")
 
-        self.oidc_user = User.objects.create_superuser("oic_user@test.test", "oic_user@test.test", "pass")
+        self.oidc_user = User.objects.create_superuser("oic_user@example.com", "oic_user@example.com", "pass")
         UserOIDC.objects.create(user=self.oidc_user, sub="knownsub", siret="13002526500013")
 
         WhitelistedEmailDomain.objects.create(domain="beta.gouv.fr")
@@ -33,7 +33,7 @@ class ProconnectUtilsTestCase(WagtailPageTestCase):
         self.assertEqual(result["status"], "success")
 
     def test_email_domain_basic_whitelist_not_allowed(self):
-        result = email_domain_basic_whitelist({"email": "disallowed.user@example.fr"})
+        result = email_domain_basic_whitelist({"email": "disallowed.user@example.com"})
         self.assertEqual(result["status"], "error")
 
     def test_email_domain_db_whitelist_allowed(self):
@@ -41,5 +41,5 @@ class ProconnectUtilsTestCase(WagtailPageTestCase):
         self.assertEqual(result["status"], "success")
 
     def test_email_domain_db_whitelist_not_allowed(self):
-        result = email_domain_db_whitelist({"email": "disallowed.user@example.fr"})
+        result = email_domain_db_whitelist({"email": "disallowed.user@example.com"})
         self.assertEqual(result["status"], "error")
