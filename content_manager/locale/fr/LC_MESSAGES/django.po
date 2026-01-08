@@ -105,17 +105,19 @@ msgstr ""
 msgid "Body"
 msgstr "Corps"
 
+#: content_manager/abstract.py:114
+msgid "For search engines"
+msgstr "Pour les moteurs de recherche"
+
 #: content_manager/abstract.py:108
 msgid "Common page configuration"
 msgstr "Configuration commune"
 
-#: content_manager/abstract.py:195
-#: content_manager/abstract.py:195
+#: content_manager/abstract.py:201
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:196
-#: content_manager/abstract.py:196
+#: content_manager/abstract.py:202
 msgid "Base pages"
 msgstr "Pages de base"
 
@@ -178,8 +180,8 @@ msgstr "Uniquement pour les tags cliquables"
 
 #: content_manager/blocks/badges_tags.py:43
 #: content_manager/blocks/basics.py:120
-#: content_manager/blocks/buttons_links.py:206
-#: content_manager/blocks/buttons_links.py:252
+#: content_manager/blocks/buttons_links.py:208
+#: content_manager/blocks/buttons_links.py:254
 msgid "Icon"
 msgstr "Icône"
 
@@ -299,7 +301,7 @@ msgid "Color"
 msgstr "Couleur"
 
 #: content_manager/blocks/basics.py:143
-#: content_manager/blocks/buttons_links.py:259
+#: content_manager/blocks/buttons_links.py:261
 msgid "Size"
 msgstr "Taille"
 
@@ -336,15 +338,16 @@ msgid "Image width"
 msgstr "Largeur de l’image"
 
 #: content_manager/blocks/basics.py:175 content_manager/blocks/basics.py:276
+#: content_manager/blocks/basics.py:175 content_manager/blocks/basics.py:276
 #: content_manager/blocks/core.py:42 content_manager/blocks/layout.py:95
 #: content_manager/blocks/sections.py:62
 msgid "Rich text"
 msgstr "Texte avec mise en forme"
 
-#: content_manager/blocks/basics.py:177 content_manager/blocks/basics.py:251
-#: content_manager/blocks/basics.py:398
-#: content_manager/blocks/buttons_links.py:196
-#: content_manager/blocks/cards.py:85 content_manager/blocks/cards.py:193
+#: content_manager/blocks/basics.py:177 content_manager/blocks/basics.py:227
+#: content_manager/blocks/basics.py:360
+#: content_manager/blocks/buttons_links.py:198
+#: content_manager/blocks/cards.py:84 content_manager/blocks/cards.py:183
 msgid "Link"
 msgstr "Lien"
 
@@ -361,7 +364,7 @@ msgid "Witdh"
 msgstr "Largeur"
 
 #: content_manager/blocks/basics.py:221 content_manager/blocks/cards.py:75
-#: content_manager/blocks/cards.py:141 content_manager/blocks/heros.py:64
+#: content_manager/blocks/cards.py:143 content_manager/blocks/heros.py:64
 msgid "Image ratio"
 msgstr "Ratio de l’image"
 
@@ -526,31 +529,31 @@ msgstr ""
 "Paramètres de requête supplémentaires à la fin du lien, par exemple des "
 "options de filtrage."
 
-#: content_manager/blocks/buttons_links.py:162
+#: content_manager/blocks/buttons_links.py:164
 msgid "Please select a page to link to"
 msgstr "Veuillez sélectionner une page"
 
-#: content_manager/blocks/buttons_links.py:166
+#: content_manager/blocks/buttons_links.py:168
 msgid "Please enter a URL"
 msgstr "Veuillez saisir une URL"
 
-#: content_manager/blocks/buttons_links.py:170
+#: content_manager/blocks/buttons_links.py:172
 msgid "Please select a document to link to"
 msgstr "Veuillez sélectionner un document"
 
-#: content_manager/blocks/buttons_links.py:188
+#: content_manager/blocks/buttons_links.py:190
 msgid "Link label"
 msgstr "Libellé du lien"
 
-#: content_manager/blocks/buttons_links.py:204
+#: content_manager/blocks/buttons_links.py:206
 msgid "Button label"
 msgstr "Libellé du bouton"
 
-#: content_manager/blocks/buttons_links.py:205
+#: content_manager/blocks/buttons_links.py:207
 msgid "Button type"
 msgstr "Type de bouton"
 
-#: content_manager/blocks/buttons_links.py:208
+#: content_manager/blocks/buttons_links.py:210
 msgid "Icon side"
 msgstr "Côté de l’icône"
 
@@ -566,11 +569,11 @@ msgstr ""
 "Si vous utilisez des icônes, mettez-en sur tous les boutons et alignez-les "
 "du même côté."
 
-#: content_manager/blocks/buttons_links.py:243
+#: content_manager/blocks/buttons_links.py:245
 msgid "Position"
 msgstr "Position"
 
-#: content_manager/blocks/buttons_links.py:253
+#: content_manager/blocks/buttons_links.py:255
 msgid "Only used for internal links."
 msgstr "Uniquement pour les liens internes."
 
@@ -1837,6 +1840,11 @@ msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 msgid "Mega menu"
 msgstr "Méga menu"
 
+#: content_manager/services/accessors.py:174
+#: content_manager/templates/content_manager/blocks/breadcrumbs.html:15
+msgid "Home page"
+msgstr "Accueil"
+
 #: content_manager/templates/content_manager/blocks/blog_recent_entries.html:107
 #: content_manager/templates/content_manager/blocks/events_recent_entries.html:107
 msgid "No article found."
@@ -1853,10 +1861,6 @@ msgstr "vous êtes ici :"
 #: content_manager/templates/content_manager/blocks/breadcrumbs.html:9
 msgid "See breadcrumb"
 msgstr "Voir le fil d’Ariane"
-
-#: content_manager/templates/content_manager/blocks/breadcrumbs.html:15
-msgid "Home page"
-msgstr "Accueil"
 
 #: content_manager/templates/content_manager/blocks/button.html:6
 #: content_manager/templates/content_manager/blocks/card_horizontal.html:12
@@ -2050,6 +2054,9 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid "Common page configuration"
+#~ msgstr "Configuration commune"
 
 #~ msgid "Link label (obsolete)"
 #~ msgstr "Libellé du lien (obsolète)"
