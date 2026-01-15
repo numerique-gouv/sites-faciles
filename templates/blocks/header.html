@@ -9,7 +9,6 @@
   {% translate "Home page" as home_page %}
   <a href="{% root_url %}"
      title="{{ home_page }} — {{ settings.content_manager.CmsDsfrConfig.site_title }}">
-
     <p class="fr-header__service-title">
       {% if settings.content_manager.CmsDsfrConfig.site_title|slice:"-2:" == "fr" %}
         {{ settings.content_manager.CmsDsfrConfig.site_title|slice:":-2" }}<em>fr</em>
