@@ -81,7 +81,7 @@ INSTALLED_APPS = [
     "wagtail.snippets",
     "wagtail",
     "wagtailmarkdown",
-    "wagtailmenus",
+    "wagtailmenus",  # Obsolete, to be removed in a future version (replaced by "menus")
     "wagtail_localize",
     "wagtail_localize.locales",
     "taggit",
@@ -100,6 +100,7 @@ INSTALLED_APPS = [
     "blog",
     "events",
     "forms",
+    "menus",
     "wagtail_honeypot",
     "dashboard",
     "wagtail.admin",
@@ -368,6 +369,8 @@ WAGTAIL_RICHTEXT_FIELD_FEATURES = [
 
 WAGTAILEMBEDS_RESPONSIVE_HTML = True
 WAGTAIL_MODERATION_ENABLED = False
+
+# Wagtailmenus: Obsolete, to be removed in a future version (replaced by "menus")
 WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("header_tools", "Menu en haut à droite"),
     ("footer", "Menu en pied de page"),
@@ -388,6 +391,9 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("mega_menu_section_15", "Catégorie de méga-menu 15"),
     ("mega_menu_section_16", "Catégorie de méga-menu 16"),
 )
+WAGTAILMENUS_FLAT_MENUS_EDITABLE_IN_WAGTAILADMIN = False
+WAGTAILMENUS_MAIN_MENUS_EDITABLE_IN_WAGTAILADMIN = False
+
 
 WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) in ["1", "True"] else False
