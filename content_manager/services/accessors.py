@@ -139,7 +139,7 @@ def get_or_create_content_page(
     return new_page
 
 
-def get_or_create_footer_menu() -> FooterBottomMenu:
+def get_or_create_footer_bottom_menu() -> FooterBottomMenu:
     """
     Get the footer menu or create it if it doesn't already exist
 
@@ -175,6 +175,7 @@ def get_or_create_main_menu() -> MainMenu:
             "page": root_page,
             "link_type": "page",
         }
-    main_menu.items.append(("link", link_value))
+        main_menu.items.append(("link", link_value))
 
+    main_menu.save()
     return main_menu
