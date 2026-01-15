@@ -164,7 +164,7 @@ clear-local-db:
 # Creates a bunch of example pages
 [group('Dev DB and medias management')]
 demo:
-    just init
+    just init-dev
     {{docker_cmd}} {{uv_run}} python manage.py create_demo_pages
 
 # Descend the latest DB backup & media files of the production database
