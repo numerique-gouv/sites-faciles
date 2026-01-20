@@ -8,7 +8,14 @@ from wagtail.test.utils import WagtailPageTestCase
 from wagtailmenus.models.menuitems import FlatMenuItem, MainMenuItem
 from wagtailmenus.models.menus import FlatMenu, MainMenu
 
-from content_manager.models import CatalogIndexPage, CmsDsfrConfig, ContentPage, MegaMenu, MegaMenuCategory
+from content_manager.models import (
+    CatalogIndexPage,
+    CmsDsfrConfig,
+    ContentPage,
+    MegaMenu,
+    MegaMenuCategory,
+    Tag,
+)
 from content_manager.services.accessors import get_or_create_content_page
 from content_manager.utils import get_default_site
 
@@ -339,15 +346,33 @@ class CatalogIndexPageTestCase(WagtailPageTestCase):
         )
         self.catalog_index_page.save()
 
-        self.catalog_entry = self.catalog_index_page.add_child(
-            instance=ContentPage(
-                title="Entrée de catalogue",
-                slug="catalog-entry",
-                owner=self.admin,
-            )
-        )
+        # Create tags
+        self.tag1 = Tag.objects.create(name="Tag 1", slug="tag-1")
+        self.tag2 = Tag.objects.create(name="Tag 2", slug="tag-2")
 
-        self.catalog_entry.save()
+        # Create entries
+        self.entry1 = self.catalog_index_page.add_child(
+            instance=ContentPage(title="Entrée 1", slug="entry-1", owner=self.admin)
+        )
+        self.entry1.tags.add(self.tag1)
+        self.entry1.save()
+
+        self.entry2 = self.catalog_index_page.add_child(
+            instance=ContentPage(title="Entrée 2", slug="entry-2", owner=self.admin)
+        )
+        self.entry2.tags.add(self.tag2)
+        self.entry2.save()
+
+        self.entry3 = self.catalog_index_page.add_child(
+            instance=ContentPage(title="Entrée 3", slug="entry-3", owner=self.admin)
+        )
+        self.entry3.tags.add(self.tag1, self.tag2)
+        self.entry3.save()
+
+        self.entry4 = self.catalog_index_page.add_child(
+            instance=ContentPage(title="Entrée 4", slug="entry-4", owner=self.admin)
+        )
+        self.entry4.save()
 
     def test_catalog_index_page_is_renderable(self):
         self.assertPageIsRenderable(self.catalog_index_page)
@@ -362,10 +387,57 @@ class CatalogIndexPageTestCase(WagtailPageTestCase):
             response.content.decode(),
         )
 
-        self.assertInHTML(
-            '<a href="/catalog-index/catalog-entry/">Entrée de catalogue</a>',
-            response.content.decode(),
-        )
+        self.assertContains(response, "Entrée 1")
+        self.assertContains(response, "Entrée 2")
+        self.assertContains(response, "Entrée 3")
+        self.assertContains(response, "Entrée 4")
+
+    def test_single_filter(self):
+        self.catalog_index_page.filter_selection = CatalogIndexPage.SINGLE_FILTER
+        self.catalog_index_page.save()
+
+        url = self.catalog_index_page.url + "?tag=tag-1"
+        response = self.client.get(url)
+
+        self.assertContains(response, "Entrée 1")
+        self.assertNotContains(response, "Entrée 2")
+        self.assertContains(response, "Entrée 3")
+        self.assertNotContains(response, "Entrée 4")
+
+    def test_multiple_filter_and(self):
+        self.catalog_index_page.filter_selection = CatalogIndexPage.MULTIPLE_FILTERS
+        self.catalog_index_page.multiple_filter_operator = CatalogIndexPage.AND_OPERATOR
+        self.catalog_index_page.save()
+
+        url = self.catalog_index_page.url + "?tag=tag-1&tag=tag-2"
+        response = self.client.get(url)
+
+        self.assertNotContains(response, "Entrée 1")
+        self.assertNotContains(response, "Entrée 2")
+        self.assertContains(response, "Entrée 3")
+        self.assertNotContains(response, "Entrée 4")
+
+    def test_multiple_filter_or(self):
+        self.catalog_index_page.filter_selection = CatalogIndexPage.MULTIPLE_FILTERS
+        self.catalog_index_page.multiple_filter_operator = CatalogIndexPage.OR_OPERATOR
+        self.catalog_index_page.save()
+
+        url = self.catalog_index_page.url + "?tag=tag-1&tag=tag-2"
+        response = self.client.get(url)
+
+        self.assertContains(response, "Entrée 1")
+        self.assertContains(response, "Entrée 2")
+        self.assertContains(response, "Entrée 3")
+        self.assertNotContains(response, "Entrée 4")
+
+    def test_no_filter(self):
+        url = self.catalog_index_page.url
+        response = self.client.get(url)
+
+        self.assertContains(response, "Entrée 1")
+        self.assertContains(response, "Entrée 2")
+        self.assertContains(response, "Entrée 3")
+        self.assertContains(response, "Entrée 4")
 
 
 class ErrorPagesTestCase(TestCase):
