@@ -8,7 +8,11 @@
       — {% translate "Category:" %} {{ current_category }}
     {% endif %}
     {% if current_tags %}
-      — {% translate "Tags:" %} {% for tag in current_tags %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+      — {% translate "Tags:" %}
+      {% for tag in current_tags %}
+        {{ tag.name }}
+        {% if not forloop.last %},{% endif %}
+      {% endfor %}
     {% endif %}
     {% if current_author %}
       - {% translate "Author:" %} {{ current_author }}
@@ -119,7 +123,9 @@
                         {% endfor %}
                       </ul>
                     {% elif page.filter_selection == page.MULTIPLE_FILTERS %}
-                      <form method="GET" action="{% pageurl page %}" id="tag-filter-form">
+                      <form method="GET"
+                            action="{% pageurl page %}#posts-list"
+                            id="tag-filter-form">
                         <ul class="fr-tags-group">
                           {% for tag in tags %}
                             <li>
@@ -129,8 +135,12 @@
                                      value="{{ tag.slug }}"
                                      {% if tag.slug in selected_tag_slugs %}checked{% endif %}
                                      onchange="this.form.submit()"
-                                     style="position: absolute; opacity: 0; pointer-events: none;">
-                              <label class="fr-tag" for="tag-{{ tag.slug }}" aria-pressed="{% if tag.slug in selected_tag_slugs %}true{% else %}false{% endif %}">
+                                     style="position: absolute;
+                                            opacity: 0;
+                                            pointer-events: none">
+                              <label class="fr-tag"
+                                     for="tag-{{ tag.slug }}"
+                                     aria-pressed="{% if tag.slug in selected_tag_slugs %}true{% else %}false{% endif %}">
                                 {{ tag.name }}
                               </label>
                             </li>

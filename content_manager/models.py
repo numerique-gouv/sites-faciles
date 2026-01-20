@@ -135,7 +135,6 @@ class CatalogIndexPage(RoutablePageMixin, SitesFacilesBasePage):
 
     def _get_filtered_entries_and_context(self, request: HttpRequest, entries: models.QuerySet) -> dict:
         selected_tag_slugs = request.GET.getlist("tag")
-
         if not selected_tag_slugs:
             return {
                 "entries": entries,
