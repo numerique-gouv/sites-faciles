@@ -18,10 +18,8 @@ class Command(BaseCommand):
 
         # Set the site hostname and site_name
         if "http://" in settings.HOST_URL or "https://" in settings.HOST_URL:
-            raise ValueError(
-                """The HOST_URL environment variable must contain the domain name only,
-                without the port or http/https protocol."""
-            )
+            raise ValueError("""The HOST_URL environment variable must contain the domain name only,
+                without the port or http/https protocol.""")
 
         site = get_default_site()
         site.hostname = settings.HOST_URL

@@ -114,10 +114,8 @@ class CardBlock(blocks.StructBlock):
             (
                 "buttons",
                 ButtonsHorizontalListBlock(
-                    help_text=_(
-                        """Please use only one primary button.
-                        If you use icons, use them on all buttons and align them on the same side."""
-                    ),
+                    help_text=_("""Please use only one primary button.
+                        If you use icons, use them on all buttons and align them on the same side."""),
                     label=_("Buttons"),
                 ),
             ),

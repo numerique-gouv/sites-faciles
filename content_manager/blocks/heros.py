@@ -110,10 +110,8 @@ class HeroImageAndTextBlock(blocks.StructBlock):
         ButtonBlock(label=_("Button")),
         default=TEMPLATE_EXAMPLE_BUTTON_LIST,
         label=_("Buttons"),
-        help_text=_(
-            """Please use only one primary button.
-            If you use icons, use them on all buttons and align them on the same side."""
-        ),
+        help_text=_("""Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""),
     )
     image = ImageBlockWithDefault(label=_("Hero image"), default_image_title="Illustration Sites Faciles Homme Nuages")
     layout = LayoutBlock(label=_("Layout"))
@@ -130,10 +128,8 @@ class HeroWideImageAndTextBlock(blocks.StructBlock):
         ButtonBlock(label=_("Button")),
         default=TEMPLATE_EXAMPLE_BUTTON_LIST,
         label=_("Buttons"),
-        help_text=_(
-            """Please use only one primary button.
-            If you use icons, use them on all buttons and align them on the same side."""
-        ),
+        help_text=_("""Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""),
     )
     image = HeroImageBlockWithRatioWidth(
         label=_("Hero image"),
@@ -150,10 +146,8 @@ class HeroBackgroundImageBlock(blocks.StructBlock):
         ButtonBlock(label=_("Button")),
         default=TEMPLATE_EXAMPLE_BUTTON_LIST,
         label=_("Buttons"),
-        help_text=_(
-            """Please use only one primary button.
-            If you use icons, use them on all buttons and align them on the same side."""
-        ),
+        help_text=_("""Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""),
     )
     background_color_or_image = blocks.ChoiceBlock(
         choices=[("color", _("Color")), ("image", _("Image"))],

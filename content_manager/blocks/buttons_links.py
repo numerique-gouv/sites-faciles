@@ -208,10 +208,8 @@ class ButtonsVerticalListBlock(blocks.StreamBlock):
 class ButtonsListBlock(blocks.StructBlock):
     buttons = ButtonsHorizontalListBlock(
         label=_("Buttons"),
-        help_text=_(
-            """Please use only one primary button.
-            If you use icons, use them on all buttons and align them on the same side."""
-        ),
+        help_text=_("""Please use only one primary button.
+            If you use icons, use them on all buttons and align them on the same side."""),
     )
     position = blocks.ChoiceBlock(label=_("Position"), choices=BUTTONS_ALIGN_CHOICES, default="", required=False)
 

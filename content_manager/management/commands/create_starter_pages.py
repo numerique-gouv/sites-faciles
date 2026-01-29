@@ -206,14 +206,12 @@ class Command(BaseCommand):
 
         # Create the form page
         title = "Contact"
-        intro = RichText(
-            """
+        intro = RichText("""
             <p>Bonjour, n’hésitez pas à nous contacter via le formulaire ci-dessous.</p>
             <p></p>
             <p>Vous pouvez également nous contacter via &lt;autres méthodes&gt;.</p>
             <p></p>
-            <p>Les champs marqués d’une astérisque (*) sont obligatoires.</p>"""
-        )
+            <p>Les champs marqués d’une astérisque (*) sont obligatoires.</p>""")
 
         thank_you_text = RichText("<p>Merci pour votre message ! Nous reviendrons vers vous rapidement.</p>")
 
