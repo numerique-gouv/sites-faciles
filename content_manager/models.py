@@ -478,10 +478,8 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         decimal_places=1,
         null=True,
         default="5.0",
-        help_text=_(
-            "To be adjusted according to the width of the logo.\
-            Example for a vertical logo: 3.5, Example for a horizontal logo: 8."
-        ),
+        help_text=_("To be adjusted according to the width of the logo.\
+            Example for a vertical logo: 3.5, Example for a horizontal logo: 8."),
     )  # type: ignore
 
     search_bar = models.BooleanField(_("Display search bar in the header"), default=False)  # type: ignore
@@ -530,10 +528,8 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
                 FieldPanel("notice_is_collapsible"),
             ],
             heading=_("Important notice"),
-            help_text=_(
-                "The important notice banner should only be used for essential and temporary information. \
-                (Excessive or continuous use risks “drowning” the message.)"
-            ),
+            help_text=_("The important notice banner should only be used for essential and temporary information. \
+                (Excessive or continuous use risks “drowning” the message.)"),
         ),
         MultiFieldPanel(
             [
