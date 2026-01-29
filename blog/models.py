@@ -120,7 +120,7 @@ class Category(TranslatableMixin, index.Indexed, Orderable):
         blank=True,
         verbose_name=_("Description"),
         help_text=_("Displayed on the top of the category page"),
-    )
+    )  # type: ignore
     colophon = StreamField(
         COLOPHON_BLOCKS,
         blank=True,
@@ -183,7 +183,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CategoryEntryPage(models.Model):
     category = models.ForeignKey(Category, related_name="+", verbose_name=_("Category"), on_delete=models.CASCADE)
-    page = ParentalKey("BlogEntryPage", related_name="entry_categories")
+    page = ParentalKey("BlogEntryPage", related_name="entry_categories")  # type: ignore
     panels = [FieldPanel("category")]
 
     def __str__(self):
@@ -191,7 +191,7 @@ class CategoryEntryPage(models.Model):
 
 
 class TagEntryPage(TaggedItemBase):
-    content_object = ParentalKey("BlogEntryPage", related_name="entry_tags")
+    content_object = ParentalKey("BlogEntryPage", related_name="entry_tags")  # type: ignore
 
 
 class BlogIndexPage(RoutablePageMixin, SitesFacilesBasePage):

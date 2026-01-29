@@ -20,7 +20,7 @@ Moved from utils to avoid circular module dependencies.
 def get_or_create_collection(col_name: str) -> Collection:
     qs = Collection.objects.filter(name=col_name)
     if qs.count():
-        return qs.first()
+        return qs.first()  # type: ignore
     else:
         root_coll = Collection.get_first_root_node()
         result = root_coll.add_child(name=col_name)
