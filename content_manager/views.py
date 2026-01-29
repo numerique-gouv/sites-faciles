@@ -16,9 +16,10 @@ class SearchResultsView(ListView):
     The search should only return pages that are:
 
     - live
-    - public
     - part of the current site
     - in the current locale
+
+    If user is anonymous, only public pages are returned.
 
     If there is no result, an empty page list is returned.
     """
@@ -32,8 +33,12 @@ class SearchResultsView(ListView):
 
         query = self.request.GET.get("q", None)
         if query:
-            object_list = Page.objects.descendant_of(root_page, inclusive=True).live().public().search(query)
+            object_list = Page.objects.descendant_of(root_page, inclusive=True).live()
 
+            if not self.request.user.is_authenticated:
+                object_list = object_list.public()
+
+            object_list = object_list.search(query)
         else:
             object_list = Page.objects.none()
         return object_list

@@ -15,15 +15,14 @@ User = get_user_model()
 class SearchResultsTestCase(WagtailPageTestCase):
     def setUp(self):
         self.home_page = Page.objects.get(slug="home").specific
-        self.admin = User.objects.create_superuser("test", "test@test.test", "pass")
+        self.admin = User.objects.create_superuser("test", "admin@example.com", "pass")
+        self.user = User.objects.create_user("user", "user@example.com", "pass")
 
-        # Common body for the two content pages
+        # Common body for the content pages
         body = []
-
         text_raw = """<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"""
         body.append(("paragraph", RichText(text_raw)))
 
-        self.admin.save()
         self.public_content_page = self.home_page.add_child(
             instance=ContentPage(
                 title="Page de contenu publique",
@@ -37,7 +36,7 @@ class SearchResultsTestCase(WagtailPageTestCase):
         self.private_content_page = get_or_create_content_page(
             "private-content-page",
             title="Page de contenu privée",
-            body=[("subpageslist", None)],
+            body=body,
             parent_page=self.home_page,
             restriction_type="login",
         )
@@ -62,12 +61,21 @@ class SearchResultsTestCase(WagtailPageTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Page de contenu publique")
 
-    def test_search_private_content_page_is_not_found(self):
+    def test_search_private_content_page_is_not_found_if_anonymous(self):
         search_url = reverse("cms_search")
         response = self.client.get(f"{search_url}?q=Lorem")
 
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Page de contenu privée")
+
+    def test_search_private_content_page_is_found_if_logged_in(self):
+        self.client.force_login(self.user)
+
+        search_url = reverse("cms_search")
+        response = self.client.get(f"{search_url}?q=Lorem")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Page de contenu privée")
 
     def test_search_draft_content_page_is_not_found(self):
         search_url = reverse("cms_search")
