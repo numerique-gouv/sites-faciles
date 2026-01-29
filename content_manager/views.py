@@ -10,13 +10,29 @@ from content_manager.models import ContentPage, Tag
 
 
 class SearchResultsView(ListView):
+    """
+    Search results page view.
+
+    The search should only return pages that are:
+
+    - live
+    - public
+    - part of the current site
+    - in the current locale
+
+    If there is no result, an empty page list is returned.
+    """
+
     model = Page
     template_name = "content_manager/search_results.html"
 
     def get_queryset(self):
+        site = Site.find_for_request(self.request)
+        root_page = site.root_page.localized
+
         query = self.request.GET.get("q", None)
         if query:
-            object_list = Page.objects.live().search(query)
+            object_list = Page.objects.descendant_of(root_page, inclusive=True).live().public().search(query)
 
         else:
             object_list = Page.objects.none()
