@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 16:34+0100\n"
-"PO-Revision-Date: 2025-12-12 16:40+0100\n"
+"POT-Creation-Date: 2026-02-05 17:40+0100\n"
+"PO-Revision-Date: 2026-02-05 17:46+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -102,18 +102,6 @@ msgstr "Sous-menu"
 msgid "Mega menu"
 msgstr "Méga menu"
 
-#: menus/contants.py:4 menus/models.py:97
-msgid "Main menu"
-msgstr "Menu principal"
-
-#: menus/contants.py:5 menus/models.py:36
-msgid "Top menu"
-msgstr "Menu du haut"
-
-#: menus/contants.py:6
-msgid "Footer menu"
-msgstr "Menu du pied de page"
-
 #: menus/models.py:21 menus/models.py:53 menus/models.py:83
 msgid "Site"
 msgstr "Site"
@@ -121,6 +109,10 @@ msgstr "Site"
 #: menus/models.py:30 menus/models.py:61 menus/models.py:91
 msgid "Menu items"
 msgstr "Éléments de menu"
+
+#: menus/models.py:36
+msgid "Top menu"
+msgstr "Menu du haut"
 
 #: menus/models.py:37
 msgid "Top menus"
@@ -144,6 +136,10 @@ msgstr "Menus du bas du pied de page"
 msgid "Footer bottom menu for site {hostname}"
 msgstr "Menu du bas du pied de page pour le site {hostname}"
 
+#: menus/models.py:97
+msgid "Main menu"
+msgstr "Menu principal"
+
 #: menus/models.py:98
 msgid "Main menus"
 msgstr "Menus principaux"
@@ -162,3 +158,6 @@ msgstr "Ouvre une nouvelle fenêtre"
 #: menus/templates/menus/blocks/main_menu_megamenu.html:12
 msgid "Close"
 msgstr "Fermer"
+
+#~ msgid "Footer menu"
+#~ msgstr "Menu du pied de page"
