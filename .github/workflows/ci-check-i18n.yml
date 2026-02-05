@@ -1,9 +1,16 @@
-name: 🔮 CI - Quality checks
+name: 🌍 CI - Internationalization Check
 
-on: [push, pull_request]
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
 jobs:
   build:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     env:
       DJANGO_SETTINGS_MODULE: config.settings_test
@@ -28,9 +35,21 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+      - name: 📦 Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
       - name: 🐍 Set up uv
         uses: astral-sh/setup-uv@v5
-      - uses: pre-commit/action@v3.0.1
-      - name: ✨ Black & ruff on all files
+      - name: 🌍 Install dependencies
         run: |
-          just quality
+          uv sync --no-group dev
+      - name: 📄 Copy empty .env.test to .env
+        run: |
+          cp .env.test .env
+      - name: 🌍 Check internationalization
+        run: |
+          just makemessages
+          just compilemessages
+          git diff --exit-code locale/
+          git diff --exit-code */locale/
