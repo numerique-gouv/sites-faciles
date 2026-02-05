@@ -206,7 +206,7 @@ class CenteredImageBlock(blocks.StructBlock):
         default="h3",
         help_text=_("Adapt to the page layout. Defaults to heading 3."),
     )
-    image = ImageBlock(label=_("Image"))
+    image = ImageChooserBlock(label=_("Image"))
     alt = blocks.CharBlock(
         label=_("Alternative text (textual description of the image)"),
         required=False,
@@ -233,11 +233,7 @@ class CenteredImageBlock(blocks.StructBlock):
 
 
 class QuoteBlock(blocks.StructBlock):
-    image = ImageBlock(
-        label=_("Image"),
-        required=False,
-        help_text=_("Optional image of the author. The image will be adjusted to a square format (1:1) of 184px."),
-    )
+    image = ImageChooserBlock(label=_("Image"), required=False)
     quote = blocks.CharBlock(label=_("Quote"))
     author_name = blocks.CharBlock(label=_("Author name"), required=False)
     author_title = blocks.CharBlock(label=_("Author title"), required=False)
