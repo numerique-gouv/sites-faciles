@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-05 11:39+0100\n"
-"PO-Revision-Date: 2026-02-05 15:41+0100\n"
+"POT-Creation-Date: 2026-02-05 17:42+0100\n"
+"PO-Revision-Date: 2026-02-05 17:46+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -62,7 +62,7 @@ msgstr ""
 "du même côté."
 
 #: content_manager/abstract.py:66 content_manager/blocks/basics.py:284
-#: content_manager/blocks/buttons_links.py:210
+#: content_manager/blocks/buttons_links.py:239
 #: content_manager/blocks/cards.py:119 content_manager/blocks/heros.py:112
 #: content_manager/blocks/heros.py:130 content_manager/blocks/heros.py:148
 #: content_manager/blocks/heros.py:251
@@ -105,19 +105,15 @@ msgstr ""
 msgid "Body"
 msgstr "Corps"
 
-#: content_manager/abstract.py:114
+#: content_manager/abstract.py:112
 msgid "For search engines"
 msgstr "Pour les moteurs de recherche"
 
-#: content_manager/abstract.py:108
-msgid "Common page configuration"
-msgstr "Configuration commune"
-
-#: content_manager/abstract.py:201
+#: content_manager/abstract.py:199
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:202
+#: content_manager/abstract.py:200
 msgid "Base pages"
 msgstr "Pages de base"
 
@@ -181,7 +177,7 @@ msgstr "Uniquement pour les tags cliquables"
 #: content_manager/blocks/badges_tags.py:43
 #: content_manager/blocks/basics.py:120
 #: content_manager/blocks/buttons_links.py:208
-#: content_manager/blocks/buttons_links.py:254
+#: content_manager/blocks/buttons_links.py:252
 msgid "Icon"
 msgstr "Icône"
 
@@ -287,8 +283,8 @@ msgid "Adapt to the page layout. Defaults to heading 3."
 msgstr "À adapter à la structure de la page. Par défaut en-tête 3."
 
 #: content_manager/blocks/basics.py:123
-#: content_manager/blocks/buttons_links.py:193
-#: content_manager/blocks/buttons_links.py:201
+#: content_manager/blocks/buttons_links.py:222
+#: content_manager/blocks/buttons_links.py:230
 #: content_manager/blocks/heros.py:110 content_manager/blocks/heros.py:128
 #: content_manager/blocks/heros.py:146 content_manager/blocks/sections.py:109
 #: content_manager/blocks/sections.py:234
@@ -301,7 +297,7 @@ msgid "Color"
 msgstr "Couleur"
 
 #: content_manager/blocks/basics.py:143
-#: content_manager/blocks/buttons_links.py:261
+#: content_manager/blocks/buttons_links.py:259
 msgid "Size"
 msgstr "Taille"
 
@@ -338,16 +334,15 @@ msgid "Image width"
 msgstr "Largeur de l’image"
 
 #: content_manager/blocks/basics.py:175 content_manager/blocks/basics.py:276
-#: content_manager/blocks/basics.py:175 content_manager/blocks/basics.py:276
 #: content_manager/blocks/core.py:42 content_manager/blocks/layout.py:95
 #: content_manager/blocks/sections.py:62
 msgid "Rich text"
 msgstr "Texte avec mise en forme"
 
 #: content_manager/blocks/basics.py:177 content_manager/blocks/basics.py:227
-#: content_manager/blocks/basics.py:360
+#: content_manager/blocks/basics.py:358
 #: content_manager/blocks/buttons_links.py:198
-#: content_manager/blocks/cards.py:84 content_manager/blocks/cards.py:183
+#: content_manager/blocks/cards.py:84 content_manager/blocks/cards.py:181
 msgid "Link"
 msgstr "Lien"
 
@@ -364,7 +359,7 @@ msgid "Witdh"
 msgstr "Largeur"
 
 #: content_manager/blocks/basics.py:221 content_manager/blocks/cards.py:75
-#: content_manager/blocks/cards.py:143 content_manager/blocks/heros.py:64
+#: content_manager/blocks/cards.py:141 content_manager/blocks/heros.py:64
 msgid "Image ratio"
 msgstr "Ratio de l’image"
 
@@ -431,7 +426,7 @@ msgstr ""
 "Optionnel, toutes les valeurs peuvent être spécifiées ou surchargées ci-"
 "dessous"
 
-#: content_manager/blocks/basics.py:368 content_manager/models.py:670
+#: content_manager/blocks/basics.py:368 content_manager/models.py:671
 msgid "Name"
 msgstr "Nom"
 
@@ -557,9 +552,9 @@ msgstr "Type de bouton"
 msgid "Icon side"
 msgstr "Côté de l’icône"
 
-#: content_manager/blocks/buttons_links.py:212
-#: content_manager/blocks/heros.py:114 content_manager/blocks/heros.py:134
-#: content_manager/blocks/heros.py:154
+#: content_manager/blocks/buttons_links.py:240
+#: content_manager/blocks/heros.py:113 content_manager/blocks/heros.py:131
+#: content_manager/blocks/heros.py:149
 msgid ""
 "Please use only one primary button.\n"
 "            If you use icons, use them on all buttons and align them on the "
@@ -569,11 +564,11 @@ msgstr ""
 "Si vous utilisez des icônes, mettez-en sur tous les boutons et alignez-les "
 "du même côté."
 
-#: content_manager/blocks/buttons_links.py:245
+#: content_manager/blocks/buttons_links.py:243
 msgid "Position"
 msgstr "Position"
 
-#: content_manager/blocks/buttons_links.py:255
+#: content_manager/blocks/buttons_links.py:253
 msgid "Only used for internal links."
 msgstr "Uniquement pour les liens internes."
 
@@ -1648,7 +1643,7 @@ msgstr "Afficher la mention BETA à côté du titre"
 msgid "Show a login button in the header"
 msgstr "Afficher un bouton de connexion dans l’en-tête"
 
-#: content_manager/models.py:445 content_manager/models.py:674
+#: content_manager/models.py:445 content_manager/models.py:675
 msgid "Description"
 msgstr "Description"
 
@@ -1709,7 +1704,7 @@ msgid "Newsletter registration URL"
 msgstr "URL d‘inscription à la lettre d’information"
 
 #: content_manager/models.py:493 content_manager/models.py:640
-#: content_manager/models.py:676
+#: content_manager/models.py:677
 msgid "Max length: 2000 characters."
 msgstr "Longueur maximum : 2000 caractères."
 
@@ -1812,31 +1807,31 @@ msgstr "Classe d’icône"
 msgid "Social media item"
 msgstr "Lien de réseau social"
 
-#: content_manager/models.py:661
+#: content_manager/models.py:662
 msgid "Category"
 msgstr "Catégorie"
 
-#: content_manager/models.py:664
+#: content_manager/models.py:665
 msgid "Mega menu category"
 msgstr "Catégorie de méga menu"
 
-#: content_manager/models.py:665
+#: content_manager/models.py:666
 msgid "Mega menu categories"
 msgstr "Catégories de méga menu"
 
-#: content_manager/models.py:676
+#: content_manager/models.py:677
 msgid "Main link"
 msgstr "Lien principal"
 
-#: content_manager/models.py:687
+#: content_manager/models.py:688
 msgid "Categories"
 msgstr "Catégories"
 
-#: content_manager/models.py:688
+#: content_manager/models.py:689
 msgid "Maximum 4 categories, each with maximum 8 links."
 msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 
-#: content_manager/models.py:699
+#: content_manager/models.py:700
 msgid "Mega menu"
 msgstr "Méga menu"
 
@@ -2041,7 +2036,7 @@ msgstr "La chaîne de requête doit commencer par '?'."
 msgid "Query string must not contain '#'."
 msgstr "La chaîne de requête ne doit pas contenir de '#'."
 
-#: content_manager/views.py:57
+#: content_manager/views.py:78
 msgid "List of all the tags."
 msgstr "Liste de toutes les étiquettes."
 
