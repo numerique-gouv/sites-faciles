@@ -30,7 +30,6 @@
     <h1>{{ title }}</h1>
     {% include "content_manager/blocks/messages.html" %}
   </div>
-
   <div class="fr-container fr-mt-6w">
     <div class="fr-grid-row fr-grid-row--gutters fr-mb-3w">
       {% for entry in object_list %}
@@ -43,15 +42,6 @@
                 </h2>
               </div>
             </div>
-            {% if entry.header_image %}
-              <div class="fr-card__header">
-                <div class="fr-card__img">
-                  <img class="fr-responsive-img"
-                       src="{{ entry.header_image.file.url }}"
-                       alt="">
-                </div>
-              </div>
-            {% endif %}
           </div>
         </div>
       {% empty %}
