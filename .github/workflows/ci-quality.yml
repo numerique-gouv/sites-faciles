@@ -34,3 +34,9 @@ jobs:
       - name: ✨ Black & ruff
         run: |
           just quality
+      - name: 🌍 Check internationalization
+        run: |
+          python manage.py makemessages -a
+          python manage.py compilemessages
+          git diff --exit-code locale/
+          git diff --exit-code */locale/
