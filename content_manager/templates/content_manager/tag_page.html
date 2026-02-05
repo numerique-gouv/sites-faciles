@@ -50,8 +50,8 @@
     </div>
   </div>
 
-  {% if posts.paginator.num_pages > 1 %}
-    <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination posts %}</div>
+  {% if page_obj.paginator.num_pages > 1 %}
+    <div class="fr-container fr-grid-row fr-grid-row--center fr-mt-6w">{% dsfr_pagination page_obj %}</div>
   {% endif %}
 
 {% endblock content %}
