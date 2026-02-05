@@ -40,10 +40,11 @@ def get_default_site() -> Site:
     Returns the default site, or the first one if none is set.
     """
     site = Site.objects.filter(is_default_site=True).first()
+
     if not site:
         site = Site.objects.filter().first()
 
-    return site
+    return site  # type: ignore
 
 
 def get_streamblock_raw_text(block) -> str:
