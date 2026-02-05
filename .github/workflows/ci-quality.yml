@@ -1,4 +1,4 @@
-name: 🔮 CI - Run pre-commit checks
+name: 🔮 CI - Quality checks
 
 on: [push, pull_request]
 
@@ -30,13 +30,20 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: 🐍 Set up uv
         uses: astral-sh/setup-uv@v5
-      - uses: pre-commit/action@v3.0.1
-      - name: ✨ Black & ruff
+      - name: 🧹 Run pre-commit checks
+        uses: pre-commit/action@v3.0.1
+      - name: 🌍 Install dependencies
+        run: |
+          uv sync --no-group dev
+      - name: 📄 Copy empty .env.test to .env
+        run: |
+          cp .env.test .env
+      - name: ✨ Black & ruff on all files
         run: |
           just quality
       - name: 🌍 Check internationalization
         run: |
-          python manage.py makemessages -a
-          python manage.py compilemessages
+          just makemessages
+          just compilemessages
           git diff --exit-code locale/
           git diff --exit-code */locale/
