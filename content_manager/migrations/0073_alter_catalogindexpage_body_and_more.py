@@ -10,7 +10,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("content_manager", "0071_alter_catalogindexpage_body_alter_contentpage_body"),
+        ("content_manager", "0072_catalogindexpage_filter_selection_and_more"),
     ]
 
     operations = [
