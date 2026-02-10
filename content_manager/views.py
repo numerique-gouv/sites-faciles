@@ -87,7 +87,7 @@ class TagView(ListView):
 
     def get_queryset(self, **kwargs):
         tag_slug = self.kwargs.get("tag")
-        return ContentPage.objects.filter(tags__slug=tag_slug)
+        return ContentPage.objects.filter(tags__slug=tag_slug, live=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
