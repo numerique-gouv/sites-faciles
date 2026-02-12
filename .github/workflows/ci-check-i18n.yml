@@ -1,4 +1,4 @@
-name: 🔮 CI - Migrations Check
+name: 🌍 CI - Internationalization Check
 
 on:
   pull_request:
@@ -29,16 +29,27 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v4
-      - name: 🐍 Set up Python ${{ matrix.python-version }} with uv
-        uses: astral-sh/setup-uv@v5
+      - name: 📔 Install just
+        uses: extractions/setup-just@v2
+      - name: 🐍 Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+      - name: 📦 Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext
+      - name: 🐍 Set up uv
+        uses: astral-sh/setup-uv@v5
       - name: 🌍 Install dependencies
         run: |
           uv sync --no-group dev
       - name: 📄 Copy empty .env.test to .env
         run: |
           cp .env.test .env
-      - name: 🚧 Check pending migrations
+      - name: 🌍 Check internationalization
         run: |
-          uv run django-admin makemigrations --check --dry-run --noinput
+          just makemessages
+          just compilemessages
+          git diff --exit-code locale/
+          git diff --exit-code */locale/
