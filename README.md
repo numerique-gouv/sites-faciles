@@ -14,9 +14,19 @@ Les tests automatisés couvrent les versions suivantes :
 - PostgreSQL 14 à 17 (cf. [versions de PostgreSQL supportées par Django](https://code.djangoproject.com/wiki/SupportedDatabaseVersions))
 
 ## Installation et contribution
-* Pour déployer le projet en production sur un serveur, voir la [documentation d’installation](https://sites.beta.gouv.fr/documentation/installation/)
-* Pour installer le projet en local pour le développement, voir la [documentation d’embarquement](./ONBOARDING.md)
+* Pour déployer le projet en production sur un serveur, voir la [documentation d'installation](https://sites.beta.gouv.fr/documentation/installation/)
+* Pour installer le projet en local pour le développement, voir la [documentation d'embarquement](./ONBOARDING.md)
 * Avant de soumettre une contribution, consulter la  [documentation de contribution](./CONTRIBUTING.md)
+
+### Git blame
+
+Le projet utilise [`.git-blame-ignore-revs`](./.git-blame-ignore-revs) pour exclure les commits de reformatage de `git blame`. À configurer une fois après le clone :
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
+Voir [`docs/git-blame-ignore-revs.md`](./docs/git-blame-ignore-revs.md) pour plus de détails.
 
 ## Architecture
 ### Applications Django

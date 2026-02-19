@@ -1,0 +1,18 @@
+# Git blame ignore revs
+#
+# This file lists commits that should be ignored by `git blame`.
+# These are typically bulk formatting or refactoring commits that don't
+# carry meaningful authorship information and would pollute blame output.
+#
+# Usage:
+#   git blame --ignore-revs-file .git-blame-ignore-revs <file>
+#
+# To configure git to use this file automatically:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# See docs/git-blame-ignore-revs.md for more details.
+#
+# Format: one full commit SHA per line, with optional comments.
+
+# Example (replace with real commit SHAs when adding formatting commits):
+# abc1234def5678abc1234def5678abc1234def5678  # Apply black formatting (2024-01-01)
