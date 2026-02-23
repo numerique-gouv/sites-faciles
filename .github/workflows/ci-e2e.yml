@@ -1,0 +1,59 @@
+name: 🎭 CI - E2E tests
+
+on: [push, pull_request]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings_test
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: dju
+          POSTGRES_PASSWORD: djpwd
+          POSTGRES_DB: djdb
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v4
+      - name: 📔 Install just
+        uses: extractions/setup-just@v2
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+      - name: 🐍 Set up uv
+        uses: astral-sh/setup-uv@v5
+      - name: 🌍 Install Python dependencies
+        run: uv sync --no-group dev
+      - name: 📄 Copy .env.test to .env
+        run: cp .env.test .env
+      - name: 💾 Collect static files
+        run: just collectstatic
+      - name: 🎨 Deploy starter content + demo pages
+        run: |
+          just init
+          uv run python manage.py create_demo_pages
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: 📦 Install Node dependencies
+        run: npm ci
+      - name: 🎭 Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+      - name: 🚀 Start Django dev server
+        run: |
+          uv run python manage.py runserver 127.0.0.1:8000 &
+          npx wait-on http://127.0.0.1:8000 --timeout 30000
+      - name: 🧪 Run Playwright E2E tests
+        run: npx playwright test
+      - name: 📸 Upload test results on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
