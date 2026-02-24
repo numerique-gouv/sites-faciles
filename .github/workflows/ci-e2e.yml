@@ -49,6 +49,7 @@ jobs:
         id: push-images
         env:
           GH_TOKEN: ${{ github.token }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
         run: |
           BRANCH="pr-${{ github.event.pull_request.number }}-screenshots"
           git checkout --orphan "$BRANCH"
@@ -58,13 +59,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "Visual regression diffs for PR #${{ github.event.pull_request.number }}"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${HEAD_REPO}.git"
           git push --force origin "$BRANCH"
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+          echo "repo=${HEAD_REPO}" >> $GITHUB_OUTPUT
 
       - name: Build PR comment body
         env:
           BRANCH: ${{ steps.push-images.outputs.branch }}
-          REPO: ${{ github.repository }}
+          REPO: ${{ steps.push-images.outputs.repo }}
         run: |
           RAW_BASE="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
           {
