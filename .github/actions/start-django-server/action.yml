@@ -16,7 +16,8 @@ runs:
   steps:
     - name: Run server
       shell: bash
-      run: uv run python manage.py runserver 127.0.0.1:8000 &
+      # Debug is required to get media working
+      run: DEBUG=True uv run python manage.py runserver 127.0.0.1:8000 &
 
     - name: Wait for server to be ready
       shell: bash
