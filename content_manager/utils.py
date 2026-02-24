@@ -1,3 +1,4 @@
+import os
 import re
 from html import unescape
 from io import BytesIO
@@ -10,17 +11,45 @@ from wagtail.models import Site
 Image = get_image_model()
 
 
+def guess_extension(filename: str, file_content: bytes) -> str:
+    """
+    Return the file extension (with leading dot) for *filename*.
+    If the filename already has an extension, it is returned as-is.
+    Otherwise the type is sniffed from magic bytes.
+    """
+    _, ext = os.path.splitext(filename)
+    if ext:
+        return ext.lower()
+
+    if file_content[:4] == b"\x89PNG":
+        return ".png"
+    if file_content[:3] == b"\xff\xd8\xff":
+        return ".jpg"
+    if file_content[:6] in (b"GIF87a", b"GIF89a"):
+        return ".gif"
+    if file_content[:4] == b"RIFF" and file_content[8:12] == b"WEBP":
+        return ".webp"
+    if b"<svg" in file_content[:512].lower():
+        return ".svg"
+
+    return ""
+
+
 def import_image(full_file_path: str, title: str):
     """
     Import an image to the Wagtail medias based on its full path and return it.
     """
+    stem = os.path.splitext(os.path.basename(full_file_path))[0]
     with open(full_file_path, "rb") as image_file:
-        image = Image(
-            file=ImageFile(BytesIO(image_file.read()), name=title),
-            title=title,
-        )
-        image.save()
-        return image
+        content = image_file.read()
+    ext = guess_extension(full_file_path, content)
+    name = f"{stem}{ext}"
+    image = Image(
+        file=ImageFile(BytesIO(content), name=name),
+        title=title,
+    )
+    image.save()
+    return image
 
 
 def overwrite_image(image, full_file_path: str, title: str):
@@ -28,10 +57,13 @@ def overwrite_image(image, full_file_path: str, title: str):
     Overwrites the file for a Wagtail image instance,
     keeping the same database record and ID.
     """
+    stem = os.path.splitext(os.path.basename(full_file_path))[0]
     with open(full_file_path, "rb") as image_file:
-        image.file = ImageFile(BytesIO(image_file.read()), name=title)
-        image.save()
-
+        content = image_file.read()
+    ext = guess_extension(full_file_path, content)
+    name = f"{stem}{ext}"
+    image.file = ImageFile(BytesIO(content), name=name)
+    image.save()
     return image
 
 

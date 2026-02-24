@@ -18,6 +18,7 @@ from wagtail.utils.file import hash_filelike
 from content_manager.constants import HEADER_FIELDS
 from content_manager.models import ContentPage
 from content_manager.services.accessors import get_or_create_collection, get_or_create_content_page
+from content_manager.utils import guess_extension
 
 PAGE_TEMPLATES_ROOT = settings.BASE_DIR / "content_manager/page_templates"
 TEMPLATES_DATA_FILE = PAGE_TEMPLATES_ROOT / "pages_data.json"
@@ -253,7 +254,7 @@ class ImportExportImages:
             # No need to export the pictograms, as they should already be present
             if "Pictogrammes_DSFR" in image_name:
                 pictogram_title = image_name.replace("__", " — ").replace("_", " ")
-                self.image_data[i]["filename"] = pictogram_title
+                self.image_data[i]["filename"] = f"{pictogram_title}.svg"
                 self.image_data[i]["is_pictogram"] = True
 
             else:
@@ -277,31 +278,6 @@ class ImportExportImages:
                 image = self.get_or_create_image(image_data)
                 image_data["local_id"] = image.id
 
-    @staticmethod
-    def _guess_extension(filename: str, file_content: bytes) -> str:
-        """
-        Return the file extension (with leading dot) for *filename*.
-        If the filename already has an extension, it is returned as-is.
-        Otherwise the type is sniffed from magic bytes.
-        """
-        _, ext = os.path.splitext(filename)
-        if ext:
-            return ext.lower()
-
-        # No extension on the filename — sniff from magic bytes
-        if file_content[:4] == b"\x89PNG":
-            return ".png"
-        if file_content[:3] == b"\xff\xd8\xff":
-            return ".jpg"
-        if file_content[:6] in (b"GIF87a", b"GIF89a"):
-            return ".gif"
-        if file_content[:4] == b"RIFF" and file_content[8:12] == b"WEBP":
-            return ".webp"
-        if b"<svg" in file_content[:512].lower():
-            return ".svg"
-
-        return ""
-
     def get_or_create_image(self, image_data) -> Image:
         filename = image_data["filename"]
         title = image_data["title"]
@@ -314,7 +290,7 @@ class ImportExportImages:
                 image_file.seek(0)
                 content = image_file.read()
                 stem = os.path.splitext(filename.lower())[0]
-                ext = self._guess_extension(filename, content)
+                ext = guess_extension(filename, content)
                 imported_filename = f"template_image_{stem}{ext}"
                 image = Image(
                     file=ImageFile(BytesIO(content), name=imported_filename),
