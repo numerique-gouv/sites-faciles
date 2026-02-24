@@ -390,7 +390,7 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ("mega_menu_section_16", "Catégorie de méga-menu 16"),
 )
 
-WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
+WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg", "avif"]
 SF_SCHEME_DEPENDENT_SVGS = True if os.getenv("SF_SCHEME_DEPENDENT_SVGS", False) in ["1", "True"] else False
 
 # Allows for complex Streamfields without completely removing checks

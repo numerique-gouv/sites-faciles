@@ -32,7 +32,7 @@ services:
       db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -fs http://localhost:${HOST_PORT}/ || exit 1"]
+      test: ["CMD-SHELL", "curl -fs http://localhost:${HOST_PORT}/cms-admin/ || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 10

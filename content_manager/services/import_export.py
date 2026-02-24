@@ -269,18 +269,41 @@ class ImportExportImages:
         for i in self.image_ids:
             i = str(i)
             image_data = self.image_data[i]
-            filename = image_data["filename"]
 
             if image_data["is_pictogram"]:
-                pictogram = Image.objects.filter(title=filename).first()
+                pictogram = Image.objects.filter(title=image_data["title"]).first()
                 image_data["local_id"] = pictogram.id
             else:
                 image = self.get_or_create_image(image_data)
                 image_data["local_id"] = image.id
 
+    @staticmethod
+    def _guess_extension(filename: str, file_content: bytes) -> str:
+        """
+        Return the file extension (with leading dot) for *filename*.
+        If the filename already has an extension, it is returned as-is.
+        Otherwise the type is sniffed from magic bytes.
+        """
+        _, ext = os.path.splitext(filename)
+        if ext:
+            return ext.lower()
+
+        # No extension on the filename — sniff from magic bytes
+        if file_content[:4] == b"\x89PNG":
+            return ".png"
+        if file_content[:3] == b"\xff\xd8\xff":
+            return ".jpg"
+        if file_content[:6] in (b"GIF87a", b"GIF89a"):
+            return ".gif"
+        if file_content[:4] == b"RIFF" and file_content[8:12] == b"WEBP":
+            return ".webp"
+        if b"<svg" in file_content[:512].lower():
+            return ".svg"
+
+        return ""
+
     def get_or_create_image(self, image_data) -> Image:
         filename = image_data["filename"]
-        imported_filename = f"template_image_{filename.lower()}"
         title = image_data["title"]
 
         with open(self.image_folder / filename, "rb") as image_file:
@@ -288,8 +311,13 @@ class ImportExportImages:
 
             image = Image.objects.filter(file_hash=file_hash).first()
             if not image:
+                image_file.seek(0)
+                content = image_file.read()
+                stem = os.path.splitext(filename.lower())[0]
+                ext = self._guess_extension(filename, content)
+                imported_filename = f"template_image_{stem}{ext}"
                 image = Image(
-                    file=ImageFile(BytesIO(image_file.read()), name=imported_filename),
+                    file=ImageFile(BytesIO(content), name=imported_filename),
                     title=title,
                     uploaded_by_user=self.user,
                     collection=self.collection,
