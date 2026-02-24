@@ -20,14 +20,7 @@ default:
 # Ensure the Docker dev server is running and healthy (no-op when USE_DOCKER != 1)
 [private]
 _ensure-docker:
-    @[ "${USE_DOCKER:-0}" != "1" ] || { \
-        docker compose ps --services --filter status=running 2>/dev/null | grep -q "^web$" \
-        || (echo "Docker web container is not running — starting with 'docker compose up -d'..." && docker compose up -d); \
-        WEB_ID=$(docker compose ps -q web 2>/dev/null); \
-        until [ "$(docker inspect --format='{{.State.Health.Status}}' "$WEB_ID" 2>/dev/null)" = "healthy" ]; do \
-            echo "Waiting for web container to be healthy..."; sleep 3; \
-        done; \
-    }
+    @cd scripts && bash ensure_docker.sh
 
 #### Main recipes
 collectstatic: _ensure-docker
