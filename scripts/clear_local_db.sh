@@ -11,5 +11,5 @@ set +a
 
 echo "Clearing database ${DATABASE_NAME}"
 
-dropdb -U postgres ${DATABASE_NAME} --force
-psql -c "CREATE DATABASE ${DATABASE_NAME} OWNER ${DATABASE_USER};" -U postgres
+dropdb -U ${DATABASE_USER} -h ${DATABASE_HOST} -p ${DATABASE_PORT} ${DATABASE_NAME} --force
+psql -c "CREATE DATABASE ${DATABASE_NAME} OWNER ${DATABASE_USER};" -U ${DATABASE_USER} -h ${DATABASE_HOST} -p ${DATABASE_PORT}
