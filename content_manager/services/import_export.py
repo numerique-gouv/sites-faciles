@@ -1,9 +1,8 @@
 import copy
 import json
-import os
 import sys
 from io import BytesIO
-from pathlib import PosixPath
+from pathlib import Path
 from urllib.request import urlretrieve
 
 import requests
@@ -111,7 +110,7 @@ class ImportPages:
         self,
         pages_data: dict | None = None,
         parent_page_slug: str | None = None,
-        image_folder: PosixPath | None = IMAGES_FOLDER,
+        image_folder: Path | None = IMAGES_FOLDER,
     ) -> None:
         if pages_data is None:
             with open(TEMPLATES_DATA_FILE, "r") as json_file:
@@ -205,7 +204,7 @@ class ImportExportImages:
     Generic class for import/export of a list of Images from a wagtail instance
     """
 
-    def __init__(self, image_ids, source_site=None, image_folder: PosixPath | None = IMAGES_FOLDER) -> None:
+    def __init__(self, image_ids, source_site=None, image_folder: Path | None = IMAGES_FOLDER) -> None:
         self.user = User.objects.filter(is_superuser=True).first()
 
         self.image_ids = set(image_ids)
@@ -213,7 +212,7 @@ class ImportExportImages:
 
         # Create the folder for the files if it doesn't exist
         self.image_folder = image_folder
-        os.makedirs(image_folder, exist_ok=True)
+        image_folder.mkdir(parents=True, exist_ok=True)
 
         self.image_data_file = self.image_folder / "image_data.json"  # type: ignore
 
@@ -223,7 +222,7 @@ class ImportExportImages:
         self.image_data = self.get_image_data()
 
     def get_image_data(self) -> dict:
-        if os.path.isfile(self.image_data_file):
+        if self.image_data_file.is_file():
             with open(self.image_data_file, "r") as json_file:
                 image_data = json.load(json_file)
         else:
@@ -289,7 +288,7 @@ class ImportExportImages:
             if not image:
                 image_file.seek(0)
                 content = image_file.read()
-                stem = os.path.splitext(filename.lower())[0]
+                stem = Path(filename.lower()).stem
                 ext = guess_extension(filename, content)
                 imported_filename = f"template_image_{stem}{ext}"
                 image = Image(

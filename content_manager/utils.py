@@ -1,7 +1,7 @@
-import os
 import re
 from html import unescape
 from io import BytesIO
+from pathlib import Path
 
 from bs4 import BeautifulSoup
 from django.core.files.images import ImageFile
@@ -17,7 +17,7 @@ def guess_extension(filename: str, file_content: bytes) -> str:
     If the filename already has an extension, it is returned as-is.
     Otherwise the type is sniffed from magic bytes.
     """
-    _, ext = os.path.splitext(filename)
+    ext = Path(filename).suffix
     if ext:
         return ext.lower()
 
@@ -39,11 +39,10 @@ def import_image(full_file_path: str, title: str):
     """
     Import an image to the Wagtail medias based on its full path and return it.
     """
-    stem = os.path.splitext(os.path.basename(full_file_path))[0]
-    with open(full_file_path, "rb") as image_file:
-        content = image_file.read()
+    path = Path(full_file_path)
+    content = path.read_bytes()
     ext = guess_extension(full_file_path, content)
-    name = f"{stem}{ext}"
+    name = f"{path.stem}{ext}"
     image = Image(
         file=ImageFile(BytesIO(content), name=name),
         title=title,
@@ -57,11 +56,10 @@ def overwrite_image(image, full_file_path: str, title: str):
     Overwrites the file for a Wagtail image instance,
     keeping the same database record and ID.
     """
-    stem = os.path.splitext(os.path.basename(full_file_path))[0]
-    with open(full_file_path, "rb") as image_file:
-        content = image_file.read()
+    path = Path(full_file_path)
+    content = path.read_bytes()
     ext = guess_extension(full_file_path, content)
-    name = f"{stem}{ext}"
+    name = f"{path.stem}{ext}"
     image.file = ImageFile(BytesIO(content), name=name)
     image.save()
     return image

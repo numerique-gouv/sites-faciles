@@ -3,7 +3,7 @@ from django.test import SimpleTestCase
 from wagtail.test.utils import WagtailPageTestCase
 
 from content_manager.models import ContentPage
-from content_manager.services.import_export import ImportExportImages
+from content_manager.utils import guess_extension
 
 
 class ImportPagesTestCase(WagtailPageTestCase):
@@ -27,10 +27,10 @@ class ImportPagesTestCase(WagtailPageTestCase):
 
 
 class GuessExtensionTestCase(SimpleTestCase):
-    """Unit tests for ImportExportImages._guess_extension — no DB required."""
+    """Unit tests for guess_extension — no DB required."""
 
     def _call(self, filename, content=b""):
-        return ImportExportImages._guess_extension(filename, content)
+        return guess_extension(filename, content)
 
     def test_svg_extension_preserved(self):
         self.assertEqual(self._call("icon.svg"), ".svg")
