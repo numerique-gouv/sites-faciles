@@ -10,7 +10,9 @@ on:
 jobs:
   comment-visual-diffs:
     name: Comment visual regression diffs
-    if: github.event.workflow_run.conclusion == 'failure'
+    if: |
+      github.event.workflow_run.conclusion == 'failure' &&
+      github.event.workflow_run.pull_requests[0] != null
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,18 +23,6 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-
-      - name: Download PR metadata
-        uses: actions/download-artifact@v4
-        with:
-          name: pr-metadata
-          run-id: ${{ github.event.workflow_run.id }}
-          github-token: ${{ github.token }}
-          path: pr-metadata
-
-      - name: Read PR number
-        id: pr
-        run: echo "number=$(cat pr-metadata/pr_number.txt)" >> $GITHUB_OUTPUT
 
       - name: Download Playwright diffs
         uses: actions/download-artifact@v4
@@ -46,15 +36,16 @@ jobs:
         id: push-images
         env:
           GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
         run: |
-          BRANCH="pr-${{ steps.pr.outputs.number }}-screenshots"
+          BRANCH="pr-${PR_NUMBER}-screenshots"
           git checkout --orphan "$BRANCH"
           git rm -rf --quiet . 2>/dev/null || true
           git clean -fdx -e diffs
           find diffs -name '*.png' -exec git add {} +
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "Visual regression diffs for PR #${{ steps.pr.outputs.number }}"
+          git commit -m "Visual regression diffs for PR #${PR_NUMBER}"
           git push --force origin "$BRANCH"
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
 
@@ -82,6 +73,7 @@ jobs:
       - name: Post PR comment
         env:
           GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
         run: |
-          gh api repos/${{ github.repository }}/issues/${{ steps.pr.outputs.number }}/comments \
+          gh api repos/${{ github.repository }}/issues/${PR_NUMBER}/comments \
             -F body=@comment_body.md

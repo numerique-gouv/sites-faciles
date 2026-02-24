@@ -22,27 +22,5 @@ jobs:
     permissions:
       contents: read
 
-  # Save PR metadata so the privileged workflow_run job can access it.
-  # pull_request workflows from forks have no write permissions, so the actual
-  # push + comment happens in ci-e2e-report.yml triggered by workflow_run.
-  save-pr-metadata:
-    name: Save PR metadata
-    needs: e2e-compare
-    if: |
-      failure() &&
-      github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Write PR number to file
-        run: echo "${{ github.event.pull_request.number }}" > pr_number.txt
-
-      - name: Upload PR metadata
-        uses: actions/upload-artifact@v4
-        with:
-          name: pr-metadata
-          path: pr_number.txt
-
 permissions:
   contents: read
