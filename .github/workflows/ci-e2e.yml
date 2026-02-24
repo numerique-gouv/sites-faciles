@@ -21,12 +21,13 @@ jobs:
       compare: true
     permissions:
       contents: read
+    continue-on-error: true
 
   comment-visual-diffs:
     name: Comment visual regression diffs
     needs: e2e-compare
     if: |
-      failure() &&
+      needs.e2e-compare.result == 'failure' &&
       github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
