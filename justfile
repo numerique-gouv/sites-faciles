@@ -17,11 +17,17 @@ default:
 
 #### Internal helpers
 
-# Ensure the Docker dev server is running (no-op when USE_DOCKER != 1)
+# Ensure the Docker dev server is running and healthy (no-op when USE_DOCKER != 1)
 [private]
 _ensure-docker:
-    # no-op if USE_DOCKER!=1; skip if web is already running; otherwise start it
-    @[ "${USE_DOCKER:-0}" != "1" ] || docker compose ps --services --filter status=running 2>/dev/null | grep -q "^web$" || (echo "Docker web container is not running — starting it with 'docker compose up -d'..." && docker compose up -d)
+    @[ "${USE_DOCKER:-0}" != "1" ] || { \
+        docker compose ps --services --filter status=running 2>/dev/null | grep -q "^web$" \
+        || (echo "Docker web container is not running — starting with 'docker compose up -d'..." && docker compose up -d); \
+        WEB_ID=$(docker compose ps -q web 2>/dev/null); \
+        until [ "$(docker inspect --format='{{.State.Health.Status}}' "$WEB_ID" 2>/dev/null)" = "healthy" ]; do \
+            echo "Waiting for web container to be healthy..."; sleep 3; \
+        done; \
+    }
 
 #### Main recipes
 collectstatic: _ensure-docker
