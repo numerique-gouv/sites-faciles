@@ -48,8 +48,12 @@ jobs:
           ref: ${{ github.ref }}
           sparse-checkout: |
             playwright.config.ts
+            pyproject.toml
             e2e/
             .github/
+            .env.test
+            justfile
+            scripts/
           path: __e2e_overlay__
 
       - name: Overlay E2E files onto working tree
