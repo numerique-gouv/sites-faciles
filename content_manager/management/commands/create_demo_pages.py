@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from faker import Faker
 from taggit.models import slugify
@@ -8,10 +11,10 @@ from wagtailmenus.models.menus import FlatMenu, MainMenu
 from blog.models import BlogIndexPage
 from content_manager.models import ContentPage, MegaMenu, MegaMenuCategory
 from content_manager.services.accessors import get_or_create_catalog_index_page, get_or_create_content_page
-from content_manager.utils import get_default_site
+from content_manager.utils import get_default_site, import_image
 from forms.models import FormField, FormPage
 
-ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form"]
+ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form", "image_examples"]
 
 fake = Faker("fr_FR")
 
@@ -70,6 +73,9 @@ class Command(BaseCommand):
             elif slug == "form":
                 menu_page = ContentPage.objects.get(slug="menu_page", locale=locale)
                 self.create_form_page("form_with_all_fields", parent_page=menu_page)
+
+            elif slug == "image_examples":
+                self.create_image_examples_page(parent_page=home_page)
             else:
                 raise ValueError(f"Valeur inconnue : {slug}")
 
@@ -290,3 +296,45 @@ class Command(BaseCommand):
             FormField.objects.create(**field_data)
 
         self.stdout.write(self.style.SUCCESS(f"Page {slug} created with id {form_page.id}"))
+
+    def create_image_examples_page(self, parent_page: ContentPage) -> None:
+        """
+        Creates a page showcasing the available illustration images.
+        """
+        slug = "image_examples"
+
+        already_exists = ContentPage.objects.filter(slug=slug).first()
+        if already_exists:
+            self.stdout.write(f"The page seem to already exist with id {already_exists.id}")
+            return
+
+        illustrations_dir = os.path.join(settings.BASE_DIR, "static", "illustration")
+        image_files = [
+            ("Placeholder-Sites-Faciles.png", "Placeholder Sites Faciles"),
+            ("illustration-sites-faciles-homme-nuages.png", "Illustration Sites Faciles - Homme et nuages"),
+            ("illustration-sites-faciles-femme-ordinateur.png", "Illustration Sites Faciles - Femme à l'ordinateur"),
+        ]
+
+        body = []
+        body.append(("paragraph", RichText("<p>Exemples d'images disponibles dans le projet.</p>")))
+
+        for filename, title in image_files:
+            full_path = os.path.join(illustrations_dir, filename)
+            if not os.path.exists(full_path):
+                self.stdout.write(self.style.WARNING(f"Image not found, skipping: {full_path}"))
+                continue
+
+            image = import_image(full_path, title)
+            body.append(
+                (
+                    "image",
+                    {
+                        "image": image,
+                        "alt": title,
+                        "width": "",
+                    },
+                )
+            )
+
+        get_or_create_content_page(slug, title="Exemples d'images", body=body, parent_page=parent_page)
+        self.stdout.write(self.style.SUCCESS("Image examples page created"))

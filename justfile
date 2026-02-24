@@ -15,16 +15,23 @@ script_name := env("FORCE_SCRIPT_NAME", "")
 default:
     @just --list
 
+#### Internal helpers
+
+# Ensure the Docker dev server is running and healthy (no-op when USE_DOCKER != 1)
+[private]
+_ensure-docker:
+    @cd scripts && bash ensure_docker.sh
+
 #### Main recipes
-collectstatic:
+collectstatic: _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py collectstatic --noinput
 
 alias csu := createsuperuser
-createsuperuser:
+createsuperuser: _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py createsuperuser
 
 alias first-deploy := deploy
-deploy:
+deploy: _ensure-docker
     just migrate
     just collectstatic
     {{docker_cmd}} {{uv_run}} python manage.py create_starter_pages
@@ -33,38 +40,38 @@ deploy:
     just index
 
 # Pass a django command
-django +command:
+django +command: _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py {{command}}
 
-import_domain_whitelist:
+import_domain_whitelist: _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py import_domain_whitelist
 
-index:
+index: _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py update_index
 
-init:
+init: _ensure-docker
     {{docker_cmd}} uv sync --no-group dev
     just deploy
 
-init-dev:
+init-dev: _ensure-docker
     {{docker_cmd}} uv sync
     just deploy
     {{docker_cmd}} {{uv_run}} pre-commit install
 
 alias messages := makemessages
-makemessages:
+makemessages: _ensure-docker
     {{docker_cmd}} {{uv_run}} django-admin makemessages -l fr --ignore=manage.py --ignore=config --ignore=medias --ignore=__init__.py --ignore=setup.py --ignore=staticfiles
     {{docker_cmd}} {{uv_run}} django-admin makemessages -d djangojs -l fr --ignore=config --ignore=medias --ignore=staticfiles
 
 alias mm:= makemigrations
-makemigrations app="":
+makemigrations app="": _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py makemigrations {{app}}
 
 alias mi := migrate
-migrate app="" version="":
+migrate app="" version="": _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py migrate {{app}} {{version}}
 
-mmi:
+mmi: _ensure-docker
     just makemigrations
     just migrate
 
@@ -72,33 +79,33 @@ nginx-generate-config-file:
     cd scripts && bash nginx_generate_config_file.sh
 
 alias rs := runserver
-runserver host_url=host_url host_port=host_port:
+runserver host_url=host_url host_port=host_port: _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py runserver {{host_url}}:{{host_port}}
 
 alias rg:= run_gunicorn
-run_gunicorn host_url=host_url host_port=host_port script_name=script_name:
+run_gunicorn host_url=host_url host_port=host_port script_name=script_name: _ensure-docker
     @echo "If nginx is properly configured, the site will run on {{host_proto}}://{{host_url}}:1{{host_port}}{{script_name}}/"
     {{docker_cmd}} {{uv_run}} gunicorn config.wsgi:application --bind {{host_url}}:{{host_port}} --env SCRIPT_NAME={{script_name}}
 
-shell:
+shell: _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py shell
 
-test app="":
+test app="": _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py test {{app}} --buffer --parallel --settings config.settings_test
 
-unittest app="":
+unittest app="": _ensure-docker
     {{docker_cmd}} {{uv_run}} python manage.py test {{app}} --settings config.settings_test
 
-update:
+update: _ensure-docker
     {{docker_cmd}} uv sync --no-group dev
     just deploy
 
-upgrade:
+upgrade: _ensure-docker
     {{docker_cmd}} uv lock --upgrade
     {{docker_cmd}} {{uv_run}} pre-commit autoupdate
     {{docker_cmd}} npm update
 
-web-prompt:
+web-prompt: _ensure-docker
     {{docker_cmd}} bash
 
 #### Production-related recipes
@@ -115,7 +122,7 @@ scalingo-postdeploy:
 
 # Run a global pre-commit
 [group('Code audit')]
-quality:
+quality: _ensure-docker
     {{docker_cmd}} {{uv_run}} pre-commit run --all-files
 
 # Count lines of code per app
@@ -156,7 +163,7 @@ clear-local-db:
 
 # Creates a bunch of example pages
 [group('Dev DB and medias management')]
-demo:
+demo: _ensure-docker
     just init
     {{docker_cmd}} {{uv_run}} python manage.py create_demo_pages
 
@@ -182,7 +189,7 @@ restore-local:
 
 # Restore the last local database backup
 [group('Dev DB and medias management')]
-restore-local-db:
+restore-local-db: _ensure-docker
     cd scripts && bash restore_local_db.sh
     {{docker_cmd}} {{uv_run}} python manage.py set_config
 
@@ -193,13 +200,13 @@ restore-local-medias:
 
 # Restore the last downloaded backup & media files from production
 [group('Dev DB and medias management')]
-restore-prod:
+restore-prod: _ensure-docker
     cd scripts && bash restore_prod_db.sh && bash restore_prod_medias.sh
     {{docker_cmd}} {{uv_run}} python manage.py set_config
 
 # Restore the last downloaded backup of the production database
 [group('Dev DB and medias management')]
-restore-prod-db:
+restore-prod-db: _ensure-docker
     cd scripts && bash restore_prod_db.sh
     {{docker_cmd}} {{uv_run}} python manage.py set_config
 
