@@ -1,0 +1,30 @@
+div.struct-block.spotlight-grid-block {
+    display: grid;
+    column-gap: 2rem;
+    grid-template-areas:
+        "one   one"
+        "two two"
+        "three three"
+        "four four"
+        "five five";
+
+    >div[data-contentpath="section_title"] {
+        grid-area: one;
+    }
+
+    >div[data-contentpath="items_per_row"] {
+        grid-area: two;
+    }
+
+    >div[data-contentpath="link"] {
+        grid-area: three;
+    }
+
+    >div[data-contentpath="items"] {
+        grid-area: four;
+    }
+
+    >div[data-contentpath="layout"] {
+        grid-area: five;
+    }
+}

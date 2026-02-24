@@ -1,0 +1,110 @@
+[project]
+name = "sites-conformes"
+version = "2.5.2rc4"
+description = "Gestionnaire de contenu permettant de créer et gérer un site internet basé sur le Système de design de l'État, accessible et responsive"
+readme = "README.md"
+requires-python = "<4.0,>=3.11"
+authors = [
+    { name = "Sébastien Reuiller", email = "sebastien.reuiller@beta.gouv.fr" },
+    { name = "Sylvain Boissel", email = "sylvain.boissel@beta.gouv.fr" },
+    { name = "Lucien Mollard", email = "lucien.mollard@beta.gouv.fr" },
+    { name = "Lucie Laporte", email = "lucie.laporte@beta.gouv.fr" },
+]
+maintainers = [
+    { name = "Sylvain Boissel", email = "sylvain.boissel@beta.gouv.fr" },
+    { name = "Lucien Mollard", email = "lucien.mollard@beta.gouv.fr" },
+    { name = "Lucie Laporte", email = "lucie.laporte@beta.gouv.fr" },
+]
+
+dependencies = [
+    "django-dsfr>=2.4.0",
+    "django>=5.2.3",
+    "wagtail>=7.0.1",
+    "psycopg2-binary>=2.9.10",
+    "python-dotenv>=1.1.0",
+    "dj-database-url>=3.0.0",
+    "gunicorn>=23.0.0",
+    "dj-static>=0.0.6",
+    "wagtailmenus>=4.0.3",
+    "wagtail-modeladmin>=2.2.0",
+    "wagtail-markdown>=0.12.1",
+    "unidecode>=1.4.0",
+    "beautifulsoup4>=4.13.4",
+    "django-taggit>=6.1.0",
+    "wagtail-localize>=1.12.1",
+    "icalendar>=6.3.1",
+    "faker>=37.4.0",
+    "rust-just>=1.40.0",
+    "mozilla-django-oidc>=4.0.1",
+    "pyyaml>=6.0.2",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "coverage>=7.9.1",
+    "django-compressor>=4.5.1",
+    "django-debug-toolbar>=5.2.0",
+    "djlint>=1.36.4",
+    "ipython>=9.3.0",
+    "pre-commit>=4.2.0",
+    "ruff>=0.12.0",
+    "tblib>=3.1.0",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sites_conformes*"]
+
+[tool.setuptools.package-data]
+sites_conformes = [
+    "templates/**/*",
+    "static/**/*",
+    "*/templates/**/*",
+    "*/static/**/*",
+    "*/page_templates/**/*",
+]
+
+[tool.black]
+line-length = 119
+extend-exclude = '''
+/(
+  | migrations
+)/
+'''
+
+[tool.coverage.run]
+omit = [
+    "manage.py",
+    "config/settings_test.py",
+    "config/wsgi.py",
+    "*/__init__.py",
+    "*/migrations/*.py",
+    "*/tests/*.py",
+]
+
+[tool.djlint]
+max_blank_lines = 1
+ignore = "H030,H031,H006,D018,T003"
+indent = 2
+
+[tool.ruff]
+exclude = [
+    ".bzr", ".direnv", ".eggs", ".git", ".git-rewrite", ".hg",
+    ".ipynb_checkpoints", ".mypy_cache", ".nox", ".pants.d", ".pyenv",
+    ".pytest_cache", ".pytype", ".ruff_cache", ".svn", ".tox", ".venv",
+    ".vscode", "__pypackages__", "_build", "buck-out", "build", "dist",
+    "node_modules", "site-packages", "venv", "migrations",
+]
+line-length = 119
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E203", "E266"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true

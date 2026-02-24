@@ -35,6 +35,7 @@ dependencies = [
     "mozilla-django-oidc>=4.0.1",
     "wand>=0.6.13",
     "wagtail-honeypot>=1.2.1",
+    "sites-conformes",
 ]
 
 [dependency-groups]
@@ -127,3 +128,11 @@ ignore = ["E203", "E266"]
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
+
+[tool.uv.workspace]
+members = [
+    "sites_conformes",
+]
+
+[tool.uv.sources]
+sites-conformes = { workspace = true, editable = true }

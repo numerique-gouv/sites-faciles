@@ -1,0 +1,27 @@
+div.struct-block.cta-section {
+    display: grid;
+    column-gap: 2rem;
+    grid-template-areas:
+        "one   one"
+        "two two"
+        "three three"
+        "four four"
+        "five five";
+
+    >div[data-contentpath="section_title"] {
+        grid-area: one;
+    }
+
+    >div[data-contentpath="text"] {
+        grid-area: two;
+    }
+
+    >div[data-contentpath="button"] {
+        grid-area: three;
+    }
+
+    >div[data-contentpath="layout"] {
+        grid-area: four;
+    }
+
+}

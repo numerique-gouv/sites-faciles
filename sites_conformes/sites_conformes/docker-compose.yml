@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:14.5-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+      PGPORT: ${DATABASE_PORT}
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@db:${DATABASE_PORT}/${DATABASE_NAME}
+    ports:
+      - "${HOST_PORT}:${HOST_PORT}"
+    volumes:
+      - .:/app
+      - medias:/app/medias
+      - staticfiles:/app/staticfiles
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+  medias:
+  staticfiles:
