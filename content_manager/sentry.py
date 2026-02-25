@@ -10,8 +10,7 @@ SENTRY_DSN_EMPTY_SENTINEL = "__empty__"
 def _init_sentry(dsn: str) -> None:
     sentry_sdk.init(
         dsn=dsn,
-        traces_sample_rate=float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.0")),
-        send_default_pii=False,
+        send_default_pii=True,
         environment=os.getenv("SENTRY_ENVIRONMENT", "production"),
     )
 
