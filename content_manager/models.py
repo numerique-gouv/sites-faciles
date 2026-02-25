@@ -340,6 +340,32 @@ class CustomScriptsSettings(BaseSiteSetting):
     ]
 
 
+@register_setting(icon="globe")
+class ExternalServicesSettings(BaseSiteSetting):
+    class Meta:
+        verbose_name = _("External services")
+
+    sentry_dsn = models.CharField(
+        _("Sentry DSN"),
+        max_length=500,
+        blank=True,
+        default="",
+        help_text=mark_safe(
+            _(
+                "DSN provided by Sentry. Overrides the <code>SENTRY_DSN</code> environment variable. "
+                'See <a href="https://docs.sentry.io/product/sentry-basics/dsn-explainer/">Sentry docs</a>.'
+            )
+        ),
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [FieldPanel("sentry_dsn")],
+            heading=_("Sentry error monitoring"),
+        ),
+    ]
+
+
 @register_setting(icon="cog")
 class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
     class Meta:

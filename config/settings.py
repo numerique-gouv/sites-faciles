@@ -472,3 +472,8 @@ DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS")
 
 SF_DISABLE_TUTORIALS = True if os.getenv("SF_DISABLE_TUTORIALS") in ["1", "True"] else False
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+# Sentry configuration
+# Initialisation is handled in content_manager/sentry.py (AppConfig.ready).
+# The DB setting takes priority; SENTRY_DSN env var is the fallback.
+SENTRY_DSN = os.getenv("SENTRY_DSN", "")
