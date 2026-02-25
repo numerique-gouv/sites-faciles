@@ -2,6 +2,8 @@ import os
 
 import sentry_sdk
 from django.core.cache import cache
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 SENTRY_DSN_CACHE_KEY = "sentry_dsn_from_db"
 SENTRY_DSN_EMPTY_SENTINEL = "__empty__"
@@ -69,6 +71,9 @@ def bootstrap_sentry_from_db() -> None:
         _init_sentry(dsn)
 
 
+@receiver(
+    post_save, sender="content_manager.ExternalServicesSettings", dispatch_uid="external_services_settings_post_save"
+)
 def invalidate_sentry_cache(sender, instance, **kwargs) -> None:
     """post_save signal receiver: update cache and re-init (or shut down) Sentry."""
     new_dsn = instance.sentry_dsn or ""
