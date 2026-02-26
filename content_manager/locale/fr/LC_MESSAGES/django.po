@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-05 11:39+0100\n"
-"PO-Revision-Date: 2026-02-05 11:42+0100\n"
+"PO-Revision-Date: 2026-02-05 15:41+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -928,7 +928,7 @@ msgstr "Assombrir"
 
 #: content_manager/blocks/heros.py:96
 msgid "Lighten"
-msgstr "Eclaircir"
+msgstr "Éclaircir"
 
 #: content_manager/blocks/heros.py:100
 msgid "Add a mask to lighten or darken the image"
