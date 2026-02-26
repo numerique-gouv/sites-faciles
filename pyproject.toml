@@ -13,7 +13,7 @@ requires-python = "<4.0,>=3.11"
 dependencies = [
     "django-dsfr>=2.4.0",
     "django>=5.2.8",
-    "wagtail>=7.2.0",
+    "wagtail>=7.3",
     "psycopg2-binary>=2.9.10",
     "python-dotenv>=1.1.0",
     "dj-database-url>=3.0.0",
@@ -49,6 +49,9 @@ dev = [
     "ruff>=0.12.0",
     "tblib>=3.1.0",
 ]
+
+[tool.uv.sources]
+wagtail = { git = "https://github.com/fabienheureux/wagtail", branch = "fix-malformed-image-embed-missing-id" }
 
 [tool.black]
 line-length = 119
