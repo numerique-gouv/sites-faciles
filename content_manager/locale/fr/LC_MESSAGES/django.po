@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-05 11:39+0100\n"
+"POT-Creation-Date: 2026-02-26 18:01+0100\n"
 "PO-Revision-Date: 2026-02-05 15:41+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
@@ -1847,7 +1847,7 @@ msgid "Home page"
 msgstr "Accueil"
 
 #: content_manager/templates/content_manager/blocks/button.html:6
-#: content_manager/templates/content_manager/blocks/card_horizontal.html:12
+#: content_manager/templates/content_manager/blocks/card_horizontal.html:11
 #: content_manager/templates/content_manager/blocks/card_vertical.html:11
 #: content_manager/templates/content_manager/blocks/contact_card_vertical.html:14
 #: content_manager/templates/content_manager/blocks/link.html:9
