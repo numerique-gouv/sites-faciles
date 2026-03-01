@@ -97,7 +97,7 @@ class MainMenuSubmenuBlock(StructBlock):
         ],
         label=_("Links"),
         min_num=1,
-        max_num=8,
+        help_text=_("The recommended maximum number of links in a single submenu is 8."),
     )
 
     class Meta:

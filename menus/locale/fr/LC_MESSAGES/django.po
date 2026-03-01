@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-05 17:40+0100\n"
-"PO-Revision-Date: 2026-02-05 17:46+0100\n"
+"POT-Creation-Date: 2026-03-02 09:02+0100\n"
+"PO-Revision-Date: 2026-03-02 09:03+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -65,6 +65,10 @@ msgstr "Libellé du sous-menu"
 #: menus/blocks.py:98
 msgid "Links"
 msgstr "Liens"
+
+#: menus/blocks.py:100
+msgid "The recommended maximum number of links in a single submenu is 8."
+msgstr "Le nombre de liens maximum recommandé dans un sous-menu est de 8."
 
 #: menus/blocks.py:110
 msgid "Column label"

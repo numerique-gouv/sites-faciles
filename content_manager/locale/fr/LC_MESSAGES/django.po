@@ -1331,11 +1331,6 @@ msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 msgid "Mega menu"
 msgstr "Méga menu"
 
-#: content_manager/services/accessors.py:174
-#: content_manager/templates/content_manager/blocks/breadcrumbs.html:15
-msgid "Home page"
-msgstr "Accueil"
-
 msgid "No article found."
 msgstr "Aucun article trouvé."
 
