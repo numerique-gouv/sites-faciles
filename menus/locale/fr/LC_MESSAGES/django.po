@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-05 17:40+0100\n"
+"PO-Revision-Date: 2026-02-05 17:46+0100\n"
+"Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.8\n"
+
+#: menus/blocks.py:11
+msgid "Page"
+msgstr "Page"
+
+#: menus/blocks.py:12
+msgid "External URL"
+msgstr "URL externe"
+
+#: menus/blocks.py:13
+msgid "Document"
+msgstr "Document"
+
+#: menus/blocks.py:18
+msgid "Link type"
+msgstr "Type de lien"
+
+#: menus/blocks.py:19
+msgid "Select the type of link."
+msgstr "Choisissez le type de lien."
+
+#: menus/blocks.py:23 menus/blocks.py:55
+msgid "Link label"
+msgstr "Libellé du lien"
+
+#: menus/blocks.py:25
+msgid ""
+"If this field is empty, the title of the linked page or document will be "
+"used."
+msgstr ""
+"Si ce champ est vide, le titre de la page ou du document lié sera utilisé."
+
+#: menus/blocks.py:35
+msgid "Icon"
+msgstr "Icône"
+
+#: menus/blocks.py:56
+msgid "See the whole section"
+msgstr "Voir tout la rubrique"
+
+#: menus/blocks.py:90
+msgid "Submenu label"
+msgstr "Libellé du sous-menu"
+
+#: menus/blocks.py:98
+msgid "Links"
+msgstr "Liens"
+
+#: menus/blocks.py:110
+msgid "Column label"
+msgstr "Libellé de la colonne"
+
+#: menus/blocks.py:121
+msgid "Mega menu label"
+msgstr "Libellé du méga menu"
+
+#: menus/blocks.py:126
+msgid "Description"
+msgstr "Description"
+
+#: menus/blocks.py:131
+msgid "Main link"
+msgstr "Lien principal"
+
+#: menus/blocks.py:137
+msgid "Column"
+msgstr "Colonne"
+
+#: menus/blocks.py:139
+msgid "Columns"
+msgstr "Colonnes"
+
+#: menus/blocks.py:151 menus/blocks.py:155 menus/blocks.py:159
+msgid "Link"
+msgstr "Lien"
+
+#: menus/blocks.py:160
+msgid "Submenu"
+msgstr "Sous-menu"
+
+#: menus/blocks.py:161
+msgid "Mega menu"
+msgstr "Méga menu"
+
+#: menus/models.py:21 menus/models.py:53 menus/models.py:83
+msgid "Site"
+msgstr "Site"
+
+#: menus/models.py:30 menus/models.py:61 menus/models.py:91
+msgid "Menu items"
+msgstr "Éléments de menu"
+
+#: menus/models.py:36
+msgid "Top menu"
+msgstr "Menu du haut"
+
+#: menus/models.py:37
+msgid "Top menus"
+msgstr "Menus du haut"
+
+#: menus/models.py:40
+#, python-brace-format
+msgid "Top menu for site {hostname}"
+msgstr "Menu du haut pour le site {hostname}"
+
+#: menus/models.py:67
+msgid "Footer bottom menu"
+msgstr "Menu du bas du pied de page"
+
+#: menus/models.py:68
+msgid "Footer bottom menus"
+msgstr "Menus du bas du pied de page"
+
+#: menus/models.py:71
+#, python-brace-format
+msgid "Footer bottom menu for site {hostname}"
+msgstr "Menu du bas du pied de page pour le site {hostname}"
+
+#: menus/models.py:97
+msgid "Main menu"
+msgstr "Menu principal"
+
+#: menus/models.py:98
+msgid "Main menus"
+msgstr "Menus principaux"
+
+#: menus/models.py:101
+#, python-brace-format
+msgid "Main menu for site {hostname}"
+msgstr "Menu principal pour le site {hostname}"
+
+#: menus/templates/menus/blocks/footer_bottom_link.html:9
+#: menus/templates/menus/blocks/link.html:9
+#: menus/templates/menus/blocks/main_menu_link.html:9
+msgid "Opens a new window"
+msgstr "Ouvre une nouvelle fenêtre"
+
+#: menus/templates/menus/blocks/main_menu_megamenu.html:12
+msgid "Close"
+msgstr "Fermer"
+
+#~ msgid "Footer menu"
+#~ msgstr "Menu du pied de page"
