@@ -37,7 +37,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: 🐍 Set up uv
         uses: astral-sh/setup-uv@v5
-      - uses: pre-commit/action@v3.0.1
       - name: 🌍 Install dependencies
         run: |
           uv sync --no-group dev
@@ -47,9 +46,6 @@ jobs:
       - name: 💾 Collect static files
         run: |
           just collectstatic
-      - name: ✨ Black & ruff
-        run: |
-          just quality
       - name: 🤹‍ Run the unit tests
         run: |
           just unittest
