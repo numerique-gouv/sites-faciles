@@ -472,3 +472,13 @@ DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS")
 
 SF_DISABLE_TUTORIALS = True if os.getenv("SF_DISABLE_TUTORIALS") in ["1", "True"] else False
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+
+if sentry_dsn := os.getenv("SENTRY_DSN"):
+    import sentry_sdk  # noqa: E402
+
+    sentry_sdk.init(
+        dsn=sentry_dsn,
+        send_default_pii=True,
+        environment=os.getenv("SENTRY_ENVIRONMENT", "production"),
+    )
