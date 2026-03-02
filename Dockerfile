@@ -11,6 +11,9 @@ ENV APP_DIR="/app"
 # Needed for docker build to succeed
 ENV DATABASE_URL=postgres://user:password@localhost:5432/db
 
+# Install curl (used by Docker healthcheck)
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 # Add new user to run the whole thing as non-root.
 RUN set -ex \
     && addgroup --gid 1000 app \
