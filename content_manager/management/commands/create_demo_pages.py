@@ -15,7 +15,15 @@ from content_manager.services.accessors import get_or_create_catalog_index_page,
 from content_manager.utils import get_default_site, import_image
 from forms.models import FormField, FormPage
 
-ALL_ALLOWED_SLUGS = ["blog_index", "publications", "menu_page", "form", "common_blocks", "hero_blocks", "image_examples"]
+ALL_ALLOWED_SLUGS = [
+    "blog_index",
+    "publications",
+    "menu_page",
+    "form",
+    "common_blocks",
+    "hero_blocks",
+    "image_examples",
+]
 
 fake = Faker("fr_FR")
 
