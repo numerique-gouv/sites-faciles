@@ -149,3 +149,7 @@ dmypy.json
 config.json
 cron.json
 temp.json
+
+# Playwright artifacts
+test-results
+__screenshots__
