@@ -17,6 +17,11 @@ class TagManagerTests(WagtailPageTestCase):
             instance=ContentPage(title="Live page", slug="live-page", owner=self.admin, body=lorem_body, live=True)
         )
         self.content_page_live.save()
+
+        self.another_live_page = home_page.add_child(
+            instance=ContentPage(title="Another live", slug="another-live", owner=self.admin, body=[], live=True)
+        )
+        self.another_live_page.save()
         self.content_page_draft = home_page.add_child(
             instance=ContentPage(title="Draft page", slug="draft-page", owner=self.admin, body=lorem_body, live=False)
         )
@@ -48,3 +53,13 @@ class TagManagerTests(WagtailPageTestCase):
         tag = Tag.objects.tags_with_usecount().get(pk=tag.pk)
 
         assert tag.usecount == 0
+
+    def test_usecount_multiple_live_pages(self):
+
+        TagContentPage.objects.create(
+            tag=self.tag,
+            content_object=self.another_live_page,
+        )
+
+        tag = Tag.objects.tags_with_usecount().get(pk=self.tag.pk)
+        assert tag.usecount == 2
