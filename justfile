@@ -32,6 +32,7 @@ alias first-deploy := deploy
 deploy:
     just migrate
     just collectstatic
+    {{docker_cmd}} {{uv_run}} python manage.py import_dsfr_pictograms
     {{docker_cmd}} {{uv_run}} python manage.py create_starter_pages
     {{docker_cmd}} {{uv_run}} python manage.py import_page_templates
     {{docker_cmd}} {{uv_run}} python manage.py import_illustration_images
@@ -114,6 +115,8 @@ web-prompt:
 [group('Production')]
 scalingo-postdeploy:
     python manage.py migrate
+    python manage.py collectstatic --noinput
+    python manage.py import_dsfr_pictograms
     python manage.py create_starter_pages
     python manage.py import_page_templates
     python manage.py update_index
