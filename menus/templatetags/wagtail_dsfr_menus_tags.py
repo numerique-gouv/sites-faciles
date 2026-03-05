@@ -7,7 +7,7 @@ from menus.models import FooterBottomMenu, MainMenu, TopMenu
 register = template.Library()
 
 
-@register.inclusion_tag("menus/top_menu.html", takes_context=True)
+@register.inclusion_tag("menus/header_top_menu.html", takes_context=True)
 def top_menu(context: Context) -> dict:
     """
     Returns the top_menu item for the site
@@ -37,7 +37,7 @@ def footer_bottom_menu(context: Context) -> dict:
     return {"request": request, "footer_bottom_menu": footer_bottom_menu, "current_page": current_page}
 
 
-@register.inclusion_tag("menus/main_menu_sf.html", takes_context=True)
+@register.inclusion_tag("menus/header_main_menu.html", takes_context=True)
 def main_menu(context: Context) -> dict:
     """
     Returns the main_menu item for the site

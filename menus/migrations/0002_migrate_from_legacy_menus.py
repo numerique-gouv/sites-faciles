@@ -179,8 +179,12 @@ def _extract_mega_menu(legacy_mega_menu_item, Page, FlatMenuItem):
 
     for cat in legacy_mega_menu_item.categories.all().order_by("sort_order", "pk"):
         category = cat.category
+        if category.heading:
+            label = category.heading
+        else:
+            label = category.title
         column_value = {
-            "label": category.heading,
+            "label": label,
             "links": [],
         }
 

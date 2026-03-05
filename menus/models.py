@@ -2,7 +2,7 @@
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, HelpPanel
 from wagtail.fields import StreamField
 from wagtail.models import Site, TranslatableMixin
 
@@ -14,13 +14,11 @@ class TopMenu(TranslatableMixin, models.Model):
     The menu in the top right corner of a site.
     """
 
-    site = models.ForeignKey(
+    site = models.OneToOneField(
         Site,
         on_delete=models.CASCADE,
-        related_name="top_menus",
         verbose_name=_("Site"),
         default=1,
-        unique=True,
     )
 
     items = StreamField(
@@ -30,7 +28,16 @@ class TopMenu(TranslatableMixin, models.Model):
         verbose_name=_("Menu items"),
         blank=True,
     )
-    panels = [FieldPanel("site"), FieldPanel("items")]
+    help_panel_content = [
+        _("The top menu of the website, displayed in the top right corner."),
+        _("There can only be one top menu per site."),
+        _("It can contain up to three links."),
+    ]
+    panels = [
+        HelpPanel(content="".join(f"<p>{s}</p>" for s in help_panel_content)),
+        FieldPanel("site"),
+        FieldPanel("items"),
+    ]
 
     class Meta(TranslatableMixin.Meta):
         verbose_name = _("Top menu")
@@ -46,13 +53,11 @@ class FooterBottomMenu(TranslatableMixin, models.Model):
     This menu contains the legal links: Terms of Service, Privacy Policy, etc.
     """
 
-    site = models.ForeignKey(
+    site = models.OneToOneField(
         Site,
         on_delete=models.CASCADE,
-        related_name="footerbottom_menus",
         verbose_name=_("Site"),
         default=1,
-        unique=True,
     )
 
     items = StreamField(
@@ -61,7 +66,17 @@ class FooterBottomMenu(TranslatableMixin, models.Model):
         verbose_name=_("Menu items"),
         blank=True,
     )
-    panels = [FieldPanel("site"), FieldPanel("items")]
+
+    help_panel_content = [
+        _("The footer bottom menu of the website, displayed at the bottom of the footer."),
+        _("There can only be one footer bottom menu per site."),
+        _("This menu contains the legal links: Terms of Service, Privacy Policy, etc."),
+    ]
+    panels = [
+        HelpPanel(content="".join(f"<p>{s}</p>" for s in help_panel_content)),
+        FieldPanel("site"),
+        FieldPanel("items"),
+    ]
 
     class Meta(TranslatableMixin.Meta):
         verbose_name = _("Footer bottom menu")
@@ -76,13 +91,11 @@ class MainMenu(TranslatableMixin, models.Model):
     The main menu of a site.
     """
 
-    site = models.ForeignKey(
+    site = models.OneToOneField(
         Site,
         on_delete=models.CASCADE,
-        related_name="main_menus",
         verbose_name=_("Site"),
         default=1,
-        unique=True,
     )
 
     items = StreamField(
@@ -90,8 +103,20 @@ class MainMenu(TranslatableMixin, models.Model):
         use_json_field=True,
         verbose_name=_("Menu items"),
         blank=True,
+        help_text=_("The recommended maximum number of items in the main menu is 8."),
     )
-    panels = [FieldPanel("site"), FieldPanel("items")]
+
+    help_panel_content = [
+        _("The main menu of the website, displayed in the main navigation area."),
+        _("There can only be one main menu per site."),
+        _("It can contain links, submenus, and mega menus."),
+        _("It is recommended to avoid mixing submenus and mega menus."),
+    ]
+    panels = [
+        HelpPanel(content="".join(f"<p>{s}</p>" for s in help_panel_content)),
+        FieldPanel("site"),
+        FieldPanel("items"),
+    ]
 
     class Meta(TranslatableMixin.Meta):
         verbose_name = _("Main menu")
