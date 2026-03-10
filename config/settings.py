@@ -101,7 +101,11 @@ INSTALLED_APPS = [
     "blog",
     "events",
     "forms",
+<<<<<<< HEAD
     "menus",
+=======
+    "customimages",
+>>>>>>> a1ab2ed (add customimages model)
     "wagtail_honeypot",
     "dashboard",
     "wagtail.admin",
@@ -478,3 +482,4 @@ DSFR_USE_INTEGRITY_CHECKSUMS = True if os.getenv("DSFR_USE_INTEGRITY_CHECKSUMS")
 
 SF_DISABLE_TUTORIALS = True if os.getenv("SF_DISABLE_TUTORIALS") in ["1", "True"] else False
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+WAGTAILIMAGES_IMAGE_MODEL = "customimages.CustomImage"
