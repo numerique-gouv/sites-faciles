@@ -73,7 +73,7 @@ class TextContentVerticalAlignments(TextContentBlock):
     position = blocks.ChoiceBlock(
         choices=ALIGN_VERTICAL_CHOICES,
         label=_("Text content position"),
-        default="center",
+        default="bottom",
         help_text=_(
             "This field allows you to define the placement of text relative to adjacent content in vertical position."
         ),
