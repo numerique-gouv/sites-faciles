@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-26 18:17+0100\n"
+"POT-Creation-Date: 2026-03-05 16:18+0100\n"
 "PO-Revision-Date: 2026-02-05 15:41+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
@@ -80,8 +80,8 @@ msgstr ""
 msgid "Body"
 msgstr "Corps"
 
-msgid "Common page configuration"
-msgstr "Configuration commune"
+msgid "For search engines"
+msgstr "Pour les moteurs de recherche"
 
 msgid "Base page"
 msgstr "Page de base"
@@ -353,6 +353,14 @@ msgid ""
 msgstr ""
 "Lien vers un bloc ancre de la page. Caractères autorisés : A-Z, a-z, 0-9, - "
 "et _."
+
+msgid "Extra query parameters"
+msgstr "Paramètres de requête"
+
+msgid "Extra query parameters at the end of the link, e.g. filtering options."
+msgstr ""
+"Paramètres de requête supplémentaires à la fin du lien, par exemple des "
+"options de filtrage."
 
 msgid "Please select a page to link to"
 msgstr "Veuillez sélectionner une page"
@@ -1320,6 +1328,9 @@ msgstr "Maximum 4 catégories, chacune contenant maximum 8 liens."
 msgid "Mega menu"
 msgstr "Méga menu"
 
+msgid "Home page"
+msgstr "Accueil"
+
 msgid "No article found."
 msgstr "Aucun article trouvé."
 
@@ -1331,9 +1342,6 @@ msgstr "vous êtes ici :"
 
 msgid "See breadcrumb"
 msgstr "Voir le fil d’Ariane"
-
-msgid "Home page"
-msgstr "Accueil"
 
 msgid "Opens a new window"
 msgstr "Ouvre une nouvelle fenêtre"
@@ -1455,6 +1463,12 @@ msgstr "recherche/"
 msgid "sitemap/"
 msgstr "plan-du-site/"
 
+msgid "Query string must start with '?'."
+msgstr "La chaîne de requête doit commencer par '?'."
+
+msgid "Query string must not contain '#'."
+msgstr "La chaîne de requête ne doit pas contenir de '#'."
+
 msgid "List of all the tags."
 msgstr "Liste de toutes les étiquettes."
 
@@ -1465,6 +1479,9 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid "Common page configuration"
+#~ msgstr "Configuration commune"
 
 #~ msgid "Link label (obsolete)"
 #~ msgstr "Libellé du lien (obsolète)"
