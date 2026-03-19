@@ -101,11 +101,8 @@ INSTALLED_APPS = [
     "blog",
     "events",
     "forms",
-<<<<<<< HEAD
     "menus",
-=======
     "customimages",
->>>>>>> a1ab2ed (add customimages model)
     "wagtail_honeypot",
     "dashboard",
     "wagtail.admin",
