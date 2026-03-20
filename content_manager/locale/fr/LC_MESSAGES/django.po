@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-05 16:18+0100\n"
-"PO-Revision-Date: 2026-02-05 15:41+0100\n"
+"POT-Creation-Date: 2026-03-20 18:48+0100\n"
+"PO-Revision-Date: 2026-03-20 18:52+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 msgid "Show title in header image?"
 msgstr "Afficher le titre sur l’image d’en-tête ?"
@@ -1231,6 +1231,32 @@ msgstr "URL d‘inscription à la lettre d’information"
 msgid "Max length: 2000 characters."
 msgstr "Longueur maximum : 2000 caractères."
 
+msgid "Activate the language selector in the header."
+msgstr "Activer l’affichage du sélecteur de langues dans l’en-tête."
+
+msgid "In simple mode, the list of languages is automatically generated."
+msgstr "Dans le mode simple, la liste des langues est générée automatiquement."
+
+msgid "In manual mode, you can define it manually below."
+msgstr "Dans le mode manuel, vous pouvez la définir manuellement ci-dessous."
+
+msgid ""
+"The manual mode is useful if each language uses a completely separated site."
+msgstr "Le mode manuel est utile s'il y a un site séparé pour chaque langue."
+
+msgid "Language selector"
+msgstr "Sélecteur de langues"
+
+msgctxt "Language selector disabled"
+msgid "Disabled"
+msgstr "Désactivé"
+
+msgid "Simple"
+msgstr "Simple"
+
+msgid "Manual"
+msgstr "Manuel"
+
 msgid "Activate share links on content_pages"
 msgstr "Activer les liens de partage sur les pages de contenu"
 
@@ -1268,6 +1294,9 @@ msgstr ""
 "information primordiale et temporaire.  (Une utilisation excessive ou "
 "continue risque de “noyer” le message)"
 
+msgid "Language selector items"
+msgstr "Entrées du sélecteur de langues"
+
 msgid "Advanced settings"
 msgstr "Paramètres avancés"
 
@@ -1297,6 +1326,32 @@ msgstr "Bloc-marque"
 
 msgid "Newsletter, social media and share links"
 msgstr "Lettre d’information, réseaux sociaux et liens de partage"
+
+msgid "Language code"
+msgstr "Code langue"
+
+msgid "The language code (examples: fr, de, en)"
+msgstr "Le code langue (par exemple : fr, de, en)"
+
+msgid "Language name"
+msgstr "Nom de la langue"
+
+msgid ""
+"The name of the language in said language (examples: Français, Deutsch, "
+"English)"
+msgstr ""
+"Le nom de la langue dans cette langue (par exemple : Français, Deutsch, "
+"English)"
+
+msgid "Link to a page on this site. Use either this or the external URL."
+msgstr ""
+"Lien vers une page du site. Utilisez soit ce champ soit le champ URL externe."
+
+msgid "Link to an external URL. Use either this or the page."
+msgstr "Lien vers une page externe. Utilisez soit ce champ soit le champ Page."
+
+msgid "Language selector item"
+msgstr "Entrée du sélecteur de langues"
 
 msgid "URL"
 msgstr "URL"
@@ -1457,6 +1512,9 @@ msgstr "Plan du site"
 msgid "Select icon"
 msgstr "Sélectionner une icône"
 
+msgid "Select language"
+msgstr "Sélectionner une langue"
+
 msgid "search/"
 msgstr "recherche/"
 
@@ -1479,6 +1537,13 @@ msgstr "Pages avec l’étiquette {tag}"
 #, python-brace-format
 msgid "List of pages tagged with {tag}"
 msgstr "Liste de pages avec l’étiquette {tag}"
+
+#~ msgid ""
+#~ "The name of the language in said language (exemples: Français, Deutsch, "
+#~ "English)"
+#~ msgstr ""
+#~ "Le nom de la langue dans cette langue (par exemple : Français, Deutsch, "
+#~ "English)"
 
 #~ msgid "Common page configuration"
 #~ msgstr "Configuration commune"

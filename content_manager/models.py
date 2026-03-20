@@ -7,14 +7,14 @@ from django.db.models import Q
 from django.forms.widgets import Textarea, mark_safe
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, pgettext_lazy
 from dsfr.constants import NOTICE_TYPE_CHOICES
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import Tag as TaggitTag, TaggedItemBase
 from unidecode import unidecode
-from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface
+from wagtail.admin.panels import FieldPanel, HelpPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface
 from wagtail.api import APIField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
@@ -496,6 +496,27 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
         blank=True,
     )
 
+    # Language selector
+    language_selector_help_panel = [
+        _("Activate the language selector in the header."),
+        _("In simple mode, the list of languages is automatically generated."),
+        _("In manual mode, you can define it manually below."),
+        _("The manual mode is useful if each language uses a completely separated site."),
+    ]
+
+    language_selector_mode = models.CharField(
+        _("Language selector"),
+        choices=[
+            ("disabled", pgettext_lazy("Language selector disabled", "Disabled")),
+            ("simple", _("Simple")),
+            ("manual", _("Manual")),
+        ],
+        default="disabled",
+        blank=True,
+        max_length=20,
+    )
+
+    # Share links
     share_links_content_pages = models.BooleanField(_("Activate share links on content_pages"), default=False)
     share_links_blog_posts = models.BooleanField(_("Activate share links on blog posts"), default=False)
     share_links_events = models.BooleanField(_("Activate share links on event pages"), default=False)
@@ -539,6 +560,14 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
                 FieldPanel("operator_logo_width"),
             ],
             heading=_("Site logo"),
+        ),
+        MultiFieldPanel(
+            [
+                HelpPanel(content="".join(f"<p>{s}</p>" for s in language_selector_help_panel)),
+                FieldPanel("language_selector_mode"),
+                InlinePanel("language_selector_items", label=_("Language selector items")),
+            ],
+            heading=_("Language selector"),
         ),
         MultiFieldPanel(
             [
@@ -629,6 +658,61 @@ class CmsDsfrConfig(ClusterableModel, BaseSiteSetting):
             or self.share_links_email
             or self.share_links_clipboard
         )
+
+
+class LanguageSelectorItem(Orderable):
+    site_config = ParentalKey(CmsDsfrConfig, on_delete=models.CASCADE, related_name="language_selector_items")  # type: ignore
+    language_code = models.CharField(
+        _("Language code"),
+        max_length=10,
+        help_text=_("The language code (examples: fr, de, en)"),
+    )
+    language_name = models.CharField(
+        _("Language name"),
+        max_length=50,
+        help_text=_("The name of the language in said language (examples: Français, Deutsch, English)"),
+    )
+
+    LIMITED_LINK_TYPE_CHOICES = [
+        ("page", _("Page")),
+        ("external_url", _("External URL")),
+    ]
+
+    link_type = models.CharField(
+        _("Link type"),
+        choices=LIMITED_LINK_TYPE_CHOICES,
+        default="page",
+        help_text=_("Select the type of link."),
+    )
+
+    page = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("Page"),
+        help_text=_("Link to a page on this site. Use either this or the external URL."),
+    )
+    external_url = models.URLField(
+        _("External URL"),
+        max_length=2000,
+        blank=True,
+        default="",
+        help_text=_("Link to an external URL. Use either this or the page."),
+    )
+
+    panels = [
+        FieldPanel("language_code"),
+        FieldPanel("language_name"),
+        FieldPanel("link_type"),
+        FieldPanel("page"),
+        FieldPanel("external_url"),
+    ]
+
+    class Meta:
+        verbose_name = _("Language selector item")
+        verbose_name_plural = _("Language selector items")
 
 
 class SocialMediaItem(Orderable):
