@@ -1,7 +1,9 @@
-from wagtail.images.models import Image
+from wagtail.images import get_image_model
 from wagtail.test.utils import WagtailPageTestCase
 
 from content_manager.utils import import_image
+
+Image = get_image_model()
 
 
 class UtilsTestCase(WagtailPageTestCase):
