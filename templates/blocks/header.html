@@ -42,6 +42,7 @@
 {% block header_tools %}
   {% if request %}
     {% top_menu %}
+    {% language_selector %}
   {% endif %}
   {% if user.is_authenticated %}
     <li>

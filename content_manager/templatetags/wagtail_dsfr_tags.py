@@ -6,19 +6,9 @@ from django.utils.html import mark_safe
 from wagtail.models import Site
 from wagtail.rich_text import RichText
 
-from content_manager.models import MegaMenu
+from content_manager.models import CmsDsfrConfig
 
 register = template.Library()
-
-
-@register.inclusion_tag("content_manager/menus/mega_menu.html", takes_context=True)
-def mega_menu(context: Context, parent_menu_id: int) -> dict:
-    """
-    Returns a mega_menu item. Takes the parent menu id as parameter,
-    """
-    menu = MegaMenu.objects.filter(parent_menu_item_id=parent_menu_id).first()
-
-    return {"request": context["request"], "menu": menu}
 
 
 @register.simple_tag
@@ -57,6 +47,72 @@ def canonical_url(context):
         hostname = request.get_host()
 
     return f"{scheme}://{hostname}{request.path}"
+
+
+@register.inclusion_tag("content_manager/widgets/language_selector.html", takes_context=True)
+def language_selector(context: Context) -> dict:
+    """
+    Returns the language selector item.
+    """
+    request = context.get("request", None)
+
+    cms_settings = CmsDsfrConfig.for_request(request)
+
+    mode = cms_settings.language_selector_mode
+
+    if mode == "simple":
+        is_active = True
+        site = Site.find_for_request(request)
+
+        homepage = site.root_page
+        default_locale = homepage.locale
+
+        language_selector_items = [
+            {
+                "language_code": default_locale.language_code,
+                "language_name": default_locale.language_name_localized,
+                "url": homepage.full_url,
+            }
+        ]
+
+        for t in homepage.get_translations():
+            language_selector_items.append(
+                {
+                    "language_code": t.locale.language_code,
+                    "language_name": t.locale.language_name_localized,
+                    "url": t.full_url,
+                }
+            )
+    elif mode == "manual":
+        is_active = True
+        items = cms_settings.language_selector_items.all()
+
+        language_selector_items = []
+
+        for i in items:
+            if i.page:
+                language_selector_items.append(
+                    {
+                        "language_code": i.language_code,
+                        "language_name": i.language_name,
+                        "url": i.page.full_url,
+                    }
+                )
+            else:
+                language_selector_items.append(
+                    {
+                        "language_code": i.language_code,
+                        "language_name": i.language_name,
+                        "url": i.external_url,
+                    }
+                )
+    else:
+        is_active = False
+        language_selector_items = []
+
+    language_selector = {"is_active": is_active, "items": language_selector_items}
+
+    return {"request": context["request"], "language_selector": language_selector}
 
 
 @register.filter
