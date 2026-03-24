@@ -1,26 +1,19 @@
 # myapp/models.py
 
-from django.db import models
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.panels import FieldPanel, HelpPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.fields import StreamField
-from wagtail.models import Site, TranslatableMixin
+from wagtail.models import TranslatableMixin
 
 from menus.blocks import FOOTER_BOTTOM_MENU_BLOCKS, MAIN_MENU_BLOCKS, TOP_MENU_BLOCKS
 
 
-class TopMenu(TranslatableMixin, models.Model):
+@register_setting()
+class TopMenu(TranslatableMixin, BaseSiteSetting):
     """
     The menu in the top right corner of a site.
     """
-
-    site = models.OneToOneField(
-        Site,
-        on_delete=models.CASCADE,
-        verbose_name=_("Site"),
-        default=1,
-    )
 
     items = StreamField(
         TOP_MENU_BLOCKS,
@@ -36,7 +29,6 @@ class TopMenu(TranslatableMixin, models.Model):
     ]
     panels = [
         HelpPanel(content="".join(f"<p>{s}</p>" for s in help_panel_content)),
-        FieldPanel("site"),
         FieldPanel("items"),
     ]
 
@@ -48,18 +40,12 @@ class TopMenu(TranslatableMixin, models.Model):
         return _("Top menu for site {hostname}").format(hostname=self.site.hostname)
 
 
-class FooterBottomMenu(TranslatableMixin, models.Model):
+@register_setting()
+class FooterBottomMenu(TranslatableMixin, BaseSiteSetting):
     """
     The menu at the bottom part of the footer of a site.
     This menu contains the legal links: Terms of Service, Privacy Policy, etc.
     """
-
-    site = models.OneToOneField(
-        Site,
-        on_delete=models.CASCADE,
-        verbose_name=_("Site"),
-        default=1,
-    )
 
     items = StreamField(
         FOOTER_BOTTOM_MENU_BLOCKS,
@@ -75,7 +61,6 @@ class FooterBottomMenu(TranslatableMixin, models.Model):
     ]
     panels = [
         HelpPanel(content="".join(f"<p>{s}</p>" for s in help_panel_content)),
-        FieldPanel("site"),
         FieldPanel("items"),
     ]
 
