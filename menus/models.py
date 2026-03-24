@@ -3,6 +3,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.panels import FieldPanel, HelpPanel
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.fields import StreamField
 from wagtail.models import Site, TranslatableMixin
 
@@ -86,17 +87,11 @@ class FooterBottomMenu(TranslatableMixin, models.Model):
         return _("Footer bottom menu for site {hostname}").format(hostname=self.site.hostname)
 
 
-class MainMenu(TranslatableMixin, models.Model):
+@register_setting()
+class MainMenu(TranslatableMixin, BaseSiteSetting):
     """
     The main menu of a site.
     """
-
-    site = models.OneToOneField(
-        Site,
-        on_delete=models.CASCADE,
-        verbose_name=_("Site"),
-        default=1,
-    )
 
     items = StreamField(
         MAIN_MENU_BLOCKS,
@@ -114,7 +109,6 @@ class MainMenu(TranslatableMixin, models.Model):
     ]
     panels = [
         HelpPanel(content="".join(f"<p>{s}</p>" for s in help_panel_content)),
-        FieldPanel("site"),
         FieldPanel("items"),
     ]
 
