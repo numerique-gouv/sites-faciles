@@ -1,24 +1,24 @@
-from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
+from wagtail.admin.viewsets.model import ModelViewSet, ModelViewSetGroup
 
 from menus.models import FooterBottomMenu, MainMenu, TopMenu
 
 
-class TopMenuViewSet(SnippetViewSet):
+class TopMenuViewSet(ModelViewSet):
     model = TopMenu
     icon = "minus"  # type: ignore
 
 
-class FooterBottomMenuViewSet(SnippetViewSet):
+class FooterBottomMenuViewSet(ModelViewSet):
     model = FooterBottomMenu
     icon = "minus"  # type: ignore
 
 
-class MainMenuViewSet(SnippetViewSet):
+class MainMenuViewSet(ModelViewSet):
     model = MainMenu
     icon = "minus"  # type: ignore
 
 
-class MenusViewSetGroup(SnippetViewSetGroup):
+class MenusViewSetGroup(ModelViewSetGroup):
     items = (TopMenuViewSet, MainMenuViewSet, FooterBottomMenuViewSet)
     menu_icon = "bars"
     menu_label = "Menus"  # type: ignore
