@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-24 09:24+0100\n"
+"POT-Creation-Date: 2026-03-24 09:46+0100\n"
 "PO-Revision-Date: 2026-03-05 17:32+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
@@ -19,198 +19,151 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.8\n"
 
-#: menus/blocks.py:11
 msgid "Page"
 msgstr "Page"
 
-#: menus/blocks.py:12
 msgid "External URL"
 msgstr "URL externe"
 
-#: menus/blocks.py:13
 msgid "Document"
 msgstr "Document"
 
-#: menus/blocks.py:18
 msgid "Link type"
 msgstr "Type de lien"
 
-#: menus/blocks.py:19
 msgid "Select the type of link."
 msgstr "Choisissez le type de lien."
 
-#: menus/blocks.py:23 menus/blocks.py:55
 msgid "Link label"
 msgstr "Libellé du lien"
 
-#: menus/blocks.py:25
 msgid ""
 "If this field is empty, the title of the linked page or document will be "
 "used."
 msgstr ""
 "Si ce champ est vide, le titre de la page ou du document lié sera utilisé."
 
-#: menus/blocks.py:35
 msgid "Icon"
 msgstr "Icône"
 
-#: menus/blocks.py:56
 msgid "See the whole section"
 msgstr "Voir tout la rubrique"
 
-#: menus/blocks.py:90
 msgid "Submenu label"
 msgstr "Libellé du sous-menu"
 
-#: menus/blocks.py:98
 msgid "Links"
 msgstr "Liens"
 
-#: menus/blocks.py:100
 msgid "The recommended maximum number of links in a single submenu is 8."
 msgstr "Le nombre de liens maximum recommandé dans un sous-menu est de 8."
 
-#: menus/blocks.py:110
 msgid "Column label"
 msgstr "Libellé de la colonne"
 
-#: menus/blocks.py:121
 msgid "Mega menu label"
 msgstr "Libellé du méga menu"
 
-#: menus/blocks.py:126
 msgid "Description"
 msgstr "Description"
 
-#: menus/blocks.py:131
 msgid "Main link"
 msgstr "Lien principal"
 
-#: menus/blocks.py:137
 msgid "Column"
 msgstr "Colonne"
 
-#: menus/blocks.py:139
 msgid "Columns"
 msgstr "Colonnes"
 
-#: menus/blocks.py:151 menus/blocks.py:155 menus/blocks.py:159
 msgid "Link"
 msgstr "Lien"
 
-#: menus/blocks.py:160
 msgid "Submenu"
 msgstr "Sous-menu"
 
-#: menus/blocks.py:161
 msgid "Mega menu"
 msgstr "Méga menu"
 
-#: menus/models.py:20 menus/models.py:59 menus/models.py:97
 msgid "Site"
 msgstr "Site"
 
-#: menus/models.py:28 menus/models.py:66 menus/models.py:104
 msgid "Menu items"
 msgstr "Éléments de menu"
 
-#: menus/models.py:32
 msgid "The top menu of the website, displayed in the top right corner."
 msgstr "Le menu du haut du site, situé dans le coin en haut à droite."
 
-#: menus/models.py:33
 msgid "There can only be one top menu per site."
 msgstr "Il ne peut y avoir qu'un menu du haut par site."
 
-#: menus/models.py:34
 msgid "It can contain up to three links."
 msgstr "Il peut contenir jusqu'à trois liens."
 
-#: menus/models.py:43
 msgid "Top menu"
 msgstr "Menu du haut"
 
-#: menus/models.py:44
 msgid "Top menus"
 msgstr "Menus du haut"
 
-#: menus/models.py:47
 #, python-brace-format
 msgid "Top menu for site {hostname}"
 msgstr "Menu du haut pour le site {hostname}"
 
-#: menus/models.py:71
 msgid ""
 "The footer bottom menu of the website, displayed at the bottom of the footer."
 msgstr "Le menu du bas du pied de page du site."
 
-#: menus/models.py:72
 msgid "There can only be one footer bottom menu per site."
 msgstr "Il ne peut y avoir qu'un menu de ce type par site."
 
-#: menus/models.py:73
 msgid ""
 "This menu contains the legal links: Terms of Service, Privacy Policy, etc."
 msgstr ""
 "Ce menu contient les liens vers les pages légales : conditions "
 "d'utilisation, politique de confidentialité, etc."
 
-#: menus/models.py:82
 msgid "Footer bottom menu"
 msgstr "Menu du bas du pied de page"
 
-#: menus/models.py:83
 msgid "Footer bottom menus"
 msgstr "Menus du bas du pied de page"
 
-#: menus/models.py:86
 #, python-brace-format
 msgid "Footer bottom menu for site {hostname}"
 msgstr "Menu du bas du pied de page pour le site {hostname}"
 
-#: menus/models.py:106
 msgid "The recommended maximum number of items in the main menu is 8."
 msgstr "Le nombre de liens maximum recommandé dans le menu principal est de 8."
 
-#: menus/models.py:110
 msgid "The main menu of the website, displayed in the main navigation area."
 msgstr ""
 "Le menu principal du site, situé dans la zone de navigation principale."
 
-#: menus/models.py:111
 msgid "There can only be one main menu per site."
 msgstr "Il ne peut y avoir qu'un menu de ce type par site."
 
-#: menus/models.py:112
 msgid "It can contain links, submenus, and mega menus."
 msgstr "Il peut contenir des liens, des sous-menus et des méga-menus."
 
-#: menus/models.py:113
 msgid "It is recommended to avoid mixing submenus and mega menus."
 msgstr ""
 "Il est recommandé de ne pas utiliser en même temps des sous-menus et des "
 "méga-menus."
 
-#: menus/models.py:122
 msgid "Main menu"
 msgstr "Menu principal"
 
-#: menus/models.py:123
 msgid "Main menus"
 msgstr "Menus principaux"
 
-#: menus/models.py:126
 #, python-brace-format
 msgid "Main menu for site {hostname}"
 msgstr "Menu principal pour le site {hostname}"
 
-#: menus/templates/menus/blocks/footer_bottom_link.html:9
-#: menus/templates/menus/blocks/link.html:9
-#: menus/templates/menus/blocks/main_menu_link.html:9
 msgid "Opens a new window"
 msgstr "Ouvre une nouvelle fenêtre"
 
-#: menus/templates/menus/blocks/main_menu_megamenu.html:12
 msgid "Close"
 msgstr "Fermer"
 
