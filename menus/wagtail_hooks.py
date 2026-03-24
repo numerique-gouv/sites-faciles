@@ -1,30 +1,22 @@
-from wagtail.snippets.models import register_snippet
-from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
+from wagtail import hooks
 
 from menus.models import FooterBottomMenu, MainMenu, TopMenu
 
-
-class TopMenuViewSet(SnippetViewSet):
-    model = TopMenu
-    icon = "minus"  # type: ignore
+from .views import MenusViewSetGroup
 
 
-class FooterBottomMenuViewSet(SnippetViewSet):
-    model = FooterBottomMenu
-    icon = "minus"  # type: ignore
+@hooks.register("register_admin_viewset")
+def register_viewset():
+    return MenusViewSetGroup()
 
 
-class MainMenuViewSet(SnippetViewSet):
-    model = MainMenu
-    icon = "minus"  # type: ignore
-
-
-class MenusViewSetGroup(SnippetViewSetGroup):
-    items = (TopMenuViewSet, MainMenuViewSet, FooterBottomMenuViewSet)
-    menu_icon = "bars"
-    menu_label = "Menus"  # type: ignore
-    menu_name = "menus"
-    menu_order = 8400
-
-
-register_snippet(MenusViewSetGroup)
+@hooks.register("construct_settings_menu")
+def exclude_menus_from_settings_menu(request, menu_items):
+    for index, item in enumerate(menu_items):
+        try:
+            if item.model in [TopMenu, FooterBottomMenu, MainMenu]:
+                del menu_items[index]
+        except AttributeError:
+            # Prevent the loop to choke on some menu items that
+            # do not specify model, like Redirect menu item
+            pass

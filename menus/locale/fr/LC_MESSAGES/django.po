@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-05 17:29+0100\n"
+"POT-Creation-Date: 2026-03-24 12:47+0100\n"
 "PO-Revision-Date: 2026-03-05 17:32+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
@@ -84,9 +84,6 @@ msgstr "Sous-menu"
 
 msgid "Mega menu"
 msgstr "Méga menu"
-
-msgid "Site"
-msgstr "Site"
 
 msgid "Menu items"
 msgstr "Éléments de menu"
@@ -166,6 +163,9 @@ msgstr "Ouvre une nouvelle fenêtre"
 
 msgid "Close"
 msgstr "Fermer"
+
+#~ msgid "Site"
+#~ msgstr "Site"
 
 #~ msgid ""
 #~ "\n"
