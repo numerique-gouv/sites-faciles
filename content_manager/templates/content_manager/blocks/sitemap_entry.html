@@ -2,6 +2,8 @@
 {% translate "Restricted access" as restricted_access_label %}
 {% for subpage in pagelist.get_children.live %}
   {% if not subpage.get_view_restrictions or user.is_authenticated %}
+    {% with specific=subpage.specific %}
+    {% if not specific.exclude_from_sitemap %}
     <li>
       {% if subpage.get_view_restrictions %}
         <span class="fr-icon-lock-line"
@@ -16,5 +18,7 @@
         </ul>
       {% endif %}
     </li>
+    {% endif %}
+    {% endwith %}
   {% endif %}
 {% endfor %}

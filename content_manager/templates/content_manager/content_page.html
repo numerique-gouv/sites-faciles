@@ -8,6 +8,7 @@
 
 {% block description %}
   {% if page.search_description %}<meta name="description" content="{{ page.search_description }}" />{% endif %}
+  {% if page.exclude_from_sitemap %}<meta name="robots" content="noindex" />{% endif %}
 {% endblock description %}
 
 {% block social_media %}

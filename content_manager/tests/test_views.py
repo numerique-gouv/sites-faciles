@@ -81,6 +81,62 @@ class ContentPageTestCase(WagtailPageTestCase):
             """<a href="/private-content-page/">Page de contenu privée</a>""",
         )
 
+    def test_excluded_page_is_not_in_readable_sitemap(self):
+        home_page = Page.objects.get(slug="home")
+        excluded_page = home_page.add_child(
+            instance=ContentPage(
+                title="Page exclue du plan du site",
+                slug="excluded-page",
+                owner=self.admin,
+                exclude_from_sitemap=True,
+            )
+        )
+        excluded_page.save()
+
+        url = reverse("readable_sitemap")
+        response = self.client.get(url)
+
+        self.assertNotContains(
+            response,
+            """<a href="/excluded-page/">Page exclue du plan du site</a>""",
+        )
+
+    def test_excluded_page_is_not_in_xml_sitemap(self):
+        home_page = Page.objects.get(slug="home")
+        excluded_page = home_page.add_child(
+            instance=ContentPage(
+                title="Page exclue du sitemap XML",
+                slug="excluded-xml-page",
+                owner=self.admin,
+                exclude_from_sitemap=True,
+            )
+        )
+        excluded_page.save()
+
+        url = reverse("xml_sitemap")
+        response = self.client.get(url)
+
+        self.assertNotContains(response, "/excluded-xml-page/")
+
+    def test_excluded_page_has_noindex_meta_tag(self):
+        home_page = Page.objects.get(slug="home")
+        excluded_page = home_page.add_child(
+            instance=ContentPage(
+                title="Page avec noindex",
+                slug="noindex-page",
+                owner=self.admin,
+                exclude_from_sitemap=True,
+            )
+        )
+        excluded_page.save()
+
+        response = self.client.get(excluded_page.url)
+        self.assertContains(response, '<meta name="robots" content="noindex" />')
+
+    def test_normal_page_does_not_have_noindex_meta_tag(self):
+        response = self.client.get(self.public_content_page.url)
+        self.assertNotContains(response, '<meta name="robots" content="noindex"')
+
 
 class ConfigTestCase(WagtailPageTestCase):
     def setUp(self):
