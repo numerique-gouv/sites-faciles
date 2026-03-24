@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-24 09:24+0100\n"
+"POT-Creation-Date: 2026-03-24 09:38+0100\n"
 "PO-Revision-Date: 2026-02-05 15:41+0100\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
@@ -81,29 +81,31 @@ msgstr ""
 
 #: content_manager/abstract.py:84
 msgid "Exclude from sitemap"
-msgstr ""
+msgstr "Exclure du plan du site"
 
-#: content_manager/abstract.py:86
+#: content_manager/abstract.py:87
 msgid ""
 "If checked, this page will be excluded from sitemap.xml, the plan du site "
 "page, and will have a noindex meta tag."
 msgstr ""
+"Si cochée, cette page sera exclue du sitemap.xml, la page plan du site et "
+"aura la metatag noindex"
 
-#: content_manager/abstract.py:95
+#: content_manager/abstract.py:98
 msgid "Preview image"
 msgstr "Image de prévisualisation"
 
-#: content_manager/abstract.py:96
+#: content_manager/abstract.py:99
 msgid "Image displayed as a preview when the page is shared on social media"
 msgstr ""
 "Image affichée comme aperçu lorsque la page est partagée sur les médias "
 "sociaux"
 
-#: content_manager/abstract.py:102
+#: content_manager/abstract.py:105
 msgid "Hero"
 msgstr "En-tête"
 
-#: content_manager/abstract.py:104
+#: content_manager/abstract.py:107
 msgid ""
 "Header section of the page. If empty, no header is displayed and the page "
 "title appears at the top of the content."
@@ -111,19 +113,19 @@ msgstr ""
 "Section d’en-tête de la page. Si celle-ci est vide, aucun en-tête "
 "n’apparaitra et le titre de la page sera placé tout en haut."
 
-#: content_manager/abstract.py:108
+#: content_manager/abstract.py:111
 msgid "Body"
 msgstr "Corps"
 
-#: content_manager/abstract.py:119
+#: content_manager/abstract.py:122
 msgid "For search engines"
 msgstr "Pour les moteurs de recherche"
 
-#: content_manager/abstract.py:211
+#: content_manager/abstract.py:214
 msgid "Base page"
 msgstr "Page de base"
 
-#: content_manager/abstract.py:212
+#: content_manager/abstract.py:215
 msgid "Base pages"
 msgstr "Pages de base"
 
