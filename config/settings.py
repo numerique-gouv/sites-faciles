@@ -58,6 +58,12 @@ FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "").rstrip("/")
 # Allow enabling WhiteNoise via an environment variable (disabled by default)
 SF_USE_WHITENOISE = getenv_bool("SF_USE_WHITENOISE", False)
 
+# Allow storing media files in PostgreSQL instead of the filesystem (disabled by default)
+# Useful for PaaS deployments with ephemeral filesystems (Scalingo, Heroku, etc.)
+# /!\ Not recommended beyond 1 GB of media — prefer S3 for larger volumes.
+# Selection order: S3_HOST wins if set, then SF_USE_DB_STORAGE, then filesystem (default)
+SF_USE_DB_STORAGE = getenv_bool("SF_USE_DB_STORAGE", False)
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -106,6 +112,9 @@ INSTALLED_APPS = [
     "dashboard",
     "wagtail.admin",
 ]
+
+if SF_USE_DB_STORAGE:
+    INSTALLED_APPS.insert(-1, "db_storage")
 
 if SF_USE_WHITENOISE:
     INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
@@ -288,6 +297,14 @@ if os.getenv("S3_HOST"):
     }
 
     MEDIA_URL = f"{endpoint_url}/"
+elif SF_USE_DB_STORAGE:
+    STORAGES["default"] = {
+        "BACKEND": "db_storage.storage.DatabaseStorage",
+    }
+    MEDIA_URL = os.getenv("MEDIA_URL", "db-storage/")
+
+    if FORCE_SCRIPT_NAME and not MEDIA_URL.startswith(FORCE_SCRIPT_NAME):
+        MEDIA_URL = f"{FORCE_SCRIPT_NAME}/{MEDIA_URL}"
 else:
     STORAGES["default"] = {
         "BACKEND": "django.core.files.storage.FileSystemStorage",

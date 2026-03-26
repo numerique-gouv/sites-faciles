@@ -28,6 +28,11 @@ urlpatterns = [
 if not settings.TESTING and settings.DEBUG and "localhost" in settings.HOST_URL:
     urlpatterns += (path("__debug__/", include("debug_toolbar.urls")),)
 
+if settings.SF_USE_DB_STORAGE:
+    urlpatterns += [
+        path("db-storage/", include("db_storage.urls")),
+    ]
+
 if settings.PROCONNECT_ACTIVATED:
     urlpatterns += [
         path("oidc/", include(oidc_urls)),
