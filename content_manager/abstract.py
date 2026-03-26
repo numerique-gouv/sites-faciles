@@ -80,6 +80,15 @@ class SitesFacilesBasePage(Page):
         blank=True,
     )
 
+    exclude_from_sitemap = models.BooleanField(
+        _("Exclude from sitemap"),
+        default=False,
+        help_text=_(
+            "If checked, this page will be excluded from sitemap.xml,"
+            " the plan du site page, and will have a noindex meta tag."
+        ),
+    )
+
     preview_image = models.ForeignKey(
         get_image_model_string(),
         null=True,
@@ -108,6 +117,7 @@ class SitesFacilesBasePage(Page):
                 "slug",
                 "seo_title",
                 "search_description",
+                "exclude_from_sitemap",
             ],
             _("For search engines"),
         ),
@@ -181,6 +191,11 @@ class SitesFacilesBasePage(Page):
             return first_hero.get("header_image")
 
         return None
+
+    def get_sitemap_urls(self, request=None):
+        if self.exclude_from_sitemap:
+            return []
+        return super().get_sitemap_urls(request)
 
     def get_absolute_url(self):
         return self.url
