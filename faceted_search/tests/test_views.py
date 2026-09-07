@@ -14,8 +14,8 @@ from wagtail.models import Page, Site
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
 
-from faceted_search.forms import RankByForm
-from faceted_search.search import RANK_BY_DATE, RANK_BY_RELEVANCE, get_rank_by_from_querystring
+from faceted_search.forms import FacetedSearchForm
+from faceted_search.search import RANK_BY_DATE, RANK_BY_RELEVANCE
 from faceted_search.tests.test_facets import FacetedSearchTestBase, get_post_titles_in_response
 from faceted_search.views import FacetedSearchResultsView
 from publications.tests.factories import PublicationIndexPageFactory, PublicationPageFactory
@@ -163,40 +163,36 @@ class AccentInsensitiveSearchTest(FacetedSearchPaginationTestBase):
 
 
 class RankByParamTest(SimpleTestCase):
-    """No DB: ``get_rank_by_from_querystring`` and the ranking form."""
+    """No DB: the form is the only source of the ``rank_by`` value."""
 
-    def test_get_rank_by_from_querystring(self):
-        factory = RequestFactory()
-        # default is relevance
-        self.assertEqual(get_rank_by_from_querystring(factory.get("/search/")), RANK_BY_RELEVANCE)
-        self.assertEqual(
-            get_rank_by_from_querystring(factory.get("/search/", {"rank_by": "relevance"})), RANK_BY_RELEVANCE
-        )
-        self.assertEqual(get_rank_by_from_querystring(factory.get("/search/", {"rank_by": "date"})), RANK_BY_DATE)
-        # invalid values default to relevance
-        self.assertEqual(
-            get_rank_by_from_querystring(factory.get("/search/", {"rank_by": "popularity"})), RANK_BY_RELEVANCE
-        )
+    def test_rank_by_value_and_default(self):
+        for query_string, expected in (
+            ("", RANK_BY_RELEVANCE),  # default is relevance
+            ("rank_by=relevance", RANK_BY_RELEVANCE),
+            ("rank_by=date", RANK_BY_DATE),
+            ("rank_by=popularity", RANK_BY_RELEVANCE),  # invalid values default to relevance
+        ):
+            with self.subTest(query_string=query_string):
+                form = FacetedSearchForm(QueryDict(query_string))
+                self.assertTrue(form.is_valid())
+                self.assertEqual(form.cleaned_data["rank_by"], expected)
+                # The checked radio must agree with the value the view ranks by.
+                self.assertEqual(form["rank_by"].value(), expected)
 
-    def test_rank_by_form_initial_value(self):
-        # default is relevance
-        self.assertEqual(RankByForm()["rank_by"].value(), RANK_BY_RELEVANCE)
-        self.assertEqual(
-            RankByForm(query_dict=QueryDict("rank_by=date"))["rank_by"].value(),
-            RANK_BY_DATE,
-        )
-        # invalid values default to relevance
-        self.assertEqual(
-            RankByForm(query_dict=QueryDict("rank_by=popularity"))["rank_by"].value(),
-            RANK_BY_RELEVANCE,
-        )
+    def test_rank_by_default_without_data(self):
+        self.assertEqual(FacetedSearchForm()["rank_by"].value(), RANK_BY_RELEVANCE)
 
-    def test_rank_by_form_preserves_get_params_but_drops_page(self):
-        form = RankByForm(query_dict=QueryDict("q=Report&theme=agriculture&theme=water&page=2&rank_by=date"))
-        # params are preserved as hidden inputs except page
-        self.assertEqual(form.hidden_params, [("q", "Report"), ("theme", "agriculture"), ("theme", "water")])
-        # rank_by is preserved as the selected value
+    def test_form_binds_query_and_ranking_and_ignores_page(self):
+        form = FacetedSearchForm(QueryDict("q=Report&page=2&rank_by=date"))
+        self.assertEqual(form["q"].value(), "Report")
         self.assertEqual(form["rank_by"].value(), RANK_BY_DATE)
+        # page is not a form field, so submitting the form resets pagination.
+        self.assertNotIn("page", form.fields)
+
+    def test_form_drops_invalid_years(self):
+        form = FacetedSearchForm(QueryDict("q=Report&year=2024&year=nope"))
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data["year"], ["2024"])
 
 
 class FacetedSearchRankingTest(FacetedSearchPaginationTestBase):

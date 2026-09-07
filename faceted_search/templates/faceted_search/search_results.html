@@ -45,12 +45,37 @@
     <h2>
       {% blocktranslate with per_page=page_obj.paginator.per_page count count=page_obj.paginator.count %}{{ count }} result ({{ per_page }} per page){% plural %}{{ count }} results ({{ per_page }} per page){% endblocktranslate %}
     </h2>
-    <form method="get" class="search-rank-by fr-mb-2w">
-      {% for key, value in rank_by_form.hidden_params %}
-        <input type="hidden" name="{{ key }}" value="{{ value }}" />
-      {% endfor %}
-      {{ rank_by_form.rank_by.as_field_group }}
-    </form>
+  {% endif %}
+
+  {% comment %}
+    Single GET form for the whole page: the sidebar facet checkboxes join it
+    through their form="faceted-search-form" attribute.
+  {% endcomment %}
+  {% translate "Search" as search_label %}
+  <form method="get" action="{% url 'cms_search' %}" id="faceted-search-form">
+    <div class="fr-search-bar fr-search-bar--lg fr-mb-2w"
+         id="results-search-bar"
+         role="search">
+      <label class="fr-label" for="results-search-input">{{ search_label }}</label>
+      <input class="fr-input"
+             type="search"
+             id="results-search-input"
+             name="{{ form.q.html_name }}"
+             value="{{ form.q.value|default_if_none:'' }}"
+             placeholder="{{ search_label }}"
+             aria-describedby="results-search-input-messages" />
+      <div class="fr-messages-group"
+           id="results-search-input-messages"
+           aria-live="polite"></div>
+      <button class="fr-btn" type="submit" title="{{ search_label }}">{{ search_label }}</button>
+    </div>
+    {{ form.year }}
+    {% if page_obj.paginator.count %}
+      <div class="search-rank-by fr-mb-2w">{{ form.rank_by.as_field_group }}</div>
+    {% endif %}
+  </form>
+
+  {% if page_obj.paginator.count %}
     <ol class="fr-mb-2w"
         start="{{ page_obj.start_index }}"
         style="--list-start: {{ page_obj.start_index }}">

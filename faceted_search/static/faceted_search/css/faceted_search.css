@@ -1,24 +1,11 @@
-.fr-sidemenu .fr-tags-group {
-    flex-direction: column;
-    align-items: flex-start;
-}
-
 .fr-filter-group {
     border-bottom: 1px solid #ddd;
     padding-bottom: 1rem;
 }
 
-.fr-filter-group:has(.fr-accordion__btn[aria-expanded="true"]) .fr-filter-group__selected {
-    display: none;
-}
-
-.fr-filter-group__selected {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    width: 100%;
-    padding-top: 0.5rem;
+.fr-facet-list {
+    list-style: none;
+    padding-left: 0;
 }
 
 /* DSFR resets ordered-list counters, so the HTML start attribute is ignored.
@@ -26,23 +13,3 @@
 #search-results ol {
     counter-reset: li-counter calc(var(--list-start, 1) - 1);
 }
-
-/* DSFR fix : we use <a> instead of <button>, which doesn't seem to be implemented in django-dsfr. */
-a.fr-tag[aria-pressed="true"] {
-    background-color: transparent;
-    background-image: radial-gradient(circle at 100% 0.25rem, transparent 0.578125rem, var(--background-active-blue-france) 0.625rem);
-    color: var(--text-inverted-blue-france);
-}
-
-a.fr-tag[aria-pressed="true"]:hover {
-    background-image: radial-gradient(circle at 100% 0.25rem, transparent 0.578125rem, var(--background-active-blue-france-hover) 0.625rem);
-}
-
-a.fr-tag[aria-pressed="true"]:active {
-    background-image: radial-gradient(circle at 100% 0.25rem, transparent 0.578125rem, var(--background-active-blue-france-active) 0.625rem);
-}
-
-a.fr-tag[aria-pressed="true"]::after {
-    color: var(--text-action-high-blue-france);
-}
-/* End of DSFR fix */

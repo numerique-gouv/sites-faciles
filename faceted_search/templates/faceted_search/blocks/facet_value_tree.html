@@ -1,20 +1,20 @@
-{% load i18n faceted_search_tags dsfr_tags %}
-{% url 'cms_search' as search_url %}
+{% load faceted_search_tags %}
 
-<ul class="fr-tags-group{% if depth %} fr-ml-6w{% endif %}">
+<ul class="fr-facet-list{% if depth %} fr-ml-3w{% endif %}">
   {% for node in nodes %}
     <li>
-      {% if facet == "collection" %}
-        {% toggle_url_facet collection=node.value as item_query %}
-      {% else %}
-        {% toggle_url_facet theme=node.value as item_query %}
-      {% endif %}
-      {% facet_label node.value.name node.value.result_count as item_label %}
-      {% if node.value in selected_values %}
-        {% dsfr_tag label=item_label is_selectable=True is_selected=True link=search_url|add:item_query %}
-      {% else %}
-        {% dsfr_tag label=item_label is_selectable=True is_selected=False link=search_url|add:item_query %}
-      {% endif %}
+      <div class="fr-checkbox-group fr-checkbox-group--sm">
+        <input type="checkbox"
+               form="faceted-search-form"
+               onchange="this.form.submit()"
+               id="facet-{{ facet }}-{{ node.value.slug }}"
+               name="{{ facet }}"
+               value="{{ node.value.slug }}"
+               {% if node.value in selected_values %}checked{% endif %} />
+        <label class="fr-label" for="facet-{{ facet }}-{{ node.value.slug }}">
+          {% facet_label node.value.name node.value.result_count %}
+        </label>
+      </div>
       {% if node.children %}
         {% include "faceted_search/blocks/facet_value_tree.html" with nodes=node.children facet=facet selected_values=selected_values depth=True %}
       {% endif %}

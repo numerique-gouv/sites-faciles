@@ -1,6 +1,5 @@
 {% load i18n faceted_search_tags dsfr_tags %}
 
-{% url 'cms_search' as search_url %}
 {% translate "Filter by theme" as theme_title %}
 {% translate "Filter by collection" as collection_title %}
 {% translate "Filter by category" as category_title %}
@@ -12,15 +11,6 @@
   <section class="fr-filter-group">
     {% render_to_string "faceted_search/blocks/facet_value_tree.html" nodes=theme_tree facet="theme" selected_values=selected_themes as theme_content %}
     {% dsfr_accordion id="filter-theme" title=theme_title content=theme_content %}
-    {% if selected_themes %}
-      <div class="fr-filter-group__selected">
-        {% for theme in selected_themes %}
-          {% toggle_url_facet theme=theme as theme_query %}
-          {% facet_label theme.name theme.result_count as theme_label %}
-          {% dsfr_tag label=theme_label is_selectable=True is_selected=True link=search_url|add:theme_query %}
-        {% endfor %}
-      </div>
-    {% endif %}
   </section>
 {% endif %}
 
@@ -28,15 +18,6 @@
   <section class="fr-filter-group">
     {% render_to_string "faceted_search/blocks/facet_value_tree.html" nodes=collection_tree facet="collection" selected_values=selected_collections as collection_content %}
     {% dsfr_accordion id="filter-collection" title=collection_title content=collection_content %}
-    {% if selected_collections %}
-      <div class="fr-filter-group__selected">
-        {% for collection in selected_collections %}
-          {% toggle_url_facet collection=collection as collection_query %}
-          {% facet_label collection.name collection.result_count as collection_label %}
-          {% dsfr_tag label=collection_label is_selectable=True is_selected=True link=search_url|add:collection_query %}
-        {% endfor %}
-      </div>
-    {% endif %}
   </section>
 {% endif %}
 
@@ -44,15 +25,6 @@
   <section class="fr-filter-group">
     {% render_to_string "faceted_search/blocks/facet_value_list.html" facet="category" items=categories selected_values=selected_categories as category_content %}
     {% dsfr_accordion id="filter-category" title=category_title content=category_content %}
-    {% if selected_categories %}
-      <div class="fr-filter-group__selected">
-        {% for category in selected_categories %}
-          {% toggle_url_facet category=category as category_query %}
-          {% facet_label category.name category.result_count as category_label %}
-          {% dsfr_tag label=category_label is_selectable=True is_selected=True link=search_url|add:category_query %}
-        {% endfor %}
-      </div>
-    {% endif %}
   </section>
 {% endif %}
 
@@ -60,15 +32,6 @@
   <section class="fr-filter-group">
     {% render_to_string "faceted_search/blocks/facet_value_list.html" facet="tag" items=tags selected_values=selected_tags as tag_content %}
     {% dsfr_accordion id="filter-tag" title=tag_title content=tag_content %}
-    {% if selected_tags %}
-      <div class="fr-filter-group__selected">
-        {% for tag in selected_tags %}
-          {% toggle_url_facet tag=tag as tag_query %}
-          {% facet_label tag.name tag.result_count as tag_label %}
-          {% dsfr_tag label=tag_label is_selectable=True is_selected=True link=search_url|add:tag_query %}
-        {% endfor %}
-      </div>
-    {% endif %}
   </section>
 {% endif %}
 
@@ -76,15 +39,6 @@
   <section class="fr-filter-group">
     {% render_to_string "faceted_search/blocks/facet_value_list.html" facet="author" items=authors selected_values=selected_authors as author_content %}
     {% dsfr_accordion id="filter-author" title=author_title content=author_content %}
-    {% if selected_authors %}
-      <div class="fr-filter-group__selected">
-        {% for author in selected_authors %}
-          {% toggle_url_facet author=author as author_query %}
-          {% facet_label author.name author.result_count as author_label %}
-          {% dsfr_tag label=author_label is_selectable=True is_selected=True link=search_url|add:author_query %}
-        {% endfor %}
-      </div>
-    {% endif %}
   </section>
 {% endif %}
 
@@ -92,14 +46,5 @@
   <section class="fr-filter-group">
     {% render_to_string "faceted_search/blocks/facet_value_list.html" facet="source" items=sources selected_values=selected_sources as source_content %}
     {% dsfr_accordion id="filter-source" title=source_title content=source_content %}
-    {% if selected_sources %}
-      <div class="fr-filter-group__selected">
-        {% for source in selected_sources %}
-          {% toggle_url_facet source=source as source_query %}
-          {% facet_label source.name source.result_count as source_label %}
-          {% dsfr_tag label=source_label is_selectable=True is_selected=True link=search_url|add:source_query %}
-        {% endfor %}
-      </div>
-    {% endif %}
   </section>
 {% endif %}
