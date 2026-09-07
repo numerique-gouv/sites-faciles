@@ -673,6 +673,31 @@ class FacetedSearchCountRenderingTest(FacetedSearchTestBase):
         self.assertIn(f"{self.collection.name} (1)", labels)
 
 
+class FacetedSearchAccordionStateTest(FacetedSearchTestBase):
+    """Every filter accordion starts open, and they can all be open at once."""
+
+    def test_accordions_are_independent(self):
+        response = self.client.get(self.search_url())
+        soup = BeautifulSoup(response.content, "html.parser")
+        group = soup.select_one(".fr-accordions-group")
+        self.assertIsNotNone(group)
+        # Without this, DSFR closes the other accordions when one is opened.
+        self.assertEqual(group["data-fr-group"], "false")
+
+    def test_accordions_start_expanded(self):
+        response = self.client.get(self.search_url())
+        soup = BeautifulSoup(response.content, "html.parser")
+        accordions = soup.select(".fr-accordions-group .fr-accordion")
+        self.assertGreater(len(accordions), 1)
+        for accordion in accordions:
+            with self.subTest(accordion=accordion.select_one(".fr-accordion__btn").get_text(strip=True)):
+                button = accordion.select_one(".fr-accordion__btn")
+                self.assertEqual(button["aria-expanded"], "true")
+                # The modifier keeps the panel open before (and without) DSFR's JS.
+                panel = accordion.select_one(f"#{button['aria-controls']}")
+                self.assertIn("fr-collapse--expanded", panel["class"])
+
+
 class FacetedSearchResultsDisplayTest(FacetedSearchTestBase):
     """Test that search result items display metadata (date, themes, collections)."""
 
