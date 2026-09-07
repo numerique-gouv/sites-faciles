@@ -1,8 +1,6 @@
-.fr-filter-group {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
-}
-
+/* Accordion bodies are meant for prose, so DSFR gives them bullets and an indent
+   (`.fr-accordion .fr-collapse` sets --ul-type: disc). The facet lists are rows of
+   checkboxes, not prose, so they opt back out. */
 .fr-facet-list {
     list-style: none;
     padding-left: 0;

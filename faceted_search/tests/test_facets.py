@@ -666,7 +666,9 @@ class FacetedSearchCountRenderingTest(FacetedSearchTestBase):
         response = self.client.get(self.search_url())
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, "html.parser")
-        labels = [label.get_text(strip=True) for label in soup.select(".fr-filter-group .fr-checkbox-group .fr-label")]
+        labels = [
+            label.get_text(strip=True) for label in soup.select(".fr-accordions-group .fr-checkbox-group .fr-label")
+        ]
         # Only post_with_collection uses self.collection among "Post*" fixtures
         self.assertIn(f"{self.collection.name} (1)", labels)
 
