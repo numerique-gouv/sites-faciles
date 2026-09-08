@@ -90,10 +90,19 @@
         });
     }
 
-    document.querySelectorAll("ul.fr-facet-tree").forEach(function (ul) {
-        if (ul.parentElement && ul.parentElement.closest("ul.fr-facet-tree")) {
-            return;
-        }
-        initTree(ul);
-    });
+    function start() {
+        document.querySelectorAll("ul.fr-facet-tree").forEach(function (ul) {
+            if (ul.parentElement && ul.parentElement.closest("ul.fr-facet-tree")) {
+                return;
+            }
+            initTree(ul);
+        });
+    }
+
+    // Added for the backport of DSFR 1.15+ to work
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", start);
+    } else {
+        start();
+    }
 })();

@@ -8,11 +8,13 @@
 
 /* Backport of DSFR 1.15 #1361 (indeterminate checkbox dash). django-dsfr still
    ships 1.14, whose native input is opacity:0, so without this the dash is invisible.
-   Delete this block when django-dsfr bundles DSFR 1.15+ — CI fails on that upgrade
-   (FacetedSearchDsfrCheckboxBackportTest). */
+   Same structure as 1.14 `:checked` (background-color + background-image with
+   `--data-uri-svg`). Delete when django-dsfr bundles DSFR 1.15+ — CI fails on
+   that upgrade (FacetedSearchDsfrCheckboxBackportTest). */
 .fr-checkbox-group input[type=checkbox]:indeterminate + label::before {
-    background-color: var(--background-active-blue-france);
     --data-uri-svg: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f5f5fe' d='M5 11h14v2H5v-2Z'/%3E%3C/svg%3E");
+    background-color: var(--background-active-blue-france);
+    background-image: radial-gradient(at 5px 4px, transparent 4px, var(--border-active-blue-france) 4px, var(--border-active-blue-france) 5px, transparent 6px), linear-gradient(var(--border-active-blue-france), var(--border-active-blue-france)), radial-gradient(at calc(100% - 5px) 4px, transparent 4px, var(--border-active-blue-france) 4px, var(--border-active-blue-france) 5px, transparent 6px), linear-gradient(var(--border-active-blue-france), var(--border-active-blue-france)), radial-gradient(at calc(100% - 5px) calc(100% - 4px), transparent 4px, var(--border-active-blue-france) 4px, var(--border-active-blue-france) 5px, transparent 6px), linear-gradient(var(--border-active-blue-france), var(--border-active-blue-france)), radial-gradient(at 5px calc(100% - 4px), transparent 4px, var(--border-active-blue-france) 4px, var(--border-active-blue-france) 5px, transparent 6px), linear-gradient(var(--border-active-blue-france), var(--border-active-blue-france)), var(--data-uri-svg);
 }
 
 :root[data-fr-theme=dark] .fr-checkbox-group input[type=checkbox]:indeterminate + label::before {

@@ -779,6 +779,16 @@ class FacetedSearchDsfrCheckboxBackportTest(SimpleTestCase):
             "and this test.",
         )
 
+    def test_backport_sets_background_image_with_dash_svg(self):
+        """1.14 only paints `--data-uri-svg` when background-image lists it (see :checked)."""
+        css = (Path(__file__).resolve().parents[1] / "static/faceted_search/css/faceted_search.css").read_text()
+        start = css.index(":indeterminate")
+        end = css.index("end backport")
+        block = css[start:end]
+        self.assertIn("background-image", block)
+        self.assertIn("var(--data-uri-svg)", block)
+        self.assertIn("M5 11h14v2H5v-2Z", block)
+
 
 class FacetedSearchResultsDisplayTest(FacetedSearchTestBase):
     """Test that search result items display metadata (date, themes, collections)."""
