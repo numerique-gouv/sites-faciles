@@ -91,8 +91,8 @@
     }
 
     function start() {
-        document.querySelectorAll("ul.fr-facet-tree").forEach(function (ul) {
-            if (ul.parentElement && ul.parentElement.closest("ul.fr-facet-tree")) {
+        document.querySelectorAll("ul.agr-facet-tree").forEach(function (ul) {
+            if (ul.parentElement && ul.parentElement.closest("ul.agr-facet-tree")) {
                 return;
             }
             initTree(ul);
