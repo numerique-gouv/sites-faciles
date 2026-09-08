@@ -89,7 +89,7 @@
   },
   "addons": [
     {
-      "plan": "postgresql:postgresql-starter-512"
+      "plan": "postgresql:postgresql-sandbox"
     }
   ]
 }

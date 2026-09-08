@@ -3,9 +3,7 @@
 Created from the Scalingo dashboard (parent app → Review apps → Manual
 deployment).
 
-`scalingo.json` sets hostnames and a fresh Postgres addon (Starter 512M — the
-free Sandbox plan is no longer provisionable, so review apps are billed per
-minute for as long as they exist).
+`scalingo.json` sets hostnames and a fresh a sandbox Postgres addon.
 create_starter_content is run so the review app should have demo pages.
 
 Note : the review apps are created with `DISABLE_COLLECTSTATIC=1` (the Python
