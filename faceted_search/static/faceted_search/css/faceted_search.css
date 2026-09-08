@@ -1,48 +1,29 @@
-.fr-sidemenu .fr-tags-group {
-    flex-direction: column;
-    align-items: flex-start;
+/* Accordion bodies are meant for prose, so DSFR gives them bullets and an indent
+   (`.fr-accordion .fr-collapse` sets --ul-type: disc). The facet lists are rows of
+   checkboxes, not prose, so they opt back out. */
+.fr-facet-list {
+    list-style: none;
+    padding-left: 0;
 }
 
-.fr-filter-group {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
+/* Backport of DSFR 1.15 #1361 (indeterminate checkbox dash). django-dsfr still
+   ships 1.14, whose native input is opacity:0, so without this the dash is invisible.
+   Same structure as 1.14 `:checked` (background-color + background-image with
+   `--data-uri-svg`). Delete when django-dsfr bundles DSFR 1.15+ — CI fails on
+   that upgrade (FacetedSearchDsfrCheckboxBackportTest). */
+.fr-checkbox-group input[type=checkbox]:indeterminate + label::before {
+    --data-uri-svg: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f5f5fe' d='M5 11h14v2H5v-2Z'/%3E%3C/svg%3E");
+    background-color: var(--background-active-blue-france);
+    background-image: radial-gradient(at 5px 4px, transparent 4px, var(--border-active-blue-france) 4px, var(--border-active-blue-france) 5px, transparent 6px), linear-gradient(var(--border-active-blue-france), var(--border-active-blue-france)), radial-gradient(at calc(100% - 5px) 4px, transparent 4px, var(--border-active-blue-france) 4px, var(--border-active-blue-france) 5px, transparent 6px), linear-gradient(var(--border-active-blue-france), var(--border-active-blue-france)), radial-gradient(at calc(100% - 5px) calc(100% - 4px), transparent 4px, var(--border-active-blue-france) 4px, var(--border-active-blue-france) 5px, transparent 6px), linear-gradient(var(--border-active-blue-france), var(--border-active-blue-france)), radial-gradient(at 5px calc(100% - 4px), transparent 4px, var(--border-active-blue-france) 4px, var(--border-active-blue-france) 5px, transparent 6px), linear-gradient(var(--border-active-blue-france), var(--border-active-blue-france)), var(--data-uri-svg);
 }
 
-.fr-filter-group:has(.fr-accordion__btn[aria-expanded="true"]) .fr-filter-group__selected {
-    display: none;
+:root[data-fr-theme=dark] .fr-checkbox-group input[type=checkbox]:indeterminate + label::before {
+    --data-uri-svg: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000091' d='M5 11h14v2H5v-2Z'/%3E%3C/svg%3E");
 }
-
-.fr-filter-group__selected {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    width: 100%;
-    padding-top: 0.5rem;
-}
+/* end backport */
 
 /* DSFR resets ordered-list counters, so the HTML start attribute is ignored.
    Use a CSS variable so the counter starts from the page's first result number. */
 #search-results ol {
     counter-reset: li-counter calc(var(--list-start, 1) - 1);
 }
-
-/* DSFR fix : we use <a> instead of <button>, which doesn't seem to be implemented in django-dsfr. */
-a.fr-tag[aria-pressed="true"] {
-    background-color: transparent;
-    background-image: radial-gradient(circle at 100% 0.25rem, transparent 0.578125rem, var(--background-active-blue-france) 0.625rem);
-    color: var(--text-inverted-blue-france);
-}
-
-a.fr-tag[aria-pressed="true"]:hover {
-    background-image: radial-gradient(circle at 100% 0.25rem, transparent 0.578125rem, var(--background-active-blue-france-hover) 0.625rem);
-}
-
-a.fr-tag[aria-pressed="true"]:active {
-    background-image: radial-gradient(circle at 100% 0.25rem, transparent 0.578125rem, var(--background-active-blue-france-active) 0.625rem);
-}
-
-a.fr-tag[aria-pressed="true"]::after {
-    color: var(--text-action-high-blue-france);
-}
-/* End of DSFR fix */

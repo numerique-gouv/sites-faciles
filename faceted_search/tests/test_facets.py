@@ -10,8 +10,10 @@ publications, not a standalone blog.
 import zoneinfo
 from datetime import datetime
 from itertools import combinations
+from pathlib import Path
 from urllib.parse import urlencode
 
+import dsfr
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
@@ -24,10 +26,13 @@ from wagtail.test.utils import WagtailPageTestCase
 
 from faceted_search.facets import (
     ENABLED_FACETS,
+    FacetSelection,
     compute_facet_result_counts,
     get_facet_context,
-    get_facet_selection_from_request,
+    get_facet_selection_from_form,
 )
+from faceted_search.forms import FacetedSearchForm
+from faceted_search.search import RANK_BY_RELEVANCE
 from faceted_search.views import FacetedSearchResultsView
 from publications.tests.factories import (
     CollectionFactory,
@@ -58,6 +63,19 @@ FILTER_CASES = [
 
 def _all_facets_disabled() -> dict[str, bool]:
     return dict.fromkeys(ENABLED_FACETS, False)
+
+
+def validated_form_for(request, site) -> FacetedSearchForm:
+    """Bind and validate the search form the way the view does."""
+    form = FacetedSearchForm(request.GET, locale=site.root_page.localized.locale)
+    if not form.is_valid():
+        raise Http404(form.errors.as_text())
+    return form
+
+
+def facet_selection_for(request, site) -> FacetSelection:
+    """Resolve the facet selection of a request the way the view does."""
+    return get_facet_selection_from_form(validated_form_for(request, site))
 
 
 def get_post_titles_in_response(response) -> list[str]:
@@ -115,7 +133,9 @@ class FacetedSearchContextTest(FacetedSearchTestBase):
             enabled_flags = {**_all_facets_disabled(), facet: True}
 
             with self.subTest(facet):
-                context = get_facet_context(request, enabled_facets=enabled_flags)
+                context = get_facet_context(
+                    request, selection=FacetSelection(), rank_by=RANK_BY_RELEVANCE, enabled_facets=enabled_flags
+                )
                 self.assertTrue(context["enabled_facets"][facet])
                 if facet in ("collection", "theme"):
                     self.assertIn(expected_item, list(tree_nodes(context[f"{facet}_tree"])))
@@ -124,13 +144,17 @@ class FacetedSearchContextTest(FacetedSearchTestBase):
 
         with self.subTest("author"):
             enabled_flags = {**_all_facets_disabled(), "author": True}
-            context = get_facet_context(request, enabled_facets=enabled_flags)
+            context = get_facet_context(
+                request, selection=FacetSelection(), rank_by=RANK_BY_RELEVANCE, enabled_facets=enabled_flags
+            )
             self.assertTrue(context["enabled_facets"]["author"])
             self.assertIn(self.author, list(context["authors"]))
 
         with self.subTest("source"):
             enabled_flags = {**_all_facets_disabled(), "source": True}
-            context = get_facet_context(request, enabled_facets=enabled_flags)
+            context = get_facet_context(
+                request, selection=FacetSelection(), rank_by=RANK_BY_RELEVANCE, enabled_facets=enabled_flags
+            )
             self.assertTrue(context["enabled_facets"]["source"])
             self.assertIn(self.organization, list(context["sources"]))
 
@@ -150,7 +174,7 @@ class FacetedSearchContextTest(FacetedSearchTestBase):
             themes=[child_theme],
         )
         request = RequestFactory().get("/")
-        context = get_facet_context(request)
+        context = get_facet_context(request, selection=FacetSelection(), rank_by=RANK_BY_RELEVANCE)
 
         collection_parent = next(node for node in context["collection_tree"] if node.value == parent_collection)
         theme_parent = next(node for node in context["theme_tree"] if node.value == parent_theme)
@@ -159,7 +183,9 @@ class FacetedSearchContextTest(FacetedSearchTestBase):
 
     def test_disabled_filter_flags_omit_context_lists(self):
         request = RequestFactory().get("/")
-        context = get_facet_context(request, enabled_facets=_all_facets_disabled())
+        context = get_facet_context(
+            request, selection=FacetSelection(), rank_by=RANK_BY_RELEVANCE, enabled_facets=_all_facets_disabled()
+        )
 
         for case in self.filter_cases:
             facet = case["name"]
@@ -176,10 +202,14 @@ class FacetedSearchContextTest(FacetedSearchTestBase):
     def test_show_search_facets_follows_enabled_flags(self):
         request = RequestFactory().get("/")
         enabled_flags = {**_all_facets_disabled(), "collection": True}
-        context = get_facet_context(request, enabled_facets=enabled_flags)
+        context = get_facet_context(
+            request, selection=FacetSelection(), rank_by=RANK_BY_RELEVANCE, enabled_facets=enabled_flags
+        )
         self.assertTrue(context["show_search_facets"])
 
-        context = get_facet_context(request, enabled_facets=_all_facets_disabled())
+        context = get_facet_context(
+            request, selection=FacetSelection(), rank_by=RANK_BY_RELEVANCE, enabled_facets=_all_facets_disabled()
+        )
         self.assertFalse(context["show_search_facets"])
 
 
@@ -421,32 +451,32 @@ class FacetedSearchCombinationTest(FacetedSearchTestBase):
 
 
 class FacetedSearchGetFacetSelectionTest(FacetedSearchTestBase):
-    """Test get_facet_selection_from_request.
+    """Test the facet selection resolved from the search form.
     We use a dummy request rather than a real client request, to save test running time."""
 
     def test_get_facet_selection_from_request__single_value(self):
         request = RequestFactory().get("/", {"collection": self.collection.slug, "tag": self.tag.slug})
         site = Site.objects.get(is_default_site=True)
-        selection = get_facet_selection_from_request(request, site)
+        selection = facet_selection_for(request, site)
         self.assertEqual(selection.collections, [self.collection])
         self.assertEqual(selection.tags, [self.tag])
 
     def test_get_facet_selection_from_request__multiple_values(self):
         request = RequestFactory().get("/", {"collection": [self.collection.slug, self.other_collection.slug]})
         site = Site.objects.get(is_default_site=True)
-        selection = get_facet_selection_from_request(request, site)
+        selection = facet_selection_for(request, site)
         self.assertEqual(selection.collections, [self.collection, self.other_collection])
 
     def test_get_facet_selection_from_request__invalid_author_id_raises_404(self):
         request = RequestFactory().get("/", {"author": "not-an-id"})
         site = Site.objects.get(is_default_site=True)
         with self.assertRaises(Http404):
-            get_facet_selection_from_request(request, site)
+            facet_selection_for(request, site)
 
     def test_get_facet_selection_from_request__invalid_year_is_ignored(self):
         request = RequestFactory().get("/", {"year": ["2024", "not-a-year", "23"]})
         site = Site.objects.get(is_default_site=True)
-        selection = get_facet_selection_from_request(request, site)
+        selection = facet_selection_for(request, site)
         self.assertEqual(selection.years, ["2024"])
 
 
@@ -476,12 +506,13 @@ class FacetedSearchCountComputingTest(FacetedSearchTestBase):
             )
         request = self.search_request()  # no selected facets
         site = Site.objects.get(is_default_site=True)
-        selection = get_facet_selection_from_request(request, site)
+        selection = facet_selection_for(request, site)
         counts = compute_facet_result_counts(
             request,
             site,
             self.search_query,
             selection,
+            rank_by=RANK_BY_RELEVANCE,
             enabled_facets={**_all_facets_disabled(), "theme": True},
         )
         # fixture post_with_theme + 3 new posts
@@ -518,12 +549,13 @@ class FacetedSearchCountComputingTest(FacetedSearchTestBase):
         # selected: theme=T, collection=A
         request = self.search_request(theme=self.theme.slug, collection=self.collection.slug)
         site = Site.objects.get(is_default_site=True)
-        selection = get_facet_selection_from_request(request, site)
+        selection = facet_selection_for(request, site)
         counts = compute_facet_result_counts(
             request,
             site,
             self.search_query,
             selection,
+            rank_by=RANK_BY_RELEVANCE,
             enabled_facets={**_all_facets_disabled(), "collection": True, "theme": True},
         )
 
@@ -546,12 +578,13 @@ class FacetedSearchCountComputingTest(FacetedSearchTestBase):
             )
         request = self.search_request()
         site = Site.objects.get(is_default_site=True)
-        selection = get_facet_selection_from_request(request, site)
+        selection = facet_selection_for(request, site)
         counts = compute_facet_result_counts(
             request,
             site,
             self.search_query,
             selection,
+            rank_by=RANK_BY_RELEVANCE,
             enabled_facets={**_all_facets_disabled(), "tag": True},
         )
         # fixture post_with_tag + 2 new posts
@@ -569,12 +602,13 @@ class FacetedSearchCountComputingTest(FacetedSearchTestBase):
             )
         request = self.search_request()
         site = Site.objects.get(is_default_site=True)
-        selection = get_facet_selection_from_request(request, site)
+        selection = facet_selection_for(request, site)
         counts = compute_facet_result_counts(
             request,
             site,
             self.search_query,
             selection,
+            rank_by=RANK_BY_RELEVANCE,
             enabled_facets={**_all_facets_disabled(), "source": True},
         )
         # fixture post_with_author + 2 new posts
@@ -594,8 +628,11 @@ class FacetedSearchCountZeroesTest(FacetedSearchTestBase):
             themes=[self.theme],
         )
         request = self.search_request(theme=self.theme.slug)
+        site = Site.objects.get(is_default_site=True)
         context = get_facet_context(
             request,
+            selection=facet_selection_for(request, site),
+            rank_by=RANK_BY_RELEVANCE,
             query=self.search_query,
             enabled_facets={**_all_facets_disabled(), "collection": True, "theme": True},
         )
@@ -608,8 +645,11 @@ class FacetedSearchCountZeroesTest(FacetedSearchTestBase):
     def test_keeps_selected_zeroes(self):
         # other_collection is selected but has no pages under theme=T → count 0, still shown
         request = self.search_request(theme=self.theme.slug, collection=self.other_collection.slug)
+        site = Site.objects.get(is_default_site=True)
         context = get_facet_context(
             request,
+            selection=facet_selection_for(request, site),
+            rank_by=RANK_BY_RELEVANCE,
             query=self.search_query,
             enabled_facets={**_all_facets_disabled(), "collection": True, "theme": True},
         )
@@ -628,9 +668,126 @@ class FacetedSearchCountRenderingTest(FacetedSearchTestBase):
         response = self.client.get(self.search_url())
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.content, "html.parser")
-        labels = [tag.get_text(strip=True) for tag in soup.select(".fr-sidemenu .fr-tag, .fr-filter-group .fr-tag")]
+        labels = [
+            label.get_text(strip=True) for label in soup.select(".fr-accordions-group .fr-checkbox-group .fr-label")
+        ]
         # Only post_with_collection uses self.collection among "Post*" fixtures
         self.assertIn(f"{self.collection.name} (1)", labels)
+
+
+class FacetedSearchAccordionStateTest(FacetedSearchTestBase):
+    """Every filter accordion starts open, and they can all be open at once."""
+
+    def test_accordions_are_independent(self):
+        response = self.client.get(self.search_url())
+        soup = BeautifulSoup(response.content, "html.parser")
+        group = soup.select_one(".fr-accordions-group")
+        self.assertIsNotNone(group)
+        # Without this, DSFR closes the other accordions when one is opened.
+        self.assertEqual(group["data-fr-group"], "false")
+
+    def test_accordions_start_expanded(self):
+        response = self.client.get(self.search_url())
+        soup = BeautifulSoup(response.content, "html.parser")
+        accordions = soup.select(".fr-accordions-group .fr-accordion")
+        self.assertGreater(len(accordions), 1)
+        for accordion in accordions:
+            with self.subTest(accordion=accordion.select_one(".fr-accordion__btn").get_text(strip=True)):
+                button = accordion.select_one(".fr-accordion__btn")
+                self.assertEqual(button["aria-expanded"], "true")
+                # The modifier keeps the panel open before (and without) DSFR's JS.
+                panel = accordion.select_one(f"#{button['aria-controls']}")
+                self.assertIn("fr-collapse--expanded", panel["class"])
+
+
+class FacetedSearchTreeCheckboxTest(FacetedSearchTestBase):
+    """Parent/child checkboxes: HTML only. Cascade and indeterminate live in facet_tree.js."""
+
+    def _theme_tree_fixtures(self):
+        parent = ThemeFactory(locale=self.index.locale, name="Parent theme", slug="parent-theme")
+        child_a = ThemeFactory(locale=self.index.locale, name="Child theme A", slug="child-theme-a", parent=parent)
+        child_b = ThemeFactory(locale=self.index.locale, name="Child theme B", slug="child-theme-b", parent=parent)
+        self.entry_page_factory(
+            parent=self.index,
+            owner=self.admin,
+            title="Post with child theme A",
+            slug="post-with-child-theme-a",
+            themes=[child_a],
+        )
+        self.entry_page_factory(
+            parent=self.index,
+            owner=self.admin,
+            title="Post with child theme B",
+            slug="post-with-child-theme-b",
+            themes=[child_b],
+        )
+        return parent, child_a, child_b
+
+    def test_tree_checkboxes_have_no_inline_onchange(self):
+        parent, child_a, _child_b = self._theme_tree_fixtures()
+        response = self.client.get(self.search_url())
+        soup = BeautifulSoup(response.content, "html.parser")
+        parent_input = soup.select_one(f"#facet-theme-{parent.slug}")
+        child_input = soup.select_one(f"#facet-theme-{child_a.slug}")
+        self.assertIsNotNone(parent_input)
+        self.assertIsNotNone(child_input)
+        self.assertFalse(parent_input.has_attr("onchange"))
+        self.assertFalse(child_input.has_attr("onchange"))
+        tag_input = soup.select_one(f"#facet-tag-{self.tag.slug}")
+        self.assertIsNotNone(tag_input)
+        self.assertEqual(tag_input.get("onchange"), "this.form.submit()")
+
+    def test_tree_script_is_included(self):
+        response = self.client.get(self.search_url())
+        soup = BeautifulSoup(response.content, "html.parser")
+        self.assertTrue(soup.select_one('script[src*="facet_tree.js"]'))
+
+    def test_all_selected_children_and_parent_render_checked(self):
+        parent, child_a, child_b = self._theme_tree_fixtures()
+        response = self.client.get(self.search_url(theme=[parent.slug, child_a.slug, child_b.slug]))
+        soup = BeautifulSoup(response.content, "html.parser")
+        for slug in (parent.slug, child_a.slug, child_b.slug):
+            with self.subTest(slug=slug):
+                checkbox = soup.select_one(f"#facet-theme-{slug}")
+                self.assertIsNotNone(checkbox)
+                self.assertTrue(checkbox.has_attr("checked"))
+
+    def test_partial_child_selection_leaves_parent_unchecked(self):
+        parent, child_a, child_b = self._theme_tree_fixtures()
+        response = self.client.get(self.search_url(theme=child_a.slug))
+        soup = BeautifulSoup(response.content, "html.parser")
+        parent_input = soup.select_one(f"#facet-theme-{parent.slug}")
+        child_a_input = soup.select_one(f"#facet-theme-{child_a.slug}")
+        child_b_input = soup.select_one(f"#facet-theme-{child_b.slug}")
+        self.assertIsNotNone(parent_input)
+        self.assertFalse(parent_input.has_attr("checked"))
+        self.assertTrue(child_a_input.has_attr("checked"))
+        self.assertFalse(child_b_input.has_attr("checked"))
+
+
+class FacetedSearchDsfrCheckboxBackportTest(SimpleTestCase):
+    """Fail when django-dsfr ships DSFR 1.15+ so the CSS backport can be deleted."""
+
+    def test_upstream_dsfr_does_not_style_indeterminate_checkboxes(self):
+        css = Path(dsfr.__file__).resolve().parent / "static/dsfr/dist/component/checkbox/checkbox.min.css"
+        self.assertTrue(css.is_file(), f"Missing bundled DSFR checkbox CSS at {css}")
+        self.assertNotIn(
+            ":indeterminate",
+            css.read_text(),
+            "django-dsfr now styles :indeterminate checkboxes. "
+            "Delete the DSFR 1.15 backport in faceted_search/static/faceted_search/css/faceted_search.css "
+            "and this test.",
+        )
+
+    def test_backport_sets_background_image_with_dash_svg(self):
+        """1.14 only paints `--data-uri-svg` when background-image lists it (see :checked)."""
+        css = (Path(__file__).resolve().parents[1] / "static/faceted_search/css/faceted_search.css").read_text()
+        start = css.index(":indeterminate")
+        end = css.index("end backport")
+        block = css[start:end]
+        self.assertIn("background-image", block)
+        self.assertIn("var(--data-uri-svg)", block)
+        self.assertIn("M5 11h14v2H5v-2Z", block)
 
 
 class FacetedSearchResultsDisplayTest(FacetedSearchTestBase):
@@ -732,12 +889,13 @@ class FacetCountsWithRankingTest(WagtailPageTestCase):
         request = RequestFactory().get("/search/", {"q": self.search_query, **params})
         request.user = AnonymousUser()
         site = Site.objects.get(is_default_site=True)
-        selection = get_facet_selection_from_request(request, site)
+        form = validated_form_for(request, site)
         return compute_facet_result_counts(
             request,
             site,
             self.search_query,
-            selection,
+            get_facet_selection_from_form(form),
+            rank_by=form.cleaned_data["rank_by"],
             enabled_facets={**dict.fromkeys(ENABLED_FACETS, False), "tag": True, "theme": True},
         )
 

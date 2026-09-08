@@ -1,8 +1,6 @@
-from urllib.parse import parse_qs, urlencode
+from django.test import SimpleTestCase
 
-from django.test import RequestFactory, SimpleTestCase
-
-from faceted_search.templatetags.faceted_search_tags import facet_label, toggle_url_facet
+from faceted_search.templatetags.faceted_search_tags import facet_label, facet_value
 
 
 class FacetLabelTest(SimpleTestCase):
@@ -17,49 +15,12 @@ class FacetLabelTest(SimpleTestCase):
         self.assertEqual(facet_label("Agriculture", ""), "Agriculture")
 
 
-class FacetedSearchToggleUrlFacetTest(SimpleTestCase):
+class FacetValueTest(SimpleTestCase):
     def setUp(self):
-        self.factory = (
-            RequestFactory()
-        )  # We use a dummy request rather than a real client request, to save test running time.
-        self.collection = type("Collection", (), {"slug": "agriculture"})()
-        self.other_collection = type("Collection", (), {"slug": "climate"})()
+        self.item = type("Item", (), {"pk": 42, "slug": "agriculture"})()
 
-    def _assert_toggle_url_facet(
-        self,
-        *,
-        request_params=None,
-        expected,
-        **toggle_kwargs,
-    ):
-        query = urlencode({"q": "Post", **(request_params or {})}, doseq=True)
-        request = self.factory.get(f"/search/?{query}")
-        result = toggle_url_facet({"request": request}, **toggle_kwargs)
-        self.assertEqual(parse_qs(result.removeprefix("?")), expected)
+    def test_facet_value_is_the_slug(self):
+        self.assertEqual(facet_value(self.item, "theme"), "agriculture")
 
-    def test_toggle_adds_facet_value(self):
-        self._assert_toggle_url_facet(
-            request_params={"collection": self.collection.slug},
-            collection=self.other_collection,
-            expected={
-                "q": ["Post"],
-                "collection": [self.collection.slug, self.other_collection.slug],
-            },
-        )
-
-    def test_toggle_removes_facet_value(self):
-        self._assert_toggle_url_facet(
-            request_params={"collection": self.collection.slug},
-            collection=self.collection,
-            expected={"q": ["Post"]},
-        )
-
-    def test_toggle_resets_pagination(self):
-        self._assert_toggle_url_facet(
-            request_params={"page": 2, "collection": self.collection.slug},
-            collection=self.other_collection,
-            expected={
-                "q": ["Post"],
-                "collection": [self.collection.slug, self.other_collection.slug],
-            },
-        )
+    def test_facet_value_is_the_pk_for_authors(self):
+        self.assertEqual(facet_value(self.item, "author"), 42)

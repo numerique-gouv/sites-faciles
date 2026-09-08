@@ -1,0 +1,16 @@
+{% comment %}
+  A DSFR accordion (see dsfr/accordion.html) that starts open.
+
+  django-dsfr's dsfr_accordion tag hardcodes the closed state, and DSFR reads the
+  initial state from the markup: aria-expanded on the button, plus the
+  fr-collapse--expanded modifier so the panel is open without JS too.
+{% endcomment %}
+<section class="fr-accordion">
+  <h3 class="fr-accordion__title">
+    <button type="button"
+            class="fr-accordion__btn"
+            aria-expanded="true"
+            aria-controls="{{ id }}">{{ title }}</button>
+  </h3>
+  <div class="fr-collapse fr-collapse--expanded" id="{{ id }}">{{ content }}</div>
+</section>

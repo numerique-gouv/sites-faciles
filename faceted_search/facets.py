@@ -8,8 +8,6 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from django.db.models import Count
-from django.http import Http404
-from django.shortcuts import get_object_or_404
 from modelsearch.backends.base import BaseSearchResults
 from wagtail.models import Site
 
@@ -67,50 +65,18 @@ def _build_facet_value_tree(taxonomies, taxonomy_model, locale) -> list[FacetVal
     return roots
 
 
-def _validate_int(value: str) -> int:
-    """Return an integer from a query parameter, or raise Http404 for invalid input."""
-    try:
-        return int(value)
-    except (ValueError, TypeError) as exc:
-        raise Http404(f"Invalid integer facet value: {value}") from exc
-
-
-def _is_valid_year(value: str) -> bool:
-    """Return True if the value is a four-digit year string."""
-    return isinstance(value, str) and value.isdigit() and len(value) == 4
-
-
-def get_facet_selection_from_request(request, site) -> FacetSelection:
-    """Resolve selected facet values from GET parameters."""
-    locale = site.root_page.localized.locale
-    selection = FacetSelection()
-
-    category_slugs = request.GET.getlist("category")
-    if category_slugs:
-        selection.categories = [get_object_or_404(Category, slug=slug, locale=locale) for slug in category_slugs]
-
-    collection_slugs = request.GET.getlist("collection")
-    if collection_slugs:
-        selection.collections = [get_object_or_404(Collection, slug=slug, locale=locale) for slug in collection_slugs]
-
-    theme_slugs = request.GET.getlist("theme")
-    if theme_slugs:
-        selection.themes = [get_object_or_404(Theme, slug=slug, locale=locale) for slug in theme_slugs]
-
-    tag_slugs = request.GET.getlist("tag")
-    if tag_slugs:
-        selection.tags = [get_object_or_404(Tag, slug=slug) for slug in tag_slugs]
-
-    source_slugs = request.GET.getlist("source")
-    if source_slugs:
-        selection.sources = [get_object_or_404(Organization, slug=slug) for slug in source_slugs]
-
-    author_ids = request.GET.getlist("author")
-    if author_ids:
-        selection.authors = [get_object_or_404(Person, id=_validate_int(author_id)) for author_id in author_ids]
-
-    selection.years = [year for year in request.GET.getlist("year") if _is_valid_year(year)]
-    return selection
+def get_facet_selection_from_form(form) -> FacetSelection:
+    """Resolve selected facet values from a validated ``FacetedSearchForm``."""
+    data = form.cleaned_data
+    return FacetSelection(
+        categories=list(data["category"]),
+        collections=list(data["collection"]),
+        themes=list(data["theme"]),
+        tags=list(data["tag"]),
+        sources=list(data["source"]),
+        authors=list(data["author"]),
+        years=data["year"],
+    )
 
 
 def apply_facet_selection(queryset, site, selection: FacetSelection, *, exclude_facet: str | None = None):
@@ -185,12 +151,6 @@ def apply_facet_selection(queryset, site, selection: FacetSelection, *, exclude_
         queryset = queryset.filter(pk__in=matching_page_ids)
 
     return queryset
-
-
-def filter_queryset_for_facets(request, queryset, site):
-    """Apply GET facet params before full-text search."""
-    selection = get_facet_selection_from_request(request, site)
-    return apply_facet_selection(queryset, site, selection)
 
 
 def _page_pks_from_search_results(results: BaseSearchResults) -> list[int]:
@@ -276,9 +236,13 @@ def _counts_for_sources(page_ids: list[int]) -> dict[int, int]:
     return {pk: count for pk, count in rows if pk is not None}
 
 
-def _search_without_given_facet(request, site, query: str, selection: FacetSelection, facet: str) -> BaseSearchResults:
+def _search_without_given_facet(
+    request, site, query: str, selection: FacetSelection, facet: str, *, rank_by: str
+) -> BaseSearchResults:
     """Full-text search with all selected facet values except ``facet``."""
-    queryset = apply_facet_selection(searchable_pages(request, site), site, selection, exclude_facet=facet)
+    queryset = apply_facet_selection(
+        searchable_pages(request, site, rank_by=rank_by), site, selection, exclude_facet=facet
+    )
     return queryset.search(query)
 
 
@@ -289,6 +253,7 @@ def compute_facet_result_counts(
     selection: FacetSelection,
     *,
     enabled_facets: dict[str, bool],
+    rank_by: str,
 ) -> dict[str, dict[int, int]]:
     """Compute sidebar result counts for each enabled facet value.
 
@@ -305,33 +270,37 @@ def compute_facet_result_counts(
 
     if enabled_facets.get("category"):
         page_ids = _page_pks_from_search_results(
-            _search_without_given_facet(request, site, query, selection, "category")
+            _search_without_given_facet(request, site, query, selection, "category", rank_by=rank_by)
         )
         counts["category"] = _counts_for_m2m_field(BlogEntryPage, page_ids, "blog_categories")
 
     if enabled_facets.get("collection"):
         page_ids = _page_pks_from_search_results(
-            _search_without_given_facet(request, site, query, selection, "collection")
+            _search_without_given_facet(request, site, query, selection, "collection", rank_by=rank_by)
         )
         counts["collection"] = _counts_for_m2m_field(PublicationPage, page_ids, "collections")
 
     if enabled_facets.get("theme"):
-        page_ids = _page_pks_from_search_results(_search_without_given_facet(request, site, query, selection, "theme"))
+        page_ids = _page_pks_from_search_results(
+            _search_without_given_facet(request, site, query, selection, "theme", rank_by=rank_by)
+        )
         counts["theme"] = _counts_for_m2m_field(PublicationPage, page_ids, "themes")
 
     if enabled_facets.get("tag"):
-        page_ids = _page_pks_from_search_results(_search_without_given_facet(request, site, query, selection, "tag"))
+        page_ids = _page_pks_from_search_results(
+            _search_without_given_facet(request, site, query, selection, "tag", rank_by=rank_by)
+        )
         counts["tag"] = _counts_for_tags(page_ids)
 
     if enabled_facets.get("author"):
         page_ids = _page_pks_from_search_results(
-            _search_without_given_facet(request, site, query, selection, "author")
+            _search_without_given_facet(request, site, query, selection, "author", rank_by=rank_by)
         )
         counts["author"] = _counts_for_m2m_field(BlogEntryPage, page_ids, "authors")
 
     if enabled_facets.get("source"):
         page_ids = _page_pks_from_search_results(
-            _search_without_given_facet(request, site, query, selection, "source")
+            _search_without_given_facet(request, site, query, selection, "source", rank_by=rank_by)
         )
         counts["source"] = _counts_for_sources(page_ids)
 
@@ -392,8 +361,20 @@ def _set_facet_selection_result_counts(selection: FacetSelection, facet_counts: 
     _set_result_counts(selection.authors, facet_counts.get("author", {}))
 
 
-def get_facet_context(request, *, enabled_facets: dict[str, bool] | None = None, query: str | None = None) -> dict:
+def get_facet_context(
+    request,
+    *,
+    selection: FacetSelection,
+    rank_by: str,
+    enabled_facets: dict[str, bool] | None = None,
+    query: str | None = None,
+) -> dict:
     """Build context for the facet sidebar.
+
+    ``selection`` holds the facet values selected by the user, and ``rank_by`` the
+    chosen ranking, both as validated by
+    :class:`~faceted_search.forms.FacetedSearchForm`. ``rank_by`` is needed because
+    result counts follow ``searchable_pages``, whose page types depend on it.
 
     Always present
     --------------
@@ -455,11 +436,12 @@ def get_facet_context(request, *, enabled_facets: dict[str, bool] | None = None,
         enabled_facets = ENABLED_FACETS
 
     site = Site.find_for_request(request)
-    selection = get_facet_selection_from_request(request, site)
 
     facet_counts: dict[str, dict[int, int]] = {}
     if query:
-        facet_counts = compute_facet_result_counts(request, site, query, selection, enabled_facets=enabled_facets)
+        facet_counts = compute_facet_result_counts(
+            request, site, query, selection, enabled_facets=enabled_facets, rank_by=rank_by
+        )
 
     context = {
         "enabled_facets": enabled_facets,
