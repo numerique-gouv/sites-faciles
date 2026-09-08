@@ -10,8 +10,10 @@ publications, not a standalone blog.
 import zoneinfo
 from datetime import datetime
 from itertools import combinations
+from pathlib import Path
 from urllib.parse import urlencode
 
+import dsfr
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
@@ -696,6 +698,92 @@ class FacetedSearchAccordionStateTest(FacetedSearchTestBase):
                 # The modifier keeps the panel open before (and without) DSFR's JS.
                 panel = accordion.select_one(f"#{button['aria-controls']}")
                 self.assertIn("fr-collapse--expanded", panel["class"])
+
+
+class FacetedSearchTreeCheckboxTest(FacetedSearchTestBase):
+    """Parent/child checkboxes: HTML only. Cascade and indeterminate live in facet_tree.js."""
+
+    def _theme_tree_fixtures(self):
+        parent = ThemeFactory(locale=self.index.locale, name="Parent theme", slug="parent-theme")
+        child_a = ThemeFactory(
+            locale=self.index.locale, name="Child theme A", slug="child-theme-a", parent=parent
+        )
+        child_b = ThemeFactory(
+            locale=self.index.locale, name="Child theme B", slug="child-theme-b", parent=parent
+        )
+        self.entry_page_factory(
+            parent=self.index,
+            owner=self.admin,
+            title="Post with child theme A",
+            slug="post-with-child-theme-a",
+            themes=[child_a],
+        )
+        self.entry_page_factory(
+            parent=self.index,
+            owner=self.admin,
+            title="Post with child theme B",
+            slug="post-with-child-theme-b",
+            themes=[child_b],
+        )
+        return parent, child_a, child_b
+
+    def test_tree_checkboxes_have_no_inline_onchange(self):
+        parent, child_a, _child_b = self._theme_tree_fixtures()
+        response = self.client.get(self.search_url())
+        soup = BeautifulSoup(response.content, "html.parser")
+        parent_input = soup.select_one(f"#facet-theme-{parent.slug}")
+        child_input = soup.select_one(f"#facet-theme-{child_a.slug}")
+        self.assertIsNotNone(parent_input)
+        self.assertIsNotNone(child_input)
+        self.assertFalse(parent_input.has_attr("onchange"))
+        self.assertFalse(child_input.has_attr("onchange"))
+        tag_input = soup.select_one(f"#facet-tag-{self.tag.slug}")
+        self.assertIsNotNone(tag_input)
+        self.assertEqual(tag_input.get("onchange"), "this.form.submit()")
+
+    def test_tree_script_is_included(self):
+        response = self.client.get(self.search_url())
+        soup = BeautifulSoup(response.content, "html.parser")
+        self.assertTrue(soup.select_one('script[src*="facet_tree.js"]'))
+
+    def test_all_selected_children_and_parent_render_checked(self):
+        parent, child_a, child_b = self._theme_tree_fixtures()
+        response = self.client.get(
+            self.search_url(theme=[parent.slug, child_a.slug, child_b.slug])
+        )
+        soup = BeautifulSoup(response.content, "html.parser")
+        for slug in (parent.slug, child_a.slug, child_b.slug):
+            with self.subTest(slug=slug):
+                checkbox = soup.select_one(f"#facet-theme-{slug}")
+                self.assertIsNotNone(checkbox)
+                self.assertTrue(checkbox.has_attr("checked"))
+
+    def test_partial_child_selection_leaves_parent_unchecked(self):
+        parent, child_a, child_b = self._theme_tree_fixtures()
+        response = self.client.get(self.search_url(theme=child_a.slug))
+        soup = BeautifulSoup(response.content, "html.parser")
+        parent_input = soup.select_one(f"#facet-theme-{parent.slug}")
+        child_a_input = soup.select_one(f"#facet-theme-{child_a.slug}")
+        child_b_input = soup.select_one(f"#facet-theme-{child_b.slug}")
+        self.assertIsNotNone(parent_input)
+        self.assertFalse(parent_input.has_attr("checked"))
+        self.assertTrue(child_a_input.has_attr("checked"))
+        self.assertFalse(child_b_input.has_attr("checked"))
+
+
+class FacetedSearchDsfrCheckboxBackportTest(SimpleTestCase):
+    """Fail when django-dsfr ships DSFR 1.15+ so the CSS backport can be deleted."""
+
+    def test_upstream_dsfr_does_not_style_indeterminate_checkboxes(self):
+        css = Path(dsfr.__file__).resolve().parent / "static/dsfr/dist/component/checkbox/checkbox.min.css"
+        self.assertTrue(css.is_file(), f"Missing bundled DSFR checkbox CSS at {css}")
+        self.assertNotIn(
+            ":indeterminate",
+            css.read_text(),
+            "django-dsfr now styles :indeterminate checkboxes. "
+            "Delete the DSFR 1.15 backport in faceted_search/static/faceted_search/css/faceted_search.css "
+            "and this test.",
+        )
 
 
 class FacetedSearchResultsDisplayTest(FacetedSearchTestBase):

@@ -1,12 +1,11 @@
 {% load faceted_search_tags %}
 
-<ul class="fr-facet-list{% if depth %} fr-ml-3w{% endif %}">
+<ul class="fr-facet-list fr-facet-tree{% if depth %} fr-ml-3w{% endif %}">
   {% for node in nodes %}
     <li>
       <div class="fr-checkbox-group fr-checkbox-group--sm">
         <input type="checkbox"
                form="faceted-search-form"
-               onchange="this.form.submit()"
                id="facet-{{ facet }}-{{ node.value.slug }}"
                name="{{ facet }}"
                value="{{ node.value.slug }}"

@@ -17,6 +17,11 @@
   {{ block.super }}
 {% endblock extra_css %}
 
+{% block extra_js %}
+  <script src="{% static 'faceted_search/js/facet_tree.js' %}"></script>
+  {{ block.super }}
+{% endblock extra_js %}
+
 {% block search_sidebar %}
   {% if show_search_facets %}
     <div class="fr-col fr-col-md-4 fr-col-12">
