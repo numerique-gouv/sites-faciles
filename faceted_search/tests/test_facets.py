@@ -705,12 +705,8 @@ class FacetedSearchTreeCheckboxTest(FacetedSearchTestBase):
 
     def _theme_tree_fixtures(self):
         parent = ThemeFactory(locale=self.index.locale, name="Parent theme", slug="parent-theme")
-        child_a = ThemeFactory(
-            locale=self.index.locale, name="Child theme A", slug="child-theme-a", parent=parent
-        )
-        child_b = ThemeFactory(
-            locale=self.index.locale, name="Child theme B", slug="child-theme-b", parent=parent
-        )
+        child_a = ThemeFactory(locale=self.index.locale, name="Child theme A", slug="child-theme-a", parent=parent)
+        child_b = ThemeFactory(locale=self.index.locale, name="Child theme B", slug="child-theme-b", parent=parent)
         self.entry_page_factory(
             parent=self.index,
             owner=self.admin,
@@ -748,9 +744,7 @@ class FacetedSearchTreeCheckboxTest(FacetedSearchTestBase):
 
     def test_all_selected_children_and_parent_render_checked(self):
         parent, child_a, child_b = self._theme_tree_fixtures()
-        response = self.client.get(
-            self.search_url(theme=[parent.slug, child_a.slug, child_b.slug])
-        )
+        response = self.client.get(self.search_url(theme=[parent.slug, child_a.slug, child_b.slug]))
         soup = BeautifulSoup(response.content, "html.parser")
         for slug in (parent.slug, child_a.slug, child_b.slug):
             with self.subTest(slug=slug):
