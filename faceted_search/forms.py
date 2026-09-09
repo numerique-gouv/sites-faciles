@@ -77,7 +77,7 @@ class FacetedSearchForm(DsfrBaseForm):
             (RANK_BY_RELEVANCE, _("Relevance")),
             (RANK_BY_DATE, _("Date")),
         ),
-        widget=RankBySelect(attrs={"onchange": "this.form.submit()"}),
+        widget=RankBySelect(attrs={"onchange": "this.form.submit()", "form": "faceted-search-form"}),
         required=True,
         # django-dsfr picks the field template from the widget class name, which
         # ``RankBySelect`` does not match, so name the radio snippet explicitly.

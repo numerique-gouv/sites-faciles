@@ -108,15 +108,6 @@ class FacetedSearchPaginationTest(FacetedSearchPaginationTestBase):
         pagination_nav = soup.select_one("nav.fr-pagination")
         self.assertIsNotNone(pagination_nav)
 
-    def test_pagination_result_count_and_page_size_are_displayed(self):
-        response = self.client.get(self.search_url())
-        soup = BeautifulSoup(response.content, "html.parser")
-        paragraph = soup.select_one("#search-results h2")
-        self.assertIsNotNone(paragraph)
-        text = paragraph.get_text()
-        self.assertIn("15 résultats", text)
-        self.assertIn("10 par page", text)
-
     def test_search_form_carries_no_page_control(self):
         """Submitting the form drops ``page``, so a new search starts at page 1."""
         response = self.client.get(self.search_url(page=2))

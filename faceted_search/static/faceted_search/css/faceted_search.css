@@ -6,6 +6,35 @@
     padding-left: 0;
 }
 
+.agr-results-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.agr-results-toolbar > p {
+    margin: 0;
+}
+
+.agr-results-toolbar .fr-fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    flex: 0 1 auto;
+}
+
+.agr-results-toolbar .fr-fieldset__legend {
+    font-size: inherit;
+    font-weight: inherit;
+    width: auto;
+    margin: 0;
+    padding-right: 0.75rem;
+}
+
 /* Backport of DSFR 1.15 #1361 (indeterminate checkbox dash). django-dsfr still
    ships 1.14, whose native input is opacity:0, so without this the dash is invisible.
    Same structure as 1.14 `:checked` (background-color + background-image with

@@ -45,17 +45,18 @@ msgstr "Filtrer par auteur"
 msgid "Filter by organization"
 msgstr "Filtrer par organisation"
 
-msgid "Search results"
-msgstr "Résultats de recherche"
+#, python-format
+msgid "Results for \"%(query)s\""
+msgstr "Résultats pour \"%(query)s\""
 
 msgid "Filters"
 msgstr "Filtres"
 
 #, python-format
-msgid "%(count)s result (%(per_page)s per page)"
-msgid_plural "%(count)s results (%(per_page)s per page)"
-msgstr[0] "%(count)s résultat (%(per_page)s par page)"
-msgstr[1] "%(count)s résultats (%(per_page)s par page)"
+msgid "%(count)s result"
+msgid_plural "%(count)s results"
+msgstr[0] "%(count)s résultat"
+msgstr[1] "%(count)s résultats"
 
 msgid "We did not find any content matching your search."
 msgstr "Nous n’avons trouvé aucun contenu correspondant à votre recherche."

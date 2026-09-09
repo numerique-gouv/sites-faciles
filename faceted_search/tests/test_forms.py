@@ -39,6 +39,7 @@ class RankByFieldTest(SimpleTestCase):
         rendered = FacetedSearchForm(QueryDict(""))["rank_by"].as_field_group()
         self.assertIn("fr-fieldset__legend", rendered)
         self.assertEqual(rendered.count("fr-fieldset__element--inline"), 2)
+        self.assertEqual(rendered.count('form="faceted-search-form"'), 2)
 
 
 class QueryFieldTest(SimpleTestCase):
