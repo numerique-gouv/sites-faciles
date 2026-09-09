@@ -2,7 +2,6 @@ from django import forms
 from django.http import QueryDict
 from django.utils.translation import gettext_lazy as _
 from dsfr.forms import DsfrBaseForm
-from dsfr.widgets import InlineRadioSelect
 
 from faceted_search.search import RANK_BY_DATE, RANK_BY_RELEVANCE
 from publications.models import Collection, Theme
@@ -28,11 +27,11 @@ def _facet_field(queryset, to_field_name: str | None = "slug") -> forms.ModelMul
     )
 
 
-class RankBySelect(InlineRadioSelect):
-    """Radio widget defaulting to relevance when ``rank_by`` is missing or unknown.
+class RankBySelect(forms.Select):
+    """Select widget defaulting to relevance when ``rank_by`` is missing or unknown.
 
     Django reads a bound value through ``value_from_datadict`` both to render the
-    field and to clean it, so the default applies to the checked radio and to
+    field and to clean it, so the default applies to the selected option and to
     ``cleaned_data`` alike.
     """
 
@@ -77,11 +76,14 @@ class FacetedSearchForm(DsfrBaseForm):
             (RANK_BY_RELEVANCE, _("Relevance")),
             (RANK_BY_DATE, _("Date")),
         ),
-        widget=RankBySelect(attrs={"onchange": "this.form.submit()", "form": "faceted-search-form"}),
+        widget=RankBySelect(
+            attrs={
+                "onchange": "this.form.submit()",
+                "form": "faceted-search-form",
+                "class": "fr-select fr-mt-0",
+            }
+        ),
         required=True,
-        # django-dsfr picks the field template from the widget class name, which
-        # ``RankBySelect`` does not match, so name the radio snippet explicitly.
-        template_name="dsfr/form_field_snippets/radioselect_snippet.html",
     )
 
     def __init__(self, query_dict: QueryDict | None = None, *, locale=None, **kwargs):

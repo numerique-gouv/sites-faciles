@@ -26,20 +26,15 @@ class RankByFieldTest(SimpleTestCase):
                 form = FacetedSearchForm(QueryDict(query_string))
                 self.assertTrue(form.is_valid())
                 self.assertEqual(form.cleaned_data["rank_by"], expected)
-                # The checked radio must agree with the value the view ranks by.
+                # The selected option must agree with the value the view ranks by.
                 self.assertEqual(form["rank_by"].value(), expected)
 
-    def test_renders_as_an_inline_dsfr_fieldset(self):
-        """django-dsfr resolves its field template from the widget class name.
-
-        ``RankBySelect`` does not match the names it knows, so without an explicit
-        ``template_name`` the radios fall back to the generic input snippet and
-        stack vertically.
-        """
-        rendered = FacetedSearchForm(QueryDict(""))["rank_by"].as_field_group()
-        self.assertIn("fr-fieldset__legend", rendered)
-        self.assertEqual(rendered.count("fr-fieldset__element--inline"), 2)
-        self.assertEqual(rendered.count('form="faceted-search-form"'), 2)
+    def test_renders_as_a_dsfr_select(self):
+        rendered = str(FacetedSearchForm(QueryDict(""))["rank_by"])
+        self.assertIn("<select", rendered)
+        self.assertIn("fr-select", rendered)
+        self.assertIn('form="faceted-search-form"', rendered)
+        self.assertEqual(rendered.count("<option"), 2)
 
 
 class QueryFieldTest(SimpleTestCase):

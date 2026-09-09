@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-26 14:15+0200\n"
+"POT-Creation-Date: 2026-09-09 10:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,6 +48,9 @@ msgstr "Filtrer par organisation"
 #, python-format
 msgid "Results for \"%(query)s\""
 msgstr "Résultats pour \"%(query)s\""
+
+msgid "Search"
+msgstr "Rechercher"
 
 msgid "Filters"
 msgstr "Filtres"

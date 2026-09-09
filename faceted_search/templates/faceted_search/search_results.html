@@ -12,7 +12,7 @@
   <h1>{% blocktranslate %}Results for "{{ query }}"{% endblocktranslate %}</h1>
   {% comment %}
     Single GET form for the whole page: the sidebar facet checkboxes and the
-    rank-by radios join it through their form="faceted-search-form" attribute.
+    rank-by select join it through their form="faceted-search-form" attribute.
   {% endcomment %}
   {% translate "Search" as search_label %}
   <form method="get" action="{% url 'cms_search' %}" id="faceted-search-form">
@@ -73,11 +73,20 @@
 
 {% block search_results %}
   {% if page_obj.paginator.count %}
-    <div class="agr-results-toolbar">
-      <p>
-        {% blocktranslate count count=page_obj.paginator.count %}{{ count }} result{% plural %}{{ count }} results{% endblocktranslate %}
-      </p>
-      {{ form.rank_by.as_field_group }}
+    <div class="fr-grid-row fr-grid-row--middle fr-grid-row--gutters fr-mb-2w">
+      <div class="fr-col">
+        <p class="fr-mb-0">
+          {% blocktranslate count count=page_obj.paginator.count %}{{ count }} result{% plural %}{{ count }} results{% endblocktranslate %}
+        </p>
+      </div>
+      <div class="fr-col-auto">
+        <div class="fr-grid-row fr-grid-row--middle">
+          <div class="fr-col-auto">
+            <label class="fr-label" for="{{ form.rank_by.id_for_label }}">{{ form.rank_by.label }}</label>
+          </div>
+          <div class="fr-col-auto fr-ml-2w">{{ form.rank_by }}</div>
+        </div>
+      </div>
     </div>
     <ol class="fr-mb-2w"
         start="{{ page_obj.start_index }}"
