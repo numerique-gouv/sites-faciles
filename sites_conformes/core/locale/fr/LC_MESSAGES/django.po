@@ -1321,6 +1321,33 @@ msgstr "Medium (140px)"
 msgid "Large (200px)"
 msgstr "Grand (200px)"
 
+msgid "Category name"
+msgstr "Nom de la catégorie"
+
+msgid "Parent category"
+msgstr "Catégorie parente"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Displayed on the top of the category page"
+msgstr "Affiché en haut de la page de la catégorie"
+
+msgid "Text displayed at the end of every page in the category"
+msgstr "Texte affiché à la fin de chaque page de la catégorie"
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "Categories"
+msgstr "Catégories"
+
+msgid "Parent category cannot be self."
+msgstr "La catégorie ne peut être sa propre parente."
+
+msgid "Cannot have circular Parents."
+msgstr "Il est impossible d’avoir des parents circulaires."
+
 msgid "Content page"
 msgstr "Page de contenu"
 
@@ -1348,6 +1375,11 @@ msgstr "Configuration des filtres"
 msgid "Catalog index page"
 msgstr "Index de catalogue"
 
+#, fuzzy, python-format
+#| msgid "Parent category cannot be self."
+msgid "Pages in category %(category)s"
+msgstr "La catégorie ne peut être sa propre parente."
+
 #, python-format
 msgid "Pages tagged with %(tag)s"
 msgstr "Pages avec l’étiquette %(tag)s"
@@ -1362,33 +1394,6 @@ msgstr "Pages avec l’une des étiquettes : %(tags)s"
 
 msgid "Selected tags"
 msgstr "Étiquettes selectionnées"
-
-msgid "Category name"
-msgstr "Nom de la catégorie"
-
-msgid "Parent category"
-msgstr "Catégorie parente"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Displayed on the top of the category page"
-msgstr "Affiché en haut de la page de la catégorie"
-
-msgid "Text displayed at the end of every page in the category"
-msgstr "Texte affiché à la fin de chaque page de la catégorie"
-
-msgid "Category"
-msgstr "Catégorie"
-
-msgid "Categories"
-msgstr "Catégories"
-
-msgid "Parent category cannot be self."
-msgstr "La catégorie ne peut être sa propre parente."
-
-msgid "Cannot have circular Parents."
-msgstr "Il est impossible d’avoir des parents circulaires."
 
 msgid "Tag"
 msgstr "Étiquette"
