@@ -105,6 +105,19 @@ msgstr "Entrées par page"
 msgid "Filter by tag"
 msgstr "Filtrer par étiquette"
 
+msgid "Category groups"
+msgstr "Groupes de catégories"
+
+msgid ""
+"Parent categories to use as filter groups. Leave empty to list every "
+"category in use."
+msgstr ""
+"Catégories parentes à utiliser comme groupes de filtres. Laissez vide pour "
+"lister toutes les catégories utilisées."
+
+msgid "Filter by category"
+msgstr "Filtrer par catégorie"
+
 msgid "New"
 msgstr "Nouveau"
 
@@ -1115,9 +1128,6 @@ msgstr "Blog"
 msgid "Number of entries"
 msgstr "Nombre d’articles"
 
-msgid "Filter by category"
-msgstr "Filtrer par catégorie"
-
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
@@ -1768,6 +1778,12 @@ msgstr "Dans cette rubrique"
 msgid "Go to page"
 msgstr "Aller à la page"
 
+msgid "selected"
+msgstr "étiquette sélectionnée"
+
+msgid "unselected"
+msgstr "étiquette non-sélectionnée"
+
 msgid "Page visibility restricted to logged in users only"
 msgstr "Visibilité de la page restreinte aux utilisateurs connectés"
 
@@ -1811,12 +1827,6 @@ msgstr "- Page %(current)s / %(total)s"
 
 msgid "Filters"
 msgstr "Filtres"
-
-msgid "selected"
-msgstr "étiquette sélectionnée"
-
-msgid "unselected"
-msgstr "étiquette non-sélectionnée"
 
 msgid "Pages"
 msgstr "Pages"
