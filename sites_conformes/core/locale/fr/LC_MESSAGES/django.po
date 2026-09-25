@@ -1376,6 +1376,10 @@ msgid "Catalog index page"
 msgstr "Index de catalogue"
 
 #, python-format
+msgid "%(title)s, in category %(category)s"
+msgstr "%(title)s, dans la catégorie %(category)s"
+
+#, python-format
 msgid "Pages in category %(category)s"
 msgstr "Pages dans la catégorie %(category)s"
 
