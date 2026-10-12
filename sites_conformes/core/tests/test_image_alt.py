@@ -6,9 +6,17 @@ from django.apps import apps
 from django.db import connection
 from django.test import TestCase, override_settings
 from django.utils import translation
-from wagtail.models import Page, Revision
+from wagtail.models import Locale, Page, Revision
 from wagtail.rich_text import RichText
 from wagtail.test.utils import WagtailPageTestCase
+from wagtail_localize.models import (
+    String,
+    StringSegment,
+    StringTranslation,
+    TranslationContext,
+    TranslationSource,
+)
+from wagtail_localize.strings import StringValue
 
 from sites_conformes.core.blocks.utils import HELP_ICON, help_text_with_details
 from sites_conformes.core.models import ContentPage
@@ -72,6 +80,22 @@ class MigrateCenteredImageAltTestCase(TestCase):
 
         self.assertFalse(migration.migrate_centered_image_alt(stream))
 
+    def test_localize_paths_of_nested_values(self):
+        stream = [
+            {"type": "image", "id": "a", "value": legacy_centered_image(12, "Un graphique")},
+            {
+                "type": "multicolumns",
+                "id": "b",
+                "value": {"columns": [{"type": "image", "id": "c", "value": legacy_centered_image(13, "")}]},
+            },
+            {"type": "tile", "id": "d", "value": {"image": 12}},
+        ]
+
+        self.assertEqual(
+            migration.find_legacy_centered_image_paths(stream, ["body"]),
+            ["body.a", "body.b.columns.c"],
+        )
+
 
 class MigrateCenteredImageAltPagesTestCase(WagtailPageTestCase):
     def setUp(self):
@@ -109,6 +133,45 @@ class MigrateCenteredImageAltPagesTestCase(WagtailPageTestCase):
 
         response = self.client.get(self.page.url)
         self.assertContains(response, 'alt="Un graphique"')
+
+    def test_translation_source_is_migrated(self):
+        # Rebuild what wagtail-localize stored before the migration: the legacy content,
+        # and the paths of the legacy "alt" and "image" fields, with a translated alt text
+        english = Locale.objects.create(language_code="en")
+        self.page.get_parent().copy_for_translation(english)
+        source, _ = TranslationSource.get_or_create_from_instance(self.page)
+        content = json.loads(source.content_json)
+        content["body"] = json.dumps(
+            [{"type": "image", "id": "block", "value": legacy_centered_image(self.image.pk, "Un graphique")}]
+        )
+        source.content_json = json.dumps(content)
+        source.save()
+        source.stringsegment_set.all().delete()
+        source.overridablesegment_set.all().delete()
+        TranslationContext.objects.filter(object=source.object, path__startswith="body.").delete()
+        alt_context = TranslationContext.objects.create(object=source.object, path="body.block.alt")
+        TranslationContext.objects.create(object=source.object, path="body.block.image")
+        string = String.from_value(self.page.locale, StringValue.from_plaintext("Un graphique"))
+        StringSegment.objects.create(source=source, string=string, context=alt_context, order=0, attrs="{}")
+        StringTranslation.objects.create(
+            translation_of=string, locale=english, context=alt_context, data="A chart", translation_type="manual"
+        )
+
+        migration.migrate_translation_sources(apps, None)
+
+        source.refresh_from_db()
+        body = json.loads(json.loads(source.content_json)["body"])
+        self.assertEqual(body[0]["value"]["image"]["alt_text"], "Un graphique")
+        self.assertNotIn("alt", body[0]["value"])
+        alt_context.refresh_from_db()
+        self.assertEqual(alt_context.path, "body.block.image.alt_text")
+        self.assertEqual(alt_context.path_id, TranslationContext._get_path_id("body.block.image.alt_text"))
+        self.assertTrue(
+            TranslationContext.objects.filter(object=source.object, path="body.block.image.image").exists()
+        )
+
+        translated_page, _ = source.create_or_update_translation(english, fallback=True)
+        self.assertEqual(translated_page.body[0].value["image"].contextual_alt_text, "A chart")
 
 
 class DecorativeImagesTestCase(WagtailPageTestCase):
