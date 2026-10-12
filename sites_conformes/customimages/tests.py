@@ -76,3 +76,18 @@ class CopyWagtailImagesTest(TestCase):
         copy_migration.reverse_copy_images(apps, None)
 
         self.assertFalse(CustomImage.objects.filter(id=old.id).exists())
+
+
+class ImageForeignKeysTest(TestCase):
+    def test_no_foreign_key_targets_the_default_wagtail_image(self):
+        # Une FK vers wagtailimages.Image n'aurait pas le sélecteur d'images dans l'admin
+        # et ne verrait pas les images envoyées après la migration vers CustomImage.
+        wrong_fields = [
+            f"{model._meta.label}.{field.name}"
+            for model in apps.get_models()
+            if model.__module__.startswith("sites_conformes.")
+            for field in model._meta.get_fields()
+            if field.many_to_one and field.related_model is WagtailImage
+        ]
+
+        self.assertEqual(wrong_fields, [])
