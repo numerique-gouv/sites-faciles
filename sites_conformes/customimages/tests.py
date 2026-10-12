@@ -9,12 +9,12 @@ from wagtail.models import Collection
 
 CustomImage = get_image_model()
 
-# La migration a un nom qui commence par un chiffre : on l'importe via import_module.
+# The migration module name starts with a digit, so it cannot be imported with a regular import.
 copy_migration = import_module("sites_conformes.customimages.migrations.0002_copy_wagtail_images")
 
 
 class CopyWagtailImagesTest(TestCase):
-    """Tests de la migration de copie des images Wagtail vers CustomImage (commande #419)."""
+    """Copy of the default Wagtail images to CustomImage (customimages migration 0002)."""
 
     def _make_collection(self):
         return Collection.objects.first() or Collection.add_root(name="Root")
@@ -39,7 +39,6 @@ class CopyWagtailImagesTest(TestCase):
         self.assertEqual(new.title, old.title)
         self.assertEqual(new.width, old.width)
         self.assertEqual(new.height, old.height)
-        # Champs qui étaient perdus avant la correction de Fabien
         self.assertEqual(new.focal_point_x, 10)
         self.assertEqual(new.focal_point_y, 20)
         self.assertEqual(new.focal_point_width, 30)
@@ -80,8 +79,8 @@ class CopyWagtailImagesTest(TestCase):
 
 class ImageForeignKeysTest(TestCase):
     def test_no_foreign_key_targets_the_default_wagtail_image(self):
-        # Une FK vers wagtailimages.Image n'aurait pas le sélecteur d'images dans l'admin
-        # et ne verrait pas les images envoyées après la migration vers CustomImage.
+        # A foreign key to wagtailimages.Image gets no image chooser in the admin
+        # and cannot reference images uploaded after the switch to CustomImage.
         wrong_fields = [
             f"{model._meta.label}.{field.name}"
             for model in apps.get_models()

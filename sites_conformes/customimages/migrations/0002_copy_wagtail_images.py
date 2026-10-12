@@ -10,12 +10,10 @@ def copy_images(apps, schema_editor):
     TaggedItem = apps.get_model("taggit", "TaggedItem")
     ContentType = apps.get_model("contenttypes", "ContentType")
 
-    # On copie tous les champs concrets définis par AbstractImage plutôt qu'une
-    # liste choisie à la main, pour ne rien perdre silencieusement (collection,
-    # focal_point_*, file_size/file_hash, description...) si le modèle de base
-    # gagne des champs plus tard. On exclut les ManyToMany/relations inverses ;
-    # les tags sont traités séparément ci-dessous car le TaggableManager de
-    # taggit n'est pas disponible sur les modèles historiques.
+    # Copy every concrete field rather than a hand-picked list, so that nothing is
+    # silently lost (collection, focal_point_*, file_size/file_hash, description...).
+    # Tags are copied separately below: taggit's TaggableManager is not available
+    # on historical models.
     copy_fields = [
         f.name for f in OldImage._meta.get_fields() if f.concrete and not f.many_to_many and f.name != "id"
     ]
@@ -36,18 +34,16 @@ def copy_images(apps, schema_editor):
                 object_id=image.id,
             )
 
-    # Réaligne la séquence d'auto-incrément sur le max(id) copié.
-    # sequence_reset_sql génère le SQL propre à chaque base (vide pour SQLite,
-    # qui n'en a pas besoin).
+    # Images keep their ids, so the id sequence must be moved past the highest copied id.
+    # sequence_reset_sql returns the SQL for the current database (nothing for SQLite).
     with connection.cursor() as cursor:
         for sql in connection.ops.sequence_reset_sql(no_style(), [NewImage]):
             cursor.execute(sql)
 
 
 def reverse_copy_images(apps, schema_editor):
-    # Supprime uniquement les CustomImage issues de la copie (mêmes ids que les
-    # images d'origine) et leurs tags, pour un rollback propre sans toucher aux
-    # images éventuellement créées après la migration.
+    # Only delete the copied images (same ids as the original ones) and their tags,
+    # leaving alone any image uploaded after the migration.
     OldImage = apps.get_model("wagtailimages", "Image")
     NewImage = apps.get_model("sites_conformes_customimages", "CustomImage")
     TaggedItem = apps.get_model("taggit", "TaggedItem")
