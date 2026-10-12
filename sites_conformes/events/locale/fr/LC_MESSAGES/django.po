@@ -164,6 +164,13 @@ msgstr "Date de début :"
 msgid "End date:"
 msgstr "Date de fin :"
 
+msgid "Filter by period"
+msgstr "Filtrer par période"
+
+msgctxt "submit button"
+msgid "Filter"
+msgstr "Filtrer"
+
 msgid "selected"
 msgstr "étiquette sélectionnée"
 
