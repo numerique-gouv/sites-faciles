@@ -57,6 +57,14 @@ class CopyWagtailImagesTest(TestCase):
 
         self.assertEqual(CustomImage.objects.filter(id=old.id).count(), 1)
 
+    def test_new_image_after_copy_gets_a_free_id(self):
+        old = WagtailImage.objects.create(title="Photo", file=get_test_image_file())
+
+        copy_migration.copy_images(apps, None)
+        new = CustomImage.objects.create(title="Nouvelle", file=get_test_image_file())
+
+        self.assertGreater(new.id, old.id)
+
     def test_reverse_removes_copied_images_and_tags(self):
         old = WagtailImage.objects.create(title="Photo", file=get_test_image_file())
         old.tags.add("gamma")
