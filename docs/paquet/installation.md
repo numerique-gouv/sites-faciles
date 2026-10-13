@@ -52,6 +52,7 @@ INSTALLED_APPS.extend([
     # Le package lui-même (fournit les templates de base partagés)
     "sites_conformes",
     # Les apps qu’il contient
+    "sites_conformes.customimages",
     "sites_conformes.core",
     "sites_conformes.blog",
     "sites_conformes.events",
@@ -123,6 +124,10 @@ HOST_URL = os.getenv("HOST_URL", "localhost")
 HOST_PROTO = os.getenv("HOST_PROTO", "https")
 
 WAGTAIL_I18N_ENABLED = True
+
+# Modèle d’image fourni par le package (texte alternatif non prérempli
+# avec le titre de l’image). Obligatoire : les migrations du package en dépendent.
+WAGTAILIMAGES_IMAGE_MODEL = "sites_conformes_customimages.CustomImage"
 ```
 
 Voir {doc}`configuration` pour la liste complète des réglages disponibles.
