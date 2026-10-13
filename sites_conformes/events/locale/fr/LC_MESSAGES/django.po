@@ -28,6 +28,9 @@ msgstr "Date de fin"
 msgid "The end date must be on or after the start date."
 msgstr "La date de fin doit être identique ou postérieure à la date de début."
 
+msgid "The end date must be on or after the start date."
+msgstr "La date de fin doit être identique ou postérieure à la date de début."
+
 msgid "Events per page"
 msgstr "Événements par page"
 
@@ -163,6 +166,12 @@ msgstr "Date de début :"
 
 msgid "End date:"
 msgstr "Date de fin :"
+
+msgid "selected"
+msgstr "étiquette sélectionnée"
+
+msgid "unselected"
+msgstr "étiquette non sélectionnée"
 
 msgid "Filter by period"
 msgstr "Filtrer par période"
