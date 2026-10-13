@@ -83,13 +83,14 @@ msgstr "Page de formulaire"
 msgid "Form pages"
 msgstr "Pages de formulaire"
 
+#, python-format
 msgid ""
 "This message was generated automatically following the submission of a form "
-"on your Sites Conformes website. If you reply to this e-mail, your answer "
-"will be sent directly to the person who submitted the form."
+"on your website %(site_name)s. If you reply to this e-mail, your answer will "
+"be sent directly to the person who submitted the form."
 msgstr ""
 "Ce message a été généré automatiquement suite à la soumission d'un "
-"formulaire sur votre site Sites Conformes. Si vous répondez à cet e-mail, "
+"formulaire sur votre site %(site_name)s. Si vous répondez à cet e-mail, "
 "votre réponse sera envoyée directement à la personne qui a soumis le "
 "formulaire."
 

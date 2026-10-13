@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from dsfr.forms import DsfrBoundField, DsfrDjangoTemplates
@@ -148,13 +149,19 @@ class FormPage(HoneypotFormMixin, HoneypotFormSubmissionMixin, AbstractEmailForm
         """
         return all(field.get("required", False) for field in self.form_fields.values())
 
-    def render_email(self, form):
-        notice = _(
+    def get_automatic_email_notice(self):
+        """
+        Notice added at the top of the notification e-mail, telling editors the message is
+        automatic and that replying to it answers the person who submitted the form.
+        """
+        return _(
             "This message was generated automatically following the submission of a form on your "
-            "Sites Conformes website. If you reply to this e-mail, your answer will be sent directly "
+            "website %(site_name)s. If you reply to this e-mail, your answer will be sent directly "
             "to the person who submitted the form."
-        )
-        return f"{notice}\n\n{super().render_email(form)}"
+        ) % {"site_name": settings.WAGTAIL_SITE_NAME}
+
+    def render_email(self, form):
+        return f"{self.get_automatic_email_notice()}\n\n{super().render_email(form)}"
 
     def send_mail(self, form):
         """

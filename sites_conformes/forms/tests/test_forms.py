@@ -1,21 +1,15 @@
 import time
 
+from django.conf import settings
 from django.core import mail
 from django.core.management import call_command
 from django.test import SimpleTestCase
 from django.urls import reverse
-from django.utils.translation import gettext as _
 from dsfr.forms import DsfrBoundField
 from wagtail.test.utils import WagtailPageTestCase
 from wagtail_localize.models import TranslationSource
 
 from sites_conformes.forms.models import FormField, FormPage, SitesFacilesFormBuilder
-
-AUTOMATIC_EMAIL_NOTICE = _(
-    "This message was generated automatically following the submission of a form on your "
-    "Sites Conformes website. If you reply to this e-mail, your answer will be sent directly "
-    "to the person who submitted the form."
-)
 
 
 class FormsTestCase(WagtailPageTestCase):
@@ -73,11 +67,13 @@ class FormsTestCase(WagtailPageTestCase):
         self.assertEqual(len(mail.outbox), 1)
 
         body = mail.outbox[0].body
+        notice = form_page.get_automatic_email_notice()
         # The notice comes first, before the form content.
-        self.assertTrue(body.startswith(AUTOMATIC_EMAIL_NOTICE))
+        self.assertTrue(body.startswith(notice))
+        self.assertIn(settings.WAGTAIL_SITE_NAME, notice)
         # The submitted form content is still present.
         self.assertIn("Votre nom complet: Félix Faure", body)
-        self.assertLess(body.index(AUTOMATIC_EMAIL_NOTICE), body.index("Votre nom complet"))
+        self.assertLess(body.index(notice), body.index("Votre nom complet"))
 
     def test_submission_email_reply_to_is_submitter_address(self):
         """
