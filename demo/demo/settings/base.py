@@ -209,6 +209,7 @@ INSTALLED_APPS.extend(
     [
         "dsfr",
         "sites_conformes",
+        "sites_conformes.customimages",
         "sites_conformes.blog",
         "sites_conformes.core",
         "sites_conformes.events",
@@ -216,13 +217,13 @@ INSTALLED_APPS.extend(
         "wagtail.contrib.settings",
         "wagtail.contrib.typed_table_block",
         "wagtail.contrib.routable_page",
-        "wagtail_modeladmin",
         "wagtailmenus",
         "wagtailmarkdown",
         "sites_conformes.proconnect",
     ]
 )
 WAGTAILADMIN_PATH = "admin/"
+WAGTAILIMAGES_IMAGE_MODEL = "sites_conformes_customimages.CustomImage"
 TESTING = False
 HOST_URL = "localhost"
 PROCONNECT_ACTIVATED = False

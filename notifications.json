@@ -23,6 +23,14 @@
             "more_info_link": "",
             "start_date": "2026-03-28",
             "end_date": "2016-04-30"
+        },
+        {
+            "type": "info",
+            "title": "Renforcez la sécurité de votre compte",
+            "description": "Vous pouvez désormais activer la double authentification pour mieux protéger l'accès à votre compte. Cette fonctionnalité est disponible à partir de la version 4.2. Si vous ne la trouvez pas, pensez à effectuer une mise à jour de Sites Conformes.",
+            "more_info_link": "https://sites.beta.gouv.fr/documentation/guide-dutilisation/s%C3%A9curiser-son-compte-avec-lauthentification-%C3%A0-deux-facteurs/",
+            "start_date": "2026-09-17",
+            "end_date": "2026-10-17"
         }
     ]
 }
