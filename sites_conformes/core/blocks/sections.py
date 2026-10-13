@@ -303,7 +303,7 @@ class SpotLightItem(blocks.StreamBlock):
                 "decorative": True,
                 "alt_text": "",
             },
-            "image_ratio": "h3",
+            "image_ratio": "",
             "image_badge": [],
             "link": {
                 "link_type": "--",
@@ -311,6 +311,7 @@ class SpotLightItem(blocks.StreamBlock):
                 "external_url": "",
                 "document": None,
                 "anchor": "",
+                "query_string": "",
             },
             "top_detail_text": "",
             "top_detail_icon": {},
