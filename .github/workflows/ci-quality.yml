@@ -2,6 +2,9 @@ name: 🔮 CI - Quality checks
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,3 +37,12 @@ jobs:
       - name: ✨ Black & ruff on all files
         run: |
           just quality
+      - name: 🌍 Install dependencies
+        run: |
+          uv sync
+      - name: 📄 Copy empty .env.test to .env
+        run: |
+          cp .env.test .env
+      - name: 📦 Check declared dependencies with deptry
+        run: |
+          just deps-check

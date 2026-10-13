@@ -20,6 +20,7 @@ from wagtail.admin.widgets.slug import SlugInput
 from wagtail.api import APIField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.fields import RichTextField, StreamField
+from wagtail.images import get_image_model_string
 from wagtail.models import Orderable
 from wagtail.models.i18n import TranslatableMixin
 from wagtail.search import index
@@ -69,7 +70,7 @@ class Person(Orderable):
     organization = models.ForeignKey("Organization", null=True, on_delete=models.SET_NULL)
     contact_info = models.CharField(_("Contact info"), max_length=500, blank=True)
     image = models.ForeignKey(
-        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+        get_image_model_string(), null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
     )
 
     panels = [
@@ -517,6 +518,10 @@ class BlogEntryPage(SitesFacilesBasePage):
     authors = ParentalManyToManyField(
         "sites_conformes_blog.Person", blank=True, help_text=_("Author entries can be created in Snippets > Persons")
     )
+
+    search_fields = SitesFacilesBasePage.search_fields + [
+        index.FilterField("date"),
+    ]
 
     parent_page_types = ["sites_conformes_blog.BlogIndexPage"]
     subpage_types = []
