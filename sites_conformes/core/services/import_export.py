@@ -3,7 +3,6 @@ import json
 import sys
 from io import BytesIO
 from pathlib import Path
-from urllib.request import urlretrieve
 
 import requests
 from django.conf import settings
