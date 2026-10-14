@@ -1,3 +1,5 @@
+from pathlib import PurePosixPath
+
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 from wagtail.images import get_image_model
@@ -38,7 +40,7 @@ class Command(BaseCommand):
     See https://github.com/wagtail/wagtail/blob/f96b1fb829b107d1f90bcc6fee2fbf8c9d82263f/wagtail/images/models.py#L902
     is_svg is called during this process and won't work with images without extension.
 
-    This script is inspired by https://github.com/wagtail/wagtail/blob/f96b1fb829b107d1f90bcc6fee2fbf8c9d82263f/wagtail/images/tests/tests.py#L388C1-L388C51 
+    This script is inspired by https://github.com/wagtail/wagtail/blob/f96b1fb829b107d1f90bcc6fee2fbf8c9d82263f/wagtail/images/tests/tests.py#L388C1-L388C51
     """
 
     def add_arguments(self, parser):
@@ -50,14 +52,22 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         dry_run = kwargs["dry_run"]
-        for image in get_image_model().objects.all():
-            if not image.is_svg():
+        # Only files without an extension can be SVGs that Wagtail fails to recognise,
+        # skipping the others avoids downloading every image on each deploy
+        for image in get_image_model().objects.exclude(file__regex=r"\.[^/]+$"):
+            try:
                 with image.get_willow_image() as willow_image:
-                    if isinstance(willow_image, SvgImageFile):
-                        print(f"Updating {image=}")
-                        print(f"Before: {image.file.name}")
-                        filename = f"{image.file.name}.svg"
-                        print(f"After: {filename}")
+                    is_svg = isinstance(willow_image, SvgImageFile)
+            except OSError as e:
+                # A missing or unreadable file must not abort the deployment
+                self.stderr.write(f"Skipping image {image.pk} ({image.file.name}): {e}")
+                continue
 
-                        if not dry_run:
-                            rename_wagtail_image(image, filename)
+            if not is_svg:
+                continue
+
+            # upload_to adds the folder back, so only pass the file name
+            filename = f"{PurePosixPath(image.file.name).name}.svg"
+            self.stdout.write(f"Image {image.pk}: {image.file.name} -> {filename}")
+            if not dry_run:
+                rename_wagtail_image(image, filename)
