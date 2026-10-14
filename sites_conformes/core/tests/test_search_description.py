@@ -289,6 +289,22 @@ class SearchDescriptionTestCase(SimpleTestCase):
 
         self.assertEqual(get_search_description(body), "Section title. Details here.")
 
+    def test_page_locale_selects_punctuation_spacing(self):
+        body = _body(
+            [
+                {
+                    "type": "paragraph",
+                    "value": "<p>Résultat <b>:</b> blé. Vraiment <b>?</b> Fin<b></b>.</p>",
+                }
+            ]
+        )
+
+        french = type("Page", (), {"locale": type("Locale", (), {"language_code": "fr"})()})()
+        german = type("Page", (), {"locale": type("Locale", (), {"language_code": "de"})()})()
+
+        self.assertEqual(get_search_description(body, page=french), "Résultat : blé. Vraiment ? Fin.")
+        self.assertEqual(get_search_description(body, page=german), "Résultat: blé. Vraiment? Fin.")
+
     def test_table_caption_headings_and_cells_are_extracted(self):
         body = _body(
             [
