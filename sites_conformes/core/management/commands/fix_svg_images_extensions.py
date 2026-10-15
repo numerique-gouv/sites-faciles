@@ -3,9 +3,6 @@ from pathlib import PurePosixPath
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 from wagtail.images import get_image_model
-from willow.image import (
-    SvgImageFile,
-)
 
 
 def rename_wagtail_image(image, new_filename):
@@ -57,7 +54,7 @@ class Command(BaseCommand):
         for image in get_image_model().objects.exclude(file__regex=r"\.[^/]+$"):
             try:
                 with image.get_willow_image() as willow_image:
-                    is_svg = isinstance(willow_image, SvgImageFile)
+                    is_svg = willow_image.format_name == "svg"
             except OSError as e:
                 # A missing or unreadable file must not abort the deployment
                 self.stderr.write(f"Skipping image {image.pk} ({image.file.name}): {e}")
