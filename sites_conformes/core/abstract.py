@@ -237,9 +237,12 @@ class AbstractIndexPage(RoutablePageMixin, SitesFacilesBasePage):
     filter_categories = ParentalManyToManyField(
         "sites_conformes_core.Category",
         blank=True,
-        limit_choices_to={"children__isnull": False},
+        limit_choices_to={"parent__isnull": True, "children__isnull": False},
         verbose_name=_("Category groups"),
-        help_text=_("Parent categories to use as filter groups. Leave empty to list every category in use."),
+        help_text=_(
+            "Top-level categories whose subcategories are shown as filter groups."
+            " Leave empty to use every category in use."
+        ),
     )
 
     class Meta:
