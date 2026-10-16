@@ -2084,3 +2084,8 @@ msgstr "Catégorie « %(node)s » déplacée sous « %(target)s »."
 
 #~ msgid "Custom scripts (CSS / JS)"
 #~ msgstr "Scripts personnalisés (CSS / JS)"
+
+msgid "%(categories)s still has subcategories: move or delete them first."
+msgstr ""
+"%(categories)s a encore des sous-catégories : déplacez-les ou supprimez-les "
+"d’abord."
