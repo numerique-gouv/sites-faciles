@@ -3,6 +3,8 @@
 import modelcluster.fields
 from django.db import migrations
 
+from sites_conformes.core.migration_utils import keep_root_filter_categories
+
 
 class Migration(migrations.Migration):
 
@@ -15,5 +17,8 @@ class Migration(migrations.Migration):
             model_name='catalogindexpage',
             name='filter_categories',
             field=modelcluster.fields.ParentalManyToManyField(blank=True, help_text='Top-level categories whose subcategories are shown as filter groups. Leave empty to use every category in use.', limit_choices_to={'children__isnull': False, 'parent__isnull': True}, to='sites_conformes_core.category', verbose_name='Category groups'),
+        ),
+        migrations.RunPython(
+            keep_root_filter_categories("sites_conformes_core", "CatalogIndexPage"), migrations.RunPython.noop
         ),
     ]
