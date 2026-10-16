@@ -99,6 +99,12 @@ msgstr "Page de base"
 msgid "Base pages"
 msgstr "Pages de base"
 
+msgid "Entries per page"
+msgstr "Entrées par page"
+
+msgid "Filter by tag"
+msgstr "Filtrer par étiquette"
+
 msgid "New"
 msgstr "Nouveau"
 
@@ -1112,9 +1118,6 @@ msgstr "Nombre d’articles"
 msgid "Filter by category"
 msgstr "Filtrer par catégorie"
 
-msgid "Filter by tag"
-msgstr "Filtrer par étiquette"
-
 msgid "Filter by author"
 msgstr "Filtrer par auteur"
 
@@ -1320,9 +1323,6 @@ msgstr "Grand (200px)"
 
 msgid "Content page"
 msgstr "Page de contenu"
-
-msgid "Entries per page"
-msgstr "Entrées par page"
 
 msgid "Single filter selection"
 msgstr "Autorise la sélection d’un seul filtre à la fois"
