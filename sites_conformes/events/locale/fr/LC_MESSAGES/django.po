@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-13 11:10+0200\n"
-"PO-Revision-Date: 2026-10-13 11:29+0200\n"
+"PO-Revision-Date: 2026-10-19 11:52+0200\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,16 +17,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 
 msgid "Start date"
 msgstr "Date de début"
 
 msgid "End date"
 msgstr "Date de fin"
-
-msgid "The end date must be on or after the start date."
-msgstr "La date de fin doit être identique ou postérieure à la date de début."
 
 msgid "The end date must be on or after the start date."
 msgstr "La date de fin doit être identique ou postérieure à la date de début."
@@ -166,19 +163,6 @@ msgstr "Date de début :"
 
 msgid "End date:"
 msgstr "Date de fin :"
-
-msgid "selected"
-msgstr "étiquette sélectionnée"
-
-msgid "unselected"
-msgstr "étiquette non sélectionnée"
-
-msgid "Filter by period"
-msgstr "Filtrer par période"
-
-msgctxt "submit button"
-msgid "Filter"
-msgstr "Filtrer"
 
 msgid "selected"
 msgstr "étiquette sélectionnée"
