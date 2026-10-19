@@ -19,15 +19,15 @@ LOCALIZE_PATH_ID_NAMESPACE = uuid.UUID("fcab004a-2b50-11ea-978f-2e728ce88125")
 # Every legacy CenteredImageBlock value has this key: rows without it are skipped in SQL,
 # and the others are loaded in small chunks, to keep memory low on large databases
 LEGACY_MARKER = "image_ratio"
-CHUNK_SIZE = 50
+CHUNK_SIZE = 10
 
 
 def contains_legacy_marker(field_name):
     return Q(**{f"{field_name}_as_text__contains": LEGACY_MARKER})
 
 
-def annotate_as_text(queryset, field_names):
-    return queryset.annotate(**{f"{name}_as_text": Cast(name, TextField()) for name in field_names})
+def alias_as_text(queryset, field_names):
+    return queryset.alias(**{f"{name}_as_text": Cast(name, TextField()) for name in field_names})
 
 
 def migrate_centered_image_alt(data):
@@ -94,7 +94,7 @@ def migrate_pages(apps, schema_editor):
         legacy_filter = Q()
         for field_name in stream_fields:
             legacy_filter |= contains_legacy_marker(field_name)
-        queryset = annotate_as_text(model.objects.all(), stream_fields).filter(legacy_filter)
+        queryset = alias_as_text(model.objects.all(), stream_fields).filter(legacy_filter)
 
         for instance in queryset.iterator(chunk_size=CHUNK_SIZE):
             updated_fields = []
@@ -112,7 +112,7 @@ def migrate_revisions(apps, schema_editor):
     # Revisions (drafts, scheduled pages...) store StreamFields as JSON strings
     Revision = apps.get_model("wagtailcore", "Revision")
 
-    queryset = annotate_as_text(Revision.objects.only("pk", "content"), ["content"]).filter(
+    queryset = alias_as_text(Revision.objects.only("pk", "content"), ["content"]).filter(
         contains_legacy_marker("content")
     )
 
