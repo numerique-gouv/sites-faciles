@@ -75,7 +75,7 @@
 
 {% block burger_menu %}
   {% translate "Search" as search_label %}
-  <nav role=navigation class="fr-header__navbar">
+  <nav role=navigation class="fr-header__navbar" aria-label="{{ search_label }}">
     {% if settings.sites_conformes_core.CmsDsfrConfig.search_bar %}
       <button class="fr-btn--search fr-btn"
               data-fr-opened="false"

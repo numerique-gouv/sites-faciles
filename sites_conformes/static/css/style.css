@@ -213,6 +213,12 @@ label.fr-tag[aria-pressed="false"] {
     color: var(--text-default-grey);
 }
 
+.cmsfr-hidden-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Custom styling for user menu */
 
 .fr-usermenu {

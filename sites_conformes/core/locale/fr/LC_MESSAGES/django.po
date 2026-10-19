@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-30 16:05+0200\n"
-"PO-Revision-Date: 2026-08-29 10:58+0200\n"
+"POT-Creation-Date: 2026-10-19 12:55+0200\n"
+"PO-Revision-Date: 2026-10-19 12:56+0200\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.10\n"
 
 msgid "Show title in header image?"
 msgstr "Afficher le titre sur l’image d’en-tête ?"
@@ -1783,14 +1783,14 @@ msgstr "Source :"
 msgid "- Page %(current)s / %(total)s"
 msgstr "- Page %(current)s / %(total)s"
 
-msgid "Filters"
-msgstr "Filtres"
-
 msgid "selected"
 msgstr "étiquette sélectionnée"
 
 msgid "unselected"
 msgstr "étiquette non-sélectionnée"
+
+msgid "Filters"
+msgstr "Filtres"
 
 msgid "Pages"
 msgstr "Pages"
@@ -1841,6 +1841,9 @@ msgstr "Retourner à l’accueil"
 
 msgid "Sitemap"
 msgstr "Plan du site"
+
+msgid "Alphabetical"
+msgstr "Alphabétique"
 
 msgid "Select icon"
 msgstr "Sélectionner une icône"
