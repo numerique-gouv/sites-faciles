@@ -87,17 +87,21 @@
     {% endif %}
   {% endwith %}
 
-  <div class="fr-container fr-my-4w">
-    <ul class="fr-tags-group">
-      {% for tag in page.tags.all|dictsort:"slug" %}
-        <li>
-          <a class="fr-tag"
-             target="_self"
-             href="{% pageurl page.get_parent %}{% toggle_url_filter tag=tag %}">{{ tag }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+  {% with tags=page.tags.all|dictsort:"slug" %}
+    {% if tags %}
+      <div class="fr-container fr-my-4w">
+        <ul class="fr-tags-group">
+          {% for tag in tags %}
+            <li>
+              <a class="fr-tag"
+                 target="_self"
+                 href="{% pageurl page.get_parent %}{% toggle_url_filter tag=tag %}">{{ tag }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endwith %}
 
   {% if settings.sites_conformes_core.CmsDsfrConfig.show_share_links and settings.sites_conformes_core.CmsDsfrConfig.share_links_blog_posts %}
     {% include "sites_conformes_core/blocks/share.html" %}

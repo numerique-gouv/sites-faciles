@@ -108,17 +108,21 @@
             {% endif %}
           </ul>
 
-          <div class="fr-card__start">
-            <ul class="fr-tags-group">
-              {% for tag in page.tags.all|dictsort:"slug" %}
-                <li>
-                  <a class="fr-tag"
-                    target="_self"
-                    href="{% pageurl page.get_parent %}?tag={{ tag.slug }}">{{ tag }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
+          {% with tags=page.tags.all|dictsort:"slug" %}
+            {% if tags %}
+              <div class="fr-card__start">
+                <ul class="fr-tags-group">
+                  {% for tag in tags %}
+                    <li>
+                      <a class="fr-tag"
+                         target="_self"
+                         href="{% pageurl page.get_parent %}?tag={{ tag.slug }}">{{ tag }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          {% endwith %}
         </div>
 
         <div class="fr-card__footer">
