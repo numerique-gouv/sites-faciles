@@ -3,6 +3,8 @@ import uuid
 
 from django.apps import apps as global_apps
 from django.db import migrations
+from django.db.models import Q, TextField
+from django.db.models.functions import Cast
 from wagtail.fields import StreamField
 
 # Keys identifying a CenteredImageBlock value saved before its "alt" field was removed
@@ -13,6 +15,19 @@ LEGACY_TO_IMAGE_BLOCK_PATHS = {"alt": "image.alt_text", "image": "image.image"}
 
 # Same namespace as wagtail_localize.models.TranslationContext._get_path_id
 LOCALIZE_PATH_ID_NAMESPACE = uuid.UUID("fcab004a-2b50-11ea-978f-2e728ce88125")
+
+# Every legacy CenteredImageBlock value has this key: rows without it are skipped in SQL,
+# and the others are loaded in small chunks, to keep memory low on large databases
+LEGACY_MARKER = "image_ratio"
+CHUNK_SIZE = 50
+
+
+def contains_legacy_marker(field_name):
+    return Q(**{f"{field_name}_as_text__contains": LEGACY_MARKER})
+
+
+def annotate_as_text(queryset, field_names):
+    return queryset.annotate(**{f"{name}_as_text": Cast(name, TextField()) for name in field_names})
 
 
 def migrate_centered_image_alt(data):
@@ -76,7 +91,12 @@ def migrate_pages(apps, schema_editor):
         if not stream_fields:
             continue
 
-        for instance in model.objects.all().iterator():
+        legacy_filter = Q()
+        for field_name in stream_fields:
+            legacy_filter |= contains_legacy_marker(field_name)
+        queryset = annotate_as_text(model.objects.all(), stream_fields).filter(legacy_filter)
+
+        for instance in queryset.iterator(chunk_size=CHUNK_SIZE):
             updated_fields = []
             for field_name in stream_fields:
                 raw_data = list(getattr(instance, field_name).raw_data)
@@ -92,7 +112,11 @@ def migrate_revisions(apps, schema_editor):
     # Revisions (drafts, scheduled pages...) store StreamFields as JSON strings
     Revision = apps.get_model("wagtailcore", "Revision")
 
-    for revision in Revision.objects.all().iterator():
+    queryset = annotate_as_text(Revision.objects.only("pk", "content"), ["content"]).filter(
+        contains_legacy_marker("content")
+    )
+
+    for revision in queryset.iterator(chunk_size=CHUNK_SIZE):
         content = revision.content
         updated = False
 
@@ -122,7 +146,11 @@ def migrate_translation_sources(apps, schema_editor):
     except LookupError:
         return
 
-    for source in TranslationSource.objects.all().iterator():
+    queryset = TranslationSource.objects.only("pk", "object_id", "content_json").filter(
+        content_json__contains=LEGACY_MARKER
+    )
+
+    for source in queryset.iterator(chunk_size=CHUNK_SIZE):
         content = json.loads(source.content_json)
         legacy_paths = []
 
