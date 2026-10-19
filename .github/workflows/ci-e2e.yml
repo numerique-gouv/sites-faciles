@@ -1,6 +1,11 @@
 name: 🎭 CI - E2E tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  # labeled/unlabeled so adding or removing `visual-change` re-runs the checks.
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 jobs:
   # Generate the trusted visual baseline from the target branch (main). The
@@ -21,7 +26,9 @@ jobs:
 
   # Render the full suite against the PR branch: functional tests assert
   # behavior for real, and each @regression test also compares its screenshot
-  # against the baseline. Any test failure or visual diff fails this job.
+  # against the baseline. Any test failure or visual diff fails this job, except
+  # visual diffs on a PR labelled `visual-change` (intended visual changes),
+  # which are reported as a warning with the diff images uploaded.
   compare:
     name: Compare (current branch)
     needs: baseline
@@ -29,6 +36,7 @@ jobs:
     with:
       ref: ${{ github.ref }}
       compare: true
+      allow_visual_diff: ${{ contains(github.event.pull_request.labels.*.name, 'visual-change') }}
     permissions:
       contents: read
 

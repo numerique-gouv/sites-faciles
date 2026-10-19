@@ -9,6 +9,10 @@ on:
       compare:
         required: true
         type: boolean
+      allow_visual_diff:
+        required: false
+        type: boolean
+        default: false
 
 env:
   DJANGO_SETTINGS_MODULE: config.settings_test
@@ -115,10 +119,22 @@ jobs:
       # tests execute for real and assert behavior on the new code;
       # @regression tests additionally assert their screenshot against the
       # baseline downloaded above (see fixtures.ts). NO --update-snapshots
-      # here, so a visual diff makes this step (and the job) fail.
+      # here, so a visual diff makes this step (and the job) fail — unless the
+      # PR carries the `visual-change` label (allow_visual_diff), in which case
+      # diffs are only reported (see fixtures.ts and the warning step below).
       - name: Run Playwright tests (full suite)
         if: inputs.compare
+        env:
+          ALLOW_VISUAL_DIFF: ${{ inputs.allow_visual_diff }}
         run: npx playwright test
+
+      - name: Warn about accepted visual diffs
+        if: inputs.compare && inputs.allow_visual_diff && !cancelled()
+        shell: bash
+        run: |
+          if find test-results -name '*-diff.png' 2>/dev/null | grep -q .; then
+            echo "::warning title=Visual diff::Visual differences were accepted via the visual-change label. Review the playwright-diffs-compare artifact."
+          fi
 
       - name: Upload baseline screenshots
         if: ${{ !inputs.compare }}
@@ -137,9 +153,10 @@ jobs:
 
       # On a comparison failure Playwright writes the expected/actual/diff PNGs
       # plus the error context under test-results/. Upload that whole tree so a
-      # visual regression is reviewable from the run page.
+      # visual regression is reviewable from the run page. Also uploaded when
+      # visual diffs were accepted, so they can still be reviewed.
       - name: Upload diff artifacts on failure
-        if: failure()
+        if: failure() || (inputs.compare && inputs.allow_visual_diff && !cancelled())
         uses: actions/upload-artifact@v4
         with:
           name: playwright-diffs-${{ inputs.compare && 'compare' || 'baseline' }}

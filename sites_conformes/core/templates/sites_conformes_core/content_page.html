@@ -51,11 +51,19 @@
 
   {% include "sites_conformes_core/blocks/blocks_stream.html" with stream=page.body %}
 
-  <ul class="fr-container fr-my-4w">
-    {% for tag in page.tags.all|dictsort:"slug" %}
-      <a class="fr-tag" target="_self" href="{% url 'global_tag' tag.slug %}">{{ tag }}</a>
-    {% endfor %}
-  </ul>
+  {% with tags=page.tags.all|dictsort:"slug" %}
+    {% if tags %}
+      <div class="fr-container fr-my-4w">
+        <ul class="fr-tags-group">
+          {% for tag in tags %}
+            <li>
+              <a class="fr-tag" target="_self" href="{% url 'global_tag' tag.slug %}">{{ tag }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endwith %}
 
   {% if settings.sites_conformes_core.CmsDsfrConfig.show_share_links and settings.sites_conformes_core.CmsDsfrConfig.share_links_content_pages %}
     {% include "sites_conformes_core/blocks/share.html" %}
