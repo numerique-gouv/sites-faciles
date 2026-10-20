@@ -132,14 +132,22 @@ if [[ -z "$DUMP_FILE" ]]; then
 fi
 
 # Open the database tunnel
-DB_URL=`sc_retry env-get SCALINGO_POSTGRESQL_URL | sed -E "s#@[^/]+/#@127.0.0.1:${TUNNEL_PORT}/#"`
-sc db-tunnel -p ${TUNNEL_PORT} SCALINGO_POSTGRESQL_URL > ${WORK_DIR}/tunnel.log 2>&1 &
+REMOTE_DB_URL=`sc_retry env-get SCALINGO_POSTGRESQL_URL`
+# Called without the sc function: in the background, a function runs in a subshell
+# and $! would be the PID of that subshell, so that the tunnel would survive the kill
+scalingo --region ${REGION} --app ${APP} db-tunnel -p ${TUNNEL_PORT} SCALINGO_POSTGRESQL_URL > ${WORK_DIR}/tunnel.log 2>&1 &
 TUNNEL_PID=$!
 trap 'kill ${TUNNEL_PID} 2> /dev/null || true' EXIT
 
-echo "Opening the database tunnel on port ${TUNNEL_PORT}"
+echo "Opening the database tunnel"
+DB_URL=""
 for i in $(seq 1 30); do
-    psql "${DB_URL}" -Atqc "SELECT 1" &> /dev/null && break
+    # The CLI uses the next free port when the requested one is taken: read the actual one in its output
+    tunnel_port=`grep -oE '127\.0\.0\.1:[0-9]+' ${WORK_DIR}/tunnel.log | head -1 | cut -d: -f2 || true`
+    if [[ -n "$tunnel_port" ]]; then
+        DB_URL=`echo "${REMOTE_DB_URL}" | sed -E "s#@[^/]+/#@127.0.0.1:${tunnel_port}/#"`
+        psql "${DB_URL}" -Atqc "SELECT 1" &> /dev/null && break
+    fi
     if [[ $i -eq 30 ]]; then
         echo "Could not connect through the tunnel, see ${WORK_DIR}/tunnel.log" 1>&2
         exit 1
