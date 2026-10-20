@@ -387,6 +387,11 @@ Voir aussi {doc}`../donnees/sauvegarde-restauration`.
 
 ## Revenir à une version précédente
 
+:::{important}
+Ce script est encore expérimental, si vous rencontrez des problèmes,
+remontez-les nous.
+:::
+
 Si une mise à jour pose problème, la recette `just scalingo-rollback` remet
 l’application dans l’état d’une sauvegarde de la base de données,
 et redéploie le code d’une version donnée :
