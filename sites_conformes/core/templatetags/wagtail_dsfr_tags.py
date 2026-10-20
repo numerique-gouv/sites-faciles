@@ -54,7 +54,7 @@ def canonical_url(context):
 
     if site:
         hostname = site.hostname
-        if site.port != 80:
+        if site.port not in [80, 443]:
             hostname = f"{hostname}:{site.port}"
     else:
         hostname = request.get_host()

@@ -1,13 +1,13 @@
 from datetime import date, datetime
 
 from django.template import Context
-from django.test import RequestFactory, SimpleTestCase
+from django.test import RequestFactory, SimpleTestCase, override_settings
 from django.utils.translation import override
 from wagtail.models import Locale, Page, Site
 from wagtail.test.utils import WagtailPageTestCase
 
 from sites_conformes.core.models import CmsDsfrConfig, ContentPage, LanguageSelectorItem
-from sites_conformes.core.templatetags.wagtail_dsfr_tags import toggle_url_filter
+from sites_conformes.core.templatetags.wagtail_dsfr_tags import canonical_url, toggle_url_filter
 
 
 class LanguageSelectorTagBaseTestCase(WagtailPageTestCase):
@@ -313,3 +313,33 @@ class EventDateRangeTagTestCase(SimpleTestCase):
 
         self.assertEqual(event_date_range(None, date(2026, 1, 5)), "")
         self.assertEqual(event_date_range(date(2026, 1, 5), None), "")
+
+
+@override_settings(HOST_PROTO="https")
+class CanonicalUrlTagTestCase(WagtailPageTestCase):
+    def setUp(self):
+        self.site = Site.objects.get(is_default_site=True)
+        self.factory = RequestFactory()
+
+    def _canonical(self, path="/test-page/"):
+        request = self.factory.get(path, SERVER_NAME=self.site.hostname, SERVER_PORT=self.site.port)
+        return canonical_url(Context({"request": request}))
+
+    def _set_port(self, port):
+        self.site.port = port
+        self.site.save()
+
+    def test_port_80_is_omitted(self):
+        self._set_port(80)
+        self.assertEqual(self._canonical(), f"https://{self.site.hostname}/test-page/")
+
+    def test_port_443_is_omitted(self):
+        self._set_port(443)
+        self.assertEqual(self._canonical(), f"https://{self.site.hostname}/test-page/")
+
+    def test_custom_port_is_kept(self):
+        self._set_port(8000)
+        self.assertEqual(self._canonical(), f"https://{self.site.hostname}:8000/test-page/")
+
+    def test_no_request_returns_empty_string(self):
+        self.assertEqual(canonical_url(Context({})), "")
