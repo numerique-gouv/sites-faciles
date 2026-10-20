@@ -118,6 +118,10 @@ sync-tarteaucitron:
 test app="":
     {{docker_cmd}} {{uv_run}} python manage.py test {{app}} --buffer --parallel --settings config.settings_test
 
+# Slow tests to run before a release (e.g. memory used by the migrations)
+test-release:
+    {{docker_cmd}} env RUN_RELEASE_TESTS=1 {{uv_run}} python manage.py test sites_conformes.core.tests.test_migrate_command.MigrateMemoryTestCase --settings config.settings_test
+
 unittest app="":
     {{docker_cmd}} {{uv_run}} python manage.py test {{app}} --settings config.settings_test
 
