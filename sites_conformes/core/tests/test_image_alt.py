@@ -47,13 +47,13 @@ class MigrateCenteredImageAltTestCase(TestCase):
         self.assertNotIn("alt", value)
         self.assertEqual(value["image"], {"image": 12, "decorative": False, "alt_text": "Un graphique"})
 
-    def test_empty_alt_is_removed_and_image_kept_as_id(self):
+    def test_empty_alt_converts_image_to_decorative_image_block(self):
         value = legacy_centered_image(12, "")
 
         self.assertTrue(migration.migrate_centered_image_alt(value))
 
         self.assertNotIn("alt", value)
-        self.assertEqual(value["image"], 12)
+        self.assertEqual(value["image"], {"image": 12, "decorative": True, "alt_text": ""})
 
     def test_existing_image_alt_text_is_kept(self):
         value = legacy_centered_image({"image": 12, "decorative": False, "alt_text": "Déjà saisi"}, "Ancien alt")
@@ -133,6 +133,29 @@ class MigrateCenteredImageAltPagesTestCase(WagtailPageTestCase):
 
         response = self.client.get(self.page.url)
         self.assertContains(response, 'alt="Un graphique"')
+
+    def test_page_mixing_empty_and_filled_alt_can_be_loaded(self):
+        # Wagtail fails to load a stream mixing image IDs and ImageBlock values (e.g. in update_index)
+        legacy_body = [
+            {"type": "image", "value": legacy_centered_image(self.image.pk, "Un graphique")},
+            {"type": "image", "value": legacy_centered_image(self.image.pk, "")},
+        ]
+        with connection.cursor() as cursor:
+            cursor.execute(
+                f"UPDATE {ContentPage._meta.db_table} SET body = %s WHERE page_ptr_id = %s",
+                [json.dumps(legacy_body), self.page.pk],
+            )
+
+        migration.migrate_pages(apps, None)
+
+        self.page.refresh_from_db()
+        images = [block.value["image"] for block in self.page.body]
+        self.assertEqual([image.contextual_alt_text for image in images], ["Un graphique", ""])
+        self.assertEqual([image.decorative for image in images], [False, True])
+
+        response = self.client.get(self.page.url)
+        imgs = BeautifulSoup(response.content, "html.parser").select("figure img")
+        self.assertEqual([img["alt"] for img in imgs], ["Un graphique", ""])
 
     def test_translation_source_is_migrated(self):
         # Rebuild what wagtail-localize stored before the migration: the legacy content,
