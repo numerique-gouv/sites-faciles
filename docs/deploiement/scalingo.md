@@ -383,3 +383,36 @@ qui ne sont pas touchés par une mise à jour du code.
 automatiquement par la plateforme. Vous pouvez consulter et télécharger ces
 sauvegardes depuis l’interface de l’addon PostgreSQL, dans votre navigateur.
 Voir aussi {doc}`../donnees/sauvegarde-restauration`.
+:::
+
+## Revenir à une version précédente
+
+Si une mise à jour pose problème, la recette `just scalingo-rollback` remet
+l’application dans l’état d’une sauvegarde de la base de données,
+et redéploie le code d’une version donnée :
+
+```sh
+just scalingo-rollback <nom-de-l-app> [version] [région]
+# par exemple :
+just scalingo-rollback mon-site v4.2.0
+```
+
+La version est un tag ou une branche du dépôt (par défaut `production`)
+et la région est par défaut `osc-fr1`.
+
+Le script, qui nécessite la CLI Scalingo, `psql`, `pg_restore`
+et la variable `BACKUP_DIR` (voir {doc}`../donnees/sauvegarde-restauration`) :
+
+1. liste les derniers déploiements et les sauvegardes disponibles,
+et vous demande laquelle restaurer ;
+2. télécharge cette sauvegarde et repère les tables créées depuis
+(par des migrations plus récentes), qui seront supprimées ;
+3. après confirmation, crée une sauvegarde de sécurité de l’état actuel,
+arrête les conteneurs web, restaure la sauvegarde, redéploie la version
+demandée puis relance les conteneurs.
+
+:::{warning}
+Les modifications de contenu faites depuis la sauvegarde choisie sont perdues.
+Si le déploiement automatique depuis GitHub est activé,
+le prochain push sur la branche liée redéploiera le code correspondant.
+:::
