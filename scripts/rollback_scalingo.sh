@@ -2,7 +2,12 @@
 
 # Roll a Scalingo app back to a database backup and to the code of a given git ref
 #
-# Usage: rollback_scalingo.sh APP [REF=production] [REGION=osc-fr1]
+# Usage: rollback_scalingo.sh APP [REGION=osc-fr1] [REF]
+#
+# REGION can be "-" to use the default region while passing a REF.
+#
+# By default, REF is the code of the last successful deployment before the backup:
+# the content of the backup may not be readable by older code.
 #
 # Tables created after the chosen backup (by newer migrations) are not part of the dump,
 # so `pg_restore --clean` would leave them in place: they are detected and dropped first.
@@ -17,14 +22,16 @@ set +a
 set -euo pipefail
 
 APP=${1:-}
-REF=${2:-production}
-REGION=${3:-osc-fr1}
+REGION=${2:-osc-fr1}
+if [[ "$REGION" == "-" ]]; then
+    REGION=osc-fr1
+fi
+REF=${3:-}
 TUNNEL_PORT=${TUNNEL_PORT:-10000}
 REPO_URL="https://github.com/numerique-gouv/sites-conformes.git"
-REPO_ARCHIVE_URL="https://github.com/numerique-gouv/sites-conformes/archive/${REF}.tar.gz"
 
 if [[ -z "$APP" ]]; then
-    echo "Usage: $0 APP [REF=production] [REGION=osc-fr1]" 1>&2
+    echo "Usage: $0 APP [REGION=osc-fr1] [REF]" 1>&2
     exit 1
 fi
 
@@ -72,8 +79,10 @@ sc_retry() {
                 return 0
             fi
         else
-            # The CLI writes its errors on stdout: keep a copy to show them when stdout is piped
-            if sc "$@" | tee ${output_file}; then
+            # The CLI writes its errors on stdout: only pass on the output of the attempt that
+            # succeeds, so that the errors end up on stderr instead of in the captured output
+            if sc "$@" > ${output_file}; then
+                cat ${output_file}
                 return 0
             fi
             cat ${output_file} 1>&2
@@ -86,11 +95,6 @@ sc_retry() {
     echo "Scalingo command failed after ${SC_RETRIES} attempts: $*" 1>&2
     return 1
 }
-
-if ! curl -sfIL -o /dev/null ${REPO_ARCHIVE_URL}; then
-    echo "Git ref ${REF} not found on GitHub (${REPO_ARCHIVE_URL})" 1>&2
-    exit 1
-fi
 
 WORK_DIR=${BACKUP_DIR}/rollback-${APP}-`date '+%Y%m%d-%H%M%S'`
 mkdir -p ${WORK_DIR}
@@ -106,7 +110,8 @@ echo "PostgreSQL addon: ${pg_uuid}"
 # Choose the backup
 echo
 echo "Recent deployments:"
-sc_retry deployments | head -n 12
+DEPLOYMENTS=`sc_retry deployments | sed 's/\x1b\[[0-9;]*m//g'`
+echo "${DEPLOYMENTS}" | head -n 12
 echo
 echo "Available backups:"
 # Fetched once: the list is also used to decide whether a safety backup is needed
@@ -121,6 +126,40 @@ if [[ -z "$BACKUP_ID" ]]; then
     exit 1
 fi
 
+# Code that was running when the backup was made: the last successful deployment before it
+# (the dates of the deployments are in UTC)
+backup_date=`echo "${BACKUPS}" | sed 's/\x1b\[[0-9;]*m//g' \
+    | awk -F '│' -v id="${BACKUP_ID}" 'index($2, id) {print $3; exit}' | xargs`
+if [[ -z "$backup_date" ]]; then
+    echo "Backup ${BACKUP_ID} not found in the list of backups" 1>&2
+    exit 1
+fi
+backup_timestamp=`date -d "${backup_date}" +%s`
+BACKUP_REF=""
+while IFS='│' read -r _ _ deployment_date _ _ deployment_ref deployment_status _; do
+    deployment_status=`echo ${deployment_status}`
+    deployment_date=`echo ${deployment_date}`
+    if [[ "$deployment_status" == "success" ]] \
+        && (( `date -d "${deployment_date} UTC" +%s` <= backup_timestamp )); then
+        BACKUP_REF=`echo ${deployment_ref}`
+        break
+    fi
+done < <(echo "${DEPLOYMENTS}" | grep -E '│ *[0-9]{4}/[0-9]{2}/[0-9]{2} ')
+if [[ -z "$REF" ]]; then
+    if [[ -z "$BACKUP_REF" ]]; then
+        echo "No successful deployment found before the backup (${backup_date}) in the recent deployments," \
+            "pass the git ref to deploy as a parameter" 1>&2
+        exit 1
+    fi
+    REF=${BACKUP_REF}
+fi
+
+REPO_ARCHIVE_URL="https://github.com/numerique-gouv/sites-conformes/archive/${REF}.tar.gz"
+if ! curl -sfIL -o /dev/null ${REPO_ARCHIVE_URL}; then
+    echo "Git ref ${REF} not found on GitHub (${REPO_ARCHIVE_URL})" 1>&2
+    exit 1
+fi
+
 # Download and extract the backup
 echo "Downloading backup ${BACKUP_ID} to ${WORK_DIR}"
 sc_retry --addon ${pg_uuid} backups-download --backup ${BACKUP_ID} --output ${WORK_DIR}/backup.tar.gz
@@ -131,35 +170,71 @@ if [[ -z "$DUMP_FILE" ]]; then
     exit 1
 fi
 
+# Read the tables of the dump once, and check that this pg_restore can read it at all:
+# otherwise every table of the database would be taken for a table created since the backup
+if ! pg_restore -l ${DUMP_FILE} > ${WORK_DIR}/dump.list; then
+    echo "pg_restore `pg_restore --version | awk '{print $3}'` cannot read the dump," \
+        "it was probably made by a newer PostgreSQL: install a matching postgresql-client" 1>&2
+    exit 1
+fi
+DUMP_TABLES=`awk '$4 == "TABLE" && $5 == "public" {print $6}' ${WORK_DIR}/dump.list | LC_ALL=C sort -u`
+if [[ -z "$DUMP_TABLES" ]]; then
+    echo "No table found in the dump, see ${WORK_DIR}/dump.list" 1>&2
+    exit 1
+fi
+
 # Open the database tunnel
 REMOTE_DB_URL=`sc_retry env-get SCALINGO_POSTGRESQL_URL`
-# Called without the sc function: in the background, a function runs in a subshell
-# and $! would be the PID of that subshell, so that the tunnel would survive the kill
-scalingo --region ${REGION} --app ${APP} db-tunnel -p ${TUNNEL_PORT} SCALINGO_POSTGRESQL_URL > ${WORK_DIR}/tunnel.log 2>&1 &
-TUNNEL_PID=$!
-trap 'kill ${TUNNEL_PID} 2> /dev/null || true' EXIT
+# Seconds to wait for each attempt: the CLI can take about 30s to get its access token
+TUNNEL_TIMEOUT=${TUNNEL_TIMEOUT:-60}
+
+# Must not be run in a subshell (nor the sc function in the background):
+# $! would then be the PID of that subshell, and the tunnel would survive the kill
+open_tunnel() {
+    scalingo --region ${REGION} --app ${APP} db-tunnel -p ${TUNNEL_PORT} SCALINGO_POSTGRESQL_URL > ${WORK_DIR}/tunnel.log 2>&1 &
+    TUNNEL_PID=$!
+}
 
 echo "Opening the database tunnel"
+open_tunnel
+trap 'kill ${TUNNEL_PID} 2> /dev/null || true' EXIT
+
 DB_URL=""
-for i in $(seq 1 30); do
+attempt=1
+elapsed=0
+while true; do
     # The CLI uses the next free port when the requested one is taken: read the actual one in its output
     tunnel_port=`grep -oE '127\.0\.0\.1:[0-9]+' ${WORK_DIR}/tunnel.log | head -1 | cut -d: -f2 || true`
     if [[ -n "$tunnel_port" ]]; then
         DB_URL=`echo "${REMOTE_DB_URL}" | sed -E "s#@[^/]+/#@127.0.0.1:${tunnel_port}/#"`
         psql "${DB_URL}" -Atqc "SELECT 1" &> /dev/null && break
     fi
-    if [[ $i -eq 30 ]]; then
-        echo "Could not connect through the tunnel, see ${WORK_DIR}/tunnel.log" 1>&2
-        exit 1
+    if ! kill -0 ${TUNNEL_PID} 2> /dev/null || [[ $elapsed -ge $TUNNEL_TIMEOUT ]]; then
+        if [[ -n "$DB_URL" ]]; then
+            psql "${DB_URL}" -Atqc "SELECT 1" > /dev/null || true
+        fi
+        kill ${TUNNEL_PID} 2> /dev/null || true
+        cat ${WORK_DIR}/tunnel.log 1>&2
+        if [[ $attempt -ge ${SC_RETRIES} ]]; then
+            echo "Could not connect through the tunnel after ${SC_RETRIES} attempts, see the output above" 1>&2
+            exit 1
+        fi
+        echo "Database tunnel failed (attempt ${attempt}/${SC_RETRIES}), retrying in $((attempt * 5))s" 1>&2
+        sleep $((attempt * 5))
+        attempt=$((attempt + 1))
+        elapsed=0
+        open_tunnel
     fi
     sleep 1
+    elapsed=$((elapsed + 1))
 done
+echo "Database tunnel open on port ${tunnel_port}"
 
 # Tables present in the database but absent from the dump
 # (sort and comm must share the same collation: the C locale avoids locale-dependent orders)
 extra_tables() {
     LC_ALL=C comm -13 \
-        <(pg_restore -l ${DUMP_FILE} | awk '$4 == "TABLE" && $5 == "public" {print $6}' | LC_ALL=C sort -u) \
+        <(echo "${DUMP_TABLES}") \
         <(psql "${DB_URL}" -Atc "SELECT tablename FROM pg_tables WHERE schemaname = 'public'" | LC_ALL=C sort -u)
 }
 EXTRA_TABLES=`extra_tables`
@@ -169,6 +244,10 @@ echo "================================================================"
 echo " App:     ${APP} (${REGION})"
 echo " Backup:  ${BACKUP_ID}"
 echo " Code:    ${REF}"
+if [[ "$REF" != "$BACKUP_REF" ]]; then
+    echo "          /!\\ the code deployed when the backup was made is ${BACKUP_REF:-unknown}," \
+        "the content of the backup may not be readable by older code"
+fi
 echo " Tables created since the backup, to be dropped:"
 echo "${EXTRA_TABLES:-  (none)}" | sed 's/^/   /'
 echo
@@ -180,6 +259,42 @@ if [[ "$CONFIRM" != "$APP" ]]; then
     exit 1
 fi
 
+backup_ids() {
+    echo "$1" | sed 's/\x1b\[[0-9;]*m//g' | awk -F '│' '$2 ~ /[0-9a-f]{24}/ {gsub(/ /, "", $2); print $2}'
+}
+
+# Wait for a backup absent from the list fetched at the beginning to be done
+wait_for_safety_backup() {
+    local known_ids=`backup_ids "${BACKUPS}"`
+    local i list backup_id status
+    for i in $(seq 1 180); do
+        list=`sc_retry --addon ${pg_uuid} backups | sed 's/\x1b\[[0-9;]*m//g'`
+        backup_id=`backup_ids "${list}" | grep -vxF "${known_ids}" | head -1 || true`
+        if [[ -z "$backup_id" ]]; then
+            if [[ $i -ge 6 ]]; then
+                echo "No safety backup was created, run the script again" 1>&2
+                exit 1
+            fi
+        else
+            status=`echo "${list}" | awk -F '│' -v id="${backup_id}" 'index($2, id) {gsub(/ /, "", $5); print $5}'`
+            case "$status" in
+                done)
+                    echo "Safety backup ${backup_id} done"
+                    return 0
+                    ;;
+                error|failed)
+                    echo "The safety backup ${backup_id} failed (${status})" 1>&2
+                    exit 1
+                    ;;
+            esac
+            echo "Safety backup ${backup_id}: ${status}, waiting"
+        fi
+        sleep 10
+    done
+    echo "The safety backup is still not done after 30 minutes, aborting" 1>&2
+    exit 1
+}
+
 # Skip the safety backup if a completed one is recent enough (the restored backup does not count)
 SAFETY_BACKUP_MAX_AGE=$((6 * 3600))
 last_backup_date=`echo "${BACKUPS}" | sed 's/\x1b\[[0-9;]*m//g' \
@@ -189,7 +304,12 @@ if [[ -n "$last_backup_date" ]] \
     echo "Skipping the safety backup, a backup was made less than 6 hours ago (${last_backup_date})"
 else
     echo "Creating a safety backup of the current database"
-    sc --addon ${pg_uuid} backups-create
+    if ! sc --addon ${pg_uuid} backups-create; then
+        # The CLI follows the backup until it is done and can time out meanwhile, although the
+        # backup was created: look for it in the list rather than create another one
+        echo "Checking whether the safety backup was created anyway" 1>&2
+        wait_for_safety_backup
+    fi
 fi
 
 # Stop the web containers so that the current code does not write during the restoration
@@ -223,10 +343,15 @@ trap 'sc_retry scale web:${WEB_AMOUNT}' EXIT
 
 echo "Deploying ${REF}"
 # Archive deployments can fail in the apt buildpack: go through the GitHub integration when possible
-# (it can only deploy branches)
-if sc integration-link 2> /dev/null | grep -q "Repository:" \
-    && git ls-remote --exit-code --heads ${REPO_URL} ${REF} &> /dev/null; then
-    sc integration-link-manual-deploy --follow ${REF}
+# (it can only deploy branches: use a branch whose head is REF when REF is a commit)
+if git ls-remote --exit-code --heads ${REPO_URL} ${REF} &> /dev/null; then
+    DEPLOY_BRANCH=${REF}
+else
+    DEPLOY_BRANCH=`git ls-remote --heads ${REPO_URL} \
+        | awk -v ref="${REF}" 'index($1, ref) == 1 {sub("refs/heads/", "", $2); print $2; exit}' || true`
+fi
+if [[ -n "$DEPLOY_BRANCH" ]] && sc integration-link 2> /dev/null | grep -q "Repository:"; then
+    sc integration-link-manual-deploy --follow ${DEPLOY_BRANCH}
 else
     sc deploy ${REPO_ARCHIVE_URL} ${REF}
 fi

@@ -392,13 +392,15 @@ l’application dans l’état d’une sauvegarde de la base de données,
 et redéploie le code d’une version donnée :
 
 ```sh
-just scalingo-rollback <nom-de-l-app> [version] [région]
+just scalingo-rollback <nom-de-l-app> [région] [version]
 # par exemple :
-just scalingo-rollback mon-site v4.2.0
+just scalingo-rollback mon-site - v4.2.0
 ```
 
-La version est un tag ou une branche du dépôt (par défaut `production`)
-et la région est par défaut `osc-fr1`.
+La version est un tag, une branche ou un commit du dépôt. Par défaut, c’est le code
+du dernier déploiement réussi avant la sauvegarde choisie : un code plus ancien
+peut ne pas savoir lire le contenu de la sauvegarde. La région est par défaut `osc-fr1`,
+`-` permet de garder cette valeur par défaut tout en précisant une version.
 
 Le script, qui nécessite la CLI Scalingo, `psql`, `pg_restore`
 et la variable `BACKUP_DIR` (voir {doc}`../donnees/sauvegarde-restauration`) :
