@@ -9,7 +9,7 @@ preload_app = True
 
 worker_class = "gthread"
 workers = int(os.environ.get("GUNICORN_WORKERS") or os.environ.get("WEB_CONCURRENCY") or 2)
-threads = int(os.environ.get("GUNICORN_THREADS", 4))
+threads = int(os.environ.get("GUNICORN_THREADS", 1))
 timeout = int(os.environ.get("GUNICORN_TIMEOUT", 120))
 
 # Recycle workers periodically to contain memory leaks; the jitter spreads
