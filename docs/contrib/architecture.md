@@ -13,21 +13,20 @@ accompagnée d’applications annexes pour divers types de pages :
 - **sites_conformes.core** : l’application principale, contient les contenus
 communs, les pages standard (pages de contenu), les pages d’index de catalogue,
 la page de recherche et la gestion des configurations
-- **blog** : Permet de gérer des articles de blog et des index de blog,
-et les flux RSS correspondants.
-- **dashboard** : Contient les personnalisations des panneaux d’administration
+- **sites_conformes.blog** : Permet de gérer des articles de blog et des index
+de blog, et les flux RSS correspondants.
+- **sites_conformes.dashboard** : Contient les personnalisations des panneaux d’administration
 de Wagtail (dans `templates/wagtailadmin` et `wagtail_hooks.py`)
--
-- **events** : Similaire à `blog`, mais permet de gérer des événements et des
-pages de calendrier, ainsi que les exports iCal correspondants.
-- **forms** : implémentation du [module de création de formulaire](https://docs.wagtail.org/en/stable/reference/contrib/forms/index.html)
+- **sites_conformes.events** : Similaire à `sites_conformes.blog`, mais permet
+de gérer des événements et des pages de calendrier, ainsi que les exports iCal correspondants.
+- **sites_conformes.forms** : implémentation du [module de création de formulaire](https://docs.wagtail.org/en/stable/reference/contrib/forms/index.html)
 de Wagtail, par exemple pour les pages de contact. Volontairement assez limité
 (suffisant pour un formulaire de contact mais pas beaucoup plus),
 pour les cas complexes il vaut mieux privilégier l’intégration de [Demarche.numerique.gouv.fr](https://demarche.numerique.gouv.fr)
 ou de [Grist](https://grist.numerique.gouv.fr/).
-- **db_storage** : stockage des médias en base de données PostgreSQL,
+- **sites_conformes.db_storage** : stockage des médias en base de données PostgreSQL,
 alternative au S3 pour les PaaS avec filesystem éphémère (cf. {doc}`../donnees/stockage-medias`)
-- **proconnect** : permet la connexion via [ProConnect](https://www.proconnect.gouv.fr/)
+- **sites_conformes.proconnect** : permet la connexion via [ProConnect](https://www.proconnect.gouv.fr/)
 
 ## DSFR
 

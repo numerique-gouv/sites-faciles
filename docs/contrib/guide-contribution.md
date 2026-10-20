@@ -172,3 +172,8 @@ Pensez à committer le `uv.lock` mis à jour avec votre modification.
 
 La recette `just cloc` compte les lignes de code par application.
 Elle nécessite l’outil [`cloc`](https://github.com/AlDanial/cloc).
+
+### test-release
+
+La recette `just test-release` contient des tests supplémentaires, particulièrement
+gourmands en mémoire. Il faut la lancer manuellement avant une release.
