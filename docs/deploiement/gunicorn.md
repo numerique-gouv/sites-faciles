@@ -98,7 +98,7 @@ chaque worker occupent chacun une copie de l’application.
 
 | Variable | Rôle | Défaut | Effet sur la mémoire |
 | --- | --- | --- | --- |
-| `GUNICORN_WORKERS` | Nombre de workers. À défaut, `WEB_CONCURRENCY` est utilisé (définie automatiquement par Scalingo). | `1` | **Fort** : chaque worker ajoute une copie complète de l’application. |
+| `GUNICORN_WORKERS` | Nombre de workers. À défaut, `WEB_CONCURRENCY` est utilisé (définie automatiquement par Scalingo). | `2` | **Fort** : chaque worker ajoute une copie complète de l’application. |
 | `GUNICORN_THREADS` | Nombre de threads par worker, c’est-à-dire de requêtes qu’un worker traite en même temps. | `1` | **Fort sous charge** : chaque requête en cours occupe de la mémoire pendant la génération de la page. |
 | `GUNICORN_TIMEOUT` | Délai (en secondes) au-delà duquel un worker qui ne répond plus est redémarré. | `120` | Aucun. |
 | `GUNICORN_MAX_REQUESTS` | Nombre de requêtes traitées par un worker avant qu’il soit redémarré. | `10000` | **Bénéfique** : remet régulièrement la mémoire du worker à zéro. |
