@@ -40,14 +40,14 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ inputs.ref }}
 
       # When running against main, overlay current-branch test files so both
       # baseline and comparison jobs use the same test definitions.
       - name: Checkout E2E files from PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref }}
           sparse-checkout: |
@@ -68,13 +68,13 @@ jobs:
           rm -rf __e2e_overlay__
 
       - name: Install just
-        uses: extractions/setup-just@v2
+        uses: extractions/setup-just@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v7
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v10.3.0
 
       - name: Install Python dependencies
         run: uv sync --no-group dev
@@ -99,7 +99,7 @@ jobs:
 
       - name: Download baseline screenshots
         if: inputs.compare
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: regression-screenshots
           path: ${{ env.SCREENSHOTS_BASE_PATH }}
@@ -138,14 +138,14 @@ jobs:
 
       - name: Upload baseline screenshots
         if: ${{ !inputs.compare }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: regression-screenshots
           path: ${{ env.SCREENSHOTS_BASE_PATH }}
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report-${{ inputs.compare && 'compare' || 'baseline' }}
           path: playwright-report/
@@ -157,7 +157,7 @@ jobs:
       # visual diffs were accepted, so they can still be reviewed.
       - name: Upload diff artifacts on failure
         if: failure() || (inputs.compare && inputs.allow_visual_diff && !cancelled())
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-diffs-${{ inputs.compare && 'compare' || 'baseline' }}
           path: test-results/
