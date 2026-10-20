@@ -3,7 +3,17 @@ import uuid
 
 from django.apps import apps as global_apps
 from django.db import migrations
+from django.db.models import Q, TextField
+from django.db.models.functions import Cast
 from wagtail.fields import StreamField
+
+# Rows are fetched in small batches: page contents can be large, and loading thousands of
+# them at once gets the migration killed on small containers
+BATCH_SIZE = 100
+
+# Only rows containing this key can hold a legacy CenteredImageBlock value, which allows
+# skipping the other ones in SQL. The legacy keys are still checked in Python.
+LEGACY_CENTERED_IMAGE_MARKER = "image_ratio"
 
 # Keys identifying a CenteredImageBlock value saved before its "alt" field was removed
 LEGACY_CENTERED_IMAGE_KEYS = {"image", "alt", "width", "image_ratio"}
@@ -76,7 +86,18 @@ def migrate_pages(apps, schema_editor):
         if not stream_fields:
             continue
 
-        for instance in model.objects.all().iterator():
+        candidates = Q()
+        for field_name in stream_fields:
+            candidates |= Q(**{f"legacy_search_{field_name}__contains": LEGACY_CENTERED_IMAGE_MARKER})
+        queryset = (
+            model.objects.annotate(
+                **{f"legacy_search_{field_name}": Cast(field_name, TextField()) for field_name in stream_fields}
+            )
+            .filter(candidates)
+            .only("pk", *stream_fields)
+        )
+
+        for instance in queryset.iterator(chunk_size=BATCH_SIZE):
             updated_fields = []
             for field_name in stream_fields:
                 raw_data = list(getattr(instance, field_name).raw_data)
@@ -92,8 +113,13 @@ def migrate_revisions(apps, schema_editor):
     # Revisions (drafts, scheduled pages...) store StreamFields as JSON strings
     Revision = apps.get_model("wagtailcore", "Revision")
 
-    for revision in Revision.objects.all().iterator():
-        content = revision.content
+    revisions = (
+        Revision.objects.annotate(content_text=Cast("content", TextField()))
+        .filter(content_text__contains=LEGACY_CENTERED_IMAGE_MARKER)
+        .values_list("pk", "content")
+    )
+
+    for pk, content in revisions.iterator(chunk_size=BATCH_SIZE):
         updated = False
 
         for key, value in content.items():
@@ -108,7 +134,7 @@ def migrate_revisions(apps, schema_editor):
                 updated = True
 
         if updated:
-            revision.save(update_fields=["content"])
+            Revision.objects.filter(pk=pk).update(content=content)
 
 
 def migrate_translation_sources(apps, schema_editor):
@@ -122,8 +148,12 @@ def migrate_translation_sources(apps, schema_editor):
     except LookupError:
         return
 
-    for source in TranslationSource.objects.all().iterator():
-        content = json.loads(source.content_json)
+    sources = TranslationSource.objects.filter(content_json__contains=LEGACY_CENTERED_IMAGE_MARKER).values_list(
+        "pk", "object_id", "content_json"
+    )
+
+    for pk, object_id, content_json in sources.iterator(chunk_size=BATCH_SIZE):
+        content = json.loads(content_json)
         legacy_paths = []
 
         for key, value in content.items():
@@ -140,10 +170,9 @@ def migrate_translation_sources(apps, schema_editor):
         if not legacy_paths:
             continue
 
-        source.content_json = json.dumps(content)
-        source.save(update_fields=["content_json"])
+        TranslationSource.objects.filter(pk=pk).update(content_json=json.dumps(content))
 
-        contexts = TranslationContext.objects.filter(object_id=source.object_id)
+        contexts = TranslationContext.objects.filter(object_id=object_id)
         for path in legacy_paths:
             for legacy_field, new_field in LEGACY_TO_IMAGE_BLOCK_PATHS.items():
                 new_path = f"{path}.{new_field}"
