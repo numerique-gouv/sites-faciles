@@ -429,7 +429,7 @@ LATEST_RELEASE_URL = os.getenv(
 # Human-facing releases page linked from the "new version available" notification (overridable for forks)
 RELEASES_URL = os.getenv("RELEASES_URL", "https://github.com/numerique-gouv/sites-conformes/releases")
 ADVERTISE_LATEST_VERSION = getenv_bool("ADVERTISE_LATEST_VERSION", True)
-
+WAGTAIL_ENABLE_UPDATE_CHECK = False  # Disable Wagtail's own update check, we use our own
 
 # Wagtailmenus: Obsolete, to be removed in a future version (replaced by "sites_conformes.menus")
 WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
