@@ -37,8 +37,9 @@ def migrate_centered_image_alt(data):
         if LEGACY_CENTERED_IMAGE_KEYS <= data.keys():
             alt = data.pop("alt") or ""
             image = data["image"]
-            if isinstance(image, int):
-                # Always convert: Wagtail can't load a stream mixing image IDs and ImageBlock values.
+            if image is None or isinstance(image, int):
+                # Always convert, even an empty image: Wagtail can't load a stream mixing
+                # image IDs (or None) and ImageBlock values.
                 # An empty legacy alt was rendered as alt="", hence decorative.
                 data["image"] = {"image": image, "decorative": not alt, "alt_text": alt}
             elif alt and isinstance(image, dict) and not image.get("alt_text"):

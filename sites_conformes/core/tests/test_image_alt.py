@@ -55,6 +55,13 @@ class MigrateCenteredImageAltTestCase(TestCase):
         self.assertNotIn("alt", value)
         self.assertEqual(value["image"], {"image": 12, "decorative": True, "alt_text": ""})
 
+    def test_missing_image_is_converted_to_image_block(self):
+        value = legacy_centered_image(None, "")
+
+        self.assertTrue(migration.migrate_centered_image_alt(value))
+
+        self.assertEqual(value["image"], {"image": None, "decorative": True, "alt_text": ""})
+
     def test_existing_image_alt_text_is_kept(self):
         value = legacy_centered_image({"image": 12, "decorative": False, "alt_text": "Déjà saisi"}, "Ancien alt")
 
@@ -139,6 +146,7 @@ class MigrateCenteredImageAltPagesTestCase(WagtailPageTestCase):
         legacy_body = [
             {"type": "image", "value": legacy_centered_image(self.image.pk, "Un graphique")},
             {"type": "image", "value": legacy_centered_image(self.image.pk, "")},
+            {"type": "image", "value": legacy_centered_image(None, "")},
         ]
         with connection.cursor() as cursor:
             cursor.execute(
@@ -149,9 +157,10 @@ class MigrateCenteredImageAltPagesTestCase(WagtailPageTestCase):
         migration.migrate_pages(apps, None)
 
         self.page.refresh_from_db()
-        images = [block.value["image"] for block in self.page.body]
+        *images, missing_image = [block.value["image"] for block in self.page.body]
         self.assertEqual([image.contextual_alt_text for image in images], ["Un graphique", ""])
         self.assertEqual([image.decorative for image in images], [False, True])
+        self.assertIsNone(missing_image)
 
         response = self.client.get(self.page.url)
         imgs = BeautifulSoup(response.content, "html.parser").select("figure img")
