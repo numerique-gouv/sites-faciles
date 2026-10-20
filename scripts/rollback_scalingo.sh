@@ -40,8 +40,51 @@ for cmd in scalingo pg_restore psql curl git; do
     fi
 done
 
+# Minimum delay between two calls to the Scalingo API, as close calls sometimes fail
+SC_MIN_INTERVAL_MS=${SC_MIN_INTERVAL_MS:-1000}
+
+now_ms() {
+    echo $(( $(date +%s%N) / 1000000 ))
+}
+
 sc() {
+    # sc is often called in subshells: the time of the last call is kept in a file
+    local last_call_file=${WORK_DIR}/.sc_last_call
+    local last_call=`cat ${last_call_file} 2> /dev/null || echo 0`
+    local wait_ms=$(( last_call + SC_MIN_INTERVAL_MS - $(now_ms) ))
+    if (( wait_ms > 0 )); then
+        sleep `printf '%d.%03d' $((wait_ms / 1000)) $((wait_ms % 1000))`
+    fi
+    now_ms > ${last_call_file}
     scalingo --region ${REGION} --app ${APP} "$@"
+}
+
+# The Scalingo API sometimes times out: retry the commands that can safely be run twice
+SC_RETRIES=${SC_RETRIES:-3}
+
+sc_retry() {
+    local attempt
+    local output_file=${WORK_DIR}/.sc_last_output
+    for attempt in $(seq 1 ${SC_RETRIES}); do
+        if [[ -t 1 ]]; then
+            # Keep the terminal as stdout so that the CLI can display its progress bars
+            if sc "$@"; then
+                return 0
+            fi
+        else
+            # The CLI writes its errors on stdout: keep a copy to show them when stdout is piped
+            if sc "$@" | tee ${output_file}; then
+                return 0
+            fi
+            cat ${output_file} 1>&2
+        fi
+        if [[ $attempt -lt ${SC_RETRIES} ]]; then
+            echo "Scalingo command failed (attempt ${attempt}/${SC_RETRIES}), retrying in $((attempt * 5))s: $*" 1>&2
+            sleep $((attempt * 5))
+        fi
+    done
+    echo "Scalingo command failed after ${SC_RETRIES} attempts: $*" 1>&2
+    return 1
 }
 
 if ! curl -sfIL -o /dev/null ${REPO_ARCHIVE_URL}; then
@@ -53,7 +96,7 @@ WORK_DIR=${BACKUP_DIR}/rollback-${APP}-`date '+%Y%m%d-%H%M%S'`
 mkdir -p ${WORK_DIR}
 
 # Caution, as of the Scalingo CLI app 1.39.0, the pipe separator ('|') has been replaced with a "BOX DRAWINGS LIGHT VERTICAL" ('│')
-pg_uuid=`sc addons | grep "PostgreSQL" | awk -F ['│'] '{print $3}' | xargs`
+pg_uuid=`sc_retry addons | grep "PostgreSQL" | awk -F ['│'] '{print $3}' | xargs`
 if [[ -z "$pg_uuid" ]]; then
     echo "No PostgreSQL addon found for ${APP}" 1>&2
     exit 1
@@ -63,10 +106,12 @@ echo "PostgreSQL addon: ${pg_uuid}"
 # Choose the backup
 echo
 echo "Recent deployments:"
-sc deployments | head -n 12
+sc_retry deployments | head -n 12
 echo
 echo "Available backups:"
-sc --addon ${pg_uuid} backups
+# Fetched once: the list is also used to decide whether a safety backup is needed
+BACKUPS=`sc_retry --addon ${pg_uuid} backups`
+echo "${BACKUPS}"
 if [[ -z "${BACKUP_ID:-}" ]]; then
     echo
     read -r -p "ID of the backup to restore (it must predate the deployment to roll back): " BACKUP_ID
@@ -78,7 +123,7 @@ fi
 
 # Download and extract the backup
 echo "Downloading backup ${BACKUP_ID} to ${WORK_DIR}"
-sc --addon ${pg_uuid} backups-download --backup ${BACKUP_ID} --output ${WORK_DIR}/backup.tar.gz
+sc_retry --addon ${pg_uuid} backups-download --backup ${BACKUP_ID} --output ${WORK_DIR}/backup.tar.gz
 tar xzf ${WORK_DIR}/backup.tar.gz -C ${WORK_DIR}
 DUMP_FILE=`find ${WORK_DIR} -name '*.pgsql' | head -1`
 if [[ -z "$DUMP_FILE" ]]; then
@@ -87,7 +132,7 @@ if [[ -z "$DUMP_FILE" ]]; then
 fi
 
 # Open the database tunnel
-DB_URL=`sc env-get SCALINGO_POSTGRESQL_URL | sed -E "s#@[^/]+/#@127.0.0.1:${TUNNEL_PORT}/#"`
+DB_URL=`sc_retry env-get SCALINGO_POSTGRESQL_URL | sed -E "s#@[^/]+/#@127.0.0.1:${TUNNEL_PORT}/#"`
 sc db-tunnel -p ${TUNNEL_PORT} SCALINGO_POSTGRESQL_URL > ${WORK_DIR}/tunnel.log 2>&1 &
 TUNNEL_PID=$!
 trap 'kill ${TUNNEL_PID} 2> /dev/null || true' EXIT
@@ -128,23 +173,23 @@ if [[ "$CONFIRM" != "$APP" ]]; then
 fi
 
 # Skip the safety backup if a completed one is recent enough (the restored backup does not count)
-SAFETY_BACKUP_MAX_AGE=$((4 * 3600))
-last_backup_date=`sc --addon ${pg_uuid} backups | sed 's/\x1b\[[0-9;]*m//g' \
+SAFETY_BACKUP_MAX_AGE=$((6 * 3600))
+last_backup_date=`echo "${BACKUPS}" | sed 's/\x1b\[[0-9;]*m//g' \
     | awk -F '│' -v restored="${BACKUP_ID}" '$5 ~ /done/ && (restored == "" || !index($2, restored)) {print $3; exit}' | xargs`
 if [[ -n "$last_backup_date" ]] \
     && (( $(date +%s) - $(date -d "$last_backup_date" +%s) < SAFETY_BACKUP_MAX_AGE )); then
-    echo "Skipping the safety backup, a backup was made less than 4 hours ago (${last_backup_date})"
+    echo "Skipping the safety backup, a backup was made less than 6 hours ago (${last_backup_date})"
 else
     echo "Creating a safety backup of the current database"
     sc --addon ${pg_uuid} backups-create
 fi
 
 # Stop the web containers so that the current code does not write during the restoration
-WEB_AMOUNT=`sc ps | grep -cE '│ *web-[0-9]+ ' || true`
+WEB_AMOUNT=`sc_retry ps | grep -cE '│ *web-[0-9]+ ' || true`
 if [[ "$WEB_AMOUNT" -eq 0 ]]; then
     read -r -p "Could not read the number of web containers, how many should be restarted? " WEB_AMOUNT
 fi
-sc scale web:0
+sc_retry scale web:0
 
 if [[ -n "$EXTRA_TABLES" ]]; then
     echo "Dropping the tables created since the backup"
@@ -166,7 +211,7 @@ fi
 kill ${TUNNEL_PID} 2> /dev/null || true
 
 # The database is restored: restart the web containers even if the deployment fails
-trap 'sc scale web:${WEB_AMOUNT}' EXIT
+trap 'sc_retry scale web:${WEB_AMOUNT}' EXIT
 
 echo "Deploying ${REF}"
 # Archive deployments can fail in the apt buildpack: go through the GitHub integration when possible
