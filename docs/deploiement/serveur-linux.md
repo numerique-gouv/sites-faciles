@@ -166,6 +166,8 @@ adaptez `config` au nom réel du dossier de configuration du projet.
 utilisera pour parler à Gunicorn : plus rapide et plus sûr qu’un port réseau
 pour une communication locale.
 - Règle empirique pour `--workers` : `(2 × nombre de cœurs CPU) + 1`.
+Chaque worker occupe sa propre copie de l’application en mémoire : sur un
+serveur à la mémoire limitée, voir {doc}`gunicorn`.
 - Avec `uv`, remplacez le chemin de l’`ExecStart` par `uv run gunicorn …`
 exécuté dans le répertoire du projet.
 
