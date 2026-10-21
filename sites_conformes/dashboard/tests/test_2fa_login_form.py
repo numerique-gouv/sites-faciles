@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.urls import reverse
+from django_otp import DEVICE_ID_SESSION_KEY
+from django_otp.oath import totp
 from django_otp.plugins.otp_totp.models import TOTPDevice
 
 User = get_user_model()
@@ -82,3 +84,45 @@ class OtpFormCustomTextTest(TestCase):
         self.assertIn("Code de sécurité", content)
         self.assertIn("Entrez le code à six chiffres affiché dans l’application.", content)
         self.assertNotIn("Otp token", content)
+
+
+@override_settings(WAGTAIL_2FA_REQUIRED=True)
+class OtpFormTokenVerificationTest(TestCase):
+    """
+    Regression test: since django-otp 1.7.1, a token submitted without an
+    ``otp_device`` is rejected with "Please select a device.". wagtail-2fa's
+    form never submits a device, so a valid code must still log the user in
+    (see patch_wagtail_2fa_token_form_device_selection).
+    """
+
+    def setUp(self):
+        self.user = User.objects.create_superuser("alice", "alice@test.test", "pass")
+        self.client.login(username="alice", password="pass")
+
+    def _token(self, device):
+        return str(totp(device.bin_key, device.step, device.t0, device.digits, device.drift)).zfill(device.digits)
+
+    def test_valid_token_logs_the_user_in(self):
+        device = TOTPDevice.objects.create(user=self.user, name="Device", confirmed=True)
+
+        response = self.client.post(reverse("wagtail_2fa_auth"), {"otp_token": self._token(device)})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.client.session.get(DEVICE_ID_SESSION_KEY), device.persistent_id)
+
+    def test_valid_token_from_second_device_logs_the_user_in(self):
+        TOTPDevice.objects.create(user=self.user, name="Old device", confirmed=True)
+        device = TOTPDevice.objects.create(user=self.user, name="New device", confirmed=True)
+
+        response = self.client.post(reverse("wagtail_2fa_auth"), {"otp_token": self._token(device)})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.client.session.get(DEVICE_ID_SESSION_KEY), device.persistent_id)
+
+    def test_invalid_token_is_rejected(self):
+        TOTPDevice.objects.create(user=self.user, name="Device", confirmed=True)
+
+        response = self.client.post(reverse("wagtail_2fa_auth"), {"otp_token": "000000"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(DEVICE_ID_SESSION_KEY, self.client.session)

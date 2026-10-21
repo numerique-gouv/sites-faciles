@@ -107,3 +107,45 @@ def patch_wagtail_2fa_device_form_field_order():
         self.order_fields(["name", "password", "otp_token"])
 
     DeviceForm.__init__ = __init__
+
+
+def patch_wagtail_2fa_token_form_device_selection():
+    """
+    Fix "Please select a device." errors on the 2FA login screen with
+    django-otp >= 1.7.1.
+
+    Since django-otp 1.7.1 (#188), ``OTPAuthenticationFormMixin._verify_token``
+    no longer falls back to trying the token against each of the user's
+    devices when no ``otp_device`` was submitted: it raises a
+    ``device_required`` validation error instead. wagtail-2fa's ``TokenForm``
+    only has an ``otp_token`` field and never submits a device, so every
+    login attempt is rejected, whatever the code entered.
+
+    This patch restores the previous behaviour for ``TokenForm`` only: when no
+    device was chosen, the token is checked against each of the user's
+    confirmed devices in turn, still going through the original (throttled)
+    verification. With a single device, this is exactly the strict path.
+
+    Bug present in wagtail-2fa 1.8.0 (latest at time of writing).
+    Remove this patch once wagtail-2fa selects the device itself.
+    """
+
+    from django import forms
+    from django_otp import devices_for_user
+    from wagtail_2fa.forms import TokenForm
+
+    original_verify_token = TokenForm._verify_token
+
+    def _verify_token(self, user, token, device=None):
+        if device is not None:
+            return original_verify_token(self, user, token, device)
+
+        error = forms.ValidationError(self.otp_error_messages["invalid_token"], code="invalid_token")
+        for candidate in devices_for_user(user, for_verify=True):
+            try:
+                return original_verify_token(self, user, token, candidate)
+            except forms.ValidationError as e:
+                error = e
+        raise error
+
+    TokenForm._verify_token = _verify_token
