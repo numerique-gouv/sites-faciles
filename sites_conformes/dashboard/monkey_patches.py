@@ -4,10 +4,15 @@ Monkey patches applied to third-party libraries at startup.
 Applied from ``DashboardConfig.ready()``.
 """
 
+import logging
+
+from django import forms
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from wagtail_2fa import utils as wagtail_2fa_utils
+
+logger = logging.getLogger(__name__)
 
 
 def patch_wagtail_2fa_new_unconfirmed_device():
@@ -107,3 +112,83 @@ def patch_wagtail_2fa_device_form_field_order():
         self.order_fields(["name", "password", "otp_token"])
 
     DeviceForm.__init__ = __init__
+
+
+def patch_wagtail_2fa_token_form_device_selection():
+    """
+    Fix "invalid 2FA code" errors on login with django-otp >= 1.7.4.
+
+    Since django-otp 1.7.4 (https://github.com/django-otp/django-otp/pull/194),
+    ``OTPAuthenticationFormMixin._verify_token`` no longer tries each of the
+    user's devices when no ``otp_device`` was submitted: it raises a
+    ``device_required`` validation error instead. ``TokenForm`` (wagtail-2fa
+    1.8.0) has no ``otp_device`` field at all, so every login attempt fails,
+    whatever the code (and otp_form_v6.html renders any form error as
+    "Invalid code").
+
+    When no device was chosen, try each of the user's confirmed TOTP devices
+    in turn, which restores the pre-1.7.4 behaviour for the only device type
+    wagtail-2fa supports. Throttling still applies per device, via the
+    original ``_verify_token``.
+
+    Remove this patch once wagtail-2fa selects the device itself and the
+    ``wagtail-2fa`` dependency in pyproject.toml is upgraded past that version.
+    """
+
+    from wagtail_2fa.forms import TokenForm
+
+    original_verify_token = TokenForm._verify_token
+
+    def _verify_token(self, user, token, device=None):
+        if device is not None:
+            return original_verify_token(self, user, token, device)
+
+        devices = TOTPDevice.objects.devices_for_user(user, confirmed=True)
+        if not devices:
+            return original_verify_token(self, user, token, None)
+
+        error = None
+        for candidate in devices:
+            try:
+                return original_verify_token(self, user, token, candidate)
+            except forms.ValidationError as e:
+                error = e
+        raise error
+
+    TokenForm._verify_token = _verify_token
+
+
+def patch_wagtail_2fa_token_form_report_unexpected_errors():
+    """
+    Report unexpected 2FA login errors to Sentry.
+
+    otp_form_v6.html renders any ``TokenForm`` error as "Invalid code", which
+    hid the django-otp 1.7.4 ``device_required`` regression (see
+    ``patch_wagtail_2fa_token_form_device_selection``) from both users and us.
+
+    A wrong or missing code is the user's doing and stays silent. Any other
+    error carrying a code is logged at ERROR level, which the Sentry logging
+    integration sends as an event. Errors without a code are django-otp's
+    throttling messages ("too many failed attempts"), also user-driven, so
+    they stay silent too.
+    """
+
+    from wagtail_2fa.forms import TokenForm
+
+    expected_error_codes = {"invalid_token", "token_required"}
+    original_clean = TokenForm.clean
+
+    def clean(self):
+        try:
+            return original_clean(self)
+        except forms.ValidationError as e:
+            if e.code is not None and e.code not in expected_error_codes:
+                logger.error(
+                    "Unexpected 2FA login error for user %s: [%s] %s",
+                    self.user.pk,
+                    e.code,
+                    " ".join(e.messages),
+                )
+            raise
+
+    TokenForm.clean = clean
