@@ -325,9 +325,11 @@ if [[ -n "$EXTRA_TABLES" ]]; then
 fi
 
 echo "Restoring the backup"
-# Errors on extensions or comments are expected with the Scalingo user rights
+# Errors on extensions or comments are expected with the Scalingo user rights, and a pg_restore
+# newer than the server sends settings unknown to it (eg. transaction_timeout, from PostgreSQL 17)
 pg_restore --clean --if-exists --no-owner --no-privileges --no-comments -d "${DB_URL}" ${DUMP_FILE} \
-    || echo "pg_restore reported errors (see above), check that they are only about extensions or comments"
+    || echo "pg_restore reported errors (see above), check that they are only about extensions, comments" \
+        "or settings unknown to the server (eg. transaction_timeout)"
 
 REMAINING_TABLES=`extra_tables`
 if [[ -n "$REMAINING_TABLES" ]]; then
