@@ -13,6 +13,15 @@ dev = [
     "django-debug-toolbar>=6.1.0",
 ]
 
+# Dependency cooldown: keep in sync with [tool.uv] in ../pyproject.toml.
+# Re-run `uv lock --project ./demo` after changing these values.
+[tool.uv]
+required-version = ">=0.9.17"
+exclude-newer = "7 days"
+# Bypass cooldown for security fixes (pillow 13.0.0: GHSA-8g5g-8vmr-9782 et al.;
+# certifi 2026.10.19: PYSEC-2026-4320). Remove once both are older than 7 days.
+exclude-newer-package = { pillow = false, certifi = false }
+
 # TODO: remove [tool.uv.sources] once sites-conformes >= 3.2.0rc1 is on PyPI.
 # Until then, this points `uv lock` / `uv sync` at the editable checkout in
 # the sibling sites_conformes/ directory so the demo can run against the
