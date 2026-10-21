@@ -150,6 +150,11 @@ scalingo-postdeploy:
     python manage.py import_page_templates
     python manage.py update_index
 
+# Roll a Scalingo app back to a DB backup and to the code of a given git ref
+[group('Production')]
+scalingo-rollback app region="osc-fr1" ref="":
+    cd scripts && bash rollback_scalingo.sh {{app}} {{region}} {{ref}}
+
 #### Audit-related recipes
 
 # Run the Django system check framework

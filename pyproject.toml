@@ -189,6 +189,9 @@ exclude-newer = "7 days"
 # Per-package opt-out: set a package to false to bypass the cooldown for an
 # urgent security fix published inside the window. Example:
 # exclude-newer-package = { wagtail = false }
+# Bypass cooldown for security fixes (pillow 13.0.0: GHSA-8g5g-8vmr-9782 et al.;
+# certifi 2026.10.19: PYSEC-2026-4320). Remove once both are older than 7 days.
+exclude-newer-package = { pillow = false, certifi = false }
 
 [tool.deptry]
 # demo/ is a separate project with its own pyproject.toml/dependencies.

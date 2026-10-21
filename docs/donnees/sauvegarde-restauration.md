@@ -147,3 +147,9 @@ sans cela, votre site local continuerait de pointer vers le domaine de productio
 | `just descend-prod-db` · `just descend-prod-medias` | Idem, base ou médias uniquement |
 | `just restore-prod` | Restaure les données de production téléchargées (base + médias) |
 | `just restore-prod-db` · `just restore-prod-medias` | Idem, base ou médias uniquement |
+
+:::{seealso}
+Pour remettre une application Scalingo dans l’état d’une sauvegarde
+(par exemple après une mise à jour qui pose problème),
+voir la recette `just scalingo-rollback` dans {doc}`../deploiement/scalingo`.
+:::
