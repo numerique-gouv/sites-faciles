@@ -1,85 +1,99 @@
 {
   "name": "Sites conformes",
-  "description": "Basic installation of the sites-conformes app",
+  "description": "Créateur de sites web accessibles et conformes au DSFR pour le secteur public, basé sur Wagtail",
   "logo": "https://raw.githubusercontent.com/numerique-gouv/sites-conformes/refs/heads/main/sites_conformes/static/artwork/logo-white-bg.svg",
   "repository": "https://github.com/numerique-gouv/sites-conformes",
   "ref": "production",
   "website": "https://sites.beta.gouv.fr",
   "env": {
     "ALLOWED_HOSTS": {
-      "description": "List of allowed host names, separated by commas (domain names only)",
-      "value": "sc-example.osc-fr1.scalingo.io,example.sites.beta.gouv.fr"
+      "description": "Liste des noms de domaine autorisés, séparés par des virgules (noms de domaine uniquement, ex : mon-app.osc-fr1.scalingo.io,mon-site.gouv.fr). Adapter la région si l’app n’est pas déployée sur osc-fr1.",
+      "generator": "template",
+      "template": "%APP%.osc-fr1.scalingo.io"
     },
     "HOST_URL": {
-      "description": "The main hostname (domain name only)",
-      "value": "example.sites.beta.gouv.fr"
-    },
-    "DEFAULT_FROM_EMAIL": {
-      "description": "The default email address for sending transactional emails. Leave empty to disable emails entirely.",
-      "value": ""
-    },
-    "EMAIL_HOST": {
-      "description": "The email address for sending transactional emails",
-      "value": "smtp-relay.brevo.com"
-    },
-    "EMAIL_HOST_PASSWORD": {
-      "description": "The email password for sending transactional emails",
-      "value": "example-password"
-    },
-    "EMAIL_HOST_USER": {
-      "description": "The email user for sending transactional emails",
-      "value": "example.user@smtp-brevo.com"
-    },
-    "EMAIL_PORT": {
-      "description": "The email port for sending transactional emails",
-      "value": "587"
-    },
-    "EMAIL_TIMEOUT": {
-      "description": "The email timeout for sending transactional emails",
-      "value": "30"
-    },
-    "WAGTAIL_PASSWORD_RESET_ENABLED": {
-      "description": "Allows the 'Reset password' form on the login page. Only set to true if actual email settings have been set",
-      "value": false
+      "description": "Le nom de domaine principal du site (nom de domaine uniquement, ex : mon-site.gouv.fr). Adapter la région si l’app n’est pas déployée sur osc-fr1.",
+      "generator": "template",
+      "template": "%APP%.osc-fr1.scalingo.io"
     },
     "SECRET_KEY": {
-      "description": "Django secret key",
+      "description": "Clé secrète de Django",
       "generator": "secret"
     },
+    "DEFAULT_FROM_EMAIL": {
+      "description": "L’adresse d’expédition des e-mails transactionnels. Laisser vide pour désactiver complètement l’envoi d’e-mails.",
+      "required": false
+    },
+    "EMAIL_HOST": {
+      "description": "Le serveur SMTP utilisé pour envoyer les e-mails transactionnels (ex : smtp-relay.brevo.com)",
+      "required": false
+    },
+    "EMAIL_PORT": {
+      "description": "Le port du serveur SMTP (ex: 587)",
+      "required": false
+    },
+    "EMAIL_USE_TLS": {
+      "description": "Utiliser une connexion TLS (STARTTLS) avec le serveur SMTP, généralement avec le port 587",
+      "required": false
+    },
+    "EMAIL_HOST_USER": {
+      "description": "L’identifiant du compte sur le serveur SMTP (ex : example.user@smtp-brevo.com)",
+      "required": false
+    },
+    "EMAIL_HOST_PASSWORD": {
+      "description": "Le mot de passe du compte sur le serveur SMTP",
+      "required": false
+    },
+    "EMAIL_TIMEOUT": {
+      "description": "Le délai d’expiration en secondes de la connexion SMTP (ex: 30. Ne doit pas être 0)",
+      "required": false
+    },
+    "WAGTAIL_PASSWORD_RESET_ENABLED": {
+      "description": "Active le lien « Mot de passe oublié » sur la page de connexion. À passer à True uniquement si l’envoi d’e-mails est configuré",
+      "value": "False"
+    },
     "S3_HOST": {
-      "description": "The host of the S3 bucket (ex: s3.eu-west-par.io.cloud.ovh.net)",
-      "value": ""
+      "description": "L’adresse du service S3, sans protocole (ex : s3.eu-west-par.io.cloud.ovh.net)",
+      "required": false
     },
     "S3_KEY_ID": {
-      "description": "The access key of the S3 bucket",
-      "value": ""
+      "description": "L’identifiant d’accès (access key) du bucket S3",
+      "required": false
     },
     "S3_KEY_SECRET": {
-      "description": "The secret key of the S3 bucket",
-      "value": ""
+      "description": "La clé secrète d’accès du bucket S3",
+      "required": false
     },
     "S3_BUCKET_NAME": {
-      "description": "The name of the S3 bucket used to store user-imported medias.",
-      "value": ""
+      "description": "Le nom du bucket S3 où sont stockés les médias importés par les utilisateurs",
+      "required": false
     },
     "S3_BUCKET_REGION": {
-      "description": "The region of the S3 bucket (ex: eu-west-par)",
-      "value": ""
+      "description": "La région du bucket S3 (ex : eu-west-par)",
+      "required": false
     },
     "S3_LOCATION": {
-      "description": "The base path for user imported medias in the S3 bucket",
+      "description": "Le dossier où sont rangés les médias dans le bucket S3. Utiliser une valeur unique (par exemple, le nom de l’app) si le bucket est partagé entre plusieurs sites.",
       "value": "medias"
     },
     "SF_USE_DB_STORAGE": {
-      "description": "Store the files in database instead of S3. Not recommanded for high trafic sites",
-      "value": false
+      "description": "Stocker les fichiers en base de données plutôt que sur S3 (ignoré si S3_HOST est renseigné). Déconseillé pour les sites à fort trafic ou au-delà de 1 Go de médias",
+      "value": "False"
+    },
+    "SF_NOINDEX": {
+      "description": "Demander aux moteurs de recherche de ne pas indexer le site (utile pendant la rédaction)",
+      "value": "True"
     }
   },
   "formation": {
     "web": {
       "amount": 1,
-      "size": "M"
+      "size": "S"
     }
   },
-  "addons": ["scalingo-postgresql"]
+  "addons": [
+    {
+      "plan": "postgresql:postgresql-starter-512"
+    }
+  ]
 }

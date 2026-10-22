@@ -17,9 +17,24 @@ runs:
       shell: bash
       run: npm ci
 
+    # The Azure Ubuntu mirror used by the runners sometimes stalls on package
+    # downloads (each one sits on apt's default timeout, logged as "Ign:"),
+    # which eats the whole step timeout. Fail fast on stuck downloads and
+    # retry them instead.
+    - name: Configure apt retries
+      shell: bash
+      run: |
+        echo 'Acquire::Retries "5"; Acquire::http::Timeout "15"; Acquire::https::Timeout "15";' \
+          | sudo tee /etc/apt/apt.conf.d/99-ci-retries
+
     # Install browsers + system deps as the official CI guide prescribes. The
-    # timeout turns any future extraction stall into a fast failure instead of
-    # eating the full job timeout.
+    # timeout turns any stall into a fast failure, and the install is
+    # idempotent, so a stalled attempt is simply retried.
     - name: Install Playwright Browsers
       shell: bash
-      run: timeout 300 npx playwright install --with-deps chromium
+      run: |
+        for attempt in 1 2 3; do
+          timeout 300 npx playwright install --with-deps chromium && exit 0
+          echo "::warning::Playwright install attempt $attempt failed, retrying"
+        done
+        exit 1
