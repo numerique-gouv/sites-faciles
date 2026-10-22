@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 14:07+0200\n"
+"POT-Creation-Date: 2026-10-21 16:57+0200\n"
 "PO-Revision-Date: 2026-04-09 13:09+0200\n"
 "Last-Translator: Sylvain Boissel <sylvain@boissel.dev>\n"
 "Language-Team: \n"
@@ -18,6 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.9\n"
+
+msgid "Error 403 — Access denied"
+msgstr "Erreur 403 — Accès refusé"
+
+msgid "Access denied"
+msgstr "Accès refusé"
+
+msgid "Error 403"
+msgstr "Erreur 403"
+
+msgid ""
+"You do not have permission to access this page. We apologize for any "
+"inconvenience."
+msgstr ""
+"Vous n’avez pas les droits nécessaires pour accéder à cette page. Veuillez "
+"nous excuser pour la gêne occasionnée."
+
+msgid "If you think this is an error, please contact the site administrator."
+msgstr ""
+"Si vous pensez qu’il s’agit d’une erreur, contactez l’administrateur du site."
+
+msgid "In this case, to continue your visit, you can consult our home page."
+msgstr ""
+"Dans ce cas, pour continuer votre visite, vous pouvez consulter notre page "
+"d’accueil."
+
+msgid "Back to home page"
+msgstr "Retourner à l’accueil"
 
 msgid "Error 404 — Page not found"
 msgstr "Erreur 404 — Page non trouvée"
@@ -41,14 +69,6 @@ msgid ""
 msgstr ""
 "Si vous avez tapé l’adresse web dans le navigateur, vérifiez qu’elle est "
 "correcte. La page n’est peut-être plus disponible."
-
-msgid "In this case, to continue your visit, you can consult our home page."
-msgstr ""
-"Dans ce cas, pour continuer votre visite, vous pouvez consulter notre page "
-"d’accueil."
-
-msgid "Back to home page"
-msgstr "Retourner à l’accueil"
 
 msgid "Error 500 — Unexpected error"
 msgstr "Erreur 500 — Erreur inattendue"

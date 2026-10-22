@@ -435,6 +435,14 @@ class CatalogIndexPageTestCase(WagtailPageTestCase):
 
 
 class ErrorPagesTestCase(TestCase):
+    def test_403_error_page(self):
+        response = self.client.get("/403/")
+        self.assertEqual(response.status_code, 403)
+        self.assertInHTML(
+            "<title>Erreur 403 — Accès refusé — Titre du site</title>",
+            response.content.decode(),
+        )
+
     def test_404_error_page(self):
         response = self.client.get("/404/")
         self.assertEqual(response.status_code, 404)
