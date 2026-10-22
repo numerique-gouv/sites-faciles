@@ -22,31 +22,31 @@
     },
     "DEFAULT_FROM_EMAIL": {
       "description": "L’adresse d’expédition des e-mails transactionnels. Laisser vide pour désactiver complètement l’envoi d’e-mails.",
-      "value": ""
+      "required": false
     },
     "EMAIL_HOST": {
-      "description": "Le serveur SMTP utilisé pour envoyer les e-mails transactionnels",
-      "value": "smtp-relay.brevo.com"
+      "description": "Le serveur SMTP utilisé pour envoyer les e-mails transactionnels (ex : smtp-relay.brevo.com)",
+      "required": false
     },
     "EMAIL_PORT": {
-      "description": "Le port du serveur SMTP",
-      "value": "587"
+      "description": "Le port du serveur SMTP (ex: 587)",
+      "required": false
     },
     "EMAIL_USE_TLS": {
       "description": "Utiliser une connexion TLS (STARTTLS) avec le serveur SMTP, généralement avec le port 587",
-      "value": "True"
+      "required": false
     },
     "EMAIL_HOST_USER": {
       "description": "L’identifiant du compte sur le serveur SMTP (ex : example.user@smtp-brevo.com)",
-      "value": ""
+      "required": false
     },
     "EMAIL_HOST_PASSWORD": {
       "description": "Le mot de passe du compte sur le serveur SMTP",
-      "value": ""
+      "required": false
     },
     "EMAIL_TIMEOUT": {
-      "description": "Le délai d’expiration en secondes de la connexion SMTP (ne doit pas être 0)",
-      "value": "30"
+      "description": "Le délai d’expiration en secondes de la connexion SMTP (ex: 30. Ne doit pas être 0)",
+      "required": false
     },
     "WAGTAIL_PASSWORD_RESET_ENABLED": {
       "description": "Active le lien « Mot de passe oublié » sur la page de connexion. À passer à True uniquement si l’envoi d’e-mails est configuré",
@@ -54,23 +54,23 @@
     },
     "S3_HOST": {
       "description": "L’adresse du service S3, sans protocole (ex : s3.eu-west-par.io.cloud.ovh.net)",
-      "value": ""
+      "required": false
     },
     "S3_KEY_ID": {
       "description": "L’identifiant d’accès (access key) du bucket S3",
-      "value": ""
+      "required": false
     },
     "S3_KEY_SECRET": {
       "description": "La clé secrète d’accès du bucket S3",
-      "value": ""
+      "required": false
     },
     "S3_BUCKET_NAME": {
       "description": "Le nom du bucket S3 où sont stockés les médias importés par les utilisateurs",
-      "value": ""
+      "required": false
     },
     "S3_BUCKET_REGION": {
       "description": "La région du bucket S3 (ex : eu-west-par)",
-      "value": ""
+      "required": false
     },
     "S3_LOCATION": {
       "description": "Le dossier où sont rangés les médias dans le bucket S3. Utiliser une valeur unique (par exemple, le nom de l’app) si le bucket est partagé entre plusieurs sites.",
@@ -82,7 +82,7 @@
     },
     "SF_NOINDEX": {
       "description": "Demander aux moteurs de recherche de ne pas indexer le site (utile pendant la rédaction)",
-      "value": "False"
+      "value": "True"
     }
   },
   "formation": {
