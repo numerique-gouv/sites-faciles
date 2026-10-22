@@ -280,7 +280,7 @@ avec votre compte Scalingo.
 commande, après avoir remplacé `mon-site` par le nom de votre application :
 
 ```sh
-scalingo -a mon-site run python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+scalingo -a mon-site run 'python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"'
 ```
 
 Une longue suite de 50 caractères s’affiche : copiez-la, retournez dans l’onglet
@@ -301,7 +301,7 @@ Initialiser le contenu du site en faisant passer ces commandes via la CLI Scalin
 
 ```sh
 scalingo -a ${APP_NAME} run python manage.py migrate
-scalingo -a ${APP_NAME} run python manage.py collectstatic --noinput --ignore="*.sass"
+scalingo -a ${APP_NAME} run 'python manage.py collectstatic --noinput --ignore="*.sass"'
 scalingo -a ${APP_NAME} run python manage.py set_config
 scalingo -a ${APP_NAME} run python manage.py import_dsfr_pictograms
 scalingo -a ${APP_NAME} run python manage.py create_starter_pages
@@ -314,6 +314,9 @@ scalingo -a ${APP_NAME} run python manage.py create_starter_pages
 normalement que les commandes ci-dessus à exécuter vous-même. Si jamais une
 commande devait être relancée manuellement, elle se présenterait sous la même
 forme : `scalingo -a mon-site run python manage.py <nom-de-la-commande>`.
+Si la commande comporte des options (commençant par `-` ou `--`), mettez-la
+entre guillemets pour que la CLI Scalingo ne les interprète pas :
+`scalingo -a mon-site run "python manage.py <nom-de-la-commande> --option"`.
 :::
 
 Votre site est maintenant en ligne à l’adresse définie dans `HOST_URL`,

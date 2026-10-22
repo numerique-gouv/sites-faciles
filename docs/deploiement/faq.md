@@ -69,7 +69,7 @@ La commande à lancer via le CLI Scalingo, en remplaçant `mon-site` par le nom 
 votre application :
 
 ```sh
-scalingo -a mon-site run python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+scalingo -a mon-site run 'python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"'
 ```
 
 Copiez la valeur affichée dans la variable `SECRET_KEY`
