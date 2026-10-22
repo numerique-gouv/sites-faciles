@@ -1,8 +1,9 @@
-## 🎯 Objectif
+# 🎯 Objectif
 
-_Un résumé de l’objectif de la PR_
+_Un résumé de l’objectif de la PR._
 
-_Précisez si c’est un bugfix, une nouvelle fonctionnalité… Expliquez rapidement le gain « fonctionnel » de vos modifications._
+_Précisez si c’est un bugfix, une nouvelle fonctionnalité… Expliquez rapidement
+le gain « fonctionnel » de vos modifications._
 
 ## 🔍 Implémentation
 
@@ -14,8 +15,16 @@ _(optionnel) Documentation, commandes à lancer, variables d’environnement, et
 
 ## 🏕 Amélioration continue
 
-- _(optionnel) Une liste d’autres modifications pas en lien direct avec la PR_
+- _(optionnel) Une liste d’autres modifications pas en lien direct avec la PR._
+
+## 🔗 Liens
+
+_Attention : remplir les « variables » ci-dessous à la main._
+
+- [Déployer la branche sur Scalingo](https://dashboard.scalingo.com/create/app?source=https://github.com/numerique-gouv/sites-conformes#{{branch_name}})
+- [Lien vers la tâche dans la feuille de route](https://projets.numerique.gouv.fr/cards/{{task_id}})
+- _(optionnel) Autres liens pertinents._
 
 ## 🖼️ Images
 
-_(optionnel) Une ou plusieurs captures d’écran, si pertinent_
+_(optionnel) Une ou plusieurs captures d’écran, si pertinent._

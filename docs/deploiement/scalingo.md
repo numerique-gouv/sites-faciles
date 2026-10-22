@@ -42,6 +42,12 @@ sans S3, les images ajoutées disparaîtraient à la prochaine mise à jour.
 On le configure à l’étape 2c.
 :::
 
+:::{tip}
+Vous pouvez déployer en un clic via le bouton ci-dessous :
+
+[![Déployer sur Scalingo](../_static/scalingo-deploy-button.svg)](https://dashboard.scalingo.com/create/app?source=https://github.com/numerique-gouv/sites-conformes#production)
+:::
+
 ## Étape 1 — Créer l’application et sa base de données
 
 Tout se passe dans votre navigateur, sur le tableau de bord Scalingo.
